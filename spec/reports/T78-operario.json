@@ -3,13 +3,11 @@
   "task": "T78",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T14:52:39.064Z",
-  "commit": "60d163a11464330693a092da42783aaa7cd91cab",
-  "base": "60d163a",
+  "at": "2026-10-16T14:55:24.383Z",
+  "commit": "5bf4999b76f8a0ca992bd3a190a8986d33e4ae0b",
+  "base": "c2dfedc",
   "changedFiles": [
     "apps/web/package.json",
-    "apps/web/src/routes/welcome/index.tsx",
-    "pnpm-lock.yaml",
     "apps/web/src/features/dashboard/api.ts",
     "apps/web/src/features/dashboard/dashboard-page.tsx",
     "apps/web/src/features/dashboard/dashboard.unit.test.ts",
@@ -21,33 +19,35 @@
     "apps/web/src/features/dashboard/tabs.ts",
     "apps/web/src/i18n/en/dashboard.json",
     "apps/web/src/i18n/es/dashboard.json",
-    "apps/web/src/i18n/pt-BR/dashboard.json"
+    "apps/web/src/i18n/pt-BR/dashboard.json",
+    "apps/web/src/routes/welcome/index.tsx",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 10.3s"
+      "detail": "ok em 8.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 5.8s"
+      "detail": "ok em 3.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 7.3s"
+      "detail": "ok em 6.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.9s"
+      "detail": "ok em 0.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
