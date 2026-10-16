@@ -171,3 +171,4 @@
 | wa-port | `OutgoingContent.video` ganha `ptv?: boolean` (vídeo-nota); hoje o nó envia com cast e o adapter ignora | T51 |
 | T25 (motor) | `ctx.render` não aplica variáveis globais (g_*, {{global.x}}): a T51 resolveu localmente (`applyGlobals` exportado); T62/T63 devem reutilizar ou o motor deve incorporar | T51 |
 | montagem (T46) | nós de mensagem precisam de `deps.mediaUrl` (cabeçalho de mídia de modelos) e `deps.record` (registro no chat) na composição de produção | T51 |
+| T29 | `wa-worker` sem alvo RPC `meta.capabilities` (o gateway usa as do perfil, todas false); `/internal/fake/sessions/:id/receive` não aceita id/mídia; falta rota fake para pausar a fila | T46 |
