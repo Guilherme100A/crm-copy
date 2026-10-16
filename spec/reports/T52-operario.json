@@ -2,9 +2,9 @@
   "version": 1,
   "task": "T52",
   "role": "operario",
-  "ok": false,
-  "at": "2026-10-16T12:58:04.680Z",
-  "commit": "92d765732db4282eda19b510fb13c05f68d9deb8",
+  "ok": true,
+  "at": "2026-10-16T13:02:51.487Z",
+  "commit": "6a89eb9370f9596694f5e3a062a22c1e055cd920",
   "base": "8d74035",
   "changedFiles": [
     "apps/api/src/routes/ai-knowledge/ai-knowledge.db.unit.test.ts",
@@ -35,48 +35,47 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 15.4s"
+      "detail": "ok em 15.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 6.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 87.1s"
+      "detail": "ok em 70.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 16.6s"
+      "detail": "ok em 17.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 2.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 27.0s"
+      "detail": "ok em 30.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 13.2s"
+      "detail": "ok em 12.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 6.1s"
+      "detail": "ok em 5.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
-      "status": "fail",
-      "detail": "exit 1 em 71.7s",
-      "output": "> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T52/packages/core\n\n ❯ src/ai-runtime/runtime.db.unit.test.ts (11 tests | 1 failed) 15491ms\n   ❯ AC-T68-01 buffer (2)\n     × mensagens picadas dentro do buffer viram um único turno com todas na ordem 3333ms\n\n Test Files  1 failed | 79 passed (80)\n      Tests  1 failed | 487 passed (488)\n   Start at  09:56:50\n   Duration  70.83s (tests 76%, import 21%, transform 3%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T52\\packages\\core:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/core@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/ai-runtime/runtime.db.unit.test.ts > AC-T68-01 buffer > mensagens picadas dentro do buffer viram um único turno com todas na ordem\nAssertionError: expected 1 to be +0 // Object.is equality\n\n- Expected\n+ Received\n\n- 0\n+ 1\n\n ❯ src/ai-runtime/runtime.db.unit.test.ts:136:29\n    134|     await sleep(300)\n    135|     await s.inbound('do plano anual')\n    136|     expect(s.llm.callCount).toBe(0)\n       |                             ^\n    137|     await sleep(1300)\n    138|     await s.runtime.idle()\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+      "status": "pass",
+      "detail": "ok em 52.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
