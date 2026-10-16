@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T64 (Torno/Sonda), T121 (Cinzel/Radar), T122 (Bigorna/Lupa).
+- Em andamento (3 pares): T37 (Cinzel/Radar), T64 (Torno/Sonda), T122 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -51,7 +51,7 @@
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | MERGED | Torno | Sonda | 0 | c4e120e |
-| 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
+| 5 | T37 | API de consumo de IA (empresa e plataforma) | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | MERGED | Torno | Sonda | 0 | 69bc234 |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
@@ -133,7 +133,7 @@
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
-| 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
