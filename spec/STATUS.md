@@ -8,7 +8,7 @@
 - Próxima onda: **0** (T00)
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
-- Dúvidas abertas para o usuário: SPEC §10.3 (gateway Leona Pay; acesso às APIs de XPag, Zenith, Notasy e UTMify)
+- Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
 
 ## Tarefas
 
