@@ -3,20 +3,20 @@
   "task": "T19",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:42:08.019Z",
-  "commit": "29da6b851e8633cbdda66793ae84ff2ad1ee8a27",
-  "base": "29da6b8",
+  "at": "2026-10-16T03:47:22.242Z",
+  "commit": "a53e3ff1ce075f7451382344728bdfc213d64322",
+  "base": "9c53246",
   "changedFiles": [
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
     "packages/core/src/flows/store/errors.ts",
     "packages/core/src/flows/store/index.ts",
     "packages/core/src/flows/store/store.db.unit.test.ts",
     "packages/core/src/flows/store/store.ts",
-    "packages/db/drizzle/crm/0003_t19_flows.sql",
-    "packages/db/drizzle/crm/meta/0003_snapshot.json",
-    "packages/db/src/schema/crm/flows.ts"
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/flows.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/drizzle/crm/0004_t19_flows.sql",
+    "packages/db/drizzle/crm/meta/0004_snapshot.json"
   ],
   "checks": [
     {
@@ -27,17 +27,17 @@
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 5.5s"
+      "detail": "ok em 8.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 7.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

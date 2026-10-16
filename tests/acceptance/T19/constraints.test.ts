@@ -77,6 +77,10 @@ describe('T19 — flow_edges (AC-T19-01)', () => {
 })
 
 describe('T19 — flow_runs ativos por contato (AC-T19-02)', () => {
+  // contato real em crm.contacts (flow_runs.contact_id tem FK desde o rebase sobre a T26)
+  const contact = (companyId: string) =>
+    sqlOk(pg.tmp.url, `INSERT INTO crm.contacts (company_id, name) VALUES (${lit(companyId)}, ${lit('Contato T19')}) RETURNING id;`)[0]![0]!
+
   const run = (companyId: string, flowId: string, contactId: string, status: string) =>
     sql(
       pg.tmp.url,
@@ -87,8 +91,8 @@ describe('T19 — flow_runs ativos por contato (AC-T19-02)', () => {
   it('AC-T19-02 segundo run running|waiting do mesmo contato na mesma empresa é rejeitado pelo banco', async () => {
     const flow = await store.createFlow(ctxOf(companyA), { name: 'Runs' })
     const flow2 = await store.createFlow(ctxOf(companyA), { name: 'Runs 2' })
-    const contact = randomUUID()
-    const first = run(companyA, flow.id, contact, 'running')
+    const c = contact(companyA)
+    const first = run(companyA, flow.id, c, 'running')
     expect(first.code, first.stderr).toBe(0)
     for (const [f, status] of [
       [flow.id, 'running'],
@@ -96,7 +100,7 @@ describe('T19 — flow_runs ativos por contato (AC-T19-02)', () => {
       [flow2.id, 'running'],
       [flow2.id, 'waiting'],
     ] as const) {
-      const r = run(companyA, f, contact, status)
+      const r = run(companyA, f, c, status)
       expect(r.code, `segundo run ${status} aceito`).not.toBe(0)
       expect(sqlState(r), r.stderr).toBe('23505')
     }
@@ -105,25 +109,26 @@ describe('T19 — flow_runs ativos por contato (AC-T19-02)', () => {
   it('AC-T19-02 o mesmo contato em empresas diferentes pode ter um run ativo em cada', async () => {
     const fa = await store.createFlow(ctxOf(companyA), { name: 'A' })
     const fb = await store.createFlow(ctxOf(companyB), { name: 'B' })
-    const contact = randomUUID()
-    expect(run(companyA, fa.id, contact, 'waiting').code).toBe(0)
-    const other = run(companyB, fb.id, contact, 'running')
+    // mesmo contact_id nas duas empresas: o índice é por (empresa, contato)
+    const c = contact(companyA)
+    expect(run(companyA, fa.id, c, 'waiting').code).toBe(0)
+    const other = run(companyB, fb.id, c, 'running')
     expect(other.code, other.stderr).toBe(0)
   })
 
   it('AC-T19-02 o índice é parcial: runs encerrados não bloqueiam um novo run ativo', async () => {
     const flow = await store.createFlow(ctxOf(companyA), { name: 'Encerrados' })
-    const contact = randomUUID()
-    for (const s of ['completed', 'failed', 'cancelled', 'completed']) expect(run(companyA, flow.id, contact, s).code).toBe(0)
-    const active = run(companyA, flow.id, contact, 'running')
+    const c = contact(companyA)
+    for (const s of ['completed', 'failed', 'cancelled', 'completed']) expect(run(companyA, flow.id, c, s).code).toBe(0)
+    const active = run(companyA, flow.id, c, 'running')
     expect(active.code, active.stderr).toBe(0)
     // ao encerrar o ativo, outro pode começar
     sqlOk(pg.tmp.url, `UPDATE crm.flow_runs SET status = 'completed' WHERE id = ${lit(active.rows[0]![0]!)};`)
-    expect(run(companyA, flow.id, contact, 'waiting').code).toBe(0)
+    expect(run(companyA, flow.id, c, 'waiting').code).toBe(0)
   })
 
   it('AC-T19-02 contatos diferentes na mesma empresa têm runs ativos independentes', async () => {
     const flow = await store.createFlow(ctxOf(companyA), { name: 'Vários contatos' })
-    for (let i = 0; i < 3; i++) expect(run(companyA, flow.id, randomUUID(), 'running').code).toBe(0)
+    for (let i = 0; i < 3; i++) expect(run(companyA, flow.id, contact(companyA), 'running').code).toBe(0)
   })
 })

@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { check, doublePrecision, index, integer, jsonb, primaryKey, text, timestamp, uniqueIndex, uuid, type AnyPgColumn } from 'drizzle-orm/pg-core'
 import { companies, users } from './base.js'
+import { contacts } from './contacts.js'
 import { createdAt, crm, updatedAt } from './schema.js'
 
 // Fluxos (T19, 06-fluxos.md §3.1–3.8): rascunho editável (flows + nodes + actions + edges), versões publicadas
@@ -173,8 +174,10 @@ export const flowRuns = crm.table(
       .references(() => flows.id, { onDelete: 'cascade' }),
     versionId: uuid('version_id').references(() => flowVersions.id, { onDelete: 'set null' }),
     version: integer('version'),
-    /** Contato do CRM (FK acrescentada quando a tabela de contatos existir, T26). */
-    contactId: uuid('contact_id').notNull(),
+    /** Contato do CRM (T26). Excluir o contato remove os runs dele. */
+    contactId: uuid('contact_id')
+      .notNull()
+      .references(() => contacts.id, { onDelete: 'cascade' }),
     chatId: uuid('chat_id'),
     status: flowRunStatusEnum('status').notNull().default('running'),
     currentNodeKey: text('current_node_key'),

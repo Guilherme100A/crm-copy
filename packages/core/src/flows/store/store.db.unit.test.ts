@@ -1,6 +1,6 @@
 // Postgres real (SPEC 3.10): banco descartável migrado.
 import { randomBytes, randomUUID } from 'node:crypto'
-import { companies, createDb, flowEdges, flowNodes, flowRuns, flowVersions, type Database } from '@crm/db'
+import { companies, contacts, createDb, flowEdges, flowNodes, flowRuns, flowVersions, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FLOW_SCHEMA_VERSION, type FlowDefinition } from '@crm/shared/flows'
 import { eq } from 'drizzle-orm'
@@ -119,12 +119,18 @@ describe('FlowStore', () => {
   it('AC-02: um run running|waiting por contato e empresa', async () => {
     const fa = await store.createFlow(a)
     const fb = await store.createFlow(b)
-    const contactId = randomUUID()
-    const run = (ctx: FlowCtx, flowId: string, status: 'running' | 'waiting' | 'completed' = 'running') =>
+    // flow_runs.contact_id referencia crm.contacts (T26); a unicidade do run ativo é por (empresa, contato).
+    const [contact] = await db.insert(contacts).values({ companyId: a.companyId, name: 'Ana' }).returning({ id: contacts.id })
+    const contactId = contact!.id
+    const run =(ctx: FlowCtx, flowId: string, status: 'running' | 'waiting' | 'completed' = 'running') =>
       db.insert(flowRuns).values({ companyId: ctx.companyId, flowId, contactId, status }).returning()
     const [first] = await run(a, fa.id)
     await expect(run(a, fa.id, 'waiting')).rejects.toMatchObject({ cause: { code: '23505', constraint: 'flow_runs_active_contact_uq' } })
     await expect(run(b, fb.id, 'waiting')).resolves.toHaveLength(1)
+    // Contato inexistente é recusado pela FK.
+    await expect(db.insert(flowRuns).values({ companyId: a.companyId, flowId: fa.id, contactId: randomUUID() })).rejects.toMatchObject({
+      cause: { code: '23503' },
+    })
     // Runs finalizados não ocupam o contato.
     await run(a, fa.id, 'completed')
     await db.update(flowRuns).set({ status: 'completed' }).where(eq(flowRuns.id, first!.id))
