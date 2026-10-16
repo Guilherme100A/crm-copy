@@ -40,6 +40,9 @@ const ADMIN: readonly PermissionKey[] = [
   'connections.edit',
   'connections.delete',
   'chat.block',
+  // T48: assumir/atribuir chat de outro atendente e excluir chat (member não tem).
+  'chat.assign_others',
+  'chat.delete',
   'facebook.campaigns',
   'facebook.pixel',
   'facebook.profiles',

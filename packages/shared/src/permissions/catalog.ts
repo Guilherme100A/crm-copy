@@ -26,7 +26,7 @@ const settingsMatrix = <A extends SettingsArea>(areas: readonly A[]) =>
 /** Grupos na ordem do modal "Permissões do membro". */
 export const PERMISSION_CATALOG = [
   { group: 'dashboard', keys: ['dashboard.sales', 'dashboard.support'] },
-  { group: 'chat', keys: ['chat.view', 'chat.block'] },
+  { group: 'chat', keys: ['chat.view', 'chat.block', 'chat.assign_others', 'chat.delete'] },
   { group: 'kanban', keys: ved('kanban') },
   { group: 'flows', keys: ved('flows') },
   { group: 'contacts', keys: ved('contacts') },

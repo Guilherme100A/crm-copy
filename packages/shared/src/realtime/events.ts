@@ -40,6 +40,8 @@ export const REALTIME_EVENTS = {
   'chat.created': defineEvent(z.looseObject({ chat_id: idSchema, chat: z.looseObject({ id: idSchema }) }), 'chat.view'),
   /** Campos do chat mudaram (status, não lidas, prévia, atendente…). */
   'chat.updated': defineEvent(z.looseObject({ chat_id: idSchema, chat: z.looseObject({ id: idSchema }).optional() }), 'chat.view'),
+  /** Chat excluído (T48): o cliente remove da lista. */
+  'chat.deleted': defineEvent(z.looseObject({ chat_id: idSchema }), 'chat.view'),
   /** Mensagem nova no chat (recebida ou enviada). */
   'message.created': defineEvent(z.looseObject({ chat_id: idSchema, message: z.looseObject({ id: idSchema }) }), 'chat.view'),
   /** Status de entrega/leitura da mensagem (nunca regride). */
