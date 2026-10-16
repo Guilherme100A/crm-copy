@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T77 (Torno/Sonda), T47 (Bigorna/Lupa; Lupa ainda no verify da T126), T127 (Cinzel/Radar).
+- Em andamento (3 pares): T88 (Torno/Sonda), T126 → depois T47 (Bigorna/Lupa), T127 (Cinzel/Radar).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -111,7 +111,7 @@
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
-| 8 | T77 | UI contatos: lista e seleção em massa | IN_PROGRESS | Torno | Sonda | 0 | |
+| 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | TODO | | | 0 | |
@@ -120,7 +120,7 @@
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
-| 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
+| 9 | T88 | UI agentes: lista e editor | IN_PROGRESS | Torno | Sonda | 0 | |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
@@ -138,7 +138,7 @@
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
-| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | REJECTED (1) | Bigorna | Lupa | 1 | AC-03: ai-agent-lab AC-T79-04 espera ~1 s real; AC-04: AC-T125-02 timeout sob carga |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 

@@ -1779,7 +1779,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ---
 
 ### T88 — UI agentes: lista e editor
-**Paths:** `apps/web/src/{routes,features}/agents/**`
+**Paths:** `apps/web/src/{routes,features}/agents/**` Liberações (2026-10-16, aditivas): `apps/api/src/routes/ai-agents/index.ts` e seu teste db.unit (`GET /api/ai-agents/model-options`, flows.view → `{ providers: [{ provider, available }], models: [{ provider, model }] }`, sem expor chaves), `apps/worker/src/index.ts` (export do job ai-knowledge) e `scripts/e2e/api.ts` (job ai-knowledge no harness).
 **Depende de:** T79, T80, T52, T23
 **Ref:** `07-agentes-ia.md#2-telas-e-rotas`, `#4-estados-e-transições`.
 **Critérios de aceitação**
