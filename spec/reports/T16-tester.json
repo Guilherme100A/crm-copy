@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "task": "T16",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:23:43.553Z",
+  "commit": "e3575e7bf57cd9e0ade76f269b5870938e5fef95",
+  "base": "e3575e7",
+  "changedFiles": [
+    "tests/acceptance/T16/events.test.ts",
+    "tests/acceptance/T16/fanout.test.ts",
+    "tests/acceptance/T16/setup.ts",
+    "tests/acceptance/T16/sse.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T16-01, AC-T16-02, AC-T16-03, AC-T16-04, AC-T16-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "19 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T16-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T16-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T16-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T16-04",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "AC-T16-05",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "4 arquivo(s) alterado(s)"
+    }
+  ]
+}
