@@ -16,6 +16,10 @@
 // e o próximo livre se outro worktree vivo já o tiver), stream wsm:events:e2e-<hash> e prefixo de filas
 // crm-e2e-<hash>. E2E_REDIS_URL = exatamente aquele Redis (db incluso, sem reserva); WA_EVENTS_STREAM e
 // CRM_QUEUE_PREFIX sobrescrevem os nomes. O efetivo vai para o e2e-server.json ("redis") e o stdout.
+//
+// T124: E2E_RESET_TIMEOUT_MS (padrão 60000; vai à API e ao e2e-server.json em reset_timeout_ms). Ao subir, apaga os
+// bancos de teste órfãos (crm_e2e_/crm_test_/crm_acc_ sem conexão e mais antigos que E2E_ORPHAN_MIN_AGE_MIN, padrão
+// 30), preservando os de harnesses vivos; E2E_ORPHAN_CLEANUP=0 desliga. Resultado em "orphans" e E2E_ORPHANS_DROPPED.
 import { spawn, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -24,7 +28,8 @@ import { createServer } from 'node:net'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { e2ePorts, e2eRedis, isOwnServerRunning, maskRedisUrl, normalizeRoot, readServerInfo, serverInfoPath } from './ports.mjs'
-import { claimRedisDb } from './redis-claim.mjs'
+import { claimRedisDb, liveHarnessDatabases } from './redis-claim.mjs'
+import { cleanupOrphanDatabases, orphanMinAgeMs } from './orphans.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pg = createRequire(join(ROOT, 'packages', 'db', 'package.json'))('pg')
@@ -110,12 +115,22 @@ function webAvailable() {
   return existsSync(dir) && readdirSync(dir).some((f) => /^vite\.config\.(m?[jt]s)$/.test(f))
 }
 
+/** Timeout do `POST /__e2e/reset` (T124): `E2E_RESET_TIMEOUT_MS`, padrão 60000. */
+function resetTimeoutFromEnv(env = process.env) {
+  const raw = env.E2E_RESET_TIMEOUT_MS
+  const n = raw === undefined || String(raw).trim() === '' ? 60_000 : Number(raw)
+  if (!Number.isInteger(n) || n <= 0) throw new Error(`E2E_RESET_TIMEOUT_MS inválido: ${raw}`)
+  return n
+}
+
 async function main() {
   const baseUrl = process.env.DATABASE_URL || 'postgres://wsm:wsm@127.0.0.1:5432/crm'
   const redisPlan = e2eRedis(ROOT)
   let redisUrl = redisPlan.url
   let redisDb = redisPlan.db
   let releaseRedis = async () => undefined
+  let orphans = { dropped: [], kept: [] }
+  const resetTimeoutMs = resetTimeoutFromEnv()
   const dbName = `crm_e2e_${randomBytes(5).toString('hex')}`
   const ports = e2ePorts(ROOT)
   const infoPath = serverInfoPath(ROOT)
@@ -157,11 +172,21 @@ async function main() {
 
   try {
     if (redisPlan.source === 'derived') {
-      const claim = await claimRedisDb(redisPlan.url, redisPlan.db, ROOT)
+      const claim = await claimRedisDb(redisPlan.url, redisPlan.db, ROOT, process.pid, undefined, { database: dbName })
       redisUrl = claim.url
       redisDb = claim.db
       releaseRedis = claim.release
       if (claim.db !== redisPlan.db) log(`Redis db ${redisPlan.db} já é de outro harness vivo; usando o db ${claim.db}`)
+    }
+    // T124: bancos de teste órfãos (execuções mortas) caem antes de criar o deste harness; os de harnesses vivos ficam.
+    if (process.env.E2E_ORPHAN_CLEANUP !== '0') {
+      try {
+        const protect = [dbName, ...(await liveHarnessDatabases(redisUrl).catch(() => []))]
+        orphans = await cleanupOrphanDatabases({ baseUrl, minAgeMs: orphanMinAgeMs(), protect })
+        if (orphans.dropped.length) log(`bancos órfãos removidos: ${orphans.dropped.join(', ')}`)
+      } catch (err) {
+        log(`limpeza de bancos órfãos falhou: ${err.message}`)
+      }
     }
     await admin(baseUrl, `CREATE DATABASE "${dbName}"`)
     dbCreated = true
@@ -175,6 +200,7 @@ async function main() {
       HOST: '127.0.0.1',
       DATABASE_URL: withDatabase(baseUrl, dbName),
       REDIS_URL: redisUrl,
+      E2E_RESET_TIMEOUT_MS: String(resetTimeoutMs),
       WA_EVENTS_STREAM: redisPlan.stream,
       CRM_QUEUE_PREFIX: redisPlan.queuePrefix,
       CREDENTIALS_KEY: randomBytes(32).toString('base64'),
@@ -238,6 +264,8 @@ async function main() {
       api_port: apiPort,
       web_port: webUrl ? Number(new URL(webUrl).port) : null,
       database: dbName,
+      reset_timeout_ms: resetTimeoutMs,
+      orphans: { dropped: orphans.dropped, kept: orphans.kept, min_age_min: orphanMinAgeMs() / 60_000 },
       redis: { url: maskRedisUrl(redisUrl), db: redisDb, stream: redisPlan.stream, queue_prefix: redisPlan.queuePrefix, source: redisPlan.source },
       pid: process.pid,
       started_at: new Date().toISOString(),
@@ -253,6 +281,7 @@ async function main() {
     out(`E2E_WEB_URL=${webUrl}`)
     out(`E2E_WEB=${webUrl ? 'up' : 'absent'}`)
     out(`E2E_DATABASE=${dbName}`)
+    out(`E2E_ORPHANS_DROPPED=${orphans.dropped.length}`)
     out(`E2E_REDIS_URL=${maskRedisUrl(redisUrl)}`)
     out(`E2E_WA_EVENTS_STREAM=${redisPlan.stream}`)
     out(`E2E_SERVER_INFO=${infoPath}`)

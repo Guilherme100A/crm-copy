@@ -100,13 +100,14 @@ export async function openRedis(url, { timeoutMs = 3000 } = {}) {
   }
 }
 
-const ownerValue = (root, pid) => JSON.stringify({ root: normalizeRoot(root), pid })
+/** Valor da reserva: worktree, pid e (T124) o banco Postgres do harness, protegido da limpeza de órfãos. */
+const ownerValue = (root, pid, info = {}) => JSON.stringify({ root: normalizeRoot(root), pid, ...info })
 
 /** Tenta reservar o db da URL; `true` se ficou com ele (novo ou já era deste root/pid). */
-export async function tryClaim(url, root, pid = process.pid, key = OWNER_KEY) {
+export async function tryClaim(url, root, pid = process.pid, key = OWNER_KEY, info = {}) {
   const r = await openRedis(url)
   try {
-    const value = ownerValue(root, pid)
+    const value = ownerValue(root, pid, info)
     if ((await r.send('SET', key, value, 'NX', 'EX', OWNER_TTL_S)) === 'OK') return true
     const current = await r.send('GET', key)
     let owner = null
@@ -130,11 +131,11 @@ export async function tryClaim(url, root, pid = process.pid, key = OWNER_KEY) {
  * Escolhe e reserva um db livre a partir do candidato (cíclico em 2..15). Devolve a URL efetiva e `release()`,
  * que para a renovação e apaga a chave (só se ainda for deste processo).
  */
-export async function claimRedisDb(baseUrl, firstDb, root, pid = process.pid, key = OWNER_KEY) {
+export async function claimRedisDb(baseUrl, firstDb, root, pid = process.pid, key = OWNER_KEY, info = {}) {
   for (const db of redisDbCandidates(firstDb)) {
     const url = withRedisDb(baseUrl, db)
-    if (!(await tryClaim(url, root, pid, key))) continue
-    const value = ownerValue(root, pid)
+    if (!(await tryClaim(url, root, pid, key, info))) continue
+    const value = ownerValue(root, pid, info)
     const timer = setInterval(() => {
       openRedis(url)
         .then(async (r) => {
@@ -166,4 +167,27 @@ export async function claimRedisDb(baseUrl, firstDb, root, pid = process.pid, ke
     }
   }
   throw new Error('nenhum db do Redis livre (2..15) para o harness E2E')
+}
+
+/**
+ * Bancos Postgres de harnesses VIVOS (de qualquer worktree), lidos das reservas `e2e:harness:owner` nos dbs 2..15
+ * (T124): ficam fora da limpeza de órfãos mesmo sem conexão no momento. Redis fora do ar → lista vazia.
+ */
+export async function liveHarnessDatabases(baseUrl, key = OWNER_KEY) {
+  const out = []
+  for (const db of redisDbCandidates(2)) {
+    try {
+      const r = await openRedis(withRedisDb(baseUrl, db))
+      try {
+        const raw = await r.send('GET', key)
+        const owner = raw ? JSON.parse(raw) : null
+        if (owner && typeof owner.database === 'string' && isPidAlive(owner.pid)) out.push(owner.database)
+      } finally {
+        await r.close()
+      }
+    } catch {
+      // db sem reserva legível ou Redis fora: segue
+    }
+  }
+  return out
 }

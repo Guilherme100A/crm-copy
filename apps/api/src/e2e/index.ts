@@ -96,6 +96,13 @@ function compareIds(a: string, b: string): number {
   return am === bm ? (as === bs ? 0 : as < bs ? -1 : 1) : am < bm ? -1 : 1
 }
 
+/** Timeout do `POST /__e2e/reset` (T124): `E2E_RESET_TIMEOUT_MS`, padrão 60000 (lido a cada reset). */
+export const DEFAULT_E2E_RESET_TIMEOUT_MS = 60_000
+export function resetTimeoutMs(env: Record<string, string | undefined> = process.env): number {
+  const n = Number(env.E2E_RESET_TIMEOUT_MS)
+  return Number.isInteger(n) && n > 0 ? n : DEFAULT_E2E_RESET_TIMEOUT_MS
+}
+
 export function e2eRoutes(rawDeps: ResolvedDeps) {
   prepareE2eDeps(rawDeps)
   const deps = rawDeps
@@ -111,8 +118,10 @@ export function e2eRoutes(rawDeps: ResolvedDeps) {
 
   app.get(`${E2E_PREFIX}`, (c) => c.json({ seed: SEED_BASE, stream, group: WA_CONSUMER_GROUP }))
 
-  // Restaura o seed-base e limpa streams/filas de teste (AC-T17-03).
-  app.post(`${E2E_PREFIX}/reset`, async (c) => {
+  // Restaura o seed-base e limpa streams/filas de teste (AC-T17-03). T124: um reset por vez (o seguinte espera o
+  // anterior terminar, nunca começa por cima: chave duplicada no seed); estourado o timeout, responde 504 mas o
+  // reset continua e segura a fila até acabar.
+  const doReset = async () => {
     const t0 = Date.now()
     const { applied } = await resetAndSeed(deps.db, deps.e2e.seed)
     const redisKeys = await clearRedis(deps.redis, stream)
@@ -120,7 +129,29 @@ export function e2eRoutes(rawDeps: ResolvedDeps) {
     if (deps.waGateway instanceof FakeWaGateway) deps.waGateway.reset()
     deps.e2e.llm = new FakeLlm()
     if (deps.e2e.deliveries) deps.e2e.deliveries.length = 0
-    return c.json({ ok: true, applied, redis_keys: redisKeys, ms: Date.now() - t0 }, 200)
+    return { applied, redisKeys, ms: Date.now() - t0 }
+  }
+  let queue: Promise<unknown> = Promise.resolve()
+  app.post(`${E2E_PREFIX}/reset`, async (c) => {
+    const timeoutMs = resetTimeoutMs()
+    const queuedAt = Date.now()
+    let startedAt = queuedAt
+    const run = queue.then(() => {
+      startedAt = Date.now()
+      return doReset()
+    })
+    queue = run.catch(() => undefined)
+    let timer: ReturnType<typeof setTimeout> | undefined
+    const timeout = new Promise<'timeout'>((resolve) => {
+      timer = setTimeout(() => resolve('timeout'), timeoutMs)
+    })
+    try {
+      const result = await Promise.race([run, timeout])
+      if (result === 'timeout') return c.json({ ok: false, error: 'reset_timeout', timeout_ms: timeoutMs, waited_ms: startedAt - queuedAt }, 504)
+      return c.json({ ok: true, applied: result.applied, redis_keys: result.redisKeys, ms: result.ms, waited_ms: startedAt - queuedAt }, 200)
+    } finally {
+      clearTimeout(timer)
+    }
   })
 
   // Injeta um WaEvent no FakeWaGateway e no stream que o worker consome (AC-T17-04).

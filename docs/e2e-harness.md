@@ -34,3 +34,14 @@ entrega cada evento a um só consumidor: no db 14 fixo de antes, dois harnesses 
 prepara o disparo criado pela API (T60) e roda os ticks (T74). Cada envio inicia o fluxo do alvo com o mesmo
 registry de nós da produção (a mensagem fica no chat com `sender_type: flow`), o LLM das empresas e os timers
 `flow-timer`/`flow-step`.
+
+## Reset serializado e bancos órfãos (T124)
+
+- `POST /__e2e/reset` roda um por vez por processo da API: o segundo espera o primeiro (resposta com `waited_ms`).
+  O timeout vem de `E2E_RESET_TIMEOUT_MS` (padrão 60000, também em `reset_timeout_ms` no `e2e-server.json`); ao estourar,
+  responde 504 `{ ok: false, error: "reset_timeout" }`, mas o reset continua e segura a fila até terminar.
+- Ao subir, o harness apaga bancos `crm_e2e_*`, `crm_test_*` e `crm_acc_*` sem conexão ativa (`pg_stat_activity`) e mais
+  antigos que `E2E_ORPHAN_MIN_AGE_MIN` minutos (padrão 30; idade pelo arquivo `PG_VERSION` do banco). Nunca toca outros
+  nomes (`crm`, `postgres`, `wsm*`…) nem os bancos de harnesses vivos (registrados na reserva `e2e:harness:owner` do
+  Redis). O DROP é sem FORCE. `E2E_ORPHAN_CLEANUP=0` desliga. Resultado: `orphans` no `e2e-server.json` e
+  `E2E_ORPHANS_DROPPED=<n>` no stdout. Função: `cleanupOrphanDatabases` em `scripts/e2e/orphans.mjs`.
