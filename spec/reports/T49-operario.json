@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "task": "T49",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T04:23:13.510Z",
+  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
+  "base": "c4f303c",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/chat-messages/index.ts",
+    "apps/api/src/routes/media/index.ts",
+    "packages/core/src/chats/send/idempotency.ts",
+    "packages/core/src/chats/send/index.ts",
+    "packages/core/src/chats/send/send.db.unit.test.ts",
+    "packages/core/src/chats/send/service.ts",
+    "packages/core/src/media/index.ts",
+    "packages/core/src/media/service.ts",
+    "packages/core/src/media/service.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/chats/send/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 6.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 11.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 6.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 2.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 10.2s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "12 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -10,6 +10,8 @@ import { customFieldsRoutes } from './custom-fields/index'
 import { companiesRoutes, companyActiveGuard } from './companies/index'
 import { teamRoutes } from './team/index'
 import { invitationsRoutes } from './invitations/index'
+import { chatMessagesRoutes } from './chat-messages/index'
+import { mediaRoutes } from './media/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -25,4 +27,6 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', companiesRoutes(deps))
   app.route('/', teamRoutes(deps))
   app.route('/', invitationsRoutes(deps))
+  app.route('/', chatMessagesRoutes(deps))
+  app.route('/', mediaRoutes(deps))
 }

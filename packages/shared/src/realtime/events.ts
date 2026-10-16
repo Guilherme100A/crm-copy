@@ -49,6 +49,14 @@ export const REALTIME_EVENTS = {
   ),
   /** Dados do contato mudaram (identidade LID/PN, atribuição, opt-out). */
   'contact.updated': defineEvent(z.looseObject({ contact_id: idSchema, contact: z.looseObject({ id: idSchema }).optional() }), 'contacts.view'),
+  // ---- T49: ações na mensagem ----
+  /** Mensagem apagada para todos (`message_deleted` do produto de referência). */
+  'message.deleted': defineEvent(z.looseObject({ chat_id: idSchema, message_id: idSchema }), 'chat.view'),
+  /** Reação adicionada ou removida (`emoji: ''`). */
+  'message.reacted': defineEvent(
+    z.looseObject({ chat_id: idSchema, message_id: idSchema, emoji: z.string(), user_id: idSchema.nullable().optional() }),
+    'chat.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS
