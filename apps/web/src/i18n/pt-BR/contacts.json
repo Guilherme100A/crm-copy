@@ -1,0 +1,91 @@
+{
+  "title": "Contatos",
+  "loadingCount": "Carregando...",
+  "count": { "one": "{n} contato", "other": "{n} contatos", "unknown": "{n}+ contatos" },
+  "common": { "cancel": "Cancelar", "close": "Fechar" },
+  "actions": { "filters": "Filtros", "importWhatsapp": "Importar do WhatsApp", "exportCsv": "Exportar CSV" },
+  "search": { "placeholder": "Buscar contato...", "clear": "Limpar busca" },
+  "chips": {
+    "label": "Etiqueta: {name}",
+    "column": "Etapa: {name}",
+    "createdBetween": "Criado de {from} a {to}",
+    "createdFrom": "Criado a partir de {from}",
+    "createdTo": "Criado até {to}",
+    "customKey": "Campo: {key}",
+    "customValue": "{key}: {value}",
+    "unknownLabel": "Etiqueta removida",
+    "unknownColumn": "Etapa removida",
+    "remove": "Remover filtro {name}",
+    "clear": "Limpar filtros"
+  },
+  "filters": {
+    "title": "Filtrar contatos",
+    "createdFrom": "Criado a partir de",
+    "createdTo": "Criado até",
+    "labels": "Etiquetas",
+    "labelsHint": "Contatos que possuem a etiqueta no contato ou em algum chat.",
+    "noLabels": "Nenhuma etiqueta nesta empresa.",
+    "columns": "Etapas do Kanban",
+    "columnsSearch": "Buscar etapa",
+    "noColumns": "Nenhum quadro Kanban com etapas nesta empresa.",
+    "search": "Buscar...",
+    "customKey": "Campo personalizado",
+    "customKeyPlaceholder": "Nome do campo",
+    "customValue": "Valor",
+    "customValuePlaceholder": "Contém (opcional)",
+    "apply": "Aplicar filtros",
+    "clear": "Limpar filtros"
+  },
+  "table": { "name": "Nome completo", "phone": "Telefone", "labels": "Etiquetas", "noPhone": "Sem telefone" },
+  "select": {
+    "row": "Selecionar {name}",
+    "visible": "Selecionar visíveis",
+    "menu": "Opções de seleção",
+    "allFilter": "Todos do filtro ({n})",
+    "allAccount": "Todos da conta ({n})",
+    "counting": "Contando..."
+  },
+  "bulk": {
+    "label": "Ações em massa",
+    "count": "{n} selecionados",
+    "countOne": "{n} selecionado",
+    "delete": "Excluir",
+    "dispatch": "Disparo em massa",
+    "export": "Exportar",
+    "clear": "Limpar"
+  },
+  "bulkDelete": {
+    "title": "Excluir contatos",
+    "body": "{n} contatos serão excluídos junto com as conversas, mensagens e cards do Kanban. Esta ação não pode ser desfeita.",
+    "confirm": "Excluir contatos",
+    "done": "{n} contatos excluídos.",
+    "failed": "A exclusão falhou.",
+    "startError": "Não foi possível iniciar a exclusão."
+  },
+  "export": {
+    "title": "Exportar contatos",
+    "body": "Exportar {n} contatos?",
+    "customFields": "Incluir campos personalizados (arquivo maior e mais lento)",
+    "hint": "A exportação roda em segundo plano; o progresso aparece aqui.",
+    "confirm": "Exportar",
+    "download": "Baixar CSV ({n} linhas)",
+    "failed": "A exportação falhou.",
+    "startError": "Não foi possível iniciar a exportação."
+  },
+  "importWhatsapp": {
+    "title": "Importar do WhatsApp",
+    "body": "Tem certeza de que deseja importar os contatos da conexão {name}?",
+    "confirm": "Importar",
+    "result": "{imported} importados, {updated} atualizados, {skipped} ignorados",
+    "notConnected": "A conexão não está conectada.",
+    "error": "Não foi possível importar os contatos."
+  },
+  "jobs": { "queued": "Na fila...", "processing": "Processando...", "processed": "{n} processados" },
+  "states": {
+    "empty": "Nenhum contato ainda.",
+    "emptyFiltered": "Nenhum contato encontrado com estes filtros.",
+    "error": "Não foi possível carregar os contatos.",
+    "retry": "Tentar novamente",
+    "loadingMore": "Carregando mais..."
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "task": "T77",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T20:40:33.461Z",
+  "commit": "d38a3e280c85f90c9683630953bc916802a8f2de",
+  "base": "d38a3e2",
+  "changedFiles": [
+    "apps/web/src/routes/customers/index.tsx",
+    "apps/web/src/features/contacts/api.ts",
+    "apps/web/src/features/contacts/contact-list.tsx",
+    "apps/web/src/features/contacts/contacts-page.tsx",
+    "apps/web/src/features/contacts/contacts.unit.test.ts",
+    "apps/web/src/features/contacts/dialogs.tsx",
+    "apps/web/src/features/contacts/filters-modal.tsx",
+    "apps/web/src/features/contacts/filters.ts",
+    "apps/web/src/features/contacts/realtime.ts",
+    "apps/web/src/features/contacts/selection.ts",
+    "apps/web/src/i18n/en/contacts.json",
+    "apps/web/src/i18n/es/contacts.json",
+    "apps/web/src/i18n/pt-BR/contacts.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 40.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 8.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 11.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 17.2s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "13 arquivo(s) alterado(s)"
+    }
+  ]
+}
