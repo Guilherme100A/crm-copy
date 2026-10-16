@@ -2024,6 +2024,18 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T124-02** Ao subir, o harness apaga bancos de teste do projeto sem conexão e antigos, e preserva: bancos com conexão ativa, recentes, e qualquer banco fora dos prefixos de teste (ex.: `crm`, `postgres`, `wsm*`).
 - **AC-T124-03** O timeout do reset vem de `E2E_RESET_TIMEOUT_MS` (padrão ≥ 60000) e aparece no `e2e-server.json`.
 
+### T126 — Estabilidade dos testes sob carga (filas, Redis, teardown e relógio)
+**Objetivo:** acabar com as falhas intermitentes que reprovaram gates de integração em 2026-10-16 quando vários pares rodam suítes ao mesmo tempo. Detalhes dos casos em `spec/STATUS.md` (linhas "testes instáveis").
+**Paths:** `apps/*/vitest.config.ts`, `packages/*/vitest.config.ts`, `apps/*/src/test-setup*.ts`, `packages/*/src/test-setup*.ts`, `packages/db/src/testing.ts`, `apps/*/src/**/*.unit.test.ts`, `packages/*/src/**/*.unit.test.ts`, `docs/testing.md`.
+**Depende de:** T121, T124, T125
+**Entregáveis:** (1) Prefixo de fila BullMQ (`CRM_QUEUE_PREFIX`/`WA_QUEUE_PREFIX`) único **por arquivo de teste**, e não só por execução (hoje vem do `vitest.config.ts` e é dividido por todos os arquivos da mesma execução). (2) Os testes que usam Redis db fixo (`apps/api/src/e2e/e2e.db.unit.test.ts` e `e2e-reset.db.unit.test.ts`, db 13) passam a usar um espaço isolado por execução (db livre ou prefixo de chaves) sem perder o que o AC-T17-03 prova. (3) Teardown seguro: workers, filas e pools em segundo plano são fechados ANTES do `drop()` do banco temporário; o `drop()` do `createTempDatabase` não derruba conexões vivas de outro arquivo. (4) O teste de buffer do AC-T68-01 (`packages/core/src/ai-runtime/runtime.db.unit.test.ts`) e outros com `sleep` real para medir janelas de tempo usam relógio injetável ou fake timers. (5) `docs/testing.md` com as regras (prefixo por arquivo, teardown, sem sleep para medir tempo).
+**Regra:** nenhuma asserção de produto muda de significado; só a infraestrutura dos testes e a forma de medir o tempo. Código de produção só pode mudar para expor um relógio injetável, sem alterar comportamento.
+**Critérios de aceitação**
+- **AC-T126-01** Dois arquivos de teste da mesma execução do vitest recebem prefixos de fila diferentes, e um worker de um arquivo nunca consome um job enfileirado pelo outro (prova com dois arquivos de fixture e a mesma fila).
+- **AC-T126-02** Duas execuções simultâneas de `pnpm --filter @crm/api test` no mesmo Redis e Postgres terminam as duas sem falhas (inclui AC-T17-03 do reset ≤ 3 s em cada uma).
+- **AC-T126-03** As suítes completas de `@crm/api`, `@crm/core` e `@crm/worker` passam 3 vezes seguidas com outra suíte completa rodando em paralelo, sem nenhuma falha e sem erro 57P01 (admin_shutdown) no log.
+- **AC-T126-04** O AC-T68-01 (buffer do agente) e o AC-T125-02 (Purchase da fila meta-capi) passam 10 vezes seguidas sob carga de CPU (outra suíte em paralelo).
+
 ### T125 — Montagem de produção da Meta (insights, CAPI e vendas ao Pixel)
 **Objetivo:** fechar as pendências de montagem da T101 e da T104.
 **Paths:** `apps/worker/src/boot/**`, `apps/api/src/server.ts`.
