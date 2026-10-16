@@ -165,3 +165,4 @@
 | T08/server.ts | no shutdown fechar as filas BullMQ criadas sob demanda pela API (flow-step, flow-timer) | T43 |
 | endurecimento | `GET /api/media/:id` escopado só por empresa (id = HMAC do conteúdo, não adivinhável, só aparece em mensagens visíveis): avaliar vínculo mídia↔chat | T119 |
 | teste instável | `packages/wa-engine/src/send/forbidden.db.unit.test.ts` (T20) falhou 1x com "expected 1 to be 0.5" (redução após 403) sob carga | T40 |
+| T46 / T38 | produção do worker chama `configureAiAgent({ llm, waGateway, ... })` (T68): na T46 com o provedor da plataforma (env); a T38 troca por resolução BYOK por empresa | T68 |
