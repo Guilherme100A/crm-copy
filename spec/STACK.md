@@ -2347,3 +2347,6 @@ Alternativa: `createOpenAICompatible({ name: 'openrouter', baseURL: 'https://ope
 6. **Erros:** erros do upstream chegam como `APICallError`. Pode haver fallback silencioso de provider, então fixe via `provider: { order, allow_fallbacks:false }` em `extraBody` quando precisar de determinismo.
 7. **Faturamento:** o custo reportado é o do OpenRouter, com markup e créditos. Para cobrar o cliente, persista o `cost` por chamada.
 8. **`decisionModel`/`evaluationModel`:** são alpha. Exigem `baseURL` terminado em `/v1`; caso contrário, lançam `LoadSettingError`.
+
+## Adendo — extração de PDF (T52)
+- `unpdf@1.8.1` (fixa; 1.9.0 de 2026-10-15 é recente demais) em `packages/core` apenas. Wrapper serverless do pdf.js; para texto use `extractText`/`getDocumentProxy` conforme os `.d.ts` instalados (context7 sem cota: confira os tipos em node_modules/unpdf). Peer `@napi-rs/canvas` é OPCIONAL e não deve ser instalado (só serve para renderizar imagens).

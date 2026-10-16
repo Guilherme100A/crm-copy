@@ -267,7 +267,7 @@ const RAW = [
   T('T38', 'Chaves de provedores de IA (BYOK)', ['T12', 'T22'], [core('ai-keys'), route('ai-keys'), schema('ai-keys')], ['api', 'core']),
   T('T39', 'Agentes de IA: schema e CRUD', ['T22', 'T26'], [core('ai-agents'), route('ai-agents'), schema('ai-agents'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.ai_agent_id */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/ai-agents/index.ts'] }),
-  T('T52', 'Agentes de IA: base de conhecimento', ['T39'], ['packages/core/src/ai-knowledge/**', route('ai-knowledge'), job('ai-knowledge')], ['api', 'worker', 'core']),
+  T('T52', 'Agentes de IA: base de conhecimento', ['T39'], ['packages/core/src/ai-knowledge/**', 'packages/db/src/schema/crm/ai-knowledge.ts', route('ai-knowledge'), job('ai-knowledge')], ['api', 'worker', 'core']),
   T('T59', 'UI: consumo de IA, chaves e hub de integrações', ['T37', 'T38', 'T23'], [...ui('settings-ai-usage'), ...ui('integrations')], ['web'], { e2e: true }),
   T('T68', 'Runtime do agente de IA', ['T39', 'T24', 'T12', 'T33', 'T49'], ['packages/core/src/ai-runtime/**', consumer('ai-agent'), job('ai-agent'), schema('ai-runtime'), 'packages/core/src/chats/send/service.ts' /* aditivo: Sender kind ai */, 'packages/ai/src/testing/fake-llm.ts' /* aditivo: providerData */], ['worker', 'core']),
   T('T79', 'Agentes: teste ao vivo, geração de prompt e criação assistida', ['T68'], ['packages/core/src/ai-agent-lab/**', route('ai-agent-lab'), job('ai-agent-lab')], ['api', 'worker', 'core']),
