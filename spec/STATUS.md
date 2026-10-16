@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T18 (Torno/Sonda), T19 (Cinzel/Radar), T22 (Bigorna/Lupa), T26 (Fole/Prisma).
+- Em andamento: T17 (Torno/Sonda), T18 (aguarda regen de migration), T19 (Cinzel/Radar, regen), T22 (Bigorna/Lupa), T33 (Fole/Prisma).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -32,7 +32,7 @@
 | 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | MERGED | Cinzel | Radar | 0 | 9edeadc |
 | 3 | T15 | Autenticação, cadastro, perfil e senha | MERGED | Torno | Sonda | 0 | 224aad1 |
 | 3 | T16 | Realtime: SSE, fan-out e replay | MERGED | Bigorna | Lupa | 0 | 53c0005 |
-| 3 | T17 | Harness E2E (API com fakes, seed, reset) | TODO | | | 0 | |
+| 3 | T17 | Harness E2E (API com fakes, seed, reset) | IN_PROGRESS | Torno | Sonda | 0 | |
 | 3 | T19 | Fluxos: schema e repositório | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 3 | T24 | UsageGuard e provider medido | TODO | | | 0 | |
 | 4 | T20 | WA: SendPipeline, deliver e health | TODO | | | 0 | |
@@ -40,14 +40,14 @@
 | 4 | T22 | Empresas, equipe, convites e permissões | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | TODO | | | 0 | |
 | 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | TODO | | | 0 | |
-| 4 | T26 | Contatos, etiquetas e campos personalizados | IN_PROGRESS | Fole | Prisma | 0 | |
+| 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | TODO | | | 0 | |
 | 5 | T29 | App wa-worker e RPC interno | TODO | | | 0 | |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | TODO | | | 0 | |
 | 5 | T31 | Departamentos e horários de atendimento | TODO | | | 0 | |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
-| 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | TODO | | | 0 | |
+| 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | IN_PROGRESS | Fole | Prisma | 0 | |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | TODO | | | 0 | |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | TODO | | | 0 | |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
