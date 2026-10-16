@@ -3,9 +3,9 @@
   "task": "T40",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T06:26:12.383Z",
-  "commit": "e74ff0eccfa0d6a898ad9fa9182a2d60e7e9c5c7",
-  "base": "59d345b",
+  "at": "2026-10-16T06:34:11.141Z",
+  "commit": "91be4331892b26fc578c8c9a556d8196b39de55e",
+  "base": "2fe5f4c",
   "changedFiles": [
     "apps/api/src/routes/ai-agents/ai-agents.db.unit.test.ts",
     "apps/api/src/routes/chat-messages/scope.db.unit.test.ts",
@@ -26,8 +26,8 @@
     "packages/core/src/connections/status.unit.test.ts",
     "packages/core/src/index.ts",
     "packages/core/src/kanban/kanban.db.unit.test.ts",
-    "packages/db/drizzle/crm/0012_t40_connections.sql",
-    "packages/db/drizzle/crm/meta/0012_snapshot.json",
+    "packages/db/drizzle/crm/0013_t40_connections.sql",
+    "packages/db/drizzle/crm/meta/0013_snapshot.json",
     "packages/db/drizzle/crm/meta/_journal.json",
     "packages/db/src/schema/crm/chats.ts",
     "packages/db/src/schema/crm/connections.ts",
@@ -43,32 +43,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 15.5s"
+      "detail": "ok em 9.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 3.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 34.1s"
+      "detail": "ok em 28.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 13.4s"
+      "detail": "ok em 8.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.8s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 19.7s"
+      "detail": "ok em 17.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
