@@ -5,8 +5,8 @@
 
 ## Resumo
 - Tarefas: 126 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T110 (Cinzel/Radar).
-- Bloqueios: nenhum
+- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T65 (Cinzel/Radar).
+- Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
 
@@ -87,14 +87,14 @@
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
-| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
 | 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |
-| 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
+| 7 | T65 | Dashboard: métricas de atendimento | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
