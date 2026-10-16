@@ -1,7 +1,7 @@
-// Rota provisória do shell (T23); a tarefa do módulo substitui este arquivo.
+// `/chats`: sem chat aberto (no desktop, o painel do meio mostra o estado vazio; no mobile, só a lista).
 import { createFileRoute } from '@tanstack/react-router'
-import { PlaceholderPage } from '@/components/placeholder-page'
+import { ChatConversationEmpty } from '@/features/chat/chat-layout'
 
 export const Route = createFileRoute('/chats/')({
-  component: () => <PlaceholderPage id="chats" titleKey="pages.chats" />,
+  component: ChatConversationEmpty,
 })

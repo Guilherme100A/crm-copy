@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as ChatsRouteRouteImport } from './routes/chats/route'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as RegisterRouteImport } from './routes/register'
@@ -18,6 +19,7 @@ import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AgentesIndexRouteImport } from './routes/agentes/index'
 import { Route as ChatsIndexRouteImport } from './routes/chats/index'
+import { Route as ChatsChatIdRouteImport } from './routes/chats/$chatId'
 import { Route as ConnectionsIndexRouteImport } from './routes/connections/index'
 import { Route as CrmsIndexRouteImport } from './routes/crms/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
@@ -40,6 +42,11 @@ const IndexRoute = IndexRouteImport.update({
 const CadastroRoute = CadastroRouteImport.update({
   id: '/cadastro',
   path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChatsRouteRoute = ChatsRouteRouteImport.update({
+  id: '/chats',
+  path: '/chats',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -73,9 +80,14 @@ const AgentesIndexRoute = AgentesIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatsIndexRoute = ChatsIndexRouteImport.update({
-  id: '/chats/',
-  path: '/chats/',
-  getParentRoute: () => rootRouteImport,
+  id: '/',
+  path: '/',
+  getParentRoute: () => ChatsRouteRoute,
+} as any)
+const ChatsChatIdRoute = ChatsChatIdRouteImport.update({
+  id: '/$chatId',
+  path: '/$chatId',
+  getParentRoute: () => ChatsRouteRoute,
 } as any)
 const ConnectionsIndexRoute = ConnectionsIndexRouteImport.update({
   id: '/connections/',
@@ -145,11 +157,13 @@ const WelcomeIndexRoute = WelcomeIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/chats': typeof ChatsRouteRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/chats/$chatId': typeof ChatsChatIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -174,6 +188,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/chats/$chatId': typeof ChatsChatIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -194,11 +209,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/chats': typeof ChatsRouteRouteWithChildren
   '/cadastro': typeof CadastroRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/chats/$chatId': typeof ChatsChatIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -220,11 +237,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/chats'
     | '/cadastro'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/chats/$chatId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -249,6 +268,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/chats/$chatId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -268,11 +288,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/chats'
     | '/cadastro'
     | '/forgot-password'
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/chats/$chatId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -293,6 +315,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ChatsRouteRoute: typeof ChatsRouteRouteWithChildren
   CadastroRoute: typeof CadastroRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
@@ -304,7 +327,6 @@ export interface RootRouteChildren {
   SupportAccessRoute: typeof SupportAccessRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AgentesIndexRoute: typeof AgentesIndexRoute
-  ChatsIndexRoute: typeof ChatsIndexRoute
   ConnectionsIndexRoute: typeof ConnectionsIndexRoute
   CrmsIndexRoute: typeof CrmsIndexRoute
   CustomersIndexRoute: typeof CustomersIndexRoute
@@ -330,6 +352,13 @@ declare module '@tanstack/react-router' {
       path: '/cadastro'
       fullPath: '/cadastro'
       preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chats': {
+      id: '/chats'
+      path: '/chats'
+      fullPath: '/chats'
+      preLoaderRoute: typeof ChatsRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -376,10 +405,17 @@ declare module '@tanstack/react-router' {
     }
     '/chats/': {
       id: '/chats/'
-      path: '/chats'
+      path: '/'
       fullPath: '/chats/'
       preLoaderRoute: typeof ChatsIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ChatsRouteRoute
+    }
+    '/chats/$chatId': {
+      id: '/chats/$chatId'
+      path: '/$chatId'
+      fullPath: '/chats/$chatId'
+      preLoaderRoute: typeof ChatsChatIdRouteImport
+      parentRoute: typeof ChatsRouteRoute
     }
     '/connections/': {
       id: '/connections/'
@@ -475,8 +511,23 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ChatsRouteRouteChildren {
+  ChatsChatIdRoute: typeof ChatsChatIdRoute
+  ChatsIndexRoute: typeof ChatsIndexRoute
+}
+
+const ChatsRouteRouteChildren: ChatsRouteRouteChildren = {
+  ChatsChatIdRoute: ChatsChatIdRoute,
+  ChatsIndexRoute: ChatsIndexRoute,
+}
+
+const ChatsRouteRouteWithChildren = ChatsRouteRoute._addFileChildren(
+  ChatsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ChatsRouteRoute: ChatsRouteRouteWithChildren,
   CadastroRoute: CadastroRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
@@ -488,7 +539,6 @@ const rootRouteChildren: RootRouteChildren = {
   SupportAccessRoute: SupportAccessRoute,
   AdminIndexRoute: AdminIndexRoute,
   AgentesIndexRoute: AgentesIndexRoute,
-  ChatsIndexRoute: ChatsIndexRoute,
   ConnectionsIndexRoute: ConnectionsIndexRoute,
   CrmsIndexRoute: CrmsIndexRoute,
   CustomersIndexRoute: CustomersIndexRoute,

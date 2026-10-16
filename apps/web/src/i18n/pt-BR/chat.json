@@ -1,0 +1,10 @@
+{
+  "title": "Chats",
+  "back": "Voltar para a lista",
+  "notFound": "Conversa não encontrada",
+  "threadSoon": "As mensagens desta conversa aparecem aqui.",
+  "empty": {
+    "title": "Nenhuma conversa aberta",
+    "hint": "Escolha uma conversa na lista para começar."
+  }
+}

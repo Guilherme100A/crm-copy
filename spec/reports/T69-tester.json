@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T69",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T08:09:42.249Z",
+  "commit": "c4e120ecd28e570fceaeeb305f29388428a731bb",
+  "base": "c4e120e",
+  "changedFiles": [
+    "tests/acceptance/T69/chat-data.ts",
+    "tests/acceptance/T69/chat-list.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T69-01, AC-T69-02, AC-T69-03, AC-T69-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "20 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T69-01",
+      "status": "pass",
+      "detail": "10 passed"
+    },
+    {
+      "name": "AC-T69-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T69-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T69-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

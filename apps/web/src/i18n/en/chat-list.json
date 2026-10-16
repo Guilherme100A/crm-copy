@@ -1,0 +1,62 @@
+{
+  "search": "Search chats...",
+  "tabs": {
+    "label": "Service stages",
+    "waiting": "Waiting",
+    "attending": "In progress",
+    "resolved": "Resolved"
+  },
+  "quick": {
+    "label": "Quick filter",
+    "all": "All",
+    "unread": "Unread",
+    "unanswered": "Unanswered"
+  },
+  "list": {
+    "label": "Conversations",
+    "loadingMore": "Loading more conversations…"
+  },
+  "item": {
+    "noMessages": "No messages",
+    "unread": "{count} unread"
+  },
+  "empty": {
+    "waiting": "No conversations waiting",
+    "attending": "No conversations in progress",
+    "resolved": "No resolved conversations",
+    "filtered": "Adjust the search or filters.",
+    "hint": "New conversations show up here."
+  },
+  "errors": {
+    "load": "Couldn't load conversations.",
+    "retry": "Try again"
+  },
+  "filters": {
+    "open": "Open chat filters",
+    "button": "Filters",
+    "title": "Chat filters",
+    "assigned": "Assignee",
+    "assignedAll": "Everyone",
+    "assignedMe": "Assigned to me",
+    "assignedNone": "Unassigned (queue)",
+    "period": {
+      "title": "Created date",
+      "from": "From",
+      "to": "To",
+      "both": "Fill in both dates of the period.",
+      "order": "The end date is before the start date."
+    },
+    "crm": "CRM",
+    "crmAll": "All CRMs",
+    "labels": "Labels",
+    "connections": "Connections",
+    "departments": "Departments",
+    "noLabels": "No labels yet.",
+    "noConnections": "No connections with conversations.",
+    "noDepartments": "No departments yet.",
+    "connectionFallback": "Connection {id}",
+    "clear": "Clear",
+    "cancel": "Cancel",
+    "apply": "Apply"
+  }
+}

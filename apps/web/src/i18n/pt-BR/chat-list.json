@@ -1,0 +1,62 @@
+{
+  "search": "Buscar chats...",
+  "tabs": {
+    "label": "Etapas do atendimento",
+    "waiting": "Aguardando",
+    "attending": "Atendendo",
+    "resolved": "Resolvidos"
+  },
+  "quick": {
+    "label": "Filtro rápido",
+    "all": "Tudo",
+    "unread": "Não lidas",
+    "unanswered": "Não respondidas"
+  },
+  "list": {
+    "label": "Conversas",
+    "loadingMore": "Carregando mais conversas…"
+  },
+  "item": {
+    "noMessages": "Sem mensagens",
+    "unread": "{count} não lidas"
+  },
+  "empty": {
+    "waiting": "Nenhuma conversa aguardando",
+    "attending": "Nenhuma conversa em atendimento",
+    "resolved": "Nenhuma conversa resolvida",
+    "filtered": "Ajuste a busca ou os filtros.",
+    "hint": "As conversas novas aparecem aqui."
+  },
+  "errors": {
+    "load": "Não foi possível carregar as conversas.",
+    "retry": "Tentar novamente"
+  },
+  "filters": {
+    "open": "Abrir filtros de chat",
+    "button": "Filtros",
+    "title": "Filtros de chat",
+    "assigned": "Responsável",
+    "assignedAll": "Todos",
+    "assignedMe": "Atribuídos a mim",
+    "assignedNone": "Sem responsável (fila)",
+    "period": {
+      "title": "Data de criação",
+      "from": "De",
+      "to": "Até",
+      "both": "Informe as duas datas do período.",
+      "order": "A data final é antes da inicial."
+    },
+    "crm": "CRM",
+    "crmAll": "Todos os CRMs",
+    "labels": "Etiquetas",
+    "connections": "Conexões",
+    "departments": "Departamentos",
+    "noLabels": "Nenhuma etiqueta cadastrada.",
+    "noConnections": "Nenhuma conexão com conversas.",
+    "noDepartments": "Nenhum departamento cadastrado.",
+    "connectionFallback": "Conexão {id}",
+    "clear": "Limpar",
+    "cancel": "Cancelar",
+    "apply": "Aplicar"
+  }
+}

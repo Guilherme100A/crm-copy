@@ -1,0 +1,828 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T69\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "tests/acceptance/T69"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T69\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T69/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T69/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T69/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T69/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T69/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T69\\",
+      "url": "http://127.0.0.1:29668",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "29668",
+        "E2E_API_PORT": "29669",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T69\\chat-list.e2e.ts",
+      "file": "T69/chat-list.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T69 — abas e filtros",
+          "file": "T69/chat-list.e2e.ts",
+          "line": 42,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T69-01 abas por status com contadores; trocar de aba reflete na URL",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 13501,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:06.033Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-e8299d1ba39c3b234e4f",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtro rápido \"Não lidas\" filtra, vai para a URL e se mantém ao recarregar; \"Tudo\" volta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3272,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:20.470Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-bd1c46ac8624706cda44",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtro rápido \"Não respondidas\" vai para a URL e para a requisição",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1885,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:23.762Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-111608d8577dbd25f37f",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 95,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtros avançados (modal) vão para a URL e se mantêm ao recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2331,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:25.661Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-92db99ebc19b72dd9482",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 105,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 período com só uma data mostra erro e não aplica",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2436,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:28.004Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-071110631127eb5a39ac",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 139,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 abas por status com contadores; trocar de aba reflete na URL",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2384,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:06.264Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-ccf3fe84ad46e471bfae",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 43,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtro rápido \"Não lidas\" filtra, vai para a URL e se mantém ao recarregar; \"Tudo\" volta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2398,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:08.771Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-89dcd3d9cde3be4b2493",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtro rápido \"Não respondidas\" vai para a URL e para a requisição",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1283,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:11.184Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-2883810fce84d823a3d7",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 95,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 filtros avançados (modal) vão para a URL e se mantêm ao recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1755,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:12.479Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-90f131bd135dbf77f053",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 105,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-01 período com só uma data mostra erro e não aplica",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1624,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:14.245Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-881775b2d49c5e3e14ca",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 139,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T69 — tempo real",
+          "file": "T69/chat-list.e2e.ts",
+          "line": 150,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T69-02 mensagem nova via SSE move o chat para o topo e atualiza não lidas sem recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8369,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:30.456Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-95acc6d5ec4751d04fdd",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 151,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-02 chat novo chega pelo SSE e aparece no topo com contador atualizado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2376,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:38.837Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-84aba79288a1dfe1e387",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 172,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-02 mensagem nova via SSE move o chat para o topo e atualiza não lidas sem recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1582,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:15.878Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-c23a6334e468af32ba8f",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 151,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-02 chat novo chega pelo SSE e aparece no topo com contador atualizado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1670,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:17.481Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-f3516f25af6efcb1b8c2",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 172,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T69 — rolagem e vazio",
+          "file": "T69/chat-list.e2e.ts",
+          "line": 187,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T69-03 rolagem infinita carrega a próxima página",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 19170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:08:41.226Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-4df77825d08591ff62a5",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 188,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-03 estado vazio por aba",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:00.415Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-5a03e223a6cff895be2a",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 207,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-03 rolagem infinita carrega a próxima página",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 180000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 18318,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:19.159Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-b2bb22ae60ba699199cf",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 188,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-03 estado vazio por aba",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1812,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:37.491Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-db2f65a619e672c17c39",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 207,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T69 — mobile e desktop",
+          "file": "T69/chat-list.e2e.ts",
+          "line": 221,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T69-04 no mobile só a lista aparece; tocar abre a conversa em tela cheia com voltar (no desktop, 3 painéis)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2103,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:02.570Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-598b53fcf612f0c35a26",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 222,
+              "column": 3
+            },
+            {
+              "title": "AC-T69-04 no mobile só a lista aparece; tocar abre a conversa em tela cheia com voltar (no desktop, 3 painéis)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1937,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T08:09:39.316Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "87d01bf1d56c220b29be-c7f690847e8416e50217",
+              "file": "T69/chat-list.e2e.ts",
+              "line": 222,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T08:07:40.474Z",
+    "duration": 121361.263,
+    "expected": 20,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
