@@ -301,7 +301,7 @@ const RAW = [
     { requiredFiles: ['packages/core/src/meta-ads/client/graph.ts'] }),
   T('T101', 'Meta: estrutura, insights e bundle assíncrono', ['T99', 'T09', 'T16'],
     ['packages/core/src/meta-ads/structure/**', route('meta-structure'), job('meta-ads'), 'packages/core/src/meta-ads/client/**' /* aditivo: estrutura, insights, BUC */], ['api', 'worker', 'core']),
-  T('T103', 'Meta: edição de status, nome e orçamento', ['T101'], ['packages/core/src/meta-ads/mutations/**', route('meta-entities')], ['api', 'core']),
+  T('T103', 'Meta: edição de status, nome e orçamento', ['T101'], ['packages/core/src/meta-ads/mutations/**', route('meta-entities'), 'packages/core/src/meta-ads/client/**', 'packages/core/src/meta-ads/structure/service.ts' /* aditivo: mutações no fake e invalidação por geração */], ['api', 'core']),
   T('T104', 'Meta: Pixel, Conversions API e nó de fluxo pixel', ['T99', 'T25', 'T34'],
     ['packages/core/src/meta-capi/**', 'packages/core/src/flows/nodes/pixel/**', route('meta-pixels'), job('meta-capi'), schema('meta-pixels'), 'packages/core/src/meta-ads/client/**' /* aditivo: CAPI no FakeMetaGraph */, 'packages/shared/src/flows/handles.ts' /* pixel: source + success + failure */], ['api', 'worker', 'core']),
   T('T105', 'Meta: vendas internas × anúncios (CTWA) e ROAS', ['T101', 'T73'], ['packages/core/src/meta-ads/sales-join/**'], ['core']),
