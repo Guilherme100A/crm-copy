@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T127 (Cinzel/Radar) verify sobre a main; T94 (Cinzel/Radar) em seguida. Verify revisão 2 (dois níveis, mobile só em ACs de layout) desde d5cad09. Piloto sob demanda: T53/T58.
+- Em andamento: T53 no gate; T94 (Cinzel/Radar) verify; piloto sob demanda T128 (Forja) e T58 (Esquadro). Vaga de verify dupla desde 20:11 (pico 20,0 GB de commit com 3 verifies; ≥ 12,7 GB livres).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -71,12 +71,12 @@
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
 | 6 | T52 | Agentes de IA: base de conhecimento | MERGED | Cinzel | Radar | 0 | 6a89eb9 |
-| 6 | T53 | UI: empresa, departamentos e horários | VERIFYING | Prumo | (vaga) | 0 | piloto sob demanda; despacho 19:39 ; operário DONE em ~15 min (verify 0, base 5abdea0) |
+| 6 | T53 | UI: empresa, departamentos e horários | VERIFYING | Prumo | Sentinela | 0 | piloto sob demanda; despacho 19:39 ; operário DONE em ~15 min (verify 0, base 5abdea0) ; tester DONE em ~8 min (16 E2E); no gate |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
-| 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
+| 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | IN_PROGRESS | Esquadro | (vaga) | 0 | piloto sob demanda; despacho 19:57 |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
@@ -139,7 +139,7 @@
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
-| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | REJECTED (1) | Cinzel | Radar | 1 | AC-T127-01: contato criado por webhook sem consentimento (ContactsService sem waGateway no processor) → run failed contact_not_found; libera inbound-webhooks-processor/** |
+| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | IN_PROGRESS | Forja | (vaga) | 0 | piloto sob demanda; despacho 19:39 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
@@ -199,6 +199,7 @@
 | T74 | jobs de preparação/envio do disparo devem levar `dispatchId` em `data` (o cancel da T60 remove por ele); distribuição dos destinatários com `target_id` null entre vários alvos | T60 |
 | ambiente (resolvido pela T121) | filas BullMQ do CRM com prefixo fixo + Redis db 1 compartilhado: workers de testes de worktrees diferentes roubam jobs | T120 |
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
+| T102 / web | Sem tratamento global de `company_inactive` (403) na web; `company.updated` não chega ao SSE (handler em módulo lazy: registrar no boot do realtime); hub sem abas permitidas mostra "Nenhuma seção"; "Nova Conta", "Convidar membro", "Sair da empresa" e redirects /departments e /business-hours sem AC | T53 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
 | UI chat (polimento) | a 1366 px com lista + conversa + painel a conversa fica com ~370 px e o compositor (T85) aperta: lista recolhível (T69) ou container queries no compositor | T91 |
