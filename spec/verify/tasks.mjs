@@ -339,6 +339,10 @@ const RAW = [
   T('T119', 'Escopo de chat nas rotas de mensagens e mídia (segurança)', ['T48', 'T49'],
     ['apps/api/src/routes/chat-messages/**', 'apps/api/src/routes/media/**', 'packages/core/src/chats/send/**'], ['api', 'core']),
 
+  T('T120', 'Montagem de produção e registro de mensagens automáticas no chat', ['T24', 'T27', 'T38', 'T46', 'T48', 'T51', 'T61', 'T67', 'T68'],
+    ['apps/worker/src/boot/**', 'apps/worker/src/main.ts', 'apps/api/src/server.ts', 'packages/core/src/chats/send/**', 'packages/core/src/chats/lifecycle/**',
+      'packages/core/src/flows/nodes/messaging/**', 'packages/core/src/flows/triggers/**', 'packages/core/src/ai-runtime/**'], ['api', 'worker', 'core']),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],

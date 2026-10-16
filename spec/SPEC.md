@@ -2014,6 +2014,18 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T120 — Montagem de produção e registro de mensagens automáticas no chat
+**Objetivo:** fechar as ligações de produção que cada tarefa deixou documentadas (spec/STATUS.md, "Pendências") e provar o sistema MONTADO como em produção: `WA_GATEWAY=rpc` com o wa-worker real (`WA_TRANSPORT=fake`), API e worker como processos ou montados pelas mesmas funções de boot.
+**Paths:** `apps/worker/src/boot/**`, `apps/worker/src/main.ts`, `apps/api/src/server.ts`, `packages/core/src/chats/send/**`, `packages/core/src/chats/lifecycle/**`, `packages/core/src/flows/nodes/messaging/**`, `packages/core/src/flows/triggers/**`, `packages/core/src/ai-runtime/**`.
+**Depende de:** T24, T27, T38, T46, T48, T51, T61, T67, T68
+**Entregáveis:** (1) boot do worker chama `configureExports` (T27), `configureContactsImport` (T67), `configureFlowTriggers` (T61), `configureFlowStep` com as deps dos nós de mensagem (`mediaUrl` via MediaService, `record`) e `configureAiAgent` com `createCompanyLlmProvider({ keys })` (BYOK, T38), `UsageGuard` (T24) e TTS/STT por empresa (`resolveTts/resolveStt`); API e worker apontam para o mesmo `STORAGE_DIR`. (2) `ChatSendService.recordOutbound` grava em `crm.messages` uma mensagem já enviada (sender_type `flow` ou `system`, actor, sem reenviar) e publica `message.created`; usado pelos nós de mensagem (T51 `deps.record`) e pela ação fora do horário (T61). (3) Resolver o chat (lifecycle T48) chama `FlowTriggers.handleAttendanceFinished`. (4) O worker publica `flow_run.updated` nas mudanças de estado dos runs.
+**Critérios de aceitação**
+- **AC-T120-01** Montado como produção: mensagem recebida que casa uma palavra-chave dispara o fluxo; o nó de mensagem envia 1 vez pelo wa-worker e a mensagem aparece em `GET /api/chats/:id/messages` com `sender_type: flow` (sem envio duplicado).
+- **AC-T120-02** Fora do horário configurado, a mensagem automática é enviada e aparece no histórico do chat com `sender_type: system`.
+- **AC-T120-03** Agente de IA ativo com chave BYOK da empresa responde (LLM falso injetado pelo resolvedor da empresa) e grava 1 linha em `ai_usage`; com a carteira esgotada, nenhuma chamada ao LLM é feita.
+- **AC-T120-04** Importação de contatos (CSV) e exportação de contatos rodam no worker montado e terminam `completed`, com o arquivo no `STORAGE_DIR` compartilhado.
+- **AC-T120-05** Resolver um chat dispara o gatilho de "atendimento finalizado" configurado na conexão; uma mudança de estado de run publica `flow_run.updated` via SSE.
+
 ### T118 — Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada
 **Objetivo:** tornar a suíte confiável com 4 pares testando em paralelo na mesma máquina (falhas transitórias observadas nas ondas 3–5).
 **Paths:** `scripts/e2e/**`, `apps/*/vitest.config.ts`, `packages/*/vitest.config.ts` (o Tester ajusta `tests/acceptance/playwright.config.ts` e `tests/acceptance/vitest.config.ts`).

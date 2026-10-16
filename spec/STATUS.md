@@ -79,7 +79,7 @@
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | TODO | | | 0 | |
-| 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
@@ -132,6 +132,7 @@
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
+| 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | TODO | | | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
