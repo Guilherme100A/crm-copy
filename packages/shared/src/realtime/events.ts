@@ -126,6 +126,17 @@ export const REALTIME_EVENTS = {
     z.looseObject({ crm_id: idSchema, column_id: idSchema.nullable().optional(), action: z.enum(['created', 'updated', 'deleted', 'moved']) }),
     'kanban.view',
   ),
+  /** Progresso de job de exportação/importação (T27): vai só para o criador (stream do usuário). */
+  'job.progress': defineEvent(
+    z.looseObject({
+      job_id: idSchema,
+      kind: z.string(),
+      status: z.enum(['queued', 'processing', 'completed', 'failed']),
+      progress: z.looseObject({ processed: z.number(), total: z.number().nullable(), percent: z.number().nullable() }),
+      row_count: z.number().nullable().optional(),
+      error: z.string().nullable().optional(),
+    }),
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "task": "T27",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T07:11:09.165Z",
+  "commit": "2c0684c7d633314e7688e5fd45236c1efbe241a4",
+  "base": "2c0684c",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/exports/index.ts",
+    "apps/worker/src/jobs/exports/exports.unit.test.ts",
+    "apps/worker/src/jobs/exports/index.ts",
+    "docs/exports.md",
+    "packages/core/src/exports/csv.ts",
+    "packages/core/src/exports/exports.db.unit.test.ts",
+    "packages/core/src/exports/exports.unit.test.ts",
+    "packages/core/src/exports/files.ts",
+    "packages/core/src/exports/index.ts",
+    "packages/core/src/exports/registry.ts",
+    "packages/core/src/exports/runner.ts",
+    "packages/core/src/exports/service.ts",
+    "packages/db/drizzle/crm/0016_t27_background_jobs.sql",
+    "packages/db/drizzle/crm/meta/0016_snapshot.json",
+    "packages/db/src/schema/crm/exports.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/exports/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 9.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 30.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 8.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 8.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 11.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 4.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 24.1s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}

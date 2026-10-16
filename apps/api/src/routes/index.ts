@@ -24,6 +24,7 @@ import { productsRoutes } from './products/index'
 import { salesRoutes } from './sales/index'
 import { connectionsRoutes } from './connections/index'
 import { contentRoutes } from './content/index'
+import { exportsRoutes } from './exports/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -53,4 +54,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', salesRoutes(deps))
   app.route('/', connectionsRoutes(deps))
   app.route('/', contentRoutes(deps))
+  app.route('/', exportsRoutes(deps))
 }

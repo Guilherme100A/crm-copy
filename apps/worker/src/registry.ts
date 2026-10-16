@@ -9,6 +9,7 @@ import { registerFlowStepJob } from './jobs/flow-step'
 import { registerFlowTimerJob } from './jobs/flow-timer'
 import { registerAiAgentJob } from './jobs/ai-agent'
 import { registerAiAgentConsumer } from './consumers/ai-agent'
+import { registerExportsJob } from './jobs/exports'
 
 export interface QueueDefinition {
   name: string
@@ -70,3 +71,4 @@ registerFlowStepJob(registry)
 registerFlowTimerJob(registry)
 registerAiAgentJob(registry)
 registerAiAgentConsumer()
+registerExportsJob(registry)
