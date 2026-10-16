@@ -2,9 +2,9 @@
   "version": 1,
   "task": "T17",
   "role": "tester",
-  "ok": false,
-  "at": "2026-10-16T04:03:26.358Z",
-  "commit": "b57dc428bb01781f5a51909e00962737a88ec2ad",
+  "ok": true,
+  "at": "2026-10-16T04:05:08.541Z",
+  "commit": "8f37a37d27225b63ff402cbac9b94bb041470f0a",
   "base": "0773ee9",
   "changedFiles": [
     "tests/acceptance/T17/inprocess.test.ts",
@@ -49,51 +49,28 @@
     },
     {
       "name": "execução vitest",
-      "status": "fail",
-      "detail": "4 passed, 3 failed, 8 skipped/todo"
+      "status": "pass",
+      "detail": "15 passed, 0 failed, 0 skipped/todo"
     },
     {
       "name": "AC-T17-01",
-      "status": "fail",
-      "detail": "0 passed, 3 skipped"
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "AC-T17-02",
-      "status": "fail",
-      "detail": "0 passed, 3 failed: T17 — /__e2e só com E2E=1 AC-T17-02 app criado sem E2E=1: toda rota /__e2e/* → 404 | T17 — /__e2e só com E2E=1 AC-T17-02 E2E com valor diferente de \"1\" também não monta as rotas | T17 — /__e2e só com E2E=1 AC-T17-02 sani",
-      "failures": [
-        {
-          "title": "T17 — /__e2e só com E2E=1 AC-T17-02 app criado sem E2E=1: toda rota /__e2e/* → 404",
-          "project": null,
-          "messages": [
-            "RolldownError: Parse failure: Parse failed with 1 error:\n'import statement' declaration can only be used at the top level of a module\n11:   // Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).\n12:   app.use(\"/api/*\", companyActiveGuard(deps));\n13:   import { e2eRoutes, isE2eEnabled } from \"../e2e/index\";\n      ^\n14:   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n15:   if (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\nAt file: /apps/api/src/routes/index.ts:13:1\n    at error (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/shared/logs-D6uA606S.mjs:166:24)\n    at normalizeParseError (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:25:9)\n    at wrap (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:5:39)\n    at parseAstAsync (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:54:9)\n    at async ssrTransformScript (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:16527:9)\n    at async loadAndTransform (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20218:64)"
-          ]
-        },
-        {
-          "title": "T17 — /__e2e só com E2E=1 AC-T17-02 E2E com valor diferente de \"1\" também não monta as rotas",
-          "project": null,
-          "messages": [
-            "RolldownError: Parse failure: Parse failed with 1 error:\n'import statement' declaration can only be used at the top level of a module\n11:   // Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).\n12:   app.use(\"/api/*\", companyActiveGuard(deps));\n13:   import { e2eRoutes, isE2eEnabled } from \"../e2e/index\";\n      ^\n14:   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n15:   if (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\nAt file: /apps/api/src/routes/index.ts:13:1\n    at error (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/shared/logs-D6uA606S.mjs:166:24)\n    at normalizeParseError (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:25:9)\n    at wrap (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:5:39)\n    at parseAstAsync (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:54:9)\n    at async ssrTransformScript (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:16527:9)\n    at async loadAndTransform (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20218:64)"
-          ]
-        },
-        {
-          "title": "T17 — /__e2e só com E2E=1 AC-T17-02 sanidade: com E2E=1 as rotas existem (o 404 acima vem da flag)",
-          "project": null,
-          "messages": [
-            "RolldownError: Parse failure: Parse failed with 1 error:\n'import statement' declaration can only be used at the top level of a module\n11:   // Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).\n12:   app.use(\"/api/*\", companyActiveGuard(deps));\n13:   import { e2eRoutes, isE2eEnabled } from \"../e2e/index\";\n      ^\n14:   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n15:   if (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\nAt file: /apps/api/src/routes/index.ts:13:1\n    at error (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/shared/logs-D6uA606S.mjs:166:24)\n    at normalizeParseError (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:25:9)\n    at wrap (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:5:39)\n    at parseAstAsync (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:54:9)\n    at async ssrTransformScript (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:16527:9)\n    at async loadAndTransform (file:///C:/Users/green/Downloads/leonas/leonas-crm-wt/T17/node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20218:64)"
-          ]
-        }
-      ]
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "AC-T17-03",
-      "status": "fail",
-      "detail": "0 passed, 3 skipped"
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "AC-T17-04",
-      "status": "fail",
-      "detail": "0 passed, 2 skipped"
+      "status": "pass",
+      "detail": "2 passed"
     },
     {
       "name": "AC-T17-05",
