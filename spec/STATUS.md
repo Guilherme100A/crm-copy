@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T37 (Cinzel/Radar), T64 (Torno/Sonda), T122 (Bigorna/Lupa).
+- Em andamento (3 pares): T37 (Cinzel/Radar), T41 (Bigorna/Lupa), T64 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -55,7 +55,7 @@
 | 5 | T38 | Chaves de provedores de IA (BYOK) | MERGED | Torno | Sonda | 0 | 69bc234 |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
-| 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
+| 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
@@ -134,7 +134,7 @@
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
-| 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
@@ -187,6 +187,4 @@
 | wa-port / engine | cronograma de warm-up replicado no core (T60: 7 dias, 20, ×1.8) para avisos de capacidade: se o engine ficar configurável, expor o cronograma pela wa-port (risco de divergência) | T60 |
 | T74 | jobs de preparação/envio do disparo devem levar `dispatchId` em `data` (o cancel da T60 remove por ele); distribuição dos destinatários com `target_id` null entre vários alvos | T60 |
 | ambiente (resolvido pela T121) | filas BullMQ do CRM com prefixo fixo + Redis db 1 compartilhado: workers de testes de worktrees diferentes roubam jobs | T120 |
-| montagem do worker | `configureMassDispatch({ db, wa, redis })` (T74) não é chamado no boot de produção (`startProductionWorker`, T120) | T74 |
-| harness E2E | `serve.mjs` usa Redis db 14 fixo: dois harnesses simultâneos dividem o stream `wsm:events`/grupo crm e um rouba eventos do outro — derivar db ou nome do stream do worktree (como as portas da T118) | T75 |
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
