@@ -6,6 +6,7 @@ import type { Processor } from 'bullmq'
 import type { EventHandler, HandlerOptions } from './consumers/framework'
 import { registerChatsConsumer } from './consumers/chats'
 import { registerFlowStepJob } from './jobs/flow-step'
+import { registerFlowTimerJob } from './jobs/flow-timer'
 
 export interface QueueDefinition {
   name: string
@@ -64,3 +65,4 @@ export function createRegistry(): WorkerRegistry {
 export const registry: WorkerRegistry = createRegistry()
 registerChatsConsumer(registry)
 registerFlowStepJob(registry)
+registerFlowTimerJob(registry)
