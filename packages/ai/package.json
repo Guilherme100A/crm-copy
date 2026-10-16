@@ -13,15 +13,40 @@
       "types": "./src/testing/index.ts",
       "development": "./src/testing/index.ts",
       "default": "./dist/testing/index.js"
+    },
+    "./aisdk": {
+      "types": "./src/aisdk/index.ts",
+      "development": "./src/aisdk/index.ts",
+      "default": "./dist/aisdk/index.js"
+    },
+    "./elevenlabs": {
+      "types": "./src/elevenlabs/index.ts",
+      "development": "./src/elevenlabs/index.ts",
+      "default": "./dist/elevenlabs/index.js"
+    },
+    "./groq": {
+      "types": "./src/groq/index.ts",
+      "development": "./src/groq/index.ts",
+      "default": "./dist/groq/index.js"
+    },
+    "./audio": {
+      "types": "./src/audio/index.ts",
+      "development": "./src/audio/index.ts",
+      "default": "./dist/audio/index.js"
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts src/testing/index.ts --format esm --target node22 --platform node --clean",
+    "build": "tsup src/index.ts src/testing/index.ts src/aisdk/index.ts src/elevenlabs/index.ts src/groq/index.ts src/audio/index.ts --format esm --target node22 --platform node --clean",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "4.0.81",
+    "@ai-sdk/google": "4.0.98",
+    "@ai-sdk/openai": "4.0.95",
+    "@openrouter/ai-sdk-provider": "3.1.0",
+    "ai": "7.0.142",
     "zod": "4.6.5"
   }
 }

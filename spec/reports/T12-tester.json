@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "task": "T12",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:32:25.838Z",
+  "commit": "224aad161623d77996fb82d273a239c221feff87",
+  "base": "224aad1",
+  "changedFiles": [
+    "tests/acceptance/T12/aisdk.test.ts",
+    "tests/acceptance/T12/audio.test.ts",
+    "tests/acceptance/T12/openrouter.test.ts",
+    "tests/acceptance/T12/support.ts",
+    "tests/acceptance/T12/voice.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T12-01, AC-T12-02, AC-T12-03, AC-T12-04, AC-T12-05, AC-T12-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "4 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "29 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T12-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T12-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T12-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T12-04",
+      "status": "pass",
+      "detail": "12 passed"
+    },
+    {
+      "name": "AC-T12-05",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T12-06",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}
