@@ -1,0 +1,111 @@
+{
+  "version": 1,
+  "task": "T85",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T09:50:02.328Z",
+  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
+  "base": "a7bbd86",
+  "changedFiles": [
+    "apps/api/src/e2e/index.ts",
+    "apps/api/src/e2e/ptt.unit.test.ts",
+    "apps/web/src/features/chat-composer/api.ts",
+    "apps/web/src/features/chat-composer/chat-slot.tsx",
+    "apps/web/src/features/chat-composer/composer.tsx",
+    "apps/web/src/features/chat-composer/composer.unit.test.ts",
+    "apps/web/src/features/chat-composer/pickers.tsx",
+    "apps/web/src/features/chat-composer/pix-dialog.tsx",
+    "apps/web/src/features/chat-composer/recorder.ts",
+    "apps/web/src/features/chat-composer/rules.ts",
+    "apps/web/src/i18n/en/chat-composer.json",
+    "apps/web/src/i18n/es/chat-composer.json",
+    "apps/web/src/i18n/pt-BR/chat-composer.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 9.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 5.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 5.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.0s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "13 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -50,7 +50,12 @@ export function prepareE2eDeps(deps: ResolvedDeps): asserts deps is ResolvedDeps
   deps.waGateway ??= new FakeWaGateway()
   deps.e2e ??= {}
   deps.e2e.llm ??= new FakeLlm()
+  // T85: nota de voz sem ffmpeg no harness (só com E2E=1; produção continua com toPttOgg).
+  deps.pttConverter ??= e2ePttConverter
 }
+
+/** Conversor PTT do harness: devolve os bytes como estão, rotulados como Ogg/Opus. */
+export const e2ePttConverter = async (audio: Uint8Array) => ({ audio, mime: 'audio/ogg; codecs=opus', seconds: 0 })
 
 /** Chaves Redis de teste apagadas no reset (filas BullMQ `crm:*` preservam o `:meta`). */
 async function clearRedis(redis: RedisClient, stream: string): Promise<number> {

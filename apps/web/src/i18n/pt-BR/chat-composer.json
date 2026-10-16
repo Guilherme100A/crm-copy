@@ -1,0 +1,66 @@
+{
+  "input": "Mensagem",
+  "placeholder": "Digite sua mensagem... (/ para respostas rápidas)",
+  "blockedPlaceholder": "Conexão desconectada",
+  "send": "Enviar mensagem",
+  "attach": "Anexar arquivo",
+  "emoji": "Adicionar emoji",
+  "sticker": {
+    "open": "Enviar figurinha",
+    "error": "Não foi possível carregar as figurinhas.",
+    "empty": "Nenhuma figurinha ainda.",
+    "item": "Figurinha"
+  },
+  "pix": {
+    "open": "Enviar Pix",
+    "title": "Enviar Pix",
+    "key": "Chave Pix",
+    "name": "Nome do recebedor",
+    "amount": "Valor (opcional)",
+    "copy": "Copiar chave",
+    "copied": "Chave copiada.",
+    "submit": "Enviar Pix",
+    "keyRequired": "Informe a chave Pix.",
+    "amountInvalid": "Valor inválido (ex.: 12,50)."
+  },
+  "quick": {
+    "open": "Respostas rápidas",
+    "title": "Respostas rápidas",
+    "loading": "Carregando…",
+    "forbidden": "Sem acesso às respostas rápidas.",
+    "empty": "Nenhuma resposta disponível."
+  },
+  "format": {
+    "bold": "Negrito",
+    "italic": "Itálico",
+    "strike": "Riscado"
+  },
+  "record": {
+    "start": "Gravar áudio",
+    "stop": "Parar e enviar",
+    "cancel": "Descartar gravação"
+  },
+  "kinds": {
+    "image": "Imagem",
+    "video": "Vídeo",
+    "audio": "Áudio",
+    "document": "Documento"
+  },
+  "attachment": {
+    "remove": "Remover anexo"
+  },
+  "errors": {
+    "send": "Não foi possível enviar.",
+    "unsupported": "Tipo de arquivo não aceito.",
+    "tooLarge": "{kind} acima do limite de {limit}.",
+    "microphone": "Não foi possível usar o microfone. Verifique a permissão.",
+    "quickReply": "Não foi possível inserir a resposta rápida."
+  },
+  "disconnected": "A conexão deste chat está desconectada. Reconecte para enviar mensagens.",
+  "retry": "Tentar novamente",
+  "dismiss": "Fechar",
+  "preview": "Prévia",
+  "recording": "Gravando",
+  "signature": "Assinatura",
+  "cancel": "Cancelar"
+}

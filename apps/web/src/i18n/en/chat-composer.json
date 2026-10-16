@@ -1,0 +1,66 @@
+{
+  "input": "Message",
+  "placeholder": "Type your message... (/ for quick replies)",
+  "blockedPlaceholder": "Connection disconnected",
+  "send": "Send message",
+  "attach": "Attach file",
+  "emoji": "Add emoji",
+  "sticker": {
+    "open": "Send sticker",
+    "error": "Couldn't load stickers.",
+    "empty": "No stickers yet.",
+    "item": "Sticker"
+  },
+  "pix": {
+    "open": "Send Pix",
+    "title": "Send Pix",
+    "key": "Pix key",
+    "name": "Recipient name",
+    "amount": "Amount (optional)",
+    "copy": "Copy key",
+    "copied": "Key copied.",
+    "submit": "Send Pix",
+    "keyRequired": "Enter the Pix key.",
+    "amountInvalid": "Invalid amount (e.g. 12.50)."
+  },
+  "quick": {
+    "open": "Quick replies",
+    "title": "Quick replies",
+    "loading": "Loading…",
+    "forbidden": "No access to quick replies.",
+    "empty": "No replies available."
+  },
+  "format": {
+    "bold": "Bold",
+    "italic": "Italic",
+    "strike": "Strikethrough"
+  },
+  "record": {
+    "start": "Record audio",
+    "stop": "Stop and send",
+    "cancel": "Discard recording"
+  },
+  "kinds": {
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "document": "Document"
+  },
+  "attachment": {
+    "remove": "Remove attachment"
+  },
+  "errors": {
+    "send": "Couldn't send.",
+    "unsupported": "File type not accepted.",
+    "tooLarge": "{kind} over the {limit} limit.",
+    "microphone": "Couldn't use the microphone. Check the permission.",
+    "quickReply": "Couldn't insert the quick reply."
+  },
+  "disconnected": "This chat's connection is disconnected. Reconnect to send messages.",
+  "retry": "Try again",
+  "dismiss": "Close",
+  "preview": "Preview",
+  "recording": "Recording",
+  "signature": "Signature",
+  "cancel": "Cancel"
+}
