@@ -3,10 +3,12 @@
   "task": "T10",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:00:42.047Z",
-  "commit": "8796946ebc475c0a1c3a5659011fd4611be5b266",
+  "at": "2026-10-16T03:04:36.125Z",
+  "commit": "f8cee3e50a601eb509ffd0bcca2114fba9a7909f",
   "base": null,
-  "changedFiles": [],
+  "changedFiles": [
+    "packages/shared/src/flows/flows.unit.test.ts"
+  ],
   "checks": [
     {
       "name": "arquivo: packages/shared/src/flows/definition.ts",
@@ -21,17 +23,17 @@
     {
       "name": "cmd: pnpm --filter @crm/shared typecheck",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/shared lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/shared test",
       "status": "pass",
-      "detail": "ok em 1.5s"
+      "detail": "ok em 1.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -91,7 +93,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "0 arquivo(s) alterado(s)"
+      "detail": "1 arquivo(s) alterado(s)"
     }
   ]
 }
