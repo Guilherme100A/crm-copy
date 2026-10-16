@@ -10,10 +10,12 @@ import { customFieldsRoutes } from './custom-fields/index'
 import { companiesRoutes, companyActiveGuard } from './companies/index'
 import { teamRoutes } from './team/index'
 import { invitationsRoutes } from './invitations/index'
-
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).
   app.use('/api/*', companyActiveGuard(deps))
+import { e2eRoutes, isE2eEnabled } from '../e2e/index'
+  // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
+  if (isE2eEnabled()) app.route('/', e2eRoutes(deps))
   app.route('/', healthRoutes(deps))
   app.route('/', authRoutes(deps))
   app.route('/', eventsRoutes(deps))

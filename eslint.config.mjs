@@ -21,21 +21,12 @@ const ENGINE = {
   group: ['@crm/wa-engine', '@crm/wa-engine/*'],
   message: 'Domínio, shared, API, worker e web usam só @crm/wa-port, nunca @crm/wa-engine (SPEC 1.4 nº 11).',
 }
+// Regex ancorada (não `group`): os padrões de `group` são estilo gitignore e casam em qualquer nível, então
+// 'ai' e 'ai/*' pegavam '@crm/ai' e '@crm/ai/testing'. Bloqueia ai, openai, groq-sdk, @anthropic-ai/sdk,
+// @google/genai (e subpaths), @ai-sdk/* e @elevenlabs/*; @crm/ai e @crm/ai/* passam (T17).
 const AI = {
-  group: [
-    'ai',
-    'ai/*',
-    '@ai-sdk/*',
-    '@anthropic-ai/sdk',
-    '@anthropic-ai/sdk/*',
-    'openai',
-    'openai/*',
-    '@google/genai',
-    '@google/genai/*',
-    '@elevenlabs/*',
-    'groq-sdk',
-    'groq-sdk/*',
-  ],
+  regex: '^(?:(?:ai|openai|groq-sdk|@anthropic-ai/sdk|@google/genai)(?:/.*)?|@ai-sdk/.+|@elevenlabs/.+)$',
+  caseSensitive: true,
   message: 'SDKs de IA só nos adapters de packages/ai; use as portas de @crm/ai (SPEC 1.4 nº 11).',
 }
 const restrict = (...patterns) => ({ 'no-restricted-imports': ['error', { patterns }] })

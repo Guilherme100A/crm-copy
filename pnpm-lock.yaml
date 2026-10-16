@@ -41,6 +41,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@crm/ai':
+        specifier: workspace:^
+        version: link:../../packages/ai
       '@crm/core':
         specifier: workspace:^
         version: link:../../packages/core
@@ -147,6 +150,9 @@ importers:
 
   packages/db:
     dependencies:
+      '@crm/node-kit':
+        specifier: workspace:^
+        version: link:../node-kit
       drizzle-orm:
         specifier: 0.45.3
         version: 0.45.3(@types/pg@8.23.1)(pg@8.23.0)

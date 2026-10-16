@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "task": "T17",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:57:52.530Z",
+  "commit": "9c532463ec7fa1714c4c41b3cdda9fefe4faeb85",
+  "base": "9c53246",
+  "changedFiles": [
+    "apps/api/package.json",
+    "apps/api/src/routes/index.ts",
+    "eslint.config.mjs",
+    "packages/db/package.json",
+    "packages/db/src/index.ts",
+    "pnpm-lock.yaml",
+    "apps/api/src/e2e/e2e.db.unit.test.ts",
+    "apps/api/src/e2e/index.ts",
+    "apps/api/src/e2e/node.ts",
+    "packages/db/src/seed/base.ts",
+    "packages/db/src/seed/index.ts",
+    "packages/db/src/seed/modules/index.ts",
+    "packages/db/src/seed/seed.db.unit.test.ts",
+    "scripts/e2e/api.ts",
+    "scripts/e2e/serve.mjs"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: scripts/e2e/serve.mjs",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/api/src/e2e/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/db/src/seed/base.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 7.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 12.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db typecheck",
+      "status": "pass",
+      "detail": "ok em 7.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db test",
+      "status": "pass",
+      "detail": "ok em 13.2s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}
