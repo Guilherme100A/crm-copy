@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "task": "T52",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-16T12:58:04.680Z",
+  "commit": "92d765732db4282eda19b510fb13c05f68d9deb8",
+  "base": "8d74035",
+  "changedFiles": [
+    "apps/api/src/routes/ai-knowledge/ai-knowledge.db.unit.test.ts",
+    "apps/api/src/routes/ai-knowledge/index.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/jobs/ai-knowledge/ai-knowledge.unit.test.ts",
+    "apps/worker/src/jobs/ai-knowledge/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/package.json",
+    "packages/core/src/ai-knowledge/extract.ts",
+    "packages/core/src/ai-knowledge/extract.unit.test.ts",
+    "packages/core/src/ai-knowledge/index.ts",
+    "packages/core/src/ai-knowledge/service.db.unit.test.ts",
+    "packages/core/src/ai-knowledge/service.ts",
+    "packages/core/src/ai-knowledge/site.ts",
+    "packages/core/src/ai-knowledge/testing/index.ts",
+    "packages/core/src/ai-knowledge/testing/pdf.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/0026_t52_ai_knowledge.sql",
+    "packages/db/drizzle/crm/meta/0026_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/ai-knowledge.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 15.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 87.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 16.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 27.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 6.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "fail",
+      "detail": "exit 1 em 71.7s",
+      "output": "> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T52/packages/core\n\n ❯ src/ai-runtime/runtime.db.unit.test.ts (11 tests | 1 failed) 15491ms\n   ❯ AC-T68-01 buffer (2)\n     × mensagens picadas dentro do buffer viram um único turno com todas na ordem 3333ms\n\n Test Files  1 failed | 79 passed (80)\n      Tests  1 failed | 487 passed (488)\n   Start at  09:56:50\n   Duration  70.83s (tests 76%, import 21%, transform 3%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T52\\packages\\core:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/core@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/ai-runtime/runtime.db.unit.test.ts > AC-T68-01 buffer > mensagens picadas dentro do buffer viram um único turno com todas na ordem\nAssertionError: expected 1 to be +0 // Object.is equality\n\n- Expected\n+ Received\n\n- 0\n+ 1\n\n ❯ src/ai-runtime/runtime.db.unit.test.ts:136:29\n    134|     await sleep(300)\n    135|     await s.inbound('do plano anual')\n    136|     expect(s.llm.callCount).toBe(0)\n       |                             ^\n    137|     await sleep(1300)\n    138|     await s.runtime.idle()\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "23 arquivo(s) alterado(s)"
+    }
+  ]
+}

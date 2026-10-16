@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T52",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T12:58:21.454Z",
+  "commit": "92d765732db4282eda19b510fb13c05f68d9deb8",
+  "base": "8d74035",
+  "changedFiles": [
+    "tests/acceptance/T52/knowledge.test.ts",
+    "tests/acceptance/T52/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T52-01, AC-T52-02, AC-T52-03, AC-T52-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "18 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T52-01",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T52-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T52-03",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "AC-T52-04",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

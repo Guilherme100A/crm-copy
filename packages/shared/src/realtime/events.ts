@@ -177,6 +177,16 @@ export const REALTIME_EVENTS = {
     }),
     'facebook.campaigns',
   ),
+  // ---- T52: base de conhecimento dos agentes (criada, lida, reindexada, excluída) ----
+  'ai_knowledge_source.updated': defineEvent(
+    z.looseObject({
+      agent_id: idSchema,
+      source_id: idSchema,
+      status: z.enum(['pending', 'ready', 'failed', 'deleted']),
+      source: z.looseObject({ id: idSchema }).optional(),
+    }),
+    'flows.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

@@ -183,6 +183,13 @@
       "when": 1792153456020,
       "tag": "0025_t72_inbound_webhooks",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1792154896626,
+      "tag": "0026_t52_ai_knowledge",
+      "breakpoints": true
     }
   ]
 }
