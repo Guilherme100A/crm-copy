@@ -3,13 +3,11 @@
   "task": "T45",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T13:55:17.640Z",
-  "commit": "c9d86e3a72e9e467f028cae408bdf020f3177a5c",
-  "base": "c9d86e3",
+  "at": "2026-10-16T14:12:54.103Z",
+  "commit": "9dab063071f542a392f943fe09b2ede7a0f11a6f",
+  "base": "c64ee95",
   "changedFiles": [
     "apps/web/package.json",
-    "apps/web/src/routeTree.gen.ts",
-    "pnpm-lock.yaml",
     "apps/web/src/features/flow-editor/canvas/api.ts",
     "apps/web/src/features/flow-editor/canvas/autosave.ts",
     "apps/web/src/features/flow-editor/canvas/editor.tsx",
@@ -25,14 +23,16 @@
     "apps/web/src/i18n/en/flow-editor.json",
     "apps/web/src/i18n/es/flow-editor.json",
     "apps/web/src/i18n/pt-BR/flow-editor.json",
+    "apps/web/src/routeTree.gen.ts",
     "apps/web/src/routes/flows/$flowId/edit.tsx",
-    "apps/web/src/routes/flows/$flowId/index.tsx"
+    "apps/web/src/routes/flows/$flowId/index.tsx",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 12.4s"
+      "detail": "ok em 13.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
@@ -52,7 +52,7 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 5.7s"
+      "detail": "ok em 10.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
