@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda; pares fixos dispensados após a T94): T128 no gate; T58 tester (Vigia); T112 operário. Vaga dupla de verify.
+- Em andamento (só agentes sob demanda): T58 tester (Vigia); T112 operário (Lastro); T32 em preparo (brief). Vaga dupla de verify. Banco-modelo de testes (T128) ativo desde b9a9cb7.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -140,7 +140,7 @@
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
-| 8 | T128 | Harness de testes: banco-modelo por hash das migrações | VERIFYING | Forja | Sentinela | 0 | piloto: operário DONE em ~42 min (verify 0, base 5abdea0; createTempDatabase 2 s → 0,8 s) ; tester APROVADO (11/11, ~8 min); no gate |
+| 8 | T128 | Harness de testes: banco-modelo por hash das migrações | MERGED | Forja | Sentinela | 0 | b9a9cb7 (piloto: op ~42 min, tester ~8 min) |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
