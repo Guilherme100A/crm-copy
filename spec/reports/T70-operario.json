@@ -3,9 +3,9 @@
   "task": "T70",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T11:48:31.952Z",
-  "commit": "30f44bf37e5350207743f023248c1c59e1f28954",
-  "base": "b6ffdc6",
+  "at": "2026-10-16T12:11:27.297Z",
+  "commit": "986795999896302e9641fe957211c6f1250271fe",
+  "base": "4fe309c",
   "changedFiles": [
     "apps/web/package.json",
     "apps/web/src/features/crms/api.ts",
@@ -29,17 +29,17 @@
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 12.2s"
+      "detail": "ok em 8.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 5.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -49,7 +49,7 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 3.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
