@@ -3,9 +3,9 @@
   "task": "T76",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T13:10:50.983Z",
-  "commit": "9751708088d3d7422072d29bfac091506c0cb426",
-  "base": "9751708",
+  "at": "2026-10-16T13:17:34.506Z",
+  "commit": "50fc2e06748df9826b33e559fd9540eef1ca416a",
+  "base": "17821f5",
   "changedFiles": [
     "apps/web/src/features/crms/api.ts",
     "apps/web/src/features/crms/board-dnd.tsx",
@@ -13,9 +13,6 @@
     "apps/web/src/features/crms/board-state.ts",
     "apps/web/src/features/crms/crms.unit.test.ts",
     "apps/web/src/features/crms/list-page.tsx",
-    "apps/web/src/routes/crms/$crmId.tsx",
-    "packages/core/src/index.ts",
-    "scripts/e2e/api.ts",
     "apps/web/src/features/kanban-tools/api.ts",
     "apps/web/src/features/kanban-tools/board-modal.tsx",
     "apps/web/src/features/kanban-tools/board-tools.tsx",
@@ -32,39 +29,42 @@
     "apps/web/src/i18n/en/kanban-tools.json",
     "apps/web/src/i18n/es/kanban-tools.json",
     "apps/web/src/i18n/pt-BR/kanban-tools.json",
+    "apps/web/src/routes/crms/$crmId.tsx",
+    "packages/core/src/index.ts",
     "packages/core/src/kanban/export.db.unit.test.ts",
-    "packages/core/src/kanban/export.ts"
+    "packages/core/src/kanban/export.ts",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 24.7s"
+      "detail": "ok em 17.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 9.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 58.8s"
+      "detail": "ok em 111.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 8.8s"
+      "detail": "ok em 11.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 6.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 4.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -74,7 +74,7 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 9.1s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
