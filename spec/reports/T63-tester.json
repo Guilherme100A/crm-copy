@@ -3,9 +3,9 @@
   "task": "T63",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T10:04:05.842Z",
-  "commit": "c0ba53e496a1dd24f0e46eb526f03b960e0097eb",
-  "base": "c0ba53e",
+  "at": "2026-10-16T10:06:58.281Z",
+  "commit": "7c5b129c66b83efbddd592610b552d0ddb87fdc6",
+  "base": "00bc1ab",
   "changedFiles": [
     "tests/acceptance/T63/crm-nodes.test.ts",
     "tests/acceptance/T63/support.ts"

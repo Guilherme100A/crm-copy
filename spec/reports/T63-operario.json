@@ -3,40 +3,40 @@
   "task": "T63",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T10:03:51.613Z",
-  "commit": "c0ba53e496a1dd24f0e46eb526f03b960e0097eb",
-  "base": "c0ba53e",
+  "at": "2026-10-16T10:06:46.679Z",
+  "commit": "7c5b129c66b83efbddd592610b552d0ddb87fdc6",
+  "base": "00bc1ab",
   "changedFiles": [
     "packages/core/src/flows/engine/dry-run.unit.test.ts",
-    "packages/core/src/flows/nodes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/core/src/sales/service.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/sales.ts",
-    "packages/shared/src/realtime/events.ts",
     "packages/core/src/flows/nodes/crm/crm.db.unit.test.ts",
     "packages/core/src/flows/nodes/crm/handlers.ts",
     "packages/core/src/flows/nodes/crm/index.ts",
     "packages/core/src/flows/nodes/crm/rules.ts",
     "packages/core/src/flows/nodes/crm/rules.unit.test.ts",
-    "packages/db/drizzle/crm/0021_t63_sale_integrations.sql",
-    "packages/db/drizzle/crm/meta/0021_snapshot.json"
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/sales/service.ts",
+    "packages/db/drizzle/crm/0022_t63_sale_integrations.sql",
+    "packages/db/drizzle/crm/meta/0022_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/sales.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.6s"
+      "detail": "ok em 10.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.0s"
+      "detail": "ok em 4.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 53.4s"
+      "detail": "ok em 54.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
