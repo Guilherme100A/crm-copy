@@ -3,33 +3,33 @@
   "task": "T124",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T11:30:44.744Z",
-  "commit": "43eab35b0abb56aa8d6e3952d73a1cc7f99c7d6f",
-  "base": "43eab35",
+  "at": "2026-10-16T11:33:55.197Z",
+  "commit": "af6224b5b3a4a7d67f15408c4614b272344bb3b0",
+  "base": "71e4f4a",
   "changedFiles": [
+    "apps/api/src/e2e/e2e-reset.db.unit.test.ts",
     "apps/api/src/e2e/index.ts",
     "docs/e2e-harness.md",
-    "scripts/e2e/redis-claim.mjs",
-    "scripts/e2e/serve.mjs",
-    "apps/api/src/e2e/e2e-reset.db.unit.test.ts",
     "scripts/e2e/orphans.mjs",
-    "scripts/e2e/orphans.unit.test.mjs"
+    "scripts/e2e/orphans.unit.test.mjs",
+    "scripts/e2e/redis-claim.mjs",
+    "scripts/e2e/serve.mjs"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 22.2s"
+      "detail": "ok em 13.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 5.2s"
+      "detail": "ok em 4.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 134.5s"
+      "detail": "ok em 99.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
