@@ -3,9 +3,9 @@
   "task": "T25",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T04:23:25.208Z",
-  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
-  "base": "c4f303c",
+  "at": "2026-10-16T04:24:30.093Z",
+  "commit": "ee576b9e2211ef6ef2cdc2fe196700be0c897ae9",
+  "base": "2f6ed0a",
   "changedFiles": [
     "tests/acceptance/T25/engine.test.ts",
     "tests/acceptance/T25/support.ts"

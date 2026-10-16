@@ -3,24 +3,24 @@
   "task": "T25",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:22:32.576Z",
-  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
-  "base": "c4f303c",
+  "at": "2026-10-16T04:24:24.431Z",
+  "commit": "ee576b9e2211ef6ef2cdc2fe196700be0c897ae9",
+  "base": "2f6ed0a",
   "changedFiles": [
     "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "pnpm-lock.yaml",
     "apps/worker/src/jobs/flow-step/flow-step.unit.test.ts",
     "apps/worker/src/jobs/flow-step/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/package.json",
     "packages/core/src/flows/engine/context.ts",
     "packages/core/src/flows/engine/dry-run.ts",
     "packages/core/src/flows/engine/dry-run.unit.test.ts",
     "packages/core/src/flows/engine/registry.ts",
     "packages/core/src/flows/engine/runner.db.unit.test.ts",
     "packages/core/src/flows/engine/runner.ts",
-    "packages/core/src/flows/nodes/index.ts"
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
@@ -36,7 +36,7 @@
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 6.7s"
+      "detail": "ok em 6.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
@@ -46,22 +46,22 @@
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 13.1s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 6.5s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.0s"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 11.0s"
+      "detail": "ok em 10.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
