@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T07 (Fole/Prisma), T08 (Torno/Sonda), T09 (Cinzel/Radar), T10 (Bigorna/Lupa).
+- Em andamento: T13 (Fole/Prisma), T14 (Cinzel/Radar), T15 (Torno/Sonda), T16 (Bigorna/Lupa). Ondas 0-1 completas; onda 2 completa.
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -21,17 +21,17 @@
 | 1 | T04 | @crm/ai: portas LLM/TTS/STT e fakes | MERGED | Fole | Prisma | 0 | 911e046 |
 | 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | MERGED | Torno | Sonda | 0 | e1d9947 |
 | 2 | T06 | WA: schema public.* e auth state cifrado | MERGED | Cinzel | Radar | 0 | e578080 |
-| 2 | T07 | WA: transporte (interface, Fake e Baileys) | IN_PROGRESS | Fole | Prisma | 1 | |
-| 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | IN_PROGRESS | Torno | Sonda | 0 | |
-| 2 | T09 | Worker: esqueleto, consumidor do wsm:events e jobs | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | IN_PROGRESS | Bigorna | Lupa | 0 | |
-| 2 | T11 | Templating: interpolação de variáveis | IN_PROGRESS | Fole | Prisma | 0 | |
+| 2 | T07 | WA: transporte (interface, Fake e Baileys) | MERGED | Fole | Prisma | 1 | 3dc6d3e |
+| 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | MERGED | Torno | Sonda | 0 | e3575e7 |
+| 2 | T09 | Worker: esqueleto, consumidor do wsm:events e jobs | MERGED | Cinzel | Radar | 0 | 8350d8d |
+| 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | MERGED | Bigorna | Lupa | 0 | 99960bf |
+| 2 | T11 | Templating: interpolação de variáveis | MERGED | Fole | Prisma | 0 | 08ed152 |
 | 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | TODO | | | 0 | |
 | 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | TODO | | | 0 | |
-| 3 | T13 | WA: SessionManager e proxy | TODO | | | 0 | |
-| 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | TODO | | | 0 | |
-| 3 | T15 | Autenticação, cadastro, perfil e senha | TODO | | | 0 | |
-| 3 | T16 | Realtime: SSE, fan-out e replay | TODO | | | 0 | |
+| 3 | T13 | WA: SessionManager e proxy | IN_PROGRESS | Fole | Prisma | 0 | |
+| 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 3 | T15 | Autenticação, cadastro, perfil e senha | IN_PROGRESS | Torno | Sonda | 0 | |
+| 3 | T16 | Realtime: SSE, fan-out e replay | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 3 | T17 | Harness E2E (API com fakes, seed, reset) | TODO | | | 0 | |
 | 3 | T19 | Fluxos: schema e repositório | TODO | | | 0 | |
 | 3 | T24 | UsageGuard e provider medido | TODO | | | 0 | |
