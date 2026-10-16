@@ -3,6 +3,7 @@ import { boolean, index, integer, jsonb, primaryKey, text, timestamp, uniqueInde
 import { companies, users } from './base.js'
 import { aiAgents } from './ai-agents.js'
 import { contacts, labels } from './contacts.js'
+import { departments } from './departments.js'
 import { createdAt, crm, updatedAt } from './schema.js'
 
 // Chats e mensagens do CRM (T33; feature 03). Um chat por (empresa, conexão, contato).
@@ -35,7 +36,8 @@ export const chats = crm.table(
       .references(() => contacts.id, { onDelete: 'cascade' }),
     status: text('status').$type<ChatStatus>().notNull().default('waiting'),
     assignedUserId: uuid('assigned_user_id').references(() => users.id, { onDelete: 'set null' }),
-    departmentId: uuid('department_id'),
+    // FK da T31: departamento excluído deixa o chat sem departamento.
+    departmentId: uuid('department_id').references(() => departments.id, { onDelete: 'set null' }),
     // FK da T39: agente excluído deixa o chat sem agente.
     aiAgentId: uuid('ai_agent_id').references(() => aiAgents.id, { onDelete: 'set null' }),
     unreadCount: integer('unread_count').notNull().default(0),

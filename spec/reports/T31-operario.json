@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "task": "T31",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T05:03:42.466Z",
+  "commit": "a579029c810e3c4f9b8b9476e456685f8c42db58",
+  "base": "a579029",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/chats.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "apps/api/src/routes/business-hours/index.ts",
+    "apps/api/src/routes/departments/departments.db.unit.test.ts",
+    "apps/api/src/routes/departments/index.ts",
+    "packages/core/src/business-hours/index.ts",
+    "packages/core/src/business-hours/is-open.ts",
+    "packages/core/src/business-hours/is-open.unit.test.ts",
+    "packages/core/src/business-hours/service.ts",
+    "packages/core/src/departments/errors.ts",
+    "packages/core/src/departments/index.ts",
+    "packages/core/src/departments/scope.ts",
+    "packages/core/src/departments/service.ts",
+    "packages/db/drizzle/crm/0010_t31_departments.sql",
+    "packages/db/drizzle/crm/meta/0010_snapshot.json",
+    "packages/db/src/schema/crm/departments.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/business-hours/is-open.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 8.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 16.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 7.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 13.2s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "19 arquivo(s) alterado(s)"
+    }
+  ]
+}
