@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T37 (Cinzel/Radar), T41 (Bigorna/Lupa), T64 (Torno/Sonda).
+- Em andamento (3 pares): T62 (Bigorna/Lupa), T85 (Torno/Sonda), T99 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -51,18 +51,18 @@
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | MERGED | Torno | Sonda | 0 | c4e120e |
-| 5 | T37 | API de consumo de IA (empresa e plataforma) | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 5 | T37 | API de consumo de IA (empresa e plataforma) | MERGED | Cinzel | Radar | 0 | a7bbd86 |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | MERGED | Torno | Sonda | 0 | 69bc234 |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
-| 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | MERGED | Bigorna | Lupa | 0 | 347b8ff |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
-| 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
+| 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
@@ -91,9 +91,9 @@
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | TODO | | | 0 | |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
-| 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | TODO | | | 0 | |
+| 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | TODO | | | 0 | |
-| 7 | T64 | Agendamento de mensagens | IN_PROGRESS | Torno | Sonda | 0 | |
+| 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
@@ -118,7 +118,7 @@
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
 | 8 | T89 | UI webhooks de entrada | TODO | | | 0 | |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
-| 9 | T85 | UI chats: compositor | TODO | | | 0 | |
+| 9 | T85 | UI chats: compositor | IN_PROGRESS | Torno | Sonda | 0 | |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
 | 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
 | 9 | T91 | UI chats: painel lateral e agendamentos | TODO | | | 0 | |
@@ -182,10 +182,10 @@
 | montagem do worker | `configureFlowTriggers({ db, waGateway, logger })` (T61) não é chamado no boot de produção — sem isso o consumidor ignora o crm.inbound | T61 |
 | T48 (lifecycle) | ao resolver o chat, chamar `FlowTriggers.handleAttendanceFinished({ companyId, chatId })` (T61) | T61 |
 | decisão | mensagem automática fora do horário (T61) e mensagens de nós de fluxo (T51) não aparecem no histórico do chat — mesma pendência de registro no chat | T61 |
-| produção (T37 ou seed) | sem linha em `crm.llm_prices` para o modelo, o agente falha com "sem preço vigente": criar seed de preços padrão da plataforma (modelos do STACK F) e/ou gestão pelo admin (T37) | T120 |
 | T75 / T85 / T91 (UI do chat) | usar o contrato de slots da T69: criar `apps/web/src/features/<módulo>/chat-slot.tsx` com `export const chatSlot = { area: thread|composer|panel, Component }` (props chatId, chat, isDesktop; ver features/chat/slots.ts) — sem editar arquivos da T69 | T69 |
 | wa-port / engine | cronograma de warm-up replicado no core (T60: 7 dias, 20, ×1.8) para avisos de capacidade: se o engine ficar configurável, expor o cronograma pela wa-port (risco de divergência) | T60 |
 | T74 | jobs de preparação/envio do disparo devem levar `dispatchId` em `data` (o cancel da T60 remove por ele); distribuição dos destinatários com `target_id` null entre vários alvos | T60 |
 | ambiente (resolvido pela T121) | filas BullMQ do CRM com prefixo fixo + Redis db 1 compartilhado: workers de testes de worktrees diferentes roubam jobs | T120 |
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
 | montagem do worker | `configureLogicNodes({ publisher })` (T41) não é chamado no boot de produção: o distribuidor funciona mas não publica `flow.distributor_updated` | T41 |
+| produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
