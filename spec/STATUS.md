@@ -139,7 +139,7 @@
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | REJECTED (1) | Bigorna | Lupa | 1 | AC-03: ai-agent-lab AC-T79-04 espera ~1 s real; AC-04: AC-T125-02 timeout sob carga |
-| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | VERIFYING | Cinzel | Radar | 0 | operário DONE; verify do tester em andamento |
+| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | BLOCKED | Cinzel | Radar | 0 | aguarda a T47: verify do tester 10/11, AC-T127-01 falha porque ninguém projeta session.connection em crm.connections.connection_state (applyConnectionEvent sem chamador); o código da T127 está pronto, integrar logo depois da T47 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
