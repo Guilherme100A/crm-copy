@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "task": "T89",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T15:37:16.042Z",
+  "commit": "f6b2460b08f6d19e7db84ca6354879b88f5de2a1",
+  "base": "f6b2460",
+  "changedFiles": [
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/settings/inbound-webhooks.tsx",
+    "apps/worker/src/index.ts",
+    "scripts/e2e/api.ts",
+    "apps/web/src/features/settings-webhooks/api.ts",
+    "apps/web/src/features/settings-webhooks/config-tab.tsx",
+    "apps/web/src/features/settings-webhooks/edit-page.tsx",
+    "apps/web/src/features/settings-webhooks/history-tab.tsx",
+    "apps/web/src/features/settings-webhooks/json-tree.tsx",
+    "apps/web/src/features/settings-webhooks/list-page.tsx",
+    "apps/web/src/features/settings-webhooks/mapping.ts",
+    "apps/web/src/features/settings-webhooks/realtime.ts",
+    "apps/web/src/features/settings-webhooks/settings-webhooks.unit.test.ts",
+    "apps/web/src/features/settings-webhooks/webhook-form.tsx",
+    "apps/web/src/i18n/en/settings-webhooks.json",
+    "apps/web/src/i18n/es/settings-webhooks.json",
+    "apps/web/src/i18n/pt-BR/settings-webhooks.json",
+    "apps/web/src/routes/settings/inbound-webhooks/$webhookId/edit.tsx",
+    "apps/web/src/routes/settings/inbound-webhooks/index.tsx",
+    "apps/web/src/routes/settings/inbound-webhooks/new.tsx"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 26.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 32.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 13.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 6.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 7.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "20 arquivo(s) alterado(s)"
+    }
+  ]
+}

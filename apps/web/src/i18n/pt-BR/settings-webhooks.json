@@ -1,0 +1,79 @@
+{
+  "common": { "loading": "Carregando...", "error": "Não foi possível concluir a ação.", "cancel": "Cancelar" },
+  "list": {
+    "title": "Webhooks de entrada",
+    "subtitle": "Receba dados de outros sistemas e crie ou atualize contatos automaticamente.",
+    "new": "Novo webhook",
+    "search": "Buscar webhook...",
+    "usage": "Consumo: {used} / {limit}",
+    "noConnection": "Sem conexão",
+    "connectionUnknown": "Conexão removida",
+    "month": "Disparos no mês:",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "deleteTitle": "Excluir webhook?",
+    "deleteBody": "O webhook \"{name}\" e o histórico dele serão excluídos. A URL deixa de funcionar.",
+    "noResults": "Nenhum webhook encontrado.",
+    "empty": "Nenhum webhook criado ainda."
+  },
+  "status": { "active": "Ativo", "inactive": "Inativo" },
+  "tabs": { "config": "Configuração", "history": "Histórico" },
+  "form": {
+    "newTitle": "Novo webhook",
+    "editTitle": "Webhook",
+    "name": "Nome",
+    "connection": "Conexão",
+    "noConnection": "Nenhuma (opcional)",
+    "active": "Ativo",
+    "nameRequired": "Informe o nome do webhook.",
+    "saved": "Webhook salvo",
+    "back": "Voltar",
+    "save": "Salvar",
+    "saveContinue": "Salvar e continuar"
+  },
+  "url": {
+    "title": "URL do webhook",
+    "hint": "Envie um POST com JSON para esta URL.",
+    "copy": "Copiar",
+    "copied": "URL copiada",
+    "copyError": "Não foi possível copiar."
+  },
+  "sample": {
+    "title": "Exemplo de requisição",
+    "listen": "Escutar exemplo",
+    "listening": "Escutando…",
+    "cancel": "Cancelar",
+    "hint": "Clique em \"Escutar exemplo\" e envie uma requisição para a URL nos próximos 90 segundos.",
+    "expired": "O tempo de escuta acabou sem receber nada. Clique em \"Escutar exemplo\" para tentar de novo.",
+    "received": "Exemplo recebido.",
+    "none": "Nenhum exemplo recebido ainda."
+  },
+  "mapping": {
+    "title": "Mapeamento de campos",
+    "hint": "Escolha o destino e clique num campo da árvore para mapeá-lo. Você pode juntar textos fixos e campos.",
+    "save": "Salvar mapeamento",
+    "saved": "Mapeamento salvo",
+    "noSample": "Escute um exemplo para ver os campos.",
+    "targets": { "full_name": "Nome", "phone": "Telefone", "email": "E-mail" },
+    "required": "obrigatório",
+    "empty": "Nenhum campo mapeado.",
+    "remove": "Remover",
+    "literalPlaceholder": "Texto fixo (ex.: +55)",
+    "literalAdd": "Texto",
+    "preview": "Resultado:",
+    "customPlaceholder": "Chave do campo personalizado",
+    "customAdd": "Campo",
+    "identityWarning": "Este campo tem texto fixo e nenhum campo da amostra que garanta o valor. Se o campo vier vazio, o contato receberá só o texto fixo (ex.: \"+55\")."
+  },
+  "history": {
+    "stats": { "total": "Total", "processed": "Processados", "failed": "Com erro", "pending": "Pendentes", "skipped": "Ignorados" },
+    "filter": "Status",
+    "all": "Todos",
+    "status": { "processed": "Processado", "failed": "Erro", "pending": "Pendente", "skipped": "Ignorado" },
+    "retention": "Guardamos os {n} mais recentes.",
+    "refresh": "Atualizar",
+    "empty": "Nenhuma requisição.",
+    "more": "Carregar mais",
+    "truncated": "Corpo truncado."
+  }
+}

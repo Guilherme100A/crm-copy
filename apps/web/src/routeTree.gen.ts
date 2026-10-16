@@ -36,6 +36,9 @@ import { Route as SupportAccessRouteImport } from './routes/support/access'
 import { Route as WelcomeIndexRouteImport } from './routes/welcome/index'
 import { Route as FlowsFlowIdIndexRouteImport } from './routes/flows/$flowId/index'
 import { Route as FlowsFlowIdEditRouteImport } from './routes/flows/$flowId/edit'
+import { Route as SettingsInboundWebhooksIndexRouteImport } from './routes/settings/inbound-webhooks/index'
+import { Route as SettingsInboundWebhooksNewRouteImport } from './routes/settings/inbound-webhooks/new'
+import { Route as SettingsInboundWebhooksWebhookIdEditRouteImport } from './routes/settings/inbound-webhooks/$webhookId/edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -172,6 +175,24 @@ const FlowsFlowIdEditRoute = FlowsFlowIdEditRouteImport.update({
   path: '/flows/$flowId/edit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SettingsInboundWebhooksIndexRoute =
+  SettingsInboundWebhooksIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => SettingsInboundWebhooksRoute,
+  } as any)
+const SettingsInboundWebhooksNewRoute =
+  SettingsInboundWebhooksNewRouteImport.update({
+    id: '/new',
+    path: '/new',
+    getParentRoute: () => SettingsInboundWebhooksRoute,
+  } as any)
+const SettingsInboundWebhooksWebhookIdEditRoute =
+  SettingsInboundWebhooksWebhookIdEditRouteImport.update({
+    id: '/$webhookId/edit',
+    path: '/$webhookId/edit',
+    getParentRoute: () => SettingsInboundWebhooksRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -185,7 +206,7 @@ export interface FileRoutesByFullPath {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
-  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
+  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRouteWithChildren
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
   '/agentes/': typeof AgentesIndexRoute
@@ -200,7 +221,10 @@ export interface FileRoutesByFullPath {
   '/settings/': typeof SettingsIndexRoute
   '/welcome/': typeof WelcomeIndexRoute
   '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/settings/inbound-webhooks/new': typeof SettingsInboundWebhooksNewRoute
   '/flows/$flowId/': typeof FlowsFlowIdIndexRoute
+  '/settings/inbound-webhooks/': typeof SettingsInboundWebhooksIndexRoute
+  '/settings/inbound-webhooks/$webhookId/edit': typeof SettingsInboundWebhooksWebhookIdEditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -213,7 +237,6 @@ export interface FileRoutesByTo {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
-  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
   '/support/access': typeof SupportAccessRoute
   '/admin': typeof AdminIndexRoute
   '/agentes': typeof AgentesIndexRoute
@@ -228,7 +251,10 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsIndexRoute
   '/welcome': typeof WelcomeIndexRoute
   '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/settings/inbound-webhooks/new': typeof SettingsInboundWebhooksNewRoute
   '/flows/$flowId': typeof FlowsFlowIdIndexRoute
+  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksIndexRoute
+  '/settings/inbound-webhooks/$webhookId/edit': typeof SettingsInboundWebhooksWebhookIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -243,7 +269,7 @@ export interface FileRoutesById {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
-  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
+  '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRouteWithChildren
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
   '/agentes/': typeof AgentesIndexRoute
@@ -258,7 +284,10 @@ export interface FileRoutesById {
   '/settings/': typeof SettingsIndexRoute
   '/welcome/': typeof WelcomeIndexRoute
   '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/settings/inbound-webhooks/new': typeof SettingsInboundWebhooksNewRoute
   '/flows/$flowId/': typeof FlowsFlowIdIndexRoute
+  '/settings/inbound-webhooks/': typeof SettingsInboundWebhooksIndexRoute
+  '/settings/inbound-webhooks/$webhookId/edit': typeof SettingsInboundWebhooksWebhookIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -289,7 +318,10 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/welcome/'
     | '/flows/$flowId/edit'
+    | '/settings/inbound-webhooks/new'
     | '/flows/$flowId/'
+    | '/settings/inbound-webhooks/'
+    | '/settings/inbound-webhooks/$webhookId/edit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -302,7 +334,6 @@ export interface FileRouteTypes {
     | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
-    | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin'
     | '/agentes'
@@ -317,7 +348,10 @@ export interface FileRouteTypes {
     | '/settings'
     | '/welcome'
     | '/flows/$flowId/edit'
+    | '/settings/inbound-webhooks/new'
     | '/flows/$flowId'
+    | '/settings/inbound-webhooks'
+    | '/settings/inbound-webhooks/$webhookId/edit'
   id:
     | '__root__'
     | '/'
@@ -346,7 +380,10 @@ export interface FileRouteTypes {
     | '/settings/'
     | '/welcome/'
     | '/flows/$flowId/edit'
+    | '/settings/inbound-webhooks/new'
     | '/flows/$flowId/'
+    | '/settings/inbound-webhooks/'
+    | '/settings/inbound-webhooks/$webhookId/edit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -360,7 +397,7 @@ export interface RootRouteChildren {
   CrmsCrmIdRoute: typeof CrmsCrmIdRoute
   InvitationTokenRoute: typeof InvitationTokenRoute
   InvitationsTokenRoute: typeof InvitationsTokenRoute
-  SettingsInboundWebhooksRoute: typeof SettingsInboundWebhooksRoute
+  SettingsInboundWebhooksRoute: typeof SettingsInboundWebhooksRouteWithChildren
   SupportAccessRoute: typeof SupportAccessRoute
   AdminIndexRoute: typeof AdminIndexRoute
   AgentesIndexRoute: typeof AgentesIndexRoute
@@ -568,6 +605,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FlowsFlowIdEditRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/settings/inbound-webhooks/': {
+      id: '/settings/inbound-webhooks/'
+      path: '/'
+      fullPath: '/settings/inbound-webhooks/'
+      preLoaderRoute: typeof SettingsInboundWebhooksIndexRouteImport
+      parentRoute: typeof SettingsInboundWebhooksRoute
+    }
+    '/settings/inbound-webhooks/new': {
+      id: '/settings/inbound-webhooks/new'
+      path: '/new'
+      fullPath: '/settings/inbound-webhooks/new'
+      preLoaderRoute: typeof SettingsInboundWebhooksNewRouteImport
+      parentRoute: typeof SettingsInboundWebhooksRoute
+    }
+    '/settings/inbound-webhooks/$webhookId/edit': {
+      id: '/settings/inbound-webhooks/$webhookId/edit'
+      path: '/$webhookId/edit'
+      fullPath: '/settings/inbound-webhooks/$webhookId/edit'
+      preLoaderRoute: typeof SettingsInboundWebhooksWebhookIdEditRouteImport
+      parentRoute: typeof SettingsInboundWebhooksRoute
+    }
   }
 }
 
@@ -585,6 +643,25 @@ const ChatsRouteRouteWithChildren = ChatsRouteRoute._addFileChildren(
   ChatsRouteRouteChildren,
 )
 
+interface SettingsInboundWebhooksRouteChildren {
+  SettingsInboundWebhooksNewRoute: typeof SettingsInboundWebhooksNewRoute
+  SettingsInboundWebhooksIndexRoute: typeof SettingsInboundWebhooksIndexRoute
+  SettingsInboundWebhooksWebhookIdEditRoute: typeof SettingsInboundWebhooksWebhookIdEditRoute
+}
+
+const SettingsInboundWebhooksRouteChildren: SettingsInboundWebhooksRouteChildren =
+  {
+    SettingsInboundWebhooksNewRoute: SettingsInboundWebhooksNewRoute,
+    SettingsInboundWebhooksIndexRoute: SettingsInboundWebhooksIndexRoute,
+    SettingsInboundWebhooksWebhookIdEditRoute:
+      SettingsInboundWebhooksWebhookIdEditRoute,
+  }
+
+const SettingsInboundWebhooksRouteWithChildren =
+  SettingsInboundWebhooksRoute._addFileChildren(
+    SettingsInboundWebhooksRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ChatsRouteRoute: ChatsRouteRouteWithChildren,
@@ -596,7 +673,7 @@ const rootRouteChildren: RootRouteChildren = {
   CrmsCrmIdRoute: CrmsCrmIdRoute,
   InvitationTokenRoute: InvitationTokenRoute,
   InvitationsTokenRoute: InvitationsTokenRoute,
-  SettingsInboundWebhooksRoute: SettingsInboundWebhooksRoute,
+  SettingsInboundWebhooksRoute: SettingsInboundWebhooksRouteWithChildren,
   SupportAccessRoute: SupportAccessRoute,
   AdminIndexRoute: AdminIndexRoute,
   AgentesIndexRoute: AgentesIndexRoute,

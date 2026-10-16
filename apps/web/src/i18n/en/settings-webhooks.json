@@ -1,0 +1,79 @@
+{
+  "common": { "loading": "Loading...", "error": "Could not complete the action.", "cancel": "Cancel" },
+  "list": {
+    "title": "Inbound webhooks",
+    "subtitle": "Receive data from other systems and create or update contacts automatically.",
+    "new": "New webhook",
+    "search": "Search webhook...",
+    "usage": "Usage: {used} / {limit}",
+    "noConnection": "No connection",
+    "connectionUnknown": "Connection removed",
+    "month": "Calls this month:",
+    "edit": "Edit",
+    "delete": "Delete",
+    "deleteTitle": "Delete webhook?",
+    "deleteBody": "The webhook \"{name}\" and its history will be deleted. The URL will stop working.",
+    "noResults": "No webhooks found.",
+    "empty": "No webhooks yet."
+  },
+  "status": { "active": "Active", "inactive": "Inactive" },
+  "tabs": { "config": "Settings", "history": "History" },
+  "form": {
+    "newTitle": "New webhook",
+    "editTitle": "Webhook",
+    "name": "Name",
+    "connection": "Connection",
+    "noConnection": "None (optional)",
+    "active": "Active",
+    "nameRequired": "Enter the webhook name.",
+    "saved": "Webhook saved",
+    "back": "Back",
+    "save": "Save",
+    "saveContinue": "Save and continue"
+  },
+  "url": {
+    "title": "Webhook URL",
+    "hint": "Send a POST with JSON to this URL.",
+    "copy": "Copy",
+    "copied": "URL copied",
+    "copyError": "Could not copy."
+  },
+  "sample": {
+    "title": "Sample request",
+    "listen": "Listen for sample",
+    "listening": "Listening…",
+    "cancel": "Cancel",
+    "hint": "Click \"Listen for sample\" and send a request to the URL within 90 seconds.",
+    "expired": "Listening time ran out without receiving anything. Click \"Listen for sample\" to try again.",
+    "received": "Sample received.",
+    "none": "No sample received yet."
+  },
+  "mapping": {
+    "title": "Field mapping",
+    "hint": "Pick a target and click a field in the tree to map it. You can combine fixed text and fields.",
+    "save": "Save mapping",
+    "saved": "Mapping saved",
+    "noSample": "Listen for a sample to see the fields.",
+    "targets": { "full_name": "Name", "phone": "Phone", "email": "Email" },
+    "required": "required",
+    "empty": "No mapped fields.",
+    "remove": "Remove",
+    "literalPlaceholder": "Fixed text (e.g. +55)",
+    "literalAdd": "Text",
+    "preview": "Result:",
+    "customPlaceholder": "Custom field key",
+    "customAdd": "Field",
+    "identityWarning": "This field has fixed text and no sample field that guarantees a value. If the field comes empty, the contact gets only the fixed text (e.g. \"+55\")."
+  },
+  "history": {
+    "stats": { "total": "Total", "processed": "Processed", "failed": "Failed", "pending": "Pending", "skipped": "Skipped" },
+    "filter": "Status",
+    "all": "All",
+    "status": { "processed": "Processed", "failed": "Error", "pending": "Pending", "skipped": "Skipped" },
+    "retention": "We keep the {n} most recent.",
+    "refresh": "Refresh",
+    "empty": "No requests.",
+    "more": "Load more",
+    "truncated": "Body truncated."
+  }
+}
