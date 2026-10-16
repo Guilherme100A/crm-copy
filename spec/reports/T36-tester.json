@@ -3,9 +3,9 @@
   "task": "T36",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T07:46:13.570Z",
-  "commit": "ae9e87a18c1131e77ff16280c173476a1fc0b0c2",
-  "base": "ae9e87a",
+  "at": "2026-10-16T07:48:40.642Z",
+  "commit": "7818f8a57ba67e889292492f1b66e83ebdae633c",
+  "base": "2a7d78d",
   "changedFiles": [
     "tests/acceptance/T36/auth-ui.e2e.ts"
   ],
