@@ -3,12 +3,11 @@
   "task": "T121",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T09:01:17.965Z",
-  "commit": "591c109b453e6d73e21e385cdfe8d3bb71ca4293",
-  "base": "591c109",
+  "at": "2026-10-16T09:06:13.949Z",
+  "commit": "992099b32519d75fef7fa4bcf9fee53c4822d9ba",
+  "base": "e5c71bf",
   "changedFiles": [
     "tests/acceptance/T09/jobs.test.ts",
-    "tests/acceptance/vitest.config.ts",
     "tests/acceptance/T121/fixtures/print-prefixes.ts",
     "tests/acceptance/T121/fixtures/tsconfig.json",
     "tests/acceptance/T121/fixtures/tsconfig.negative.json",
@@ -16,7 +15,8 @@
     "tests/acceptance/T121/fixtures/typecheck-probe.ts",
     "tests/acceptance/T121/queues.test.ts",
     "tests/acceptance/T121/sender.test.ts",
-    "tests/acceptance/T121/test-configs.test.ts"
+    "tests/acceptance/T121/test-configs.test.ts",
+    "tests/acceptance/vitest.config.ts"
   ],
   "checks": [
     {
