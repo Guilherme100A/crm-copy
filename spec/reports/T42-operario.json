@@ -3,33 +3,33 @@
   "task": "T42",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T11:13:13.908Z",
-  "commit": "3c26ad8a990b508916487d263d516b7b3358b312",
-  "base": "3c26ad8",
+  "at": "2026-10-16T11:20:13.221Z",
+  "commit": "4d720b0837e4c4c016b6157e94cc8218fe41ede6",
+  "base": "4d1ce18",
   "changedFiles": [
-    "packages/core/src/flows/nodes/index.ts",
-    "packages/core/src/index.ts",
     "packages/core/src/flows/nodes/external/external.db.unit.test.ts",
     "packages/core/src/flows/nodes/external/handlers.ts",
     "packages/core/src/flows/nodes/external/http.ts",
     "packages/core/src/flows/nodes/external/http.unit.test.ts",
-    "packages/core/src/flows/nodes/external/index.ts"
+    "packages/core/src/flows/nodes/external/index.ts",
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.1s"
+      "detail": "ok em 15.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.5s"
+      "detail": "ok em 52.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 86.9s"
+      "detail": "ok em 101.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
