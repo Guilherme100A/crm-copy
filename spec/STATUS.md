@@ -139,7 +139,7 @@
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
-| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | VERIFYING | Cinzel | Radar | 0 | T47 integrada; verifies de novo sobre e40a877+ |
+| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | REJECTED (1) | Cinzel | Radar | 1 | AC-T127-01: contato criado por webhook sem consentimento (ContactsService sem waGateway no processor) → run failed contact_not_found; libera inbound-webhooks-processor/** |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | IN_PROGRESS | Forja | (vaga) | 0 | piloto sob demanda; despacho 19:39 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
