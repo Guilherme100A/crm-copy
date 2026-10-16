@@ -3,14 +3,12 @@
   "task": "T29",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:58:40.557Z",
-  "commit": "ea992827c100ca5f71d5298429d2d067b7d77ac0",
-  "base": "ea99282",
+  "at": "2026-10-16T05:00:32.482Z",
+  "commit": "994cc09f8cca021c0b9abb14cdba8fc3f4ce29b6",
+  "base": "40ad6c5",
   "changedFiles": [
     ".env.example",
     "apps/wa-worker/package.json",
-    "apps/wa-worker/src/index.ts",
-    "pnpm-lock.yaml",
     "apps/wa-worker/src/boot/attach-queue.ts",
     "apps/wa-worker/src/boot/blob-refs.ts",
     "apps/wa-worker/src/boot/boot.unit.test.ts",
@@ -18,12 +16,14 @@
     "apps/wa-worker/src/boot/fake-control.ts",
     "apps/wa-worker/src/boot/start.db.unit.test.ts",
     "apps/wa-worker/src/boot/start.ts",
+    "apps/wa-worker/src/index.ts",
     "apps/wa-worker/src/main.ts",
     "apps/wa-worker/src/rpc/dedupe.ts",
     "apps/wa-worker/src/rpc/errors.ts",
     "apps/wa-worker/src/rpc/rpc.unit.test.ts",
     "apps/wa-worker/src/rpc/server.ts",
-    "apps/wa-worker/src/rpc/targets.ts"
+    "apps/wa-worker/src/rpc/targets.ts",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
@@ -39,17 +39,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-worker typecheck",
       "status": "pass",
-      "detail": "ok em 10.1s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-worker lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 2.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-worker test",
       "status": "pass",
-      "detail": "ok em 6.8s"
+      "detail": "ok em 5.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
