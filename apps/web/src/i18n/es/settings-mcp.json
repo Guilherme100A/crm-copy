@@ -1,0 +1,43 @@
+{
+  "tab": "Credenciales MCP",
+  "title": "Credenciales MCP",
+  "subtitle": "Permite que clientes de IA (Cursor, n8n, Claude) lean los datos de la empresa mediante el Model Context Protocol.",
+  "create": "Nueva credencial",
+  "loading": "Cargando...",
+  "error": "No se pudo completar la acción.",
+  "cancel": "Cancelar",
+  "never": "Nunca",
+  "neverUsed": "Nunca usada",
+  "server": {
+    "title": "URL del servidor MCP",
+    "copy": "Copiar URL",
+    "auth": "Autenticación: envía el token en el header",
+    "tips": "Buenas prácticas: usa una credencial por cliente y revoca las que no se usan. Las herramientas son de solo lectura."
+  },
+  "empty": { "title": "Ninguna credencial MCP", "body": "Crea una credencial para conectar un cliente MCP." },
+  "columns": { "name": "Nombre", "status": "Estado", "expires": "Vence", "lastUsed": "Último uso" },
+  "status": { "active": "Activa", "expired": "Vencida" },
+  "expiration": { "0": "Nunca", "30": "30 días", "90": "90 días", "365": "1 año" },
+  "form": {
+    "title": "Nueva credencial MCP",
+    "name": "Nombre",
+    "namePlaceholder": "Ej.: Cursor del equipo de ventas",
+    "expiration": "Vencimiento",
+    "submit": "Crear",
+    "nameRequired": "Indica el nombre de la credencial.",
+    "invalid": "Revisa los datos de la credencial."
+  },
+  "created": {
+    "title": "Credencial creada",
+    "warning": "Cópialo ahora: el token no se mostrará de nuevo.",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "close": "Cerrar"
+  },
+  "revoke": {
+    "action": "Revocar",
+    "title": "¿Revocar credencial?",
+    "body": "La credencial \"{name}\" deja de funcionar de inmediato y los clientes que la usan pierden el acceso.",
+    "confirm": "Revocar"
+  }
+}

@@ -17,6 +17,8 @@ export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'GET', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/hooks/*' },
+  // T94: servidor MCP — autenticado pelo token Bearer da credencial MCP na própria rota (não pela sessão).
+  { method: '*', path: '/api/mcp' },
 ]
 
 function matches(route: PublicRoute, method: string, path: string): boolean {
@@ -33,7 +35,7 @@ export function isPublicApiRoute(method: string, path: string, extra: readonly P
   return [...PUBLIC_API_ROUTES, ...extra].some((r) => matches(r, method, p))
 }
 
-/** Webhooks de entrada (`/api/hooks/**`) chegam de sistemas externos: fora do CSRF guard. */
+/** Webhooks de entrada (`/api/hooks/**`) e o servidor MCP (T94, Bearer) chegam de sistemas externos: fora do CSRF guard. */
 export function isInboundHook(path: string): boolean {
-  return path.startsWith('/api/hooks/')
+  return path.startsWith('/api/hooks/') || path === '/api/mcp'
 }

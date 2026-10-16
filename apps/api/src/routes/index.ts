@@ -50,6 +50,7 @@ import { hooksPaymentsRoutes } from './hooks-payments/index'
 import { dashboardRoutes } from './dashboard/index'
 import { dashboardAttendanceRoutes } from './dashboard-attendance/index'
 import { aiAgentLabRoutes } from './ai-agent-lab/index'
+import { mcpRoutes } from './mcp/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -107,4 +108,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', hooksPaymentsRoutes(deps))
   app.route('/', dashboardAttendanceRoutes(deps))
   app.route('/', dashboardRoutes(deps))
+  app.route('/', mcpRoutes(deps))
 }

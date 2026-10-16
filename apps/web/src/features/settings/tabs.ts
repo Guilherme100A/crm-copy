@@ -30,4 +30,6 @@ export const SETTINGS_TABS: SettingsTab[] = [
     permissions: ['settings.accounts.view'],
     load: () => import('@/features/settings-company/company-tab'),
   },
+  // T94: credenciais do servidor MCP (09 §2).
+  { id: 'mcp_credentials', labelKey: 'settings-mcp:tab', group: 'integrations', permissions: ['settings.mcp.view'], load: () => import('@/features/settings-mcp/mcp-tab') },
 ]

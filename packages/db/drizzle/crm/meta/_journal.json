@@ -204,6 +204,13 @@
       "when": 1792165732996,
       "tag": "0028_t73_sale_sources",
       "breakpoints": true
+    },
+    {
+      "idx": 29,
+      "version": "7",
+      "when": 1792184083051,
+      "tag": "0029_t94_mcp_credentials",
+      "breakpoints": true
     }
   ]
 }
