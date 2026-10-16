@@ -3,16 +3,10 @@
   "task": "T117",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:35:47.910Z",
-  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
-  "base": "13a99a5",
-  "changedFiles": [
-    "tests/acceptance/T117/fixtures/server-harness.ts",
-    "tests/acceptance/T117/logout-sse.test.ts",
-    "tests/acceptance/T117/setup.ts",
-    "tests/acceptance/T117/shutdown.test.ts",
-    "tests/acceptance/helpers/sse.ts"
-  ],
+  "at": "2026-10-16T03:36:50.154Z",
+  "commit": "4513896045eddc5c9d8ad4df93ebcdbdba14e076",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -72,7 +66,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
