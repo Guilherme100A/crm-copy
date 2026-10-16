@@ -144,6 +144,7 @@
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
 
 | Tarefa | Pendência | Origem |
+| empresas (T22) | `PUT /api/companies/:id { time_zone }` com fuso fora de COMPANY_TIME_ZONES (ex.: Asia/Tokyo) responde 200 e grava America/Sao_Paulo em silêncio (normalizeTimeZone em packages/core/src/companies/service.ts). Deve responder 422 VALIDATION, ou aceitar qualquer fuso IANA válido se a referência permitir. Incluir no despacho da próxima tarefa que tocar packages/core/src/companies ou na T102. | T78 (Torno) |
 |---|---|---|
 | T102 | `tests/acceptance/T23/shell.e2e.ts` (linhas 72/80/88) procura `data-testid="page-chats"`, o placeholder de /chats que a T69 substituiu: 9 testes do desktop falham na suíte inteira. Atualizar para um testid estável da inbox (ou do shell) sem perder o que o AC-T23 prova. | T45 (Torno) |
 | T81 | Mascarar o token público em /api/hooks/** no apps/api/src/middleware/request-logger.ts (hoje loga c.req.path com o token): liberar esse arquivo no despacho. Varrer requests `pending` cujo enqueue falhou; dedupe por body_hash (duplicate_payload); preencher steps/error/reason/processed_at; evento realtime sample_received. | T72 (Bigorna) |
