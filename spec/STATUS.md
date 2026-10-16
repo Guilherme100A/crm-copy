@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T70 (Torno/Sonda), T104 (Cinzel/Radar), T123 (Bigorna/Lupa, re-verify).
+- Em andamento (3 pares): T42 (Bigorna/Lupa), T70 (Torno/Sonda), T104 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -56,7 +56,7 @@
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | MERGED | Bigorna | Lupa | 0 | 347b8ff |
-| 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
+| 5 | T42 | Nós externos (HTTP e IA) | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
@@ -135,7 +135,7 @@
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
-| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | IN_PROGRESS | Bigorna | Lupa | 1 | |
+| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
@@ -190,8 +190,6 @@
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
-| templating (T11) | `{{customer.name}}` não é reconhecido (só first_name/full_name): avaliar alias por paridade com a referência | T85 |
-| montagem do worker | `configureCrmNodes({ publisher })` (T63) e `configureLogicNodes({ publisher })` (T41) não são chamados no boot: os nós funcionam mas não publicam eventos no SSE | T63, T41 |
 | harness E2E / testes | bancos crm_e2e_*/crm_test_*/crm_acc_* de execuções mortas acumulam (72 apagados em 2026-10-16 após queda do Postgres por memória): o harness deve limpar órfãos sem conexão ao subir | infra |
 | UI chat (polimento) | a 1366 px com lista + conversa + painel a conversa fica com ~370 px e o compositor (T85) aperta: lista recolhível (T69) ou container queries no compositor | T91 |
 | T50 (desempenho) | painel do chat (T91) acha o card do chat com 1 chamada por coluna: criar rota dedicada "card do chat por quadro" | T91 |
