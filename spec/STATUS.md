@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T35 (Bigorna/Lupa), T40 (Cinzel/Radar, integração da FK), T68 (Torno/Sonda).
+- Em andamento (3 pares): T35 (Bigorna/Lupa), T46 (Cinzel/Radar), T68 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -54,7 +54,7 @@
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
-| 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
@@ -64,7 +64,7 @@
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
-| 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | TODO | | | 0 | |
+| 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
