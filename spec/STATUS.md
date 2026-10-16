@@ -174,3 +174,5 @@
 | T29 | `wa-worker` sem alvo RPC `meta.capabilities` (o gateway usa as do perfil, todas false); `/internal/fake/sessions/:id/receive` não aceita id/mídia; falta rota fake para pausar a fila | T46 |
 | montagem do worker | trocar `platformLlmFromEnv` por `createCompanyLlmProvider({ keys })` (T38, BYOK por empresa) e ligar `resolveTts/resolveStt` e o `UsageGuard` (T24) no `configureAiAgent` (T46 deixou sem medição de cota) | T46, T38 |
 | montagem do worker | `configureExports({ db, redis, files })` (T27) não é chamado no boot de produção; API e worker devem apontar para o mesmo `STORAGE_DIR/exports` e importar os módulos que registram os kinds | T27 |
+| verificar antes de produção | endpoints não confirmados (context7 sem cota): OpenRouter `GET /key` (probe) e ElevenLabs `GET /v1/voices` — conferir na doc oficial | T38 |
+| montagem do worker | o runtime da T68 recebe um único tts/stt: voz por empresa (BYOK) precisa de um wrapper que chame `resolveTts/resolveStt(companyId)` (T38) | T38 |
