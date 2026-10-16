@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "task": "T13",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:25:10.364Z",
+  "commit": "46e5940f6d515691f8aa1ce37fd65dea6101eccf",
+  "base": "46e5940",
+  "changedFiles": [
+    "tests/acceptance/T13/session-manager.test.ts",
+    "tests/acceptance/T13/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T13-01, AC-T13-02, AC-T13-03, AC-T13-04, AC-T13-05, AC-T13-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "15 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T13-01",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T13-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T13-03",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T13-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T13-05",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T13-06",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

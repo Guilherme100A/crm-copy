@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "task": "T13",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:21:55.853Z",
+  "commit": "46e5940f6d515691f8aa1ce37fd65dea6101eccf",
+  "base": "46e5940",
+  "changedFiles": [
+    "packages/wa-engine/package.json",
+    "packages/wa-engine/src/index.ts",
+    "pnpm-lock.yaml",
+    "packages/wa-engine/src/proxy/connect.ts",
+    "packages/wa-engine/src/proxy/errors.ts",
+    "packages/wa-engine/src/proxy/index.ts",
+    "packages/wa-engine/src/proxy/service.ts",
+    "packages/wa-engine/src/proxy/url.ts",
+    "packages/wa-engine/src/session/index.ts",
+    "packages/wa-engine/src/session/manager.db.unit.test.ts",
+    "packages/wa-engine/src/session/manager.ts",
+    "packages/wa-engine/src/session/qr.ts",
+    "packages/wa-engine/src/session/states.ts",
+    "packages/wa-engine/src/session/states.unit.test.ts",
+    "packages/wa-engine/src/session/store.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/wa-engine/src/session/states.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-engine/src/session/manager.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
+      "status": "pass",
+      "detail": "ok em 6.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine lint",
+      "status": "pass",
+      "detail": "ok em 3.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine test",
+      "status": "pass",
+      "detail": "ok em 4.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}
