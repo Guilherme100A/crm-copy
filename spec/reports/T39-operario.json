@@ -3,28 +3,28 @@
   "task": "T39",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:51:41.185Z",
-  "commit": "7c3ecd8196f1b899b608b406949ba79b37037087",
-  "base": "7c3ecd8",
+  "at": "2026-10-16T04:53:04.748Z",
+  "commit": "dfde4aadf781788f58170b07d2aad494242131a0",
+  "base": "9cd4f0d",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/chats.ts",
-    "packages/db/src/schema/crm/index.ts",
-    "pnpm-lock.yaml",
     "apps/api/src/routes/ai-agents/ai-agents.db.unit.test.ts",
     "apps/api/src/routes/ai-agents/index.ts",
+    "apps/api/src/routes/index.ts",
+    "packages/core/package.json",
     "packages/core/src/ai-agents/errors.ts",
     "packages/core/src/ai-agents/index.ts",
     "packages/core/src/ai-agents/provider-keys.ts",
     "packages/core/src/ai-agents/service.ts",
     "packages/core/src/ai-agents/settings.ts",
     "packages/core/src/ai-agents/settings.unit.test.ts",
+    "packages/core/src/index.ts",
     "packages/db/drizzle/crm/0009_t39_ai_agents.sql",
     "packages/db/drizzle/crm/meta/0009_snapshot.json",
-    "packages/db/src/schema/crm/ai-agents.ts"
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/ai-agents.ts",
+    "packages/db/src/schema/crm/chats.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
@@ -35,17 +35,17 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 7.9s"
+      "detail": "ok em 7.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.5s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 12.8s"
+      "detail": "ok em 14.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
@@ -55,12 +55,12 @@
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 13.0s"
+      "detail": "ok em 13.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
