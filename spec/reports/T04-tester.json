@@ -3,14 +3,10 @@
   "task": "T04",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T02:48:35.427Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
-  "base": "197d4c2",
-  "changedFiles": [
-    "tests/acceptance/T04/contract.ts",
-    "tests/acceptance/T04/llm.test.ts",
-    "tests/acceptance/T04/voice.test.ts"
-  ],
+  "at": "2026-10-16T02:48:45.546Z",
+  "commit": "911e046439786f320d476751d027d535109ddd77",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -75,7 +71,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "3 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
