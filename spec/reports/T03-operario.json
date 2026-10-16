@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "task": "T03",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T02:45:47.884Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "packages/wa-port/package.json",
+    "packages/wa-port/src/index.ts",
+    "pnpm-lock.yaml",
+    "packages/wa-port/src/contract/index.ts",
+    "packages/wa-port/src/contract/suite.ts",
+    "packages/wa-port/src/contract/suite.unit.test.ts",
+    "packages/wa-port/src/errors.ts",
+    "packages/wa-port/src/errors.unit.test.ts",
+    "packages/wa-port/src/events.ts",
+    "packages/wa-port/src/events.unit.test.ts",
+    "packages/wa-port/src/gateway.ts",
+    "packages/wa-port/src/gateway.unit.test.ts",
+    "packages/wa-port/src/testing/fake-gateway.ts",
+    "packages/wa-port/src/testing/fake-gateway.unit.test.ts",
+    "packages/wa-port/src/testing/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/wa-port/src/gateway.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-port/src/events.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-port/src/testing/fake-gateway.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-port/src/contract/suite.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port typecheck",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port lint",
+      "status": "pass",
+      "detail": "ok em 4.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port test",
+      "status": "pass",
+      "detail": "ok em 3.2s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}

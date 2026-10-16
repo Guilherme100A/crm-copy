@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T03",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T02:46:01.063Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "tests/acceptance/T03/capabilities.test.ts",
+    "tests/acceptance/T03/contract-coverage.test.ts",
+    "tests/acceptance/T03/contract-fake.test.ts",
+    "tests/acceptance/T03/errors.test.ts",
+    "tests/acceptance/T03/events.test.ts",
+    "tests/acceptance/T03/fake-gateway.test.ts",
+    "tests/acceptance/T03/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T03-01, AC-T03-02, AC-T03-03, AC-T03-04, AC-T03-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "6 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "57 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T03-01",
+      "status": "pass",
+      "detail": "23 passed"
+    },
+    {
+      "name": "AC-T03-02",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "AC-T03-03",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T03-04",
+      "status": "pass",
+      "detail": "19 passed"
+    },
+    {
+      "name": "AC-T03-05",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "7 arquivo(s) alterado(s)"
+    }
+  ]
+}
