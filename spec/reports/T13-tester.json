@@ -3,13 +3,10 @@
   "task": "T13",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:25:10.364Z",
-  "commit": "46e5940f6d515691f8aa1ce37fd65dea6101eccf",
-  "base": "46e5940",
-  "changedFiles": [
-    "tests/acceptance/T13/session-manager.test.ts",
-    "tests/acceptance/T13/support.ts"
-  ],
+  "at": "2026-10-16T03:27:19.089Z",
+  "commit": "fecd452902f84b1449ad592d4efada14b4b64891",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

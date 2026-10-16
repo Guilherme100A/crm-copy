@@ -3,26 +3,10 @@
   "task": "T13",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:21:55.853Z",
-  "commit": "46e5940f6d515691f8aa1ce37fd65dea6101eccf",
-  "base": "46e5940",
-  "changedFiles": [
-    "packages/wa-engine/package.json",
-    "packages/wa-engine/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/wa-engine/src/proxy/connect.ts",
-    "packages/wa-engine/src/proxy/errors.ts",
-    "packages/wa-engine/src/proxy/index.ts",
-    "packages/wa-engine/src/proxy/service.ts",
-    "packages/wa-engine/src/proxy/url.ts",
-    "packages/wa-engine/src/session/index.ts",
-    "packages/wa-engine/src/session/manager.db.unit.test.ts",
-    "packages/wa-engine/src/session/manager.ts",
-    "packages/wa-engine/src/session/qr.ts",
-    "packages/wa-engine/src/session/states.ts",
-    "packages/wa-engine/src/session/states.unit.test.ts",
-    "packages/wa-engine/src/session/store.ts"
-  ],
+  "at": "2026-10-16T03:27:08.663Z",
+  "commit": "fecd452902f84b1449ad592d4efada14b4b64891",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/wa-engine/src/session/states.ts",
@@ -37,17 +21,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
       "status": "pass",
-      "detail": "ok em 6.2s"
+      "detail": "ok em 5.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 2.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 7.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -107,7 +91,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "15 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
