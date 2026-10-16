@@ -159,7 +159,7 @@ const RAW = [
   T('T16', 'Realtime: SSE, fan-out e replay', ['T08'], [core('realtime'), 'apps/api/src/routes/events/**'], ['api', 'core'],
     { requiredFiles: ['packages/core/src/realtime/publisher.ts', 'apps/api/src/routes/events/index.ts'] }),
   T('T17', 'Harness E2E (API com fakes, seed, reset)', ['T08', 'T03', 'T04'],
-    ['apps/api/src/e2e/**', 'packages/db/src/seed/index.ts', 'packages/db/src/seed/base.ts', 'scripts/e2e/**'], ['api', 'db'],
+    ['apps/api/src/e2e/**', 'packages/db/src/seed/index.ts', 'packages/db/src/seed/base.ts', 'scripts/e2e/**', 'eslint.config.mjs' /* corrige falso positivo do grupo AI (T00) */], ['api', 'db'],
     { requiredFiles: ['scripts/e2e/serve.mjs', 'apps/api/src/e2e/index.ts', 'packages/db/src/seed/base.ts'] }),
   T('T22', 'Empresas, equipe, convites e permissões', ['T15'],
     [core('companies'), core('team'), core('invitations'), route('companies'), route('team'), route('invitations'), schema('team')], ['api', 'core'],
