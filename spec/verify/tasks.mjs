@@ -352,6 +352,11 @@ const RAW = [
   T('T123', 'Montagem: eventos dos nós de lógica e CRM e alias customer.name', ['T41', 'T63', 'T120'],
     ['apps/worker/src/boot/**', 'packages/core/src/templating/**', 'packages/core/src/chats/send/**', 'packages/core/src/flows/nodes/messaging/**' /* correção do deadlock: registro pela transação do passo */], ['worker', 'core']),
 
+  T('T124', 'Harness E2E: reset serializado e limpeza de bancos órfãos', ['T17', 'T122'],
+    ['scripts/e2e/**', 'apps/api/src/e2e/**'], ['api'], { e2e: true }),
+  T('T125', 'Montagem de produção da Meta (insights, CAPI e vendas ao Pixel)', ['T101', 'T104', 'T120'],
+    ['apps/worker/src/boot/**', 'apps/api/src/server.ts'], ['api', 'worker']),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],

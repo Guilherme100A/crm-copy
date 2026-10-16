@@ -2014,6 +2014,26 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T124 — Harness E2E: reset serializado e limpeza de bancos órfãos
+**Objetivo:** dois defeitos do harness (T17/T122) vistos sob carga: (a) `POST /__e2e/reset` passa de 15 s, o cliente desiste e o próximo reset começa por cima → 500 duplicate key (seed); (b) bancos `crm_e2e_*`/`crm_test_*`/`crm_acc_*` de execuções mortas acumulam (72 apagados à mão em 2026-10-16, após o Postgres cair por memória).
+**Paths:** `scripts/e2e/**`, `apps/api/src/e2e/**`.
+**Depende de:** T17, T122
+**Entregáveis:** (1) reset serializado no servidor (mutex: um reset por vez; o segundo espera o primeiro) e timeout do reset configurável (padrão ≥ 60 s); (2) ao subir, o harness remove bancos de teste do projeto (`crm_e2e_*`, `crm_test_*`, `crm_acc_*`) SEM conexão ativa e mais antigos que N minutos (padrão 30), nunca outros bancos.
+**Critérios de aceitação**
+- **AC-T124-01** Dois `POST /__e2e/reset` simultâneos terminam ambos com 200 e o seed fica íntegro (sem 500 por chave duplicada).
+- **AC-T124-02** Ao subir, o harness apaga bancos de teste do projeto sem conexão e antigos, e preserva: bancos com conexão ativa, recentes, e qualquer banco fora dos prefixos de teste (ex.: `crm`, `postgres`, `wsm*`).
+- **AC-T124-03** O timeout do reset vem de `E2E_RESET_TIMEOUT_MS` (padrão ≥ 60000) e aparece no `e2e-server.json`.
+
+### T125 — Montagem de produção da Meta (insights, CAPI e vendas ao Pixel)
+**Objetivo:** fechar as pendências de montagem da T101 e da T104.
+**Paths:** `apps/worker/src/boot/**`, `apps/api/src/server.ts`.
+**Depende de:** T101, T104, T120
+**Entregáveis:** `startProductionWorker` chama `configureMetaAds({ db, redis, publisher })` e `configureMetaCapi({ db })`; API e worker envolvem o publisher com `capiSalePublisher(publisher, { enqueue: metaCapiEnqueuer() })`; `.env.example` ganha `META_CAPI_TEST_EVENT_CODE` (opcional, aditivo).
+**Critérios de aceitação**
+- **AC-T125-01** Montado como produção (padrão da T120) com FakeMetaGraph: `GET /api/meta/structure-bundle?async=1` é processado pelo worker (job meta-sync) e fica `ready`.
+- **AC-T125-02** Montado como produção: uma venda aprovada (API de vendas da T34 ou nó approved_sale) gera exatamente 1 evento Purchase no FakeMetaGraph para o pixel com `auto_send_sales`, com `event_id` sale-<id>.
+- **AC-T125-03** Repetir a mesma venda (mesmo external_id) não gera um segundo evento no FakeMetaGraph.
+
 ### T123 — Montagem: eventos dos nós de lógica e CRM e alias customer.name
 **Objetivo:** fechar as pendências de montagem da T41 e da T63 (os nós funcionam mas não publicam no SSE em produção) e a paridade de variável apontada na T85.
 **Paths:** `apps/worker/src/boot/**`, `packages/core/src/templating/**`.

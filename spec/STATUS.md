@@ -136,6 +136,8 @@
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
+| 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | TODO | | | 0 | |
+| 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | TODO | | | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
@@ -198,3 +200,4 @@
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
 | harness E2E (T17) | `POST /__e2e/reset` passa de 15 s sob carga; o cliente desiste e o próximo reset começa por cima → 500 duplicate key companies_pkey: serializar o reset (mutex) e subir o timeout do resetSeed (junto com a limpeza de bancos órfãos) | T70 |
+| (T125) montagem Meta | `configureMetaCapi({ db })` no boot e `capiSalePublisher` na API/worker (vendas aprovadas → Pixel) | T104 |
