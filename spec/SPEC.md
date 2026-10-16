@@ -2135,6 +2135,19 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T127-06** Montado como produção: o teste ao vivo do agente (job ai-agent-lab, T79) usa o LLM do processo (o FakeLlm configurado registra a chamada) e mede o consumo pelo `UsageGuard`.
 - **AC-T127-07** Um job de exportação cujo kind não tem processor configurado (ou cujo processor lança erro antes do runner) termina com `status = 'failed'` e a mensagem do erro em `crm.background_jobs`.
 
+### T128 — Harness de testes: banco-modelo por hash das migrações
+**Objetivo:** baratear a criação de bancos descartáveis (revisão 2, SPEC 10.1 nº 12): migrar uma vez e clonar com `CREATE DATABASE … TEMPLATE`, em vez de rodar todas as migrações em cada `createTempDatabase({ migrate: true })` e em cada subida do harness E2E.
+**Paths:** `packages/db/src/testing.ts`, `packages/db/src/testing/**`, `scripts/e2e/serve.mjs`, `scripts/e2e/orphans.mjs`, `scripts/e2e/template-db.mjs`, `scripts/e2e/*.unit.test.mjs`, `docs/testing.md`.
+**Depende de:** T124, T126
+**Entregáveis:** banco-modelo `crm_tpl_<set>_<hash12>` por conjunto de migrações (`set`), onde o hash é o SHA-256 do conteúdo dos arquivos de migração (e do journal) desse conjunto; criação do modelo serializada por `pg_advisory_lock` (o primeiro cria e migra; os demais esperam e reaproveitam), modelo marcado `IS_TEMPLATE true` e `ALLOW_CONNECTIONS false`; clonagem com nova tentativa curta quando o Postgres recusa a cópia por haver sessão na origem (`55006`); `createTempDatabase({ migrate: true })` e o harness (`serve.mjs`, inclusive o reset) passam a clonar o modelo e aplicar só o seed depois; modelos de hash antigo sem conexões são removidos pela limpeza de órfãos; `docs/testing.md` explica o mecanismo e como forçar a recriação.
+**Critérios de aceitação**
+- **AC-T128-01** `createTempDatabase({ migrate: true })` devolve um banco com o mesmo schema (tabelas, colunas e índices de `crm` e `public`) que a migração completa, e a partir da segunda chamada com as mesmas migrações nenhuma migração é executada (o banco nasce do modelo `crm_tpl_*`).
+- **AC-T128-02** Oito chamadas concorrentes para o mesmo conjunto criam o modelo uma única vez e as oito devolvem bancos utilizáveis, sem erro de "source database is being accessed by other users".
+- **AC-T128-03** Alterar o conteúdo de uma migração (hash diferente) faz a próxima chamada criar um modelo novo; a limpeza de órfãos (`scripts/e2e/orphans.mjs`) remove o modelo antigo sem conexões e nunca remove o modelo do hash atual.
+- **AC-T128-04** O harness E2E (`node scripts/e2e/serve.mjs`) sobe com banco clonado do modelo mais o seed, e o `POST /__e2e/reset` volta ao estado do seed também a partir do modelo; o tempo de criação do banco do harness cai em relação à migração completa (medido e registrado em `docs/testing.md`).
+
+---
+
 ### T102 — Integração E2E final
 **Objetivo:** provar o sistema montado. Tarefa principalmente do Tester; o Operário só corrige integrações.
 **Paths (Operário):** `apps/**`, `packages/**`, `scripts/**` (só correções de integração, nada de feature nova)

@@ -185,7 +185,7 @@ const RAW = [
     { requiredFiles: ['packages/core/src/support-access/index.ts'] }),
   T('T36', 'UI: autenticação, perfil e troca de empresa', ['T22', 'T23'], [...ui('auth'), ...ui('profile'), 'apps/web/src/features/company-switcher/**', i18n('company-switcher'), 'apps/web/src/app/guard.ts' /* aditivo: rotas públicas */, 'apps/web/src/app/shell/app-shell.tsx' /* troca CompanyBadge por CompanySwitcher */], ['web'],
     { requiredFiles: ['apps/web/src/routes/login.tsx'], e2e: true }),
-  T('T53', 'UI: empresa, departamentos e horários', ['T31', 'T36'], [...ui('settings-company'), ...ui('settings-departments'), ...ui('settings-hours')], ['web'], { e2e: true }),
+  T('T53', 'UI: empresa, departamentos e horários', ['T31', 'T36'], [...ui('settings-company'), ...ui('settings-departments'), ...ui('settings-hours'), 'apps/web/src/routes/settings/index.tsx' /* aditivo: abas viram select pesquisável no mobile (AC-T53-05) */], ['web'], { e2e: true }),
   T('T54', 'UI: equipe, permissões, convites e suporte', ['T32', 'T36'], [...ui('settings-team'), ...ui('settings-invitations'), ...ui('settings-support')], ['web'], { e2e: true }),
 
   // ---------------- Contatos, chats, conteúdo ----------------
@@ -203,7 +203,7 @@ const RAW = [
   T('T49', 'Chats: envio, mídia e leitura', ['T33'], ['packages/core/src/chats/send/**', core('media'), route('chat-messages'), route('media')], ['api', 'core'],
     { requiredFiles: ['packages/core/src/chats/send/index.ts'] }),
   T('T58', 'UI: respostas rápidas, modelos, variáveis, campos e etiquetas', ['T35', 'T26', 'T23'],
-    [...ui('settings-quick-replies'), ...ui('settings-templates'), ...ui('settings-variables'), ...ui('settings-fields'), ...ui('settings-labels')], ['web'], { e2e: true }),
+    [...ui('settings-quick-replies'), ...ui('settings-templates'), ...ui('settings-variables'), ...ui('settings-fields'), ...ui('settings-labels'), 'packages/core/src/custom-fields/service.ts' /* descrição de campo de sistema editável, como a referência (AC-T58-04) */], ['web', 'core'], { e2e: true }),
   T('T64', 'Agendamento de mensagens', ['T49', 'T35'], [core('schedules'), job('schedules'), route('schedules'), schema('schedules'), 'apps/worker/src/boot/production.ts' /* aditivo: configureSchedules */], ['api', 'worker', 'core']),
   T('T66', 'Contatos: filtros avançados e ações em massa', ['T26', 'T27', 'T50'], ['packages/core/src/contacts-bulk/**', route('contacts-bulk'), job('contacts-bulk'), 'packages/core/src/contacts/**', 'apps/api/src/routes/contacts/**' /* aditivo: filtros avançados na listagem da T26 */], ['api', 'worker', 'core']),
   T('T67', 'Contatos: importação CSV e do WhatsApp', ['T26', 'T27'], ['packages/core/src/contacts-import/**', route('contacts-import'), job('contacts-import')], ['api', 'worker', 'core']),
@@ -362,6 +362,8 @@ const RAW = [
     ['apps/*/vitest.config.ts', 'packages/*/vitest.config.ts', 'apps/*/src/test-setup*.ts', 'packages/*/src/test-setup*.ts', 'packages/db/src/testing.ts', 'packages/db/src/seed/index.ts' /* resetDatabase do harness E2E (opção A, autorizada) */, 'packages/core/src/meta-capi/sales.ts', 'apps/worker/src/jobs/meta-capi/index.ts' /* Purchase perdido antes do commit (rejeição 1, opção A) */, 'apps/*/src/**/*.unit.test.ts', 'packages/*/src/**/*.unit.test.ts', 'docs/testing.md'], ['api', 'worker', 'core']),
   T('T127', 'Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA', ['T42', 'T47', 'T52', 'T73', 'T79', 'T81', 'T111', 'T125'],
     ['apps/worker/src/boot/**', 'apps/worker/src/main.ts', 'apps/worker/src/jobs/exports/**', 'packages/core/src/exports/**'], ['api', 'worker', 'core']),
+  T('T128', 'Harness de testes: banco-modelo por hash das migrações', ['T124', 'T126'],
+    ['packages/db/src/testing.ts', 'packages/db/src/testing/**', 'scripts/e2e/serve.mjs', 'scripts/e2e/orphans.mjs', 'scripts/e2e/*.unit.test.mjs', 'scripts/e2e/template-db.mjs', 'docs/testing.md'], ['db']),
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115', 'T127'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],
