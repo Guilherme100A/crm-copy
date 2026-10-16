@@ -208,7 +208,7 @@ const RAW = [
   T('T69', 'UI chats: lista e filtros', ['T48', 'T23'], [...ui('chat'), 'apps/web/src/features/chat-list/**', i18n('chat-list')], ['web'], { e2e: true }),
   T('T75', 'UI chats: conversa', ['T69', 'T49'], ['apps/web/src/features/chat-thread/**', i18n('chat-thread'), 'apps/api/src/routes/chat-messages/**', 'packages/core/src/chats/send/**' /* aditivo: mídia por mensagem, reações na lista, retry */], ['api', 'core', 'web'], { e2e: true }),
   T('T85', 'UI chats: compositor', ['T75', 'T64'], ['apps/web/src/features/chat-composer/**', i18n('chat-composer'), 'apps/api/src/e2e/**' /* aditivo: pttConverter passthrough só no harness E2E */], ['web'], { e2e: true }),
-  T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**', i18n('chat-panel'), 'apps/web/src/features/chat/chat-layout.tsx' /* aditivo: slot panel no mobile */, 'packages/core/src/chats/lifecycle/**' /* aditivo: chat.updated também ao escopo antigo */, 'apps/api/src/routes/auth/**', 'packages/core/src/auth/**', 'apps/web/src/app/access.ts' /* permissões efetivas no perfil e no cliente */], ['api', 'core', 'web'], { e2e: true }),
+  T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**', i18n('chat-panel'), 'apps/web/src/features/chat/chat-layout.tsx' /* aditivo: slot panel no mobile */, 'packages/core/src/chats/lifecycle/**' /* aditivo: chat.updated também ao escopo antigo */, 'apps/api/src/routes/auth/**', 'packages/core/src/auth/**', 'apps/web/src/lib/session.ts' /* permissões efetivas no perfil e no cliente */], ['api', 'core', 'web'], { e2e: true }),
   T('T77', 'UI contatos: lista e seleção em massa', ['T66', 'T23'], [...ui('contacts')], ['web'], { e2e: true }),
   T('T86', 'UI contatos: formulário, importação e jobs', ['T77', 'T67'], ['apps/web/src/features/contact-form/**', 'apps/web/src/features/contact-jobs/**', i18n('contact-form')], ['web'], { e2e: true }),
   T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', i18n('notifications')], ['web'], { e2e: true }),
@@ -350,7 +350,7 @@ const RAW = [
     ['scripts/e2e/**', 'apps/worker/src/boot/**'], ['api', 'worker'], { e2e: true }),
 
   T('T123', 'Montagem: eventos dos nós de lógica e CRM e alias customer.name', ['T41', 'T63', 'T120'],
-    ['apps/worker/src/boot/**', 'packages/core/src/templating/**'], ['worker', 'core']),
+    ['apps/worker/src/boot/**', 'packages/core/src/templating/**', 'packages/core/src/chats/send/**', 'packages/core/src/flows/nodes/messaging/**' /* correção do deadlock: registro pela transação do passo */], ['worker', 'core']),
 
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
