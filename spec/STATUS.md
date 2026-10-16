@@ -182,3 +182,5 @@
 | decisão | mensagem automática fora do horário (T61) e mensagens de nós de fluxo (T51) não aparecem no histórico do chat — mesma pendência de registro no chat | T61 |
 | produção (T37 ou seed) | sem linha em `crm.llm_prices` para o modelo, o agente falha com "sem preço vigente": criar seed de preços padrão da plataforma (modelos do STACK F) e/ou gestão pelo admin (T37) | T120 |
 | T75 / T85 / T91 (UI do chat) | usar o contrato de slots da T69: criar `apps/web/src/features/<módulo>/chat-slot.tsx` com `export const chatSlot = { area: thread|composer|panel, Component }` (props chatId, chat, isDesktop; ver features/chat/slots.ts) — sem editar arquivos da T69 | T69 |
+| wa-port / engine | cronograma de warm-up replicado no core (T60: 7 dias, 20, ×1.8) para avisos de capacidade: se o engine ficar configurável, expor o cronograma pela wa-port (risco de divergência) | T60 |
+| T74 | jobs de preparação/envio do disparo devem levar `dispatchId` em `data` (o cancel da T60 remove por ele); distribuição dos destinatários com `target_id` null entre vários alvos | T60 |
