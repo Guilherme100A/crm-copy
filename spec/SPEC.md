@@ -2022,6 +2022,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Critérios de aceitação**
 - **AC-T122-01** Dois harnesses de worktrees diferentes rodando ao mesmo tempo: cada `message.inbound` emitido por `/__e2e/wa/emit` em um deles é entregue ao worker daquele harness (0 perdas em 20 eventos por harness).
 - **AC-T122-02** No worker montado como produção (padrão da T120), um disparo em massa criado pela API (T60) é preparado e envia ao menos 1 mensagem pelo wa-worker fake, terminando `completed`.
+- **AC-T122-03** Com `E2E_REDIS_URL` definida, o harness usa exatamente aquele Redis (db/streams), e o arquivo `test-results/e2e-server.json` registra o Redis efetivo usado.
 
 ### T121 — Isolamento de filas BullMQ nos testes e remetente flow
 **Objetivo:** eliminar a interferência entre worktrees: as filas do CRM têm nome/prefixo fixos e todos usam o Redis db 1, então workers de testes de um worktree consomem jobs de outro (runs presos, imports em queued — observado na T120).
