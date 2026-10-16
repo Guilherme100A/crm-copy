@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T40 (Cinzel/Radar, conflito FK), T50 (Bigorna/Lupa), T118 (Fole/Prisma), T119 (Torno/Sonda).
+- Em andamento: T34 (Torno/Sonda), T40 (Cinzel/Radar, conserto), T50 (Bigorna/Lupa), T118 (Fole/Prisma).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -48,7 +48,7 @@
 | 5 | T31 | Departamentos e horários de atendimento | MERGED | Torno | Sonda | 0 | 9cd0f6a |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
-| 5 | T34 | Vendas, produtos, despesas e grupos de filtro | TODO | | | 0 | |
+| 5 | T34 | Vendas, produtos, despesas e grupos de filtro | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | TODO | | | 0 | |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
@@ -131,7 +131,7 @@
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | IN_PROGRESS | Fole | Prisma | 0 | |
-| 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | IN_PROGRESS | Torno | Sonda | 0 | |
+| 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
