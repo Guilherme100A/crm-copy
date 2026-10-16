@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T38 (Torno/Sonda), T61 (Cinzel/Radar), T67 (Bigorna/Lupa).
+- Em andamento (3 pares): T36 (Torno/Sonda), T61 (Cinzel/Radar), T67 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -50,9 +50,9 @@
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
-| 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
+| 5 | T36 | UI: autenticação, perfil e troca de empresa | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
-| 5 | T38 | Chaves de provedores de IA (BYOK) | IN_PROGRESS | Torno | Sonda | 0 | |
+| 5 | T38 | Chaves de provedores de IA (BYOK) | MERGED | Torno | Sonda | 0 | 69bc234 |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
