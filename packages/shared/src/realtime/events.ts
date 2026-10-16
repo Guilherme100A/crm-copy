@@ -160,6 +160,11 @@ export const REALTIME_EVENTS = {
     }),
     'contacts.view',
   ),
+  /** Notificação genérica no app (T63/T84; ex.: push da Venda aprovada): toast e central de notificações. */
+  'notification.created': defineEvent(
+    z.looseObject({ title: z.string(), body: z.string(), url: z.string().nullable().optional() }),
+    'dashboard.sales',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

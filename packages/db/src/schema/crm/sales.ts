@@ -62,6 +62,10 @@ export const sales = crm.table(
     instanceNumber: text('instance_number'),
     leadNumber: text('lead_number'),
     customerName: text('customer_name'),
+    /** Emissor de nota fiscal escolhido no bloco Venda aprovada (T63; consumido pela T112). */
+    noteIssuerId: text('note_issuer_id'),
+    /** Integração UTMify do bloco Venda aprovada (T63; consumida pela T113). */
+    utmifyIntegrationId: text('utmify_integration_id'),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },

@@ -24,6 +24,10 @@ export interface RecordSaleInput {
   instanceNumber?: string | null
   leadNumber?: string | null
   customerName?: string | null
+  /** Emissor de NF do bloco Venda aprovada (T63/T112); ausente não sobrescreve no upsert. */
+  noteIssuerId?: string | null
+  /** Integração UTMify do bloco Venda aprovada (T63/T113); ausente não sobrescreve no upsert. */
+  utmifyIntegrationId?: string | null
 }
 
 export interface SaleDto {
@@ -44,6 +48,8 @@ export interface SaleDto {
   instance_number: string | null
   lead_number: string | null
   customer_name: string | null
+  note_issuer_id: string | null
+  utmify_integration_id: string | null
   created_at: string
   updated_at: string
 }
@@ -95,6 +101,8 @@ function toDto(r: { sale: typeof sales.$inferSelect; productName: string | null 
     instance_number: s.instanceNumber,
     lead_number: s.leadNumber,
     customer_name: s.customerName,
+    note_issuer_id: s.noteIssuerId,
+    utmify_integration_id: s.utmifyIntegrationId,
     created_at: s.createdAt.toISOString(),
     updated_at: s.updatedAt.toISOString(),
   }
@@ -113,7 +121,11 @@ export class SalesService {
   async record(input: RecordSaleInput): Promise<{ sale: SaleDto; created: boolean }> {
     const v = await this.validate(input.companyId, input, true)
     const externalId = text(input.externalId, 200)
-    const values = { companyId: input.companyId, source: input.source, externalId, ...v }
+    const integrations = {
+      ...(input.noteIssuerId !== undefined ? { noteIssuerId: text(input.noteIssuerId, 200) } : {}),
+      ...(input.utmifyIntegrationId !== undefined ? { utmifyIntegrationId: text(input.utmifyIntegrationId, 200) } : {}),
+    }
+    const values = { companyId: input.companyId, source: input.source, externalId, ...v, ...integrations }
     const [row] = externalId
       ? await this.db
           .insert(sales)
@@ -126,6 +138,7 @@ export class SalesService {
               amountCents: v.amountCents,
               currency: v.currency,
               ...(input.soldAt ? { soldAt: v.soldAt } : {}),
+              ...integrations,
               updatedAt: new Date(),
             },
           })

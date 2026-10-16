@@ -1,0 +1,102 @@
+{
+  "version": 1,
+  "task": "T63",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T10:03:51.613Z",
+  "commit": "c0ba53e496a1dd24f0e46eb526f03b960e0097eb",
+  "base": "c0ba53e",
+  "changedFiles": [
+    "packages/core/src/flows/engine/dry-run.unit.test.ts",
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/sales/service.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/sales.ts",
+    "packages/shared/src/realtime/events.ts",
+    "packages/core/src/flows/nodes/crm/crm.db.unit.test.ts",
+    "packages/core/src/flows/nodes/crm/handlers.ts",
+    "packages/core/src/flows/nodes/crm/index.ts",
+    "packages/core/src/flows/nodes/crm/rules.ts",
+    "packages/core/src/flows/nodes/crm/rules.unit.test.ts",
+    "packages/db/drizzle/crm/0021_t63_sale_integrations.sql",
+    "packages/db/drizzle/crm/meta/0021_snapshot.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 53.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "14 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -4,6 +4,7 @@ import type { NodeType } from '@crm/shared'
 import type { NodeHandler } from '../engine/context'
 import { notImplemented, type NodeRegistry } from '../engine/registry'
 import { registerMessagingNodes } from './messaging/index'
+import { registerCrmNodes as registerCrmGroup } from './crm/index'
 import { registerInteractiveNodes as registerInteractiveGroup } from './interactive/index'
 import { registerLogicNodes as registerLogicGroup } from './logic/index'
 
@@ -37,7 +38,7 @@ const registerLogicNodes = (registry: NodeRegistry) => registerLogicGroup(regist
 const registerExternalNodes = registerStub('external') // T42
 const registerMessageNodes = (registry: NodeRegistry) => registerMessagingNodes(registry) // T51
 const registerInteractiveNodes = (registry: NodeRegistry) => registerInteractiveGroup(registry) // T62
-const registerCrmNodes = registerStub('crm') // T63
+const registerCrmNodes = (registry: NodeRegistry) => registerCrmGroup(registry) // T63
 const registerPixelNodes = registerStub('pixel') // T104
 const registerPaymentNodes = registerStub('payment') // T111
 

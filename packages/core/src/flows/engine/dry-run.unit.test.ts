@@ -67,8 +67,8 @@ describe('dry-run (mesmo laço do motor, sem banco nem gateway real)', () => {
   })
 
   it('stubs dos grupos lançam node_not_implemented; tipo sem handler idem', async () => {
-    const r = await dryRun({ definition: def([node('start', 'start'), node('t', 'tags')], [edge('start', 'source', 't')]) })
-    expect([r.status, r.error]).toEqual(['failed', 'node_not_implemented:tags'])
+    const r = await dryRun({ definition: def([node('start', 'start'), node('t', 'pixel')], [edge('start', 'source', 't')]) })
+    expect([r.status, r.error]).toEqual(['failed', 'node_not_implemented:pixel'])
     const reg = createNodeRegistry()
     for (const g of Object.values(NODE_GROUPS)) for (const t of g.types) expect(reg.has(t), t).toBe(true)
     const unknown = await dryRun({ definition: def([node('start', 'start'), node('x', 'nao_existe')], [edge('start', 'source', 'x')]) })
