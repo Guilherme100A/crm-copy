@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T80",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T13:23:13.339Z",
+  "commit": "dfd7984e310e6e3ae218c02486c691e7e2c19406",
+  "base": "dfd7984",
+  "changedFiles": [
+    "tests/acceptance/T80/setup.ts",
+    "tests/acceptance/T80/voices.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T80-01, AC-T80-02, AC-T80-03, AC-T80-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "14 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T80-01",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T80-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T80-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T80-04",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

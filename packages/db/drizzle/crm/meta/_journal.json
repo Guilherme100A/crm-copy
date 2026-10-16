@@ -190,6 +190,13 @@
       "when": 1792154896626,
       "tag": "0026_t52_ai_knowledge",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1792156350895,
+      "tag": "0027_t80_ai_voices",
+      "breakpoints": true
     }
   ]
 }

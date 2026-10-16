@@ -16,6 +16,7 @@ import { chatMessagesRoutes } from './chat-messages/index'
 import { mediaRoutes } from './media/index'
 import { flowsRoutes } from './flows/index'
 import { aiAgentsRoutes } from './ai-agents/index'
+import { aiVoicesRoutes } from './ai-voices/index'
 import { aiKnowledgeRoutes } from './ai-knowledge/index'
 import { departmentsRoutes } from './departments/index'
 import { businessHoursRoutes } from './business-hours/index'
@@ -66,6 +67,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T38: antes dos agentes, que leem deps.aiProviderKeys (passa a ser BYOK: empresa + plataforma).
   aiKeysDefaults(deps)
   app.route('/', aiAgentsRoutes(deps))
+  app.route('/', aiVoicesRoutes(deps))
   app.route('/', aiKnowledgeRoutes(deps))
   app.route('/', departmentsRoutes(deps))
   app.route('/', businessHoursRoutes(deps))
