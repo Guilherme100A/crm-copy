@@ -35,6 +35,20 @@ export const REALTIME_EVENTS = {
       permission_keys: z.array(z.string()).nullable().optional(),
     }),
   ),
+  // ---- T33: chats e mensagens (ChatsChannel do produto de referência; filtrados por chat.view e chatScope) ----
+  /** Chat novo (1ª mensagem de um contato na conexão). */
+  'chat.created': defineEvent(z.looseObject({ chat_id: idSchema, chat: z.looseObject({ id: idSchema }) }), 'chat.view'),
+  /** Campos do chat mudaram (status, não lidas, prévia, atendente…). */
+  'chat.updated': defineEvent(z.looseObject({ chat_id: idSchema, chat: z.looseObject({ id: idSchema }).optional() }), 'chat.view'),
+  /** Mensagem nova no chat (recebida ou enviada). */
+  'message.created': defineEvent(z.looseObject({ chat_id: idSchema, message: z.looseObject({ id: idSchema }) }), 'chat.view'),
+  /** Status de entrega/leitura da mensagem (nunca regride). */
+  'message.status': defineEvent(
+    z.looseObject({ chat_id: idSchema, message_id: idSchema, status: z.string().min(1), error: z.string().nullable().optional() }),
+    'chat.view',
+  ),
+  /** Dados do contato mudaram (identidade LID/PN, atribuição, opt-out). */
+  'contact.updated': defineEvent(z.looseObject({ contact_id: idSchema, contact: z.looseObject({ id: idSchema }).optional() }), 'contacts.view'),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

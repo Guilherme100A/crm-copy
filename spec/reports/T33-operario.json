@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "task": "T33",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:57:58.188Z",
+  "commit": "9c532463ec7fa1714c4c41b3cdda9fefe4faeb85",
+  "base": "9c53246",
+  "changedFiles": [
+    "apps/worker/src/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/worker/src/consumers/chats/chats.db.unit.test.ts",
+    "apps/worker/src/consumers/chats/index.ts",
+    "packages/core/src/chats/ingest/chat-ingest.db.unit.test.ts",
+    "packages/core/src/chats/ingest/chat-ingest.ts",
+    "packages/core/src/chats/ingest/index.ts",
+    "packages/core/src/chats/model/connections.ts",
+    "packages/core/src/chats/model/dto.ts",
+    "packages/core/src/chats/model/index.ts",
+    "packages/core/src/chats/model/merge.ts",
+    "packages/core/src/chats/model/rules.ts",
+    "packages/core/src/chats/model/rules.unit.test.ts",
+    "packages/db/drizzle/crm/0004_t33_chats.sql",
+    "packages/db/drizzle/crm/meta/0004_snapshot.json",
+    "packages/db/src/schema/crm/chats.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/chats/ingest/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 8.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 7.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 3.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 6.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "20 arquivo(s) alterado(s)"
+    }
+  ]
+}
