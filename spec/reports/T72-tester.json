@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T72",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T12:32:22.925Z",
+  "commit": "9751708088d3d7422072d29bfac091506c0cb426",
+  "base": "9751708",
+  "changedFiles": [
+    "tests/acceptance/T72/inbound-webhooks.test.ts",
+    "tests/acceptance/T72/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T72-01, AC-T72-02, AC-T72-03, AC-T72-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "14 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T72-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T72-02",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T72-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T72-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

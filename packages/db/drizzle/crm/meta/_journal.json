@@ -176,6 +176,13 @@
       "when": 1792150931015,
       "tag": "0024_t109_payments",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1792153456020,
+      "tag": "0025_t72_inbound_webhooks",
+      "breakpoints": true
     }
   ]
 }
