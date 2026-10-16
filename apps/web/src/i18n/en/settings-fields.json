@@ -1,0 +1,36 @@
+{
+  "tab": "Custom Fields",
+  "title": "Custom Fields",
+  "subtitle": "Manage custom fields and system variables for your contacts.",
+  "new": "New field",
+  "views": {
+    "custom": "Custom",
+    "system": "System"
+  },
+  "search": "Search field",
+  "noResults": "No fields found.",
+  "emptyCustom": "No custom fields. New fields also appear when a contact gets a new key.",
+  "emptySystem": "No system fields.",
+  "cols": {
+    "key": "Key",
+    "description": "Description",
+    "value": "Value",
+    "example": "Example"
+  },
+  "readonlyValue": "Computed by the system",
+  "editSystemTitle": "Edit system field description",
+  "editTitle": "Edit field",
+  "newTitle": "New field",
+  "errors": {
+    "length": "The key must be 2 to 255 characters long.",
+    "chars": "The key may only contain letters, numbers, space, \"_\" and \"-\".",
+    "reserved": "Key reserved for a system field."
+  },
+  "fields": {
+    "key": "Key",
+    "keyImmutable": "The key cannot be changed.",
+    "keyHint": "Lowercase; letters, numbers, space, \"_\" and \"-\". In messages, use the key between braces.",
+    "description": "Description"
+  },
+  "systemNote": "This field value is computed by the system and cannot be edited. Only the description changes."
+}

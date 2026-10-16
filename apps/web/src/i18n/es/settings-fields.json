@@ -1,0 +1,36 @@
+{
+  "tab": "Campos Personalizados",
+  "title": "Campos Personalizados",
+  "subtitle": "Gestiona campos personalizados y variables del sistema para tus contactos.",
+  "new": "Nuevo campo",
+  "views": {
+    "custom": "Personalizados",
+    "system": "Sistema"
+  },
+  "search": "Buscar campo",
+  "noResults": "No se encontraron campos.",
+  "emptyCustom": "No hay campos personalizados. Los campos nuevos también aparecen cuando un contacto recibe una clave nueva.",
+  "emptySystem": "No hay campos de sistema.",
+  "cols": {
+    "key": "Clave",
+    "description": "Descripción",
+    "value": "Valor",
+    "example": "Ejemplo"
+  },
+  "readonlyValue": "Calculado por el sistema",
+  "editSystemTitle": "Editar descripción del campo de sistema",
+  "editTitle": "Editar campo",
+  "newTitle": "Nuevo campo",
+  "errors": {
+    "length": "La clave debe tener de 2 a 255 caracteres.",
+    "chars": "La clave solo puede tener letras, números, espacio, \"_\" y \"-\".",
+    "reserved": "Clave reservada para un campo de sistema."
+  },
+  "fields": {
+    "key": "Clave",
+    "keyImmutable": "La clave no se puede cambiar.",
+    "keyHint": "Minúsculas; letras, números, espacio, \"_\" y \"-\". En los mensajes, usa la clave entre llaves.",
+    "description": "Descripción"
+  },
+  "systemNote": "El valor de este campo lo calcula el sistema y no se puede editar. Solo cambia la descripción."
+}

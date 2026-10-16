@@ -1,0 +1,30 @@
+{
+  "tab": "Labels",
+  "title": "Labels",
+  "subtitle": "Organize contacts with colored labels.",
+  "new": "New label",
+  "search": "Search label",
+  "noResults": "No labels found.",
+  "empty": "No labels yet.",
+  "cols": {
+    "name": "Name",
+    "color": "Color",
+    "contacts": "Contacts"
+  },
+  "deleteTitle": "Delete label",
+  "deleteBody": "The label \"{name}\" will be deleted and removed from {n} contact(s).",
+  "editTitle": "Edit label",
+  "newTitle": "New label",
+  "errors": {
+    "name": "The name must be 2 to 50 characters long.",
+    "color": "The color must be in #RRGGBB format."
+  },
+  "fields": {
+    "name": "Name",
+    "color": "Color",
+    "preview": "Preview:"
+  },
+  "common": {
+    "error": "Something went wrong. Try again."
+  }
+}

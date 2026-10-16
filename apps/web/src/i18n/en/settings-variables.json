@@ -1,0 +1,40 @@
+{
+  "tab": "Global Variables",
+  "title": "Global Variables",
+  "subtitle": "Manage the variables that can be used in all your flows.",
+  "new": "New variable",
+  "search": "Search by name",
+  "noResults": "No variables found.",
+  "empty": "No variables yet.",
+  "cols": {
+    "name": "Name",
+    "type": "Type",
+    "value": "Value",
+    "description": "Description"
+  },
+  "types": {
+    "text": "Text",
+    "number": "Number"
+  },
+  "deleteTitle": "Delete variable",
+  "deleteBody": "The variable \"{name}\" will be deleted. Flows that use it will get an empty value.",
+  "editTitle": "Edit variable",
+  "newTitle": "New variable",
+  "errors": {
+    "name": "Enter the name (letters, numbers and underscore).",
+    "name_long": "Name too long (up to 64 characters with the prefix).",
+    "number": "Invalid number (e.g. 10 or -2.5)."
+  },
+  "fields": {
+    "name": "Name",
+    "nameImmutable": "The name cannot be changed after creation.",
+    "nameHint": "Use letters, numbers and underscore. In flows, use the full name between braces.",
+    "type": "Type",
+    "value": "Value",
+    "numberHint": "Numbers only, e.g. 10 or -2.5.",
+    "description": "Description (optional)"
+  },
+  "common": {
+    "error": "Something went wrong. Try again."
+  }
+}

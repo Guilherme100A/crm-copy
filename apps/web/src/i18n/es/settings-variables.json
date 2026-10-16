@@ -1,0 +1,40 @@
+{
+  "tab": "Variables Globales",
+  "title": "Variables Globales",
+  "subtitle": "Gestiona las variables que puedes usar en todos tus flujos.",
+  "new": "Nueva variable",
+  "search": "Buscar por nombre",
+  "noResults": "No se encontraron variables.",
+  "empty": "No hay variables.",
+  "cols": {
+    "name": "Nombre",
+    "type": "Tipo",
+    "value": "Valor",
+    "description": "Descripción"
+  },
+  "types": {
+    "text": "Texto",
+    "number": "Número"
+  },
+  "deleteTitle": "Eliminar variable",
+  "deleteBody": "La variable \"{name}\" será eliminada. Los flujos que la usan quedarán con valor vacío.",
+  "editTitle": "Editar variable",
+  "newTitle": "Nueva variable",
+  "errors": {
+    "name": "Indica el nombre (letras, números y guion bajo).",
+    "name_long": "Nombre demasiado largo (hasta 64 caracteres con el prefijo).",
+    "number": "Número inválido (ej.: 10 o -2.5)."
+  },
+  "fields": {
+    "name": "Nombre",
+    "nameImmutable": "El nombre no se puede cambiar después de creado.",
+    "nameHint": "Usa letras, números y guion bajo. En los flujos, usa el nombre completo entre llaves.",
+    "type": "Tipo",
+    "value": "Valor",
+    "numberHint": "Solo números, ej.: 10 o -2.5.",
+    "description": "Descripción (opcional)"
+  },
+  "common": {
+    "error": "No se pudo completar. Inténtalo de nuevo."
+  }
+}

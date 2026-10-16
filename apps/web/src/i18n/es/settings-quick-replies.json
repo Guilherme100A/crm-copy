@@ -1,0 +1,72 @@
+{
+  "tab": "Respuestas Rápidas",
+  "title": "Respuestas Rápidas",
+  "subtitle": "Gestiona y organiza las respuestas rápidas de tu empresa.",
+  "new": "Nueva respuesta rápida",
+  "search": "Buscar por atajo",
+  "noResults": "No se encontraron respuestas rápidas.",
+  "empty": "No hay respuestas rápidas.",
+  "cols": {
+    "shortcut": "Atajo",
+    "preview": "Vista previa",
+    "actions": "Acciones"
+  },
+  "deleteTitle": "Eliminar respuesta rápida",
+  "deleteBody": "La respuesta rápida \"/{shortcut}\" será eliminada. Esta acción no se puede deshacer.",
+  "editTitle": "Editar respuesta rápida",
+  "newTitle": "Nueva respuesta rápida",
+  "errors": {
+    "shortcut": "Indica un atajo (minúsculas, números, guiones, guiones bajos y espacios).",
+    "noActions": "Agrega al menos una acción de contenido válida.",
+    "actionIncomplete": "Completa la acción {n}."
+  },
+  "fields": {
+    "shortcut": "Atajo",
+    "shortcutHint": "En el chat, escribe \"/\" seguido del atajo. Usa minúsculas, números, guiones, guiones bajos y espacios."
+  },
+  "editor": {
+    "actions": "Acciones",
+    "actionsCount": "{n} de {max}",
+    "noActions": "Sin acciones. Agrega un mensaje, multimedia, sticker o contacto.",
+    "drag": "Arrastrar para reordenar",
+    "up": "Subir",
+    "down": "Bajar",
+    "remove": "Quitar acción",
+    "messageText": "Texto del mensaje",
+    "messagePlaceholder": "Hola {first_name}, ¿qué tal?",
+    "contactName": "Nombre del contacto",
+    "contactPhone": "Teléfono del contacto",
+    "mediaType": "Tipo de multimedia",
+    "replaceFile": "Cambiar archivo",
+    "chooseFile": "Subir archivo",
+    "fileAttached": "Archivo adjunto",
+    "noFile": "Sin archivo",
+    "caption": "Leyenda (opcional)",
+    "noStickers": "No hay stickers. Súbelos desde el chat."
+  },
+  "types": {
+    "send_message": "Mensaje",
+    "send_multi_media": "Multimedia",
+    "send_sticker": "Sticker",
+    "send_contact": "Contacto"
+  },
+  "media": {
+    "image": "Imagen",
+    "video": "Video",
+    "audio": "Audio",
+    "document": "Documento"
+  },
+  "common": {
+    "loading": "Cargando…",
+    "error": "No se pudo completar. Inténtalo de nuevo.",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "actions": "Acciones",
+    "pagination": "Paginación",
+    "prev": "Página anterior",
+    "next": "Página siguiente",
+    "pageOf": "Página {page} de {pages}"
+  }
+}

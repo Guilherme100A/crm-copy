@@ -1,0 +1,66 @@
+{
+  "tab": "Message Templates",
+  "title": "Message Templates",
+  "subtitle": "Reusable internal templates, with contact variables and buttons turned into text.",
+  "new": "New template",
+  "search": "Search by name",
+  "noResults": "No templates found.",
+  "empty": "No templates yet.",
+  "cols": {
+    "name": "Name",
+    "body": "Body",
+    "buttons": "Buttons"
+  },
+  "deleteTitle": "Delete template",
+  "deleteBody": "The template \"{name}\" will be deleted. This cannot be undone.",
+  "editTitle": "Edit template",
+  "newTitle": "New template",
+  "errors": {
+    "name": "Enter the template name.",
+    "body": "Enter the message body.",
+    "header_text": "Enter the header text.",
+    "header_media": "Upload the header file.",
+    "button": "Complete button {n}."
+  },
+  "fields": {
+    "name": "Name",
+    "header": "Header",
+    "headerText": "Header text",
+    "mediaAttached": "File attached — replace",
+    "chooseFile": "Upload file",
+    "body": "Body",
+    "footer": "Footer (optional)",
+    "buttons": "Buttons",
+    "buttonType": "Button type",
+    "buttonText": "Button text",
+    "buttonUrl": "Link address",
+    "buttonPhone": "Phone",
+    "removeButton": "Remove button",
+    "addButton": "Add button"
+  },
+  "header": {
+    "none": "No header",
+    "text": "Text",
+    "image": "Image",
+    "video": "Video",
+    "document": "Document"
+  },
+  "buttons": {
+    "reply": "Reply",
+    "url": "Link",
+    "phone": "Phone"
+  },
+  "buttonsCount": "{n} of {max}",
+  "variables": "Insert variable in the body",
+  "preview": {
+    "title": "Preview",
+    "searchContact": "Search sample contact",
+    "contact": "Sample contact",
+    "noContact": "No contact (empty variables)",
+    "empty": "Write the body to see the preview.",
+    "hint": "Reply buttons become a numbered menu; links and phones are sent as text."
+  },
+  "common": {
+    "error": "Something went wrong. Try again."
+  }
+}

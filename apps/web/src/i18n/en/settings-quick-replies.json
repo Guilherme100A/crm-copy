@@ -1,0 +1,72 @@
+{
+  "tab": "Quick Replies",
+  "title": "Quick Replies",
+  "subtitle": "Manage and organize the quick replies of your company.",
+  "new": "New quick reply",
+  "search": "Search by shortcut",
+  "noResults": "No quick replies found.",
+  "empty": "No quick replies yet.",
+  "cols": {
+    "shortcut": "Shortcut",
+    "preview": "Preview",
+    "actions": "Actions"
+  },
+  "deleteTitle": "Delete quick reply",
+  "deleteBody": "The quick reply \"/{shortcut}\" will be deleted. This cannot be undone.",
+  "editTitle": "Edit quick reply",
+  "newTitle": "New quick reply",
+  "errors": {
+    "shortcut": "Enter a shortcut (lowercase letters, numbers, hyphens, underscores and spaces).",
+    "noActions": "Add at least one valid content action.",
+    "actionIncomplete": "Complete action {n}."
+  },
+  "fields": {
+    "shortcut": "Shortcut",
+    "shortcutHint": "In the chat, type \"/\" followed by the shortcut. Use lowercase letters, numbers, hyphens, underscores and spaces."
+  },
+  "editor": {
+    "actions": "Actions",
+    "actionsCount": "{n} of {max}",
+    "noActions": "No actions. Add a message, media, sticker or contact.",
+    "drag": "Drag to reorder",
+    "up": "Move up",
+    "down": "Move down",
+    "remove": "Remove action",
+    "messageText": "Message text",
+    "messagePlaceholder": "Hi {first_name}, how are you?",
+    "contactName": "Contact name",
+    "contactPhone": "Contact phone",
+    "mediaType": "Media type",
+    "replaceFile": "Replace file",
+    "chooseFile": "Upload file",
+    "fileAttached": "File attached",
+    "noFile": "No file",
+    "caption": "Caption (optional)",
+    "noStickers": "No stickers yet. Upload stickers from the chat."
+  },
+  "types": {
+    "send_message": "Message",
+    "send_multi_media": "Media",
+    "send_sticker": "Sticker",
+    "send_contact": "Contact"
+  },
+  "media": {
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "document": "Document"
+  },
+  "common": {
+    "loading": "Loading…",
+    "error": "Something went wrong. Try again.",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "actions": "Actions",
+    "pagination": "Pagination",
+    "prev": "Previous page",
+    "next": "Next page",
+    "pageOf": "Page {page} of {pages}"
+  }
+}

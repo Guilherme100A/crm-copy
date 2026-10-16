@@ -1,0 +1,40 @@
+{
+  "tab": "Variáveis Globais",
+  "title": "Variáveis Globais",
+  "subtitle": "Gerencie as variáveis que podem ser usadas em todos os seus fluxos.",
+  "new": "Nova variável",
+  "search": "Buscar por nome",
+  "noResults": "Nenhuma variável encontrada.",
+  "empty": "Nenhuma variável cadastrada.",
+  "cols": {
+    "name": "Nome",
+    "type": "Tipo",
+    "value": "Valor",
+    "description": "Descrição"
+  },
+  "types": {
+    "text": "Texto",
+    "number": "Número"
+  },
+  "deleteTitle": "Excluir variável",
+  "deleteBody": "A variável \"{name}\" será excluída. Fluxos que a usam ficarão com o valor vazio.",
+  "editTitle": "Editar variável",
+  "newTitle": "Nova variável",
+  "errors": {
+    "name": "Informe o nome (letras, números e underscore).",
+    "name_long": "Nome muito longo (até 64 caracteres com o prefixo).",
+    "number": "Valor numérico inválido (ex.: 10 ou -2.5)."
+  },
+  "fields": {
+    "name": "Nome",
+    "nameImmutable": "O nome não pode ser alterado depois de criado.",
+    "nameHint": "Use letras, números e underscore. Nos fluxos, use o nome completo entre chaves.",
+    "type": "Tipo",
+    "value": "Valor",
+    "numberHint": "Somente números, ex.: 10 ou -2.5.",
+    "description": "Descrição (opcional)"
+  },
+  "common": {
+    "error": "Não foi possível concluir. Tente de novo."
+  }
+}

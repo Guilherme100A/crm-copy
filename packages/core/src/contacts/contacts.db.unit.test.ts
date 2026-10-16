@@ -96,7 +96,7 @@ describe('ContactsService', () => {
     expect(list.find((f) => f.key === 'plano pago')).toMatchObject({ example_value: 'sim', system: false })
     expect(list.filter((f) => f.system).map((f) => f.key)).toContain('full_name')
     expect((await fields.updateDescription(a, 'plano pago', 'Se pagou')).description).toBe('Se pagou')
-    expect(await codeOf(fields.updateDescription(a, 'full_name', 'x'))).toBe('validation')
+    expect(await fields.updateDescription(a, 'full_name', 'x')).toMatchObject({ key: 'full_name', description: 'x', system: true }) // T58: descrição de sistema editável
     expect(await codeOf(fields.updateDescription(a, 'nao_existe', 'x'))).toBe('not_found')
     expect(await codeOf(contacts.create(a, { name: 'F', phone: '+5511944443333', customFields: { x: 1 } }))).toBe('validation')
   })

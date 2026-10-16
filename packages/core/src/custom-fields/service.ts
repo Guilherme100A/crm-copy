@@ -1,6 +1,6 @@
 // Catálogo de campos personalizados (features 05 §3.2 e 17 §3.D): chave minúscula imutável (2–255), só a
 // descrição é editável, sem exclusão; nasce também quando um contato recebe uma chave nova. Campos de sistema
-// (BOT) são somente leitura.
+// (BOT): valor somente leitura, descrição editável (T58).
 import { and, asc, eq, sql } from 'drizzle-orm'
 import { customFieldDefs, type Database } from '@crm/db'
 import { ContactsError, invalid, uniqueViolation } from '../contacts/errors'
@@ -60,10 +60,14 @@ const exampleOf = (v: unknown): string | null => {
 export class CustomFieldsService {
   constructor(private readonly db: Database) {}
 
-  /** Sistema primeiro, depois os customizados em ordem alfabética. */
+  /** Sistema primeiro (descrição da empresa, se houver, senão a padrão), depois os customizados em ordem alfabética. */
   async list(companyId: string): Promise<CustomFieldDto[]> {
     const rows = await this.db.select().from(customFieldDefs).where(eq(customFieldDefs.companyId, companyId)).orderBy(asc(customFieldDefs.key))
-    return [...SYSTEM_CUSTOM_FIELDS.map((f) => ({ key: f.key, description: f.description, example_value: null, system: true })), ...rows.map(toDto)]
+    const overrides = new Map(rows.filter((r) => SYSTEM_KEYS.has(r.key)).map((r) => [r.key, r.description]))
+    return [
+      ...SYSTEM_CUSTOM_FIELDS.map((f) => ({ key: f.key, description: overrides.get(f.key) ?? f.description, example_value: null, system: true })),
+      ...rows.filter((r) => !SYSTEM_KEYS.has(r.key)).map(toDto),
+    ]
   }
 
   async create(companyId: string, input: { key: string; description?: string | null }): Promise<CustomFieldDto> {
@@ -80,10 +84,21 @@ export class CustomFieldsService {
     }
   }
 
-  /** Só a descrição muda (a chave é imutável). Campo de sistema → erro de validação. */
+  /**
+   * Só a descrição muda (a chave é imutável). Campo de sistema (T58, 17 §3.D): grava a descrição da empresa numa linha
+   * do catálogo com a chave de sistema; vazia → volta à padrão. O valor continua somente leitura.
+   */
   async updateDescription(companyId: string, rawKey: string, description: string | null): Promise<CustomFieldDto> {
     const key = rawKey.trim().toLowerCase()
-    if (SYSTEM_KEYS.has(key)) throw invalid('key', 'Campos de sistema não são editáveis')
+    const system = SYSTEM_CUSTOM_FIELDS.find((f) => f.key === key)
+    if (system) {
+      const desc = description?.trim() || null
+      await this.db
+        .insert(customFieldDefs)
+        .values({ companyId, key, description: desc })
+        .onConflictDoUpdate({ target: [customFieldDefs.companyId, customFieldDefs.key], set: { description: desc, updatedAt: new Date() } })
+      return { key, description: desc ?? system.description, example_value: null, system: true }
+    }
     const [row] = await this.db
       .update(customFieldDefs)
       .set({ description: description?.trim() || null, updatedAt: new Date() })

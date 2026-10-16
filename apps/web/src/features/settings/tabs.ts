@@ -32,4 +32,10 @@ export const SETTINGS_TABS: SettingsTab[] = [
   },
   // T94: credenciais do servidor MCP (09 §2).
   { id: 'mcp_credentials', labelKey: 'settings-mcp:tab', group: 'integrations', permissions: ['settings.mcp.view'], load: () => import('@/features/settings-mcp/mcp-tab') },
+  // T58: conteúdo (17 §2.1); modelos internos usam o id `message_templates`.
+  { id: 'quick_replies', labelKey: 'settings-quick-replies:tab', group: 'automation', permissions: ['settings.quick_replies.view'], load: () => import('@/features/settings-quick-replies/tab') },
+  { id: 'message_templates', labelKey: 'settings-templates:tab', group: 'automation', permissions: ['settings.message_templates.view'], load: () => import('@/features/settings-templates/tab') },
+  { id: 'global_variables', labelKey: 'settings-variables:tab', group: 'automation', load: () => import('@/features/settings-variables/tab') },
+  { id: 'custom_fields', labelKey: 'settings-fields:tab', group: 'automation', permissions: ['settings.fields.view'], load: () => import('@/features/settings-fields/tab') },
+  { id: 'tags', labelKey: 'settings-labels:tab', group: 'automation', permissions: ['settings.labels.view'], load: () => import('@/features/settings-labels/tab') },
 ]

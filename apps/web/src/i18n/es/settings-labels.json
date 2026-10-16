@@ -1,0 +1,30 @@
+{
+  "tab": "Etiquetas",
+  "title": "Etiquetas",
+  "subtitle": "Organiza los contactos con etiquetas de colores.",
+  "new": "Nueva etiqueta",
+  "search": "Buscar etiqueta",
+  "noResults": "No se encontraron etiquetas.",
+  "empty": "No hay etiquetas.",
+  "cols": {
+    "name": "Nombre",
+    "color": "Color",
+    "contacts": "Contactos"
+  },
+  "deleteTitle": "Eliminar etiqueta",
+  "deleteBody": "La etiqueta \"{name}\" será eliminada y quitada de {n} contacto(s).",
+  "editTitle": "Editar etiqueta",
+  "newTitle": "Nueva etiqueta",
+  "errors": {
+    "name": "El nombre debe tener de 2 a 50 caracteres.",
+    "color": "El color debe estar en formato #RRGGBB."
+  },
+  "fields": {
+    "name": "Nombre",
+    "color": "Color",
+    "preview": "Vista previa:"
+  },
+  "common": {
+    "error": "No se pudo completar. Inténtalo de nuevo."
+  }
+}

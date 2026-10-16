@@ -1,0 +1,66 @@
+{
+  "tab": "Modelos de Mensagem",
+  "title": "Modelos de Mensagem",
+  "subtitle": "Modelos internos reutilizáveis, com variáveis do contato e botões convertidos em texto.",
+  "new": "Novo modelo",
+  "search": "Buscar por nome",
+  "noResults": "Nenhum modelo encontrado.",
+  "empty": "Nenhum modelo cadastrado.",
+  "cols": {
+    "name": "Nome",
+    "body": "Corpo",
+    "buttons": "Botões"
+  },
+  "deleteTitle": "Excluir modelo",
+  "deleteBody": "O modelo \"{name}\" será excluído. Esta ação não pode ser desfeita.",
+  "editTitle": "Editar modelo",
+  "newTitle": "Novo modelo",
+  "errors": {
+    "name": "Informe o nome do modelo.",
+    "body": "Informe o corpo da mensagem.",
+    "header_text": "Informe o texto do cabeçalho.",
+    "header_media": "Envie o arquivo do cabeçalho.",
+    "button": "Complete o botão {n}."
+  },
+  "fields": {
+    "name": "Nome",
+    "header": "Cabeçalho",
+    "headerText": "Texto do cabeçalho",
+    "mediaAttached": "Arquivo anexado — trocar",
+    "chooseFile": "Enviar arquivo",
+    "body": "Corpo",
+    "footer": "Rodapé (opcional)",
+    "buttons": "Botões",
+    "buttonType": "Tipo do botão",
+    "buttonText": "Texto do botão",
+    "buttonUrl": "Endereço do link",
+    "buttonPhone": "Telefone",
+    "removeButton": "Remover botão",
+    "addButton": "Adicionar botão"
+  },
+  "header": {
+    "none": "Sem cabeçalho",
+    "text": "Texto",
+    "image": "Imagem",
+    "video": "Vídeo",
+    "document": "Documento"
+  },
+  "buttons": {
+    "reply": "Resposta",
+    "url": "Link",
+    "phone": "Telefone"
+  },
+  "buttonsCount": "{n} de {max}",
+  "variables": "Inserir variável no corpo",
+  "preview": {
+    "title": "Prévia",
+    "searchContact": "Buscar contato de exemplo",
+    "contact": "Contato de exemplo",
+    "noContact": "Sem contato (variáveis vazias)",
+    "empty": "Escreva o corpo para ver a prévia.",
+    "hint": "Botões de resposta viram um menu numerado; links e telefones vão como texto."
+  },
+  "common": {
+    "error": "Não foi possível concluir. Tente de novo."
+  }
+}

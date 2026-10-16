@@ -1,0 +1,154 @@
+{
+  "version": 1,
+  "task": "T58",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T23:41:00.492Z",
+  "commit": "9acbd81b5581c83a76057de37cfbc4e8ae11a9ed",
+  "base": "683ccbf",
+  "changedFiles": [
+    "apps/web/src/features/settings-fields/api.ts",
+    "apps/web/src/features/settings-fields/rules.ts",
+    "apps/web/src/features/settings-fields/settings-fields.unit.test.ts",
+    "apps/web/src/features/settings-fields/tab.tsx",
+    "apps/web/src/features/settings-labels/api.ts",
+    "apps/web/src/features/settings-labels/rules.ts",
+    "apps/web/src/features/settings-labels/settings-labels.unit.test.ts",
+    "apps/web/src/features/settings-labels/tab.tsx",
+    "apps/web/src/features/settings-quick-replies/actions-editor.tsx",
+    "apps/web/src/features/settings-quick-replies/api.ts",
+    "apps/web/src/features/settings-quick-replies/kit.tsx",
+    "apps/web/src/features/settings-quick-replies/rules.ts",
+    "apps/web/src/features/settings-quick-replies/settings-quick-replies.unit.test.ts",
+    "apps/web/src/features/settings-quick-replies/tab.tsx",
+    "apps/web/src/features/settings-templates/api.ts",
+    "apps/web/src/features/settings-templates/rules.ts",
+    "apps/web/src/features/settings-templates/settings-templates.unit.test.ts",
+    "apps/web/src/features/settings-templates/tab.tsx",
+    "apps/web/src/features/settings-variables/api.ts",
+    "apps/web/src/features/settings-variables/rules.ts",
+    "apps/web/src/features/settings-variables/settings-variables.unit.test.ts",
+    "apps/web/src/features/settings-variables/tab.tsx",
+    "apps/web/src/features/settings/tabs.ts",
+    "apps/web/src/i18n/en/settings-fields.json",
+    "apps/web/src/i18n/en/settings-labels.json",
+    "apps/web/src/i18n/en/settings-quick-replies.json",
+    "apps/web/src/i18n/en/settings-templates.json",
+    "apps/web/src/i18n/en/settings-variables.json",
+    "apps/web/src/i18n/es/settings-fields.json",
+    "apps/web/src/i18n/es/settings-labels.json",
+    "apps/web/src/i18n/es/settings-quick-replies.json",
+    "apps/web/src/i18n/es/settings-templates.json",
+    "apps/web/src/i18n/es/settings-variables.json",
+    "apps/web/src/i18n/pt-BR/settings-fields.json",
+    "apps/web/src/i18n/pt-BR/settings-labels.json",
+    "apps/web/src/i18n/pt-BR/settings-quick-replies.json",
+    "apps/web/src/i18n/pt-BR/settings-templates.json",
+    "apps/web/src/i18n/pt-BR/settings-variables.json",
+    "packages/core/src/contacts/contacts.db.unit.test.ts",
+    "packages/core/src/custom-fields/custom-fields.db.unit.test.ts",
+    "packages/core/src/custom-fields/service.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 12.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 7.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 106.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 8.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 4.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 9.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "41 arquivo(s) alterado(s)"
+    }
+  ]
+}

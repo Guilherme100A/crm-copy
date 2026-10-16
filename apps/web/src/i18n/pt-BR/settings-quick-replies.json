@@ -1,0 +1,72 @@
+{
+  "tab": "Respostas Rápidas",
+  "title": "Respostas Rápidas",
+  "subtitle": "Gerencie e organize as respostas rápidas da sua empresa.",
+  "new": "Nova resposta rápida",
+  "search": "Buscar por atalho",
+  "noResults": "Nenhuma resposta rápida encontrada.",
+  "empty": "Nenhuma resposta rápida cadastrada.",
+  "cols": {
+    "shortcut": "Atalho",
+    "preview": "Prévia",
+    "actions": "Ações"
+  },
+  "deleteTitle": "Excluir resposta rápida",
+  "deleteBody": "A resposta rápida \"/{shortcut}\" será excluída. Esta ação não pode ser desfeita.",
+  "editTitle": "Editar resposta rápida",
+  "newTitle": "Nova resposta rápida",
+  "errors": {
+    "shortcut": "Informe um atalho (letras minúsculas, números, hífens, underscores e espaços).",
+    "noActions": "Adicione pelo menos uma ação de conteúdo válida.",
+    "actionIncomplete": "Complete a ação {n}."
+  },
+  "fields": {
+    "shortcut": "Atalho",
+    "shortcutHint": "No chat, digite \"/\" seguido do atalho. Use letras minúsculas, números, hífens, underscores e espaços."
+  },
+  "editor": {
+    "actions": "Ações",
+    "actionsCount": "{n} de {max}",
+    "noActions": "Nenhuma ação. Adicione uma mensagem, mídia, figurinha ou contato.",
+    "drag": "Arrastar para reordenar",
+    "up": "Mover para cima",
+    "down": "Mover para baixo",
+    "remove": "Remover ação",
+    "messageText": "Texto da mensagem",
+    "messagePlaceholder": "Olá {first_name}, tudo bem?",
+    "contactName": "Nome do contato",
+    "contactPhone": "Telefone do contato",
+    "mediaType": "Tipo de mídia",
+    "replaceFile": "Trocar arquivo",
+    "chooseFile": "Enviar arquivo",
+    "fileAttached": "Arquivo anexado",
+    "noFile": "Nenhum arquivo",
+    "caption": "Legenda (opcional)",
+    "noStickers": "Nenhuma figurinha cadastrada. Envie figurinhas pelo chat."
+  },
+  "types": {
+    "send_message": "Mensagem",
+    "send_multi_media": "Mídia",
+    "send_sticker": "Figurinha",
+    "send_contact": "Contato"
+  },
+  "media": {
+    "image": "Imagem",
+    "video": "Vídeo",
+    "audio": "Áudio",
+    "document": "Documento"
+  },
+  "common": {
+    "loading": "Carregando…",
+    "error": "Não foi possível concluir. Tente de novo.",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "actions": "Ações",
+    "pagination": "Paginação",
+    "prev": "Página anterior",
+    "next": "Próxima página",
+    "pageOf": "Página {page} de {pages}"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "tab": "Plantillas de Mensaje",
+  "title": "Plantillas de Mensaje",
+  "subtitle": "Plantillas internas reutilizables, con variables del contacto y botones convertidos en texto.",
+  "new": "Nueva plantilla",
+  "search": "Buscar por nombre",
+  "noResults": "No se encontraron plantillas.",
+  "empty": "No hay plantillas.",
+  "cols": {
+    "name": "Nombre",
+    "body": "Cuerpo",
+    "buttons": "Botones"
+  },
+  "deleteTitle": "Eliminar plantilla",
+  "deleteBody": "La plantilla \"{name}\" será eliminada. Esta acción no se puede deshacer.",
+  "editTitle": "Editar plantilla",
+  "newTitle": "Nueva plantilla",
+  "errors": {
+    "name": "Indica el nombre de la plantilla.",
+    "body": "Indica el cuerpo del mensaje.",
+    "header_text": "Indica el texto del encabezado.",
+    "header_media": "Sube el archivo del encabezado.",
+    "button": "Completa el botón {n}."
+  },
+  "fields": {
+    "name": "Nombre",
+    "header": "Encabezado",
+    "headerText": "Texto del encabezado",
+    "mediaAttached": "Archivo adjunto — cambiar",
+    "chooseFile": "Subir archivo",
+    "body": "Cuerpo",
+    "footer": "Pie (opcional)",
+    "buttons": "Botones",
+    "buttonType": "Tipo de botón",
+    "buttonText": "Texto del botón",
+    "buttonUrl": "Dirección del enlace",
+    "buttonPhone": "Teléfono",
+    "removeButton": "Quitar botón",
+    "addButton": "Agregar botón"
+  },
+  "header": {
+    "none": "Sin encabezado",
+    "text": "Texto",
+    "image": "Imagen",
+    "video": "Video",
+    "document": "Documento"
+  },
+  "buttons": {
+    "reply": "Respuesta",
+    "url": "Enlace",
+    "phone": "Teléfono"
+  },
+  "buttonsCount": "{n} de {max}",
+  "variables": "Insertar variable en el cuerpo",
+  "preview": {
+    "title": "Vista previa",
+    "searchContact": "Buscar contacto de ejemplo",
+    "contact": "Contacto de ejemplo",
+    "noContact": "Sin contacto (variables vacías)",
+    "empty": "Escribe el cuerpo para ver la vista previa.",
+    "hint": "Los botones de respuesta se vuelven un menú numerado; enlaces y teléfonos van como texto."
+  },
+  "common": {
+    "error": "No se pudo completar. Inténtalo de nuevo."
+  }
+}
