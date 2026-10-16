@@ -145,7 +145,7 @@ const RAW = [
     { requiredFiles: ['packages/wa-engine/src/events/outbox.ts', 'packages/wa-engine/src/media/index.ts'] }),
   T('T29', 'App wa-worker e RPC interno', ['T20', 'T21'], ['apps/wa-worker/**'], ['wa-worker'],
     { requiredFiles: ['apps/wa-worker/src/main.ts', 'apps/wa-worker/src/rpc/server.ts'] }),
-  T('T46', '@crm/wa-gateway-rpc: adapter WaGateway por RPC + stream', ['T29'], ['packages/wa-gateway-rpc/**'], ['wa-gateway-rpc'],
+  T('T46', '@crm/wa-gateway-rpc: adapter WaGateway por RPC + stream', ['T29'], ['packages/wa-gateway-rpc/**', 'apps/worker/src/main.ts', 'apps/worker/src/boot/**', 'apps/api/src/server.ts' /* aditivo: montagem de produção com WaGateway real */], ['wa-gateway-rpc'],
     { requiredFiles: ['packages/wa-gateway-rpc/src/gateway.ts', 'packages/wa-gateway-rpc/src/profiles.ts'] }),
 
   // ---------------- Plataforma (API, worker, auth, realtime, harness) ----------------
