@@ -201,6 +201,15 @@ export const REALTIME_EVENTS = {
     }),
     'flows.view',
   ),
+  // ---- T81: escuta de amostra do webhook de entrada (só no stream do usuário que está escutando) ----
+  'webhook.sample_received': defineEvent(
+    z.looseObject({
+      webhook_id: idSchema,
+      request_id: idSchema,
+      request: z.looseObject({ raw_body: z.string(), raw_body_truncated: z.boolean() }),
+    }),
+    'webhooks.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

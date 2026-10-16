@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T81",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T15:06:47.810Z",
+  "commit": "71076e9de29fc496ab33e19e1bec7e14f15d3235",
+  "base": "01ff0df",
+  "changedFiles": [
+    "tests/acceptance/T81/processor.test.ts",
+    "tests/acceptance/T81/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T81-01, AC-T81-02, AC-T81-03, AC-T81-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "17 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T81-01",
+      "status": "pass",
+      "detail": "9 passed"
+    },
+    {
+      "name": "AC-T81-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T81-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T81-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

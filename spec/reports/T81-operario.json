@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "task": "T81",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-16T15:06:27.149Z",
+  "commit": "71076e9de29fc496ab33e19e1bec7e14f15d3235",
+  "base": "01ff0df",
+  "changedFiles": [
+    "apps/api/src/middleware/request-logger.ts",
+    "apps/api/src/middleware/request-logger.unit.test.ts",
+    "apps/api/src/routes/inbound-webhook-samples/inbound-webhook-samples.db.unit.test.ts",
+    "apps/api/src/routes/inbound-webhook-samples/index.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/jobs/inbound-webhooks/inbound-webhooks.unit.test.ts",
+    "apps/worker/src/jobs/inbound-webhooks/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/inbound-webhooks-processor/index.ts",
+    "packages/core/src/inbound-webhooks-processor/mapping.ts",
+    "packages/core/src/inbound-webhooks-processor/processor.db.unit.test.ts",
+    "packages/core/src/inbound-webhooks-processor/processor.ts",
+    "packages/core/src/inbound-webhooks-processor/samples.ts",
+    "packages/core/src/index.ts",
+    "packages/shared/src/realtime/events.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 18.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 17.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "fail",
+      "detail": "exit 1 em 95.0s",
+      "output": "\n> @crm/api@0.0.0 test C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T81\\apps\\api\n> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T81/apps/api\n\n ❯ src/e2e/e2e.db.unit.test.ts (7 tests | 1 failed) 9602ms\n   ❯ AC-T17-03 reset (1)\n     × restaura o seed-base em ≤ 3 s e limpa as chaves de teste 5264ms\n\n Test Files  1 failed | 41 passed (42)\n      Tests  1 failed | 225 passed (226)\n   Start at  12:02:37\n   Duration  93.93s (tests 75%, import 19%, transform 7%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T81\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/e2e/e2e.db.unit.test.ts > AC-T17-03 reset > restaura o seed-base em ≤ 3 s e limpa as chaves de teste\nAssertionError: expected 3239 to be less than 3000\n ❯ src/e2e/e2e.db.unit.test.ts:103:29\n    101|     const res = await app.request('/__e2e/reset', { method: 'POST' })\n    102|     expect(res.status).toBe(200)\n    103|     expect(Date.now() - t0).toBeLessThan(3000)\n       |                             ^\n    104|     // T37: os seeds de módulo registrados (ex.: ai-prices) rodam depo…\n    105|     const body = (await res.json()) as { ok: boolean; applied: string[…\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 17.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "fail",
+      "detail": "exit 1 em 27.6s",
+      "output": "> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T81/apps/worker\n\n ❯ src/boot/production-worker.db.unit.test.ts (7 tests | 1 failed) 14937ms\n   ❯ T120 montado como produção (7)\n     × AC-T120-03: agente de IA com chave BYOK responde (FakeLlm pelo resolvedor) e grava ai_usage; carteira esgotada → sem chamada ao LLM 4408ms\n\n Test Files  1 failed | 19 passed (20)\n      Tests  1 failed | 60 passed (61)\n   Start at  12:04:31\n   Duration  26.72s (tests 44%, import 43%, transform 13%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T81\\apps\\worker:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/worker@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/boot/production-worker.db.unit.test.ts > T120 montado como produção > AC-T120-03: agente de IA com chave BYOK responde (FakeLlm pelo resolvedor) e grava ai_usage; carteira esgotada → sem chamada ao LLM\nAssertionError: expected 2 to be 1 // Object.is equality\n\n- Expected\n+ Received\n\n- 1\n+ 2\n\n ❯ src/boot/production-worker.db.unit.test.ts:290:28\n    288|     await until('mensagem recebida', async () => (await history(s, cha…\n    289|     await new Promise((r) => setTimeout(r, 3000))\n    290|     expect(fake.callCount).toBe(before + 1)\n       |                            ^\n    291|     expect(await usage()).toBe(1)\n    292|     expect((await history(s, chat.id)).filter((m) => m.sender_type ===…\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 65.8s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}
