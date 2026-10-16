@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T35 (Bigorna/Lupa), T46 (Cinzel/Radar), T68 (Torno/Sonda).
+- Em andamento (3 pares): T46 (Cinzel/Radar), T51 (Bigorna/Lupa), T68 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -49,7 +49,7 @@
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
-| 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
@@ -69,7 +69,7 @@
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
-| 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | TODO | | | 0 | |
+| 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 6 | T52 | Agentes de IA: base de conhecimento | TODO | | | 0 | |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
