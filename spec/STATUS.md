@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T76 (Torno/Sonda), T72 (Bigorna/Lupa), T52 (Cinzel/Radar).
+- Em andamento (3 pares): T76 (Torno/Sonda), T55 (Bigorna/Lupa), T52 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -61,7 +61,7 @@
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
-| 5 | T72 | Webhooks de entrada: CRUD e recepção pública | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 5 | T72 | Webhooks de entrada: CRUD e recepção pública | MERGED | Bigorna | Lupa | 0 | c7c9abb |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | MERGED | Bigorna | Lupa | 0 | 9556291 |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
@@ -73,7 +73,7 @@
 | 6 | T52 | Agentes de IA: base de conhecimento | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
-| 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | TODO | | | 0 | |
+| 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
