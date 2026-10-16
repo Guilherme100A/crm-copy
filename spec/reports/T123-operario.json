@@ -3,38 +3,38 @@
   "task": "T123",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T10:52:26.865Z",
-  "commit": "3261029eb3994a3c70d63c31e6dc4adc126d6a12",
-  "base": "3261029",
+  "at": "2026-10-16T10:59:25.616Z",
+  "commit": "850b35b5dee15e34430903c90fca9f8aa1d84a95",
+  "base": "96c690b",
   "changedFiles": [
     "apps/worker/src/boot/production-worker.db.unit.test.ts",
     "apps/worker/src/boot/production.ts",
     "packages/core/src/chats/send/record.db.unit.test.ts",
     "packages/core/src/chats/send/service.ts",
     "packages/core/src/flows/nodes/messaging/production.ts",
-    "packages/core/src/templating/render.ts",
-    "packages/core/src/templating/alias.unit.test.ts"
+    "packages/core/src/templating/alias.unit.test.ts",
+    "packages/core/src/templating/render.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 11.8s"
+      "detail": "ok em 21.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 6.4s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 24.1s"
+      "detail": "ok em 19.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.3s"
+      "detail": "ok em 11.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
@@ -44,7 +44,7 @@
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 61.0s"
+      "detail": "ok em 106.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
