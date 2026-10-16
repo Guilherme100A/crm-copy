@@ -192,3 +192,4 @@
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
 | templating (T11) | `{{customer.name}}` não é reconhecido (só first_name/full_name): avaliar alias por paridade com a referência | T85 |
 | montagem do worker | `configureCrmNodes({ publisher })` (T63) e `configureLogicNodes({ publisher })` (T41) não são chamados no boot: os nós funcionam mas não publicam eventos no SSE | T63, T41 |
+| harness E2E / testes | bancos crm_e2e_*/crm_test_*/crm_acc_* de execuções mortas acumulam (72 apagados em 2026-10-16 após queda do Postgres por memória): o harness deve limpar órfãos sem conexão ao subir | infra |
