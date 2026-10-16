@@ -2016,7 +2016,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ### T117 — Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único
 **Objetivo:** fechar pendências cruzadas encontradas na integração das ondas 2–3 (T13/T15/T16 feitas em paralelo).
-**Paths:** `apps/api/src/routes/auth/**`, `apps/api/src/server.ts`, `packages/wa-engine/src/transport/baileys.ts`.
+**Paths:** `apps/api/src/routes/auth/**`, `apps/api/src/server.ts`, `packages/wa-engine/src/transport/baileys.ts`, `packages/wa-engine/src/auth-state/index.ts` (só para marcar o store cacheável).
 **Depende de:** T13, T15, T16
 **Entregáveis:** (1) `POST /api/auth/logout` chama `RealtimePublisher.endSession(sessionId)` (T16) após revogar a sessão; o reset de senha (T15, que revoga todas as sessões) chama `endUserSessions(userId)`. (2) `server.ts` chama `stopRealtimeHub(redis)` no shutdown, antes de fechar o Redis. (3) `BaileysTransport` não reaplica `makeCacheableSignalKeyStore` quando o auth state recebido já é cacheável (T06 já envolve); um único cache por sessão.
 **Critérios de aceitação**
