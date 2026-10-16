@@ -86,7 +86,7 @@ const ui = (m) => [`apps/web/src/routes/${ROUTE_DIR[m] ?? m}/**`, ...(ROUTE_FILE
 
 /**
  * id, título, deps, paths, workspaces (comandos), opções:
- *  requiredFiles, infra (true = postgres+redis locais), e2e (Playwright desktop+mobile no --role tester),
+ *  requiredFiles, infra (true = postgres+redis locais), e2e (Playwright no --role tester: desktop; mobile só nos ACs de `mobile`),
  *  minWave (adiamento deliberado), todo (aguardando spec; verify recusa).
  */
 function T(id, title, deps, paths, ws, opts = {}) {
@@ -102,6 +102,8 @@ function T(id, title, deps, paths, ws, opts = {}) {
     testerPaths: opts.testerPaths,
     infra: opts.infra ?? true,
     e2e: opts.e2e ?? false,
+    // revisão 2 (SPEC 3.11): E2E roda só no projeto desktop; os ACs listados aqui (layout/responsivo) rodam também no mobile
+    mobile: opts.mobile ?? [],
     minWave: opts.minWave ?? 0,
     todo: opts.todo ?? false,
   }

@@ -4,8 +4,12 @@
 //   node spec/verify/verify.mjs list                         # tarefas, ondas, deps e status dos relatórios
 //   node spec/verify/verify.mjs plan [--max 4]               # lotes por onda, ordenados pelo caminho crítico
 //   node spec/verify/verify.mjs lint-spec                    # SPEC.md × tasks.mjs (headings, ACs, ondas)
-//   node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands]
+//   node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands] [--full] [--retry-failed]
 //   node spec/verify/verify.mjs wave <n>                     # regressão de todas as tarefas até a onda n
+//
+// Dois níveis (revisão 2): durante a tarefa, `pnpm --filter X test` roda só os testes afetados desde --base
+// (vitest --changed); a suíte completa (--full) roda uma vez, no gate (scripts/orq/integrate.sh).
+// --retry-failed reaproveita os comandos aprovados no relatório anterior e roda de novo só os que falharam.
 //
 // Exit 0 = aprovado, 1 = reprovado, 2 = uso incorreto ou tarefa TODO.
 // Node puro (sem dependências), multiplataforma.
@@ -20,7 +24,8 @@ const SPEC_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const ROOT = resolve(SPEC_DIR, '..')
 const REPORTS = join(SPEC_DIR, 'reports')
 const REPORT_VERSION = 1
-const PW_PROJECTS = ['desktop', 'mobile']
+// projetos E2E exigidos para um AC: desktop sempre; mobile só nos ACs de layout/responsivo (task.mobile)
+const pwProjectsFor = (task, id) => (task.mobile.includes(id) ? ['desktop', 'mobile'] : ['desktop'])
 
 const C = process.stdout.isTTY
   ? { ok: '\x1b[32m', fail: '\x1b[31m', warn: '\x1b[33m', dim: '\x1b[2m', b: '\x1b[1m', r: '\x1b[0m' }
@@ -64,7 +69,7 @@ function walk(dir, out = []) {
 // 127.0.0.1 e não localhost: no Windows o libpq perde ~2 s por conexão tentando ::1 (spec/INFRA.md).
 const CHILD_ENV = {
   ...process.env,
-  VITEST_MAX_WORKERS: process.env.VITEST_MAX_WORKERS ?? '4',
+  VITEST_MAX_WORKERS: process.env.VITEST_MAX_WORKERS ?? '2',
   npm_config_workspace_concurrency: process.env.npm_config_workspace_concurrency ?? '1',
   DATABASE_URL: process.env.DATABASE_URL ?? 'postgres://wsm:wsm@127.0.0.1:5432/crm',
   REDIS_URL: process.env.REDIS_URL ?? 'redis://127.0.0.1:6379/1',
@@ -134,10 +139,27 @@ function checkFiles(report, files, label) {
   }
 }
 
-function checkCommands(report, commands) {
+// comandos aprovados no relatório anterior desta tarefa/papel (para --retry-failed)
+function previouslyPassed(task, role) {
+  const f = join(REPORTS, `${task}-${role}.json`)
+  if (!existsSync(f)) return new Set()
+  const prev = JSON.parse(readFileSync(f, 'utf8'))
+  return new Set(prev.checks.filter((c) => c.status === 'pass' && c.name.startsWith('cmd: ')).map((c) => c.name))
+}
+
+function checkCommands(report, commands, { full, base, skip = new Set() }) {
   for (const cmd of commands) {
-    const r = run(cmd)
-    report.add(`cmd: ${cmd}`, r.code === 0 ? 'pass' : 'fail', `${r.code === 0 ? 'ok' : `exit ${r.code}`} em ${(r.ms / 1000).toFixed(1)}s`)
+    const name = `cmd: ${cmd}`
+    if (skip.has(name)) {
+      report.add(name, 'pass', 'aprovado na rodada anterior (--retry-failed)')
+      continue
+    }
+    // fora do gate: só os testes afetados pelas mudanças desde a base
+    const pkg = !full && base ? /^pnpm --filter (\S+) test$/.exec(cmd)?.[1] : null
+    const actual = pkg ? `pnpm --filter ${pkg} exec vitest run --passWithNoTests --changed ${base}` : cmd
+    const r = run(actual)
+    const how = pkg ? ' (afetados desde a base)' : ''
+    report.add(name, r.code === 0 ? 'pass' : 'fail', `${r.code === 0 ? 'ok' : `exit ${r.code}`} em ${(r.ms / 1000).toFixed(1)}s${how}`)
     if (r.code !== 0) report.checks.at(-1).output = r.tail
   }
 }
@@ -241,7 +263,10 @@ function runPlaywright(report, task, dir, files) {
   }
   const out = join(REPORTS, `${task.id}-playwright.json`)
   if (existsSync(out)) rmSync(out)
-  const r = run(`pnpm exec playwright test --config ${config} --reporter=json ${dir}`, { env: { PLAYWRIGHT_JSON_OUTPUT_NAME: out } })
+  // desktop sempre; mobile só com os ACs de layout/responsivo (grep do projeto mobile no playwright.config)
+  const mobileGrep = task.mobile.map((id) => id.replace(/-/g, '\\-')).join('|')
+  const projects = mobileGrep ? '--project desktop --project mobile' : '--project desktop'
+  const r = run(`pnpm exec playwright test --config ${config} --reporter=json ${projects} ${dir}`, { env: { PLAYWRIGHT_JSON_OUTPUT_NAME: out, E2E_MOBILE_GREP: mobileGrep } })
   if (!existsSync(out)) {
     report.add('execução playwright', 'fail', `sem relatório JSON (exit ${r.code})`)
     report.checks.at(-1).output = r.tail
@@ -270,9 +295,9 @@ function runPlaywright(report, task, dir, files) {
   const st = json.stats ?? {}
   report.add('execução playwright', r.code === 0 ? 'pass' : 'fail',
     `${st.expected ?? 0} passed, ${st.unexpected ?? 0} failed, ${st.flaky ?? 0} flaky, ${st.skipped ?? 0} skipped`)
-  const projects = new Set(rows.map((x) => x.project))
-  const missing = PW_PROJECTS.filter((p) => !projects.has(p))
-  report.add('projetos E2E desktop e mobile', missing.length ? 'fail' : 'pass', missing.length ? `faltando: ${missing.join(', ')}` : '')
+  const ran = new Set(rows.map((x) => x.project))
+  const missing = (mobileGrep ? ['desktop', 'mobile'] : ['desktop']).filter((p) => !ran.has(p))
+  report.add(mobileGrep ? 'projetos E2E desktop e mobile (ACs de layout)' : 'projeto E2E desktop', missing.length ? 'fail' : 'pass', missing.length ? `faltando: ${missing.join(', ')}` : '')
   return rows
 }
 
@@ -307,10 +332,10 @@ function checkAcceptance(report, task) {
     const passed = mine.filter((t) => t.status === 'passed')
     const failed = mine.filter((t) => t.status === 'failed')
     const skipped = mine.filter((t) => t.status === 'skipped')
-    // Um AC verificado no navegador precisa passar nos DOIS projetos (desktop e mobile).
+    // Um AC verificado no navegador precisa passar no desktop, e também no mobile se for de layout (task.mobile).
     const pwProjects = new Set(mine.filter((t) => t.runner === 'playwright' && t.status === 'passed').map((t) => t.project))
     const pwUsed = mine.some((t) => t.runner === 'playwright')
-    const pwMissing = pwUsed ? PW_PROJECTS.filter((p) => !pwProjects.has(p)) : []
+    const pwMissing = pwUsed ? pwProjectsFor(task, id).filter((p) => !pwProjects.has(p)) : []
     const ok = mine.length > 0 && passed.length > 0 && !failed.length && !skipped.length && !pwMissing.length
     const detail = !mine.length
       ? 'nenhum teste executado com este ID'
@@ -338,7 +363,7 @@ function verifyOperario(task, opts) {
   if (unmet.length) report.add('dependências aceitas', 'warn', `sem relatório aprovado: ${unmet.join(', ')}`)
   checkFiles(report, task.requiredFiles, 'arquivo')
   if (opts.skipCommands) report.add('comandos', 'skip', '--skip-commands')
-  else checkCommands(report, task.commands)
+  else checkCommands(report, task.commands, { full: opts.full, base: opts.base, skip: opts.retryFailed ? previouslyPassed(task.id, 'operario') : undefined })
   checkForbidden(report, FORBIDDEN)
   checkScope(report, [...task.paths, ...SHARED_PATHS], [], opts, (f) => !f.startsWith('tests/'))
   return report
@@ -444,6 +469,8 @@ function parseArgs(argv) {
     else if (a === '--base') opts.base = argv[++i]
     else if (a === '--strict-scope') opts.strict = true
     else if (a === '--skip-commands') opts.skipCommands = true
+    else if (a === '--full') opts.full = true
+    else if (a === '--retry-failed') opts.retryFailed = true
     else if (a === '--max') opts.max = Number(argv[++i])
     else opts.positional.push(a)
   }
@@ -455,7 +482,7 @@ function usage() {
   node spec/verify/verify.mjs list
   node spec/verify/verify.mjs plan [--max 4]
   node spec/verify/verify.mjs lint-spec
-  node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands]
+  node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands] [--full] [--retry-failed]
   node spec/verify/verify.mjs wave <n>`)
   process.exit(2)
 }
