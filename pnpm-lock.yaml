@@ -53,6 +53,9 @@ importers:
       '@crm/shared':
         specifier: workspace:^
         version: link:../../packages/shared
+      '@crm/wa-port':
+        specifier: workspace:^
+        version: link:../../packages/wa-port
       '@hono/node-server':
         specifier: 2.1.1
         version: 2.1.1(hono@4.13.8)
