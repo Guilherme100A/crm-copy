@@ -1,0 +1,132 @@
+{
+  "app": {
+    "loading": "Cargando…",
+    "skipToContent": "Saltar al contenido"
+  },
+  "nav": {
+    "label": "Navegación principal",
+    "sections": {
+      "main": "Principal",
+      "operations": "Operaciones",
+      "management": "Gestión"
+    },
+    "items": {
+      "dashboard": "Panel",
+      "chats": "Chats en vivo",
+      "kanban": "Kanban",
+      "contacts": "Contactos",
+      "flows": "Flujos",
+      "agents": "Agentes de IA",
+      "connections": "Conexiones",
+      "inboundWebhooks": "Webhooks de entrada",
+      "massDispatch": "Envíos masivos",
+      "facebook": "Facebook",
+      "settings": "Configuración",
+      "admin": "Administración",
+      "tutorials": "Tutoriales",
+      "supportAccess": "Accesos de soporte",
+      "mcpCredentials": "Credenciales MCP"
+    },
+    "badges": {
+      "new": "Nuevo"
+    }
+  },
+  "bottomNav": {
+    "label": "Navegación inferior",
+    "home": "Inicio",
+    "more": "Más"
+  },
+  "sidebar": {
+    "collapse": "Contraer menú",
+    "expand": "Expandir menú",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "theme": {
+    "light": "Claro",
+    "dark": "Oscuro",
+    "toggle": "Cambiar tema",
+    "shortcut": "Ctrl+M · ⌘M"
+  },
+  "userMenu": {
+    "open": "Abrir menú del usuario",
+    "profile": "Mi perfil",
+    "logout": "Salir",
+    "language": "Idioma"
+  },
+  "languages": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English",
+    "es": "Español"
+  },
+  "company": {
+    "active": "Empresa activa",
+    "none": "Sin empresa"
+  },
+  "guards": {
+    "permissionDenied": "No tienes permiso para acceder a esta página."
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La dirección que abriste no existe o fue movida.",
+    "home": "Volver al inicio"
+  },
+  "breadcrumbs": {
+    "label": "Ruta de navegación",
+    "home": "Inicio",
+    "back": "Volver",
+    "segments": {
+      "chats": "Chats en vivo",
+      "crms": "Kanban",
+      "customers": "Contactos",
+      "flows": "Flujos",
+      "agentes": "Agentes de IA",
+      "connections": "Conexiones",
+      "settings": "Configuración",
+      "inbound-webhooks": "Webhooks de entrada",
+      "mass-dispatches": "Envíos masivos",
+      "facebook": "Facebook",
+      "profile": "Mi perfil",
+      "admin": "Administración",
+      "support": "Soporte",
+      "access": "Accesos de soporte",
+      "campaigns": "Campañas",
+      "pixel": "Píxel",
+      "profiles": "Perfiles y cuentas"
+    }
+  },
+  "pages": {
+    "placeholder": "Esta área todavía está en construcción.",
+    "welcome": "Panel",
+    "chats": "Chats en vivo",
+    "kanban": "Kanban",
+    "contacts": "Contactos",
+    "flows": "Flujos",
+    "agents": "Agentes de IA",
+    "connections": "Conexiones",
+    "inboundWebhooks": "Webhooks de entrada",
+    "massDispatch": "Envíos masivos",
+    "facebook": "Facebook",
+    "settings": "Configuración",
+    "profile": "Mi perfil",
+    "admin": "Administración",
+    "supportAccess": "Accesos de soporte",
+    "settingsEmpty": "Ninguna sección de configuración disponible.",
+    "settingsTabs": "Secciones de configuración"
+  },
+  "login": {
+    "title": "Iniciar sesión",
+    "subtitle": "Accede a tu cuenta de {appName}",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "submit": "Entrar",
+    "submitting": "Entrando…",
+    "invalid": "Correo o contraseña incorrectos.",
+    "rateLimited": "Demasiados intentos. Inténtalo de nuevo en unos minutos.",
+    "loginRequired": "Inicia sesión para continuar."
+  },
+  "errors": {
+    "generic": "Algo salió mal.",
+    "retry": "Intentar de nuevo"
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "version": 1,
+  "task": "T23",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T05:28:22.209Z",
+  "commit": "51a82c4671fb7217e08273057fc6b06fc4776848",
+  "base": "51a82c4",
+  "changedFiles": [
+    "apps/web/package.json",
+    "apps/web/tsconfig.json",
+    "apps/web/vitest.config.ts",
+    "package.json",
+    "pnpm-lock.yaml",
+    "apps/web/index.html",
+    "apps/web/scripts/i18n-check.mjs",
+    "apps/web/scripts/routes-gen.mjs",
+    "apps/web/src/app/access.ts",
+    "apps/web/src/app/access.unit.test.ts",
+    "apps/web/src/app/guard.ts",
+    "apps/web/src/app/nav.ts",
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/app/shell/breadcrumbs.tsx",
+    "apps/web/src/app/shell/controls.tsx",
+    "apps/web/src/app/shell/nav-list.tsx",
+    "apps/web/src/components/not-found.tsx",
+    "apps/web/src/components/placeholder-page.tsx",
+    "apps/web/src/components/toaster.tsx",
+    "apps/web/src/components/ui/button.tsx",
+    "apps/web/src/features/auth/login-page.tsx",
+    "apps/web/src/features/settings/tabs.ts",
+    "apps/web/src/i18n/core.ts",
+    "apps/web/src/i18n/en/shell.json",
+    "apps/web/src/i18n/es/shell.json",
+    "apps/web/src/i18n/i18n.unit.test.ts",
+    "apps/web/src/i18n/index.tsx",
+    "apps/web/src/i18n/pt-BR/shell.json",
+    "apps/web/src/lib/http.ts",
+    "apps/web/src/lib/lib.unit.test.ts",
+    "apps/web/src/lib/realtime.ts",
+    "apps/web/src/lib/redirect.ts",
+    "apps/web/src/lib/session.ts",
+    "apps/web/src/lib/storage.ts",
+    "apps/web/src/lib/theme.ts",
+    "apps/web/src/lib/toast.ts",
+    "apps/web/src/lib/use-media-query.ts",
+    "apps/web/src/lib/utils.ts",
+    "apps/web/src/main.tsx",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/__root.tsx",
+    "apps/web/src/routes/admin/index.tsx",
+    "apps/web/src/routes/agentes/index.tsx",
+    "apps/web/src/routes/chats/index.tsx",
+    "apps/web/src/routes/connections/index.tsx",
+    "apps/web/src/routes/crms/index.tsx",
+    "apps/web/src/routes/customers/index.tsx",
+    "apps/web/src/routes/facebook/index.tsx",
+    "apps/web/src/routes/flows/index.tsx",
+    "apps/web/src/routes/index.tsx",
+    "apps/web/src/routes/login.tsx",
+    "apps/web/src/routes/mass-dispatches/index.tsx",
+    "apps/web/src/routes/profile/index.tsx",
+    "apps/web/src/routes/settings/inbound-webhooks.tsx",
+    "apps/web/src/routes/settings/index.tsx",
+    "apps/web/src/routes/support/access.tsx",
+    "apps/web/src/routes/welcome/index.tsx",
+    "apps/web/src/styles.css",
+    "apps/web/src/vite-env.d.ts",
+    "apps/web/vite.config.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: apps/web/src/main.tsx",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/web/src/app/nav.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/web/src/lib/http.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/web/src/lib/realtime.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 4.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 10.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "60 arquivo(s) alterado(s)"
+    }
+  ]
+}

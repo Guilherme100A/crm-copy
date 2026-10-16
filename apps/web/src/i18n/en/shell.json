@@ -1,0 +1,132 @@
+{
+  "app": {
+    "loading": "Loading…",
+    "skipToContent": "Skip to content"
+  },
+  "nav": {
+    "label": "Main navigation",
+    "sections": {
+      "main": "Main",
+      "operations": "Operations",
+      "management": "Management"
+    },
+    "items": {
+      "dashboard": "Dashboard",
+      "chats": "Live chats",
+      "kanban": "Kanban",
+      "contacts": "Contacts",
+      "flows": "Flows",
+      "agents": "AI agents",
+      "connections": "Connections",
+      "inboundWebhooks": "Inbound webhooks",
+      "massDispatch": "Mass messaging",
+      "facebook": "Facebook",
+      "settings": "Settings",
+      "admin": "Administration",
+      "tutorials": "Tutorials",
+      "supportAccess": "Support access",
+      "mcpCredentials": "MCP credentials"
+    },
+    "badges": {
+      "new": "New"
+    }
+  },
+  "bottomNav": {
+    "label": "Bottom navigation",
+    "home": "Home",
+    "more": "More"
+  },
+  "sidebar": {
+    "collapse": "Collapse menu",
+    "expand": "Expand menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "toggle": "Toggle theme",
+    "shortcut": "Ctrl+M · ⌘M"
+  },
+  "userMenu": {
+    "open": "Open user menu",
+    "profile": "My profile",
+    "logout": "Sign out",
+    "language": "Language"
+  },
+  "languages": {
+    "pt-BR": "Português (Brasil)",
+    "en": "English",
+    "es": "Español"
+  },
+  "company": {
+    "active": "Active company",
+    "none": "No company"
+  },
+  "guards": {
+    "permissionDenied": "You don't have permission to access this page."
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "The address you opened doesn't exist or has moved.",
+    "home": "Back to home"
+  },
+  "breadcrumbs": {
+    "label": "Breadcrumb",
+    "home": "Home",
+    "back": "Back",
+    "segments": {
+      "chats": "Live chats",
+      "crms": "Kanban",
+      "customers": "Contacts",
+      "flows": "Flows",
+      "agentes": "AI agents",
+      "connections": "Connections",
+      "settings": "Settings",
+      "inbound-webhooks": "Inbound webhooks",
+      "mass-dispatches": "Mass messaging",
+      "facebook": "Facebook",
+      "profile": "My profile",
+      "admin": "Administration",
+      "support": "Support",
+      "access": "Support access",
+      "campaigns": "Campaigns",
+      "pixel": "Pixel",
+      "profiles": "Profiles and accounts"
+    }
+  },
+  "pages": {
+    "placeholder": "This area is still under construction.",
+    "welcome": "Dashboard",
+    "chats": "Live chats",
+    "kanban": "Kanban",
+    "contacts": "Contacts",
+    "flows": "Flows",
+    "agents": "AI agents",
+    "connections": "Connections",
+    "inboundWebhooks": "Inbound webhooks",
+    "massDispatch": "Mass messaging",
+    "facebook": "Facebook",
+    "settings": "Settings",
+    "profile": "My profile",
+    "admin": "Administration",
+    "supportAccess": "Support access",
+    "settingsEmpty": "No settings section available.",
+    "settingsTabs": "Settings sections"
+  },
+  "login": {
+    "title": "Sign in",
+    "subtitle": "Access your {appName} account",
+    "email": "Email",
+    "password": "Password",
+    "submit": "Sign in",
+    "submitting": "Signing in…",
+    "invalid": "Wrong email or password.",
+    "rateLimited": "Too many attempts. Try again in a few minutes.",
+    "loginRequired": "Sign in to continue."
+  },
+  "errors": {
+    "generic": "Something went wrong.",
+    "retry": "Try again"
+  }
+}
