@@ -3,56 +3,56 @@
   "task": "T120",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T08:12:55.063Z",
-  "commit": "358c67f0fb93e78e7d0cdf475113959fa6a89243",
-  "base": "358c67f",
+  "at": "2026-10-16T08:19:56.949Z",
+  "commit": "d31eda16da714481c3aaacabffcfb8a49af9f173",
+  "base": "570b730",
   "changedFiles": [
     "apps/api/src/server.ts",
     "apps/worker/package.json",
     "apps/worker/src/boot/config.ts",
+    "apps/worker/src/boot/flow-run-events.ts",
+    "apps/worker/src/boot/flow-run-events.unit.test.ts",
+    "apps/worker/src/boot/production-worker.db.unit.test.ts",
+    "apps/worker/src/boot/production-worker.ts",
     "apps/worker/src/boot/production.ts",
     "apps/worker/src/boot/production.unit.test.ts",
     "apps/worker/src/index.ts",
     "apps/worker/src/main.ts",
     "packages/core/src/ai-runtime/runtime.db.unit.test.ts",
     "packages/core/src/ai-runtime/runtime.ts",
-    "packages/core/src/chats/lifecycle/index.ts",
-    "packages/core/src/chats/lifecycle/service.ts",
-    "packages/core/src/chats/send/service.ts",
-    "packages/core/src/flows/nodes/messaging/index.ts",
-    "packages/core/src/flows/triggers/triggers.db.unit.test.ts",
-    "packages/core/src/flows/triggers/triggers.ts",
-    "pnpm-lock.yaml",
-    "apps/worker/src/boot/flow-run-events.ts",
-    "apps/worker/src/boot/flow-run-events.unit.test.ts",
-    "apps/worker/src/boot/production-worker.db.unit.test.ts",
-    "apps/worker/src/boot/production-worker.ts",
     "packages/core/src/chats/lifecycle/hooks.ts",
     "packages/core/src/chats/lifecycle/hooks.unit.test.ts",
+    "packages/core/src/chats/lifecycle/index.ts",
+    "packages/core/src/chats/lifecycle/service.ts",
     "packages/core/src/chats/send/record.db.unit.test.ts",
+    "packages/core/src/chats/send/service.ts",
+    "packages/core/src/flows/nodes/messaging/index.ts",
     "packages/core/src/flows/nodes/messaging/production.ts",
-    "packages/core/src/flows/nodes/messaging/production.unit.test.ts"
+    "packages/core/src/flows/nodes/messaging/production.unit.test.ts",
+    "packages/core/src/flows/triggers/triggers.db.unit.test.ts",
+    "packages/core/src/flows/triggers/triggers.ts",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 10.8s"
+      "detail": "ok em 11.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 5.5s"
+      "detail": "ok em 3.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 40.1s"
+      "detail": "ok em 41.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 12.2s"
+      "detail": "ok em 11.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
@@ -62,22 +62,22 @@
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 17.7s"
+      "detail": "ok em 15.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.1s"
+      "detail": "ok em 11.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 32.8s"
+      "detail": "ok em 37.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
