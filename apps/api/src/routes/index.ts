@@ -17,6 +17,8 @@ import { aiAgentsRoutes } from './ai-agents/index'
 import { departmentsRoutes } from './departments/index'
 import { businessHoursRoutes } from './business-hours/index'
 import { chatsRoutes } from './chats/index'
+import { flowRunsRoutes } from './flow-runs/index'
+import { flowShareRoutes } from './flow-share/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -39,4 +41,6 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', departmentsRoutes(deps))
   app.route('/', businessHoursRoutes(deps))
   app.route('/', chatsRoutes(deps))
+  app.route('/', flowRunsRoutes(deps))
+  app.route('/', flowShareRoutes(deps))
 }

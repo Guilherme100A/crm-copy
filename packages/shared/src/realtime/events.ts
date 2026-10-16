@@ -16,6 +16,16 @@ const defineEvent = <D extends z.ZodType>(data: D, permission: PermissionKey | n
   permission,
 })
 
+/** Dados dos eventos `flow_run.*` (T43). */
+const flowRunEventData = () =>
+  z.looseObject({
+    run_id: idSchema,
+    flow_id: idSchema,
+    contact_id: idSchema.nullable().optional(),
+    chat_id: idSchema.nullable().optional(),
+    status: z.string(),
+  })
+
 export const REALTIME_EVENTS = {
   /** Dados da empresa mudaram (nome, fuso, status…): o cliente recarrega a empresa. */
   'company.updated': defineEvent(
@@ -86,6 +96,13 @@ export const REALTIME_EVENTS = {
     z.looseObject({ flow_id: idSchema, actor_id: idSchema.nullable(), mutation: z.string() }),
     'flows.view',
   ),
+  // ---- T43: execuções de fluxo (flow_execution_created/cancelled da referência) ----
+  /** Run criado (disparo manual, gatilho…). */
+  'flow_run.created': defineEvent(flowRunEventData(), 'flows.view'),
+  /** Run mudou de estado (esperando, concluído, falhou…). */
+  'flow_run.updated': defineEvent(flowRunEventData(), 'flows.view'),
+  /** Run cancelado (manual, novo disparo para o contato, cancelar todos da conexão). */
+  'flow_run.cancelled': defineEvent(flowRunEventData(), 'flows.view'),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

@@ -28,7 +28,7 @@ export const PERMISSION_CATALOG = [
   { group: 'dashboard', keys: ['dashboard.sales', 'dashboard.support'] },
   { group: 'chat', keys: ['chat.view', 'chat.block', 'chat.assign_others', 'chat.delete'] },
   { group: 'kanban', keys: ved('kanban') },
-  { group: 'flows', keys: ved('flows') },
+  { group: 'flows', keys: [...ved('flows'), 'flows.run'] },
   { group: 'contacts', keys: ved('contacts') },
   { group: 'webhooks', keys: ved('webhooks') },
   { group: 'connections', keys: ved('connections') },

@@ -14,6 +14,8 @@ const MEMBER: readonly PermissionKey[] = [
   'chat.view',
   'kanban.view',
   'flows.view',
+  // T43: atendente dispara/cancela fluxo pelo chat (como na referência).
+  'flows.run',
   'contacts.view',
   'settings.view',
   ...area('view'),

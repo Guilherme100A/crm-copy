@@ -14,6 +14,7 @@ import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { requirePerm } from '../../middleware/authorize'
 import { setAudit } from '../../middleware/audit'
 import { FlowGraph, genKey } from './graph'
+import { flowServices } from '../flow-runs/services'
 import { BLOCKING_REFERENCE_KINDS, deletionImpact, type FlowReferenceSource } from './impact'
 
 export { registerFlowReferenceSource } from './impact'
@@ -268,12 +269,23 @@ export function flowsRoutes(deps: ResolvedDeps) {
     const errors = validateFlow(def)
     if (errors.length) throw new ApiError('VALIDATION_ERROR', 'O fluxo tem erros e não pode ser ativado', { errors })
     const version = await run(() => store.publish(ctx, id))
-    const flow = await run(() => store.updateFlow(ctx, id, { status: 'active' }))
+    // T43/T30: ativar também retoma os runs congelados pela pausa (prazo restante reagendado).
+    await flowServices(deps).control.resumeFlow(ctx, id)
+    const flow = await run(() => store.getFlow(ctx, id))
     setAudit(c, { action: 'flow.activate', targetType: 'flow', targetId: id, detail: { version: version.version } })
     return c.json({ flow: await flowDto(flow), version: { id: version.id, version: version.version } })
   })
 
-  app.post('/api/flows/:id/pause', requirePerm('flows.edit'), (c) => setStatus(c, 'paused', 'pause'))
+  // T43/T30: pausar congela os runs em espera (timers removidos, prazo restante guardado).
+  app.post('/api/flows/:id/pause', requirePerm('flows.edit'), async (c) => {
+    const ctx = ctxOf(c)
+    const id = c.req.param('id')
+    const current = await run(() => store.getFlow(ctx, id))
+    const { paused_runs } = await flowServices(deps).control.pauseFlow(ctx, current.id)
+    const flow = await run(() => store.getFlow(ctx, id))
+    setAudit(c, { action: 'flow.pause', targetType: 'flow', targetId: id, detail: { paused_runs } })
+    return c.json({ flow: await flowDto(flow), paused_runs })
+  })
   app.post('/api/flows/:id/archive', requirePerm('flows.edit'), (c) => setStatus(c, 'archived', 'archive'))
   app.post('/api/flows/:id/unarchive', requirePerm('flows.edit'), async (c) => {
     const flow = await run(() => store.getFlow(ctxOf(c), c.req.param('id')))
