@@ -4,10 +4,13 @@
 import { Hono, type Context, type MiddlewareHandler } from 'hono'
 import { z } from 'zod'
 import { toPttOgg } from '@crm/ai'
+import { FsBlobStore } from '@crm/node-kit'
 import {
   ChatQueryService,
   ChatSendError,
   ChatSendService,
+  mediaDownloadName,
+  MessageMediaService,
   ChatsError,
   crmConnectionSessionResolver,
   RealtimePublisher,
@@ -193,6 +196,35 @@ export function chatMessagesRoutes(deps: ResolvedDeps) {
     const chat = await domain(() => serviceFor(deps).markRead(companyId, c.req.param('id')))
     setAudit(c, { skip: true })
     return c.json({ chat: toChatDto(chat) }, 200)
+  })
+
+  // T75: mídia da mensagem (saída: o blob enviado; entrada: baixada do WhatsApp na 1ª vez). `?download=1` = anexo.
+  app.get('/api/chats/:id/messages/:mid/media', perm, scoped, async (c) => {
+    const { companyId } = getCompanyCtx(c)
+    if (!deps.waGateway) throw new ApiError('INTERNAL', 'WaGateway não configurado')
+    const gateway = deps.waGateway
+    // Lido na requisição: o harness E2E injeta o blobStore nas deps depois de montar as rotas.
+    const svc = new MessageMediaService({ db: deps.db, blobs: deps.blobStore ?? new FsBlobStore(), downloadMedia: (s, ref) => gateway.downloadMedia(s, ref) })
+    const mid = c.req.param('mid')
+    const media = await domain(() => svc.get(companyId, c.req.param('id'), mid))
+    const name = mediaDownloadName(media.type, mid, media.mime, media.fileName)
+    const disposition = c.req.query('download') === '1' ? 'attachment' : 'inline'
+    setAudit(c, { skip: true })
+    return c.body(new Uint8Array(media.data), 200, {
+      'content-type': media.mime,
+      'content-length': String(media.data.byteLength),
+      'content-disposition': `${disposition}; filename*=UTF-8''${encodeURIComponent(name)}`,
+      'cache-control': 'private, max-age=3600',
+      'x-content-type-options': 'nosniff',
+    })
+  })
+
+  // T75: reenvio de mensagem com falha (mesmo conteúdo, pelo pipeline).
+  app.post('/api/chats/:id/messages/:mid/retry', perm, scoped, async (c) => {
+    const s = senderOf(c)
+    const message = await domain(() => serviceFor(deps).retry(s.companyId, c.req.param('id'), c.req.param('mid'), s))
+    setAudit(c, { action: 'chat_messages.retry', targetType: 'message', targetId: message.id })
+    return c.json({ message }, 200)
   })
 
   return app

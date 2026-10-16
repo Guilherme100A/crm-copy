@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "task": "T75",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T08:41:41.761Z",
+  "commit": "10fa4d0bcdff94da0ca757c2a2d6a17010760737",
+  "base": "10fa4d0",
+  "changedFiles": [
+    "apps/api/src/routes/chat-messages/index.ts",
+    "packages/core/src/chats/send/index.ts",
+    "packages/core/src/chats/send/service.ts",
+    "apps/api/src/routes/chat-messages/t75.db.unit.test.ts",
+    "apps/web/src/features/chat-thread/api.ts",
+    "apps/web/src/features/chat-thread/chat-slot.tsx",
+    "apps/web/src/features/chat-thread/chat-thread.tsx",
+    "apps/web/src/features/chat-thread/chat-thread.unit.test.ts",
+    "apps/web/src/features/chat-thread/forward-dialog.tsx",
+    "apps/web/src/features/chat-thread/message-bubble.tsx",
+    "apps/web/src/features/chat-thread/realtime.ts",
+    "apps/web/src/features/chat-thread/reply-store.ts",
+    "apps/web/src/features/chat-thread/timeline.ts",
+    "apps/web/src/i18n/en/chat-thread.json",
+    "apps/web/src/i18n/es/chat-thread.json",
+    "apps/web/src/i18n/pt-BR/chat-thread.json",
+    "packages/core/src/chats/send/message-media.ts",
+    "packages/core/src/chats/send/t75.db.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 13.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 50.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 9.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 4.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 46.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 5.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 4.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 2.8s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "18 arquivo(s) alterado(s)"
+    }
+  ]
+}

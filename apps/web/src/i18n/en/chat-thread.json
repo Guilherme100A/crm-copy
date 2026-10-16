@@ -1,0 +1,72 @@
+{
+  "status": {
+    "pending": "Sending",
+    "sent": "Sent",
+    "delivered": "Delivered",
+    "read": "Read",
+    "failed": "Failed",
+    "cancelled": "Cancelled"
+  },
+  "types": {
+    "text": "Message",
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "voice": "Voice message",
+    "document": "Document",
+    "sticker": "Sticker",
+    "location": "Location",
+    "contact": "Contact",
+    "unknown": "Unsupported message",
+    "system": "System message"
+  },
+  "sender": {
+    "ai": "AI agent",
+    "flow": "Flow"
+  },
+  "menu": {
+    "open": "More options",
+    "reply": "Reply",
+    "react": "React",
+    "forward": "Forward",
+    "copy": "Copy",
+    "download": "Download media",
+    "delete": "Delete for everyone"
+  },
+  "note": {
+    "label": "Internal note"
+  },
+  "forward": {
+    "title": "Forward message",
+    "search": "Search conversation",
+    "empty": "No conversations found.",
+    "submit": "Forward",
+    "done": "Message forwarded."
+  },
+  "delete": {
+    "title": "Delete for everyone?",
+    "body": "The message will also be deleted from the contact's WhatsApp.",
+    "submit": "Delete"
+  },
+  "errors": {
+    "load": "Couldn't load messages.",
+    "retryLoad": "Try again",
+    "forward": "Couldn't forward.",
+    "copy": "Couldn't copy.",
+    "react": "Couldn't react.",
+    "retry": "Couldn't resend.",
+    "delete": "Couldn't delete."
+  },
+  "deleted": "Message deleted",
+  "viewOnce": "View once",
+  "openMap": "Open map",
+  "retry": "Try again",
+  "quotedUnavailable": "Quoted message",
+  "replyingTo": "Replying",
+  "loadingOlder": "Loading earlier messages…",
+  "empty": "No messages in this conversation yet.",
+  "newMessages": "{count} new",
+  "copied": "Copied.",
+  "cancel": "Cancel",
+  "mediaUnavailable": "Media unavailable"
+}

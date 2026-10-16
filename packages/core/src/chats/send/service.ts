@@ -1,7 +1,7 @@
 // Envio, mídia, reação, apagar, encaminhar e leitura no chat (SPEC T49; 03-chats F31–F47).
 // Todo envio passa por `WaGateway.send` (pipeline do engine: gates, fila, antiban; SPEC 1.4 nº 2). A mensagem do
 // CRM é reservada (`queued`) antes do gateway, então uma repetição com a mesma Idempotency-Key nunca reenvia.
-import { and, desc, eq, lt, or, sql } from 'drizzle-orm'
+import { and, desc, eq, inArray, lt, or, sql } from 'drizzle-orm'
 import { chatEvents, chats, connections, contacts, messageReactions, messages, type CrmMessageStatus, type Database } from '@crm/db'
 import type { RealtimeEventData, RealtimeEventType } from '@crm/shared'
 import type { MessageStatus, MessageView, OutgoingContent, PresenceKind, WaGateway } from '@crm/wa-port'
@@ -182,7 +182,7 @@ export class ChatSendService {
   // ---- leitura ----------------------------------------------------------------------------------------------
 
   /** Histórico paginado (25 por página, da mais nova para trás); `before` = id da mais antiga já carregada. */
-  async list(companyId: string, chatId: string, q: { before?: string; limit?: number } = {}): Promise<{ items: MessageDto[]; next_cursor: string | null }> {
+  async list(companyId: string, chatId: string, q: { before?: string; limit?: number } = {}): Promise<{ items: MessageWithReactions[]; next_cursor: string | null }> {
     await this.chat(companyId, chatId)
     const limit = Math.min(Math.max(q.limit ?? MESSAGES_PAGE_SIZE, 1), 100)
     const conds = [eq(messages.companyId, companyId), eq(messages.chatId, chatId)]
@@ -193,7 +193,85 @@ export class ChatSendService {
     }
     const rows = await this.db.select().from(messages).where(and(...conds)).orderBy(desc(messages.createdAt), desc(messages.id)).limit(limit + 1)
     const page = rows.slice(0, limit)
-    return { items: page.reverse().map(toMessageDto), next_cursor: rows.length > limit ? page[0]!.id : null }
+    return { items: await this.withReactions(companyId, page.reverse().map(toMessageDto)), next_cursor: rows.length > limit ? page[0]!.id : null }
+  }
+
+  /** T75: reações gravadas de cada mensagem (`[{ emoji, actor_type, user_id }]`, da mais antiga para a mais nova). */
+  private async withReactions(companyId: string, items: MessageDto[]): Promise<MessageWithReactions[]> {
+    if (!items.length) return []
+    const rows = await this.db
+      .select({ messageId: messageReactions.messageId, emoji: messageReactions.emoji, actorType: messageReactions.actorType, userId: messageReactions.actorUserId })
+      .from(messageReactions)
+      .where(and(eq(messageReactions.companyId, companyId), inArray(messageReactions.messageId, items.map((m) => m.id))))
+      .orderBy(messageReactions.createdAt)
+    const by = new Map<string, MessageReactionDto[]>()
+    for (const r of rows) {
+      const list = by.get(r.messageId) ?? []
+      list.push({ emoji: r.emoji, actor_type: r.actorType, user_id: r.userId })
+      by.set(r.messageId, list)
+    }
+    return items.map((m) => ({ ...m, reactions: by.get(m.id) ?? [] }))
+  }
+
+  /**
+   * T75: reenvia uma mensagem que falhou (mesmo conteúdo, pelo `WaGateway.send`). Só `failed` e de saída; volta a
+   * `queued` e segue como um envio normal (se o gateway recusar de novo, volta a `failed` e o erro sobe).
+   */
+  async retry(companyId: string, chatId: string, messageId: string, sender: Sender): Promise<MessageDto> {
+    const msg = await this.message(companyId, messageId, chatId)
+    if (msg.direction !== 'outbound' || msg.status !== 'failed') throw new ChatSendError('conflict', 'Só mensagens com falha podem ser reenviadas', { status: msg.status })
+    const prepared = this.preparedFrom(msg)
+    if (!prepared) throw new ChatSendError('conflict', 'Mensagem sem conteúdo reenviável')
+    const { chat, phone, sessionId } = await this.target(companyId, chatId)
+    await this.db.update(messages).set({ status: 'queued', error: null, updatedAt: this.now() }).where(eq(messages.id, msg.id))
+    await this.publish(companyId, 'message.status', { chat_id: chat.id, message_id: msg.id, status: 'queued', error: null }, chat)
+    const viewOnce = (msg.media as Record<string, unknown> | null)?.view_once === true
+    let view
+    try {
+      view = await this.opts.waGateway.send({ sessionId, phone, content: prepared.content, actor: actorOf(sender), ...(viewOnce ? { viewOnce: true } : {}) })
+    } catch (err) {
+      const error = err instanceof Error ? err.message : String(err)
+      await this.db.update(messages).set({ status: 'failed', error, updatedAt: this.now() }).where(eq(messages.id, msg.id))
+      await this.publish(companyId, 'message.status', { chat_id: chat.id, message_id: msg.id, status: 'failed', error }, chat)
+      throw err
+    }
+    const [sent] = await this.db
+      .update(messages)
+      .set({
+        status: PIPELINE_STATUS[view.status] ?? 'queued',
+        pipelineMessageId: view.id,
+        ...(view.transportMessageId ? { waMessageId: view.transportMessageId } : {}),
+        ...(view.sentAt ? { sentAt: new Date(view.sentAt) } : {}),
+        updatedAt: this.now(),
+      })
+      .where(eq(messages.id, msg.id))
+      .returning()
+    await this.publish(companyId, 'message.status', { chat_id: chat.id, message_id: msg.id, status: sent!.status, error: null }, chat)
+    return toMessageDto(sent!)
+  }
+
+  /** Conteúdo do gateway reconstruído do registro (reenvio): mídia pelo blob, localização, contato ou texto. */
+  private preparedFrom(msg: MessageRow): Prepared | null {
+    const media = (msg.media ?? null) as Record<string, unknown> | null
+    const sha = typeof media?.key === 'string' ? media.key : typeof media?.sha256 === 'string' ? media.sha256 : null
+    if (['image', 'video', 'audio', 'document', 'sticker'].includes(msg.type) && sha && typeof media?.mime === 'string')
+      return this.mediaContent(msg.type, { sha256: sha, mime: media.mime, fileName: typeof media.file_name === 'string' ? media.file_name : null }, msg.body, media.ptt === true)
+    const loc = media?.location as { latitude?: number; longitude?: number; name?: string | null; address?: string | null } | undefined
+    if (msg.type === 'location' && typeof loc?.latitude === 'number' && typeof loc.longitude === 'number')
+      return {
+        content: { location: { latitude: loc.latitude, longitude: loc.longitude, ...(loc.name ? { name: loc.name } : {}), ...(loc.address ? { address: loc.address } : {}) } },
+        type: 'location',
+        body: msg.body,
+        media,
+        presence: null,
+      }
+    const contact = media?.contact as { name?: string; phone?: string } | undefined
+    if (msg.type === 'contact' && contact?.name && contact.phone) {
+      const c = { name: contact.name, phone: contact.phone }
+      return { content: { contact: { displayName: c.name, vcard: vcardOf(c) } }, type: 'contact', body: msg.body, media, presence: null }
+    }
+    if (msg.body?.trim()) return { content: { text: msg.body }, type: 'text', body: msg.body, media: null, presence: null }
+    return null
   }
 
   /** Marca o chat como lido (zera não lidas). */
@@ -573,3 +651,12 @@ export function crmConnectionSessionResolver(db: Database): SessionResolver {
     }
   }
 }
+
+/** T75: reação gravada de uma mensagem. */
+export interface MessageReactionDto {
+  emoji: string
+  actor_type: string
+  user_id: string | null
+}
+
+export type MessageWithReactions = MessageDto & { reactions: MessageReactionDto[] }

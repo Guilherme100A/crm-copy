@@ -1,0 +1,72 @@
+{
+  "status": {
+    "pending": "Enviando",
+    "sent": "Enviada",
+    "delivered": "Entregue",
+    "read": "Lida",
+    "failed": "Falhou",
+    "cancelled": "Cancelada"
+  },
+  "types": {
+    "text": "Mensagem",
+    "image": "Imagem",
+    "video": "Vídeo",
+    "audio": "Áudio",
+    "voice": "Mensagem de voz",
+    "document": "Documento",
+    "sticker": "Figurinha",
+    "location": "Localização",
+    "contact": "Contato",
+    "unknown": "Mensagem não suportada",
+    "system": "Mensagem do sistema"
+  },
+  "sender": {
+    "ai": "Agente de IA",
+    "flow": "Fluxo"
+  },
+  "menu": {
+    "open": "Mais opções",
+    "reply": "Responder",
+    "react": "Reagir",
+    "forward": "Encaminhar",
+    "copy": "Copiar",
+    "download": "Baixar mídia",
+    "delete": "Apagar para todos"
+  },
+  "note": {
+    "label": "Nota interna"
+  },
+  "forward": {
+    "title": "Encaminhar mensagem",
+    "search": "Buscar conversa",
+    "empty": "Nenhuma conversa encontrada.",
+    "submit": "Encaminhar",
+    "done": "Mensagem encaminhada."
+  },
+  "delete": {
+    "title": "Apagar para todos?",
+    "body": "A mensagem será apagada no WhatsApp do contato também.",
+    "submit": "Apagar"
+  },
+  "errors": {
+    "load": "Não foi possível carregar as mensagens.",
+    "retryLoad": "Tentar novamente",
+    "forward": "Não foi possível encaminhar.",
+    "copy": "Não foi possível copiar.",
+    "react": "Não foi possível reagir.",
+    "retry": "Não foi possível reenviar.",
+    "delete": "Não foi possível apagar."
+  },
+  "deleted": "Mensagem apagada",
+  "viewOnce": "Visualização única",
+  "openMap": "Abrir no mapa",
+  "retry": "Tentar novamente",
+  "quotedUnavailable": "Mensagem citada",
+  "replyingTo": "Respondendo",
+  "loadingOlder": "Carregando mensagens anteriores…",
+  "empty": "Nenhuma mensagem nesta conversa ainda.",
+  "newMessages": "{count} nova(s)",
+  "copied": "Copiado.",
+  "cancel": "Cancelar",
+  "mediaUnavailable": "Mídia indisponível"
+}

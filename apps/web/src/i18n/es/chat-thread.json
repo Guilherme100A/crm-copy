@@ -1,0 +1,72 @@
+{
+  "status": {
+    "pending": "Enviando",
+    "sent": "Enviado",
+    "delivered": "Entregado",
+    "read": "Leído",
+    "failed": "Falló",
+    "cancelled": "Cancelado"
+  },
+  "types": {
+    "text": "Mensaje",
+    "image": "Imagen",
+    "video": "Video",
+    "audio": "Audio",
+    "voice": "Mensaje de voz",
+    "document": "Documento",
+    "sticker": "Sticker",
+    "location": "Ubicación",
+    "contact": "Contacto",
+    "unknown": "Mensaje no compatible",
+    "system": "Mensaje del sistema"
+  },
+  "sender": {
+    "ai": "Agente de IA",
+    "flow": "Flujo"
+  },
+  "menu": {
+    "open": "Más opciones",
+    "reply": "Responder",
+    "react": "Reaccionar",
+    "forward": "Reenviar",
+    "copy": "Copiar",
+    "download": "Descargar archivo",
+    "delete": "Eliminar para todos"
+  },
+  "note": {
+    "label": "Nota interna"
+  },
+  "forward": {
+    "title": "Reenviar mensaje",
+    "search": "Buscar conversación",
+    "empty": "No se encontraron conversaciones.",
+    "submit": "Reenviar",
+    "done": "Mensaje reenviado."
+  },
+  "delete": {
+    "title": "¿Eliminar para todos?",
+    "body": "El mensaje también se eliminará del WhatsApp del contacto.",
+    "submit": "Eliminar"
+  },
+  "errors": {
+    "load": "No fue posible cargar los mensajes.",
+    "retryLoad": "Reintentar",
+    "forward": "No fue posible reenviar.",
+    "copy": "No fue posible copiar.",
+    "react": "No fue posible reaccionar.",
+    "retry": "No fue posible reenviar.",
+    "delete": "No fue posible eliminar."
+  },
+  "deleted": "Mensaje eliminado",
+  "viewOnce": "Visualización única",
+  "openMap": "Abrir en el mapa",
+  "retry": "Reintentar",
+  "quotedUnavailable": "Mensaje citado",
+  "replyingTo": "Respondiendo",
+  "loadingOlder": "Cargando mensajes anteriores…",
+  "empty": "Aún no hay mensajes en esta conversación.",
+  "newMessages": "{count} nuevo(s)",
+  "copied": "Copiado.",
+  "cancel": "Cancelar",
+  "mediaUnavailable": "Archivo no disponible"
+}
