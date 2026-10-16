@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T42 (Bigorna/Lupa), T70 (Torno/Sonda), T104 (Cinzel/Radar).
+- Em andamento (3 pares): T42 (Bigorna/Lupa), T70 (Torno/Sonda), T125 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -86,7 +86,7 @@
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
-| 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | TODO | | | 0 | |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
@@ -137,7 +137,7 @@
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | TODO | | | 0 | |
-| 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | TODO | | | 0 | |
+| 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
