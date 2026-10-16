@@ -3,46 +3,46 @@
   "task": "T37",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T09:27:17.875Z",
-  "commit": "bdc48468e69b810fa64dc7ddcee62e4c6caee2fc",
-  "base": "bdc4846",
+  "at": "2026-10-16T09:33:24.731Z",
+  "commit": "777e9138fd7aebc397d440aadd8e6e8a126a0f33",
+  "base": "347b8ff",
   "changedFiles": [
     "apps/api/src/e2e/e2e.db.unit.test.ts",
+    "apps/api/src/routes/ai-usage/index.ts",
+    "apps/api/src/routes/ai-usage/queries.ts",
     "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/platform-ai/index.ts",
+    "apps/api/src/routes/platform-ai/platform-ai.db.unit.test.ts",
     "apps/api/src/server.ts",
     "apps/worker/src/boot/production-worker.ts",
     "packages/db/src/index.ts",
+    "packages/db/src/seed/modules/ai-prices.db.unit.test.ts",
+    "packages/db/src/seed/modules/ai-prices.ts",
     "packages/db/src/seed/modules/index.ts",
     "packages/db/src/seed/seed.db.unit.test.ts",
     "packages/shared/src/permissions/catalog.ts",
-    "packages/shared/src/permissions/defaults.ts",
-    "apps/api/src/routes/ai-usage/index.ts",
-    "apps/api/src/routes/ai-usage/queries.ts",
-    "apps/api/src/routes/platform-ai/index.ts",
-    "apps/api/src/routes/platform-ai/platform-ai.db.unit.test.ts",
-    "packages/db/src/seed/modules/ai-prices.db.unit.test.ts",
-    "packages/db/src/seed/modules/ai-prices.ts"
+    "packages/shared/src/permissions/defaults.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 11.8s"
+      "detail": "ok em 10.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 10.9s"
+      "detail": "ok em 3.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 64.4s"
+      "detail": "ok em 48.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 9.8s"
+      "detail": "ok em 8.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
@@ -52,7 +52,7 @@
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 57.7s"
+      "detail": "ok em 44.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
