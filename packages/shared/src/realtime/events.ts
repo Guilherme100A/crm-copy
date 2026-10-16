@@ -1,0 +1,88 @@
+// Realtime (SPEC 3.7): envelope `{ id, type, company_id, at, data }` e catálogo tipado de eventos `<domínio>.<ação>`.
+// Arquivo compartilhado: cada módulo acrescenta seus tipos em REALTIME_EVENTS de forma aditiva.
+import * as z from 'zod'
+import { idSchema } from '../ids'
+import type { PermissionKey } from '../permissions/catalog'
+
+interface RealtimeEventDef<D extends z.ZodType = z.ZodType> {
+  /** Schema do `data`. */
+  data: D
+  /** Permissão exigida para receber o evento (filtro no servidor); `null` = qualquer membro. */
+  permission: PermissionKey | null
+}
+
+const defineEvent = <D extends z.ZodType>(data: D, permission: PermissionKey | null = null): RealtimeEventDef<D> => ({
+  data,
+  permission,
+})
+
+export const REALTIME_EVENTS = {
+  /** Dados da empresa mudaram (nome, fuso, status…): o cliente recarrega a empresa. */
+  'company.updated': defineEvent(
+    z.object({
+      company_id: idSchema.optional(),
+      id: idSchema.optional(),
+      name: z.string().optional(),
+      fields: z.array(z.string()).optional(),
+    }),
+  ),
+  /** Permissões/escopo de um membro mudaram: o cliente desse usuário recarrega o perfil. */
+  'member.permissions_changed': defineEvent(
+    z.object({
+      company_id: idSchema.optional(),
+      user_id: idSchema.optional(),
+      role: z.enum(['owner', 'admin', 'member']).optional(),
+      permission_keys: z.array(z.string()).nullable().optional(),
+    }),
+  ),
+} as const satisfies Record<string, RealtimeEventDef>
+
+export type RealtimeEventType = keyof typeof REALTIME_EVENTS
+export type RealtimeEventData<T extends RealtimeEventType> = z.infer<(typeof REALTIME_EVENTS)[T]['data']>
+
+export const REALTIME_EVENT_TYPES = Object.keys(REALTIME_EVENTS) as RealtimeEventType[]
+
+export const realtimeEventTypeSchema = z.enum(REALTIME_EVENT_TYPES as [RealtimeEventType, ...RealtimeEventType[]])
+
+export function isRealtimeEventType(value: unknown): value is RealtimeEventType {
+  return typeof value === 'string' && Object.hasOwn(REALTIME_EVENTS, value)
+}
+
+export type RealtimeEnvelope<T extends RealtimeEventType = RealtimeEventType> = {
+  [K in T]: {
+    /** Id do Redis Stream (`<ms>-<seq>`), também usado como `id:` do SSE. */
+    id: string
+    type: K
+    company_id: string
+    /** ISO 8601 UTC. */
+    at: string
+    data: RealtimeEventData<K>
+  }
+}[T]
+
+/** Envelope validado: `type` precisa estar no catálogo e `data` no schema do tipo. */
+export const realtimeEnvelopeSchema = z
+  .object({
+    id: z.string().min(1),
+    type: realtimeEventTypeSchema,
+    company_id: idSchema,
+    at: z.iso.datetime({ offset: true }),
+    data: z.unknown(),
+  })
+  .transform((env, ctx) => {
+    const parsed = REALTIME_EVENTS[env.type].data.safeParse(env.data)
+    if (!parsed.success) {
+      for (const issue of parsed.error.issues) ctx.addIssue({ ...issue, path: ['data', ...issue.path] } as never)
+      return z.NEVER
+    }
+    return { ...env, data: parsed.data } as RealtimeEnvelope
+  })
+
+export function parseRealtimeEnvelope(value: unknown): RealtimeEnvelope {
+  return realtimeEnvelopeSchema.parse(value)
+}
+
+/** Permissão exigida para receber o tipo de evento (`null` = qualquer membro da empresa). */
+export function realtimeEventPermission(type: RealtimeEventType): PermissionKey | null {
+  return REALTIME_EVENTS[type].permission
+}

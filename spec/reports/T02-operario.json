@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "task": "T02",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T02:41:54.949Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "packages/shared/package.json",
+    "packages/shared/src/index.ts",
+    "packages/shared/tsconfig.json",
+    "pnpm-lock.yaml",
+    "packages/shared/src/dto/company.ts",
+    "packages/shared/src/dto/index.ts",
+    "packages/shared/src/dto/member.ts",
+    "packages/shared/src/dto/user.ts",
+    "packages/shared/src/errors/codes.ts",
+    "packages/shared/src/errors/codes.unit.test.ts",
+    "packages/shared/src/ids.ts",
+    "packages/shared/src/misc.unit.test.ts",
+    "packages/shared/src/money.ts",
+    "packages/shared/src/pagination.ts",
+    "packages/shared/src/permissions/catalog.ts",
+    "packages/shared/src/permissions/defaults.ts",
+    "packages/shared/src/permissions/resolve.ts",
+    "packages/shared/src/permissions/resolve.unit.test.ts",
+    "packages/shared/src/phone.ts",
+    "packages/shared/src/phone.unit.test.ts",
+    "packages/shared/src/realtime/events.ts",
+    "packages/shared/src/realtime/events.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/shared/src/errors/codes.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/shared/src/permissions/catalog.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/shared/src/realtime/events.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/shared typecheck",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/shared lint",
+      "status": "pass",
+      "detail": "ok em 2.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/shared test",
+      "status": "pass",
+      "detail": "ok em 1.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}
