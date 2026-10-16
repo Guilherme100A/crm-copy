@@ -1,0 +1,3 @@
+// Schema `crm` (pgSchema). Ponto de registro (SPEC 2.4): cada tarefa acrescenta `export * from './<módulo>.js'`, de forma aditiva.
+export * from './schema.js'
+export * from './base.js'

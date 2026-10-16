@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "task": "T01",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T02:44:10.814Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "tests/acceptance/vitest.config.ts",
+    "tests/acceptance/T01/coexistence.test.ts",
+    "tests/acceptance/T01/constraints.test.ts",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0000_init.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0001_session_limits.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0002_suggestions.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0003_ai_settings.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0004_session_router.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0005_session_phone_optional.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0006_proxy_settings.sql",
+    "tests/acceptance/T01/fixtures/ai-manager-public/0007_session_browser.sql",
+    "tests/acceptance/T01/migrations.test.ts",
+    "tests/acceptance/T01/support.ts",
+    "tests/acceptance/T01/temp-database.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T01-01, AC-T01-02, AC-T01-03, AC-T01-04, AC-T01-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "4 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "20 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T01-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T01-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T01-03",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "AC-T01-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T01-05",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "14 arquivo(s) alterado(s)"
+    }
+  ]
+}

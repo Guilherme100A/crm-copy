@@ -13,10 +13,11 @@ export default defineConfig({
   resolve: {
     // A raiz não depende dos workspaces: os testes importam os pacotes pelo nome (@crm/...)
     // e o alias aponta para o fonte (mesma resolução da condição `development`, SPEC 3.1).
-    // Subpaths (`@crm/wa-port/testing`, `@crm/db/testing`) → packages/<nome>/src/<subpath>/index.ts.
+    // Subpaths (`@crm/wa-port/testing`, `@crm/db/testing`) → packages/<nome>/src/<subpath> sem extensão:
+    // o Vite resolve `src/<subpath>.ts` ou `src/<subpath>/index.ts` (as duas formas existem nas tarefas).
     alias: [
       { find: new RegExp(`^@crm/(${PACKAGES})$`), replacement: `${ROOT}packages/$1/src/index.ts` },
-      { find: new RegExp(`^@crm/(${PACKAGES})/(.+)$`), replacement: `${ROOT}packages/$1/src/$2/index.ts` },
+      { find: new RegExp(`^@crm/(${PACKAGES})/(.+)$`), replacement: `${ROOT}packages/$1/src/$2` },
       { find: new RegExp(`^@crm/(${APPS})$`), replacement: `${ROOT}apps/$1/src/index.ts` },
     ],
   },
