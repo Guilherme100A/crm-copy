@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "task": "T120",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T08:12:55.063Z",
+  "commit": "358c67f0fb93e78e7d0cdf475113959fa6a89243",
+  "base": "358c67f",
+  "changedFiles": [
+    "apps/api/src/server.ts",
+    "apps/worker/package.json",
+    "apps/worker/src/boot/config.ts",
+    "apps/worker/src/boot/production.ts",
+    "apps/worker/src/boot/production.unit.test.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/main.ts",
+    "packages/core/src/ai-runtime/runtime.db.unit.test.ts",
+    "packages/core/src/ai-runtime/runtime.ts",
+    "packages/core/src/chats/lifecycle/index.ts",
+    "packages/core/src/chats/lifecycle/service.ts",
+    "packages/core/src/chats/send/service.ts",
+    "packages/core/src/flows/nodes/messaging/index.ts",
+    "packages/core/src/flows/triggers/triggers.db.unit.test.ts",
+    "packages/core/src/flows/triggers/triggers.ts",
+    "pnpm-lock.yaml",
+    "apps/worker/src/boot/flow-run-events.ts",
+    "apps/worker/src/boot/flow-run-events.unit.test.ts",
+    "apps/worker/src/boot/production-worker.db.unit.test.ts",
+    "apps/worker/src/boot/production-worker.ts",
+    "packages/core/src/chats/lifecycle/hooks.ts",
+    "packages/core/src/chats/lifecycle/hooks.unit.test.ts",
+    "packages/core/src/chats/send/record.db.unit.test.ts",
+    "packages/core/src/flows/nodes/messaging/production.ts",
+    "packages/core/src/flows/nodes/messaging/production.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 10.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 40.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 12.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 17.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 4.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 32.8s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "25 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -1,8 +1,20 @@
 // Processo da API: carrega config, migra, cria o app e abre a porta (@hono/node-server).
 import { serve } from '@hono/node-server'
-import { bullTimerScheduler, defineQueue, FlowControl, type FlowStepJobData, type FlowTimerJobData, type TimerScheduler } from '@crm/core'
+import {
+  bullTimerScheduler,
+  defineQueue,
+  FlowControl,
+  FlowEngine,
+  FlowTriggers,
+  FsExportFileStore,
+  registerAttendanceFinishedTrigger,
+  type FlowStepJobData,
+  type FlowTimerJobData,
+  type TimerScheduler,
+} from '@crm/core'
 import { createDb, runMigrations } from '@crm/db'
-import { bullConnection, createLogger, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
+import { join } from 'node:path'
+import { bullConnection, createLogger, FsBlobStore, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
 import { createWaGatewayFromEnv } from '@crm/wa-gateway-rpc'
 import { createApp } from './app'
 import { loadApiConfig } from './config'
@@ -38,6 +50,17 @@ async function main() {
   }
   const flowControl = new FlowControl({ db, timers, enqueueStep: flowStepEnqueue, logger })
 
+  // T120: resolver um chat (rota de chats, T48) dispara o fluxo de "atendimento finalizado" da conexão (T61). A API só
+  // CRIA o run e enfileira o 1º flow-step; os passos rodam no worker.
+  // Motor só dos gatilhos (com enqueue); o da rota de execuções segue o padrão dela (sem enqueue próprio).
+  const flowEngine = new FlowEngine({ db, wa: wa.gateway, enqueue: flowStepEnqueue, hooks: flowControl.engineHooks(), logger })
+  const offAttendance = registerAttendanceFinishedTrigger(new FlowTriggers({ db, engine: flowEngine, control: flowControl, waGateway: wa.gateway, logger }), logger)
+
+  // T120: o MESMO STORAGE_DIR do worker (mídia na raiz, export/import em exports/).
+  const storageDir = process.env.STORAGE_DIR?.trim() || './storage'
+  const blobStore = new FsBlobStore({ dir: storageDir })
+  const exportFiles = new FsExportFileStore({ dir: join(storageDir, 'exports') })
+
   const app = createApp({
     db,
     redis,
@@ -48,6 +71,8 @@ async function main() {
     waGateway: wa.gateway,
     flowStepEnqueue,
     flowControl,
+    blobStore,
+    exportFiles,
   })
 
   const server = serve({ fetch: app.fetch, hostname: config.HOST, port: config.PORT }, (info) => {
@@ -62,6 +87,7 @@ async function main() {
   const shutdown = (signal: string) => {
     if (closing) return
     closing = true
+    offAttendance()
     logger.info({ signal }, 'api shutting down')
     setTimeout(() => process.exit(1), 10_000).unref()
     // T117: o hub realtime (subscriber Redis) fecha antes do Redis de comandos.

@@ -28,6 +28,8 @@ import type { WaGateway } from '@crm/wa-port'
 import { BusinessHoursService } from '../../business-hours/service'
 import { isOpen } from '../../business-hours/is-open'
 import type { CrmInboundEvent } from '../../chats/ingest/chat-ingest'
+import { onChatResolved } from '../../chats/lifecycle/hooks'
+import type { RecordOutboundInput } from '../../chats/send/service'
 import { FlowEngineError, type StartRunInput } from '../engine/runner'
 import { matchKeywordRule } from './match'
 
@@ -62,6 +64,8 @@ export interface FlowTriggersOptions {
   control: { cancelForContact(ctx: { companyId: string }, contactId: string): Promise<{ cancelled: number }> }
   /** Envio da mensagem fora do horário. Sem ele a ação `message` é pulada (com aviso). */
   waGateway?: Pick<WaGateway, 'send'>
+  /** Grava a mensagem fora do horário no chat (`ChatSendService.recordOutbound`, T120). Sem ele, só envia. */
+  record?: (input: RecordOutboundInput) => Promise<unknown>
   now?: () => Date
   logger?: FlowTriggersLogger
 }
@@ -283,14 +287,20 @@ export class FlowTriggers {
       return { result: null }
     }
     if (!(await this.claimWindow(e, now))) return { result: 'window' }
-    await this.opts.waGateway.send({
+    // `contactId` do SendRequest é o id do engine (public.contacts), não o do CRM: não vai (como no T49).
+    const content = { text }
+    const view = await this.opts.waGateway.send({
       sessionId: e.session_id,
       phone: contact.phone,
-      content: { text },
+      content,
       actor: OUT_OF_HOURS_ACTOR,
-      contactId: e.contact_id,
       clientMessageId: `out-of-hours-${e.message_id}`,
     })
+    // T120: a mensagem automática aparece no histórico do chat (sender_type `system`), sem reenviar.
+    if (this.opts.record)
+      await this.opts
+        .record({ companyId: e.company_id, chatId: e.chat_id, senderType: 'system', actor: OUT_OF_HOURS_ACTOR, content, view })
+        .catch((err: unknown) => this.log.warn({ err: err instanceof Error ? err.message : String(err), chat_id: e.chat_id }, 'falha ao registrar a mensagem fora do horário no chat'))
     return { result: 'message' }
   }
 
@@ -329,4 +339,17 @@ export class FlowTriggers {
       throw err
     }
   }
+}
+
+/**
+ * Liga o "chat resolvido" (lifecycle, T48) ao gatilho de atendimento finalizado (T120). API e worker chamam no boot
+ * com os seus gatilhos; a falha vai para o logger e não desfaz a resolução. Devolve a função que desliga.
+ */
+export function registerAttendanceFinishedTrigger(triggers: Pick<FlowTriggers, 'handleAttendanceFinished'>, logger?: FlowTriggersLogger): () => void {
+  return onChatResolved(
+    async (e) => {
+      await triggers.handleAttendanceFinished({ companyId: e.companyId, chatId: e.chatId })
+    },
+    (err, e) => logger?.error({ err: err instanceof Error ? err.message : String(err), chat_id: e.chatId }, 'gatilho de atendimento finalizado falhou'),
+  )
 }

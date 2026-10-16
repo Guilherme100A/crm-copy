@@ -267,8 +267,9 @@ describe('AC-T61-05 ação fora do horário', () => {
     w.clock.t = new Date('2026-10-15T01:00:00Z')
     expect((await w.triggers.handleInbound(await inbound(w, 'alguém?'))).out_of_hours).toBe('message')
     expect(w.sent).toEqual([
-      expect.objectContaining({ sessionId: w.sessionId, phone: expect.stringMatching(/^\+55/), content: { text: 'Voltamos às 9h' }, actor: OUT_OF_HOURS_ACTOR, contactId: w.contactId }),
+      expect.objectContaining({ sessionId: w.sessionId, phone: expect.stringMatching(/^\+55/), content: { text: 'Voltamos às 9h' }, actor: OUT_OF_HOURS_ACTOR }),
     ])
+    expect(w.sent[0]).not.toHaveProperty('contactId')
     // 11 h depois (sábado não; quinta 09:00 = aberto). Fica em sábado de madrugada para seguir fechado.
     w.clock.t = new Date('2026-10-15T08:00:00Z') // quinta 05:00 SP, 7 h depois
     expect((await w.triggers.handleInbound(await inbound(w, 'oi?'))).out_of_hours).toBe('window')

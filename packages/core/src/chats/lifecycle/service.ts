@@ -7,6 +7,7 @@ import { chatScope, type ChatRow } from '../model/dto'
 import { ChatQueryService, type ChatListItem } from '../query/service'
 import type { ChatActor } from '../query/context'
 import { chatInvalid, ChatsError } from './errors'
+import { emitChatResolved } from './hooks'
 
 export const NOTE_MAX = 5000
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -108,7 +109,10 @@ export class ChatLifecycleService {
   async resolve(actor: ChatActor, chatId: string): Promise<ChatListItem> {
     const chat = await this.query.row(actor, chatId)
     this.assertTransition(chat, 'resolve')
-    return this.mutate(actor, chat, { status: 'resolved', resolvedAt: new Date() }, 'resolved', { from: chat.status })
+    const resolved = await this.mutate(actor, chat, { status: 'resolved', resolvedAt: new Date() }, 'resolved', { from: chat.status })
+    // T120: "atendimento finalizado" (T61) e outros ouvintes, depois do commit.
+    await emitChatResolved({ companyId: actor.companyId, chatId: chat.id, actorUserId: actor.userId ?? null })
+    return resolved
   }
 
   /** resolved → waiting, sem atendente (AC-T48-03). */

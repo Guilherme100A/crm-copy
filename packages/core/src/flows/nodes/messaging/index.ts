@@ -25,3 +25,4 @@ export {
 } from './handlers'
 export { DRY_RUN_SESSION, MessagingTargetError, defaultGlobals, defaultLoadTemplate, defaultResolveTarget, type SendTarget } from './data'
 export { PIX_KEY_TYPES, crc16ccitt, normalizePixKey, pixAmount, pixEmv, pixMessage, type PixEmvInput, type PixKeyType } from './pix'
+export { flowMessageRecorder, mediaUrlFrom, productionNodeRegistry } from './production'

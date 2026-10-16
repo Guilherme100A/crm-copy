@@ -1,92 +1,140 @@
-// Montagem de produção do worker (T46): injeta o WaGateway real (`wa-gateway-rpc` com WA_GATEWAY=rpc, FakeWaGateway
-// com WA_GATEWAY=fake) e o banco nos módulos registrados no registry (chats T33, flow-timer T30, flow-step T25), e
-// o LlmProvider da plataforma (chaves do ambiente) nos nós de IA dos fluxos e no runtime do agente de IA (T68).
-// A T38 troca a chave da plataforma por resolução BYOK por empresa (`resolveCredentials`).
-import { crmConnectionSessionResolver, crmConnectionsResolver, MediaService, type ChatPublisher } from '@crm/core'
-import type { Database } from '@crm/db'
-import { createAiSdkProvider, FakeLlm, LLM_PROVIDERS, toPttOgg, type LlmProvider, type LlmProviderId } from '@crm/ai'
+// Montagem de produção do worker (T46 → T120): o WaGateway real (`wa-gateway-rpc` com WA_GATEWAY=rpc, FakeWaGateway
+// com WA_GATEWAY=fake), o banco, o Redis e o MESMO `STORAGE_DIR` da API ligados a todos os módulos do registry:
+//   chats (T33), flow-timer (T30), flow-step com os nós de mensagem gravando no chat (T51 `record`/`mediaUrl`),
+//   gatilhos (T61, inclusive a mensagem fora do horário no histórico e o "atendimento finalizado"), exportações e
+//   importações (T27/T67) e o agente de IA (T68) com LLM e voz por empresa (BYOK, T38) e cota/carteira (T24).
+import {
+  AiKeysService,
+  ChatSendService,
+  createCompanyLlmProvider,
+  crmConnectionSessionResolver,
+  crmConnectionsResolver,
+  flowMessageRecorder,
+  FsExportFileStore,
+  MediaService,
+  mediaUrlFrom,
+  productionNodeRegistry,
+  RealtimePublisher,
+  registerAttendanceFinishedTrigger,
+  resolveStt,
+  resolveTts,
+  UsageGuard,
+  type ExportFileStore,
+} from '@crm/core'
+import type { AiKeyProvider, Database } from '@crm/db'
+import { FakeLlm, toPttOgg, type LlmProvider, type LlmRequest, type LlmResult } from '@crm/ai'
 import { FsBlobStore, type BlobStore, type Logger } from '@crm/node-kit'
 import type { WaGateway } from '@crm/wa-port'
+import type { Redis } from 'ioredis'
 import { configureChatsConsumer } from '../consumers/chats'
+import { configureFlowTriggers, flowTriggers } from '../consumers/flow-triggers'
 import { configureAiAgent } from '../jobs/ai-agent'
+import { configureContactsImport } from '../jobs/contacts-import'
+import { configureExports } from '../jobs/exports'
 import { configureFlowStep } from '../jobs/flow-step'
 import { configureFlowTimer } from '../jobs/flow-timer'
 
 type Env = Record<string, string | undefined>
-type WarnLogger = Pick<Logger, 'warn' | 'info'>
-
-/** Variável de ambiente com a chave da plataforma de cada provedor. */
-export const PLATFORM_LLM_KEYS: Record<LlmProviderId, string> = {
-  anthropic: 'ANTHROPIC_API_KEY',
-  openai: 'OPENAI_API_KEY',
-  google: 'GOOGLE_API_KEY',
-  openrouter: 'OPENROUTER_API_KEY',
-}
-
-export class PlatformKeyMissingError extends Error {
-  readonly code = 'PLATFORM_KEY_MISSING'
-  constructor(readonly provider: LlmProviderId) {
-    super(`sem chave da plataforma para ${provider} (${PLATFORM_LLM_KEYS[provider]})`)
-    this.name = 'PlatformKeyMissingError'
-  }
-}
+type KeysResolver = Pick<AiKeysService, 'resolveCredentials'>
 
 /**
- * LlmProvider da plataforma a partir do ambiente: `AI_MODE=fake` → FakeLlm; senão AI SDK com as chaves
- * ANTHROPIC/OPENAI/GOOGLE/OPENROUTER_API_KEY. Sem chave nenhuma devolve `undefined` e registra um aviso.
+ * `AI_MODE=fake`: o FakeLlm atrás do MESMO resolvedor da empresa — cada chamada exige a chave efetiva (BYOK ou da
+ * plataforma) do provedor do modelo, como o provedor real; sem chave → `ProviderNotConfiguredError`. Nunca chama
+ * um provedor real.
  */
-export function platformLlmFromEnv(env: Env = process.env, logger?: WarnLogger): LlmProvider | undefined {
-  if (env.AI_MODE?.trim().toLowerCase() === 'fake') {
-    logger?.info({ ai_mode: 'fake' }, 'LLM da plataforma: FakeLlm (AI_MODE=fake)')
-    return new FakeLlm()
+export class CompanyKeyedFakeLlm implements LlmProvider {
+  constructor(
+    private readonly keys: KeysResolver,
+    readonly fake: FakeLlm = new FakeLlm(),
+  ) {}
+
+  async generate<T>(req: LlmRequest<T>): Promise<LlmResult<T>> {
+    await this.keys.resolveCredentials(req.tenantId, req.model.provider as AiKeyProvider)
+    return this.fake.generate(req)
   }
-  const keys = new Map<LlmProviderId, string>()
-  for (const provider of LLM_PROVIDERS) {
-    const key = env[PLATFORM_LLM_KEYS[provider]]?.trim()
-    if (key) keys.set(provider, key)
-  }
-  if (keys.size === 0) {
-    logger?.warn({ keys: Object.values(PLATFORM_LLM_KEYS) }, 'nenhuma chave de LLM da plataforma configurada: nós de IA dos fluxos e agentes ficam sem modelo')
-    return undefined
-  }
-  return createAiSdkProvider({
-    resolveCredentials: ({ provider }) => {
-      const apiKey = keys.get(provider)
-      if (!apiKey) throw new PlatformKeyMissingError(provider)
-      return { apiKey }
-    },
-  })
+}
+
+/** LLM das empresas: AI SDK com a chave de cada empresa (T38) ou, com `AI_MODE=fake`, o FakeLlm pelo mesmo resolvedor. */
+export function companyLlmFromEnv(keys: KeysResolver, env: Env = process.env): LlmProvider {
+  if (env.AI_MODE?.trim().toLowerCase() === 'fake') return new CompanyKeyedFakeLlm(keys)
+  return createCompanyLlmProvider({ keys })
 }
 
 export interface WorkerProductionDeps {
   db: Database
   waGateway: WaGateway
-  llm?: LlmProvider | undefined
+  /** Redis de comandos: realtime (SSE) e contadores do UsageGuard. */
+  redis: Redis
   logger?: Logger
-  /** Mídia do agente (mesmo `STORAGE_DIR` da API). Default `new FsBlobStore()`. */
+  /** Blobs de mídia (mesmo `STORAGE_DIR` da API). Default `new FsBlobStore()`. */
   blobStore?: BlobStore
-  /** Eventos realtime das mensagens do agente (`chat.*`). */
-  publisher?: ChatPublisher
+  /** Arquivos de export/import (mesmo `STORAGE_DIR/exports` da API). Default `new FsExportFileStore()`. */
+  files?: ExportFileStore
+  /** Chaves de IA (BYOK). Default `new AiKeysService({ db })` (cifrador de `CREDENTIALS_KEY`). */
+  keys?: AiKeysService
+  /** LLM das empresas. Default `companyLlmFromEnv(keys, env)`. */
+  llm?: LlmProvider
+  /** Eventos realtime. Default `new RealtimePublisher({ redis })`. */
+  publisher?: RealtimePublisher
+  env?: Env
+}
+
+export interface WorkerProduction {
+  publisher: RealtimePublisher
+  chatSend: ChatSendService
+  keys: AiKeysService
+  llm: LlmProvider
+  /** Com `AI_MODE=fake`: o FakeLlm usado (roteiro e contagem de chamadas nos testes). */
+  fakeLlm: FakeLlm | undefined
+  guard: UsageGuard
+  /** Desliga os ouvintes de processo registrados aqui ("atendimento finalizado"). */
+  dispose(): void
 }
 
 /** Configura os módulos do registry do processo com as dependências reais. Chamar antes do `startWorker`. */
-export function configureWorkerProduction(deps: WorkerProductionDeps): void {
+export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerProduction {
+  const { db, waGateway, redis } = deps
+  const env = deps.env ?? process.env
   const logger = deps.logger ? { logger: deps.logger } : {}
-  configureChatsConsumer({ db: deps.db, waGateway: deps.waGateway, resolveConnection: crmConnectionsResolver(deps.db), ...logger })
-  configureFlowTimer({ db: deps.db, ...logger })
-  configureFlowStep({ db: deps.db, wa: deps.waGateway, ...(deps.llm ? { llm: deps.llm } : {}), ...logger })
-  if (!deps.llm) {
-    deps.logger?.warn({}, 'agente de IA não configurado: sem LLM da plataforma (a T38 trará BYOK por empresa)')
-    return
-  }
+  const publisher = deps.publisher ?? new RealtimePublisher({ redis })
+  const media = new MediaService({ blobStore: deps.blobStore ?? new FsBlobStore() })
+  const files = deps.files ?? new FsExportFileStore()
+  const resolveSession = crmConnectionSessionResolver(db)
+  const pttConverter = (data: Uint8Array) => toPttOgg(data)
+  const chatSend = new ChatSendService({ db, waGateway, resolveSession, media, pttConverter, publisher, ...logger })
+
+  configureChatsConsumer({ db, waGateway, resolveConnection: crmConnectionsResolver(db), publisher, ...logger })
+  configureFlowTimer({ db, ...logger })
+
+  const keys = deps.keys ?? new AiKeysService({ db, env })
+  const llm = deps.llm ?? companyLlmFromEnv(keys, env)
+  const fakeLlm = llm instanceof CompanyKeyedFakeLlm ? llm.fake : undefined
+
+  // Nós de mensagem gravam no chat o que enviaram (sender_type flow) e resolvem a mídia da empresa.
+  const registry = productionNodeRegistry({ record: flowMessageRecorder(chatSend), mediaUrl: mediaUrlFrom(media) })
+  configureFlowStep({ db, wa: waGateway, registry, llm, ...logger })
+
+  // Gatilhos: a mensagem fora do horário entra no histórico como `system`; resolver o chat dispara "atendimento finalizado".
+  configureFlowTriggers({ db, waGateway, record: (input) => chatSend.recordOutbound(input), ...logger })
+  const offAttendance = registerAttendanceFinishedTrigger(flowTriggers()!, deps.logger)
+
+  configureExports({ db, files, publisher, ...logger })
+  configureContactsImport({ files, waGateway })
+
+  const guard = new UsageGuard({ db, redis, realtime: publisher })
   configureAiAgent({
-    db: deps.db,
-    llm: deps.llm,
-    waGateway: deps.waGateway,
-    resolveSession: crmConnectionSessionResolver(deps.db),
-    media: new MediaService({ blobStore: deps.blobStore ?? new FsBlobStore() }),
-    pttConverter: (data) => toPttOgg(data),
-    ...(deps.publisher ? { publisher: deps.publisher } : {}),
+    db,
+    llm,
+    waGateway,
+    resolveSession,
+    media,
+    pttConverter,
+    publisher,
+    guard,
+    resolveTts: (companyId) => resolveTts(companyId, { keys, env }),
+    resolveStt: (companyId) => resolveStt(companyId, { keys, env }),
     ...logger,
   })
+
+  return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }
 }

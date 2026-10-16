@@ -267,3 +267,40 @@ describe('AC-T68-06 envio como agente e providerData', () => {
     expect((await chatRow(s.chatId)).assignedUserId).toBeNull()
   })
 })
+
+describe('T120 voz por empresa (resolveTts/resolveStt)', () => {
+  it('usa o TTS/STT resolvido para a empresa do chat', async () => {
+    const companyTts = new FakeTts()
+    const companyStt = new FakeStt({ text: 'quero por áudio' })
+    const seen: string[] = []
+    const s = await setup({
+      script: [toolCall('send_audio', {}), text('Claro, posso te ajudar com isso agora mesmo.')],
+      runtime: {
+        tts: undefined,
+        stt: undefined,
+        resolveTts: async (companyId) => (seen.push(`tts:${companyId}`), companyTts),
+        resolveStt: async (companyId) => (seen.push(`stt:${companyId}`), companyStt),
+      },
+    })
+    const handle = { session_id: 'sess-1', message_id: 'wa-audio-t120', mime: 'audio/ogg', size: 4, sha256: null, key: null, status: 'ready' }
+    s.gateway.setMedia('wa-audio-t120', new Uint8Array([1, 2, 3, 4]))
+    await s.inbound(null, { type: 'audio', media: handle })
+    await s.runtime.flush(s.chatId)
+    expect(companyStt.calls).toHaveLength(1)
+    expect(companyTts.calls).toHaveLength(1)
+    expect(seen).toEqual([`stt:${s.companyId}`, `tts:${s.companyId}`])
+    const [sent] = await db.select().from(messages).where(and(eq(messages.chatId, s.chatId), eq(messages.direction, 'outbound')))
+    expect(sent!.type).toBe('audio')
+  })
+
+  it('empresa sem chave de voz: a resposta sai em texto', async () => {
+    const s = await setup({
+      script: [toolCall('send_audio', {}), text('Claro, posso te ajudar com isso agora mesmo.')],
+      runtime: { tts: undefined, resolveTts: async () => Promise.reject(new Error('sem chave elevenlabs')) },
+    })
+    await s.inbound('me explica por áudio')
+    await s.runtime.flush(s.chatId)
+    const [sent] = await db.select().from(messages).where(and(eq(messages.chatId, s.chatId), eq(messages.direction, 'outbound')))
+    expect(sent).toMatchObject({ type: 'text', senderType: 'ai' })
+  })
+})

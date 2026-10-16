@@ -2,9 +2,9 @@
 // Todo envio passa por `WaGateway.send` (pipeline do engine: gates, fila, antiban; SPEC 1.4 nº 2). A mensagem do
 // CRM é reservada (`queued`) antes do gateway, então uma repetição com a mesma Idempotency-Key nunca reenvia.
 import { and, desc, eq, lt, or, sql } from 'drizzle-orm'
-import { chatEvents, chats, contacts, messageReactions, messages, type CrmMessageStatus, type Database } from '@crm/db'
+import { chatEvents, chats, connections, contacts, messageReactions, messages, type CrmMessageStatus, type Database } from '@crm/db'
 import type { RealtimeEventData, RealtimeEventType } from '@crm/shared'
-import type { MessageStatus, OutgoingContent, PresenceKind, WaGateway } from '@crm/wa-port'
+import type { MessageStatus, MessageView, OutgoingContent, PresenceKind, WaGateway } from '@crm/wa-port'
 import type { ChatPublisher } from '../ingest/chat-ingest'
 import { chatScope, toChatDto, toMessageDto, type ChatRow, type MessageDto, type MessageRow } from '../model/dto'
 import { previewOf } from '../model/rules'
@@ -25,6 +25,56 @@ export class ChatSendError extends Error {
 }
 
 const invalid = (path: string, message: string) => new ChatSendError('validation', message, { fields: [{ path, message }] })
+
+/**
+ * Remetente de uma mensagem automática já enviada (T120): `flow` (nós de mensagem, T51) ou `system` (ação fora do
+ * horário, T61). `flow` ainda não está em `MESSAGE_SENDER_TYPES` (@crm/db, T33): a coluna é texto livre, sem check.
+ */
+export type AutomaticSenderType = 'flow' | 'system'
+
+export interface RecordOutboundInput {
+  companyId: string
+  /** Chat da mensagem; sem ele, o chat do contato na conexão da sessão (`contactId` + `sessionId`). */
+  chatId?: string | null
+  contactId?: string | null
+  sessionId?: string | null
+  senderType: AutomaticSenderType
+  /** Quem pediu o envio (`flow:<runId>`, `crm:system:business-hours`); vai em `media.actor`. */
+  actor: string
+  content: OutgoingContent
+  /** Mensagem aceita pelo gateway (`WaGateway.send`): a gravação é idempotente por `view.id`. */
+  view: MessageView
+  viewOnce?: boolean
+}
+
+/** Tipo, corpo e mídia do registro no CRM a partir do conteúdo enviado ao gateway. */
+export function describeOutgoing(content: OutgoingContent): { type: string; body: string | null; media: Record<string, unknown> | null } {
+  const c = content as Record<string, unknown>
+  const blob = (ref: unknown, extra: Record<string, unknown>) => {
+    const url = (ref as { url?: unknown } | undefined)?.url
+    const key = typeof url === 'string' && url.startsWith('blob:') ? url.slice(5) : null
+    return { ...(key ? { key } : typeof url === 'string' ? { url } : {}), ...extra }
+  }
+  const caption = (v: unknown) => (typeof v === 'string' && v ? v : null)
+  if (typeof c.text === 'string') return { type: 'text', body: c.text, media: null }
+  for (const kind of ['image', 'video', 'audio', 'document', 'sticker'] as const) {
+    if (!(kind in c)) continue
+    const extra: Record<string, unknown> = {}
+    if (typeof c.mimetype === 'string') extra.mime = c.mimetype
+    if (typeof c.fileName === 'string') extra.file_name = c.fileName
+    if (c.ptt === true) extra.ptt = true
+    return { type: kind, body: caption(c.caption), media: blob(c[kind], extra) }
+  }
+  if (c.contact && typeof c.contact === 'object') {
+    const contact = c.contact as { displayName?: unknown; vcard?: unknown }
+    return { type: 'contact', body: typeof contact.displayName === 'string' ? contact.displayName : null, media: { contact: { name: contact.displayName, vcard: contact.vcard } } }
+  }
+  if (c.location && typeof c.location === 'object') {
+    const loc = c.location as { name?: unknown; address?: unknown }
+    return { type: 'location', body: caption(loc.name) ?? caption(loc.address), media: { location: { ...(c.location as object) } } }
+  }
+  return { type: 'text', body: null, media: null }
+}
 
 /** Sessão do gateway de uma conexão do CRM (`crm.connections`, T40). `null` = sem sessão → 409. */
 export type SessionResolver = (companyId: string, connectionId: string) => Promise<string | null>
@@ -180,6 +230,76 @@ export class ChatSendService {
       }
       throw err
     }
+  }
+
+  /**
+   * Grava no chat uma mensagem automática que JÁ foi enviada pelo gateway (nó de fluxo ou ação fora do horário), sem
+   * reenviar. Idempotente por `view.id` (`messages_company_pipeline_id_uq`): o retry do passo do fluxo devolve a mesma
+   * linha. Atualiza a prévia do chat (sem atribuir atendente) e publica `message.created`/`chat.updated`.
+   * Sem chat encontrado devolve `null` (ex.: run manual de contato sem chat na conexão).
+   */
+  async recordOutbound(input: RecordOutboundInput): Promise<MessageDto | null> {
+    const chat = await this.chatForRecord(input)
+    if (!chat) return null
+    const described = describeOutgoing(input.content)
+    const view = input.view
+    const now = this.now()
+    const media = { ...(described.media ?? {}), actor: input.actor, ...(input.viewOnce ? { view_once: true } : {}) }
+    const result = await this.db.transaction(async (tx) => {
+      const [inserted] = await tx
+        .insert(messages)
+        .values({
+          companyId: input.companyId,
+          chatId: chat.id,
+          direction: 'outbound',
+          // `flow` fora da união do @crm/db (T33): texto livre no banco.
+          senderType: input.senderType as never,
+          senderUserId: null,
+          type: described.type,
+          body: described.body,
+          media,
+          status: PIPELINE_STATUS[view.status] ?? 'queued',
+          pipelineMessageId: view.id,
+          ...(view.transportMessageId ? { waMessageId: view.transportMessageId } : {}),
+          ...(view.sentAt ? { sentAt: new Date(view.sentAt) } : {}),
+        })
+        .onConflictDoNothing()
+        .returning()
+      if (!inserted) return null
+      const [updatedChat] = await tx
+        .update(chats)
+        .set({ lastMessageAt: now, lastMessagePreview: previewOf(described.type, described.body), updatedAt: now })
+        .where(eq(chats.id, chat.id))
+        .returning()
+      return { msg: inserted, chat: updatedChat! }
+    })
+    if (!result) {
+      // Repetição: devolve a linha já gravada.
+      const [existing] = await this.db
+        .select()
+        .from(messages)
+        .where(and(eq(messages.companyId, input.companyId), eq(messages.pipelineMessageId, view.id)))
+        .limit(1)
+      return existing ? toMessageDto(existing) : null
+    }
+    await this.publish(input.companyId, 'message.created', { chat_id: chat.id, message: toMessageDto(result.msg) as never }, result.chat)
+    await this.publish(input.companyId, 'chat.updated', { chat_id: chat.id, chat: toChatDto(result.chat) as never }, result.chat)
+    return toMessageDto(result.msg)
+  }
+
+  private async chatForRecord(input: RecordOutboundInput): Promise<ChatRow | null> {
+    if (input.chatId) {
+      const [row] = await this.db.select().from(chats).where(and(eq(chats.companyId, input.companyId), eq(chats.id, input.chatId))).limit(1)
+      return row ?? null
+    }
+    if (!input.contactId || !input.sessionId) return null
+    const [row] = await this.db
+      .select({ chat: chats })
+      .from(chats)
+      .innerJoin(connections, eq(connections.id, chats.connectionId))
+      .where(and(eq(chats.companyId, input.companyId), eq(chats.contactId, input.contactId), eq(connections.sessionId, input.sessionId)))
+      .limit(1)
+    return row?.chat ?? null
   }
 
   /** Encaminha a mensagem para outro chat da empresa (mesmo conteúdo). */

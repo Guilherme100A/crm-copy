@@ -58,6 +58,12 @@ export interface AiAgentRuntimeOptions {
   media: MediaService
   stt?: SttProvider
   tts?: TtsProvider
+  /**
+   * STT/TTS por empresa (BYOK, T38 `resolveStt`/`resolveTts`; T120). Têm precedência sobre `stt`/`tts`; erro na
+   * resolução (empresa sem chave) = sem o recurso nesta mensagem (texto em vez de áudio, áudio não transcrito).
+   */
+  resolveStt?: (companyId: string) => Promise<SttProvider>
+  resolveTts?: (companyId: string) => Promise<TtsProvider>
   pttConverter?: PttConverter
   publisher?: ChatPublisher
   /** Cobrança/cota (T24). Sem guard o LLM é chamado sem medição. */
@@ -271,7 +277,7 @@ export class AiAgentRuntime {
     for (const id of ids) {
       const m = byId.get(id)
       if (!m) continue
-      if (m.type === 'audio' && m.media && agent.settings.understand_audio && this.opts.stt) {
+      if (m.type === 'audio' && m.media && agent.settings.understand_audio && (this.opts.stt || this.opts.resolveStt)) {
         const text = await this.transcribe(chat, m.media)
         if (text) lines.push(`[áudio] ${text}`)
         continue
@@ -291,7 +297,8 @@ export class AiAgentRuntime {
       const sessionId = (media.session_id as string | undefined) ?? (await this.opts.resolveSession(chat.companyId, chat.connectionId))
       if (!sessionId) return null
       const bytes = await toBytes(await this.opts.waGateway.downloadMedia(sessionId, media as never))
-      const res = await this.opts.stt!.transcribe({ audio: bytes, mime: String(media.mime ?? 'audio/ogg'), language: 'pt' })
+      const stt = this.opts.resolveStt ? await this.opts.resolveStt(chat.companyId) : this.opts.stt!
+      const res = await stt.transcribe({ audio: bytes, mime: String(media.mime ?? 'audio/ogg'), language: 'pt' })
       return res.text.trim() || null
     } catch (err) {
       this.opts.logger?.warn({ err, chatId: chat.id }, 'ai agent: falha ao transcrever áudio')
@@ -469,7 +476,7 @@ export class AiAgentRuntime {
           },
         }),
       )
-    if (agent.settings.audio_choice_enabled && this.opts.tts)
+    if (agent.settings.audio_choice_enabled && (this.opts.tts || this.opts.resolveTts))
       list.push(
         llmTool({
           name: 'send_audio',
@@ -486,15 +493,27 @@ export class AiAgentRuntime {
 
   // ---------- saída ----------
 
+  /** TTS da empresa (BYOK) ou o fixo; empresa sem chave de voz → `null` (responde em texto). */
+  private async ttsFor(chat: ChatRow): Promise<TtsProvider | null> {
+    if (!this.opts.resolveTts) return this.opts.tts ?? null
+    try {
+      return await this.opts.resolveTts(chat.companyId)
+    } catch (err) {
+      this.opts.logger?.warn({ err, chatId: chat.id }, 'ai agent: sem TTS para a empresa; resposta em texto')
+      return null
+    }
+  }
+
   /** Envia a resposta como agente: áudio se pedido e permitido, senão texto dividido (AC-T68-03/06). */
   private async reply(chat: ChatRow, agent: AgentDto, state: StateRow, text: string, wantsAudio: boolean): Promise<string[]> {
     const sender: Sender = { userId: agent.id, name: agent.name, kind: 'ai', agentId: agent.id }
     const s = agent.settings
     const sign = s.sign_name && state.repliesCount === 0
     const sent: string[] = []
-    if (wantsAudio && this.opts.tts && canSpeak(text) && state.audioCount < s.audio_max_per_conversation) {
+    const voice = wantsAudio && canSpeak(text) && state.audioCount < s.audio_max_per_conversation ? await this.ttsFor(chat) : null
+    if (voice) {
       // O LLM decide pela tool `send_audio`; a regra fixa (canSpeak) e o limite por conversa podem vetar.
-      const tts = await this.opts.tts.synthesize({ text, voiceId: s.audio_voice || 'default', format: 'ogg_opus' })
+      const tts = await voice.synthesize({ text, voiceId: s.audio_voice || 'default', format: 'ogg_opus' })
       const media = await this.opts.media.store(chat.companyId, tts.audio, tts.mime, 'resposta.ogg')
       const { message } = await this.send.send(chat.companyId, chat.id, sender, { type: 'audio', mediaId: media.id, ptt: true })
       sent.push(message.id)

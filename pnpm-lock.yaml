@@ -201,6 +201,13 @@ importers:
       zod:
         specifier: 4.6.5
         version: 4.6.5
+    devDependencies:
+      '@crm/api':
+        specifier: workspace:*
+        version: link:../api
+      '@crm/wa-worker':
+        specifier: workspace:*
+        version: link:../wa-worker
 
   packages/ai:
     dependencies:
