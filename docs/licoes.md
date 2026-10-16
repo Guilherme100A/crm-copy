@@ -45,3 +45,7 @@
 - Não rode prettier em arquivos compartilhados: o código existente não segue o printWidth 120 e o diff deixa de ser aditivo (o verify de escopo/union no gate sofre). Formate só os seus arquivos. (T53)
 - Handlers de realtime registrados em módulo carregado sob demanda (lazy) não entram no SSE já aberto: `lib/realtime.ts` registra os tipos ao conectar. (T53)
 - Webhook de entrada que cria contato precisa registrar consentimento `webhook` no gateway, senão o wa-engine recusa o envio (`contact_not_found`). (T127)
+- `DROP DATABASE` no Postgres 16/Windows espera checkpoint (10–16 s sob carga): drops em série e timeouts folgados em testes que removem banco; `src/migrations.db.unit.test.ts` (30 s) estoura sob carga. (T128)
+- Testes de `scripts/e2e/*.unit.test.mjs` rodam no vitest do `@crm/api`, não no verify de tarefas só-db; rode à mão. (T128)
+- Harness em segundo plano: `E2E_IGNORE_STDIN=1 node scripts/e2e/serve.mjs` (sem isso ele sai ao fechar o stdin). O seed não tem contatos, conexões nem figurinhas: crie pela API no teste. (T58, T53)
+- Decisão que muda comportamento existente: procure o teste que trava o comportamento antigo (ex.: `contacts.db.unit.test.ts`) e ajuste-o de forma mínima (`*.unit.test.ts` é compartilhado, SPEC 2.4). (T58)

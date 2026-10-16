@@ -28,6 +28,7 @@
 | ai (Vercel AI SDK) | **7.0.142 (exato)** | novo | Node ≥ 22, ESM; só o adapter `llm-aisdk` importa (Bloco F) |
 | @ai-sdk/anthropic / openai / google | **4.0.81 / 4.0.95 / 4.0.98 (exatos)** | novo | major 4 ↔ `ai@7`; subir os quatro juntos |
 | @openrouter/ai-sdk-provider | **3.1.0 (exato)** | novo (revisão 1) | peer `ai ^7`, spec V4, Node ≥ 22; plano B `@ai-sdk/openai-compatible@3.0.70` (F.8) |
+| @modelcontextprotocol/sdk | **1.31.0 (exato)** | novo (T94) | `McpServer.registerTool`; `WebStandardStreamableHTTPServerTransport` sem sessão com `enableJsonResponse` (um servidor por request); peer `zod ^3.25 || ^4`; conferido nos `.d.ts` (context7 sem cota) |
 | @anthropic-ai/sdk | 0.128.0 | lock | 0.135.0 disponível sem breaking; usado pelo `AiProvider` do ai-manager e por adapter direto se preciso |
 | openai / @google/genai | 7.34.0 / 2.30.0 | novo (opcional) | só para adapter direto atrás da mesma porta; openai@7 exige Node ≥ 22 |
 | @elevenlabs/elevenlabs-js / groq-sdk | 2.73.0 / 1.6.0 | novo | TTS / STT confirmados pelo usuário |
