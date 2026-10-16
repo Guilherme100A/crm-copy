@@ -3,3 +3,4 @@
 export * from './platform'
 export * from './templating'
 export * from './jobs'
+export * from './auth'

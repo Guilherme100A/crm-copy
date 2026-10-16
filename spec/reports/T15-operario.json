@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "task": "T15",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:18:01.839Z",
+  "commit": "e3575e7bf57cd9e0ade76f269b5870938e5fef95",
+  "base": "e3575e7",
+  "changedFiles": [
+    "apps/api/src/middleware/app.db.unit.test.ts",
+    "apps/api/src/middleware/public-routes.ts",
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/migrations.db.unit.test.ts",
+    "packages/db/src/schema.unit.test.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "apps/api/src/routes/auth/auth.db.unit.test.ts",
+    "apps/api/src/routes/auth/index.ts",
+    "packages/core/src/auth/auth-service.ts",
+    "packages/core/src/auth/auth.unit.test.ts",
+    "packages/core/src/auth/errors.ts",
+    "packages/core/src/auth/image.ts",
+    "packages/core/src/auth/index.ts",
+    "packages/core/src/auth/normalize.ts",
+    "packages/db/drizzle/crm/0001_t15_auth.sql",
+    "packages/db/drizzle/crm/meta/0001_snapshot.json",
+    "packages/db/src/schema/crm/auth.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/auth/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/api/src/routes/auth/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 6.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 2.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 6.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 4.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 2.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 2.9s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "19 arquivo(s) alterado(s)"
+    }
+  ]
+}

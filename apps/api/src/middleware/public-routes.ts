@@ -11,6 +11,9 @@ export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'POST', path: '/api/auth/register' },
   { method: 'POST', path: '/api/auth/password-resets' },
   { method: 'POST', path: '/api/auth/password-resets/*' },
+  // T15: validar e usar o link de redefinição (quem esqueceu a senha não tem sessão)
+  { method: 'GET', path: '/api/auth/password-resets/*' },
+  { method: 'PATCH', path: '/api/auth/password-resets/*' },
   { method: 'GET', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/hooks/*' },

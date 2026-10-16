@@ -2,3 +2,4 @@
 export * from './schema.js'
 export * from './base.js'
 export * from './jobs.js'
+export * from './auth.js'

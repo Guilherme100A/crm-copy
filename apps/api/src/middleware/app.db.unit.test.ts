@@ -168,9 +168,9 @@ describe('AC-T08-02 sessão', () => {
     expect(other.status).toBe(404)
   })
 
-  it('rota pública não exige sessão (cai no 404 de rota)', async () => {
+  it('rota pública não exige sessão (qualquer status exceto 401)', async () => {
     const res = await app.request('/api/auth/login', { method: 'POST', headers: { 'x-requested-with': 'crm' } })
-    expect(res.status).toBe(404)
+    expect(res.status).not.toBe(401)
   })
 })
 
