@@ -3,9 +3,9 @@
   "task": "T111",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T14:05:26.689Z",
-  "commit": "c8c706ca32fcfa371db5898d61c4f39e1a163294",
-  "base": "72160cd",
+  "at": "2026-10-16T14:10:58.987Z",
+  "commit": "40de8cf5280df159dcd990d97fe35b9e161debd6",
+  "base": "aa67e0c",
   "changedFiles": [
     "apps/api/src/routes/hooks-payments/hooks-payments.db.unit.test.ts",
     "apps/api/src/routes/hooks-payments/index.ts",
@@ -27,47 +27,47 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 21.1s"
+      "detail": "ok em 17.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 9.3s"
+      "detail": "ok em 4.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 129.5s"
+      "detail": "ok em 102.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 23.9s"
+      "detail": "ok em 21.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.8s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 30.1s"
+      "detail": "ok em 38.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 15.4s"
+      "detail": "ok em 19.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 6.8s"
+      "detail": "ok em 6.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 98.6s"
+      "detail": "ok em 80.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
