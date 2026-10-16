@@ -347,4 +347,58 @@ describe('T120 montado como produção', () => {
     expect(done).toMatchObject({ sent_count: 1, pending_count: 0 })
     await until('mensagem do disparo no wa-worker', async () => (await sentTexts(conn.sessionId)).includes(`Oferta T122 ${id}`) || undefined)
   }, 180_000)
+
+  it('AC-T123-01/02: distribuidor, etiqueta, status e venda aprovada publicam pelo SSE da empresa', async () => {
+    // Empresa e conexão próprias: o antiban do wa-worker limita 5 envios/min por sessão e os casos anteriores deixam
+    // estado na empresa compartilhada (agente de IA, gatilhos).
+    const t = await signUp()
+    const own = await connectedConnection(t)
+    const [product] = (
+      await db.execute(
+        sql`insert into crm.products (company_id, name, currency, price_min_cents, price_max_cents, price_fallback_cents) values (${t.companyId}, 'Curso T123', 'BRL', 100, 100000, 4700) returning public_id`,
+      )
+    ).rows as Array<{ public_id: string }>
+    const flow = (await call(t, 'POST', '/api/flows', { name: `CRM ${rnd()}` })).body.flow
+    const a = (aid: string, type: string, config: unknown) => ({ id: aid, type, order: 0, config })
+    const def = {
+      schema: 'crm.flow/v1',
+      entry: 'start',
+      nodes: [
+        node('start', 'start'),
+        node('D', 'distributor', [a('d1', 'distribute_contacts', { outputs: [{ id: 'a', quantity: 1 }, { id: 'b', quantity: 1 }] })]),
+        node('T', 'tags', [a('t1', 'add_tags', { tags: ['Lead T123'] })]),
+        node('C', 'chat_controller', [a('c1', 'change_chat_status', { chat_status: 'Atendimento' })]),
+        node('V', 'approved_sale', [a('v1', 'register_approved_sale', { product_public_id: product!.public_id, amount_template: '97,00', push_title_template: 'Venda {produto.nome}', push_body_template: '{{customer.name}} comprou' })]),
+        node('M', 'message', [a('m1', 'send_message', { message_text: `fim T123 ${id}` })]),
+      ],
+      edges: [
+        { id: 'e1', from: 'start', handle: 'source', to: 'D' },
+        { id: 'e2', from: 'D', handle: 'output:a', to: 'T' },
+        { id: 'e3', from: 'D', handle: 'output:b', to: 'T' },
+        { id: 'e4', from: 'T', handle: 'source', to: 'C' },
+        { id: 'e5', from: 'C', handle: 'source', to: 'V' },
+        { id: 'e6', from: 'V', handle: 'source', to: 'M' },
+      ],
+      variables: [],
+      refs: {},
+    }
+    expectStatus(await call(t, 'PUT', `/api/flows/${flow.id}/definition`, def), 200)
+    expectStatus(await call(t, 'POST', `/api/flows/${flow.id}/activate`), 200)
+    expectStatus(await call(t, 'PUT', `/api/connection-flow-configs/${own.id}`, { keyword_triggers: [{ flow_id: flow.id, conditions: [{ keyword: 'crm123', match_type: 'equals' }] }] }), 200)
+    const stream = await sse(t)
+    try {
+      receive(own.sessionId, jid(), 'crm123')
+      for (const type of ['flow.distributor_updated', 'contact.updated', 'chat.updated', 'notification.created'])
+        await until(`${type} no SSE`, async () => stream.events.includes(type) || undefined)
+      // O passo publica os eventos antes do commit: espera o run terminar (o nó de mensagem M vem depois da venda).
+      const run = await until('run terminado', async () => {
+        const [r] = await db.select().from(flowRuns).where(eq(flowRuns.flowId, flow.id))
+        return r && r.status !== 'running' ? r : undefined
+      })
+      expect(run.status, `${run.error}`).toBe('completed')
+      await until('mensagem do fluxo enviada', async () => (await sentTexts(own.sessionId)).includes(`fim T123 ${id}`) || undefined)
+    } finally {
+      stream.close()
+    }
+  }, 180_000)
 })

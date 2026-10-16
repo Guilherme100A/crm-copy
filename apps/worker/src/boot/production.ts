@@ -7,6 +7,8 @@
 import {
   AiKeysService,
   ChatSendService,
+  configureCrmNodes,
+  configureLogicNodes,
   createCompanyLlmProvider,
   crmConnectionSessionResolver,
   crmConnectionsResolver,
@@ -172,6 +174,11 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
       ...(deps.logger ? { logger: deps.logger } : {}),
     },
   })
+
+  // Nós de lógica (T41: flow.distributor_updated) e de CRM (T63: contact.updated, chat.updated, kanban.*,
+  // notification.created) publicam pelo realtime do processo (T123).
+  configureLogicNodes({ publisher, ...logger })
+  configureCrmNodes({ publisher, ...logger })
 
   return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }
 }

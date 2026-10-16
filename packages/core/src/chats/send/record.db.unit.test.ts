@@ -86,6 +86,22 @@ describe('ChatSendService.recordOutbound', () => {
     expect(sys).toMatchObject({ sender_type: 'system', body: 'Fora do horário', status: 'queued' })
   })
 
+  it('T123: com executor (transação do passo) grava nela: sem deadlock com o lock de crm.chats e desfeito junto', async () => {
+    const s = await setup()
+    // A transação do passo já segura a linha do chat (como o nó de status da T63) e grava a mensagem por ela.
+    await expect(
+      db.transaction(async (tx) => {
+        await tx.update(chats).set({ status: 'attending' }).where(eq(chats.id, s.chatId))
+        const msg = await s.svc.recordOutbound({ companyId: s.companyId, chatId: s.chatId, senderType: 'flow', actor: 'flow:run-x', content: { text: 'no passo' }, view: view('pipe-tx'), executor: tx })
+        expect(msg).toMatchObject({ body: 'no passo' })
+        throw new Error('desfaz o passo')
+      }),
+    ).rejects.toThrow('desfaz o passo')
+    expect(await db.select().from(messages).where(eq(messages.chatId, s.chatId))).toHaveLength(0)
+    const [chat] = await db.select().from(chats).where(eq(chats.id, s.chatId))
+    expect(chat?.status).toBe('waiting')
+  })
+
   it('sem chatId acha o chat pelo contato + sessão; sem chat devolve null', async () => {
     const s = await setup()
     const rec = await s.svc.recordOutbound({ companyId: s.companyId, contactId: s.contactId, sessionId: s.sessionId, senderType: 'flow', actor: 'flow:x', content: { text: 'oi' }, view: view(`p-${s.chatId}`) })

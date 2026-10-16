@@ -45,6 +45,11 @@ export interface RecordOutboundInput {
   /** Mensagem aceita pelo gateway (`WaGateway.send`): a gravação é idempotente por `view.id`. */
   view: MessageView
   viewOnce?: boolean
+  /**
+   * Onde gravar (T123): a transação do passo do fluxo, para o registro ser atômico com o passo e não disputar o lock
+   * de `crm.chats` com ela (deadlock). Padrão: o banco do serviço.
+   */
+  executor?: Database | Parameters<Parameters<Database['transaction']>[0]>[0] | null
 }
 
 /** Tipo, corpo e mídia do registro no CRM a partir do conteúdo enviado ao gateway. */
@@ -317,13 +322,14 @@ export class ChatSendService {
    * Sem chat encontrado devolve `null` (ex.: run manual de contato sem chat na conexão).
    */
   async recordOutbound(input: RecordOutboundInput): Promise<MessageDto | null> {
-    const chat = await this.chatForRecord(input)
+    const db = input.executor ?? this.db
+    const chat = await this.chatForRecord(input, db)
     if (!chat) return null
     const described = describeOutgoing(input.content)
     const view = input.view
     const now = this.now()
     const media = { ...(described.media ?? {}), actor: input.actor, ...(input.viewOnce ? { view_once: true } : {}) }
-    const result = await this.db.transaction(async (tx) => {
+    const result = await db.transaction(async (tx) => {
       const [inserted] = await tx
         .insert(messages)
         .values({
@@ -353,7 +359,7 @@ export class ChatSendService {
     })
     if (!result) {
       // Repetição: devolve a linha já gravada.
-      const [existing] = await this.db
+      const [existing] = await db
         .select()
         .from(messages)
         .where(and(eq(messages.companyId, input.companyId), eq(messages.pipelineMessageId, view.id)))
@@ -365,13 +371,13 @@ export class ChatSendService {
     return toMessageDto(result.msg)
   }
 
-  private async chatForRecord(input: RecordOutboundInput): Promise<ChatRow | null> {
+  private async chatForRecord(input: RecordOutboundInput, db: NonNullable<RecordOutboundInput['executor']> = this.db): Promise<ChatRow | null> {
     if (input.chatId) {
-      const [row] = await this.db.select().from(chats).where(and(eq(chats.companyId, input.companyId), eq(chats.id, input.chatId))).limit(1)
+      const [row] = await db.select().from(chats).where(and(eq(chats.companyId, input.companyId), eq(chats.id, input.chatId))).limit(1)
       return row ?? null
     }
     if (!input.contactId || !input.sessionId) return null
-    const [row] = await this.db
+    const [row] = await db
       .select({ chat: chats })
       .from(chats)
       .innerJoin(connections, eq(connections.id, chats.connectionId))

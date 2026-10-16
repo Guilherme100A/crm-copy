@@ -19,6 +19,8 @@ export function flowMessageRecorder(chatSend: { recordOutbound(input: RecordOutb
       content: sent.content,
       view: sent.view,
       viewOnce: sent.viewOnce,
+      // Na transação do passo (T123): atômico com o passo e sem disputar o lock de crm.chats com ele.
+      ...(ctx.repo?.db ? { executor: ctx.repo.db as RecordOutboundInput['executor'] } : {}),
     })
   }
 }

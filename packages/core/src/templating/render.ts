@@ -128,7 +128,14 @@ function contactField(contact: TemplateContact | null | undefined, field: string
   if (field === 'custom_fields') return undefined
   const direct = readPath(contact, [field])
   if (direct !== undefined) return direct
-  return readPath(readPath(contact, ['custom_fields']), [field])
+  const custom = readPath(readPath(contact, ['custom_fields']), [field])
+  // T123: `{{customer.name}}` / `{name}` (referência) = nome completo, só quando nada mais resolve (`name` do
+  // contato ou campo personalizado `name` continuam valendo como antes).
+  if (custom === undefined && field === 'name') {
+    const full = readPath(contact, ['full_name'])
+    return typeof full === 'string' && full ? full : undefined
+  }
+  return custom
 }
 
 function globalVar(globals: Record<string, unknown> | null | undefined, name: string): unknown {
