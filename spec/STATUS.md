@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T76 (Torno/Sonda), T55 (Bigorna/Lupa), T52 (Cinzel/Radar).
+- Em andamento (3 pares): T76 (Torno/Sonda), T79 (Bigorna/Lupa), T80 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -70,10 +70,10 @@
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
-| 6 | T52 | Agentes de IA: base de conhecimento | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T52 | Agentes de IA: base de conhecimento | MERGED | Cinzel | Radar | 0 | 6a89eb9 |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
-| 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
@@ -81,7 +81,7 @@
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
-| 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
+| 6 | T80 | Vozes (ElevenLabs) | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
@@ -112,7 +112,7 @@
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | IN_PROGRESS | Torno | Sonda | 0 | |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
-| 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | TODO | | | 0 | |
+| 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | TODO | | | 0 | |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
@@ -200,5 +200,6 @@
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
 | montagem do worker | `configureExternalNodes({ llm por empresa, llmForKey via AiKeysService.credentialsForKey, guard: UsageGuard })` (T42) no boot: sem isso o nó de IA usa o ctx.llm sem medição | T42 |
+| testes instáveis | `packages/core/src/ai-runtime/runtime.db.unit.test.ts` (AC-T68-01 buffer) usa sleep real de 300 ms e falha sob carga (verify paralelo); passou 3/3 isolado. Tornar o relógio injetável (fake timers) quando alguém tocar no runtime. | gate T52 |
 | montagem do worker | `configureAiKnowledge({ db, redis })` no boot (senão o job ai-knowledge falha com "dependências não configuradas") e `knowledge: new AiKnowledgeService({ db }).asKnowledgeSearch()` no configureAiAgent do worker de produção e no teste ao vivo (T79) | T52 |
 | testes (T17) | `apps/api/src/e2e/e2e.db.unit.test.ts` usa Redis db 13 fixo e o reset apaga crm:* — pode ser o db de um harness vivo (T122 usa 2..15): usar a reserva de db da T122 (e2eRedis/redis-claim) | T124 |
