@@ -42,6 +42,7 @@ import { configureContactsImport } from '../jobs/contacts-import'
 import { configureExports } from '../jobs/exports'
 import { FLOW_STEP_QUEUE, configureFlowStep, flowStepEnqueuer } from '../jobs/flow-step'
 import { configureFlowTimer } from '../jobs/flow-timer'
+import { configureSchedules } from '../jobs/schedules'
 import { configureMassDispatch } from '../jobs/mass-dispatch'
 
 type Env = Record<string, string | undefined>
@@ -115,6 +116,8 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
 
   configureChatsConsumer({ db, waGateway, resolveConnection: crmConnectionsResolver(db), publisher, ...logger })
   configureFlowTimer({ db, ...logger })
+  // T64: agendamentos enviam pelo mesmo ChatSendService e iniciam fluxos pelo motor do processo.
+  configureSchedules({ db, chatSend, waGateway })
 
   const keys = deps.keys ?? new AiKeysService({ db, env })
   const llm = deps.llm ?? companyLlmFromEnv(keys, env)

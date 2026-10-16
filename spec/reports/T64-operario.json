@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "task": "T64",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-16T09:22:20.088Z",
+  "commit": "ff545225e91155e761f9eb722bf70b1f1787bfc3",
+  "base": "bd3668e",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/schedules/index.ts",
+    "apps/api/src/routes/schedules/schedules.db.unit.test.ts",
+    "apps/worker/src/boot/production.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/jobs/schedules/index.ts",
+    "apps/worker/src/jobs/schedules/schedules.unit.test.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/schedules/errors.ts",
+    "packages/core/src/schedules/index.ts",
+    "packages/core/src/schedules/rules.ts",
+    "packages/core/src/schedules/rules.unit.test.ts",
+    "packages/core/src/schedules/runner.ts",
+    "packages/core/src/schedules/schedules.db.unit.test.ts",
+    "packages/core/src/schedules/service.ts",
+    "packages/db/drizzle/crm/0020_t64_schedules.sql",
+    "packages/db/drizzle/crm/meta/0020_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/schedules.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 27.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 7.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 55.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "fail",
+      "detail": "exit 2 em 3.8s",
+      "output": "\n> @crm/worker@0.0.0 typecheck C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T64\\apps\\worker\n> tsc --noEmit\n\nsrc/boot/production.ts(38,8): error TS1005: ';' expected.\r\nsrc/boot/production.ts(39,8): error TS1005: ';' expected.\r\nsrc/boot/production.ts(40,1): error TS1109: Expression expected.\r\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T64\\apps\\worker:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/worker@0.0.0 typecheck: `tsc --noEmit`\nExit status 2\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "fail",
+      "detail": "exit 1 em 2.9s",
+      "output": "\n> @crm/worker@0.0.0 lint C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T64\\apps\\worker\n> eslint .\n\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T64\\apps\\worker\\src\\boot\\production.ts\n  38:7  error  Parsing error: ';' expected\n\n✖ 1 problem (1 error, 0 warnings)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T64\\apps\\worker:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/worker@0.0.0 lint: `eslint .`\nExit status 1\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "fail",
+      "detail": "exit 1 em 16.3s",
+      "output": " \u001b[38;5;246m38 │\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249my\u001b[0m\u001b[38;5;249mp\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249mF\u001b[0m\u001b[38;5;249ml\u001b[0m\u001b[38;5;249mo\u001b[0m\u001b[38;5;249mw\u001b[0m\u001b[38;5;249mS\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mp\u001b[0m\u001b[38;5;249mJ\u001b[0m\u001b[38;5;249mo\u001b[0m\u001b[38;5;249mb\u001b[0m\u001b[38;5;249mD\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249m,\u001b[0m\n \u001b[38;5;240m   │\u001b[0m       │ \n \u001b[38;5;240m   │\u001b[0m       ╰─ \n \u001b[38;5;240m   │\u001b[0m \n \u001b[38;5;240m   │\u001b[0m \u001b[38;5;115mHelp\u001b[0m: Try inserting a semicolon here\n\u001b[38;5;246m────╯\u001b[0m\n\n  Plugin: vite:oxc\n  File: C:/Users/green/Downloads/leonas/leonas-crm-wt/T64/apps/worker/src/boot/production.ts\n ❯ transformWithOxc ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7581:19\n ❯ TransformPluginContext.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7653:26\n ❯ EnvironmentPluginContainer.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:8545:51\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20184:26\n ❯ fetchModule ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:36165:15\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/2]⎯\n\n FAIL  src/boot/production.unit.test.ts [ src/boot/production.unit.test.ts ]\nError: Transform failed with 1 error:\n\n\u001b[31m[PARSE_ERROR] \u001b[0mExpected a semicolon or an implicit semicolon after a statement, but found none\n    \u001b[38;5;246m╭\u001b[0m\u001b[38;5;246m─\u001b[0m\u001b[38;5;246m[\u001b[0m src/boot/production.ts:38:7 \u001b[38;5;246m]\u001b[0m\n    \u001b[38;5;246m│\u001b[0m\n \u001b[38;5;246m38 │\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249my\u001b[0m\u001b[38;5;249mp\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249mF\u001b[0m\u001b[38;5;249ml\u001b[0m\u001b[38;5;249mo\u001b[0m\u001b[38;5;249mw\u001b[0m\u001b[38;5;249mS\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mp\u001b[0m\u001b[38;5;249mJ\u001b[0m\u001b[38;5;249mo\u001b[0m\u001b[38;5;249mb\u001b[0m\u001b[38;5;249mD\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249m,\u001b[0m\n \u001b[38;5;240m   │\u001b[0m       │ \n \u001b[38;5;240m   │\u001b[0m       ╰─ \n \u001b[38;5;240m   │\u001b[0m \n \u001b[38;5;240m   │\u001b[0m \u001b[38;5;115mHelp\u001b[0m: Try inserting a semicolon here\n\u001b[38;5;246m────╯\u001b[0m\n\n  Plugin: vite:oxc\n  File: C:/Users/green/Downloads/leonas/leonas-crm-wt/T64/apps/worker/src/boot/production.ts\n ❯ transformWithOxc ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7581:19\n ❯ TransformPluginContext.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7653:26\n ❯ EnvironmentPluginContainer.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:8545:51\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_jiti@2.7.0_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20184:26\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/2]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 11.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 55.8s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "21 arquivo(s) alterado(s)"
+    }
+  ]
+}

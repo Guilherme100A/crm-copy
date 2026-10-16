@@ -14,6 +14,7 @@ import { registerFlowTriggersConsumer } from './consumers/flow-triggers'
 import { registerContactsImportJob } from './jobs/contacts-import'
 import { registerContactsBulkJobs } from './jobs/contacts-bulk'
 import { registerMassDispatchJob } from './jobs/mass-dispatch'
+import { registerSchedulesJob } from './jobs/schedules'
 
 export interface QueueDefinition {
   name: string
@@ -80,3 +81,4 @@ registerFlowTriggersConsumer()
 registerContactsImportJob()
 registerContactsBulkJobs()
 registerMassDispatchJob(registry)
+registerSchedulesJob(registry)
