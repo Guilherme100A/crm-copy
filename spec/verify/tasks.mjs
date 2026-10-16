@@ -303,7 +303,7 @@ const RAW = [
     ['packages/core/src/meta-ads/structure/**', route('meta-structure'), job('meta-ads'), 'packages/core/src/meta-ads/client/**' /* aditivo: estrutura, insights, BUC */], ['api', 'worker', 'core']),
   T('T103', 'Meta: edição de status, nome e orçamento', ['T101'], ['packages/core/src/meta-ads/mutations/**', route('meta-entities')], ['api', 'core']),
   T('T104', 'Meta: Pixel, Conversions API e nó de fluxo pixel', ['T99', 'T25', 'T34'],
-    ['packages/core/src/meta-capi/**', 'packages/core/src/flows/nodes/pixel/**', route('meta-pixels'), job('meta-capi'), schema('meta-pixels'), 'packages/core/src/meta-ads/client/**' /* aditivo: CAPI no FakeMetaGraph */], ['api', 'worker', 'core']),
+    ['packages/core/src/meta-capi/**', 'packages/core/src/flows/nodes/pixel/**', route('meta-pixels'), job('meta-capi'), schema('meta-pixels'), 'packages/core/src/meta-ads/client/**' /* aditivo: CAPI no FakeMetaGraph */, 'packages/shared/src/flows/handles.ts' /* pixel: source + success + failure */], ['api', 'worker', 'core']),
   T('T105', 'Meta: vendas internas × anúncios (CTWA) e ROAS', ['T101', 'T73'], ['packages/core/src/meta-ads/sales-join/**'], ['core']),
   T('T106', 'UI Facebook: gerenciador, pixel e perfis', ['T101', 'T103', 'T104', 'T23'], [...ui('facebook')], ['web'], { e2e: true }),
 
