@@ -2,9 +2,9 @@
   "version": 1,
   "task": "T24",
   "role": "tester",
-  "ok": false,
-  "at": "2026-10-16T04:36:06.033Z",
-  "commit": "7d2adb5070f1fbab8c7c2488f50d5f3159e1ff42",
+  "ok": true,
+  "at": "2026-10-16T04:37:49.353Z",
+  "commit": "874471ec14dafaadbcddd0898a017c31b9cb6a50",
   "base": "649f800",
   "changedFiles": [
     "tests/acceptance/T24/metering.test.ts",
@@ -48,33 +48,33 @@
     },
     {
       "name": "execução vitest",
-      "status": "fail",
-      "detail": "0 passed, 0 failed, 13 skipped/todo"
+      "status": "pass",
+      "detail": "13 passed, 0 failed, 0 skipped/todo"
     },
     {
       "name": "AC-T24-01",
-      "status": "fail",
-      "detail": "0 passed, 3 skipped"
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "AC-T24-02",
-      "status": "fail",
-      "detail": "0 passed, 2 skipped"
+      "status": "pass",
+      "detail": "2 passed"
     },
     {
       "name": "AC-T24-03",
-      "status": "fail",
-      "detail": "0 passed, 3 skipped"
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "AC-T24-04",
-      "status": "fail",
-      "detail": "0 passed, 2 skipped"
+      "status": "pass",
+      "detail": "2 passed"
     },
     {
       "name": "AC-T24-05",
-      "status": "fail",
-      "detail": "0 passed, 3 skipped"
+      "status": "pass",
+      "detail": "3 passed"
     },
     {
       "name": "escopo de arquivos",
