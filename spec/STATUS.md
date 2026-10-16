@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T23 (Fole/Prisma), T29 (Cinzel/Radar), T30 (Bigorna/Lupa), T31 (Torno/Sonda).
+- Em andamento: T23 (Fole/Prisma), T30 (Bigorna/Lupa), T31 (Torno/Sonda), T40 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -43,7 +43,7 @@
 | 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
-| 5 | T29 | App wa-worker e RPC interno | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T31 | Departamentos e horários de atendimento | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
@@ -54,7 +54,7 @@
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
-| 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | TODO | | | 0 | |
+| 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | TODO | | | 0 | |
