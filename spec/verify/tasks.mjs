@@ -221,7 +221,7 @@ const RAW = [
   T('T55', 'Dashboard: métricas de vendas, bootstrap e marcos', ['T34'], ['packages/core/src/dashboard/sales/**', 'packages/core/src/dashboard/bootstrap/**', 'packages/core/src/dashboard/milestones/**', route('dashboard')], ['api', 'core']),
   T('T65', 'Dashboard: métricas de atendimento', ['T48'], ['packages/core/src/dashboard/attendance/**', route('dashboard-attendance')], ['api', 'core']),
   T('T70', 'UI kanban: lista e quadro', ['T50', 'T23'], [...ui('crms')], ['web'], { e2e: true }),
-  T('T76', 'UI kanban: modais, filtros, estatísticas e exportação', ['T70', 'T27'], ['apps/web/src/features/kanban-tools/**', 'apps/web/src/features/crms/**', 'apps/web/src/routes/crms/$crmId.tsx', 'packages/core/src/kanban/export*', i18n('kanban-tools')], ['web'], { e2e: true }),
+  T('T76', 'UI kanban: modais, filtros, estatísticas e exportação', ['T70', 'T27'], ['apps/web/src/features/kanban-tools/**', 'apps/web/src/features/crms/**', 'apps/web/src/routes/crms/$crmId.tsx', 'packages/core/src/kanban/export*', i18n('kanban-tools')], ['web', 'core'], { e2e: true }),
   T('T78', 'UI dashboard: filtros e vendas', ['T55', 'T23'], [...ui('dashboard')], ['web'], { e2e: true }),
   T('T87', 'UI dashboard: histórico, atendimento e marcos', ['T78', 'T65'], ['apps/web/src/features/dashboard-attendance/**', 'apps/web/src/features/dashboard-history/**', i18n('dashboard-attendance')], ['web'], { e2e: true }),
 
