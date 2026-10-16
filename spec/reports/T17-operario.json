@@ -2,24 +2,24 @@
   "version": 1,
   "task": "T17",
   "role": "operario",
-  "ok": true,
-  "at": "2026-10-16T03:57:52.530Z",
-  "commit": "9c532463ec7fa1714c4c41b3cdda9fefe4faeb85",
-  "base": "9c53246",
+  "ok": false,
+  "at": "2026-10-16T04:03:16.537Z",
+  "commit": "b57dc428bb01781f5a51909e00962737a88ec2ad",
+  "base": "0773ee9",
   "changedFiles": [
     "apps/api/package.json",
+    "apps/api/src/e2e/e2e.db.unit.test.ts",
+    "apps/api/src/e2e/index.ts",
+    "apps/api/src/e2e/node.ts",
     "apps/api/src/routes/index.ts",
     "eslint.config.mjs",
     "packages/db/package.json",
     "packages/db/src/index.ts",
-    "pnpm-lock.yaml",
-    "apps/api/src/e2e/e2e.db.unit.test.ts",
-    "apps/api/src/e2e/index.ts",
-    "apps/api/src/e2e/node.ts",
     "packages/db/src/seed/base.ts",
     "packages/db/src/seed/index.ts",
     "packages/db/src/seed/modules/index.ts",
     "packages/db/src/seed/seed.db.unit.test.ts",
+    "pnpm-lock.yaml",
     "scripts/e2e/api.ts",
     "scripts/e2e/serve.mjs"
   ],
@@ -41,33 +41,35 @@
     },
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
-      "status": "pass",
-      "detail": "ok em 7.6s"
+      "status": "fail",
+      "detail": "exit 2 em 6.5s",
+      "output": "\n> @crm/api@0.0.0 typecheck C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T17\\apps\\api\n> tsc --noEmit\n\nsrc/routes/index.ts(16,1): error TS1232: An import declaration can only be used at the top level of a namespace or module.\r\nsrc/routes/index.ts(16,41): error TS2307: Cannot find module '../e2e/index' or its corresponding type declarations.\r\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T17\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 typecheck: `tsc --noEmit`\nExit status 2\n"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 2.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
-      "status": "pass",
-      "detail": "ok em 12.1s"
+      "status": "fail",
+      "detail": "exit 1 em 4.7s",
+      "output": "     |   ^\n  14 |  \t// T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n  15 |  \tif (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\n ❯ error ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/shared/logs-D6uA606S.mjs:166:24\n ❯ normalizeParseError ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:25:9\n ❯ wrap ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:5:39\n ❯ parseAstAsync ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:54:9\n ❯ ssrTransformScript ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:16527:9\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20218:64\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/5]⎯\n\n FAIL  src/routes/auth/realtime-end.db.unit.test.ts [ src/routes/auth/realtime-end.db.unit.test.ts ]\nRolldownError: Parse failure: Parse failed with 1 error:\n'import statement' declaration can only be used at the top level of a module\n11:   // Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).\n12:   app.use(\"/api/*\", companyActiveGuard(deps));\n13:   import { e2eRoutes, isE2eEnabled } from \"../e2e/index\";\n      ^\n14:   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n15:   if (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\nAt file: /src/routes/index.ts:13:1\n  File: /src/routes/index.ts:13:1\n  11 |  \t// Antes de qualquer rota: empresa ativa desativada → 403 company_inactive (T22).\n  12 |  \tapp.use(\"/api/*\", companyActiveGuard(deps));\n  13 |  \timport { e2eRoutes, isE2eEnabled } from \"../e2e/index\";\n     |   ^\n  14 |  \t// T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).\n  15 |  \tif (isE2eEnabled()) app.route(\"/\", e2eRoutes(deps));\n ❯ error ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/shared/logs-D6uA606S.mjs:166:24\n ❯ normalizeParseError ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:25:9\n ❯ wrap ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:5:39\n ❯ parseAstAsync ../../node_modules/.pnpm/rolldown@1.2.14/node_modules/rolldown/dist/parse-ast-index.mjs:54:9\n ❯ ssrTransformScript ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:16527:9\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20218:64\n ❯ fetchModule ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:36165:15\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/5]⎯\n\n"
     },
     {
       "name": "cmd: pnpm --filter @crm/db typecheck",
       "status": "pass",
-      "detail": "ok em 7.7s"
+      "detail": "ok em 4.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 2.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db test",
       "status": "pass",
-      "detail": "ok em 13.2s"
+      "detail": "ok em 11.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
