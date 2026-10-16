@@ -3,33 +3,33 @@
   "task": "T51",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T06:53:46.663Z",
-  "commit": "f48c9b5174cc53b6d5dbc95feced00e99f6c7017",
-  "base": "f48c9b5",
+  "at": "2026-10-16T06:54:58.073Z",
+  "commit": "60c79f20b8eead5ad97800c9bacd7c277ad8332f",
+  "base": "cc5cb08",
   "changedFiles": [
     "packages/core/src/flows/nodes/index.ts",
-    "packages/core/src/index.ts",
     "packages/core/src/flows/nodes/messaging/data.ts",
     "packages/core/src/flows/nodes/messaging/handlers.ts",
     "packages/core/src/flows/nodes/messaging/index.ts",
     "packages/core/src/flows/nodes/messaging/messaging.unit.test.ts",
-    "packages/core/src/flows/nodes/messaging/pix.ts"
+    "packages/core/src/flows/nodes/messaging/pix.ts",
+    "packages/core/src/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 13.7s"
+      "detail": "ok em 11.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 6.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 22.6s"
+      "detail": "ok em 21.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
