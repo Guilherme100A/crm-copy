@@ -30,6 +30,7 @@ export const SHARED_PATHS = [
   'packages/*/src/index.ts',
   'apps/*/src/index.ts',
   'apps/api/src/routes/index.ts',
+  'apps/api/src/middleware/public-routes.ts',
   'apps/worker/src/registry.ts',
   'apps/web/src/routeTree.gen.ts',
   'apps/web/src/app/nav.ts',
