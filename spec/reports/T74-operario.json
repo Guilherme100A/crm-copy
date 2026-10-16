@@ -3,53 +3,53 @@
   "task": "T74",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T08:43:34.999Z",
-  "commit": "591c109b453e6d73e21e385cdfe8d3bb71ca4293",
-  "base": "591c109",
+  "at": "2026-10-16T08:46:38.065Z",
+  "commit": "7c8938f659d940554ac5f4daac2c643460036737",
+  "base": "16200df",
   "changedFiles": [
     "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/worker/src/jobs/mass-dispatch/index.ts",
     "apps/worker/src/jobs/mass-dispatch/mass-dispatch.unit.test.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
     "packages/core/src/mass-dispatch-runner/index.ts",
     "packages/core/src/mass-dispatch-runner/runner.db.unit.test.ts",
     "packages/core/src/mass-dispatch-runner/runner.ts",
     "packages/core/src/mass-dispatch-runner/starter.ts",
     "packages/core/src/mass-dispatch-runner/window.ts",
-    "packages/core/src/mass-dispatch-runner/window.unit.test.ts"
+    "packages/core/src/mass-dispatch-runner/window.unit.test.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 12.1s"
+      "detail": "ok em 15.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 2.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 18.0s"
+      "detail": "ok em 23.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 11.1s"
+      "detail": "ok em 10.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.8s"
+      "detail": "ok em 4.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 59.7s"
+      "detail": "ok em 55.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
