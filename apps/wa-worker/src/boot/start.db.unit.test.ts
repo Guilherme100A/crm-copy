@@ -128,7 +128,11 @@ describe('wa-worker (WA_TRANSPORT=fake)', () => {
     const { prefix, stream } = names()
     const w = await boot(prefix, stream)
     const sessionId = await connectedSession(w)
-    const events = await waitFor(() => streamEvents(stream), (ev) => ev.some((e) => e.type === 'session.state' && e.to === 'WARMING'))
+    // session.connection sai depois do state WARMING (awaits entre os dois no onOpen): esperar os dois.
+    const events = await waitFor(
+      () => streamEvents(stream),
+      (ev) => ev.some((e) => e.type === 'session.state' && e.to === 'WARMING') && ev.some((e) => e.type === 'session.connection'),
+    )
     expect(events.map((e) => e.type)).toEqual(expect.arrayContaining(['session.qr', 'session.state', 'session.connection']))
 
     const phone = '+5511999990501'
