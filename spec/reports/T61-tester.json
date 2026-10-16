@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "task": "T61",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T07:28:24.086Z",
+  "commit": "be05ef447b1c37ff603358e953df21a0f4472e02",
+  "base": "be05ef4",
+  "changedFiles": [
+    "tests/acceptance/T61/api.test.ts",
+    "tests/acceptance/T61/setup.ts",
+    "tests/acceptance/T61/triggers.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T61-01, AC-T61-02, AC-T61-03, AC-T61-04, AC-T61-05, AC-T61-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "31 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T61-01",
+      "status": "pass",
+      "detail": "14 passed"
+    },
+    {
+      "name": "AC-T61-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T61-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T61-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T61-05",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T61-06",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "3 arquivo(s) alterado(s)"
+    }
+  ]
+}
