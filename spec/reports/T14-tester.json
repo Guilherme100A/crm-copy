@@ -3,15 +3,10 @@
   "task": "T14",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:21:29.710Z",
-  "commit": "8350d8dbfa8aa9be771bceda6fb05aafdc9cc0cb",
-  "base": "8350d8d",
-  "changedFiles": [
-    "tests/acceptance/T14/antiban.test.ts",
-    "tests/acceptance/T14/limits.test.ts",
-    "tests/acceptance/T14/queue.test.ts",
-    "tests/acceptance/T14/support.ts"
-  ],
+  "at": "2026-10-16T03:22:00.029Z",
+  "commit": "011b46b63663dbfc697c411bc26f3dc0e6880352",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -81,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "4 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

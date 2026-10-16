@@ -3,30 +3,10 @@
   "task": "T14",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:20:37.052Z",
-  "commit": "8350d8dbfa8aa9be771bceda6fb05aafdc9cc0cb",
-  "base": "8350d8d",
-  "changedFiles": [
-    "packages/wa-engine/package.json",
-    "packages/wa-engine/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/wa-engine/src/antiban/adapter.ts",
-    "packages/wa-engine/src/antiban/adapter.unit.test.ts",
-    "packages/wa-engine/src/antiban/index.ts",
-    "packages/wa-engine/src/queue/index.ts",
-    "packages/wa-engine/src/queue/jid.ts",
-    "packages/wa-engine/src/queue/queue-cluster.db.unit.test.ts",
-    "packages/wa-engine/src/queue/queue.db.unit.test.ts",
-    "packages/wa-engine/src/queue/queue.ts",
-    "packages/wa-engine/src/queue/states.ts",
-    "packages/wa-engine/src/queue/states.unit.test.ts",
-    "packages/wa-engine/src/queue/store.ts",
-    "packages/wa-engine/src/safety/index.ts",
-    "packages/wa-engine/src/safety/limits.db.unit.test.ts",
-    "packages/wa-engine/src/safety/limits.ts",
-    "packages/wa-engine/src/warmup/index.ts",
-    "packages/wa-engine/src/warmup/warmup.unit.test.ts"
-  ],
+  "at": "2026-10-16T03:21:52.133Z",
+  "commit": "011b46b63663dbfc697c411bc26f3dc0e6880352",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/wa-engine/src/queue/queue.ts",
@@ -41,17 +21,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
       "status": "pass",
-      "detail": "ok em 5.9s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 5.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 9.2s"
+      "detail": "ok em 7.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -111,7 +91,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "19 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
