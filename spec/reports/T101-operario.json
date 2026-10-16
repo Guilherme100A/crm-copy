@@ -3,73 +3,73 @@
   "task": "T101",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T10:24:50.462Z",
-  "commit": "0bea18009c58224829f89b0258a702c7a9fc8bb0",
-  "base": "0bea180",
+  "at": "2026-10-16T10:29:17.752Z",
+  "commit": "ba36968330d768d7316a225dc3ea6b101234e6d7",
+  "base": "fd385be",
   "changedFiles": [
     "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/meta-structure/index.ts",
+    "apps/api/src/routes/meta-structure/meta-structure.db.unit.test.ts",
     "apps/worker/src/index.ts",
+    "apps/worker/src/jobs/meta-ads/index.ts",
+    "apps/worker/src/jobs/meta-ads/meta-ads.unit.test.ts",
     "apps/worker/src/registry.ts",
     "packages/core/src/index.ts",
     "packages/core/src/meta-ads/client/testing/fake-graph.ts",
-    "packages/shared/src/realtime/events.ts",
-    "apps/api/src/routes/meta-structure/index.ts",
-    "apps/api/src/routes/meta-structure/meta-structure.db.unit.test.ts",
-    "apps/worker/src/jobs/meta-ads/index.ts",
-    "apps/worker/src/jobs/meta-ads/meta-ads.unit.test.ts",
     "packages/core/src/meta-ads/structure/account.ts",
     "packages/core/src/meta-ads/structure/index.ts",
     "packages/core/src/meta-ads/structure/metrics.ts",
     "packages/core/src/meta-ads/structure/metrics.unit.test.ts",
     "packages/core/src/meta-ads/structure/params.ts",
     "packages/core/src/meta-ads/structure/service.db.unit.test.ts",
-    "packages/core/src/meta-ads/structure/service.ts"
+    "packages/core/src/meta-ads/structure/service.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 17.3s"
+      "detail": "ok em 13.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 121.2s"
+      "detail": "ok em 71.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 16.4s"
+      "detail": "ok em 11.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 6.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 28.6s"
+      "detail": "ok em 20.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.3s"
+      "detail": "ok em 9.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.3s"
+      "detail": "ok em 4.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 67.9s"
+      "detail": "ok em 47.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
