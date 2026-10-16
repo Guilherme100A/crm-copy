@@ -197,3 +197,4 @@
 | Meta | `meta_ads_display_currency` da empresa não existe no schema (default BRL ou query); métricas internas `purchases_leona` ficam null até a T105 | T101 |
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
+| harness E2E (T17) | `POST /__e2e/reset` passa de 15 s sob carga; o cliente desiste e o próximo reset começa por cima → 500 duplicate key companies_pkey: serializar o reset (mutex) e subir o timeout do resetSeed (junto com a limpeza de bancos órfãos) | T70 |
