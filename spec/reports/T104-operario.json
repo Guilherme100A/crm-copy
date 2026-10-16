@@ -3,25 +3,22 @@
   "task": "T104",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T11:06:13.827Z",
-  "commit": "cce5a5bb3d87b87b66373dff7174aaf61b037377",
-  "base": "cce5a5b",
+  "at": "2026-10-16T11:11:10.221Z",
+  "commit": "8d32a5f824715c101fe7be5afcc5c1af114d0c90",
+  "base": "be33744",
   "changedFiles": [
     "apps/api/src/routes/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/flows/engine/dry-run.unit.test.ts",
-    "packages/core/src/flows/nodes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/flows/handles.ts",
     "apps/api/src/routes/meta-pixels/index.ts",
     "apps/api/src/routes/meta-pixels/meta-pixels.db.unit.test.ts",
     "apps/worker/src/jobs/meta-capi/index.ts",
     "apps/worker/src/jobs/meta-capi/meta-capi.unit.test.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/flows/engine/dry-run.unit.test.ts",
+    "packages/core/src/flows/nodes/index.ts",
     "packages/core/src/flows/nodes/pixel/index.ts",
     "packages/core/src/flows/nodes/pixel/pixel.db.unit.test.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
     "packages/core/src/meta-capi/capi.db.unit.test.ts",
     "packages/core/src/meta-capi/hashing.ts",
     "packages/core/src/meta-capi/hashing.unit.test.ts",
@@ -31,53 +28,56 @@
     "packages/core/src/meta-capi/service.ts",
     "packages/db/drizzle/crm/0023_t104_meta_pixels.sql",
     "packages/db/drizzle/crm/meta/0023_snapshot.json",
-    "packages/db/src/schema/crm/meta-pixels.ts"
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/meta-pixels.ts",
+    "packages/shared/src/flows/handles.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.0s"
+      "detail": "ok em 13.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 3.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 55.6s"
+      "detail": "ok em 68.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 12.7s"
+      "detail": "ok em 14.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.5s"
+      "detail": "ok em 2.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 20.9s"
+      "detail": "ok em 22.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.6s"
+      "detail": "ok em 12.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.2s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 61.4s"
+      "detail": "ok em 106.1s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

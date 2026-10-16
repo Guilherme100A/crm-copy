@@ -3,9 +3,9 @@
   "task": "T104",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T11:06:36.399Z",
-  "commit": "cce5a5bb3d87b87b66373dff7174aaf61b037377",
-  "base": "cce5a5b",
+  "at": "2026-10-16T11:11:25.632Z",
+  "commit": "8d32a5f824715c101fe7be5afcc5c1af114d0c90",
+  "base": "be33744",
   "changedFiles": [
     "tests/acceptance/T104/capi.test.ts",
     "tests/acceptance/T104/setup.ts"
