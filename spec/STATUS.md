@@ -21,11 +21,11 @@
 | 1 | T04 | @crm/ai: portas LLM/TTS/STT e fakes | MERGED | Fole | Prisma | 0 | 911e046 |
 | 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | MERGED | Torno | Sonda | 0 | e1d9947 |
 | 2 | T06 | WA: schema public.* e auth state cifrado | MERGED | Cinzel | Radar | 0 | e578080 |
-| 2 | T07 | WA: transporte (interface, Fake e Baileys) | IN_PROGRESS | Fole | Prisma | 0 | |
+| 2 | T07 | WA: transporte (interface, Fake e Baileys) | IN_PROGRESS | Fole | Prisma | 1 | |
 | 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | IN_PROGRESS | Torno | Sonda | 0 | |
 | 2 | T09 | Worker: esqueleto, consumidor do wsm:events e jobs | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | IN_PROGRESS | Bigorna | Lupa | 0 | |
-| 2 | T11 | Templating: interpolação de variáveis | TODO | | | 0 | |
+| 2 | T11 | Templating: interpolação de variáveis | IN_PROGRESS | Fole | Prisma | 0 | |
 | 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | TODO | | | 0 | |
 | 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | TODO | | | 0 | |
 | 3 | T13 | WA: SessionManager e proxy | TODO | | | 0 | |
