@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T74 (Bigorna/Lupa), T75 (Torno/Sonda), T121 (Cinzel/Radar).
+- Em andamento (3 pares): T64 (Torno/Sonda), T121 (Cinzel/Radar), T122 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -93,7 +93,7 @@
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | TODO | | | 0 | |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | TODO | | | 0 | |
-| 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
+| 7 | T64 | Agendamento de mensagens | IN_PROGRESS | Torno | Sonda | 0 | |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
@@ -134,7 +134,7 @@
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | TODO | | | 0 | |
+| 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
