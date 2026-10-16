@@ -244,7 +244,7 @@ const RAW = [
   T('T57', 'UI editores de nó: lógica, CRM e externos', ['T45', 'T10'], ['apps/web/src/features/flow-editor/node-editors/logic/**', 'apps/web/src/features/flow-editor/node-editors/crm/**', 'apps/web/src/features/flow-editor/node-editors/external/**', i18n('node-editors-logic')], ['web'], { e2e: true }),
 
   // ---------------- Conexões ----------------
-  T('T40', 'Conexões: API, QR, pareamento, proxy e perfil', ['T22', 'T03'], [core('connections'), route('connections'), schema('connections')], ['api', 'core'],
+  T('T40', 'Conexões: API, QR, pareamento, proxy e perfil', ['T22', 'T03'], [core('connections'), route('connections'), schema('connections'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.connection_id */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/connections/index.ts'] }),
   T('T47', 'Conexões: projeção de status, eventos e alertas', ['T40', 'T09', 'T16'], ['packages/core/src/connections-status/**', consumer('connections')], ['worker', 'core']),
   T('T71', 'UI conexões', ['T40', 'T47', 'T23'], [...ui('connections')], ['web'], { e2e: true }),
