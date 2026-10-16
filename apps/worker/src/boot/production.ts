@@ -4,6 +4,7 @@
 //   gatilhos (T61, inclusive a mensagem fora do horário no histórico e o "atendimento finalizado"), exportações e
 //   importações (T27/T67), o agente de IA (T68) com LLM e voz por empresa (BYOK, T38) e cota/carteira (T24) e os
 //   disparos em massa (T74/T122), que iniciam os fluxos com o mesmo registry de nós e os timers do processo.
+//   T125: Gerenciador Meta (meta-sync), Conversions API (meta-capi, nó pixel) e vendas aprovadas ao Pixel.
 import {
   AiKeysService,
   ChatSendService,
@@ -46,6 +47,9 @@ import { FLOW_STEP_QUEUE, configureFlowStep, flowStepEnqueuer } from '../jobs/fl
 import { configureFlowTimer } from '../jobs/flow-timer'
 import { configureSchedules } from '../jobs/schedules'
 import { configureMassDispatch } from '../jobs/mass-dispatch'
+import { configureMetaAds } from '../jobs/meta-ads'
+import { configureMetaCapi, metaCapiEnqueuer } from '../jobs/meta-capi'
+import { capiSalePublisher, configurePixelNodes, fxRatesFromEnv, metaConfigFromEnv, MetaProfilesService } from '@crm/core'
 
 type Env = Record<string, string | undefined>
 type KeysResolver = Pick<AiKeysService, 'resolveCredentials'>
@@ -179,6 +183,16 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   // notification.created) publicam pelo realtime do processo (T123).
   configureLogicNodes({ publisher, ...logger })
   configureCrmNodes({ publisher, ...logger })
+
+  // T125: Meta. Gerenciador (job meta-sync, T101) com o OAuth/Graph e as cotações do env; Conversions API (job
+  // meta-capi e nó pixel, T104) na Graph do env; a venda aprovada pelo nó approved_sale enfileira o Purchase
+  // (`sale.recorded` → meta-capi). Fila criada no primeiro uso.
+  configureMetaAds({ db, redis, publisher, profiles: new MetaProfilesService({ db, config: metaConfigFromEnv(env) }), fx: fxRatesFromEnv(env), ...logger })
+  const capiEnv = { graphUrl: env.META_GRAPH_URL?.trim() || undefined, testEventCode: env.META_CAPI_TEST_EVENT_CODE?.trim() || null, isProduction: env.NODE_ENV === 'production' }
+  configureMetaCapi({ db, ...capiEnv })
+  configurePixelNodes(capiEnv)
+  let capiEnqueue: ReturnType<typeof metaCapiEnqueuer> | undefined
+  configureCrmNodes({ publisher: capiSalePublisher(publisher, { enqueue: (data, opts) => (capiEnqueue ??= metaCapiEnqueuer())(data, opts), ...logger }) })
 
   return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }
 }

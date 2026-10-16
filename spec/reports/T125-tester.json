@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "task": "T125",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T11:33:11.834Z",
+  "commit": "34f8dd4f3ec3eecff114a75bbbc8d77f71fddcb6",
+  "base": "34f8dd4",
+  "changedFiles": [
+    "tests/acceptance/T125/meta-production.test.ts",
+    "tests/acceptance/T125/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T125-01, AC-T125-02, AC-T125-03"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "4 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T125-01",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T125-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T125-03",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}
