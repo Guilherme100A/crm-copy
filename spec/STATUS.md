@@ -158,3 +158,6 @@
 | T50 | filtro `crm/kanban` na lista de chats (T48) e `PATCH /api/chats/:id` de coluna/quadro ficam com a T50 | T48 |
 | T46 / wa-port / T29 | método `sessions.setProxy` (ou update) na porta, no RPC e no gateway: hoje o proxy fica cifrado no CRM e a conexão só é marcada `requires_restart` | T40 |
 | teste instável | `apps/api/src/routes/auth/realtime-end.db.unit.test.ts` "fecha em < 2 s" (T117) mediu 2372 ms sob carga: avaliar folga | T40 |
+| T49b (SEGURANÇA, após T48) | rotas da T49 (`/api/chats/:id/messages`, envio, mídia, leitura, react, delete) não aplicam o escopo de chat: usar `ChatQueryService.row(actor, id)` (T48) e responder 404 fora do escopo | T48 |
+| T17b (bloqueia E2E em main) | `scripts/e2e/serve.mjs`: `spawnSync(pnpm --filter @crm/web build)` herda o stdin e trava sem `apps/web/dist` — usar `stdio: [ignore, inherit, inherit]` | T23 |
+| SPEC (Codice) | Paths das tarefas de UI devem seguir as URLs da spec 18 (ex.: `/customers`, `/chats`, `/crms`, `/agentes`); `requiredFile` da T36 é `routes/auth/login.tsx` mas a URL é `/login` (a T23 renderiza `features/auth/login-page.tsx` em `routes/login.tsx`) | T23 |
