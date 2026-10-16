@@ -95,7 +95,7 @@ function T(id, title, deps, paths, ws, opts = {}) {
 const RAW = [
   // ---------------- Fundação ----------------
   T('T00', 'Scaffold do monorepo', [],
-    ['package.json', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'tsconfig*.json', 'eslint.config.*', '.prettierrc*', '.gitignore', '.npmrc', '.nvmrc',
+    ['package.json', 'pnpm-workspace.yaml', 'pnpm-lock.yaml', 'tsconfig*.json', 'eslint.config.*', '.prettierrc*', '.gitignore', '.gitattributes', '.npmrc', '.nvmrc',
       '.env.example', 'vitest.workspace.ts', 'apps/*/package.json', 'apps/*/tsconfig.json', 'apps/*/vitest.config.ts', 'apps/*/src/index.ts',
       'packages/*/package.json', 'packages/*/tsconfig.json', 'packages/*/vitest.config.ts', 'packages/*/src/index.ts', 'scripts/**', 'docs/README.md'],
     [], {

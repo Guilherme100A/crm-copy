@@ -165,13 +165,14 @@ function changedFiles(base) {
   return [...new Set([...diff.stdout.split('\n'), ...untracked.stdout.split('\n')].map((s) => s.trim()).filter(Boolean))]
 }
 
-function checkScope(report, allowed, forbidden, { base, strict }) {
+// Operário e Tester dividem o worktree: cada papel só responde pela sua área (own).
+function checkScope(report, allowed, forbidden, { base, strict }, own = () => true) {
   const changed = changedFiles(base)
   if (!changed) {
     report.add('escopo de arquivos', 'skip', 'sem git ou ref inválida')
     return
   }
-  const relevant = changed.filter((f) => !matchesAny(f, IGNORED_PATHS))
+  const relevant = changed.filter((f) => !matchesAny(f, IGNORED_PATHS) && own(f))
   report.changedFiles = relevant
   const bad = relevant.filter((f) => !matchesAny(f, allowed) || matchesAny(f, forbidden))
   // Working tree compartilhada: arquivos de outras tarefas aparecem no diff → só bloqueia com --base/--strict-scope.
@@ -339,7 +340,7 @@ function verifyOperario(task, opts) {
   if (opts.skipCommands) report.add('comandos', 'skip', '--skip-commands')
   else checkCommands(report, task.commands)
   checkForbidden(report, FORBIDDEN)
-  checkScope(report, [...task.paths, ...SHARED_PATHS], ['tests/**'], opts)
+  checkScope(report, [...task.paths, ...SHARED_PATHS], [], opts, (f) => !f.startsWith('tests/'))
   return report
 }
 
@@ -349,7 +350,7 @@ function verifyTester(task, opts) {
   if (task.testerRequiredFiles) checkFiles(report, task.testerRequiredFiles, 'arquivo')
   checkForbidden(report, TESTER_FORBIDDEN)
   checkAcceptance(report, task)
-  checkScope(report, ['tests/**'], [], opts)
+  checkScope(report, [`tests/acceptance/${task.id}/**`, 'tests/acceptance/helpers/**', 'tests/acceptance/*.config.ts'], [], opts, (f) => f.startsWith('tests/'))
   return report
 }
 

@@ -416,7 +416,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ### T00 — Scaffold do monorepo
 **Objetivo:** base que todas as tarefas usam, espelhando o ai-manager (`AI-MANAGER-MAP.md#1-visão-geral`).
-**Paths:** manifestos e configs da raiz, `apps/*/{package.json,tsconfig.json,vitest.config.ts,src/index.ts}`, `packages/*/{package.json,tsconfig.json,vitest.config.ts,src/index.ts}`, `scripts/**`, `docs/README.md`.
+**Paths:** manifestos e configs da raiz (inclui `.gitattributes`), `apps/*/{package.json,tsconfig.json,vitest.config.ts,src/index.ts}`, `packages/*/{package.json,tsconfig.json,vitest.config.ts,src/index.ts}`, `scripts/**`, `docs/README.md`.
 **Depende de:** —
 **Entregáveis:** workspaces `apps/{api,worker,wa-worker,web}` e `packages/{shared,db,node-kit,wa-port,wa-engine,wa-gateway-rpc,ai,core}` com scripts `build`, `typecheck`, `lint`, `test`; `tsconfig.base.json` strict; ESLint 10 flat config com `typescript-eslint` e **`no-restricted-imports`** aplicando a regra 1.4 nº 11; Prettier; `.nvmrc` = 22; `engines.node >= 22.12`; `.env.example` (3.12); `git init`.
 **Critérios de aceitação**
