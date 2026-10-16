@@ -254,7 +254,7 @@ const RAW = [
     { requiredFiles: ['packages/ai/src/aisdk/provider.ts', 'packages/ai/src/audio/ptt.ts'], infra: false }),
   T('T18', 'Consumo de IA: preços, ledger, carteira e porta BillingProvider', ['T01', 'T02', 'T04'], [core('ai-usage'), core('billing'), schema('ai-usage')], ['core'],
     { requiredFiles: ['packages/core/src/ai-usage/wallet.ts', 'packages/core/src/billing/port.ts'] }),
-  T('T24', 'UsageGuard e provider medido', ['T18', 'T12'], ['packages/core/src/ai-metering/**'], ['core'], { requiredFiles: ['packages/core/src/ai-metering/guard.ts'] }),
+  T('T24', 'UsageGuard e provider medido', ['T18', 'T12'], ['packages/core/src/ai-metering/**', 'packages/db/src/schema/crm/ai-usage.ts' /* aditivo: feature, agent_id, error_code, status error */], ['core'], { requiredFiles: ['packages/core/src/ai-metering/guard.ts'] }),
   T('T37', 'API de consumo de IA (empresa e plataforma)', ['T24', 'T22'], [route('ai-usage'), route('platform-ai')], ['api', 'core']),
   T('T38', 'Chaves de provedores de IA (BYOK)', ['T12', 'T22'], [core('ai-keys'), route('ai-keys'), schema('ai-keys')], ['api', 'core']),
   T('T39', 'Agentes de IA: schema e CRUD', ['T22', 'T26'], [core('ai-agents'), route('ai-agents'), schema('ai-agents')], ['api', 'core'],

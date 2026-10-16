@@ -741,7 +741,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Critérios de aceitação**
 - **AC-T24-01** Com cota `hard` mensal estourada, `reserve` lança `LlmQuotaExceededError` antes de chamar o provedor (FakeLlm com 0 chamadas).
 - **AC-T24-02** Cota `soft` estourada permite a chamada e emite `ai_wallet.low`.
-- **AC-T24-03** Cada chamada medida grava exatamente uma linha em `ai_usage` com tokens, `cost_micros`, `billed_credits` e `feature`; `commit` repetido com o mesmo `request_id` debita uma vez.
+- **AC-T24-03** Cada chamada medida grava exatamente uma linha em `ai_usage` com tokens, `cost_micros`, `credits` (créditos cobrados, coluna da T18) e `feature`; `commit` repetido com o mesmo `request_id` debita uma vez.
 - **AC-T24-04** Erro do provedor grava `ai_usage.status = 'error'` sem débito.
 - **AC-T24-05** A reconciliação corrige divergência entre o contador Redis e o Postgres (teste com contador adulterado).
 
