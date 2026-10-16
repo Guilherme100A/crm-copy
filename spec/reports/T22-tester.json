@@ -3,16 +3,10 @@
   "task": "T22",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:42:34.111Z",
-  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
-  "base": "13a99a5",
-  "changedFiles": [
-    "tests/acceptance/T22/companies-team.test.ts",
-    "tests/acceptance/T22/deactivate.test.ts",
-    "tests/acceptance/T22/invitations.test.ts",
-    "tests/acceptance/T22/setup.ts",
-    "tests/acceptance/helpers/sse.ts"
-  ],
+  "at": "2026-10-16T03:52:46.642Z",
+  "commit": "7cecc74a249efa07ccb70f6465807734ce3e62b0",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -87,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
