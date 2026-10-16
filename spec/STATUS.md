@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T91 (Torno/Sonda, rejeição 1), T104 (Cinzel/Radar), T123 (Bigorna/Lupa, rejeição 1).
+- Em andamento (3 pares): T70 (Torno/Sonda), T104 (Cinzel/Radar), T123 (Bigorna/Lupa, re-verify).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -98,7 +98,7 @@
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
-| 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
+| 7 | T70 | UI kanban: lista e quadro | IN_PROGRESS | Torno | Sonda | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
@@ -121,7 +121,7 @@
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
 | 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
-| 9 | T91 | UI chats: painel lateral e agendamentos | IN_PROGRESS | Torno | Sonda | 1 | |
+| 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
