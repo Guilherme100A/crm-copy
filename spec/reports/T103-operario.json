@@ -3,50 +3,50 @@
   "task": "T103",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T11:52:48.253Z",
-  "commit": "b209e1d551ff545d013aedf6a5575f6b8c7f3219",
-  "base": "b209e1d",
+  "at": "2026-10-16T12:16:58.632Z",
+  "commit": "2958a8860021c41b965e4f62dc8807dbbf6b0a6a",
+  "base": "4e1a314",
   "changedFiles": [
     "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
-    "packages/core/src/meta-ads/structure/service.ts",
     "apps/api/src/routes/meta-entities/index.ts",
     "apps/api/src/routes/meta-entities/meta-entities.db.unit.test.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
     "packages/core/src/meta-ads/mutations/index.ts",
     "packages/core/src/meta-ads/mutations/service.db.unit.test.ts",
-    "packages/core/src/meta-ads/mutations/service.ts"
+    "packages/core/src/meta-ads/mutations/service.ts",
+    "packages/core/src/meta-ads/structure/service.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 11.9s"
+      "detail": "ok em 12.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 4.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 70.9s"
+      "detail": "ok em 51.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 9.4s"
+      "detail": "ok em 12.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.3s"
+      "detail": "ok em 5.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 59.3s"
+      "detail": "ok em 68.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
