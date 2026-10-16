@@ -25,6 +25,10 @@
     "bullmq": "6.3.8",
     "drizzle-orm": "0.45.3",
     "ioredis": "6.0.0",
+    "papaparse": "5.7.0",
     "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/papaparse": "5.5.2"
   }
 }

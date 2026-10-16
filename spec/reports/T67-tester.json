@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "task": "T67",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T07:34:12.388Z",
+  "commit": "b597667943db88e9608bef1386322211bb92030b",
+  "base": "b597667",
+  "changedFiles": [
+    "tests/acceptance/T67/imports.test.ts",
+    "tests/acceptance/T67/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T67-01, AC-T67-02, AC-T67-03, AC-T67-04, AC-T67-05, AC-T67-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "13 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T67-01",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T67-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T67-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T67-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T67-05",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T67-06",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}
