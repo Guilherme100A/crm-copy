@@ -1,0 +1,1168 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T78\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "tests/acceptance/T78"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T78\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T78/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T78/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T78/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T78/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T78/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T78\\",
+      "url": "http://127.0.0.1:31778",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "31778",
+        "E2E_API_PORT": "31779",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T78\\dashboard.e2e.ts",
+      "file": "T78/dashboard.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T78 — período, filtros e atualizar",
+          "file": "T78/dashboard.e2e.ts",
+          "line": 44,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T78-01 presets (hoje, ontem, 7 dias = hoje−6..hoje, 30 dias, este mês) vão para a URL e para a API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1945,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:41.798Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-2fcd465ed530ce3db583",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 personalizado vai para a URL, sobrevive ao reload e recusa intervalo maior que 366 dias",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1744,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:43.842Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-06ddf33f7aa4ad94c1d0",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 conexões e produtos vão para a URL e para a API; reload mantém",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:45.598Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-76a7f9494652cdc6ec2a",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 \"Atualizar\" força o recálculo e mostra \"Última atualização\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1723,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:47.963Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-7af7efff9743fef29e78",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 116,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 presets (hoje, ontem, 7 dias = hoje−6..hoje, 30 dias, este mês) vão para a URL e para a API",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1728,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:11.869Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-f83bb10624e1207b5af6",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 45,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 personalizado vai para a URL, sobrevive ao reload e recusa intervalo maior que 366 dias",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1938,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:13.693Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-76beac284ef94e04fa55",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 64,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 conexões e produtos vão para a URL e para a API; reload mantém",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2042,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:15.642Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-13ac602a0f711330f5b8",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 90,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-01 \"Atualizar\" força o recálculo e mostra \"Última atualização\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1916,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:17.698Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-0443642cb5179b0434eb",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 116,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T78 — KPIs e gráficos",
+          "file": "T78/dashboard.e2e.ts",
+          "line": 131,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T78-02 KPIs com tendência (verde/vermelho, invertida em despesas) e lucro negativo destacado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2000,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:49.699Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-59ffc030846aecbca09e",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 132,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-02 tendência neutra quando o período anterior é zero",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1681,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:51.712Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-68f9870cf4b22a9aaf19",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-02 gráficos mostram estado vazio sem vendas no período",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1906,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:53.406Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-3c82b74187167474bdf4",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 176,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-02 KPIs com tendência (verde/vermelho, invertida em despesas) e lucro negativo destacado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1972,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:19.628Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-0f3364ed2035dd982c9d",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 132,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-02 tendência neutra quando o período anterior é zero",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1818,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:21.613Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-fad25f1c794b12c96224",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 166,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-02 gráficos mostram estado vazio sem vendas no período",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2658,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:23.442Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-37888f568a3122c5ee32",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 176,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T78 — grupos de filtro",
+          "file": "T78/dashboard.e2e.ts",
+          "line": 189,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T78-03 criar, aplicar e excluir grupo de filtro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2493,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:55.325Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-59b1268352953691fa3c",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 190,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-03 criar, aplicar e excluir grupo de filtro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2288,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:26.113Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-299c57f041333f780942",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 190,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T78 — saudação, marcos e permissão",
+          "file": "T78/dashboard.e2e.ts",
+          "line": 247,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T12:00:00Z em America/Sao_Paulo → \"Bom dia\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1667,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:57.828Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-b397a41445fc5f7a4680",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T17:30:00Z em America/Mexico_City → \"Bom dia\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1728,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:53:59.508Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-400ef86067a9314c2ae3",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T17:30:00Z em America/Sao_Paulo → \"Boa tarde\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1866,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:01.248Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-f6893047ff0be17d4b02",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T20:00:00Z em UTC → \"Boa noite\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2045,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:03.126Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-9f163230589daaed11da",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 pílula de marcos com modal de progresso (R$ 75 mil → \"Primeira Marca\", 50% até \"Tração\")",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2141,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:05.182Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-1d7438e496286ce223de",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 269,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-04 sem faturamento a pílula mostra \"Sem selo\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1749,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:07.335Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-5fe1e6f04413593e0db9",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 288,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-04 sem dashboard.sales a aba Vendas some e abre Atendimento (mesmo com ?tab=sales)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2278,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:09.096Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-46d4bcbdbc8300ad306b",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 295,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T12:00:00Z em America/Sao_Paulo → \"Bom dia\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1518,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:28.414Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-824f304fbc322cfbdcab",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T17:30:00Z em America/Mexico_City → \"Bom dia\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1999,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:29.946Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-d9cfb8b9a2144b886d91",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T17:30:00Z em America/Sao_Paulo → \"Boa tarde\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1608,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:31.958Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-c787e438a99214e68e94",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 saudação pelo horário no fuso da empresa: 2026-10-16T20:00:00Z em UTC → \"Boa noite\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1432,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:33.577Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-121ed35b290a88e2bada",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 256,
+              "column": 5
+            },
+            {
+              "title": "AC-T78-04 pílula de marcos com modal de progresso (R$ 75 mil → \"Primeira Marca\", 50% até \"Tração\")",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1823,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:35.022Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-1ac1a310555372f119e2",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 269,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-04 sem faturamento a pílula mostra \"Sem selo\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1339,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:36.856Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-86a2ec773b063fe89775",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 288,
+              "column": 3
+            },
+            {
+              "title": "AC-T78-04 sem dashboard.sales a aba Vendas some e abre Atendimento (mesmo com ?tab=sales)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1824,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T14:54:38.209Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "8eca4409753dd905357a-a92f0cd78da2624af0e4",
+              "file": "T78/dashboard.e2e.ts",
+              "line": 295,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T14:53:31.403Z",
+    "duration": 69092.244,
+    "expected": 30,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

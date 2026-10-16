@@ -1,0 +1,72 @@
+{
+  "common": { "cancel": "Cancel", "close": "Close", "error": "Could not load the data.", "save": "Save" },
+  "greeting": { "morning": "Good morning, {name}!", "afternoon": "Good afternoon, {name}!", "evening": "Good evening, {name}!" },
+  "subline": "{company} operation • {n} total leads",
+  "tabs": { "label": "Dashboard sections", "sales": "Sales", "attendance": "Support" },
+  "attendance": { "placeholder": "The support panel will be available soon." },
+  "presets": { "today": "Today", "yesterday": "Yesterday", "7d": "Last 7 days", "30d": "Last 30 days", "month": "This month", "custom": "Custom" },
+  "filters": {
+    "period": "Period",
+    "from": "From",
+    "to": "To",
+    "apply": "Apply",
+    "problems": { "incomplete": "Enter both dates.", "inverted": "The end date is before the start date.", "too_long": "The maximum range is 366 days." },
+    "allConnections": "All connections",
+    "allProducts": "All products",
+    "selected": "{n} selected",
+    "search": "Search...",
+    "noOptions": "Nothing found.",
+    "clear": "Clear filters",
+    "refresh": "Refresh",
+    "lastUpdated": "Last updated: {time}"
+  },
+  "groups": {
+    "label": "Filter groups",
+    "empty": "No saved groups.",
+    "save": "Save group",
+    "saveTitle": "Save filter group",
+    "name": "Group name",
+    "nameRequired": "Enter the group name.",
+    "summary": "{c} connections · {p} products",
+    "delete": "Delete group",
+    "deleteTitle": "Delete group?",
+    "deleteBody": "The group \"{name}\" will be deleted."
+  },
+  "sales": { "loading": "Loading sales..." },
+  "kpis": {
+    "vsPrevious": "Compared to the previous period",
+    "new_leads": { "label": "New leads", "hint": "Contacts whose first message arrived in the period" },
+    "revenue": { "label": "Revenue", "hint": "Sum of approved sales" },
+    "sales_count": { "label": "Sales", "hint": "Number of approved sales" },
+    "roas": { "label": "ROAS", "hint": "Revenue ÷ ad spend" },
+    "conversion_rate": { "label": "Conversion rate", "hint": "Sales ÷ new leads" },
+    "avg_ticket": { "label": "Average ticket", "hint": "Revenue ÷ sales" },
+    "profit": { "label": "Profit", "hint": "Profit before fees − expenses" },
+    "spend": { "label": "Meta spend (Ad)", "hint": "Ad spend in the period" },
+    "profit_pre_fees": { "label": "Profit before fees", "hint": "Revenue − ad spend" },
+    "expenses": { "label": "Fees and expenses", "hint": "Sum of active expense rules" }
+  },
+  "charts": {
+    "empty": "No sales in the period",
+    "value": "Value",
+    "count": "Qty",
+    "overTime": "Sales over time",
+    "byHour": "Sales by hour",
+    "byConnection": "Sales by instance",
+    "byState": "Sales by state",
+    "byProduct": "Product performance",
+    "noConnection": "No connection",
+    "unknownState": "Unknown"
+  },
+  "milestone": {
+    "none": "No badge",
+    "title": "Revenue track",
+    "current": "Current level",
+    "next": "Next level",
+    "progress": "Progress",
+    "remaining": "{amount} left to {name}",
+    "maxReached": "Maximum level reached",
+    "levels": { "1": "First Mark", "2": "Traction", "3": "Scale", "4": "Expansion", "5": "Million Club", "6": "Market Reference" },
+    "thresholds": { "1": "R$ 50k", "2": "R$ 100k", "3": "R$ 250k", "4": "R$ 500k", "5": "R$ 1 million", "6": "R$ 2 million" }
+  }
+}

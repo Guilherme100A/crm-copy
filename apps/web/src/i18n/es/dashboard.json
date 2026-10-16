@@ -1,0 +1,72 @@
+{
+  "common": { "cancel": "Cancelar", "close": "Cerrar", "error": "No se pudieron cargar los datos.", "save": "Guardar" },
+  "greeting": { "morning": "¡Buenos días, {name}!", "afternoon": "¡Buenas tardes, {name}!", "evening": "¡Buenas noches, {name}!" },
+  "subline": "Operación {company} • {n} leads acumulados",
+  "tabs": { "label": "Secciones del panel", "sales": "Ventas", "attendance": "Atención" },
+  "attendance": { "placeholder": "El panel de atención estará disponible pronto." },
+  "presets": { "today": "Hoy", "yesterday": "Ayer", "7d": "Últimos 7 días", "30d": "Últimos 30 días", "month": "Este mes", "custom": "Personalizado" },
+  "filters": {
+    "period": "Período",
+    "from": "Desde",
+    "to": "Hasta",
+    "apply": "Aplicar",
+    "problems": { "incomplete": "Indica las dos fechas.", "inverted": "La fecha final es anterior a la inicial.", "too_long": "El intervalo máximo es de 366 días." },
+    "allConnections": "Todas las conexiones",
+    "allProducts": "Todos los productos",
+    "selected": "{n} seleccionada(s)",
+    "search": "Buscar...",
+    "noOptions": "No se encontró nada.",
+    "clear": "Limpiar filtros",
+    "refresh": "Actualizar",
+    "lastUpdated": "Última actualización: {time}"
+  },
+  "groups": {
+    "label": "Grupos de filtro",
+    "empty": "No hay grupos guardados.",
+    "save": "Guardar grupo",
+    "saveTitle": "Guardar grupo de filtro",
+    "name": "Nombre del grupo",
+    "nameRequired": "Indica el nombre del grupo.",
+    "summary": "{c} conexiones · {p} productos",
+    "delete": "Eliminar grupo",
+    "deleteTitle": "¿Eliminar grupo?",
+    "deleteBody": "El grupo \"{name}\" será eliminado."
+  },
+  "sales": { "loading": "Cargando ventas..." },
+  "kpis": {
+    "vsPrevious": "Comparado con el período anterior",
+    "new_leads": { "label": "Leads nuevos", "hint": "Contactos cuyo primer mensaje llegó en el período" },
+    "revenue": { "label": "Facturación", "hint": "Suma de las ventas aprobadas" },
+    "sales_count": { "label": "Ventas", "hint": "Cantidad de ventas aprobadas" },
+    "roas": { "label": "ROAS", "hint": "Facturación ÷ gasto en anuncios" },
+    "conversion_rate": { "label": "Tasa de conversión", "hint": "Ventas ÷ leads nuevos" },
+    "avg_ticket": { "label": "Ticket medio", "hint": "Facturación ÷ ventas" },
+    "profit": { "label": "Ganancia", "hint": "Ganancia antes de tasas − gastos" },
+    "spend": { "label": "Gasto Meta (Ad)", "hint": "Gasto en anuncios en el período" },
+    "profit_pre_fees": { "label": "Ganancia antes de tasas", "hint": "Facturación − gasto en anuncios" },
+    "expenses": { "label": "Tasas y gastos", "hint": "Suma de las reglas de gasto vigentes" }
+  },
+  "charts": {
+    "empty": "No hay ventas en el período",
+    "value": "Valor",
+    "count": "Cant.",
+    "overTime": "Ventas por período",
+    "byHour": "Ventas por horario",
+    "byConnection": "Ventas por instancia",
+    "byState": "Ventas por estado",
+    "byProduct": "Rendimiento de los productos",
+    "noConnection": "Sin conexión",
+    "unknownState": "Desconocido"
+  },
+  "milestone": {
+    "none": "Sin sello",
+    "title": "Ruta de facturación",
+    "current": "Nivel actual",
+    "next": "Próximo nivel",
+    "progress": "Progreso",
+    "remaining": "Faltan {amount} para {name}",
+    "maxReached": "Nivel máximo alcanzado",
+    "levels": { "1": "Primera Marca", "2": "Tracción", "3": "Escala", "4": "Expansión", "5": "Club del Millón", "6": "Referencia en el Mercado" },
+    "thresholds": { "1": "R$ 50 mil", "2": "R$ 100 mil", "3": "R$ 250 mil", "4": "R$ 500 mil", "5": "R$ 1 millón", "6": "R$ 2 millones" }
+  }
+}
