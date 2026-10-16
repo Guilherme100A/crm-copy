@@ -1,5 +1,6 @@
 // Config compartilhada da suíte de aceitação (propriedade dos Testers, SPEC 3.10).
 // Uso (a partir da raiz): pnpm exec vitest run --config tests/acceptance/vitest.config.ts tests/acceptance/T00
+import { randomBytes } from 'node:crypto'
 import { existsSync, readFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
@@ -8,6 +9,10 @@ const ROOT = fileURLToPath(new URL('../..', import.meta.url)).split('\\').join('
 
 const PACKAGES = 'shared|db|node-kit|wa-port|wa-engine|wa-gateway-rpc|ai|core'
 const APPS = 'api|worker|wa-worker|web'
+
+// T121: prefixo das filas BullMQ único por EXECUÇÃO. Vários worktrees testam no mesmo Redis (db 1); com o prefixo
+// fixo, workers de uma execução consumiriam jobs de outra. Calculado uma vez no carregamento desta config.
+const RUN_ID = `${process.pid}-${randomBytes(4).toString('hex')}`
 
 export default defineConfig({
   root: ROOT,
@@ -63,6 +68,8 @@ export default defineConfig({
       AI_MODE: 'fake',
       MAIL_TRANSPORT: 'memory',
       APP_NAME: 'CRM',
+      CRM_QUEUE_PREFIX: `crm-t-${RUN_ID}`,
+      WA_QUEUE_PREFIX: `wsm-t-${RUN_ID}`,
     },
   },
 })

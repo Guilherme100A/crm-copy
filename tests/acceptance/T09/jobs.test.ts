@@ -1,4 +1,4 @@
-// AC-T09-05: defineQueue cria filas com prefixo `crm` e nome sem `:`; SIGTERM fecha workers e consumidores
+// AC-T09-05: defineQueue cria filas com o prefixo do CRM (`CRM_QUEUE_PREFIX`, padrão `crm` — T121) e nome sem `:`; SIGTERM fecha workers e consumidores
 // sem perder job ativo (o job termina antes do exit).
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { exec, tail } from '../helpers/exec'
@@ -6,6 +6,8 @@ import { REDIS_URL, core, kit, newRedis, rand, waitFor } from './support'
 
 let redis: any
 const toClose: any[] = []
+// Prefixo do CRM: CRM_QUEUE_PREFIX do ambiente (a aceitação usa um por execução, T121); sem a variável, `crm`.
+const PREFIX = process.env.CRM_QUEUE_PREFIX || 'crm'
 
 beforeAll(async () => {
   redis = await newRedis()
@@ -27,10 +29,20 @@ describe('T09 — defineQueue / defineWorker', () => {
     const q = defineQueue(name, { connection: bullConnection({ url: REDIS_URL }) })
     toClose.push(q)
     expect(q.name).toBe(name)
-    expect(q.opts?.prefix ?? q.qualifiedName?.split(':')[0]).toBe('crm')
+    expect(q.opts?.prefix ?? q.qualifiedName?.split(':')[0]).toBe(PREFIX)
     await q.add('teste', { a: 1 })
-    const keys: string[] = await redis.keys(`crm:${name}:*`)
-    expect(keys.length, 'nenhuma chave crm:<fila>:* no Redis').toBeGreaterThan(0)
+    const keys: string[] = await redis.keys(`${PREFIX}:${name}:*`)
+    expect(keys.length, `nenhuma chave ${PREFIX}:<fila>:* no Redis`).toBeGreaterThan(0)
+    // sem a variável, o prefixo é `crm`
+    const saved = process.env.CRM_QUEUE_PREFIX
+    delete process.env.CRM_QUEUE_PREFIX
+    try {
+      const plain = defineQueue(`t09-padrao-${rand()}`, { connection: bullConnection({ url: REDIS_URL }) })
+      toClose.push(plain)
+      expect(plain.opts?.prefix).toBe('crm')
+    } finally {
+      if (saved !== undefined) process.env.CRM_QUEUE_PREFIX = saved
+    }
   })
 
   it('AC-T09-05 nome de fila com ":" é rejeitado', async () => {
@@ -48,7 +60,7 @@ describe('T09 — defineQueue / defineWorker', () => {
     const done: unknown[] = []
     const w = defineWorker(name, async (job: any) => void done.push(job.data), { connection: bullConnection({ url: REDIS_URL }) })
     try {
-      expect(w.opts?.prefix).toBe('crm')
+      expect(w.opts?.prefix).toBe(PREFIX)
       expect(() =>
         defineWorker(`t09:x:${rand()}`, async () => {}, { connection: bullConnection({ url: REDIS_URL }), autorun: false }),
       ).toThrow()

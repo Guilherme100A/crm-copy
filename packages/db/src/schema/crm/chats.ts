@@ -17,7 +17,8 @@ export type ChatStatus = (typeof CHAT_STATUSES)[number]
 export const MESSAGE_DIRECTIONS_CRM = ['inbound', 'outbound'] as const
 export type CrmMessageDirection = (typeof MESSAGE_DIRECTIONS_CRM)[number]
 
-export const MESSAGE_SENDER_TYPES = ['contact', 'user', 'bot', 'ai', 'system'] as const
+/** Remetente da mensagem. `flow` = enviada por um nó de fluxo (T120/T121); `system` = automação do CRM (ex.: fora do horário). */
+export const MESSAGE_SENDER_TYPES = ['contact', 'user', 'bot', 'ai', 'system', 'flow'] as const
 export type MessageSenderType = (typeof MESSAGE_SENDER_TYPES)[number]
 
 /** Estados de entrega (os do pipeline, SPEC 3.8) + `received` para mensagens que chegaram. */

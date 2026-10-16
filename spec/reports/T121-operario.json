@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "task": "T121",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T08:38:25.654Z",
+  "commit": "591c109b453e6d73e21e385cdfe8d3bb71ca4293",
+  "base": "591c109",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/vitest.config.ts",
+    "apps/wa-worker/vitest.config.ts",
+    "apps/web/vitest.config.ts",
+    "apps/worker/vitest.config.ts",
+    "packages/ai/vitest.config.ts",
+    "packages/core/src/jobs/queues.ts",
+    "packages/core/src/jobs/queues.unit.test.ts",
+    "packages/core/vitest.config.ts",
+    "packages/db/src/schema/crm/chats.ts",
+    "packages/db/vitest.config.ts",
+    "packages/node-kit/vitest.config.ts",
+    "packages/shared/vitest.config.ts",
+    "packages/wa-engine/vitest.config.ts",
+    "packages/wa-gateway-rpc/vitest.config.ts",
+    "packages/wa-port/vitest.config.ts",
+    "packages/db/src/schema/crm/chats.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 22.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 65.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db typecheck",
+      "status": "pass",
+      "detail": "ok em 10.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db lint",
+      "status": "pass",
+      "detail": "ok em 5.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db test",
+      "status": "pass",
+      "detail": "ok em 44.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 24.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 6.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 26.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 19.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 40.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}

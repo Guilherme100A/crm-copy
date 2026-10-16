@@ -1,0 +1,42 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@crm/db": [
+        "../../../../packages/db/src/index.ts"
+      ],
+      "@crm/db/*": [
+        "../../../../packages/db/src/*"
+      ],
+      "@crm/core": [
+        "../../../../packages/core/src/index.ts"
+      ],
+      "@crm/shared": [
+        "../../../../packages/shared/src/index.ts"
+      ],
+      "@crm/shared/*": [
+        "../../../../packages/shared/src/*/index.ts"
+      ],
+      "@crm/node-kit": [
+        "../../../../packages/node-kit/src/index.ts"
+      ],
+      "@crm/wa-port": [
+        "../../../../packages/wa-port/src/index.ts"
+      ],
+      "@crm/wa-port/*": [
+        "../../../../packages/wa-port/src/*/index.ts"
+      ],
+      "@crm/ai": [
+        "../../../../packages/ai/src/index.ts"
+      ],
+      "@crm/ai/*": [
+        "../../../../packages/ai/src/*/index.ts"
+      ]
+    }
+  },
+  "files": [
+    "typecheck-negative.ts"
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "task": "T121",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T09:01:17.965Z",
+  "commit": "591c109b453e6d73e21e385cdfe8d3bb71ca4293",
+  "base": "591c109",
+  "changedFiles": [
+    "tests/acceptance/T09/jobs.test.ts",
+    "tests/acceptance/vitest.config.ts",
+    "tests/acceptance/T121/fixtures/print-prefixes.ts",
+    "tests/acceptance/T121/fixtures/tsconfig.json",
+    "tests/acceptance/T121/fixtures/tsconfig.negative.json",
+    "tests/acceptance/T121/fixtures/typecheck-negative.ts",
+    "tests/acceptance/T121/fixtures/typecheck-probe.ts",
+    "tests/acceptance/T121/queues.test.ts",
+    "tests/acceptance/T121/sender.test.ts",
+    "tests/acceptance/T121/test-configs.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T121-01, AC-T121-02, AC-T121-03"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "3 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "7 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T121-01",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T121-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T121-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "10 arquivo(s) alterado(s)"
+    }
+  ]
+}
