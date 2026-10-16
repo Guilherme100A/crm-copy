@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T88 (Torno/Sonda), T126 → depois T47 (Bigorna/Lupa), T127 em verify + T94 (Cinzel/Radar).
+- Em andamento (3 pares): verifies em fila, um por vez (máquina sem memória): T126 (Lupa) → integrar T126 → T47 → T88 → T94; T127 integra logo após a T47.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -84,7 +84,7 @@
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
-| 6 | T94 | Servidor MCP (token estático) | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T94 | Servidor MCP (token estático) | IN_PROGRESS | Cinzel | Radar | 0 | implementada; aguarda janela de verify (OOM nas 3 tentativas) |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
@@ -120,7 +120,7 @@
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
-| 9 | T88 | UI agentes: lista e editor | IN_PROGRESS | Torno | Sonda | 0 | |
+| 9 | T88 | UI agentes: lista e editor | IN_PROGRESS | Torno | Sonda | 0 | implementada; aguarda janela de verify (fila: T126 → T47 → T88 → T94; máquina sem memória) |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
