@@ -3,13 +3,11 @@
   "task": "T75",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T08:41:41.761Z",
-  "commit": "10fa4d0bcdff94da0ca757c2a2d6a17010760737",
-  "base": "10fa4d0",
+  "at": "2026-10-16T08:50:31.925Z",
+  "commit": "3541a8047232a9f56fe0d505e01e3e2e490c8678",
+  "base": "567330b",
   "changedFiles": [
     "apps/api/src/routes/chat-messages/index.ts",
-    "packages/core/src/chats/send/index.ts",
-    "packages/core/src/chats/send/service.ts",
     "apps/api/src/routes/chat-messages/t75.db.unit.test.ts",
     "apps/web/src/features/chat-thread/api.ts",
     "apps/web/src/features/chat-thread/chat-slot.tsx",
@@ -23,64 +21,66 @@
     "apps/web/src/i18n/en/chat-thread.json",
     "apps/web/src/i18n/es/chat-thread.json",
     "apps/web/src/i18n/pt-BR/chat-thread.json",
+    "packages/core/src/chats/send/index.ts",
     "packages/core/src/chats/send/message-media.ts",
+    "packages/core/src/chats/send/service.ts",
     "packages/core/src/chats/send/t75.db.unit.test.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.3s"
+      "detail": "ok em 11.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 4.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 50.8s"
+      "detail": "ok em 37.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 9.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 46.3s"
+      "detail": "ok em 50.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 5.7s"
+      "detail": "ok em 6.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.7s"
+      "detail": "ok em 0.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 2.8s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
