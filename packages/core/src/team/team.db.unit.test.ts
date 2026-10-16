@@ -18,7 +18,8 @@ let seq = 0
 beforeAll(async () => {
   tmp = await createTempDatabase({ migrate: true })
   db = createDb(tmp.url, { max: 8 })
-})
+  // Migrar um banco novo cresce a cada migration nova (T34: +4 tabelas); o hook padrão de 10 s estoura sob carga.
+}, 60_000)
 afterAll(async () => {
   await db?.$client.end()
   await tmp?.drop()

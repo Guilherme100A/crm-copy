@@ -29,6 +29,8 @@ const ADMIN: readonly PermissionKey[] = [
   ...area('delete'),
   'dashboard.sales',
   'dashboard.support',
+  // T34: admin edita vendas por padrão (member não).
+  'sales.edit',
   'kanban.edit',
   'kanban.delete',
   'flows.edit',

@@ -113,7 +113,9 @@ describe('AC-T17-03 reset', () => {
       const login = await app.request('/api/auth/login', { method: 'POST', headers: J, body: JSON.stringify({ email: u.email, password: SEED_BASE.password }) })
       expect(login.status, u.email).toBe(200)
     }
-  })
+    // O ≤ 3 s do AC vale para o reset (medido acima); cadastro, logins e o TRUNCATE de mais tabelas a cada
+    // migration nova passam do timeout padrão de 5 s do teste inteiro sob carga.
+  }, 30_000)
 })
 
 describe('AC-T17-04 wa/emit', () => {

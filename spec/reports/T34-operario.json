@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "task": "T34",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T06:22:51.291Z",
+  "commit": "1df6c8421100fe924355cae9157b3eccbc8c58dc",
+  "base": "1df6c84",
+  "changedFiles": [
+    "apps/api/src/e2e/e2e.db.unit.test.ts",
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/team/team.db.unit.test.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/permissions/catalog.ts",
+    "packages/shared/src/permissions/defaults.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/products/index.ts",
+    "apps/api/src/routes/sales/index.ts",
+    "apps/api/src/routes/sales/sales.db.unit.test.ts",
+    "packages/core/src/products/index.ts",
+    "packages/core/src/products/price.unit.test.ts",
+    "packages/core/src/products/service.ts",
+    "packages/core/src/sales/errors.ts",
+    "packages/core/src/sales/expenses.ts",
+    "packages/core/src/sales/index.ts",
+    "packages/core/src/sales/service.ts",
+    "packages/db/drizzle/crm/0011_t34_sales.sql",
+    "packages/db/drizzle/crm/meta/0011_snapshot.json",
+    "packages/db/src/schema/crm/sales.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/sales/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 24.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 15.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 29.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 11.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 20.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}
