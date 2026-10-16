@@ -318,7 +318,7 @@ const RAW = [
   T('T110', 'Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook)', ['T109'],
     ['packages/core/src/payments/zenith/**', route('zenith-oauth')], ['api', 'core']),
   T('T111', 'Bloco Pagamento no fluxo e confirmação por webhook', ['T109', 'T30'],
-    ['packages/core/src/flows/nodes/payment/**', 'packages/core/src/payments/webhooks/**', route('hooks-payments'), job('payment-webhooks')], ['api', 'worker', 'core']),
+    ['packages/core/src/flows/nodes/payment/**', 'packages/core/src/flows/engine/waits.ts', 'packages/core/src/flows/engine/control.ts', 'packages/core/src/payments/webhooks/**', route('hooks-payments'), job('payment-webhooks')], ['api', 'worker', 'core']),
   T('T112', 'Emissão de NF (Notasy) na venda aprovada', ['T34', 'T22'],
     [core('invoicing'), route('invoice-integrations'), job('invoices'), schema('invoicing')], ['api', 'worker', 'core']),
   T('T113', 'UTMify: integração e envio de vendas aprovadas', ['T34', 'T22'],
