@@ -244,7 +244,7 @@ const RAW = [
   T('T61', 'Gatilhos, fluxos padrão por conexão e ação fora do horário', ['T30', 'T33', 'T40', 'T31'],
     ['packages/core/src/flows/triggers/**', route('connection-flow-configs'), consumer('flow-triggers'), schema('flow-triggers')], ['api', 'worker', 'core']),
   T('T62', 'Nós interativos (menu, carrossel, espera de resposta)', ['T30', 'T51'], ['packages/core/src/flows/nodes/interactive/**', 'packages/core/src/flows/engine/control.ts', 'packages/core/src/flows/engine/control*.test.ts' /* aditivo: reentry */], ['core']),
-  T('T63', 'Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente)', ['T25', 'T48', 'T50', 'T34'], ['packages/core/src/flows/nodes/crm/**'], ['core']),
+  T('T63', 'Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente)', ['T25', 'T48', 'T50', 'T34'], ['packages/core/src/flows/nodes/crm/**', 'packages/db/src/schema/crm/sales.ts', 'packages/core/src/sales/**' /* aditivo: note_issuer_id, utmify_integration_id */], ['core']),
   T('T82', 'Simulador de fluxos', ['T41', 'T42', 'T51', 'T62', 'T63', 'T45'], [route('flow-simulate'), 'apps/web/src/features/flow-simulator/**', i18n('flow-simulator')], ['api', 'web'], { e2e: true }),
   T('T44', 'UI fluxos: lista e pastas', ['T28', 'T23'], [...ui('flows')], ['web'], { e2e: true }),
   T('T45', 'UI fluxos: canvas do editor', ['T28', 'T23'], ['apps/web/src/features/flow-editor/canvas/**', 'apps/web/src/features/flow-editor/palette/**', 'apps/web/src/features/flow-editor/properties/**', 'apps/web/src/features/flow-editor/index.ts*', i18n('flow-editor')], ['web'], { e2e: true }),
