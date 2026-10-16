@@ -200,4 +200,5 @@
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
 | montagem do worker | `configureExternalNodes({ llm por empresa, llmForKey via AiKeysService.credentialsForKey, guard: UsageGuard })` (T42) no boot: sem isso o nó de IA usa o ctx.llm sem medição | T42 |
+| montagem do worker | `configureAiKnowledge({ db, redis })` no boot (senão o job ai-knowledge falha com "dependências não configuradas") e `knowledge: new AiKnowledgeService({ db }).asKnowledgeSearch()` no configureAiAgent do worker de produção e no teste ao vivo (T79) | T52 |
 | testes (T17) | `apps/api/src/e2e/e2e.db.unit.test.ts` usa Redis db 13 fixo e o reset apaga crm:* — pode ser o db de um harness vivo (T122 usa 2..15): usar a reserva de db da T122 (e2eRedis/redis-claim) | T124 |
