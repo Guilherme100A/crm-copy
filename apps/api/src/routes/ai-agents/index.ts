@@ -1,9 +1,11 @@
 // Agentes de IA (SPEC T39; 07-agentes-ia.md §6). Leitura com flows.view; escrita e ações com flows.edit (07 §8).
+import { asc, eq } from 'drizzle-orm'
 import { Hono, type Context } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 import { z } from 'zod'
-import { AGENT_MEDIA_MAX_BYTES, AiAgentsError, AiAgentsService, AVATAR_MAX_BYTES, agentWriteSchema, type AiProviderKeys } from '@crm/core'
-import { AI_AGENT_STATUSES } from '@crm/db'
+import { LLM_PROVIDERS } from '@crm/ai'
+import { AGENT_MEDIA_MAX_BYTES, AiAgentsError, AiAgentsService, AVATAR_MAX_BYTES, agentWriteSchema, envProviderKeys, type AiProviderKeys } from '@crm/core'
+import { AI_AGENT_STATUSES, llmPrices } from '@crm/db'
 import { FsBlobStore } from '@crm/node-kit'
 import { getCompanyCtx } from '../../lib/context'
 import { ApiError } from '../../lib/errors'
@@ -90,6 +92,22 @@ export function aiAgentsRoutes(deps: ResolvedDeps) {
     const agent = await domain(() => service.create(companyId, body, actor(c)))
     setAudit(c, { action: 'ai_agents.create', targetType: 'ai_agent', targetId: agent.id })
     return c.json({ agent }, 201)
+  })
+
+  // Seletor de modelo do editor (T88, AC-T88-03): provedores com chave para a empresa (empresa ou plataforma, a mesma
+  // regra do publish) e os modelos LLM do catálogo de preços. Só booleanos e nomes: nenhuma chave sai daqui.
+  // Registrado antes de /api/ai-agents/:id.
+  app.get('/api/ai-agents/model-options', view, async (c) => {
+    const { companyId } = getCompanyCtx(c)
+    const keys = deps.aiProviderKeys ?? envProviderKeys()
+    const providers = await Promise.all(LLM_PROVIDERS.map(async (provider) => ({ provider, available: Boolean(await keys.isConfigured({ companyId, provider })) })))
+    const known = new Set<string>(LLM_PROVIDERS)
+    const rows = await deps.db
+      .selectDistinct({ provider: llmPrices.provider, model: llmPrices.model })
+      .from(llmPrices)
+      .where(eq(llmPrices.kind, 'llm'))
+      .orderBy(asc(llmPrices.provider), asc(llmPrices.model))
+    return c.json({ providers, models: rows.filter((r) => known.has(r.provider)) }, 200)
   })
 
   app.get('/api/ai-agents/:id', view, async (c) => {

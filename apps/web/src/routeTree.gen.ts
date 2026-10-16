@@ -18,6 +18,8 @@ import { Route as RegisterRouteImport } from './routes/register'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AgentesIndexRouteImport } from './routes/agentes/index'
+import { Route as AgentesAgentIdRouteImport } from './routes/agentes/$agentId'
+import { Route as AgentesNovoRouteImport } from './routes/agentes/novo'
 import { Route as ChatsIndexRouteImport } from './routes/chats/index'
 import { Route as ChatsChatIdRouteImport } from './routes/chats/$chatId'
 import { Route as ConnectionsIndexRouteImport } from './routes/connections/index'
@@ -83,6 +85,16 @@ const AdminIndexRoute = AdminIndexRouteImport.update({
 const AgentesIndexRoute = AgentesIndexRouteImport.update({
   id: '/agentes/',
   path: '/agentes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentesAgentIdRoute = AgentesAgentIdRouteImport.update({
+  id: '/agentes/$agentId',
+  path: '/agentes/$agentId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgentesNovoRoute = AgentesNovoRouteImport.update({
+  id: '/agentes/novo',
+  path: '/agentes/novo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatsIndexRoute = ChatsIndexRouteImport.update({
@@ -202,6 +214,8 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/agentes/$agentId': typeof AgentesAgentIdRoute
+  '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
@@ -233,6 +247,8 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/agentes/$agentId': typeof AgentesAgentIdRoute
+  '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
@@ -265,6 +281,8 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/agentes/$agentId': typeof AgentesAgentIdRoute
+  '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
@@ -299,6 +317,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/agentes/$agentId'
+    | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/invitation/$token'
@@ -330,6 +350,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/agentes/$agentId'
+    | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/invitation/$token'
@@ -361,6 +383,8 @@ export interface FileRouteTypes {
     | '/login'
     | '/register'
     | '/reset-password'
+    | '/agentes/$agentId'
+    | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/invitation/$token'
@@ -394,6 +418,8 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AgentesAgentIdRoute: typeof AgentesAgentIdRoute
+  AgentesNovoRoute: typeof AgentesNovoRoute
   CrmsCrmIdRoute: typeof CrmsCrmIdRoute
   InvitationTokenRoute: typeof InvitationTokenRoute
   InvitationsTokenRoute: typeof InvitationsTokenRoute
@@ -477,6 +503,20 @@ declare module '@tanstack/react-router' {
       path: '/agentes'
       fullPath: '/agentes/'
       preLoaderRoute: typeof AgentesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agentes/$agentId': {
+      id: '/agentes/$agentId'
+      path: '/agentes/$agentId'
+      fullPath: '/agentes/$agentId'
+      preLoaderRoute: typeof AgentesAgentIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agentes/novo': {
+      id: '/agentes/novo'
+      path: '/agentes/novo'
+      fullPath: '/agentes/novo'
+      preLoaderRoute: typeof AgentesNovoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chats/': {
@@ -670,6 +710,8 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  AgentesAgentIdRoute: AgentesAgentIdRoute,
+  AgentesNovoRoute: AgentesNovoRoute,
   CrmsCrmIdRoute: CrmsCrmIdRoute,
   InvitationTokenRoute: InvitationTokenRoute,
   InvitationsTokenRoute: InvitationsTokenRoute,

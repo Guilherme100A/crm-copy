@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "task": "T88",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T21:51:45.316Z",
+  "commit": "856909649f1929ef466f8a62fcfe49274c049103",
+  "base": "8569096",
+  "changedFiles": [
+    "apps/api/src/routes/ai-agents/ai-agents.db.unit.test.ts",
+    "apps/api/src/routes/ai-agents/index.ts",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/agentes/index.tsx",
+    "apps/worker/src/index.ts",
+    "scripts/e2e/api.ts",
+    "apps/web/src/features/agents/agents.unit.test.ts",
+    "apps/web/src/features/agents/api.ts",
+    "apps/web/src/features/agents/editor-page.tsx",
+    "apps/web/src/features/agents/form.ts",
+    "apps/web/src/features/agents/knowledge-tab.tsx",
+    "apps/web/src/features/agents/list-page.tsx",
+    "apps/web/src/features/agents/model-select.tsx",
+    "apps/web/src/features/agents/realtime.ts",
+    "apps/web/src/features/agents/skills-tab.tsx",
+    "apps/web/src/features/agents/tabs.tsx",
+    "apps/web/src/features/agents/ui.tsx",
+    "apps/web/src/i18n/en/agents.json",
+    "apps/web/src/i18n/es/agents.json",
+    "apps/web/src/i18n/pt-BR/agents.json",
+    "apps/web/src/routes/agentes/$agentId.tsx",
+    "apps/web/src/routes/agentes/novo.tsx"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 14.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 8.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 152.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 23.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 5.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 47.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 16.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 6.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 28.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 1.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 23.9s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}

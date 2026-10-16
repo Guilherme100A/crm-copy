@@ -7,7 +7,7 @@ import { createApp } from '../../apps/api/src/app'
 import { loadApiConfig } from '../../apps/api/src/config'
 import type { HandledEvent } from '../../apps/api/src/e2e/index'
 import { stopRealtimeHub } from '../../apps/api/src/routes/events/index'
-import { configureExports, configureInboundWebhooks, createRegistry, registry as processRegistry, startWorker } from '../../apps/worker/src/index'
+import { configureAiKnowledge, configureExports, configureInboundWebhooks, createRegistry, registry as processRegistry, startWorker } from '../../apps/worker/src/index'
 import { RealtimePublisher } from '../../packages/core/src/index'
 import { createDb, resetAndSeed, runMigrations } from '../../packages/db/src/index'
 import { createLogger, initCredentialsCrypto, redisConnection } from '../../packages/node-kit/src/index'
@@ -41,6 +41,9 @@ async function main() {
   configureExports({ db, redis, logger })
   // Webhooks de entrada (T81) no worker in-process: processa os requests e publica webhook.sample_received.
   configureInboundWebhooks({ db, redis, publisher: new RealtimePublisher({ redis }), logger })
+  // Base de conhecimento dos agentes (T52) no worker in-process (a fila entra pelo registry do processo): ingere as
+  // fontes e publica ai_knowledge_source.updated.
+  configureAiKnowledge({ db, redis })
   const worker = await startWorker({
     registry: reg,
     db,

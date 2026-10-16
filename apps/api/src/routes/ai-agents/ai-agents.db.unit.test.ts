@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { eq, sql } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { AGENT_SETTINGS_DEFAULTS } from '@crm/core'
-import { chats, companies, companyMembers, connections, contacts, createDb, flowNodeActions, flowNodes, flows, platformSettings, users, type Database } from '@crm/db'
+import { chats, companies, companyMembers, connections, contacts, createDb, flowNodeActions, flowNodes, flows, llmPrices, platformSettings, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, FsBlobStore, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../../app'
@@ -304,5 +304,35 @@ describe('permissões, avatar e mídia', () => {
     expect(served.headers.get('content-type')).toBe('image/png')
     expect((await json(await call(s, 'DELETE', `/api/ai-agents/${agent.id}/media/${full.media[0].id}`))).agent.media).toHaveLength(7)
     expect((await up(`/api/ai-agents/${agent.id}/media`, 'file', png, 'application/x-msdownload')).status).toBe(415)
+  })
+})
+
+describe('AC-T88-03 opções de modelo do editor', () => {
+  it('GET /api/ai-agents/model-options: provedores com disponibilidade e modelos llm distintos, sem segredo', async () => {
+    const s = await signUp()
+    const t = (d: string) => new Date(`${d}T00:00:00Z`)
+    await db.insert(llmPrices).values([
+      { provider: 'anthropic', model: 't88-sonnet', kind: 'llm', effectiveFrom: t('2026-01-01'), inputPerMtokMicros: 1, outputPerMtokMicros: 2 },
+      { provider: 'anthropic', model: 't88-sonnet', kind: 'llm', effectiveFrom: t('2026-06-01'), inputPerMtokMicros: 3, outputPerMtokMicros: 4 },
+      { provider: 'openai', model: 't88-gpt', kind: 'llm', effectiveFrom: t('2026-01-01'), inputPerMtokMicros: 1, outputPerMtokMicros: 2 },
+      { provider: 'elevenlabs', model: 't88-voice', kind: 'tts', effectiveFrom: t('2026-01-01'), unitPriceMicros: 1 },
+    ])
+    const res = await call(s, 'GET', '/api/ai-agents/model-options')
+    expect(res.status).toBe(200)
+    const body = await json(res)
+    expect(body.providers).toEqual([
+      { provider: 'anthropic', available: true },
+      { provider: 'openai', available: false },
+      { provider: 'google', available: false },
+      { provider: 'openrouter', available: false },
+    ])
+    const mine = body.models.filter((m: Json) => String(m.model).startsWith('t88-'))
+    expect(mine).toEqual([
+      { provider: 'anthropic', model: 't88-sonnet' },
+      { provider: 'openai', model: 't88-gpt' },
+    ])
+    expect(JSON.stringify(body)).not.toMatch(/secret|api_key|hint/)
+    // não colide com /api/ai-agents/:id
+    expect((await call(s, 'GET', '/api/ai-agents/00000000-0000-4000-8000-000000000000')).status).toBe(404)
   })
 })
