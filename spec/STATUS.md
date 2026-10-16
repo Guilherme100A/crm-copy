@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T23 (Fole/Prisma), T30 (Bigorna/Lupa), T31 (Torno/Sonda), T40 (Cinzel/Radar).
+- Em andamento: T23 (Fole/Prisma), T40 (Cinzel/Radar), T43 (Bigorna/Lupa), T48 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -44,8 +44,8 @@
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
 | 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
-| 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | IN_PROGRESS | Bigorna | Lupa | 0 | |
-| 5 | T31 | Departamentos e horários de atendimento | IN_PROGRESS | Torno | Sonda | 0 | |
+| 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | MERGED | Bigorna | Lupa | 0 | edee67b |
+| 5 | T31 | Departamentos e horários de atendimento | MERGED | Torno | Sonda | 0 | 9cd0f6a |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | TODO | | | 0 | |
@@ -57,7 +57,7 @@
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
-| 5 | T43 | API de execuções, compartilhar, importar e exportar | TODO | | | 0 | |
+| 5 | T43 | API de execuções, compartilhar, importar e exportar | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | TODO | | | 0 | |
@@ -66,7 +66,7 @@
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | TODO | | | 0 | |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
-| 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | TODO | | | 0 | |
+| 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | IN_PROGRESS | Torno | Sonda | 0 | |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | TODO | | | 0 | |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | TODO | | | 0 | |
@@ -154,5 +154,4 @@
 | engine (T14/T20) | `quoted`/`viewOnce` aceitos no RPC mas não aplicados: deliver precisa levar `SendOptions` — mudança aditiva no engine | T29 |
 | transporte (T07) | `profile.setName/setStatus/setPicture` respondem 501 NOT_SUPPORTED: falta API no transporte | T29 |
 | engine | reconciliação de mensagens `processing` após crash não gracioso (send-guard/reconcile do ai-manager) | T29 |
-| T28 (ajuste) | rota `POST /api/flows/:id/pause` só muda o status: deve chamar `FlowControl.pauseFlow`/`resumeFlow` (T30) para congelar e retomar os runs | T30 |
 | T46 / boot do worker | produção chama `configureFlowTimer({ db })` e `configureFlowStep({ wa })` (respostas via crm.inbound e envio pelos nós) | T30 |
