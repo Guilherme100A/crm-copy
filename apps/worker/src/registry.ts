@@ -16,6 +16,7 @@ import { registerContactsBulkJobs } from './jobs/contacts-bulk'
 import { registerMassDispatchJob } from './jobs/mass-dispatch'
 import { registerSchedulesJob } from './jobs/schedules'
 import { registerMetaAdsJob } from './jobs/meta-ads'
+import { registerMetaCapiJob } from './jobs/meta-capi'
 
 export interface QueueDefinition {
   name: string
@@ -84,3 +85,4 @@ registerContactsBulkJobs()
 registerMassDispatchJob(registry)
 registerSchedulesJob(registry)
 registerMetaAdsJob(registry)
+registerMetaCapiJob(registry)

@@ -162,6 +162,13 @@
       "when": 1792145130715,
       "tag": "0022_t63_sale_integrations",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1792146828491,
+      "tag": "0023_t104_meta_pixels",
+      "breakpoints": true
     }
   ]
 }

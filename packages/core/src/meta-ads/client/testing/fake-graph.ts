@@ -30,6 +30,16 @@ export interface FakeGraphRequest {
   endpoint: string
   query: Record<string, string>
   body: Record<string, string>
+  /** T104: corpo JSON cru (quando `content-type: application/json`). */
+  json?: unknown
+}
+
+/** T104: um evento recebido em `POST /{pixel_id}/events` (Conversions API). */
+export interface FakeCapiEvent {
+  pixelId: string
+  accessToken: string
+  testEventCode: string | null
+  event: Record<string, unknown>
 }
 
 /** T101: nível de `/act_x/insights`. */
@@ -73,6 +83,9 @@ export class FakeMetaGraph {
   private readonly insightsByAccount = new Map<string, Record<FakeInsightLevel, Record<string, unknown>[]>>()
   private readonly accountFailures = new Map<string, { status: number; error: Record<string, unknown> }>()
   private readonly usageByAccount = new Map<string, string>()
+  // T104: pixels (Conversions API) e os eventos recebidos.
+  private readonly pixels = new Map<string, string>()
+  readonly capiEvents: FakeCapiEvent[] = []
   url = ''
 
   constructor(opts: FakeMetaGraphOptions = {}) {
@@ -151,12 +164,24 @@ export class FakeMetaGraph {
       req.on('data', (c: Buffer) => (s += c.toString('utf8')))
       req.on('end', () => resolve(s))
     })
-    const body = Object.fromEntries(new URLSearchParams(raw))
+    // T104: a Conversions API recebe JSON; o resto da Graph, formulário.
+    let json: unknown
+    if (/application\/json/i.test(String(req.headers['content-type'] ?? '')) && raw) {
+      try {
+        json = JSON.parse(raw)
+      } catch {
+        json = undefined
+      }
+    }
+    const body: Record<string, string> =
+      json && typeof json === 'object' && !Array.isArray(json)
+        ? Object.fromEntries(Object.entries(json as Record<string, unknown>).map(([k, v]) => [k, typeof v === 'string' ? v : JSON.stringify(v)]))
+        : Object.fromEntries(new URLSearchParams(raw))
     const query = Object.fromEntries(url.searchParams)
     const m = /^\/(v\d+\.\d+)(\/.*)?$/.exec(url.pathname)
     const version = m?.[1] ?? null
     const endpoint = m ? (m[2] ?? '/') : url.pathname
-    this.requests.push({ method: req.method ?? 'GET', path: url.pathname, version, endpoint, query, body })
+    this.requests.push({ method: req.method ?? 'GET', path: url.pathname, version, endpoint, query, body, ...(json !== undefined ? { json } : {}) })
     const params = { ...query, ...body }
     // T101: header de uso por conta (`setUsage`); `{}` nas demais.
     const actMatch = /^\/(act_[^/]+)(?:\/|$)/.exec(endpoint)
@@ -173,6 +198,9 @@ export class FakeMetaGraph {
     if (!version) return error(400, 2635, 'versão da API ausente no caminho')
 
     if (endpoint === '/oauth/access_token') return this.oauth(params, send, error)
+    // T104: Conversions API — token do pixel (sem appsecret_proof).
+    const capi = /^\/(\d+)\/events$/.exec(endpoint)
+    if (capi && req.method === 'POST') return this.capi(capi[1]!, params, json, send, error)
 
     const token = params.access_token
     const info = token ? this.tokens.get(token) : undefined
@@ -278,6 +306,44 @@ export class FakeMetaGraph {
         ? { 'fake-biz': [{ type: 'ADS_INSIGHTS', call_count: usage, total_cputime: usage, total_time: usage, estimated_time_to_regain_access: regainMinutes }] }
         : usage
     this.usageByAccount.set(fbAccountId, JSON.stringify(value))
+  }
+
+  // ---------------------------------------------------------------- T104: Conversions API
+
+  /** Cadastra um pixel/dataset e o token CAPI aceito por ele. */
+  addPixel(pixelId: string, accessToken: string): void {
+    this.pixels.set(pixelId, accessToken)
+  }
+
+  /** Eventos CAPI recebidos (opcionalmente só de um pixel). */
+  capiEventsFor(pixelId?: string): FakeCapiEvent[] {
+    return pixelId ? this.capiEvents.filter((e) => e.pixelId === pixelId) : [...this.capiEvents]
+  }
+
+  private capi(
+    pixelId: string,
+    params: Record<string, string>,
+    json: unknown,
+    send: (s: number, j: unknown) => void,
+    error: (s: number, c: number, m: string, t?: string) => void,
+  ): void {
+    const expected = this.pixels.get(pixelId)
+    if (!expected) return error(400, 100, `Unsupported post request. Object with ID '${pixelId}' does not exist`, 'GraphMethodException')
+    const token = params.access_token
+    if (!token || token !== expected) return error(400, 190, 'Invalid OAuth access token.')
+    const src = (json && typeof json === 'object' ? json : null) as Record<string, unknown> | null
+    let data: unknown = src?.data
+    if (data === undefined && params.data) {
+      try {
+        data = JSON.parse(params.data)
+      } catch {
+        data = undefined
+      }
+    }
+    if (!Array.isArray(data) || data.length === 0) return error(400, 100, '(#100) The parameter data is required')
+    const testEventCode = typeof src?.test_event_code === 'string' ? src.test_event_code : (params.test_event_code ?? null)
+    for (const event of data as Record<string, unknown>[]) this.capiEvents.push({ pixelId, accessToken: token, testEventCode, event })
+    return send(200, { events_received: data.length, messages: [], fbtrace_id: `trace-${randomBytes(4).toString('hex')}` })
   }
 
   private oauth(params: Record<string, string>, send: (s: number, j: unknown) => void, error: (s: number, c: number, m: string) => void): void {

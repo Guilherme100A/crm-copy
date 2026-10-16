@@ -74,6 +74,9 @@ export function nodeHandles(node: Pick<FlowNode, 'type' | 'actions'>): string[] 
     case 'condition':
     case 'integration':
       return [handle.success, handle.failure]
+    // T104: `source` mantém válidos os fluxos já salvos; `success`/`failure` seguem o resultado do envio CAPI.
+    case 'pixel':
+      return [handle.source, handle.success, handle.failure]
     case 'distributor':
       return unique(ids(list(configOf(node, 'distribute_contacts').outputs))).map(handle.output)
     case 'ai': {

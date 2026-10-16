@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "task": "T104",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T11:06:13.827Z",
+  "commit": "cce5a5bb3d87b87b66373dff7174aaf61b037377",
+  "base": "cce5a5b",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/flows/engine/dry-run.unit.test.ts",
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/flows/handles.ts",
+    "apps/api/src/routes/meta-pixels/index.ts",
+    "apps/api/src/routes/meta-pixels/meta-pixels.db.unit.test.ts",
+    "apps/worker/src/jobs/meta-capi/index.ts",
+    "apps/worker/src/jobs/meta-capi/meta-capi.unit.test.ts",
+    "packages/core/src/flows/nodes/pixel/index.ts",
+    "packages/core/src/flows/nodes/pixel/pixel.db.unit.test.ts",
+    "packages/core/src/meta-capi/capi.db.unit.test.ts",
+    "packages/core/src/meta-capi/hashing.ts",
+    "packages/core/src/meta-capi/hashing.unit.test.ts",
+    "packages/core/src/meta-capi/index.ts",
+    "packages/core/src/meta-capi/pixels.ts",
+    "packages/core/src/meta-capi/sales.ts",
+    "packages/core/src/meta-capi/service.ts",
+    "packages/db/drizzle/crm/0023_t104_meta_pixels.sql",
+    "packages/db/drizzle/crm/meta/0023_snapshot.json",
+    "packages/db/src/schema/crm/meta-pixels.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 12.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 55.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 12.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 20.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 61.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "25 arquivo(s) alterado(s)"
+    }
+  ]
+}
