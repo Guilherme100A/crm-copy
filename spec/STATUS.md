@@ -190,3 +190,4 @@
 | montagem do worker | `configureLogicNodes({ publisher })` (T41) não é chamado no boot de produção: o distribuidor funciona mas não publica `flow.distributor_updated` | T41 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
+| templating (T11) | `{{customer.name}}` não é reconhecido (só first_name/full_name): avaliar alias por paridade com a referência | T85 |
