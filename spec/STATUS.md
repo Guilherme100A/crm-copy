@@ -151,3 +151,6 @@
 | ambiente | cota mensal do context7 esgotada (2026-10-16): agentes usam STACK.md + código/tipos instalados | T25 |
 | ambiente | testes instáveis sob carga (8 agentes no mesmo Postgres/Redis): o gate repete 1x antes de rejeitar | T20 |
 | T29 / T46 | SendPipeline (T20) deduplica por `clientMessageId` quando presente; `markRead` real no engine (transport.markRead) e no RPC/gateway | T21 |
+| engine (T14/T20) | `quoted`/`viewOnce` aceitos no RPC mas não aplicados: deliver precisa levar `SendOptions` — mudança aditiva no engine | T29 |
+| transporte (T07) | `profile.setName/setStatus/setPicture` respondem 501 NOT_SUPPORTED: falta API no transporte | T29 |
+| engine | reconciliação de mensagens `processing` após crash não gracioso (send-guard/reconcile do ai-manager) | T29 |
