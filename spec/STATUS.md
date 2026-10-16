@@ -144,6 +144,7 @@
 
 | Tarefa | Pendência | Origem |
 |---|---|---|
+| T102 | `tests/acceptance/T23/shell.e2e.ts` (linhas 72/80/88) procura `data-testid="page-chats"`, o placeholder de /chats que a T69 substituiu: 9 testes do desktop falham na suíte inteira. Atualizar para um testid estável da inbox (ou do shell) sem perder o que o AC-T23 prova. | T45 (Torno) |
 | T81 | Mascarar o token público em /api/hooks/** no apps/api/src/middleware/request-logger.ts (hoje loga c.req.path com o token): liberar esse arquivo no despacho. Varrer requests `pending` cujo enqueue falhou; dedupe por body_hash (duplicate_payload); preencher steps/error/reason/processed_at; evento realtime sample_received. | T72 (Bigorna) |
 | T111 | A rota de hooks de pagamento deve repassar o query token no header x-webhook-token ao parseWebhook e NÃO logar a query string (mesmo mascaramento do request-logger). | T109 (Bigorna) |
 | T21 | `incomingMessageSchema` (wa-port) ganha `historical: z.literal(true).optional()` (aditivo), senão o AC-T33-03 só vale via `history.batch`; `SendRequest` ganha `clientMessageId?` (aditivo) para idempotência ponta a ponta do envio dos chats | T33, T49 |
