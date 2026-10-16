@@ -231,7 +231,7 @@ const RAW = [
     ['packages/core/src/flows/engine/timers*', 'packages/core/src/flows/engine/waits*', 'packages/core/src/flows/engine/control*', 'apps/worker/src/jobs/flow-timer/**'], ['worker', 'core']),
   T('T41', 'Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo)', ['T25'], ['packages/core/src/flows/nodes/logic/**'], ['core']),
   T('T42', 'Nós externos (HTTP e IA)', ['T25', 'T24'], ['packages/core/src/flows/nodes/external/**'], ['core']),
-  T('T43', 'API de execuções, compartilhar, importar e exportar', ['T25', 'T28'], [route('flow-runs'), route('flow-share')], ['api', 'core']),
+  T('T43', 'API de execuções, compartilhar, importar e exportar', ['T25', 'T28'], [route('flow-runs'), route('flow-share'), 'apps/api/src/routes/flows/index.ts' /* aditivo: pause/resume via FlowControl (T30) */], ['api', 'core']),
   T('T51', 'Nós de mensagem (mensagem, modelo, notificação, Pix)', ['T25', 'T35'], ['packages/core/src/flows/nodes/messaging/**'], ['core']),
   T('T61', 'Gatilhos, fluxos padrão por conexão e ação fora do horário', ['T30', 'T33', 'T40', 'T31'],
     ['packages/core/src/flows/triggers/**', route('connection-flow-configs'), consumer('flow-triggers'), schema('flow-triggers')], ['api', 'worker', 'core']),
