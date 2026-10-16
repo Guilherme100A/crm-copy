@@ -3,28 +3,10 @@
   "task": "T18",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:49:09.833Z",
-  "commit": "fd1880e45ae77ee0e6ed81889eb3ae262634dac5",
-  "base": "744ecca",
-  "changedFiles": [
-    "packages/core/src/ai-usage/ai-usage.db.unit.test.ts",
-    "packages/core/src/ai-usage/errors.ts",
-    "packages/core/src/ai-usage/index.ts",
-    "packages/core/src/ai-usage/pricing.ts",
-    "packages/core/src/ai-usage/pricing.unit.test.ts",
-    "packages/core/src/ai-usage/usage.ts",
-    "packages/core/src/ai-usage/wallet.ts",
-    "packages/core/src/billing/billing.unit.test.ts",
-    "packages/core/src/billing/index.ts",
-    "packages/core/src/billing/noop.ts",
-    "packages/core/src/billing/port.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/ai-usage.ts",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/db/drizzle/crm/0005_t18_ai_usage.sql",
-    "packages/db/drizzle/crm/meta/0005_snapshot.json"
-  ],
+  "at": "2026-10-16T03:49:46.012Z",
+  "commit": "30a0008082821bd215a2afa335ae079a8b6646a1",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/core/src/ai-usage/wallet.ts",
@@ -39,17 +21,17 @@
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 5.7s"
+      "detail": "ok em 7.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 2.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 7.1s"
+      "detail": "ok em 12.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -109,7 +91,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "17 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

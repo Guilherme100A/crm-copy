@@ -3,15 +3,10 @@
   "task": "T18",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:49:20.480Z",
-  "commit": "fd1880e45ae77ee0e6ed81889eb3ae262634dac5",
-  "base": "744ecca",
-  "changedFiles": [
-    "tests/acceptance/T18/billing.test.ts",
-    "tests/acceptance/T18/pricing.test.ts",
-    "tests/acceptance/T18/setup.ts",
-    "tests/acceptance/T18/wallet.test.ts"
-  ],
+  "at": "2026-10-16T03:49:52.380Z",
+  "commit": "30a0008082821bd215a2afa335ae079a8b6646a1",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -81,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "4 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
