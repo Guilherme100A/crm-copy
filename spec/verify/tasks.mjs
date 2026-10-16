@@ -264,7 +264,7 @@ const RAW = [
     { requiredFiles: ['packages/core/src/ai-agents/index.ts'] }),
   T('T52', 'Agentes de IA: base de conhecimento', ['T39'], ['packages/core/src/ai-knowledge/**', route('ai-knowledge'), job('ai-knowledge')], ['api', 'worker', 'core']),
   T('T59', 'UI: consumo de IA, chaves e hub de integrações', ['T37', 'T38', 'T23'], [...ui('settings-ai-usage'), ...ui('integrations')], ['web'], { e2e: true }),
-  T('T68', 'Runtime do agente de IA', ['T39', 'T24', 'T12', 'T33', 'T49'], ['packages/core/src/ai-runtime/**', consumer('ai-agent'), job('ai-agent')], ['worker', 'core']),
+  T('T68', 'Runtime do agente de IA', ['T39', 'T24', 'T12', 'T33', 'T49'], ['packages/core/src/ai-runtime/**', consumer('ai-agent'), job('ai-agent'), schema('ai-runtime'), 'packages/core/src/chats/send/service.ts' /* aditivo: Sender kind ai */, 'packages/ai/src/testing/fake-llm.ts' /* aditivo: providerData */], ['worker', 'core']),
   T('T79', 'Agentes: teste ao vivo, geração de prompt e criação assistida', ['T68'], ['packages/core/src/ai-agent-lab/**', route('ai-agent-lab'), job('ai-agent-lab')], ['api', 'worker', 'core']),
   T('T80', 'Vozes (ElevenLabs)', ['T38', 'T12'], [core('ai-voices'), route('ai-voices'), schema('ai-voices')], ['api', 'core']),
   T('T88', 'UI agentes: lista e editor', ['T79', 'T80', 'T52', 'T23'], [...ui('agents')], ['web'], { e2e: true }),
