@@ -1,6 +1,7 @@
 import { sql } from 'drizzle-orm'
 import { boolean, index, integer, jsonb, primaryKey, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
 import { companies, users } from './base.js'
+import { aiAgents } from './ai-agents.js'
 import { contacts, labels } from './contacts.js'
 import { createdAt, crm, updatedAt } from './schema.js'
 
@@ -35,7 +36,8 @@ export const chats = crm.table(
     status: text('status').$type<ChatStatus>().notNull().default('waiting'),
     assignedUserId: uuid('assigned_user_id').references(() => users.id, { onDelete: 'set null' }),
     departmentId: uuid('department_id'),
-    aiAgentId: uuid('ai_agent_id'),
+    // FK da T39: agente excluído deixa o chat sem agente.
+    aiAgentId: uuid('ai_agent_id').references(() => aiAgents.id, { onDelete: 'set null' }),
     unreadCount: integer('unread_count').notNull().default(0),
     lastMessagePreview: text('last_message_preview'),
     lastMessageAt: timestamp('last_message_at', { withTimezone: true }),

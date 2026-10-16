@@ -64,6 +64,13 @@
       "when": 1792123775982,
       "tag": "0008_t24_ai_metering",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1792125971314,
+      "tag": "0009_t39_ai_agents",
+      "breakpoints": true
     }
   ]
 }
