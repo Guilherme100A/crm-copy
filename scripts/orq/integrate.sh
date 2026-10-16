@@ -12,8 +12,8 @@ T=$1; TITLE=$2; WT=$(cd "$ROOT/.." && pwd)/leonas-crm-wt/$T
 MIG=packages/db/drizzle/crm
 cd "$WT" || exit 1
 if git status | grep -q "rebase in progress"; then echo "ABORTADO: rebase em andamento em $T — resolva antes"; exit 4; fi
-# spec/SPEC.md e spec/verify/** são do Orquestrador: a tarefa nunca os leva no commit
-git checkout main -- spec/SPEC.md spec/verify 2>/dev/null || true
+# spec/SPEC.md, spec/verify/**, STATUS, briefs e docs/licoes.md são do Orquestrador: a tarefa nunca os leva no commit
+git checkout main -- spec/SPEC.md spec/verify spec/STATUS.md spec/briefs docs/licoes.md 2>/dev/null || true
 git add -A
 git diff --cached --quiet || git commit -q -m "$T: $TITLE
 
