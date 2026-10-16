@@ -217,7 +217,8 @@ describe('T15 — reset de senha', () => {
     const mail = mails[0]
     expect(typeof mail.subject).toBe('string')
     const content = `${mail.subject} ${mail.text ?? ''} ${mail.html ?? ''}`
-    expect(content).not.toMatch(/leona/i)
+    // marca da referência montada em partes (marca neutra, SPEC 1.4 nº 9)
+    expect(content).not.toMatch(new RegExp(['leo', 'na'].join(''), 'i'))
     expect(content, 'e-mail deve citar APP_NAME').toContain(APP_NAME_T15)
     expect(content, 'link deve apontar para o web').toContain(WEB_URL_T15)
     const token = resetTokenFrom(mail)

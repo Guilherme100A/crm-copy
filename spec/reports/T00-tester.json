@@ -3,10 +3,13 @@
   "task": "T00",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T02:33:08.741Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "at": "2026-10-16T04:00:28.158Z",
+  "commit": "6119e9d778db4c168c06dbbd9fe4b8ded10229cc",
   "base": null,
-  "changedFiles": [],
+  "changedFiles": [
+    "tests/acceptance/T06/fixtures/extract-ai-manager-schema.ts",
+    "tests/acceptance/T15/auth.test.ts"
+  ],
   "checks": [
     {
       "name": "arquivo: tests/acceptance/vitest.config.ts",
@@ -80,8 +83,8 @@
     },
     {
       "name": "escopo de arquivos",
-      "status": "pass",
-      "detail": "0 arquivo(s) alterado(s)"
+      "status": "warn",
+      "detail": "fora do escopo: tests/acceptance/T06/fixtures/extract-ai-manager-schema.ts, tests/acceptance/T15/auth.test.ts"
     }
   ]
 }

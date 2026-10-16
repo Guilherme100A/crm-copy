@@ -1,13 +1,15 @@
 // Gera ai-manager-public.json: aplica as migrations 0000..0007 do ai-manager (somente leitura) num banco
 // descartável e extrai de information_schema/pg_enum as tabelas, colunas (nome, tipo, nulidade) e enums de `public`.
-// Uso (raiz do repo): pnpm exec tsx tests/acceptance/T06/fixtures/extract-ai-manager-schema.ts [<dir das migrations>]
+// Uso (raiz do repo): pnpm exec tsx tests/acceptance/T06/fixtures/extract-ai-manager-schema.ts <dir das migrations>
+// (ou AI_MANAGER_DRIZZLE_DIR=<ai-manager>/packages/db/drizzle).
 import { readdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createTempDb, dropTempDb, sqlOk } from '../../helpers/pg'
 import { publicSchema } from '../schema-snapshot'
 
-const dir = process.argv[2] ?? 'C:/Users/green/Downloads/leonas/ai-manager/packages/db/drizzle'
+const dir = process.argv[2] ?? process.env.AI_MANAGER_DRIZZLE_DIR
+if (!dir) throw new Error('informe a pasta packages/db/drizzle do ai-manager (argumento ou AI_MANAGER_DRIZZLE_DIR)')
 const files = readdirSync(dir).filter((f) => /^000[0-7]_.*\.sql$/.test(f)).sort()
 const db = createTempDb('crm_fix_t06')
 try {
