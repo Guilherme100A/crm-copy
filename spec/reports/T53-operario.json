@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "task": "T53",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T23:13:25.548Z",
+  "commit": "fc5e3e0a03cb9688fb669adf8f10cfa33ce1ad7f",
+  "base": "f89179f",
+  "changedFiles": [
+    "apps/web/src/features/settings-company/api.ts",
+    "apps/web/src/features/settings-company/company-tab.tsx",
+    "apps/web/src/features/settings-company/company.ts",
+    "apps/web/src/features/settings-company/info-panel.tsx",
+    "apps/web/src/features/settings-company/settings-company.unit.test.ts",
+    "apps/web/src/features/settings-company/ui.tsx",
+    "apps/web/src/features/settings-departments/api.ts",
+    "apps/web/src/features/settings-departments/departments-panel.tsx",
+    "apps/web/src/features/settings-departments/palette.ts",
+    "apps/web/src/features/settings-departments/settings-departments.unit.test.ts",
+    "apps/web/src/features/settings-hours/api.ts",
+    "apps/web/src/features/settings-hours/hours-panel.tsx",
+    "apps/web/src/features/settings-hours/settings-hours.unit.test.ts",
+    "apps/web/src/features/settings-hours/validation.ts",
+    "apps/web/src/features/settings/tabs.ts",
+    "apps/web/src/i18n/en/settings-company.json",
+    "apps/web/src/i18n/en/settings-departments.json",
+    "apps/web/src/i18n/en/settings-hours.json",
+    "apps/web/src/i18n/es/settings-company.json",
+    "apps/web/src/i18n/es/settings-departments.json",
+    "apps/web/src/i18n/es/settings-hours.json",
+    "apps/web/src/i18n/pt-BR/settings-company.json",
+    "apps/web/src/i18n/pt-BR/settings-departments.json",
+    "apps/web/src/i18n/pt-BR/settings-hours.json",
+    "apps/web/src/routes/settings/index.tsx"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 11.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 5.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 10.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "25 arquivo(s) alterado(s)"
+    }
+  ]
+}

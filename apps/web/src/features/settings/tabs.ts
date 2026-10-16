@@ -21,4 +21,13 @@ export interface SettingsTab {
 export const SETTINGS_GROUPS: readonly SettingsGroup[] = ['account', 'automation', 'integrations']
 
 /** Abas registradas, na ordem de exibição dentro de cada grupo. */
-export const SETTINGS_TABS: SettingsTab[] = []
+export const SETTINGS_TABS: SettingsTab[] = [
+  // T53: Empresa (sub-abas Dados Corporativos, Departamentos e Horários em `?company_tab=`).
+  {
+    id: 'accounts',
+    labelKey: 'settings-company:tab',
+    group: 'account',
+    permissions: ['settings.accounts.view'],
+    load: () => import('@/features/settings-company/company-tab'),
+  },
+]

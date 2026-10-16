@@ -1,0 +1,60 @@
+{
+  "title": "Horários de Atendimento",
+  "subtitle": "Escalas semanais de atendimento de cada conexão, no fuso da empresa.",
+  "save": "Salvar",
+  "saveHint": "As alterações só valem depois de clicar em Salvar.",
+  "saved": "Horários salvos.",
+  "saveError": "Não foi possível salvar os horários.",
+  "invalid": "Corrija os campos destacados antes de salvar.",
+  "connection": "WhatsApp",
+  "noConnections": "Nenhuma conexão de WhatsApp cadastrada. Crie uma conexão para definir os horários.",
+  "noConnectionsPermission": "Você não tem acesso à lista de conexões. Peça a um administrador a permissão de ver conexões para configurar os horários.",
+  "status": {
+    "pending": "Pendente",
+    "connecting": "Conectando",
+    "connected": "Conectada",
+    "paused": "Pausada",
+    "disconnected": "Desconectada",
+    "banned": "Banida"
+  },
+  "active": "Sistema de horários",
+  "activeOn": "Sistema de horários ativo",
+  "activeOff": "Sistema de horários desativado",
+  "activeHint": "Fora dos horários abaixo, a ação escolhida é executada.",
+  "actionType": "Tipo de ação fora do horário",
+  "action": {
+    "message": "Mensagem",
+    "messageHint": "envia uma mensagem automática",
+    "flow": "Fluxo",
+    "flowHint": "inicia um fluxo"
+  },
+  "message": "Mensagem fora do horário",
+  "messagePlaceholder": "Ex.: Nosso atendimento volta amanhã às 9h.",
+  "flow": "Fluxo fora do horário",
+  "flowPlaceholder": "Selecione um fluxo",
+  "schedule": "Grade semanal",
+  "scheduleHint": "Cada dia pode ter vários intervalos. Use HH:MM; 24:00 vale como fim do dia.",
+  "days": {
+    "0": "Domingo",
+    "1": "Segunda-feira",
+    "2": "Terça-feira",
+    "3": "Quarta-feira",
+    "4": "Quinta-feira",
+    "5": "Sexta-feira",
+    "6": "Sábado"
+  },
+  "closed": "Fechado",
+  "start": "Início",
+  "end": "Fim",
+  "until": "até",
+  "add": "Adicionar intervalo",
+  "remove": "Remover intervalo",
+  "errors": {
+    "day": "Dia da semana de 0 (domingo) a 6 (sábado).",
+    "time": "Horário inválido (HH:MM).",
+    "endBeforeStart": "O fim precisa ser depois do início.",
+    "messageRequired": "Informe a mensagem fora do horário.",
+    "flowRequired": "Escolha o fluxo fora do horário.",
+    "tooMany": "No máximo {max} intervalos."
+  }
+}

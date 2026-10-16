@@ -1,0 +1,73 @@
+{
+  "tab": "Empresa",
+  "title": "Empresa",
+  "subtitle": "Datos de la empresa, departamentos y horarios de atención.",
+  "tabs": { "info": "Datos corporativos", "departments": "Departamentos", "hours": "Horarios de trabajo" },
+  "hub": {
+    "selectCategory": "Selecciona la categoría",
+    "searchCategory": "Buscar categoría...",
+    "noCategory": "No se encontró ninguna categoría."
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "loadError": "No se pudieron cargar los datos.",
+    "retry": "Intentar de nuevo",
+    "forbidden": "Acceso denegado.",
+    "saveError": "No se pudo completar la acción."
+  },
+  "status": { "active": "Activa", "inactive": "Inactiva" },
+  "info": {
+    "title": "Datos corporativos",
+    "statusHint": "Estado de la empresa",
+    "inactiveBanner": "Esta empresa está desactivada. Los miembros no acceden a los datos y las conexiones quedan pausadas hasta reactivarla.",
+    "name": "Nombre de la empresa",
+    "description": "Descripción",
+    "optional": "Opcional",
+    "slug": "Slug",
+    "slugHint": "Letras minúsculas, números y guiones.",
+    "timeZone": "Zona horaria",
+    "timeZoneLocked": "Solo propietarios y administradores pueden cambiar la zona horaria.",
+    "statusEmails": "Notificaciones por correo de conexiones",
+    "statusEmailsHint": "Avisa por correo cuando una conexión de WhatsApp cae o vuelve.",
+    "save": "Guardar empresa",
+    "readOnly": "No tienes permiso para editar los datos de la empresa.",
+    "nameRequired": "Indica el nombre de la empresa.",
+    "slugInvalid": "Usa de 2 a 63 caracteres: letras minúsculas, números y guiones.",
+    "slugTaken": "Este slug ya está en uso.",
+    "saved": "¡Cuenta actualizada con éxito!"
+  },
+  "timeZones": {
+    "America_Sao_Paulo": "Brasilia",
+    "America_Fortaleza": "Fortaleza",
+    "America_Manaus": "Manaos",
+    "America_Belem": "Belém",
+    "America_Noronha": "Fernando de Noronha",
+    "America_Argentina_Buenos_Aires": "Buenos Aires",
+    "America_Santiago": "Santiago",
+    "America_Bogota": "Bogotá",
+    "America_Lima": "Lima",
+    "America_Mexico_City": "Ciudad de México",
+    "America_New_York": "Nueva York",
+    "UTC": "UTC"
+  },
+  "deactivate": {
+    "button": "Desactivar",
+    "title": "¿Desactivar empresa?",
+    "body": "La empresa \"{name}\" será desactivada. Esto es lo que sucede:",
+    "effects": {
+      "access": "Los miembros pierden el acceso a los datos de la empresa (chats, contactos, embudo e informes).",
+      "connections": "Las conexiones de WhatsApp se pausan y dejan de enviar y recibir mensajes.",
+      "automations": "Los flujos, envíos y automatizaciones dejan de ejecutarse.",
+      "reactivate": "El propietario puede reactivar la empresa después en esta misma pantalla."
+    },
+    "confirm": "Desactivar empresa",
+    "done": "Empresa desactivada."
+  },
+  "reactivate": {
+    "button": "Activar",
+    "title": "Activar empresa",
+    "body": "La empresa \"{name}\" vuelve a funcionar con normalidad. Las conexiones pausadas deben reanudarse en Conexiones.",
+    "confirm": "Activar empresa",
+    "done": "Empresa activada."
+  }
+}

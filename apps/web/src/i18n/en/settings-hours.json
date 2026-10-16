@@ -1,0 +1,60 @@
+{
+  "title": "Business hours",
+  "subtitle": "Weekly service schedule for each connection, in the company time zone.",
+  "save": "Save",
+  "saveHint": "Changes only apply after you click Save.",
+  "saved": "Business hours saved.",
+  "saveError": "Could not save the business hours.",
+  "invalid": "Fix the highlighted fields before saving.",
+  "connection": "WhatsApp",
+  "noConnections": "No WhatsApp connection yet. Create a connection to set its hours.",
+  "noConnectionsPermission": "You don't have access to the connection list. Ask an administrator for permission to view connections to set the hours.",
+  "status": {
+    "pending": "Pending",
+    "connecting": "Connecting",
+    "connected": "Connected",
+    "paused": "Paused",
+    "disconnected": "Disconnected",
+    "banned": "Banned"
+  },
+  "active": "Business hours system",
+  "activeOn": "Business hours system on",
+  "activeOff": "Business hours system off",
+  "activeHint": "Outside the hours below, the chosen action runs.",
+  "actionType": "Action outside business hours",
+  "action": {
+    "message": "Message",
+    "messageHint": "sends an automatic message",
+    "flow": "Flow",
+    "flowHint": "starts a flow"
+  },
+  "message": "Out-of-hours message",
+  "messagePlaceholder": "E.g.: We are back tomorrow at 9 a.m.",
+  "flow": "Out-of-hours flow",
+  "flowPlaceholder": "Select a flow",
+  "schedule": "Weekly schedule",
+  "scheduleHint": "Each day can have several intervals. Use HH:MM; 24:00 means end of day.",
+  "days": {
+    "0": "Sunday",
+    "1": "Monday",
+    "2": "Tuesday",
+    "3": "Wednesday",
+    "4": "Thursday",
+    "5": "Friday",
+    "6": "Saturday"
+  },
+  "closed": "Closed",
+  "start": "Start",
+  "end": "End",
+  "until": "to",
+  "add": "Add interval",
+  "remove": "Remove interval",
+  "errors": {
+    "day": "Day of week from 0 (Sunday) to 6 (Saturday).",
+    "time": "Invalid time (HH:MM).",
+    "endBeforeStart": "The end must be after the start.",
+    "messageRequired": "Enter the out-of-hours message.",
+    "flowRequired": "Choose the out-of-hours flow.",
+    "tooMany": "At most {max} intervals."
+  }
+}
