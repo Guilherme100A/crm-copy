@@ -65,7 +65,7 @@
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | MERGED | Bigorna | Lupa | 0 | 9556291 |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
-| 6 | T47 | Conexões: projeção de status, eventos e alertas | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 6 | T47 | Conexões: projeção de status, eventos e alertas | IN_PROGRESS | Bigorna | Lupa | 0 | implementada; verify do operário 1 por causa externa (OOM do Postgres; AC-T125-02 corrigido na T126): reroda após o merge da T126 |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
