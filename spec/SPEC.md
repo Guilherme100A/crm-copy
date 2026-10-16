@@ -2014,6 +2014,16 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T121 — Isolamento de filas BullMQ nos testes e remetente flow
+**Objetivo:** eliminar a interferência entre worktrees: as filas do CRM têm nome/prefixo fixos e todos usam o Redis db 1, então workers de testes de um worktree consomem jobs de outro (runs presos, imports em queued — observado na T120).
+**Paths:** `packages/core/src/jobs/**`, `packages/db/src/schema/crm/chats.ts`, `apps/*/vitest.config.ts`, `packages/*/vitest.config.ts` (o Tester ajusta `tests/acceptance/vitest.config.ts`/helpers).
+**Depende de:** T09, T120
+**Entregáveis:** (1) o prefixo padrão das filas/workers do CRM vem de `CRM_QUEUE_PREFIX` (padrão `crm`), lido no momento da criação; documentar no `.env.example` (aditivo). (2) Todas as suítes (vitest de apps/packages e aceitação) definem um prefixo único por execução (ex.: `crm-t-<pid>-<rand>`) antes de importar o código. (3) `MESSAGE_SENDER_TYPES` inclui `flow` (usado pela T120 com cast).
+**Critérios de aceitação**
+- **AC-T121-01** Dois workers do CRM com `CRM_QUEUE_PREFIX` diferentes no MESMO Redis db: um job enfileirado num prefixo só é processado pelo worker daquele prefixo.
+- **AC-T121-02** As configs de teste de todos os apps/packages e da aceitação definem um `CRM_QUEUE_PREFIX` único por execução (verificável lendo o ambiente dentro de um teste).
+- **AC-T121-03** `MESSAGE_SENDER_TYPES` contém `flow`; uma mensagem gravada por `recordOutbound` com sender_type `flow` tipa sem cast.
+
 ### T120 — Montagem de produção e registro de mensagens automáticas no chat
 **Objetivo:** fechar as ligações de produção que cada tarefa deixou documentadas (spec/STATUS.md, "Pendências") e provar o sistema MONTADO como em produção: `WA_GATEWAY=rpc` com o wa-worker real (`WA_TRANSPORT=fake`), API e worker como processos ou montados pelas mesmas funções de boot.
 **Paths:** `apps/worker/src/boot/**`, `apps/worker/src/main.ts`, `apps/api/src/server.ts`, `packages/core/src/chats/send/**`, `packages/core/src/chats/lifecycle/**`, `packages/core/src/flows/nodes/messaging/**`, `packages/core/src/flows/triggers/**`, `packages/core/src/ai-runtime/**`.

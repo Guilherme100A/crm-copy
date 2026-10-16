@@ -343,6 +343,9 @@ const RAW = [
     ['apps/worker/src/boot/**', 'apps/worker/src/main.ts', 'apps/api/src/server.ts', 'packages/core/src/chats/send/**', 'packages/core/src/chats/lifecycle/**',
       'packages/core/src/flows/nodes/messaging/**', 'packages/core/src/flows/triggers/**', 'packages/core/src/ai-runtime/**'], ['api', 'worker', 'core']),
 
+  T('T121', 'Isolamento de filas BullMQ nos testes e remetente flow', ['T09', 'T120'],
+    ['packages/core/src/jobs/**', 'packages/db/src/schema/crm/chats.ts', 'apps/*/vitest.config.ts', 'packages/*/vitest.config.ts'], ['core', 'db', 'worker', 'api']),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],
