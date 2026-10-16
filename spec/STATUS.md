@@ -144,6 +144,8 @@
 
 | Tarefa | Pendência | Origem |
 |---|---|---|
+| T81 | Mascarar o token público em /api/hooks/** no apps/api/src/middleware/request-logger.ts (hoje loga c.req.path com o token): liberar esse arquivo no despacho. Varrer requests `pending` cujo enqueue falhou; dedupe por body_hash (duplicate_payload); preencher steps/error/reason/processed_at; evento realtime sample_received. | T72 (Bigorna) |
+| T111 | A rota de hooks de pagamento deve repassar o query token no header x-webhook-token ao parseWebhook e NÃO logar a query string (mesmo mascaramento do request-logger). | T109 (Bigorna) |
 | T21 | `incomingMessageSchema` (wa-port) ganha `historical: z.literal(true).optional()` (aditivo), senão o AC-T33-03 só vale via `history.batch`; `SendRequest` ganha `clientMessageId?` (aditivo) para idempotência ponta a ponta do envio dos chats | T33, T49 |
 | T40 | criar `crm.connections` com `session_id` e `company_id` (o resolver padrão da T33 consulta essas colunas); registrar a fonte com `registerCompanySessionsSource` (T22); FK `chats.connection_id` | T22, T33 |
 | T31 / T39 | FKs `chats.department_id` (T31) e `chats.ai_agent_id` (T39) | T33 |
