@@ -81,14 +81,40 @@ export async function runSeeds(db: Database, opts: RunSeedsOptions = {}): Promis
 /** Schemas/tabelas preservados no reset: controle das migrations. */
 const KEEP = new Set(['crm.__drizzle_migrations', 'drizzle.__drizzle_migrations'])
 
-/** Esvazia todas as tabelas de `crm` e `public` (menos o controle de migrations) num único TRUNCATE. */
+/**
+ * Esvazia todas as tabelas de `crm` e `public` (menos o controle de migrations) e reinicia as sequências delas: o mesmo
+ * estado final de `TRUNCATE … RESTART IDENTITY CASCADE`.
+ *
+ * T126: um único comando com um `DELETE` por tabela (CTEs) em vez do TRUNCATE. As FKs são checadas no fim do comando,
+ * então a ordem não importa. O TRUNCATE recria os arquivos de cada tabela e índice, e o build de cada btree faz fsync
+ * imediato (PG 16): centenas de fsyncs por reset, que sob disco disputado levaram o reset de ~1 s a 13–27 s. O DELETE
+ * só grava WAL. As sequências próprias das tabelas (serial/identity) voltam ao início com `setval(…, start, false)`,
+ * o mesmo estado que o RESTART IDENTITY deixa.
+ */
 export async function resetDatabase(db: Database): Promise<string[]> {
   const res = await db.execute<{ t: string }>(sql`
     select quote_ident(table_schema) || '.' || quote_ident(table_name) as t
     from information_schema.tables
     where table_type = 'BASE TABLE' and table_schema in ('crm', 'public')`)
   const tables = res.rows.map((r) => r.t).filter((t) => !KEEP.has(t.replace(/"/g, '')))
-  if (tables.length) await db.execute(sql.raw(`truncate table ${tables.join(', ')} restart identity cascade`))
+  if (!tables.length) return tables
+  const regclasses = tables.map((t) => `'${t.replace(/'/g, "''")}'::regclass`).join(', ')
+  try {
+    await db.transaction(async (tx) => {
+      await tx.execute(sql.raw(`with ${tables.map((t, i) => `d${i} as (delete from ${t})`).join(', ')} select 1`))
+      await tx.execute(
+        sql.raw(`
+          select setval(s.seqrelid, s.seqstart, false)
+          from pg_sequence s
+          join pg_depend d on d.classid = 'pg_class'::regclass and d.objid = s.seqrelid
+            and d.refclassid = 'pg_class'::regclass and d.deptype in ('a', 'i')
+          where d.refobjid in (${regclasses})`),
+      )
+    })
+  } catch {
+    // Algo que o DELETE não cobre (ex.: trigger novo que recusa a remoção): o TRUNCATE deixa o mesmo estado, só mais lento.
+    await db.execute(sql.raw(`truncate table ${tables.join(', ')} restart identity cascade`))
+  }
   return tables
 }
 

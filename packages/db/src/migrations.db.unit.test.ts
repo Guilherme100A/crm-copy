@@ -133,25 +133,33 @@ describe('runMigrations (Postgres real)', () => {
     })
   })
 
-  it('createTempDatabase({ migrate: true }) devolve banco migrado e drop() remove com conexões abertas', async () => {
-    const t = await createTempDatabase({ migrate: true })
+  it('createTempDatabase({ migrate: true }) devolve banco migrado; drop() não derruba conexões abertas e remove depois que fecham', async () => {
+    // T126: o drop() deixou de usar WITH (FORCE) (derrubava conexões vivas → 57P01 em quem ainda usava o banco).
+    const t = await createTempDatabase({ migrate: true, dropWaitMs: 300 })
     const db = createDb(t.url, { max: 1 })
-    // O DROP ... WITH (FORCE) derruba as conexões abertas: o Pool emite 'error' no cliente ocioso.
-    db.$client.on('error', () => undefined)
+    const errors: unknown[] = []
+    db.$client.on('error', (e) => void errors.push(e))
     const held = new pg.Client({ connectionString: t.url })
     await held.connect()
-    held.on('error', () => undefined)
+    held.on('error', (e) => void errors.push(e))
+    const base = process.env.DATABASE_URL ?? 'postgres://wsm:wsm@127.0.0.1:5432/crm'
+    const onWarning = () => undefined
+    process.on('warning', onWarning)
     try {
       expect(await tablesIn(t.url, 'crm')).toContain('users')
       await db.$client.query('select 1')
       await t.drop()
-      const base = process.env.DATABASE_URL ?? 'postgres://wsm:wsm@127.0.0.1:5432/crm'
-      expect(await query(base, `select 1 from pg_database where datname = $1`, [t.name])).toEqual([])
-      await t.drop()
+      expect(await query(base, `select 1 from pg_database where datname = $1`, [t.name])).toHaveLength(1)
+      expect((await held.query('select 1 as ok')).rows[0].ok).toBe(1)
+      expect(errors).toEqual([])
     } finally {
+      process.off('warning', onWarning)
       await held.end().catch(() => undefined)
       await db.$client.end().catch(() => undefined)
     }
+    await t.drop()
+    expect(await query(base, `select 1 from pg_database where datname = $1`, [t.name])).toEqual([])
+    await t.drop()
   })
 
   it('migrations crm não alteram tabelas public pré-existentes (banco do ai-manager)', async () => {

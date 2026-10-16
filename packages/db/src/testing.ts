@@ -1,13 +1,18 @@
-import { randomBytes } from 'node:crypto'
+import { createHash, randomBytes } from 'node:crypto'
 import pg from 'pg'
 import { DEFAULT_DATABASE_URL, migrateUrl, type MigrationSetOption } from './client.js'
 
-// `@crm/db/testing` — bancos descartáveis para testes *.db.unit.test.ts e de aceitação (SPEC 3.10).
+// `@crm/db/testing` — bancos descartáveis para testes *.db.unit.test.ts e de aceitação (SPEC 3.10), e o prefixo de
+// filas BullMQ por arquivo de teste (T126). Regras em docs/testing.md.
 
 export interface TempDatabase {
   name: string
   url: string
-  /** Remove o banco, derrubando conexões ainda abertas (`WITH (FORCE)`). Idempotente. */
+  /**
+   * Remove o banco depois que as conexões dele terminam (T126: espera até `dropWaitMs`). Conexão ainda viva ao fim da
+   * espera → o banco NÃO é removido (sem `WITH (FORCE)`, que dispararia 57P01 em pools/workers ainda em uso) e fica para
+   * a limpeza de órfãos (`scripts/e2e/orphans.mjs`), com um aviso do processo. Idempotente.
+   */
   drop(): Promise<void>
 }
 
@@ -18,7 +23,11 @@ export interface CreateTempDatabaseOptions {
   /** Conjunto de migrations aplicado quando `migrate` (padrão `all`). */
   set?: MigrationSetOption
   prefix?: string
+  /** Espera máxima, no `drop()`, pelo fim das conexões do banco (padrão 15 s). */
+  dropWaitMs?: number
 }
+
+export const DEFAULT_DROP_WAIT_MS = 15_000
 
 export function randomDatabaseName(prefix = 'crm_test'): string {
   return `${prefix}_${randomBytes(6).toString('hex')}`
@@ -38,7 +47,7 @@ export async function createTempDatabase(opts: CreateTempDatabaseOptions = {}): 
   const baseUrl = opts.baseUrl ?? process.env.DATABASE_URL ?? DEFAULT_DATABASE_URL
   const name = randomDatabaseName(opts.prefix)
   const url = withDatabase(baseUrl, name)
-  const drop = () => adminQuery(baseUrl, `DROP DATABASE IF EXISTS ${quoteIdent(name)} WITH (FORCE)`)
+  const drop = () => dropWhenIdle(baseUrl, name, opts.dropWaitMs ?? DEFAULT_DROP_WAIT_MS)
   await adminQuery(baseUrl, `CREATE DATABASE ${quoteIdent(name)}`)
   if (opts.migrate) {
     try {
@@ -51,6 +60,42 @@ export async function createTempDatabase(opts: CreateTempDatabaseOptions = {}): 
   return { name, url, drop }
 }
 
+/** Conexões abertas no banco (fora a do próprio administrador). */
+export async function databaseConnections(baseUrl: string, name: string): Promise<number> {
+  const client = new pg.Client({ connectionString: baseUrl })
+  await client.connect()
+  try {
+    const r = await client.query<{ n: number }>('select count(*)::int as n from pg_stat_activity where datname = $1 and pid <> pg_backend_pid()', [name])
+    return r.rows[0]?.n ?? 0
+  } finally {
+    await client.end()
+  }
+}
+
+/**
+ * DROP sem FORCE quando o banco fica sem conexões (pools que acabaram de receber `end()` terminam em instantes).
+ * Se sobrar conexão viva no fim da espera, o banco fica (órfão para a limpeza) em vez de derrubar quem o usa.
+ */
+async function dropWhenIdle(baseUrl: string, name: string, waitMs: number): Promise<void> {
+  const deadline = Date.now() + waitMs
+  for (;;) {
+    const open = await databaseConnections(baseUrl, name)
+    if (open === 0) {
+      try {
+        await adminQuery(baseUrl, `DROP DATABASE IF EXISTS ${quoteIdent(name)}`)
+        return
+      } catch (err) {
+        // 55006 (object_in_use): alguém conectou entre a contagem e o DROP; tenta de novo dentro da janela.
+        if ((err as { code?: string }).code !== '55006' || Date.now() > deadline) throw err
+      }
+    } else if (Date.now() > deadline) {
+      process.emitWarning(`banco temporário ${name} mantido: ${open} conexão(ões) ainda aberta(s) após ${waitMs} ms (feche pools/workers antes do drop)`, 'TempDatabaseWarning')
+      return
+    }
+    await new Promise((r) => setTimeout(r, 100))
+  }
+}
+
 async function adminQuery(baseUrl: string, sql: string): Promise<void> {
   const client = new pg.Client({ connectionString: baseUrl })
   await client.connect()
@@ -59,4 +104,32 @@ async function adminQuery(baseUrl: string, sql: string): Promise<void> {
   } finally {
     await client.end()
   }
+}
+
+// ---------------------------------------------------------------- filas por arquivo de teste (T126)
+
+/** Prefixos de fila BullMQ efetivos neste processo de teste. */
+export function testQueuePrefix(env: NodeJS.ProcessEnv = process.env): { crm: string | undefined; wa: string | undefined } {
+  return { crm: env.CRM_QUEUE_PREFIX, wa: env.WA_QUEUE_PREFIX }
+}
+
+/**
+ * Torna `CRM_QUEUE_PREFIX`/`WA_QUEUE_PREFIX` únicos POR ARQUIVO de teste: `<prefixo da execução>-f<hash do arquivo>-<rand>`.
+ * Chamado pelo `src/test-setup.ts` de cada pacote (setupFiles roda antes de cada arquivo, com `expect.getState().testPath`
+ * já definido). O prefixo da execução vem do `vitest.config.ts` (T121); sem ele, `crm-t-<pid>` / `wsm-t-<pid>`.
+ * Idempotente no mesmo arquivo.
+ */
+export function isolateTestQueues(testPath: string | undefined, env: NodeJS.ProcessEnv = process.env): { crm: string; wa: string } {
+  const hash = createHash('sha1')
+    .update(testPath ?? `pid-${process.pid}`)
+    .digest('hex')
+    .slice(0, 8)
+  const tag = `-f${hash}-`
+  const keep = (v: string | undefined) => (v && v.includes(tag) ? v : null)
+  const rand = randomBytes(2).toString('hex')
+  const crm = keep(env.CRM_QUEUE_PREFIX) ?? `${env.CRM_QUEUE_PREFIX?.trim() || `crm-t-${process.pid}`}${tag}${rand}`
+  const wa = keep(env.WA_QUEUE_PREFIX) ?? `${env.WA_QUEUE_PREFIX?.trim() || `wsm-t-${process.pid}`}${tag}${rand}`
+  env.CRM_QUEUE_PREFIX = crm
+  env.WA_QUEUE_PREFIX = wa
+  return { crm, wa }
 }

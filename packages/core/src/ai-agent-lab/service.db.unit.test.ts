@@ -269,13 +269,19 @@ describe('AC-T79-04 criação assistida', () => {
 
   it('inline processa sozinho depois do createRun', async () => {
     const co = await company()
-    const s = lab(new FakeLlm([output(composed)]), { inline: true })
-    const run = await s.createRun(co, null, { pitch: 'Vendo cursos de inglês para adultos.' })
-    let current = run
-    for (let i = 0; i < 50 && current.status !== 'completed' && current.status !== 'failed'; i++) {
-      await new Promise((r) => setTimeout(r, 20))
-      current = await s.getRun(co, run.id)
+    // T126: espera o run terminar pelo evento que o serviço publica a cada gravação (antes: 50 × 20 ms de relógio real,
+    // que sob carga acabava com o run ainda `running`). Nenhum processRun manual: o inline roda sozinho.
+    let settle!: (status: string) => void
+    const finished = new Promise<string>((r) => (settle = r))
+    const publisher = {
+      publish: async (_co: string, _type: 'ai_agent.run.updated', data: { run: { status: string } }) => {
+        if (data.run.status === 'completed' || data.run.status === 'failed') settle(data.run.status)
+      },
     }
-    expect(current.status).toBe('completed')
-  })
+    const s = lab(new FakeLlm([output(composed)]), { inline: true, publisher })
+    const run = await s.createRun(co, null, { pitch: 'Vendo cursos de inglês para adultos.' })
+    const timeout = new Promise<string>((_, reject) => setTimeout(() => reject(new Error('timeout: o run inline não terminou em 60 s')), 60_000).unref())
+    expect(await Promise.race([finished, timeout])).toBe('completed')
+    expect((await s.getRun(co, run.id)).status).toBe('completed')
+  }, 90_000)
 })

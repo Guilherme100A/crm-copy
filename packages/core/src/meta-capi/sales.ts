@@ -2,6 +2,8 @@
 // `Purchase` (`event_id = sale-<saleId>`, `action_source: system_generated`) para os pixels da empresa com
 // `auto_send_sales`. O decorator `capiSalePublisher` envolve o publisher do realtime (o mesmo que o SalesService
 // já recebe) e só enfileira — o POST acontece no worker, fora da transação da venda.
+// T126: quem grava a venda numa transação (o nó `approved_sale` roda dentro da transação do passo) enfileira ANTES do
+// commit; o job que chega antes do commit não vê a venda e lança `SaleNotVisibleError` para o BullMQ tentar de novo.
 import { and, eq } from 'drizzle-orm'
 import { pixelConfigs, sales, type Database } from '@crm/db'
 import type { CapiSendResult, CapiService } from './service'
@@ -17,6 +19,17 @@ export const saleEventId = (saleId: string) => `sale-${saleId}`
 export const saleJobId = (saleId: string) => `capi-sale-${saleId}`
 
 export type CapiSaleEnqueue = (data: MetaCapiSaleJobData, opts: { jobId: string }) => Promise<void>
+
+/** A venda do job ainda não está visível (commit pendente de quem a gravou). Retentável: o job nunca conclui sem enviar. */
+export class SaleNotVisibleError extends Error {
+  readonly retryable = true
+  constructor(readonly saleId: string) {
+    super(`meta-capi: venda ${saleId} ainda não visível (commit pendente?)`)
+    this.name = 'SaleNotVisibleError'
+  }
+}
+
+export const isSaleNotVisibleError = (err: unknown): err is SaleNotVisibleError => err instanceof Error && err.name === 'SaleNotVisibleError'
 
 interface Publisher {
   publish(companyId: string, type: never, data: never, opts?: never): Promise<unknown>
@@ -54,14 +67,18 @@ export interface CapiSaleOutcome {
   result: CapiSendResult
 }
 
-/** Envia o `Purchase` da venda para cada pixel com `auto_send_sales` (job `meta-capi`). Venda não aprovada: nada. */
+/**
+ * Envia o `Purchase` da venda para cada pixel com `auto_send_sales` (job `meta-capi`). Venda não aprovada: nada.
+ * Venda ainda não visível: `SaleNotVisibleError` (o retry do job a encontra depois do commit; um rollback termina `failed`).
+ */
 export async function sendSaleToPixels(deps: { db: Database; capi: Pick<CapiService, 'send' | 'userFromContact'> }, data: MetaCapiSaleJobData): Promise<CapiSaleOutcome[]> {
   const [sale] = await deps.db
     .select()
     .from(sales)
     .where(and(eq(sales.companyId, data.companyId), eq(sales.id, data.saleId)))
     .limit(1)
-  if (!sale || sale.status !== 'approved') return []
+  if (!sale) throw new SaleNotVisibleError(data.saleId)
+  if (sale.status !== 'approved') return []
   const pixels = await deps.db
     .select({ id: pixelConfigs.id })
     .from(pixelConfigs)

@@ -16,14 +16,40 @@ import { AiAgentsService } from '../ai-agents'
 import type { CrmInboundEvent } from '../chats/ingest/chat-ingest'
 import { MediaService } from '../media/service'
 import { AiAgentRuntime, type AiAgentRuntimeOptions } from './runtime'
+import type { AiTurnJobData } from './scheduler'
 
 let temp: TempDatabase
 let db: Database
 let storage: string
 let media: MediaService
 const rnd = () => randomBytes(4).toString('hex')
-const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 type Published = { type: string; data: Record<string, unknown> }
+
+/**
+ * Agendador do buffer com relógio virtual (T126): mesma semântica do `memoryTurnScheduler` (um agendamento novo do
+ * chat substitui o anterior), mas o tempo só anda com `advance(ms)`, que roda os turnos vencidos na ordem.
+ */
+function virtualTurnScheduler() {
+  let now = 0
+  let run: (job: AiTurnJobData) => Promise<unknown> = async () => undefined
+  const timers = new Map<string, { due: number; job: AiTurnJobData }>()
+  return {
+    bind(fn: (job: AiTurnJobData) => Promise<unknown>) {
+      run = fn
+    },
+    async schedule(job: AiTurnJobData, delayMs: number) {
+      timers.set(job.chatId, { due: now + Math.max(0, delayMs), job })
+    },
+    async advance(ms: number) {
+      now += ms
+      const due = [...timers.entries()].filter(([, t]) => t.due <= now).sort((a, b) => a[1].due - b[1].due)
+      for (const [chatId, t] of due) {
+        timers.delete(chatId)
+        await run(t.job)
+      }
+    },
+  }
+}
 
 beforeAll(async () => {
   temp = await createTempDatabase({ migrate: true })
@@ -126,19 +152,27 @@ const stateRow = async (id: string) => (await db.select().from(aiConversationSta
 
 describe('AC-T68-01 buffer', () => {
   it('mensagens picadas dentro do buffer viram um único turno com todas na ordem', async () => {
-    // Mesma proporção do AC (3 mensagens em 3 s com buffer de 5 s), em escala menor: 300 ms entre elas, buffer de 1 s.
-    const s = await setup({ settings: { buffer_enabled: true, buffer_seconds: 1 } })
+    // Proporção do AC: 3 mensagens em 3 s com buffer de 5 s. T126: relógio virtual (agendador injetado no runtime) em
+    // vez de sleep real — sob carga o tempo de cada inbound não pode encurtar a janela medida.
+    const clock = virtualTurnScheduler()
+    const s = await setup({ settings: { buffer_enabled: true, buffer_seconds: 5 }, runtime: { scheduler: clock } })
+    clock.bind((job) => s.runtime.runTurn(job))
     await s.inbound('oi')
-    await sleep(300)
+    await clock.advance(1500)
     await s.inbound('quero saber')
-    await sleep(300)
+    await clock.advance(1500)
     await s.inbound('do plano anual')
+    // cada mensagem reinicia a contagem: 4,999 s depois da última ainda não houve turno
+    await clock.advance(4999)
     expect(s.llm.callCount).toBe(0)
-    await sleep(1300)
+    await clock.advance(1)
     await s.runtime.idle()
     expect(s.llm.callCount).toBe(1)
     expect(lastUserText(s.llm.calls[0]!)).toBe('oi\nquero saber\ndo plano anual')
     expect(s.gateway.sent).toHaveLength(1)
+    // nada pendente: o tempo seguir não gera outro turno
+    await clock.advance(60_000)
+    expect(s.llm.callCount).toBe(1)
   })
 
   it('flush roda o turno pendente na hora', async () => {

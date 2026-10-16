@@ -8,11 +8,14 @@ import { createLogger, redisConnection } from '@crm/node-kit'
 import { eq } from 'drizzle-orm'
 import { createApp, type RedisClient } from '../app'
 import { stopRealtimeHub } from '../routes/events/index'
+import { claimTestRedisDb, clearCrmKeys, type TestRedisClaim } from '../test-setup-redis'
 import { DEFAULT_E2E_RESET_TIMEOUT_MS, resetTimeoutMs } from './index'
 
 let temp: TempDatabase
 let db: Database
 let redis: RedisClient
+// T126: db do Redis reservado só para este arquivo (o reset apaga crm:* no db inteiro); antes era o db 13 fixo.
+let claim: TestRedisClaim | undefined
 const stream = `e2e-reset:${randomBytes(4).toString('hex')}:wsm:events`
 const J = { 'content-type': 'application/json', 'x-requested-with': 'crm' }
 
@@ -36,13 +39,16 @@ function withEnv<T>(env: Record<string, string | undefined>, fn: () => T): T {
 beforeAll(async () => {
   temp = await createTempDatabase({ migrate: true })
   db = createDb(temp.url, { max: 6 })
-  redis = redisConnection({ url: 'redis://127.0.0.1:6379/13' })
+  claim = await claimTestRedisDb(expect.getState().testPath)
+  redis = redisConnection({ url: claim.url })
+  await clearCrmKeys(redis)
 }, 120_000)
 afterAll(async () => {
   await stopRealtimeHub(redis)
   await redis?.del(stream)
   await redis?.quit()
   await db?.$client.end()
+  await claim?.release()
   await temp?.drop()
 })
 

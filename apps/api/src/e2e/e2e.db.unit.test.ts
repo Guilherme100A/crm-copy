@@ -1,4 +1,4 @@
-// Harness E2E (T17): rotas /__e2e/* com e sem E2E=1. Redis em banco próprio (13) e stream único: o reset apaga
+// Harness E2E (T17): rotas /__e2e/* com e sem E2E=1. Redis em db reservado só para o arquivo (T126; antes o 13 fixo) e stream único: o reset apaga
 // chaves `crm:*` e não pode atingir testes de outros pacotes rodando no Redis compartilhado.
 import { randomBytes } from 'node:crypto'
 import { eq } from 'drizzle-orm'
@@ -8,10 +8,13 @@ import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../app'
 import { stopRealtimeHub } from '../routes/events/index'
+import { claimTestRedisDb, clearCrmKeys, type TestRedisClaim } from '../test-setup-redis'
 
 let temp: TempDatabase
 let db: Database
 let redis: RedisClient
+// T126: db do Redis reservado só para este arquivo (o reset apaga crm:* no db inteiro); antes era o db 13 fixo.
+let claim: TestRedisClaim | undefined
 const stream = `e2e-test:${randomBytes(4).toString('hex')}:wsm:events`
 const J = { 'content-type': 'application/json', 'x-requested-with': 'crm' }
 const logger = createLogger({ level: 'silent' })
@@ -47,7 +50,9 @@ const inbound = (id: string) => ({
 beforeAll(async () => {
   temp = await createTempDatabase({ migrate: true })
   db = createDb(temp.url, { max: 4 })
-  redis = redisConnection({ url: 'redis://127.0.0.1:6379/13' })
+  claim = await claimTestRedisDb(expect.getState().testPath)
+  redis = redisConnection({ url: claim.url })
+  await clearCrmKeys(redis)
 }, 60_000)
 
 afterAll(async () => {
@@ -55,6 +60,7 @@ afterAll(async () => {
   await stopRealtimeHub(redis)
   await db?.$client.end()
   redis?.disconnect()
+  await claim?.release()
   await temp?.drop()
 })
 

@@ -56,8 +56,9 @@ describe('T121 prefixo das filas', () => {
   })
 
   it('AC-T121-02: a config de teste define prefixos únicos por execução (CRM e wa-engine)', () => {
-    expect(process.env.CRM_QUEUE_PREFIX).toMatch(/^crm-t-\d+-[a-z0-9]+$/)
-    expect(process.env.WA_QUEUE_PREFIX).toMatch(/^wsm-t-\d+-[a-z0-9]+$/)
+    // prefixo da execução (vitest.config.ts) + sufixo do arquivo (test-setup.ts, T126)
+    expect(process.env.CRM_QUEUE_PREFIX).toMatch(/^crm-t-\d+-[a-z0-9]+-f[0-9a-f]{8}-[0-9a-f]{4}$/)
+    expect(process.env.WA_QUEUE_PREFIX).toMatch(/^wsm-t-\d+-[a-z0-9]+-f[0-9a-f]{8}-[0-9a-f]{4}$/)
     expect(defineQueue('prefix-check').opts.prefix).toBe(process.env.CRM_QUEUE_PREFIX)
   })
 

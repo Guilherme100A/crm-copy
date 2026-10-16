@@ -17,6 +17,7 @@ import { startWaWorker, type WaWorkerHandle } from '@crm/wa-worker'
 import { and, count, eq, sql } from 'drizzle-orm'
 import type { Redis } from 'ioredis'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { onCrmInbound } from '../consumers/chats'
 import { startProductionWorker, type ProductionWorker } from './production-worker'
 
 const id = randomBytes(4).toString('hex')
@@ -160,6 +161,21 @@ async function connectedConnection(s: Session): Promise<{ id: string; sessionId:
 
 const jid = () => `55119${String(Math.floor(Math.random() * 1e8)).padStart(8, '0')}@s.whatsapp.net`
 const receive = (sessionId: string, from: string, body: string) => waWorker.fake!.require(sessionId).receive({ from, text: body })
+/** Resolve quando a mensagem `body` de `from` terminou de passar pelos ouvintes do `crm.inbound` (fluxos, agente). */
+function inboundHandled(from: string, body: string, ms = 60_000): Promise<void> {
+  const phone = `+${from.split('@')[0]}`
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => (off(), reject(new Error(`timeout: crm.inbound de ${body}`))), ms)
+    const off = onCrmInbound(async (e) => {
+      if (e.text !== body) return
+      const [c] = await db.select({ phone: contacts.phoneE164 }).from(contacts).where(eq(contacts.id, e.contact_id))
+      if (c?.phone !== phone) return
+      clearTimeout(timer)
+      off()
+      resolve()
+    })
+  })
+}
 
 async function chatOf(s: Session, from: string): Promise<any> {
   const phone = `+${from.split('@')[0]}`
@@ -269,8 +285,13 @@ describe('T120 montado como produção', () => {
     await db.insert(aiWallets).values({ companyId: s.companyId, balanceCredits: 1_000_000, status: 'ok' }).onConflictDoUpdate({ target: aiWallets.companyId, set: { balanceCredits: 1_000_000, status: 'ok' } })
 
     const from = jid()
+    // T126: o chat aparece na API (commit do ingest) antes de os ouvintes do `crm.inbound` do "oi" rodarem; ligar o
+    // agente nessa janela faz ele responder ao "oi" também. Espera o "oi" passar por todos os ouvintes (este é
+    // inscrito depois do consumidor do agente e eles rodam em ordem) antes do PATCH.
+    const oiDone = inboundHandled(from, 'oi')
     receive(conn.sessionId, from, 'oi')
     const chat = await chatOf(s, from)
+    await oiDone
     expectStatus(await call(s, 'PATCH', `/api/chats/${chat.id}`, { ai_agent_id: agent.id }), 200)
     fake.enqueue(text('Olá, sou a Ana!'))
     const before = fake.callCount
