@@ -86,8 +86,12 @@ export class FakeWaGateway implements WaGateway {
   readonly optOuts: OptOutInput[] = []
   readonly presences: { sessionId: string; to: string; kind: PresenceKind }[] = []
   readonly cancelled: string[] = []
+  /** Toda chamada a `markRead`, em ordem. */
+  readonly reads: { sessionId: string; chatJid: string; messageIds: string[] }[] = []
 
   private readonly sessionMap = new Map<string, SessionView>()
+  /** (sessionId, clientMessageId) → id da mensagem já enfileirada (idempotência do envio). */
+  private readonly byClientId = new Map<string, string>()
   private readonly qrs = new Map<string, { qr: string; generatedAt: string }>()
   private readonly messages = new Map<string, MessageView>()
   private readonly groups = new Map<string, GroupSummary[]>()
@@ -244,7 +248,9 @@ export class FakeWaGateway implements WaGateway {
     this.optOuts.length = 0
     this.presences.length = 0
     this.cancelled.length = 0
+    this.reads.length = 0
     this.failures.length = 0
+    this.byClientId.clear()
     for (const map of [this.sessionMap, this.qrs, this.messages, this.groups, this.contacts, this.media, this.profiles]) map.clear()
     this.consented.clear()
     this.optedOut.clear()
@@ -272,6 +278,13 @@ export class FakeWaGateway implements WaGateway {
   async send(req: SendRequest): Promise<MessageView> {
     this.throwPendingFailure()
     if (!req.actor || !req.actor.trim()) throw new SendRejectedError('UNAUTHORIZED', 'authenticated actor required')
+    // Idempotência: o mesmo (sessionId, clientMessageId) devolve a mensagem já enfileirada, sem novo envio.
+    const clientKey = req.clientMessageId ? `${req.sessionId}\u0000${req.clientMessageId}` : undefined
+    const existingId = clientKey ? this.byClientId.get(clientKey) : undefined
+    if (existingId) {
+      const existing = this.messages.get(existingId)
+      if (existing) return { ...existing }
+    }
     const session = this.sessionMap.get(req.sessionId)
     if (!session) throw new SendRejectedError('SESSION_NOT_FOUND', `session ${req.sessionId} not found`)
     if (this.autoConnect && session.status === 'NEW') await this.setSessionState(session.id, 'WARMING')
@@ -305,7 +318,9 @@ export class FakeWaGateway implements WaGateway {
       createdAt: at,
       updatedAt: at,
     }
+    if (req.clientMessageId) message.clientMessageId = req.clientMessageId
     this.messages.set(message.id, message)
+    if (clientKey) this.byClientId.set(clientKey, message.id)
     this.sent.push({ ...structuredClone(req), messageId: message.id, message: { ...message } })
     return { ...message }
   }
@@ -351,6 +366,11 @@ export class FakeWaGateway implements WaGateway {
   async presence(sessionId: string, to: string, kind: PresenceKind): Promise<void> {
     this.requireSession(sessionId)
     this.presences.push({ sessionId, to, kind })
+  }
+
+  async markRead(sessionId: string, chatJid: string, messageIds: string[]): Promise<void> {
+    this.requireSession(sessionId)
+    this.reads.push({ sessionId, chatJid, messageIds: [...messageIds] })
   }
 
   async listContacts(sessionId: string): Promise<WaContactSummary[]> {

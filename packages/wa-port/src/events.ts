@@ -34,7 +34,8 @@ export const mediaHandleSchema = z.object({
   sha256: z.string().nullable(),
   /** Chave no BlobStore; null enquanto não baixada. */
   key: z.string().nullable(),
-  status: z.enum(['ready', 'pending', 'expired', 'failed']),
+  /** `ready` = gravada no BlobStore; `pending` = download lazy; `unavailable` = expirada/falhou de vez (T21). */
+  status: z.enum(['ready', 'pending', 'expired', 'failed', 'unavailable']),
   file_name: z.string().nullable().optional(),
 })
 export type MediaHandle = z.infer<typeof mediaHandleSchema>
@@ -76,6 +77,8 @@ export const incomingMessageSchema = z.object({
   /** Id da mensagem citada (resposta). */
   quoted_id: z.string().optional(),
   ad: ctwaInfoSchema.optional(),
+  /** `true` = sincronizada (histórico ou enviada de outro aparelho): gravar sem disparar automações (T21/T33). */
+  historical: z.literal(true).optional(),
 })
 export type IncomingMessage = z.infer<typeof incomingMessageSchema>
 

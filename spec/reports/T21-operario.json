@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "task": "T21",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T04:38:42.233Z",
+  "commit": "51a82c4671fb7217e08273057fc6b06fc4776848",
+  "base": "51a82c4",
+  "changedFiles": [
+    "packages/wa-engine/package.json",
+    "packages/wa-engine/src/index.ts",
+    "packages/wa-port/src/contract/suite.ts",
+    "packages/wa-port/src/events.ts",
+    "packages/wa-port/src/gateway.ts",
+    "packages/wa-port/src/testing/fake-gateway.ts",
+    "packages/wa-engine/src/contacts/index.ts",
+    "packages/wa-engine/src/contacts/sync.ts",
+    "packages/wa-engine/src/events/convert.ts",
+    "packages/wa-engine/src/events/index.ts",
+    "packages/wa-engine/src/events/outbox.ts",
+    "packages/wa-engine/src/events/outbox.unit.test.ts",
+    "packages/wa-engine/src/media/index.ts",
+    "packages/wa-engine/src/media/media.unit.test.ts",
+    "packages/wa-port/src/additions.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/wa-engine/src/events/outbox.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-engine/src/media/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
+      "status": "pass",
+      "detail": "ok em 6.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine lint",
+      "status": "pass",
+      "detail": "ok em 3.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine test",
+      "status": "pass",
+      "detail": "ok em 12.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -233,6 +233,25 @@ export function defineWaGatewayContract(nameOrFactory: string | WaGatewayContrac
       })
     })
 
+    it('send: o mesmo clientMessageId na sessão devolve a mesma mensagem (idempotência)', async () => {
+      const sessionId = await connectedSession()
+      const phone = randomPhone()
+      await h.gateway.recordConsent({ phone, source: 'manual', actor: h.actor })
+      const clientMessageId = `contract-${uid()}`
+      const req = { sessionId, phone, content: text('uma vez'), actor: h.actor, clientMessageId, quoted: 'wamid-original', viewOnce: false }
+      const first = await h.gateway.send(req)
+      const second = await h.gateway.send(req)
+      expect(second.id).toBe(first.id)
+      const other = await h.gateway.send({ ...req, clientMessageId: `${clientMessageId}-2` })
+      expect(other.id).not.toBe(first.id)
+    })
+
+    it('markRead (quando suportado): aceita os ids do chat sem erro', async () => {
+      if (!h.gateway.markRead) return
+      const sessionId = await connectedSession()
+      await expect(h.gateway.markRead(sessionId, `${randomPhone().slice(1)}@s.whatsapp.net`, ['m1', 'm2'])).resolves.toBeUndefined()
+    })
+
     it('send: sendGroup com JID que não é de grupo rejeita com VALIDATION_ERROR 400', async () => {
       const sessionId = await connectedSession()
       await expect(h.gateway.sendGroup({ sessionId, groupId: 'not-a-group', content: text(), actor: h.actor })).rejects.toMatchObject({

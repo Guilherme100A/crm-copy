@@ -96,6 +96,12 @@ export interface SendRequest {
   /** Quem pediu o envio (`crm:<userId>`). Sem actor, o gate auth rejeita. */
   actor?: string
   contactId?: string | null
+  /** Idempotência ponta a ponta (T49): o mesmo (sessionId, clientMessageId) devolve a mensagem já enfileirada. */
+  clientMessageId?: string
+  /** Resposta citada: id da mensagem original no WhatsApp. */
+  quoted?: string
+  /** Mídia de visualização única. */
+  viewOnce?: boolean
 }
 
 export interface SendGroupRequest {
@@ -104,6 +110,9 @@ export interface SendGroupRequest {
   groupId: string
   content: OutgoingContent
   actor: string
+  clientMessageId?: string
+  quoted?: string
+  viewOnce?: boolean
 }
 
 export interface ReactRequest {
@@ -141,6 +150,8 @@ export interface MessageView {
   readAt: string | null
   createdAt: string
   updatedAt: string
+  /** `clientMessageId` do pedido, quando informado (acréscimo do CRM; ausente no ai-manager). */
+  clientMessageId?: string | null
 }
 
 export interface SessionView {
@@ -288,6 +299,11 @@ export interface WaGateway {
   recordConsent(input: RecordConsentInput): Promise<void>
   /** Opt-out: bloqueia todo envio para o telefone (gate `contactAllowed`). */
   optOut(input: OptOutInput): Promise<void>
+  /**
+   * Recibo de leitura (azul) das mensagens recebidas no chat (ids do WhatsApp). Opcional: o perfil ai-manager
+   * pode não ter (T46); sem ele o CRM só grava a leitura localmente.
+   */
+  markRead?(sessionId: string, chatJid: string, messageIds: string[]): Promise<void>
   profile?: WaProfileControl
   /** Assina os eventos WaEvent v1. Devolve a função que cancela a assinatura. */
   subscribe(listener: WaEventListener): () => void

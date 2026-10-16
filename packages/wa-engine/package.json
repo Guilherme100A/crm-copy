@@ -53,10 +53,25 @@
       "types": "./src/health/index.ts",
       "development": "./src/health/index.ts",
       "default": "./dist/health/index.js"
+    },
+    "./events": {
+      "types": "./src/events/index.ts",
+      "development": "./src/events/index.ts",
+      "default": "./dist/events/index.js"
+    },
+    "./media": {
+      "types": "./src/media/index.ts",
+      "development": "./src/media/index.ts",
+      "default": "./dist/media/index.js"
+    },
+    "./contacts": {
+      "types": "./src/contacts/index.ts",
+      "development": "./src/contacts/index.ts",
+      "default": "./dist/contacts/index.js"
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts src/transport/index.ts src/queue/index.ts src/antiban/index.ts src/warmup/index.ts src/safety/index.ts src/session/index.ts src/proxy/index.ts src/send/index.ts src/health/index.ts --format esm --target node22 --platform node --clean",
+    "build": "tsup src/index.ts src/transport/index.ts src/queue/index.ts src/antiban/index.ts src/warmup/index.ts src/safety/index.ts src/session/index.ts src/proxy/index.ts src/send/index.ts src/health/index.ts src/events/index.ts src/media/index.ts src/contacts/index.ts --format esm --target node22 --platform node --clean",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
