@@ -2,10 +2,10 @@
   "version": 1,
   "task": "T28",
   "role": "tester",
-  "ok": true,
-  "at": "2026-10-16T04:39:58.796Z",
-  "commit": "51a82c4671fb7217e08273057fc6b06fc4776848",
-  "base": "51a82c4",
+  "ok": false,
+  "at": "2026-10-16T04:42:10.038Z",
+  "commit": "e12bc900ac177edcf22486471a6a76591352a10b",
+  "base": "0106f10",
   "changedFiles": [
     "tests/acceptance/T28/flows-api.test.ts",
     "tests/acceptance/T28/setup.ts"
@@ -48,38 +48,38 @@
     },
     {
       "name": "execução vitest",
-      "status": "pass",
-      "detail": "16 passed, 0 failed, 0 skipped/todo"
+      "status": "fail",
+      "detail": "0 passed, 0 failed, 16 skipped/todo"
     },
     {
       "name": "AC-T28-01",
-      "status": "pass",
-      "detail": "4 passed"
+      "status": "fail",
+      "detail": "0 passed, 4 skipped"
     },
     {
       "name": "AC-T28-02",
-      "status": "pass",
-      "detail": "3 passed"
+      "status": "fail",
+      "detail": "0 passed, 3 skipped"
     },
     {
       "name": "AC-T28-03",
-      "status": "pass",
-      "detail": "2 passed"
+      "status": "fail",
+      "detail": "0 passed, 2 skipped"
     },
     {
       "name": "AC-T28-04",
-      "status": "pass",
-      "detail": "3 passed"
+      "status": "fail",
+      "detail": "0 passed, 3 skipped"
     },
     {
       "name": "AC-T28-05",
-      "status": "pass",
-      "detail": "2 passed"
+      "status": "fail",
+      "detail": "0 passed, 2 skipped"
     },
     {
       "name": "AC-T28-06",
-      "status": "pass",
-      "detail": "2 passed"
+      "status": "fail",
+      "detail": "0 passed, 2 skipped"
     },
     {
       "name": "escopo de arquivos",
