@@ -202,7 +202,7 @@ const RAW = [
     { requiredFiles: ['packages/core/src/chats/send/index.ts'] }),
   T('T58', 'UI: respostas rápidas, modelos, variáveis, campos e etiquetas', ['T35', 'T26', 'T23'],
     [...ui('settings-quick-replies'), ...ui('settings-templates'), ...ui('settings-variables'), ...ui('settings-fields'), ...ui('settings-labels')], ['web'], { e2e: true }),
-  T('T64', 'Agendamento de mensagens', ['T49', 'T35'], [core('schedules'), job('schedules'), route('schedules'), schema('schedules')], ['api', 'worker', 'core']),
+  T('T64', 'Agendamento de mensagens', ['T49', 'T35'], [core('schedules'), job('schedules'), route('schedules'), schema('schedules'), 'apps/worker/src/boot/production.ts' /* aditivo: configureSchedules */], ['api', 'worker', 'core']),
   T('T66', 'Contatos: filtros avançados e ações em massa', ['T26', 'T27', 'T50'], ['packages/core/src/contacts-bulk/**', route('contacts-bulk'), job('contacts-bulk'), 'packages/core/src/contacts/**', 'apps/api/src/routes/contacts/**' /* aditivo: filtros avançados na listagem da T26 */], ['api', 'worker', 'core']),
   T('T67', 'Contatos: importação CSV e do WhatsApp', ['T26', 'T27'], ['packages/core/src/contacts-import/**', route('contacts-import'), job('contacts-import')], ['api', 'worker', 'core']),
   T('T69', 'UI chats: lista e filtros', ['T48', 'T23'], [...ui('chat'), 'apps/web/src/features/chat-list/**', i18n('chat-list')], ['web'], { e2e: true }),
