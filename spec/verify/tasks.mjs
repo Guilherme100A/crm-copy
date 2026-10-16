@@ -279,7 +279,7 @@ const RAW = [
 
   // ---------------- Webhooks, vendas externas, disparos, MCP ----------------
   T('T72', 'Webhooks de entrada: CRUD e recepção pública', ['T26'], [core('inbound-webhooks'), route('inbound-webhooks'), 'apps/api/src/routes/hooks/**', schema('inbound-webhooks')], ['api', 'core']),
-  T('T81', 'Webhooks de entrada: processador e escuta de amostras', ['T72', 'T61', 'T50'], ['packages/core/src/inbound-webhooks-processor/**', job('inbound-webhooks')], ['worker', 'core']),
+  T('T81', 'Webhooks de entrada: processador e escuta de amostras', ['T72', 'T61', 'T50'], ['packages/core/src/inbound-webhooks-processor/**', 'apps/api/src/middleware/request-logger.ts', job('inbound-webhooks')], ['api', 'worker', 'core']),
   T('T89', 'UI webhooks de entrada', ['T81', 'T23'], [...ui('settings-webhooks')], ['web'], { e2e: true }),
   T('T73', 'Fontes de venda (webhook genérico) e atribuição UTM/CTWA', ['T34', 'T33'], [core('sale-sources'), core('attribution'), route('sale-sources'), 'apps/api/src/routes/hooks-sales/**', job('inbound-sales'), schema('sale-sources')], ['api', 'worker', 'core']),
   T('T90', 'UI fontes de venda e produtos', ['T73', 'T23'], [...ui('settings-sale-sources'), ...ui('settings-products')], ['web'], { e2e: true }),

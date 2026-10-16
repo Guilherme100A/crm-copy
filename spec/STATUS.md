@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T45 (Torno/Sonda), T79 (Bigorna/Lupa), T111 (Cinzel/Radar).
+- Em andamento (3 pares): T78 (Torno/Sonda), T79 (Bigorna/Lupa), T81 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -59,7 +59,7 @@
 | 5 | T42 | Nós externos (HTTP e IA) | MERGED | Bigorna | Sonda | 0 | 5e15536 |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
-| 5 | T45 | UI fluxos: canvas do editor | IN_PROGRESS | Torno | Sonda | 0 | |
+| 5 | T45 | UI fluxos: canvas do editor | MERGED | Torno | Sonda | 0 | 9dab063 |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | MERGED | Bigorna | Lupa | 0 | c7c9abb |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
@@ -88,7 +88,7 @@
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
-| 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
@@ -101,8 +101,8 @@
 | 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 | 9867959 |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
-| 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
-| 7 | T81 | Webhooks de entrada: processador e escuta de amostras | TODO | | | 0 | |
+| 7 | T78 | UI dashboard: filtros e vendas | IN_PROGRESS | Torno | Sonda | 0 | |
+| 7 | T81 | Webhooks de entrada: processador e escuta de amostras | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
