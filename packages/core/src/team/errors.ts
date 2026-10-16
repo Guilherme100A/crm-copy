@@ -14,6 +14,3 @@ export class TeamError extends Error {
     this.name = 'TeamError'
   }
 }
-
-export const notFound = (what = 'Recurso') => new TeamError('not_found', `${what} não encontrado(a)`)
-export const forbidden = (message = 'Permissão insuficiente', errorCode?: string) => new TeamError('forbidden', message, errorCode)

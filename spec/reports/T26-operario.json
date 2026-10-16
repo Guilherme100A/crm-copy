@@ -3,10 +3,17 @@
   "task": "T26",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:43:22.156Z",
-  "commit": "7ab9ae557db15c3378b945e4f0ee7560a9f71850",
+  "at": "2026-10-16T03:58:13.200Z",
+  "commit": "23a441a2d1ab8dcdd5485f3be6d467989543fe1a",
   "base": null,
-  "changedFiles": [],
+  "changedFiles": [
+    "apps/api/src/routes/team/support.ts",
+    "packages/core/src/companies/service.ts",
+    "packages/core/src/invitations/service.ts",
+    "packages/core/src/team/errors.ts",
+    "packages/core/src/team/service.ts",
+    "packages/core/src/team/internal.ts"
+  ],
   "checks": [
     {
       "name": "arquivo: packages/core/src/contacts/index.ts",
@@ -16,32 +23,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 6.8s"
+      "detail": "ok em 8.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 3.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 8.6s"
+      "detail": "ok em 13.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 6.6s"
+      "detail": "ok em 9.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 4.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 11.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -100,8 +107,8 @@
     },
     {
       "name": "escopo de arquivos",
-      "status": "pass",
-      "detail": "0 arquivo(s) alterado(s)"
+      "status": "warn",
+      "detail": "fora do escopo: apps/api/src/routes/team/support.ts, packages/core/src/companies/service.ts, packages/core/src/invitations/service.ts, packages/core/src/team/errors.ts, packages/core/src/team/service.ts, packages/core/src/team/internal.ts"
     }
   ]
 }

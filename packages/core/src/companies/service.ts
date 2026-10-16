@@ -9,7 +9,8 @@ import { isUniqueViolation } from '../auth/errors'
 import { findMembership, permissionsOf } from '../platform/company-context'
 import type { CompanyMember } from '../platform/types'
 import type { RealtimePublisher } from '../realtime/publisher'
-import { TeamError, forbidden, notFound } from '../team/errors'
+import { TeamError } from '../team/errors'
+import { forbidden, notFound } from '../team/internal'
 import { companySessionIds, type CompanySessionsSource } from './sessions-source'
 import { slugCandidate, slugify } from './slug'
 
@@ -36,7 +37,7 @@ export function normalizeTimeZone(tz: string | null | undefined): string {
   return (COMPANY_TIME_ZONES as readonly string[]).includes(tz) ? tz : DEFAULT_TIME_ZONE
 }
 
-export interface Actor {
+export interface TeamActor {
   userId: string
   systemRole: SystemRole
 }
@@ -129,13 +130,13 @@ export class CompanyService {
     return { items: rows.map((r) => ({ ...toCompanyDto(r.company), role: r.role })), page: buildPageMeta(query, { total: Number(total?.n ?? 0) }) }
   }
 
-  async get(actor: Actor, companyId: string): Promise<CompanyWithRole> {
+  async get(actor: TeamActor, companyId: string): Promise<CompanyWithRole> {
     const { member } = await this.membership(actor, companyId)
     return { ...toCompanyDto(await this.row(companyId)), role: member.role }
   }
 
   /** Cria a empresa com o criador como `owner`. Suporte (acesso temporário) não cria empresas. */
-  async create(actor: Actor, input: CreateCompanyInput): Promise<CompanyWithRole> {
+  async create(actor: TeamActor, input: CreateCompanyInput): Promise<CompanyWithRole> {
     if (actor.systemRole === 'support') throw forbidden('Usuários de suporte não criam empresas')
     const name = input.name.trim()
     const settings: Record<string, unknown> = { connection_status_emails_enabled: true }
@@ -165,7 +166,7 @@ export class CompanyService {
    * Edita a empresa (`settings.accounts.edit`). Fuso: só owner/admin da empresa ou admin da plataforma.
    * `active` (desativar/reativar) só o owner.
    */
-  async update(actor: Actor, companyId: string, input: UpdateCompanyInput): Promise<CompanyWithRole> {
+  async update(actor: TeamActor, companyId: string, input: UpdateCompanyInput): Promise<CompanyWithRole> {
     const { member, perms } = await this.membership(actor, companyId)
     if (input.active !== undefined) {
       if (member.role !== 'owner') throw forbidden('Só o proprietário ativa ou desativa a empresa')
@@ -213,7 +214,7 @@ export class CompanyService {
    * Desativa (soft): bloqueia o acesso dos membros e pausa as sessões WhatsApp da empresa. Dados não são excluídos.
    * Sessão que não pode pausar (já pausada/desconectada/inexistente) é ignorada.
    */
-  async deactivate(actor: Actor, companyId: string): Promise<{ company: CompanyWithRole; pausedSessionIds: string[] }> {
+  async deactivate(actor: TeamActor, companyId: string): Promise<{ company: CompanyWithRole; pausedSessionIds: string[] }> {
     const { member } = await this.membership(actor, companyId)
     if (member.role !== 'owner') throw forbidden('Só o proprietário desativa a empresa')
     const now = this.now()
@@ -240,14 +241,14 @@ export class CompanyService {
   }
 
   /** Torna a empresa a ativa do usuário. */
-  async switch(actor: Actor, companyId: string): Promise<{ company: CompanyWithRole; role: MemberRole; permissions: PermissionKey[] }> {
+  async switch(actor: TeamActor, companyId: string): Promise<{ company: CompanyWithRole; role: MemberRole; permissions: PermissionKey[] }> {
     const { member, perms } = await this.membership(actor, companyId)
     await this.db.update(users).set({ lastCompanyId: companyId, updatedAt: this.now() }).where(eq(users.id, actor.userId))
     return { company: { ...toCompanyDto(await this.row(companyId)), role: member.role }, role: member.role, permissions: [...perms] }
   }
 
   /** Sai da empresa. O owner precisa transferir a propriedade antes. */
-  async leave(actor: Actor, companyId: string): Promise<void> {
+  async leave(actor: TeamActor, companyId: string): Promise<void> {
     const { member } = await this.membership(actor, companyId)
     if (member.role === 'owner')
       throw new TeamError('conflict', 'Transfira a propriedade antes de sair da empresa', 'owner_must_transfer')
@@ -269,7 +270,7 @@ export class CompanyService {
     return row?.active === true
   }
 
-  private async membership(actor: Actor, companyId: string): Promise<{ member: CompanyMember; perms: ReadonlySet<PermissionKey> }> {
+  private async membership(actor: TeamActor, companyId: string): Promise<{ member: CompanyMember; perms: ReadonlySet<PermissionKey> }> {
     const member = await findMembership(this.db, actor.userId, companyId)
     if (!member) throw notFound('Empresa')
     return { member, perms: permissionsOf(member, { systemRole: actor.systemRole }) }

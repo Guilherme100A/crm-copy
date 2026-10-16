@@ -19,7 +19,8 @@ import type { AuditService } from '../platform/audit-service'
 import type { SessionService } from '../platform/session-service'
 import { generateSessionToken, hashToken } from '../platform/tokens'
 import type { AuthUser } from '../platform/types'
-import { TeamError, notFound } from '../team/errors'
+import { TeamError } from '../team/errors'
+import { notFound } from '../team/internal'
 
 export const DEFAULT_INVITATION_TTL_DAYS = 7
 export const DEFAULT_MAX_RESENDS_PER_DAY = 3

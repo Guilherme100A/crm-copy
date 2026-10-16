@@ -6,7 +6,7 @@ import {
   RealtimePublisher,
   TeamError,
   TeamService,
-  type Actor,
+  type TeamActor,
   type CompanySessionsSource,
   type TeamErrorKind,
 } from '@crm/core'
@@ -107,7 +107,7 @@ export async function run<T>(fn: () => Promise<T>): Promise<T> {
 }
 
 /** Usuário da sessão como ator (tokens de API não gerenciam empresas/equipe). */
-export function actorOf(c: Context<AppEnv>): Actor & { name: string } {
+export function actorOf(c: Context<AppEnv>): TeamActor & { name: string } {
   const ctx = getCtx(c)
   if (!ctx.user || ctx.auth.kind !== 'session') throw new ApiError('FORBIDDEN', 'Disponível apenas para sessões de usuário')
   return { userId: ctx.user.id, systemRole: ctx.user.systemRole, name: ctx.user.name }

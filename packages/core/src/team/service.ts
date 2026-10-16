@@ -15,8 +15,9 @@ import {
   type PermissionKey,
 } from '@crm/shared'
 import type { RealtimePublisher } from '../realtime/publisher'
-import type { Actor } from '../companies/service'
-import { TeamError, forbidden, notFound } from './errors'
+import type { TeamActor } from '../companies/service'
+import { TeamError } from './errors'
+import { forbidden, notFound } from './internal'
 
 export interface MemberDto {
   id: string
@@ -136,7 +137,7 @@ export class TeamService {
    * terceiros (403); papel `owner` só por transferência (422); o owner não troca o próprio papel (409).
    * Permissões explícitas: só owner/admin da empresa.
    */
-  async update(actor: Actor & { role: MemberRole | null }, companyId: string, targetUserId: string, input: UpdateMemberInput): Promise<MemberDto> {
+  async update(actor: TeamActor & { role: MemberRole | null }, companyId: string, targetUserId: string, input: UpdateMemberInput): Promise<MemberDto> {
     if (input.role === 'owner')
       throw new TeamError('validation', 'Use a transferência de propriedade para definir o proprietário', 'use_transfer_ownership', {
         fields: [{ path: 'role', message: 'Use a transferência de propriedade' }],
@@ -184,7 +185,7 @@ export class TeamService {
    * Transfere a propriedade de forma atômica: o owner atual vira `admin` e o alvo (um admin) vira o único `owner`.
    * A linha do owner é travada (`FOR UPDATE`): transferências concorrentes do mesmo owner — só uma vence.
    */
-  async transferOwnership(actor: Actor, companyId: string, targetUserId: string): Promise<{ owner: MemberDto; previous_owner: MemberDto }> {
+  async transferOwnership(actor: TeamActor, companyId: string, targetUserId: string): Promise<{ owner: MemberDto; previous_owner: MemberDto }> {
     await this.db.transaction(async (tx) => {
       const [me] = await tx
         .select({ id: companyMembers.id, role: companyMembers.role })
