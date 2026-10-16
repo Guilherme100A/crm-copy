@@ -176,3 +176,6 @@
 | verificar antes de produção | endpoints não confirmados (context7 sem cota): OpenRouter `GET /key` (probe) e ElevenLabs `GET /v1/voices` — conferir na doc oficial | T38 |
 | montagem do worker | o runtime da T68 recebe um único tts/stt: voz por empresa (BYOK) precisa de um wrapper que chame `resolveTts/resolveStt(companyId)` (T38) | T38 |
 | decisão (UI) | Paths de UI seguem a URL (spec 18): `ui(m)` mapeia contacts→customers, chat→chats, agents→agentes, dashboard→welcome, mass-dispatch→mass-dispatches, settings-webhooks→settings/inbound-webhooks; auth inclui routes/login.tsx etc. Abas de Configurações entram por `features/settings/tabs.ts` (compartilhado) | T23 |
+| montagem do worker | `configureFlowTriggers({ db, waGateway, logger })` (T61) não é chamado no boot de produção — sem isso o consumidor ignora o crm.inbound | T61 |
+| T48 (lifecycle) | ao resolver o chat, chamar `FlowTriggers.handleAttendanceFinished({ companyId, chatId })` (T61) | T61 |
+| decisão | mensagem automática fora do horário (T61) e mensagens de nós de fluxo (T51) não aparecem no histórico do chat — mesma pendência de registro no chat | T61 |
