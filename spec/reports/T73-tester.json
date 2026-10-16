@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T73",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T20:08:19.488Z",
+  "commit": "d38a3e280c85f90c9683630953bc916802a8f2de",
+  "base": "d38a3e2",
+  "changedFiles": [
+    "tests/acceptance/T73/sale-sources.test.ts",
+    "tests/acceptance/T73/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T73-01, AC-T73-02, AC-T73-03, AC-T73-04, AC-T73-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "11 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T73-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T73-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T73-03",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T73-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T73-05",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

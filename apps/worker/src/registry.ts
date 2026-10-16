@@ -22,6 +22,7 @@ import { registerPaymentWebhooksJob } from './jobs/payment-webhooks'
 
 import { registerAiAgentLabJob } from './jobs/ai-agent-lab'
 import { registerInboundWebhooksJob } from './jobs/inbound-webhooks'
+import { registerInboundSalesJob } from './jobs/inbound-sales'
 export interface QueueDefinition {
   name: string
   opts: Omit<DefineQueueOptions, 'connection'>
@@ -94,3 +95,4 @@ registerAiKnowledgeJob(registry)
 registerPaymentWebhooksJob(registry)
 registerAiAgentLabJob(registry)
 registerInboundWebhooksJob(registry)
+registerInboundSalesJob(registry)

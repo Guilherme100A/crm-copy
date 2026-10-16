@@ -44,6 +44,8 @@ import { paymentIntegrationsRoutes } from './payment-integrations/index'
 import { inboundWebhooksRoutes } from './inbound-webhooks/index'
 import { inboundWebhookSamplesRoutes } from './inbound-webhook-samples/index'
 import { hooksRoutes } from './hooks/index'
+import { hooksSalesRoutes } from './hooks-sales/index'
+import { saleSourcesRoutes } from './sale-sources/index'
 import { hooksPaymentsRoutes } from './hooks-payments/index'
 import { dashboardRoutes } from './dashboard/index'
 import { dashboardAttendanceRoutes } from './dashboard-attendance/index'
@@ -100,6 +102,8 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', inboundWebhooksRoutes(deps))
   app.route('/', inboundWebhookSamplesRoutes(deps))
   app.route('/', hooksRoutes(deps))
+  app.route('/', hooksSalesRoutes(deps))
+  app.route('/', saleSourcesRoutes(deps))
   app.route('/', hooksPaymentsRoutes(deps))
   app.route('/', dashboardAttendanceRoutes(deps))
   app.route('/', dashboardRoutes(deps))
