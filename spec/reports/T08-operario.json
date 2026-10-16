@@ -3,45 +3,10 @@
   "task": "T08",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:03:15.368Z",
-  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
-  "base": "eff38af",
-  "changedFiles": [
-    "apps/api/package.json",
-    "apps/api/src/index.ts",
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "pnpm-lock.yaml",
-    "apps/api/src/app.ts",
-    "apps/api/src/config.ts",
-    "apps/api/src/lib/context.ts",
-    "apps/api/src/lib/cookies.ts",
-    "apps/api/src/lib/errors.ts",
-    "apps/api/src/lib/errors.unit.test.ts",
-    "apps/api/src/lib/rate-limiter.ts",
-    "apps/api/src/lib/types.ts",
-    "apps/api/src/lib/validate.ts",
-    "apps/api/src/middleware/app.db.unit.test.ts",
-    "apps/api/src/middleware/audit.ts",
-    "apps/api/src/middleware/auth.ts",
-    "apps/api/src/middleware/authorize.ts",
-    "apps/api/src/middleware/company.ts",
-    "apps/api/src/middleware/csrf.ts",
-    "apps/api/src/middleware/public-routes.ts",
-    "apps/api/src/middleware/public-routes.unit.test.ts",
-    "apps/api/src/middleware/rate-limit.ts",
-    "apps/api/src/middleware/request-logger.ts",
-    "apps/api/src/routes/health/index.ts",
-    "apps/api/src/routes/index.ts",
-    "apps/api/src/server.ts",
-    "packages/core/src/platform/audit-service.ts",
-    "packages/core/src/platform/company-context.ts",
-    "packages/core/src/platform/index.ts",
-    "packages/core/src/platform/platform.unit.test.ts",
-    "packages/core/src/platform/session-service.ts",
-    "packages/core/src/platform/tokens.ts",
-    "packages/core/src/platform/types.ts"
-  ],
+  "at": "2026-10-16T03:05:35.340Z",
+  "commit": "27036e0e8d622b3122fe0653403690c5852eb3ff",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: apps/api/src/app.ts",
@@ -66,32 +31,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 4.9s"
+      "detail": "ok em 6.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.8s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 5.9s"
+      "detail": "ok em 4.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 5.8s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -151,7 +116,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "34 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

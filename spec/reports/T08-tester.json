@@ -3,14 +3,10 @@
   "task": "T08",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:05:03.177Z",
-  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
-  "base": "eff38af",
-  "changedFiles": [
-    "tests/acceptance/T08/health.test.ts",
-    "tests/acceptance/T08/middlewares.test.ts",
-    "tests/acceptance/T08/setup.ts"
-  ],
+  "at": "2026-10-16T03:05:46.610Z",
+  "commit": "27036e0e8d622b3122fe0653403690c5852eb3ff",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -85,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "3 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
