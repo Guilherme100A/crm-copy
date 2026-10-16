@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "task": "T38",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T07:17:02.939Z",
+  "commit": "2c0684c7d633314e7688e5fd45236c1efbe241a4",
+  "base": "2c0684c",
+  "changedFiles": [
+    "tests/acceptance/T38/ai-keys.test.ts",
+    "tests/acceptance/T38/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T38-01, AC-T38-02, AC-T38-03, AC-T38-04, AC-T38-05, AC-T38-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "17 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T38-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T38-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T38-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T38-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T38-05",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T38-06",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}
