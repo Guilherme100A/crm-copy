@@ -3,16 +3,12 @@
   "task": "T23",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:28:22.209Z",
-  "commit": "51a82c4671fb7217e08273057fc6b06fc4776848",
-  "base": "51a82c4",
+  "at": "2026-10-16T05:31:58.331Z",
+  "commit": "1a27dd69d9e4aa0d3c5967db33434cd76a44ac60",
+  "base": "27d8e7f",
   "changedFiles": [
-    "apps/web/package.json",
-    "apps/web/tsconfig.json",
-    "apps/web/vitest.config.ts",
-    "package.json",
-    "pnpm-lock.yaml",
     "apps/web/index.html",
+    "apps/web/package.json",
     "apps/web/scripts/i18n-check.mjs",
     "apps/web/scripts/routes-gen.mjs",
     "apps/web/src/app/access.ts",
@@ -66,7 +62,11 @@
     "apps/web/src/routes/welcome/index.tsx",
     "apps/web/src/styles.css",
     "apps/web/src/vite-env.d.ts",
-    "apps/web/vite.config.ts"
+    "apps/web/tsconfig.json",
+    "apps/web/vite.config.ts",
+    "apps/web/vitest.config.ts",
+    "package.json",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
@@ -92,27 +92,27 @@
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 8.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 10.1s"
+      "detail": "ok em 3.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 4.3s"
+      "detail": "ok em 6.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.5s"
+      "detail": "ok em 0.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 5.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
