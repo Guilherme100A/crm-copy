@@ -3,35 +3,10 @@
   "task": "T26",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:41:26.899Z",
-  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
-  "base": "13a99a5",
-  "changedFiles": [
-    "apps/api/package.json",
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "pnpm-lock.yaml",
-    "apps/api/src/routes/contacts/contacts.db.unit.test.ts",
-    "apps/api/src/routes/contacts/index.ts",
-    "apps/api/src/routes/contacts/shared.ts",
-    "apps/api/src/routes/custom-fields/index.ts",
-    "apps/api/src/routes/labels/index.ts",
-    "packages/core/src/contacts/contacts.db.unit.test.ts",
-    "packages/core/src/contacts/errors.ts",
-    "packages/core/src/contacts/index.ts",
-    "packages/core/src/contacts/normalize.ts",
-    "packages/core/src/contacts/normalize.unit.test.ts",
-    "packages/core/src/contacts/service.ts",
-    "packages/core/src/custom-fields/index.ts",
-    "packages/core/src/custom-fields/service.ts",
-    "packages/core/src/labels/index.ts",
-    "packages/core/src/labels/service.ts",
-    "packages/db/drizzle/crm/0003_t26_contacts.sql",
-    "packages/db/drizzle/crm/meta/0003_snapshot.json",
-    "packages/db/src/schema/crm/contacts.ts"
-  ],
+  "at": "2026-10-16T03:43:22.156Z",
+  "commit": "7ab9ae557db15c3378b945e4f0ee7560a9f71850",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/core/src/contacts/index.ts",
@@ -41,32 +16,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 8.5s"
+      "detail": "ok em 6.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.8s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 8.4s"
+      "detail": "ok em 8.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 6.4s"
+      "detail": "ok em 6.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 2.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 4.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -126,7 +101,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "24 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

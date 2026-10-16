@@ -3,13 +3,10 @@
   "task": "T26",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:41:45.885Z",
-  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
-  "base": "13a99a5",
-  "changedFiles": [
-    "tests/acceptance/T26/contacts.test.ts",
-    "tests/acceptance/T26/setup.ts"
-  ],
+  "at": "2026-10-16T03:43:27.512Z",
+  "commit": "7ab9ae557db15c3378b945e4f0ee7560a9f71850",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
