@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 126 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T73 (Cinzel/Radar).
+- Em andamento (3 pares): T77 (Torno/Sonda), T126 (Bigorna/Lupa), T73 (Cinzel/Radar).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -111,12 +111,12 @@
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
-| 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
+| 8 | T77 | UI contatos: lista e seleção em massa | IN_PROGRESS | Torno | Sonda | 0 | |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | TODO | | | 0 | |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
-| 8 | T89 | UI webhooks de entrada | IN_PROGRESS | Torno | Sonda | 0 | |
+| 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
@@ -144,7 +144,7 @@
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
 
 | Tarefa | Pendência | Origem |
-| T89 | Mapeamento com literal + caminho (ex. do doc 09: `+55` + `$.phone`): payload SEM telefone gera "+55", que não conta como ausente, e o request falha no resolve_customer em vez de `missing_required_fields`. Decidir: tratar campo de identidade só com literais (sem nenhum segmento de caminho resolvido) como ausente, ou avisar na UI do mapeamento. | T81 (Radar) |
+| T89 (resolvido: aviso na UI do mapeamento) | Mapeamento com literal + caminho (ex. do doc 09: `+55` + `$.phone`): payload SEM telefone gera "+55", que não conta como ausente, e o request falha no resolve_customer em vez de `missing_required_fields`. Decidir: tratar campo de identidade só com literais (sem nenhum segmento de caminho resolvido) como ausente, ou avisar na UI do mapeamento. | T81 (Radar) |
 | T126 | `apps/worker/src/boot/production-worker.db.unit.test.ts` AC-T120-03 falha na main 2/4 isolado (fake.callCount 2 em vez de 1): provável corrida do teste (o PATCH ai_agent_id na linha 274 acontece antes de o "oi" ser processado). Repassado à Bigorna. | gate T81 |
 | empresas (T22) | `PUT /api/companies/:id { time_zone }` com fuso fora de COMPANY_TIME_ZONES (ex.: Asia/Tokyo) responde 200 e grava America/Sao_Paulo em silêncio (normalizeTimeZone em packages/core/src/companies/service.ts). Deve responder 422 VALIDATION, ou aceitar qualquer fuso IANA válido se a referência permitir. Incluir no despacho da próxima tarefa que tocar packages/core/src/companies ou na T102. | T78 (Torno) |
 |---|---|---|
