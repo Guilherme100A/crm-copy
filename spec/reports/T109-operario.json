@@ -3,17 +3,15 @@
   "task": "T109",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T12:14:01.563Z",
-  "commit": "6f2cfffd544d31a7832f049eeea154820f7352d2",
-  "base": "6f2cfff",
+  "at": "2026-10-16T12:20:20.905Z",
+  "commit": "955629192ad2925e3ca4913a80eadf7114544f15",
+  "base": "0e9fd16",
   "changedFiles": [
     "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
     "apps/api/src/routes/payment-integrations/index.ts",
     "apps/api/src/routes/payment-integrations/payment-integrations.db.unit.test.ts",
     "docs/integrations/xpag.md",
+    "packages/core/src/index.ts",
     "packages/core/src/payments/keys/index.ts",
     "packages/core/src/payments/keys/service.db.unit.test.ts",
     "packages/core/src/payments/keys/service.ts",
@@ -24,6 +22,8 @@
     "packages/core/src/payments/xpag/index.ts",
     "packages/db/drizzle/crm/0024_t109_payments.sql",
     "packages/db/drizzle/crm/meta/0024_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
     "packages/db/src/schema/crm/payments.ts"
   ],
   "checks": [
@@ -40,32 +40,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.2s"
+      "detail": "ok em 11.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.7s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 69.9s"
+      "detail": "ok em 79.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.7s"
+      "detail": "ok em 9.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.8s"
+      "detail": "ok em 5.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 57.8s"
+      "detail": "ok em 52.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
