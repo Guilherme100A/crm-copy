@@ -3,16 +3,10 @@
   "task": "T09",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:11:04.928Z",
-  "commit": "e578080e7ed41e003edea3b38c4a57a902853d1e",
-  "base": "e578080",
-  "changedFiles": [
-    "tests/acceptance/T09/consumer.test.ts",
-    "tests/acceptance/T09/fixtures/sigterm-child.ts",
-    "tests/acceptance/T09/idempotency.test.ts",
-    "tests/acceptance/T09/jobs.test.ts",
-    "tests/acceptance/T09/support.ts"
-  ],
+  "at": "2026-10-16T03:13:17.378Z",
+  "commit": "09c6793fc1410b0d399b66fac5d8b5474fcf9dd5",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -82,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

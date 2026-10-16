@@ -3,37 +3,10 @@
   "task": "T09",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:10:52.214Z",
-  "commit": "e578080e7ed41e003edea3b38c4a57a902853d1e",
-  "base": "e578080",
-  "changedFiles": [
-    "apps/worker/package.json",
-    "apps/worker/src/index.ts",
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/migrations.db.unit.test.ts",
-    "packages/db/src/schema.unit.test.ts",
-    "packages/db/src/schema/crm/index.ts",
-    "pnpm-lock.yaml",
-    "apps/worker/src/boot/config.ts",
-    "apps/worker/src/boot/start.ts",
-    "apps/worker/src/boot/start.unit.test.ts",
-    "apps/worker/src/consumers/framework/consumer.db.unit.test.ts",
-    "apps/worker/src/consumers/framework/consumer.ts",
-    "apps/worker/src/consumers/framework/index.ts",
-    "apps/worker/src/main.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/jobs/idempotency.db.unit.test.ts",
-    "packages/core/src/jobs/idempotency.ts",
-    "packages/core/src/jobs/idempotency.unit.test.ts",
-    "packages/core/src/jobs/index.ts",
-    "packages/core/src/jobs/queues.ts",
-    "packages/core/src/jobs/queues.unit.test.ts",
-    "packages/db/drizzle/crm/0001_t09_jobs.sql",
-    "packages/db/drizzle/crm/meta/0001_snapshot.json",
-    "packages/db/src/schema/crm/jobs.ts"
-  ],
+  "at": "2026-10-16T03:13:07.478Z",
+  "commit": "09c6793fc1410b0d399b66fac5d8b5474fcf9dd5",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: apps/worker/src/main.ts",
@@ -53,32 +26,32 @@
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 5.0s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 2.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 6.9s"
+      "detail": "ok em 7.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 4.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.1s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -138,7 +111,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "26 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
