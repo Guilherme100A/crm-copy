@@ -589,7 +589,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T10-02** Fluxo válido de exemplo (start → mensagem → menu → 2 opções + timeout) passa sem erros e faz round-trip JSON idêntico.
 - **AC-T10-03** `migrate` converte `menu` legado em `interactive_menu` com handles `option:<id>` estáveis (reordenar opções não muda o handle).
 - **AC-T10-04** Node type `unsupported` faz `validate` retornar erro `unsupported_node` e a ativação não é permitida.
-- **AC-T10-05** Cada `action_type` suportado (lista da tabela de 06 classificada V/A) tem schema e exemplo válido testado.
+- **AC-T10-05** Cada `action_type` suportado tem schema e exemplo válido testado. Suportados = os action types listados em `06-fluxos.md#36-tipos-de-ação-action_type-e-config` **menos** os fora de escopo: `kieai_generate`, `make_call`, `send_template` (template oficial da Meta) e a cobrança pelo gateway da referência (`leonapay`) — **31 action types** no total; os excluídos existem só como `unsupported`.
 
 ---
 
