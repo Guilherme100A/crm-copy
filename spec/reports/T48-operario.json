@@ -3,23 +3,23 @@
   "task": "T48",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:27:55.627Z",
-  "commit": "9d66def8912b3465a3f6a34bb6cab48fcee4db1e",
-  "base": "9d66def",
+  "at": "2026-10-16T05:30:36.877Z",
+  "commit": "6f5fd29ab6fd2c343f89266b7a900cec23fb7c23",
+  "base": "3fe79b5",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/shared/src/permissions/catalog.ts",
-    "packages/shared/src/permissions/defaults.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/api/src/routes/chats/chats.db.unit.test.ts",
     "apps/api/src/routes/chats/index.ts",
+    "apps/api/src/routes/index.ts",
     "packages/core/src/chats/lifecycle/errors.ts",
     "packages/core/src/chats/lifecycle/index.ts",
     "packages/core/src/chats/lifecycle/service.ts",
     "packages/core/src/chats/query/context.ts",
     "packages/core/src/chats/query/index.ts",
-    "packages/core/src/chats/query/service.ts"
+    "packages/core/src/chats/query/service.ts",
+    "packages/core/src/index.ts",
+    "packages/shared/src/permissions/catalog.ts",
+    "packages/shared/src/permissions/defaults.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -30,32 +30,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.8s"
+      "detail": "ok em 13.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 10.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 38.0s"
+      "detail": "ok em 32.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 9.2s"
+      "detail": "ok em 7.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 3.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 16.8s"
+      "detail": "ok em 16.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
