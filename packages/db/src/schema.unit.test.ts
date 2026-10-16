@@ -12,8 +12,9 @@ const crmTables = (Object.values(db) as unknown[]).filter((v): v is PgTable => i
 
 describe('schema crm', () => {
   it('as 8 tabelas-base ficam no schema crm', () => {
+    // Outras tarefas acrescentam tabelas ao crm (SPEC 2.4): a base precisa estar presente, não ser a lista inteira.
     const names = crmTables.filter((t) => getTableConfig(t).schema === 'crm').map((t) => getTableName(t))
-    expect(names.sort()).toEqual([...db.CRM_BASE_TABLES].sort())
+    expect(names).toEqual(expect.arrayContaining([...db.CRM_BASE_TABLES]))
   })
 
   it('nenhuma tabela do CRM fica em public', () => {

@@ -1,7 +1,13 @@
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
 import pg from 'pg'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
+import { MIGRATION_SETS } from './client.js'
 import { CRM_BASE_TABLES, createDb, runMigrations } from './index.js'
 import { createTempDatabase, type TempDatabase } from './testing.js'
+
+const crmJournalEntries = () =>
+  (JSON.parse(readFileSync(join(MIGRATION_SETS.crm.folder, 'meta', '_journal.json'), 'utf8')) as { entries: unknown[] }).entries.length
 
 // Postgres real (SPEC 3.10): DATABASE_URL aponta para um banco existente no servidor de testes.
 
@@ -57,7 +63,8 @@ describe('runMigrations (Postgres real)', () => {
       await db.$client.end()
     }
     const tables = await tablesIn(t.url, 'crm')
-    expect(tables).toEqual([...CRM_BASE_TABLES, '__drizzle_migrations'].sort())
+    // Outras tarefas acrescentam tabelas ao crm (SPEC 2.4): a base e o controle precisam estar presentes.
+    expect(tables).toEqual(expect.arrayContaining([...CRM_BASE_TABLES, '__drizzle_migrations']))
     expect(await tablesIn(t.url, 'public')).toEqual([])
     const [ctl] = await query<{ n: string }>(t.url, `select count(*) n from crm.__drizzle_migrations`)
     expect(Number(ctl?.n)).toBeGreaterThan(0)
@@ -71,7 +78,9 @@ describe('runMigrations (Postgres real)', () => {
     await runMigrations({ url: t.url, set: 'all' })
     await Promise.all([runMigrations(t.url, { set: 'all' }), runMigrations(t.url, { set: 'all' })])
     const [ctl] = await query<{ n: string }>(t.url, `select count(*) n from crm.__drizzle_migrations`)
-    expect(Number(ctl?.n)).toBe(1)
+    // Idempotência: cada migration do journal aplicada exatamente uma vez, apesar das 4 execuções.
+    expect(Number(ctl?.n)).toBeGreaterThanOrEqual(1)
+    expect(Number(ctl?.n)).toBe(crmJournalEntries())
   })
 
   it('concorrência num banco vazio: só uma aplica, a outra espera o lock', async () => {

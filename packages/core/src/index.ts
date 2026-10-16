@@ -2,3 +2,4 @@
 // Ponto de registro (SPEC 2.4): cada tarefa acrescenta seus `export * from './<módulo>'` aqui, de forma aditiva.
 export * from './platform'
 export * from './templating'
+export * from './jobs'
