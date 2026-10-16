@@ -3,38 +3,38 @@
   "task": "T122",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T09:09:38.211Z",
-  "commit": "182a2b532e22930294739233fb4633dd576016c2",
-  "base": "182a2b5",
+  "at": "2026-10-16T09:14:28.311Z",
+  "commit": "8633b08770d11ff6970376f2bccf99f465384a4c",
+  "base": "b5e3a94",
   "changedFiles": [
     "apps/worker/src/boot/production-worker.db.unit.test.ts",
     "apps/worker/src/boot/production.ts",
-    "scripts/e2e/ports.mjs",
-    "scripts/e2e/serve.mjs",
     "docs/e2e-harness.md",
+    "scripts/e2e/ports.mjs",
     "scripts/e2e/redis-claim.mjs",
-    "scripts/e2e/redis.unit.test.mjs"
+    "scripts/e2e/redis.unit.test.mjs",
+    "scripts/e2e/serve.mjs"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.7s"
+      "detail": "ok em 9.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 6.5s"
+      "detail": "ok em 4.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 38.6s"
+      "detail": "ok em 35.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 11.8s"
+      "detail": "ok em 10.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
@@ -44,7 +44,7 @@
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 26.9s"
+      "detail": "ok em 17.1s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
