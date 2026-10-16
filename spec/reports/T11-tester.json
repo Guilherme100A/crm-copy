@@ -3,12 +3,10 @@
   "task": "T11",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:08:50.299Z",
-  "commit": "1b6da410404a6405b5595104d4060f7b5a69f161",
-  "base": "1b6da41",
-  "changedFiles": [
-    "tests/acceptance/T11/templating.test.ts"
-  ],
+  "at": "2026-10-16T03:10:05.521Z",
+  "commit": "2a0e0b87d00bc086ea8799a89daf13c8c20bfe08",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -73,7 +71,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "1 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
