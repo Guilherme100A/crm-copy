@@ -131,3 +131,15 @@
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
+
+## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
+
+| Tarefa | Pendência | Origem |
+|---|---|---|
+| T21 | `incomingMessageSchema` (wa-port) ganha `historical: z.literal(true).optional()` (aditivo), senão o AC-T33-03 só vale via `history.batch` | T33 (Fole) |
+| T40 | criar `crm.connections` com `session_id` e `company_id` (o resolver padrão da T33 consulta essas colunas); registrar a fonte com `registerCompanySessionsSource` (T22); FK `chats.connection_id` | T22, T33 |
+| T31 / T39 | FKs `chats.department_id` (T31) e `chats.ai_agent_id` (T39) | T33 |
+| T46 / T29 | injetar `waGateway` e resolver no worker via `configureChatsConsumer` | T33 |
+| endurecimento | `requestLogger` (T08) loga `c.req.path` com token em `/api/invitations/:token*` e `/api/auth/password-resets/:token` — redigir | T22, T15 |
+| endurecimento | FK composta `(company_id, contact_id)` em `flow_runs` (hoje FK só por `contact_id`) | T19 |
+| endurecimento | Streams SSE de empresa desativada não caem (heartbeat confere sessão/vínculo, não `active`) | T22 |
