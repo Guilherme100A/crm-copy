@@ -50,6 +50,13 @@
       "when": 1792122672765,
       "tag": "0006_t22_team",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1792123530402,
+      "tag": "0007_t33_chats",
+      "breakpoints": true
     }
   ]
 }
