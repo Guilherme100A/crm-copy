@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "task": "T117",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:35:47.910Z",
+  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
+  "base": "13a99a5",
+  "changedFiles": [
+    "tests/acceptance/T117/fixtures/server-harness.ts",
+    "tests/acceptance/T117/logout-sse.test.ts",
+    "tests/acceptance/T117/setup.ts",
+    "tests/acceptance/T117/shutdown.test.ts",
+    "tests/acceptance/helpers/sse.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T117-01, AC-T117-02, AC-T117-03"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "6 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T117-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T117-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T117-03",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}

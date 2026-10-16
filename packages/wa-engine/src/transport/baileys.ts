@@ -193,6 +193,26 @@ interface BaileysModule {
 
 const loadBaileys = async (): Promise<BaileysModule> => (await import('@whiskeysockets/baileys')) as unknown as BaileysModule
 
+/**
+ * Marca de key store que já tem cache em memória (T117). `Symbol.for` com a mesma chave no `auth-state` (T06),
+ * que marca o store sem importar o transporte (sem ciclo).
+ */
+export const CACHEABLE_KEY_STORE = Symbol.for('crm.wa-engine.cacheable-key-store')
+
+export function markCacheableKeyStore<T extends object>(keys: T): T {
+  Object.defineProperty(keys, CACHEABLE_KEY_STORE, { value: true, enumerable: false, configurable: true })
+  return keys
+}
+
+export function isCacheableKeyStore(keys: unknown): boolean {
+  return typeof keys === 'object' && keys !== null && (keys as Record<symbol, unknown>)[CACHEABLE_KEY_STORE] === true
+}
+
+/** Um único cache por sessão: envolve com `wrap` (o `makeCacheableSignalKeyStore`) só se o store ainda não tem cache. */
+export function withKeyCache<K extends object>(keys: K, wrap: (keys: K) => unknown): K {
+  return isCacheableKeyStore(keys) ? keys : markCacheableKeyStore(wrap(keys) as K)
+}
+
 /** A conta (ids próprios) é admin/superadmin do grupo? */
 export function isGroupAdmin(participants: unknown[] | undefined, ownIds: ReadonlySet<string>): boolean {
   if (!participants || ownIds.size === 0) return false
@@ -317,8 +337,8 @@ export class BaileysTransport extends TransportEmitter implements WaTransport {
     if (!factory) {
       const mod = await loadBaileys()
       factory = mod.makeWASocket
-      // Cache em memória na frente do key store do Postgres (STACK C.2).
-      auth = { creds: opts.auth.creds, keys: mod.makeCacheableSignalKeyStore(opts.auth.keys, this.logger) as typeof opts.auth.keys }
+      // Cache em memória na frente do key store do Postgres (STACK C.2), sem reaplicar se o auth state já tem (T06).
+      auth = { creds: opts.auth.creds, keys: withKeyCache(opts.auth.keys, (k) => mod.makeCacheableSignalKeyStore(k, this.logger)) }
     }
 
     const config = {

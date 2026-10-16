@@ -161,4 +161,13 @@ describe('usePostgresAuthState', () => {
     const { rows } = await db.$client.query('select 1 from session_credentials where session_id = $1', [id])
     expect(rows).toEqual([])
   })
+
+  // T117: o BaileysTransport reconhece o store já cacheado e não o envolve de novo.
+  it('com cache, o key store vem marcado como cacheável; com cache:false, não', async () => {
+    const marker = Symbol.for('crm.wa-engine.cacheable-key-store')
+    const cached = await usePostgresAuthState(db, await newSession(), { cipher })
+    expect((cached.state.keys as unknown as Record<symbol, unknown>)[marker]).toBe(true)
+    const raw = await usePostgresAuthState(db, await newSession(), { cipher, cache: false })
+    expect((raw.state.keys as unknown as Record<symbol, unknown>)[marker]).toBeUndefined()
+  })
 })

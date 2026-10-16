@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "task": "T117",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:35:36.355Z",
+  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
+  "base": "13a99a5",
+  "changedFiles": [
+    "apps/api/src/routes/auth/index.ts",
+    "apps/api/src/server.ts",
+    "packages/wa-engine/src/auth-state/auth-state.db.unit.test.ts",
+    "packages/wa-engine/src/auth-state/index.ts",
+    "packages/wa-engine/src/transport/baileys.ts",
+    "packages/wa-engine/src/transport/baileys.unit.test.ts",
+    "apps/api/src/routes/auth/realtime-end.db.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: apps/api/src/server.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 6.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 7.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine lint",
+      "status": "pass",
+      "detail": "ok em 3.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine test",
+      "status": "pass",
+      "detail": "ok em 7.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "7 arquivo(s) alterado(s)"
+    }
+  ]
+}

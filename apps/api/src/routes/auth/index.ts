@@ -1,9 +1,11 @@
 // Rotas de autenticação, cadastro, perfil e senha (SPEC T15; feature 01 §6). Corpo em snake_case; o envelope
 // `{ user: {…} }` do produto de referência também é aceito.
+import { eq } from 'drizzle-orm'
 import { Hono, type Context } from 'hono'
 import { bodyLimit } from 'hono/body-limit'
 import { z } from 'zod'
-import { AVATAR_MAX_BYTES, AuthError, AuthService, type AuthErrorCode } from '@crm/core'
+import { AVATAR_MAX_BYTES, AuthError, AuthService, RealtimePublisher, hashToken, type AuthErrorCode } from '@crm/core'
+import { passwordResets } from '@crm/db'
 import { createMailer, FsBlobStore, type BlobStore, type Mailer } from '@crm/node-kit'
 import { emailSchema, passwordSchema } from '@crm/shared'
 import { setAudit } from '../../middleware/audit'
@@ -123,6 +125,16 @@ export function authRoutes(deps: ResolvedDeps) {
   })
   const loginLimiter = new RateLimiter({ redis: deps.redis, limit: LOGIN_MAX_FAILURES, windowMs: LOGIN_WINDOW_MS, prefix: 'crm:rl:login' })
   const ip = (c: Context<AppEnv>) => clientIp(c, deps.trustProxy)
+  // Fecha na hora, em todas as réplicas, os streams SSE de sessões encerradas (T117; T16 `endSession`/`endUserSessions`).
+  const realtime = new RealtimePublisher({ redis: deps.redis, prefix: deps.realtime?.prefix })
+  const endStreams = async (c: Context<AppEnv>, end: () => Promise<void>) => {
+    try {
+      await end()
+    } catch (err) {
+      // A sessão já foi revogada no banco: o stream cai na próxima reconferência mesmo sem o aviso.
+      c.get('logger')?.warn({ err }, 'failed to close realtime streams')
+    }
+  }
 
   const app = new Hono<AppEnv>()
 
@@ -153,7 +165,11 @@ export function authRoutes(deps: ResolvedDeps) {
 
   const logout = async (c: Context<AppEnv>) => {
     const ctx = getCtx(c)
-    if (ctx.auth.kind === 'session' && ctx.auth.sessionId) await deps.sessions.revoke(ctx.auth.sessionId)
+    if (ctx.auth.kind === 'session' && ctx.auth.sessionId) {
+      const sessionId = ctx.auth.sessionId
+      await deps.sessions.revoke(sessionId)
+      await endStreams(c, () => realtime.endSession(sessionId))
+    }
     clearSessionCookie(c, { secure: cookieSecure })
     setAudit(c, { action: 'auth.logout', targetType: 'user', targetId: ctx.user?.id })
     return c.json({ ok: true }, 200)
@@ -270,7 +286,15 @@ export function authRoutes(deps: ResolvedDeps) {
 
   app.patch('/api/auth/password-resets/:token', validate('json', resetCompleteSchema), async (c) => {
     const { password } = c.req.valid('json')
-    await run(() => service.completePasswordReset(c.req.param('token'), password))
+    const token = c.req.param('token')
+    // Dono do token, lido antes de consumi-lo: o reset revoga todas as sessões e fecha os streams do usuário.
+    const [owner] = await deps.db
+      .select({ userId: passwordResets.userId })
+      .from(passwordResets)
+      .where(eq(passwordResets.tokenHash, hashToken(token)))
+      .limit(1)
+    await run(() => service.completePasswordReset(token, password))
+    if (owner) await endStreams(c, () => realtime.endUserSessions(owner.userId))
     return c.json({ ok: true }, 200)
   })
 

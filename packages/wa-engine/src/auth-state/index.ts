@@ -175,6 +175,10 @@ export async function usePostgresAuthState(
   }
 
   const keys = opts.cache === false ? store : withoutRemovedKeys(makeCacheableSignalKeyStore(store, opts.logger, opts.cache))
+  // T117: marca o store com cache para o BaileysTransport não reaplicar `makeCacheableSignalKeyStore`
+  // (mesma chave de `CACHEABLE_KEY_STORE` em transport/baileys.ts; `Symbol.for` evita importar o transporte).
+  if (opts.cache !== false)
+    Object.defineProperty(keys, Symbol.for('crm.wa-engine.cacheable-key-store'), { value: true, enumerable: false, configurable: true })
 
   return {
     state: { creds, keys },

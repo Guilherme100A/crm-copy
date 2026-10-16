@@ -4,6 +4,7 @@ import { createDb, runMigrations } from '@crm/db'
 import { createLogger, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
 import { createApp } from './app'
 import { loadApiConfig } from './config'
+import { stopRealtimeHub } from './routes/events/index'
 
 async function main() {
   const config = loadApiConfig()
@@ -27,15 +28,26 @@ async function main() {
     logger.info({ port: info.port }, 'api listening')
   })
 
+  // Conexões longas (SSE) não terminam sozinhas: depois desta folga são derrubadas para o `close` concluir.
+  const DRAIN_MS = 1_000
+  const sockets = server as unknown as { closeIdleConnections?: () => void; closeAllConnections?: () => void }
+
   let closing = false
   const shutdown = (signal: string) => {
     if (closing) return
     closing = true
     logger.info({ signal }, 'api shutting down')
-    server.close(() => {
-      void Promise.allSettled([db.$client.end(), redis.quit()]).then(() => process.exit(0))
-    })
     setTimeout(() => process.exit(1), 10_000).unref()
+    // T117: o hub realtime (subscriber Redis) fecha antes do Redis de comandos.
+    void stopRealtimeHub(redis)
+      .catch((err: unknown) => logger.warn({ err }, 'failed to stop realtime hub'))
+      .then(() => {
+        server.close(() => {
+          void Promise.allSettled([db.$client.end(), redis.quit()]).then(() => process.exit(0))
+        })
+        sockets.closeIdleConnections?.()
+        setTimeout(() => sockets.closeAllConnections?.(), DRAIN_MS).unref()
+      })
   }
   process.on('SIGTERM', () => shutdown('SIGTERM'))
   process.on('SIGINT', () => shutdown('SIGINT'))

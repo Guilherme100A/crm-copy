@@ -1,6 +1,17 @@
 import { EventEmitter } from 'node:events'
 import { describe, expect, it, vi } from 'vitest'
-import { BaileysTransport, PTT_MIMETYPE, ackFor, mapDisconnectReason, type BaileysSocketConfig, type BaileysSocketLike } from './baileys'
+import {
+  BaileysTransport,
+  CACHEABLE_KEY_STORE,
+  PTT_MIMETYPE,
+  ackFor,
+  isCacheableKeyStore,
+  mapDisconnectReason,
+  markCacheableKeyStore,
+  withKeyCache,
+  type BaileysSocketConfig,
+  type BaileysSocketLike,
+} from './baileys'
 import type { ConnectOptions, IncomingMessage } from './types'
 
 function fakeSocket() {
@@ -187,5 +198,31 @@ describe('BaileysTransport', () => {
     const t = new BaileysTransport({ makeSocket: () => fakeSocket() })
     await t.connect({ sessionId: 's', auth })
     await expect(t.sendMessage('a@s.whatsapp.net', { text: 'x' })).rejects.toMatchObject({ code: 'TRANSPORT_NOT_CONNECTED' })
+  })
+})
+
+// T117: um único cache de chaves por sessão.
+describe('withKeyCache', () => {
+  it('store marcado não é reembrulhado; store sem marca é envolvido uma vez e marcado', () => {
+    const wrap = vi.fn((k: object) => ({ wrapped: k }))
+    const cached = markCacheableKeyStore({ get: async () => ({}) })
+    expect(withKeyCache(cached, wrap)).toBe(cached)
+    expect(wrap).not.toHaveBeenCalled()
+
+    const plain = { get: async () => ({}) }
+    const once = withKeyCache(plain, wrap)
+    expect(wrap).toHaveBeenCalledTimes(1)
+    expect(once).toEqual({ wrapped: plain })
+    expect(isCacheableKeyStore(once)).toBe(true)
+    expect(withKeyCache(once, wrap)).toBe(once)
+    expect(wrap).toHaveBeenCalledTimes(1)
+  })
+
+  it('a marca usa Symbol.for (a mesma chave vista pelo auth-state) e não é enumerável', () => {
+    const k = markCacheableKeyStore({})
+    expect(CACHEABLE_KEY_STORE).toBe(Symbol.for('crm.wa-engine.cacheable-key-store'))
+    expect(Object.keys(k)).toEqual([])
+    expect(isCacheableKeyStore({})).toBe(false)
+    expect(isCacheableKeyStore(null)).toBe(false)
   })
 })
