@@ -49,7 +49,7 @@
 
 ### 1.3 Tester
 - Escreve testes de aceitação **a partir dos critérios**, não da implementação (caixa-preta sempre que possível: HTTP, portas públicas, navegador).
-- Arquivos em `tests/acceptance/Txx/`: `*.test.ts` (Vitest) e, em tarefas de UI, `*.e2e.ts` (Playwright, projetos `desktop` e `mobile`).
+- Arquivos em `tests/acceptance/Txx/`: `*.test.ts` (Vitest) e, em tarefas de UI, `*.e2e.ts` (Playwright, projeto `desktop`; os ACs de layout também no `mobile`, ver 3.10).
 - **Todo teste inclui o ID `AC-Txx-nn` no título.** Um AC só está coberto com ≥ 1 teste com o ID e status `passed`; se for E2E, passa nos dois projetos.
 - **Não edita** `apps/**` nem `packages/**`. Bug de produto → `REJECT` com evidência.
 - Nunca usa WhatsApp real nem API paga: `FakeTransport`, `FakeWaGateway`, `FakeLlm`, `FakeTts`, `FakeStt`, mailer em memória, servidor fake da Meta.
@@ -239,7 +239,8 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ### 3.10 Testes
 - Unitários junto do código: `*.unit.test.ts` (puros/fakes) e `*.db.unit.test.ts` (Postgres real em banco descartável `crm_test_<rand>` via `createTempDatabase({ migrate: true })` do `@crm/db/testing`).
-- Aceitação: `tests/acceptance/Txx/*.test.ts` (Vitest; HTTP via `app.request()` ou servidor local; worker via filas reais em Redis db 1 com prefixo aleatório) e `tests/acceptance/Txx/*.e2e.ts` (Playwright 1.63, projetos **`desktop`** 1366×768 e **`mobile`** 390×844, Chromium).
+- Aceitação: `tests/acceptance/Txx/*.test.ts` (Vitest; HTTP via `app.request()` ou servidor local; worker via filas reais em Redis db 1 com prefixo aleatório) e `tests/acceptance/Txx/*.e2e.ts` (Playwright 1.63, projetos **`desktop`** 1366×768 e **`mobile`** 390×844, Chromium). **Revisão 2:** no verify cada E2E roda só no `desktop`; o `mobile` roda apenas os ACs de layout/responsivo (o texto do AC cita *mobile*/responsivo, ou a tarefa lista o AC em `mobile` no `tasks.mjs`).
+- **Verify em dois níveis (revisão 2):** durante a tarefa, `pnpm --filter X test` roda só os testes afetados desde `--base` (`vitest run --changed <base>`); a suíte completa roda uma vez, no gate (`--full`), e a repetição por instabilidade do gate roda só o que falhou (`--retry-failed`). `VITEST_MAX_WORKERS=2`.
 - E2E usa o **harness** (T17): `node scripts/e2e/serve.mjs` sobe API + web com `WA_GATEWAY=fake`, `AI_MODE=fake`, `MAIL_TRANSPORT=memory`, banco descartável com seed, e expõe `/__e2e/*` (reset, emitir evento WhatsApp, ler e-mails) **somente com `E2E=1`**.
 - Fakes oficiais: `FakeTransport` (wa-engine), `FakeWaGateway` (wa-port/testing), `FakeLlm`/`FakeTts`/`FakeStt` (ai/testing), mailer `memory` (node-kit), `FakeMetaGraph` (T99), `FakeXPag`/`FakeZenith` (T109/T110), `FakeNotasy` (T112), `FakeUtmify` (T113) — servidores HTTP locais.
 - `ANTIBAN_MODE=passthrough` explícito na config de teste (produção nunca decide por `NODE_ENV`).
@@ -2173,12 +2174,12 @@ node spec/verify/infra-local.mjs                        # sobe Postgres/Redis na
 2. Extrai de `SPEC.md` os IDs `AC-Txx-nn` da tarefa e confere que cada um aparece em `tests/acceptance/Txx/**`.
 3. Sobe a infra (`CRM_INFRA=local` padrão: `infra-local.mjs`; `CRM_INFRA=docker` usa `docker compose`).
 4. Roda **Vitest** (`*.test.ts`, reporter JSON) e, se houver, **Playwright** (`*.e2e.ts`, `tests/acceptance/playwright.config.ts`, reporter JSON). Tarefa de UI sem `*.e2e.ts` reprova.
-5. Cada AC precisa de ≥ 1 teste `passed`, nenhum `failed`/`skipped`; se o AC tem teste E2E, ele passa nos projetos **`desktop` e `mobile`**.
+5. Cada AC precisa de ≥ 1 teste `passed`, nenhum `failed`/`skipped`; se o AC tem teste E2E, ele passa no projeto **`desktop`** e, se for AC de layout/responsivo (3.10), também no **`mobile`**.
 6. **Escopo**: o Tester só alterou `tests/**`.
 
 **Relatório:** `spec/reports/Txx-<papel>.json` com `{ version: 1, task, role, ok, at, commit, base, changedFiles[], checks[{ name, status, detail, output?, failures? }] }`, mais `Txx-vitest.json`/`Txx-playwright.json` brutos. Exit `0` aprovado, `1` reprovado, `2` uso incorreto.
 
-**Ambiente dos comandos** (definido pelo verify, sobrescrevível por env): `DATABASE_URL=postgres://wsm:wsm@127.0.0.1:5432/crm`, `REDIS_URL=redis://127.0.0.1:6379/1`, `ANTIBAN_MODE=passthrough`, `WA_GATEWAY=fake`, `WA_TRANSPORT=fake`, `AI_MODE=fake`, `MAIL_TRANSPORT=memory`, `VITEST_MAX_WORKERS=4`, `pnpm -r` com concorrência 1.
+**Ambiente dos comandos** (definido pelo verify, sobrescrevível por env): `DATABASE_URL=postgres://wsm:wsm@127.0.0.1:5432/crm`, `REDIS_URL=redis://127.0.0.1:6379/1`, `ANTIBAN_MODE=passthrough`, `WA_GATEWAY=fake`, `WA_TRANSPORT=fake`, `AI_MODE=fake`, `MAIL_TRANSPORT=memory`, `VITEST_MAX_WORKERS=2`, `pnpm -r` com concorrência 1.
 
 ---
 
@@ -2203,7 +2204,7 @@ Você é TESTER na tarefa {Txx} — {título}.
 Worktree: ../leonas-crm-wt/{Txx}. Escreva só em tests/acceptance/{Txx}/ (e helpers compartilhados em tests/acceptance/helpers, de forma aditiva).
 Leia spec/SPEC.md: seções 1, 3 (3.10 e 3.11) e a tarefa {Txx} inteira.
 Um ou mais testes por critério; o título de cada teste DEVE conter o ID (ex.: it('AC-{Txx}-03 reabre chat resolvido', ...)).
-API/worker: *.test.ts (Vitest). UI: *.e2e.ts (Playwright, projetos desktop e mobile, harness scripts/e2e/serve.mjs).
+API/worker: *.test.ts (Vitest). UI: *.e2e.ts (Playwright, projeto desktop; ACs de layout/responsivo também no mobile; harness scripts/e2e/serve.mjs).
 Teste pelos contratos (HTTP, portas, navegador), não por detalhes internos. Nunca WhatsApp real nem API paga: use os fakes.
 Não edite apps/** nem packages/**. Não faça commit.
 Escreva os testes já; quando o Orquestrador avisar que a implementação está pronta, rode:
@@ -2303,6 +2304,8 @@ Regra geral: em dúvida de escopo, fazer como o produto de referência faz.
 10. **Sem sandbox de XPag, Zenith, Notasy e UTMify:** implementação pela documentação pública (pesquisada pelo Operário, com URLs citadas no código e em `docs/integrations/`) + fakes; o usuário valida com chave real depois. `BLOCKED` só se não houver documentação pública. (T109–T113.)
 11. **Cota de disparos em massa:** como a referência — `conexões × 500/mês + bônus`, ajustável pelo admin da plataforma; "ilimitado por padrão" vale só para limites de quantidade. (T60, T95.)
 
+12. **Revisão 2 (2026-10-16, custo do verify):** E2E `mobile` só nos ACs de layout/responsivo; verify em dois níveis (testes afetados durante a tarefa, suíte completa uma vez no gate); `VITEST_MAX_WORKERS=2`; Postgres de **teste** sem durabilidade (`fsync`, `synchronous_commit`, `full_page_writes` desligados) e banco-modelo migrado uma vez por hash das migrações. (3.10, 6.)
+
 ### 10.2 Decisões assumidas (revisáveis; o Orquestrador pode seguir com elas)
 1. Cadastro cria automaticamente a empresa "Minha empresa" com o usuário como `owner` (T15).
 2. Sessão por cookie httpOnly com TTL de 30 dias deslizante; empresa ativa por header `X-Company-Id` (permite abas com empresas diferentes).
@@ -2322,4 +2325,4 @@ Regra geral: em dúvida de escopo, fazer como o produto de referência faz.
 16. "Push" do bloco Venda aprovada = notificação no app (`notification.created`, T63/T84); não há app móvel nativo.
 
 ### 10.3 Dúvidas abertas para o usuário
-Nenhuma no momento (as da revisão 1 foram fechadas em 10.1 nº 9–11). Novas dúvidas surgidas na execução entram aqui.
+1. **T110 (Zenith):** não há documentação pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com). Opções: (a) o usuário fornece a documentação do parceiro; (b) contrato provisório marcado `[NÃO VERIFICADO]`, validado depois com chave real; (c) tirar a Zenith do escopo (fica só XPag). Em aberto desde 2026-10-16 12:21.

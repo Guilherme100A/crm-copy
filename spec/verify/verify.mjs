@@ -24,8 +24,8 @@ const SPEC_DIR = resolve(dirname(fileURLToPath(import.meta.url)), '..')
 const ROOT = resolve(SPEC_DIR, '..')
 const REPORTS = join(SPEC_DIR, 'reports')
 const REPORT_VERSION = 1
-// projetos E2E exigidos para um AC: desktop sempre; mobile só nos ACs de layout/responsivo (task.mobile)
-const pwProjectsFor = (task, id) => (task.mobile.includes(id) ? ['desktop', 'mobile'] : ['desktop'])
+// projetos E2E exigidos para um AC: desktop sempre; mobile só nos ACs de layout/responsivo (revisão 2, SPEC 3.10)
+const pwProjectsFor = (mobileIds, id) => (mobileIds.includes(id) ? ['desktop', 'mobile'] : ['desktop'])
 
 const C = process.stdout.isTTY
   ? { ok: '\x1b[32m', fail: '\x1b[31m', warn: '\x1b[33m', dim: '\x1b[2m', b: '\x1b[1m', r: '\x1b[0m' }
@@ -213,6 +213,14 @@ function acceptanceIds(taskId, spec = readSpec()) {
   return [...new Set(ids)]
 }
 
+// ACs de layout/responsivo: o texto do AC cita mobile/responsivo, ou a tarefa lista o AC em `mobile` (tasks.mjs)
+function mobileAcceptanceIds(task, ids, spec = readSpec()) {
+  return ids.filter((id) => {
+    const line = spec.split('\n').find((l) => l.includes(`**${id}**`)) ?? ''
+    return task.mobile.includes(id) || /mobile|responsiv/i.test(line)
+  })
+}
+
 function startInfra(report, task) {
   if (!task.infra) return
   const mode = process.env.CRM_INFRA ?? 'local'
@@ -251,7 +259,7 @@ function runVitest(report, task, dir, files) {
 }
 
 // --- Playwright (tests/acceptance/Txx/**/*.e2e.ts), projetos desktop e mobile ---
-function runPlaywright(report, task, dir, files) {
+function runPlaywright(report, task, dir, files, mobileIds) {
   if (!files.length) {
     if (task.e2e) report.add('testes E2E (Playwright)', 'fail', `tarefa de UI sem *.e2e.ts em ${dir}/`)
     return []
@@ -264,7 +272,7 @@ function runPlaywright(report, task, dir, files) {
   const out = join(REPORTS, `${task.id}-playwright.json`)
   if (existsSync(out)) rmSync(out)
   // desktop sempre; mobile só com os ACs de layout/responsivo (grep do projeto mobile no playwright.config)
-  const mobileGrep = task.mobile.map((id) => id.replace(/-/g, '\\-')).join('|')
+  const mobileGrep = mobileIds.map((id) => id.replace(/-/g, '\\-')).join('|')
   const projects = mobileGrep ? '--project desktop --project mobile' : '--project desktop'
   const r = run(`pnpm exec playwright test --config ${config} --reporter=json ${projects} ${dir}`, { env: { PLAYWRIGHT_JSON_OUTPUT_NAME: out, E2E_MOBILE_GREP: mobileGrep } })
   if (!existsSync(out)) {
@@ -323,9 +331,11 @@ function checkAcceptance(report, task) {
   const missing = ids.filter((id) => !source.includes(id))
   report.add('todo AC referenciado em teste', missing.length ? 'fail' : 'pass', missing.length ? `sem teste: ${missing.join(', ')}` : '')
 
+  const mobileIds = mobileAcceptanceIds(task, ids)
+  if (pwFiles.length) report.add('ACs também no mobile (layout)', 'pass', mobileIds.join(', ') || 'nenhum: só desktop')
   startInfra(report, task)
   mkdirSync(REPORTS, { recursive: true })
-  const results = [...runVitest(report, task, dir, vitestFiles), ...runPlaywright(report, task, dir, pwFiles)]
+  const results = [...runVitest(report, task, dir, vitestFiles), ...runPlaywright(report, task, dir, pwFiles, mobileIds)]
 
   for (const id of ids) {
     const mine = results.filter((t) => t.title.includes(id))
@@ -335,7 +345,7 @@ function checkAcceptance(report, task) {
     // Um AC verificado no navegador precisa passar no desktop, e também no mobile se for de layout (task.mobile).
     const pwProjects = new Set(mine.filter((t) => t.runner === 'playwright' && t.status === 'passed').map((t) => t.project))
     const pwUsed = mine.some((t) => t.runner === 'playwright')
-    const pwMissing = pwUsed ? pwProjectsFor(task, id).filter((p) => !pwProjects.has(p)) : []
+    const pwMissing = pwUsed ? pwProjectsFor(mobileIds, id).filter((p) => !pwProjects.has(p)) : []
     const ok = mine.length > 0 && passed.length > 0 && !failed.length && !skipped.length && !pwMissing.length
     const detail = !mine.length
       ? 'nenhum teste executado com este ID'

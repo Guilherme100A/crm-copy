@@ -37,7 +37,12 @@ export default defineConfig({
   },
   projects: [
     { name: 'desktop', use: { ...devices['Desktop Chrome'], viewport: { width: 1366, height: 768 } } },
-    { name: 'mobile', use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true } },
+    // revisão 2 (SPEC 3.11): no verify, o mobile roda só os ACs de layout da tarefa (E2E_MOBILE_GREP vem de tasks.mjs `mobile`)
+    {
+      name: 'mobile',
+      use: { ...devices['Desktop Chrome'], viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true },
+      ...(process.env.E2E_MOBILE_GREP ? { grep: new RegExp(process.env.E2E_MOBILE_GREP) } : {}),
+    },
   ],
   webServer: {
     command: 'node scripts/e2e/serve.mjs',

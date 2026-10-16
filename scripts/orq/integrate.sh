@@ -70,10 +70,11 @@ fi
 # Gate: o worktree rebaseado é exatamente o próximo main — verificar AQUI, antes do merge.
 pnpm install >/dev/null 2>&1
 B=$(git rev-parse --short main); FAIL=0
+# Suíte completa UMA vez, aqui (--full no operário); a repetição por instabilidade roda só o que falhou (--retry-failed).
 for r in operario tester; do
-  o=$(node spec/verify/verify.mjs "$T" --role $r --base "$B" 2>&1 | grep -E '✘|APROVADO|REPROVADO' | tail -4)
-  # instabilidade por carga (8 agentes no mesmo Postgres/Redis): repete 1x antes de rejeitar
-  echo "$o" | grep -q APROVADO || { echo "($r reprovou; repetindo 1x)"; o=$(node spec/verify/verify.mjs "$T" --role $r --base "$B" 2>&1 | grep -E '✘|APROVADO|REPROVADO' | tail -4); }
+  F=""; [ $r = operario ] && F="--full"
+  o=$(node spec/verify/verify.mjs "$T" --role $r --base "$B" $F 2>&1 | grep -E '✘|APROVADO|REPROVADO' | tail -4)
+  echo "$o" | grep -q APROVADO || { echo "($r reprovou; repetindo só o que falhou)"; o=$(node spec/verify/verify.mjs "$T" --role $r --base "$B" $F --retry-failed 2>&1 | grep -E '✘|APROVADO|REPROVADO' | tail -4); }
   echo "$o"; echo "$o" | grep -q APROVADO || FAIL=1
 done
 [ $FAIL = 1 ] && { echo "PARE: verify reprovado sobre main — NÃO integrado"; exit 6; }
