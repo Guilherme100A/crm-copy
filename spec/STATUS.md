@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T63 (Bigorna/Lupa), T91 (Torno/Sonda), T101 (Cinzel/Radar).
+- Em andamento (3 pares): T91 (Torno/Sonda), T101 (Cinzel/Radar), T123 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -135,7 +135,7 @@
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
-| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | TODO | | | 0 | |
+| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
