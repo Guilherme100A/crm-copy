@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T76 (Torno/Sonda), T79 (Bigorna/Lupa), T80 (Cinzel/Radar).
+- Em andamento (3 pares): T45 (Torno/Sonda), T79 (Bigorna/Lupa), T80 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -59,7 +59,7 @@
 | 5 | T42 | Nós externos (HTTP e IA) | MERGED | Bigorna | Sonda | 0 | 5e15536 |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
-| 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
+| 5 | T45 | UI fluxos: canvas do editor | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | MERGED | Bigorna | Lupa | 0 | c7c9abb |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
@@ -110,7 +110,7 @@
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
-| 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | IN_PROGRESS | Torno | Sonda | 0 | |
+| 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
