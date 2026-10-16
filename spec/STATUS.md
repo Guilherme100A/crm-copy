@@ -150,3 +150,4 @@
 | revisar | loop_guard de 50 nós por job (T25) falha fluxos legítimos > 50 nós sem espera; janela at-least-once entre `send` e o registro do passo (fechar com idempotency key no gateway) | T25 |
 | ambiente | cota mensal do context7 esgotada (2026-10-16): agentes usam STACK.md + código/tipos instalados | T25 |
 | ambiente | testes instáveis sob carga (8 agentes no mesmo Postgres/Redis): o gate repete 1x antes de rejeitar | T20 |
+| T29 / T46 | SendPipeline (T20) deduplica por `clientMessageId` quando presente; `markRead` real no engine (transport.markRead) e no RPC/gateway | T21 |
