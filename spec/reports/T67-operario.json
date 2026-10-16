@@ -3,47 +3,47 @@
   "task": "T67",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T07:33:57.378Z",
-  "commit": "b597667943db88e9608bef1386322211bb92030b",
-  "base": "b597667",
+  "at": "2026-10-16T07:36:29.067Z",
+  "commit": "024ab35308152ff9dd919b242ddd60faf30bc6fd",
+  "base": "dacc5d2",
   "changedFiles": [
+    "apps/api/src/routes/contacts-import/index.ts",
     "apps/api/src/routes/index.ts",
     "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "pnpm-lock.yaml",
-    "apps/api/src/routes/contacts-import/index.ts",
     "apps/worker/src/jobs/contacts-import/index.ts",
+    "apps/worker/src/registry.ts",
     "docs/contacts-import.md",
+    "packages/core/package.json",
     "packages/core/src/contacts-import/csv.ts",
     "packages/core/src/contacts-import/csv.unit.test.ts",
     "packages/core/src/contacts-import/import.db.unit.test.ts",
     "packages/core/src/contacts-import/importer.ts",
     "packages/core/src/contacts-import/index.ts",
     "packages/core/src/contacts-import/report.ts",
-    "packages/core/src/contacts-import/service.ts"
+    "packages/core/src/contacts-import/service.ts",
+    "packages/core/src/index.ts",
+    "pnpm-lock.yaml"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 10.2s"
+      "detail": "ok em 12.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.3s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 38.6s"
+      "detail": "ok em 33.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 8.3s"
+      "detail": "ok em 10.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
@@ -53,22 +53,22 @@
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 11.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.5s"
+      "detail": "ok em 10.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 25.4s"
+      "detail": "ok em 28.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
