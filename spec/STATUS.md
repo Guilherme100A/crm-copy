@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T76 (Torno/Sonda), T103 (Cinzel/Radar), T109 (Bigorna/Lupa).
+- Em andamento (3 pares): T76 (Torno/Sonda), T72 (Bigorna/Lupa), T52 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -61,16 +61,16 @@
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
-| 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
+| 5 | T72 | Webhooks de entrada: CRUD e recepção pública | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
-| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | MERGED | Bigorna | Lupa | 0 | 9556291 |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
-| 6 | T52 | Agentes de IA: base de conhecimento | TODO | | | 0 | |
+| 6 | T52 | Agentes de IA: base de conhecimento | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | TODO | | | 0 | |
@@ -98,13 +98,13 @@
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
-| 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 |  |
+| 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 | 9867959 |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | TODO | | | 0 | |
 | 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
-| 7 | T103 | Meta: edição de status, nome e orçamento | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
