@@ -78,7 +78,11 @@ const route = (m) => `apps/api/src/routes/${m}/**`
 const job = (m) => `apps/worker/src/jobs/${m}/**`
 const consumer = (m) => `apps/worker/src/consumers/${m}/**`
 const i18n = (m) => `apps/web/src/i18n/*/${m}.json`
-const ui = (m) => [`apps/web/src/routes/${m}/**`, `apps/web/src/features/${m}/**`, i18n(m)]
+// O roteador por arquivo serve pela PASTA = URL (spec 18 §2): módulo → pasta de rota quando o nome difere da URL.
+const ROUTE_DIR = { contacts: 'customers', chat: 'chats', agents: 'agentes', dashboard: 'welcome', 'mass-dispatch': 'mass-dispatches', 'settings-webhooks': 'settings/inbound-webhooks' }
+// rotas avulsas na raiz (ex.: /login, /reset-password) de cada módulo
+const ROUTE_FILES = { auth: ['apps/web/src/routes/login.tsx', 'apps/web/src/routes/register.tsx', 'apps/web/src/routes/reset-password.tsx', 'apps/web/src/routes/forgot-password.tsx', 'apps/web/src/routes/invite.tsx', 'apps/web/src/routes/invite/**'] }
+const ui = (m) => [`apps/web/src/routes/${ROUTE_DIR[m] ?? m}/**`, ...(ROUTE_FILES[m] ?? []), `apps/web/src/features/${m}/**`, i18n(m)]
 
 /**
  * id, título, deps, paths, workspaces (comandos), opções:
@@ -178,7 +182,7 @@ const RAW = [
   T('T32', 'Acesso de suporte', ['T22', 'T16'], [core('support-access'), route('support-access'), schema('support-access')], ['api', 'core'],
     { requiredFiles: ['packages/core/src/support-access/index.ts'] }),
   T('T36', 'UI: autenticação, perfil e troca de empresa', ['T22', 'T23'], [...ui('auth'), ...ui('profile'), 'apps/web/src/features/company-switcher/**', i18n('company-switcher')], ['web'],
-    { requiredFiles: ['apps/web/src/routes/auth/login.tsx'], e2e: true }),
+    { requiredFiles: ['apps/web/src/routes/login.tsx'], e2e: true }),
   T('T53', 'UI: empresa, departamentos e horários', ['T31', 'T36'], [...ui('settings-company'), ...ui('settings-departments'), ...ui('settings-hours')], ['web'], { e2e: true }),
   T('T54', 'UI: equipe, permissões, convites e suporte', ['T32', 'T36'], [...ui('settings-team'), ...ui('settings-invitations'), ...ui('settings-support')], ['web'], { e2e: true }),
 

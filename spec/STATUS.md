@@ -160,7 +160,6 @@
 | T50 | filtro `crm/kanban` na lista de chats (T48) e `PATCH /api/chats/:id` de coluna/quadro ficam com a T50 | T48 |
 | T46 / wa-port / T29 | método `sessions.setProxy` (ou update) na porta, no RPC e no gateway: hoje o proxy fica cifrado no CRM e a conexão só é marcada `requires_restart` | T40 |
 | teste instável | `apps/api/src/routes/auth/realtime-end.db.unit.test.ts` "fecha em < 2 s" (T117) mediu 2372 ms sob carga: avaliar folga | T40 |
-| SPEC (Codice) | Paths das tarefas de UI devem seguir as URLs da spec 18 (ex.: `/customers`, `/chats`, `/crms`, `/agentes`); `requiredFile` da T36 é `routes/auth/login.tsx` mas a URL é `/login` (a T23 renderiza `features/auth/login-page.tsx` em `routes/login.tsx`) | T23 |
 | worker (T25/T30) | ninguém publica `flow_run.updated` (está no catálogo): o worker deve publicar mudanças de estado dos runs | T43 |
 | T08/server.ts | no shutdown fechar as filas BullMQ criadas sob demanda pela API (flow-step, flow-timer) | T43 |
 | endurecimento | `GET /api/media/:id` escopado só por empresa (id = HMAC do conteúdo, não adivinhável, só aparece em mensagens visíveis): avaliar vínculo mídia↔chat | T119 |
@@ -176,3 +175,4 @@
 | montagem do worker | `configureExports({ db, redis, files })` (T27) não é chamado no boot de produção; API e worker devem apontar para o mesmo `STORAGE_DIR/exports` e importar os módulos que registram os kinds | T27 |
 | verificar antes de produção | endpoints não confirmados (context7 sem cota): OpenRouter `GET /key` (probe) e ElevenLabs `GET /v1/voices` — conferir na doc oficial | T38 |
 | montagem do worker | o runtime da T68 recebe um único tts/stt: voz por empresa (BYOK) precisa de um wrapper que chame `resolveTts/resolveStt(companyId)` (T38) | T38 |
+| decisão (UI) | Paths de UI seguem a URL (spec 18): `ui(m)` mapeia contacts→customers, chat→chats, agents→agentes, dashboard→welcome, mass-dispatch→mass-dispatches, settings-webhooks→settings/inbound-webhooks; auth inclui routes/login.tsx etc. Abas de Configurações entram por `features/settings/tabs.ts` (compartilhado) | T23 |
