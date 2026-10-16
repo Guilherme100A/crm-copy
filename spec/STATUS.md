@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T60 (Bigorna/Lupa), T69 (Torno/Sonda), T120 (Cinzel/Radar).
+- Em andamento (3 pares): T74 (Bigorna/Lupa), T75 (Torno/Sonda), T121 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -78,7 +78,7 @@
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
-| 6 | T60 | Disparos em massa: API e cota | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
@@ -97,10 +97,10 @@
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
-| 7 | T69 | UI chats: lista e filtros | IN_PROGRESS | Torno | Sonda | 0 | |
+| 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
-| 7 | T74 | Disparos em massa: preparação e agendador | TODO | | | 0 | |
+| 7 | T74 | Disparos em massa: preparação e agendador | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | TODO | | | 0 | |
 | 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
@@ -109,7 +109,7 @@
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
-| 8 | T75 | UI chats: conversa | TODO | | | 0 | |
+| 8 | T75 | UI chats: conversa | IN_PROGRESS | Torno | Sonda | 0 | |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | TODO | | | 0 | |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | TODO | | | 0 | |
@@ -132,8 +132,8 @@
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
-| 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | TODO | | | 0 | |
+| 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
+| 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
