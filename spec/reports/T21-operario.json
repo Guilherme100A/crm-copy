@@ -3,25 +3,25 @@
   "task": "T21",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:38:42.233Z",
-  "commit": "51a82c4671fb7217e08273057fc6b06fc4776848",
-  "base": "51a82c4",
+  "at": "2026-10-16T04:40:48.051Z",
+  "commit": "63a7485708dc7ce47337d2eb44a5ecf719ce1656",
+  "base": "deac72a",
   "changedFiles": [
     "packages/wa-engine/package.json",
-    "packages/wa-engine/src/index.ts",
-    "packages/wa-port/src/contract/suite.ts",
-    "packages/wa-port/src/events.ts",
-    "packages/wa-port/src/gateway.ts",
-    "packages/wa-port/src/testing/fake-gateway.ts",
     "packages/wa-engine/src/contacts/index.ts",
     "packages/wa-engine/src/contacts/sync.ts",
     "packages/wa-engine/src/events/convert.ts",
     "packages/wa-engine/src/events/index.ts",
     "packages/wa-engine/src/events/outbox.ts",
     "packages/wa-engine/src/events/outbox.unit.test.ts",
+    "packages/wa-engine/src/index.ts",
     "packages/wa-engine/src/media/index.ts",
     "packages/wa-engine/src/media/media.unit.test.ts",
-    "packages/wa-port/src/additions.unit.test.ts"
+    "packages/wa-port/src/additions.unit.test.ts",
+    "packages/wa-port/src/contract/suite.ts",
+    "packages/wa-port/src/events.ts",
+    "packages/wa-port/src/gateway.ts",
+    "packages/wa-port/src/testing/fake-gateway.ts"
   ],
   "checks": [
     {
@@ -42,12 +42,12 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 3.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 12.6s"
+      "detail": "ok em 12.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
