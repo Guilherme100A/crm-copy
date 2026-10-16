@@ -108,6 +108,15 @@ export const REALTIME_EVENTS = {
     z.looseObject({ flow_id: idSchema, actor_id: idSchema.nullable(), mutation: z.string() }),
     'flows.view',
   ),
+  /** Contadores do distribuidor mudaram (T41): `outputs[].count` por saída. */
+  'flow.distributor_updated': defineEvent(
+    z.looseObject({
+      flow_id: idSchema,
+      node_id: z.string(),
+      outputs: z.array(z.looseObject({ id: z.string(), count: z.number() })),
+    }),
+    'flows.view',
+  ),
   // ---- T43: execuções de fluxo (flow_execution_created/cancelled da referência) ----
   /** Run criado (disparo manual, gatilho…). */
   'flow_run.created': defineEvent(flowRunEventData(), 'flows.view'),
