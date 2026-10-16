@@ -1,16 +1,20 @@
 // Mensagens do chat (SPEC T49; 03-chats F23–F47): histórico, envio (idempotente por Idempotency-Key), reação,
 // encaminhar, apagar para todos e marcar como lido. Permissão `chat.view` ("Acessar chat" inclui responder).
-import { Hono, type Context } from 'hono'
+// T119: toda rota resolve o chat pelo escopo do ator (T31/T48) ANTES de qualquer efeito: fora do escopo → 404.
+import { Hono, type Context, type MiddlewareHandler } from 'hono'
 import { z } from 'zod'
 import { toPttOgg } from '@crm/ai'
 import {
+  ChatQueryService,
   ChatSendError,
   ChatSendService,
+  ChatsError,
   crmConnectionSessionResolver,
   RealtimePublisher,
   RedisIdempotencyStore,
   SEND_MESSAGE_TYPES,
   toChatDto,
+  type ChatActor,
   type ChatPublisher,
   type PttConverter,
   type Sender,
@@ -100,16 +104,38 @@ function senderOf(c: Context<AppEnv>): Sender & { companyId: string } {
   return { companyId: ctx.companyId, userId: ctx.user.id, name: ctx.user.name }
 }
 
+/** Ator do escopo: sessão age como o usuário; token de API pela empresa inteira (como na T48). */
+function actorOf(c: Context<AppEnv>): ChatActor {
+  const ctx = getCompanyCtx(c)
+  return { companyId: ctx.companyId, userId: ctx.auth.kind === 'session' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
+}
+
+/** Chat fora do escopo (ou de outra empresa) → 404, igual a inexistente (SPEC 3.3). */
+async function assertChatVisible(query: ChatQueryService, c: Context<AppEnv>, chatId: string): Promise<void> {
+  try {
+    await query.row(actorOf(c), chatId)
+  } catch (err) {
+    if (err instanceof ChatsError && err.code === 'not_found') throw new ApiError('NOT_FOUND', 'Chat não encontrado')
+    throw err
+  }
+}
+
 export function chatMessagesRoutes(deps: ResolvedDeps) {
   const app = new Hono<AppEnv>()
   const perm = requirePerm('chat.view')
+  const query = new ChatQueryService(deps.db)
+  /** Middleware: `:id` precisa estar no escopo antes de validar o corpo ou tocar no gateway. */
+  const scoped: MiddlewareHandler<AppEnv> = async (c, next) => {
+    await assertChatVisible(query, c, c.req.param('id') ?? '')
+    await next()
+  }
 
-  app.get('/api/chats/:id/messages', perm, validate('query', listQuery), async (c) => {
+  app.get('/api/chats/:id/messages', perm, scoped, validate('query', listQuery), async (c) => {
     const { companyId } = getCompanyCtx(c)
     return c.json(await domain(() => serviceFor(deps).list(companyId, c.req.param('id'), c.req.valid('query'))), 200)
   })
 
-  app.post('/api/chats/:id/messages', perm, validate('json', sendSchema), async (c) => {
+  app.post('/api/chats/:id/messages', perm, scoped, validate('json', sendSchema), async (c) => {
     const s = senderOf(c)
     const b = c.req.valid('json')
     const key = c.req.header('idempotency-key')?.trim() || b.client_message_id || null
@@ -139,28 +165,30 @@ export function chatMessagesRoutes(deps: ResolvedDeps) {
     return c.json({ message: { ...message, client_message_id: key } }, replay ? 200 : 201)
   })
 
-  app.post('/api/chats/:id/messages/:mid/react', perm, validate('json', reactSchema), async (c) => {
+  app.post('/api/chats/:id/messages/:mid/react', perm, scoped, validate('json', reactSchema), async (c) => {
     const s = senderOf(c)
     const message = await domain(() => serviceFor(deps).react(s.companyId, c.req.param('id'), c.req.param('mid'), c.req.valid('json').emoji, s))
     setAudit(c, { action: 'chat_messages.react', targetType: 'message', targetId: message.id })
     return c.json({ message }, 200)
   })
 
-  app.post('/api/chats/:id/messages/:mid/forward', perm, validate('json', forwardSchema), async (c) => {
+  app.post('/api/chats/:id/messages/:mid/forward', perm, scoped, validate('json', forwardSchema), async (c) => {
     const s = senderOf(c)
+    // O destino também precisa estar no escopo (T119).
+    await assertChatVisible(query, c, c.req.valid('json').chat_id)
     const message = await domain(() => serviceFor(deps).forward(s.companyId, c.req.param('id'), c.req.param('mid'), c.req.valid('json').chat_id, s))
     setAudit(c, { action: 'chat_messages.forward', targetType: 'message', targetId: message.id })
     return c.json({ message }, 201)
   })
 
-  app.post('/api/chats/:id/messages/:mid/delete', perm, async (c) => {
+  app.post('/api/chats/:id/messages/:mid/delete', perm, scoped, async (c) => {
     const s = senderOf(c)
     const message = await domain(() => serviceFor(deps).deleteForEveryone(s.companyId, c.req.param('id'), c.req.param('mid'), s))
     setAudit(c, { action: 'chat_messages.delete', targetType: 'message', targetId: message.id })
     return c.json({ message }, 200)
   })
 
-  app.post('/api/chats/:id/read', perm, async (c) => {
+  app.post('/api/chats/:id/read', perm, scoped, async (c) => {
     const { companyId } = getCompanyCtx(c)
     const chat = await domain(() => serviceFor(deps).markRead(companyId, c.req.param('id')))
     setAudit(c, { skip: true })
