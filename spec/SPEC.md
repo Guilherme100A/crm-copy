@@ -678,10 +678,10 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Entregáveis:** `POST /api/auth/login|logout|register`, `GET|PUT /api/auth/profile`, `POST|DELETE /api/auth/profile/avatar`, `POST /api/auth/password-resets`, `GET|PATCH /api/auth/password-resets/:token`, `POST /api/auth/api-tokens` (owner/admin); cadastro cria a empresa "Minha empresa" com o usuário `owner`; e-mails (reset) via `Mailer` com `APP_NAME`.
 **Critérios de aceitação**
 - **AC-T15-01** Login correto → 200 com cookie `crm_session` httpOnly e `{ user, companies[] }`; senha errada e e-mail inexistente → 401 com a mesma mensagem; 10 falhas em 15 min → 429.
-- **AC-T15-02** Cadastro (senha ≥ 6 e confirmação) cria usuário `system_role=user`, empresa e membership `owner`; e-mail repetido (qualquer caixa) → 409; `referral_code` opcional fica gravado se casar `^[A-Za-z0-9_-]{1,64}$` e é ignorado caso contrário.
+- **AC-T15-02** Cadastro (senha ≥ `PASSWORD_MIN_LENGTH` = 8 de `@crm/shared`, e confirmação) cria usuário `system_role=user`, empresa e membership `owner`; e-mail repetido (qualquer caixa) → 409; `referral_code` opcional (código do afiliado que indicou) fica gravado em `crm.user_profiles.referred_by_code` (sem unique; `users.referral_code` é o código de afiliado do próprio usuário e não é tocado) se casar `^[A-Za-z0-9_-]{1,64}$` e é ignorado caso contrário.
 - **AC-T15-03** Logout revoga a sessão: o mesmo cookie depois → 401.
 - **AC-T15-04** Pedido de reset responde 200 neutro para e-mail inexistente; para existente envia e-mail (MemoryMailer) com link; o token vale uma vez e expira (GET devolve `{ valid: false, reason }`).
-- **AC-T15-05** `PUT /api/auth/profile` trocando e-mail sem `current_password` correto → 422 `error_code: current_password_invalid`; locale inválido é normalizado para `pt_BR`.
+- **AC-T15-05** `PUT /api/auth/profile` trocando e-mail sem `current_password` correto → 422 `error_code: current_password_invalid`; locale no fio e no banco é `pt-BR` | `en` | `es` (`LOCALES` de `@crm/shared`); a entrada aceita `pt_BR` como sinônimo e locale inválido é normalizado para `pt-BR`.
 - **AC-T15-06** Avatar: jpeg/png/webp até 5 MB aceito; 6 MB → 413; gif → 415; DELETE zera o avatar.
 
 ---
