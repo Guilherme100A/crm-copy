@@ -52,9 +52,16 @@ export interface SendMessageInput {
 }
 
 export interface Sender {
+  /** Usuário que envia; com `kind: 'ai'` não é gravado (o agente não é usuário). */
   userId: string
   name: string
+  /** T68: `ai` = agente de IA (sender_type `ai`, actor `crm:ai:<agentId>`, sem auto-atribuição). Default `user`. */
+  kind?: 'user' | 'ai'
+  agentId?: string
 }
+
+const isAi = (s: Sender) => s.kind === 'ai'
+const actorOf = (s: Sender) => (isAi(s) ? `crm:ai:${s.agentId ?? 'agent'}` : `crm:${s.userId}`)
 
 export interface ChatSendServiceOptions {
   db: Database
@@ -250,8 +257,8 @@ export class ChatSendService {
         companyId,
         chatId: chat.id,
         direction: 'outbound',
-        senderType: 'user',
-        senderUserId: sender.userId,
+        senderType: isAi(sender) ? 'ai' : 'user',
+        senderUserId: isAi(sender) ? null : sender.userId,
         type: prepared.type,
         body: prepared.body,
         media: prepared.media ? { ...prepared.media, ...(input.viewOnce ? { view_once: true } : {}), ...(clientMessageId ? { client_message_id: clientMessageId } : {}) } : clientMessageId ? { client_message_id: clientMessageId } : null,
@@ -264,7 +271,7 @@ export class ChatSendService {
     let view
     try {
       // `contactId` do SendRequest é o id do contato no engine (public.contacts), não o do CRM: não se envia.
-      view = await this.opts.waGateway.send({ sessionId, phone, content: prepared.content, actor: `crm:${sender.userId}` })
+      view = await this.opts.waGateway.send({ sessionId, phone, content: prepared.content, actor: actorOf(sender) })
     } catch (err) {
       if (rejectionCode(err) === 'SESSION_NOT_CONNECTED') {
         // A mensagem não chegou a ser aceita: nada fica gravado (AC-T49-06).
@@ -297,11 +304,12 @@ export class ChatSendService {
       const [current] = await tx.select().from(chats).where(eq(chats.id, chat.id)).for('update')
       const set: Partial<typeof chats.$inferInsert> = { lastMessageAt: now, lastMessagePreview: previewOf(prepared.type, prepared.body), updatedAt: now }
       // Auto-atribuição (F20): responder um chat da fila sem responsável assume o atendimento.
-      if (!current!.assignedUserId && current!.status === 'waiting') {
+      // O agente de IA não assume o chat nem conta como primeira resposta humana (T68).
+      if (!isAi(sender) && !current!.assignedUserId && current!.status === 'waiting') {
         Object.assign(set, { assignedUserId: sender.userId, status: 'attending' })
         await tx.insert(chatEvents).values({ companyId, chatId: chat.id, type: 'assigned', actorUserId: sender.userId, detail: { reason: 'first_reply' } })
       }
-      if (!current!.firstHumanReplyAt) Object.assign(set, { firstHumanReplyAt: now, firstHumanReplyBy: sender.userId })
+      if (!isAi(sender) && !current!.firstHumanReplyAt) Object.assign(set, { firstHumanReplyAt: now, firstHumanReplyBy: sender.userId })
       const [updatedChat] = await tx.update(chats).set(set).where(eq(chats.id, chat.id)).returning()
       return { msg: msg!, chat: updatedChat! }
     })

@@ -7,6 +7,8 @@ import type { EventHandler, HandlerOptions } from './consumers/framework'
 import { registerChatsConsumer } from './consumers/chats'
 import { registerFlowStepJob } from './jobs/flow-step'
 import { registerFlowTimerJob } from './jobs/flow-timer'
+import { registerAiAgentJob } from './jobs/ai-agent'
+import { registerAiAgentConsumer } from './consumers/ai-agent'
 
 export interface QueueDefinition {
   name: string
@@ -66,3 +68,5 @@ export const registry: WorkerRegistry = createRegistry()
 registerChatsConsumer(registry)
 registerFlowStepJob(registry)
 registerFlowTimerJob(registry)
+registerAiAgentJob(registry)
+registerAiAgentConsumer()

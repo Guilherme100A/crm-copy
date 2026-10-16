@@ -27,6 +27,8 @@ export const FAKE_STEP_USAGE: Readonly<LlmUsage> = Object.freeze({
 export interface FakeStepOptions {
   /** Sobrescreve campos do uso do passo (os ausentes vêm de `FAKE_STEP_USAGE`). */
   usage?: Partial<LlmUsage>
+  /** Dado opaco do provedor no passo (thoughtSignature, reasoning cifrado), copiado para o `LlmStep` (T68). */
+  providerData?: unknown
 }
 
 export interface FakeToolCallSpec {
@@ -36,41 +38,41 @@ export interface FakeToolCallSpec {
 }
 
 export type FakeLlmStep =
-  | { kind: 'tool-calls'; calls: FakeToolCallSpec[]; usage?: Partial<LlmUsage> }
-  | { kind: 'text'; text: string; usage?: Partial<LlmUsage> }
-  | { kind: 'output'; value: unknown; usage?: Partial<LlmUsage> }
-  | { kind: 'length'; text: string; usage?: Partial<LlmUsage> }
-  | { kind: 'refusal'; text: string; usage?: Partial<LlmUsage> }
+  | { kind: 'tool-calls'; calls: FakeToolCallSpec[]; usage?: Partial<LlmUsage>; providerData?: unknown }
+  | { kind: 'text'; text: string; usage?: Partial<LlmUsage>; providerData?: unknown }
+  | { kind: 'output'; value: unknown; usage?: Partial<LlmUsage>; providerData?: unknown }
+  | { kind: 'length'; text: string; usage?: Partial<LlmUsage>; providerData?: unknown }
+  | { kind: 'refusal'; text: string; usage?: Partial<LlmUsage>; providerData?: unknown }
   | { kind: 'fail'; error: unknown }
 
 /** Passo em que o modelo chama uma tool. */
 export function toolCall(name: string, input: unknown, opts: FakeStepOptions & { id?: string } = {}): FakeLlmStep {
-  return { kind: 'tool-calls', calls: [{ name, input, id: opts.id }], usage: opts.usage }
+  return { kind: 'tool-calls', calls: [{ name, input, id: opts.id }], usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Passo com várias tool calls em paralelo. */
 export function toolCalls(calls: FakeToolCallSpec[], opts: FakeStepOptions = {}): FakeLlmStep {
-  return { kind: 'tool-calls', calls, usage: opts.usage }
+  return { kind: 'tool-calls', calls, usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Passo final com texto (com `output`, o texto é interpretado como JSON). */
 export function text(value: string, opts: FakeStepOptions = {}): FakeLlmStep {
-  return { kind: 'text', text: value, usage: opts.usage }
+  return { kind: 'text', text: value, usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Passo final de structured output: o valor é validado contra `req.output`. */
 export function output(value: unknown, opts: FakeStepOptions = {}): FakeLlmStep {
-  return { kind: 'output', value, usage: opts.usage }
+  return { kind: 'output', value, usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Passo final cortado por `maxOutputTokens`. */
 export function length(value = '', opts: FakeStepOptions = {}): FakeLlmStep {
-  return { kind: 'length', text: value, usage: opts.usage }
+  return { kind: 'length', text: value, usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Passo final em que o modelo recusa. */
 export function refusal(value = '', opts: FakeStepOptions = {}): FakeLlmStep {
-  return { kind: 'refusal', text: value, usage: opts.usage }
+  return { kind: 'refusal', text: value, usage: opts.usage, ...(opts.providerData !== undefined ? { providerData: opts.providerData } : {}) }
 }
 
 /** Faz `generate` rejeitar com o erro (ex.: `LlmUpstreamError`). */
@@ -156,14 +158,14 @@ export class FakeLlm implements LlmProvider {
         }))
         const toolResults: LlmToolResult[] = []
         for (const call of toolCalls) toolResults.push(await this.execute(req, call))
-        steps.push({ index, text: '', toolCalls, toolResults, usage, finishReason: 'tool-calls' })
+        steps.push({ index, text: '', toolCalls, toolResults, usage, finishReason: 'tool-calls', ...(item.providerData !== undefined ? { providerData: item.providerData } : {}) })
         if (steps.length >= maxSteps) return done('tool-limit')
         continue
       }
 
       const stepText = item.kind === 'output' ? JSON.stringify(item.value) : item.text
       const finishReason = item.kind === 'length' ? 'length' : item.kind === 'refusal' ? 'refusal' : 'stop'
-      steps.push({ index, text: stepText, toolCalls: [], toolResults: [], usage, finishReason })
+      steps.push({ index, text: stepText, toolCalls: [], toolResults: [], usage, finishReason, ...(item.providerData !== undefined ? { providerData: item.providerData } : {}) })
       if (finishReason !== 'stop') return done(finishReason)
       if (!req.output) return done('stop')
 

@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "task": "T68",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T06:54:25.768Z",
+  "commit": "e3a13185f12b1e7fb3e5de8aa11ff566819acc50",
+  "base": "23307ec",
+  "changedFiles": [
+    "apps/worker/src/consumers/ai-agent/index.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/jobs/ai-agent/ai-agent.unit.test.ts",
+    "apps/worker/src/jobs/ai-agent/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/ai/src/testing/fake-llm.ts",
+    "packages/core/src/ai-runtime/index.ts",
+    "packages/core/src/ai-runtime/runtime.db.unit.test.ts",
+    "packages/core/src/ai-runtime/runtime.ts",
+    "packages/core/src/ai-runtime/scheduler.ts",
+    "packages/core/src/ai-runtime/scheduler.unit.test.ts",
+    "packages/core/src/ai-runtime/text-rules.ts",
+    "packages/core/src/ai-runtime/text-rules.unit.test.ts",
+    "packages/core/src/chats/send/service.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/0015_t68_ai_runtime.sql",
+    "packages/db/drizzle/crm/meta/0015_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/ai-runtime.ts",
+    "packages/db/src/schema/crm/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 9.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 3.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 12.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 9.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 6.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 26.0s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "20 arquivo(s) alterado(s)"
+    }
+  ]
+}
