@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 126 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T78 (Torno/Sonda), T126 (Bigorna/Lupa), T81 (Cinzel/Radar).
+- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T110 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -87,7 +87,7 @@
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
-| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
+| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
@@ -101,8 +101,8 @@
 | 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 | 9867959 |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
-| 7 | T78 | UI dashboard: filtros e vendas | IN_PROGRESS | Torno | Sonda | 0 | |
-| 7 | T81 | Webhooks de entrada: processador e escuta de amostras | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
+| 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
@@ -116,7 +116,7 @@
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | TODO | | | 0 | |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
-| 8 | T89 | UI webhooks de entrada | TODO | | | 0 | |
+| 8 | T89 | UI webhooks de entrada | IN_PROGRESS | Torno | Sonda | 0 | |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
@@ -144,6 +144,8 @@
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
 
 | Tarefa | Pendência | Origem |
+| T89 | Mapeamento com literal + caminho (ex. do doc 09: `+55` + `$.phone`): payload SEM telefone gera "+55", que não conta como ausente, e o request falha no resolve_customer em vez de `missing_required_fields`. Decidir: tratar campo de identidade só com literais (sem nenhum segmento de caminho resolvido) como ausente, ou avisar na UI do mapeamento. | T81 (Radar) |
+| T126 | `apps/worker/src/boot/production-worker.db.unit.test.ts` AC-T120-03 falha na main 2/4 isolado (fake.callCount 2 em vez de 1): provável corrida do teste (o PATCH ai_agent_id na linha 274 acontece antes de o "oi" ser processado). Repassado à Bigorna. | gate T81 |
 | empresas (T22) | `PUT /api/companies/:id { time_zone }` com fuso fora de COMPANY_TIME_ZONES (ex.: Asia/Tokyo) responde 200 e grava America/Sao_Paulo em silêncio (normalizeTimeZone em packages/core/src/companies/service.ts). Deve responder 422 VALIDATION, ou aceitar qualquer fuso IANA válido se a referência permitir. Incluir no despacho da próxima tarefa que tocar packages/core/src/companies ou na T102. | T78 (Torno) |
 |---|---|---|
 | T102 | `tests/acceptance/T23/shell.e2e.ts` (linhas 72/80/88) procura `data-testid="page-chats"`, o placeholder de /chats que a T69 substituiu: 9 testes do desktop falham na suíte inteira. Atualizar para um testid estável da inbox (ou do shell) sem perder o que o AC-T23 prova. | T45 (Torno) |
