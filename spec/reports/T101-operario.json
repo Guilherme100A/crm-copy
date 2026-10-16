@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "task": "T101",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T10:24:50.462Z",
+  "commit": "0bea18009c58224829f89b0258a702c7a9fc8bb0",
+  "base": "0bea180",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/meta-structure/index.ts",
+    "apps/api/src/routes/meta-structure/meta-structure.db.unit.test.ts",
+    "apps/worker/src/jobs/meta-ads/index.ts",
+    "apps/worker/src/jobs/meta-ads/meta-ads.unit.test.ts",
+    "packages/core/src/meta-ads/structure/account.ts",
+    "packages/core/src/meta-ads/structure/index.ts",
+    "packages/core/src/meta-ads/structure/metrics.ts",
+    "packages/core/src/meta-ads/structure/metrics.unit.test.ts",
+    "packages/core/src/meta-ads/structure/params.ts",
+    "packages/core/src/meta-ads/structure/service.db.unit.test.ts",
+    "packages/core/src/meta-ads/structure/service.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 17.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 121.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 16.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 28.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 67.9s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}

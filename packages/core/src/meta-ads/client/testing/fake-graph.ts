@@ -32,6 +32,16 @@ export interface FakeGraphRequest {
   body: Record<string, string>
 }
 
+/** T101: nível de `/act_x/insights`. */
+export type FakeInsightLevel = 'account' | 'campaign' | 'adset' | 'ad'
+
+/** T101: estrutura de uma conta (`/act_x/campaigns|adsets|ads`), filtrada por `effective_status` quando pedido. */
+export interface FakeAccountStructure {
+  campaigns?: Record<string, unknown>[]
+  adsets?: Record<string, unknown>[]
+  ads?: Record<string, unknown>[]
+}
+
 export interface FakeMetaGraphOptions {
   appId?: string
   appSecret?: string
@@ -58,6 +68,11 @@ export class FakeMetaGraph {
   private readonly opts: FakeMetaGraphOptions
   private server: Server | undefined
   private failures: { status: number; error: Record<string, unknown> }[] = []
+  // T101: estrutura, insights, falhas e uso por conta de anúncio.
+  private readonly structures = new Map<string, Required<FakeAccountStructure>>()
+  private readonly insightsByAccount = new Map<string, Record<FakeInsightLevel, Record<string, unknown>[]>>()
+  private readonly accountFailures = new Map<string, { status: number; error: Record<string, unknown> }>()
+  private readonly usageByAccount = new Map<string, string>()
   url = ''
 
   constructor(opts: FakeMetaGraphOptions = {}) {
@@ -143,8 +158,11 @@ export class FakeMetaGraph {
     const endpoint = m ? (m[2] ?? '/') : url.pathname
     this.requests.push({ method: req.method ?? 'GET', path: url.pathname, version, endpoint, query, body })
     const params = { ...query, ...body }
+    // T101: header de uso por conta (`setUsage`); `{}` nas demais.
+    const actMatch = /^\/(act_[^/]+)(?:\/|$)/.exec(endpoint)
+    const usageHeader = (actMatch && this.usageByAccount.get(actMatch[1]!)) ?? this.usageByAccount.get('*') ?? '{}'
     const send = (status: number, json: unknown) => {
-      res.writeHead(status, { 'content-type': 'application/json', 'x-business-use-case-usage': '{}' })
+      res.writeHead(status, { 'content-type': 'application/json', 'x-business-use-case-usage': usageHeader })
       res.end(JSON.stringify(json))
     }
     const error = (status: number, code: number, message: string, type = 'OAuthException') =>
@@ -187,7 +205,79 @@ export class FakeMetaGraph {
       }
       return send(200, { data: slice, paging })
     }
+    // ---- T101: estrutura e insights por conta de anúncio ----
+    const actEdge = /^\/(act_[^/]+)\/(campaigns|adsets|ads|insights)$/.exec(endpoint)
+    if (actEdge) {
+      const [, act, edge] = actEdge as unknown as [string, string, string]
+      const fail = this.accountFailures.get(act)
+      if (fail) return send(fail.status, { error: fail.error })
+      let items: Record<string, unknown>[]
+      if (edge === 'insights') {
+        const level = (params.level ?? 'account') as FakeInsightLevel
+        items = [...(this.insightsByAccount.get(act)?.[level] ?? [])]
+      } else {
+        const s = this.structures.get(act)
+        items = [...((edge === 'campaigns' ? s?.campaigns : edge === 'adsets' ? s?.adsets : s?.ads) ?? [])]
+        const statuses = params.effective_status ? (JSON.parse(params.effective_status) as string[]) : null
+        if (statuses) items = items.filter((e) => statuses.includes(String(e.effective_status ?? e.status ?? '')))
+      }
+      return send(200, this.page(items, params, `${this.url}/${version}${endpoint}`))
+    }
     return error(404, 803, `endpoint fake não suportado: ${endpoint}`, 'GraphMethodException')
+  }
+
+  /** Página de uma lista com `paging.next` absoluto (offset no `after`), como a Graph. */
+  private page(items: Record<string, unknown>[], params: Record<string, string>, base: string): { data: Record<string, unknown>[]; paging: Record<string, unknown> } {
+    const size = Number(params.limit) || this.opts.pageSize || 25
+    const offset = Number(params.after ?? 0) || 0
+    const paging: Record<string, unknown> = { cursors: { before: String(offset), after: String(offset + size) } }
+    if (offset + size < items.length) {
+      const next = new URL(base)
+      for (const [k, v] of Object.entries(params)) if (k !== 'appsecret_proof' && k !== 'after') next.searchParams.set(k, v)
+      next.searchParams.set('limit', String(size))
+      next.searchParams.set('after', String(offset + size))
+      paging.next = next.toString()
+    }
+    return { data: items.slice(offset, offset + size), paging }
+  }
+
+  // ---------------------------------------------------------------- T101: semeadura da conta
+
+  /** Campanhas, conjuntos e anúncios da conta (`act_x`), no formato da Graph (orçamentos em centavos, string). */
+  setStructure(fbAccountId: string, structure: FakeAccountStructure): void {
+    this.structures.set(fbAccountId, { campaigns: [...(structure.campaigns ?? [])], adsets: [...(structure.adsets ?? [])], ads: [...(structure.ads ?? [])] })
+  }
+
+  /** Linhas de `/act_x/insights?level=…` (com `actions[]`/`action_values[]`). */
+  setInsights(fbAccountId: string, level: FakeInsightLevel, rows: Record<string, unknown>[]): void {
+    const cur = this.insightsByAccount.get(fbAccountId) ?? { account: [], campaign: [], adset: [], ad: [] }
+    cur[level] = [...rows]
+    this.insightsByAccount.set(fbAccountId, cur)
+  }
+
+  /** Toda chamada `/act_x/*` responde este erro até `clearAccountFailure`. */
+  failAccount(fbAccountId: string, status: number, error: Record<string, unknown>): void {
+    this.accountFailures.set(fbAccountId, { status, error })
+  }
+
+  clearAccountFailure(fbAccountId: string): void {
+    this.accountFailures.delete(fbAccountId)
+  }
+
+  /**
+   * Header `x-business-use-case-usage` das respostas da conta (`'*'` = todas): um número vira
+   * `{ "<biz>": [{ call_count: pct, total_cputime: pct, total_time: pct, estimated_time_to_regain_access }] }`.
+   */
+  setUsage(fbAccountId: string | '*', usage: number | Record<string, unknown> | null, regainMinutes = 0): void {
+    if (usage === null) {
+      this.usageByAccount.delete(fbAccountId)
+      return
+    }
+    const value =
+      typeof usage === 'number'
+        ? { 'fake-biz': [{ type: 'ADS_INSIGHTS', call_count: usage, total_cputime: usage, total_time: usage, estimated_time_to_regain_access: regainMinutes }] }
+        : usage
+    this.usageByAccount.set(fbAccountId, JSON.stringify(value))
   }
 
   private oauth(params: Record<string, string>, send: (s: number, j: unknown) => void, error: (s: number, c: number, m: string) => void): void {

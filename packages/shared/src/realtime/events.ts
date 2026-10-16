@@ -165,6 +165,18 @@ export const REALTIME_EVENTS = {
     z.looseObject({ title: z.string(), body: z.string(), url: z.string().nullable().optional() }),
     'dashboard.sales',
   ),
+  // ---- T101: Gerenciador Meta (MetaStructureBundleChannel da referência): progresso do bundle; o cliente relê o GET ----
+  'meta.bundle.progress': defineEvent(
+    z.looseObject({
+      bundle_key: z.string(),
+      status: z.enum(['loading', 'partial', 'refreshing', 'ready']),
+      targets_done: z.number(),
+      targets_total: z.number(),
+      errors: z.array(z.looseObject({ ad_account_id: z.string(), error: z.string() })).optional(),
+      warnings: z.array(z.string()).optional(),
+    }),
+    'facebook.campaigns',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS
