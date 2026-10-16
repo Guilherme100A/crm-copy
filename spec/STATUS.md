@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T27 (Bigorna/Lupa), T38 (Torno/Sonda), T61 (Cinzel/Radar).
+- Em andamento (3 pares): T38 (Torno/Sonda), T61 (Cinzel/Radar), T67 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -41,7 +41,7 @@
 | 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | MERGED | Fole | Prisma | 0 | 0e50449 |
 | 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | MERGED | Bigorna | Lupa | 0 | 0119e46 |
 | 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
-| 4 | T27 | Jobs genéricos de exportação e importação | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 4 | T27 | Jobs genéricos de exportação e importação | MERGED | Bigorna | Lupa | 0 | b597667 |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
 | 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | MERGED | Bigorna | Lupa | 0 | edee67b |
@@ -60,7 +60,7 @@
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
-| 5 | T67 | Contatos: importação CSV e do WhatsApp | TODO | | | 0 | |
+| 5 | T67 | Contatos: importação CSV e do WhatsApp | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
