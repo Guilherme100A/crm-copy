@@ -721,7 +721,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Objetivo:** persistência dos fluxos, versões publicadas e execuções.
 **Paths:** `packages/core/src/flows/store/**`, `packages/db/src/schema/crm/flows.ts`
 **Depende de:** T01, T10
-**Ref:** `06-fluxos.md#31-flow` a `#38`, D3 §2 (modelo proposto).
+**Ref:** `06-fluxos.md#31-flow` a `#38`, `#4-estados-e-transições` (o modelo de tabelas está nos Entregáveis abaixo).
 **Entregáveis:** tabelas `flow_folders`, `flows` (status `draft|active|paused|archived`), `flow_nodes`, `flow_node_actions`, `flow_edges` (unique `(from_node_id, handle)`), `flow_versions` (definição imutável), `flow_runs` (índice único parcial: 1 run `running|waiting` por (empresa, contato)), `flow_run_steps` (`idempotency_key` único), `flow_distributor_counters`, `flow_share_codes`; repositório `FlowStore` (rascunho ↔ `FlowDefinition`, publicar versão).
 **Critérios de aceitação**
 - **AC-T19-01** Dois edges com o mesmo (nó de origem, handle) → violação de unicidade.
@@ -736,7 +736,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Objetivo:** toda chamada de IA (LLM, TTS, STT) passa por reserva/commit de créditos e cota.
 **Paths:** `packages/core/src/ai-metering/**`
 **Depende de:** T18, T12
-**Ref:** `12-cobrancas-assinaturas-tokens.md#410-códigos-de-erro-de-tokens`, D5 §2.3 (regras 1–4).
+**Ref:** `12-cobrancas-assinaturas-tokens.md#410-códigos-de-erro-de-tokens`, `#55-tokens-leona`; `STACK.md` Bloco F §F.2 (UsageGuard, custo por tabela própria).
 **Entregáveis:** `UsageGuard.reserve(companyId, estimate, feature)` (saldo − estimativa < −overrun ou cota `hard` estourada → `LlmQuotaExceededError`), `commit(usage)` idempotente por `request_id`, contador quente em Redis com reconciliação; `meter(provider)` decorando `LlmProvider`/`TtsProvider`/`SttProvider` com `feature` e `agent_id`; evento `ai_wallet.updated`/`ai_wallet.low` via `RealtimePublisher` (injetado).
 **Critérios de aceitação**
 - **AC-T24-01** Com cota `hard` mensal estourada, `reserve` lança `LlmQuotaExceededError` antes de chamar o provedor (FakeLlm com 0 chamadas).
@@ -814,7 +814,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Objetivo:** executar versões publicadas de fluxo de forma idempotente sobre BullMQ.
 **Paths:** `packages/core/src/flows/engine/{runner,registry,context,dry-run}*`, `packages/core/src/flows/nodes/index.ts`, `apps/worker/src/jobs/flow-step/**`
 **Depende de:** T19, T11, T09
-**Ref:** `06-fluxos.md#42-execução`, `#55-execução-pelo-chat`, D3 §9b.
+**Ref:** `06-fluxos.md#42-execução`, `#55-execução-pelo-chat` (o desenho do motor está nos Entregáveis abaixo).
 **Entregáveis:** run = estado em `flow_runs`; job `flow-step { runId, expectedSeq }`; `SELECT … FOR UPDATE` + `seq`; laço síncrono até nó de espera/fim com limite de **50 passos por job** (`failed: loop_guard`); `NodeHandler.execute(ctx) → { next } | { wait } | { end } | { jump }`; `ctx` com `wa` (WaGateway), `vars`, `render`, `repo`, `llm`, `log`, `idempotencyKey(actionId)` = hash(runId, seq, actionId); registro de grupos de nós em `nodes/index.ts` (stubs para os grupos das tarefas T41, T42, T51, T62, T63, T104, T111); erro → handle `failure` se existir, senão `failed`; modo dry-run com gateway fake e store em memória.
 **Critérios de aceitação**
 - **AC-T25-01** Um run com handlers de teste percorre start → A → B → fim, grava um `flow_run_steps` por nó e termina `completed`.
@@ -892,7 +892,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Objetivo:** atrasos, espera de resposta com timeout e controle de runs.
 **Paths:** `packages/core/src/flows/engine/{timers,waits,control}*`, `apps/worker/src/jobs/flow-timer/**`
 **Depende de:** T25
-**Ref:** `06-fluxos.md#45-unidades-de-tempo` (máx. 31 dias), `#55-execução-pelo-chat`, D3 §9b.
+**Ref:** `06-fluxos.md#45-unidades-de-tempo` (máx. 31 dias), `#55-execução-pelo-chat`, `#35-tipos-de-nó-…` (wait_response, smart_interval).
 **Entregáveis:** `wait { kind: 'timer'|'reply', handles, deadline_at }`; job delayed `flow-timer` com `jobId = run:<id>:seq:<n>`; `resolveReply(runId, inbound)`; `cancel(runId)` (remove timer), `pauseFlow(flowId)` (runs `waiting` congelam; timers reagendam no resume), atrasos curtos (≤ 5 s) em processo.
 **Critérios de aceitação**
 - **AC-T30-01** Espera de resposta com timeout: chegando a resposta antes, segue o handle de resposta; sem resposta, o timer segue `timeout`. Resposta e timer simultâneos → só um avança (teste de corrida).
@@ -999,7 +999,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Objetivo:** expor carteira, extrato, cotas e a administração de créditos pela plataforma.
 **Paths:** `apps/api/src/routes/{ai-usage,platform-ai}/**`
 **Depende de:** T24, T22
-**Ref:** D5 §2.4; `12-cobrancas-assinaturas-tokens.md#62-tokens--…`, `#64-admin-referência`.
+**Ref:** `12-cobrancas-assinaturas-tokens.md#62-tokens--…`, `#64-admin-referência`, `#56-admin-referência`.
 **Entregáveis:** empresa (`ai_usage.view`): `GET /api/ai/wallet`, `GET /api/ai/usage`, `GET /api/ai/usage/summary?group_by=day|feature|model|agent`, `GET /api/ai/quotas`; plataforma (`platform_admin`): `POST /api/platform/companies/:id/ai/topups|adjustments`, `POST /api/platform/ai/usage/:id/refund`, `GET|PUT /api/platform/companies/:id/ai/quotas`, `PATCH /api/platform/companies/:id/ai/wallet`, `GET|POST|PATCH /api/platform/ai/prices`, `GET|PATCH /api/platform/ai/pricing-settings`, `GET /api/platform/ai/usage`, `GET /api/platform/ai/wallets?negative=1`.
 **Critérios de aceitação**
 - **AC-T37-01** Recarga pelo admin da plataforma exige nota, gera entrada `topup` com `actor_user_id` e publica `ai_wallet.updated` na empresa.
@@ -1179,7 +1179,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ### T47 — Conexões: projeção de status, eventos e alertas
 **Paths:** `packages/core/src/connections-status/**`, `apps/worker/src/consumers/connections/**`
 **Depende de:** T40, T09, T16
-**Ref:** `08-conexoes.md#4-estados-e-transições`, `#7-eventos-realtime`, `01-auth-conta-multiempresa.md` (e-mail de desconexão), D4 §2.5.
+**Ref:** `08-conexoes.md#4-estados-e-transições`, `#7-eventos-realtime`, `01-auth-conta-multiempresa.md#compatibilidade-baileys-clone` (e-mail de desconexão), `21-realtime-e-plataforma.md#realtime-actioncable` (ConnectionsChannel).
 **Entregáveis:** handlers de `session.state`, `session.connection`, `session.qr`, `session.pairing_code` → atualizam `crm.connections` e publicam os eventos SSE `connection.created|updated|deleted|status_changed|qr_updated|pairing_code|connected|disconnected|disconnected_alert|banned_alert|reconnected_with_paused_flows|health_degraded` e `flow.auto_paused|resumed`; ao cair: pausa runs de fluxo daquela conexão; ao voltar com runs pausados: evento com contagens; e-mail de desconexão para owner/admin (se `connection_status_emails_enabled`), com dedupe.
 **Critérios de aceitação**
 - **AC-T47-01** `session.connection close` (transient) → `connection.disconnected` + `disconnected_at`; alerta `connection.disconnected_alert` deduplicado em 5 s.
@@ -1381,7 +1381,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ### T73 — Fontes de venda (webhook genérico) e atribuição UTM/CTWA
 **Paths:** `packages/core/src/{sale-sources,attribution}/**`, `apps/api/src/routes/{sale-sources,hooks-sales}/**`, `apps/worker/src/jobs/inbound-sales/**`, `packages/db/src/schema/crm/sale-sources.ts`
 **Depende de:** T34, T33
-**Ref:** `19-integracoes.md#55-mapeamento-evento-de-pagamento--ações`, `11-facebook-ads.md#37-atribuição-em-contatos-e-vendas`, D5 §3.
+**Ref:** `19-integracoes.md#55-mapeamento-evento-de-pagamento--ações`, `11-facebook-ads.md#37-atribuição-em-contatos-e-vendas`, `05-contatos.md#compatibilidade-baileys-clone` (CTWA).
 **Entregáveis:** `sale_sources` (token, segredo HMAC opcional cifrado, mapeamento JSONPath → `SaleEvent`, tabela de status), `inbound_sale_events` (bruto, status, erro, venda); público `POST /api/hooks/sales/:token` (202 + fila `inbound-sales`); `POST /api/sale-sources/:id/test` (dry-run do mapeamento), replay, rotação de token; contato encontrado/criado pelo telefone E.164; `contact_attribution` (first/last touch com `utm_*`, `ctwa_clid`, `source_id`).
 **Critérios de aceitação**
 - **AC-T73-01** Token inválido → 404; HMAC errado → 401; mesmo `external_id` duas vezes → 1 venda com status atualizado.
@@ -1564,7 +1564,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ### T74 — Disparos em massa: preparação e agendador
 **Paths:** `packages/core/src/mass-dispatch-runner/**`, `apps/worker/src/jobs/mass-dispatch/**`
 **Depende de:** T60, T30
-**Ref:** `10-disparos-em-massa.md#4-estados-e-transições`, `#5-ações-e-regras-de-negócio`, D4 §4.7 (mapeamento ao pipeline).
+**Ref:** `10-disparos-em-massa.md#4-estados-e-transições`, `#5-ações-e-regras-de-negócio`, `#compatibilidade-baileys-clone`; `AI-MANAGER-MAP.md#4-pipeline-de-envio-e-antiban` (gates e antiban).
 **Critérios de aceitação**
 - **AC-T74-01** Preparação passa por `resolving_recipients → counting → scheduling → completed` com progresso no SSE (`mass_dispatch.updated`, no máximo 1/s).
 - **AC-T74-02** Envios só dentro da janela e dias da semana no fuso da empresa; intervalo aleatório entre mín e máx (RNG injetado); limite diário pausa e retoma no próximo dia permitido.
