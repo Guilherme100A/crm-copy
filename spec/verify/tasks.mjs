@@ -257,7 +257,7 @@ const RAW = [
   T('T24', 'UsageGuard e provider medido', ['T18', 'T12'], ['packages/core/src/ai-metering/**', 'packages/db/src/schema/crm/ai-usage.ts' /* aditivo: feature, agent_id, error_code, status error */], ['core'], { requiredFiles: ['packages/core/src/ai-metering/guard.ts'] }),
   T('T37', 'API de consumo de IA (empresa e plataforma)', ['T24', 'T22'], [route('ai-usage'), route('platform-ai')], ['api', 'core']),
   T('T38', 'Chaves de provedores de IA (BYOK)', ['T12', 'T22'], [core('ai-keys'), route('ai-keys'), schema('ai-keys')], ['api', 'core']),
-  T('T39', 'Agentes de IA: schema e CRUD', ['T22', 'T26'], [core('ai-agents'), route('ai-agents'), schema('ai-agents')], ['api', 'core'],
+  T('T39', 'Agentes de IA: schema e CRUD', ['T22', 'T26'], [core('ai-agents'), route('ai-agents'), schema('ai-agents'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.ai_agent_id */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/ai-agents/index.ts'] }),
   T('T52', 'Agentes de IA: base de conhecimento', ['T39'], ['packages/core/src/ai-knowledge/**', route('ai-knowledge'), job('ai-knowledge')], ['api', 'worker', 'core']),
   T('T59', 'UI: consumo de IA, chaves e hub de integrações', ['T37', 'T38', 'T23'], [...ui('settings-ai-usage'), ...ui('integrations')], ['web'], { e2e: true }),
