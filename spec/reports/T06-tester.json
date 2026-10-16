@@ -3,18 +3,10 @@
   "task": "T06",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T02:56:18.880Z",
-  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
-  "base": "eff38af",
-  "changedFiles": [
-    "tests/acceptance/vitest.config.ts",
-    "tests/acceptance/T06/auth-state.test.ts",
-    "tests/acceptance/T06/fixtures/ai-manager-public.json",
-    "tests/acceptance/T06/fixtures/extract-ai-manager-schema.ts",
-    "tests/acceptance/T06/schema-snapshot.ts",
-    "tests/acceptance/T06/schema.test.ts",
-    "tests/acceptance/T06/support.ts"
-  ],
+  "at": "2026-10-16T02:56:58.093Z",
+  "commit": "e578080e7ed41e003edea3b38c4a57a902853d1e",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "7 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

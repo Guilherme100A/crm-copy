@@ -3,51 +3,10 @@
   "task": "T06",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:56:09.885Z",
-  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
-  "base": "eff38af",
-  "changedFiles": [
-    "packages/db/drizzle.wa.config.ts",
-    "packages/db/package.json",
-    "packages/db/src/schema/wa/index.ts",
-    "packages/wa-engine/package.json",
-    "packages/wa-engine/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/db/drizzle/wa/0000_init.sql",
-    "packages/db/drizzle/wa/0001_session_limits.sql",
-    "packages/db/drizzle/wa/0002_suggestions.sql",
-    "packages/db/drizzle/wa/0003_ai_settings.sql",
-    "packages/db/drizzle/wa/0004_session_router.sql",
-    "packages/db/drizzle/wa/0005_session_phone_optional.sql",
-    "packages/db/drizzle/wa/0006_proxy_settings.sql",
-    "packages/db/drizzle/wa/0007_session_browser.sql",
-    "packages/db/drizzle/wa/meta/0000_snapshot.json",
-    "packages/db/drizzle/wa/meta/0001_snapshot.json",
-    "packages/db/drizzle/wa/meta/0002_snapshot.json",
-    "packages/db/drizzle/wa/meta/0003_snapshot.json",
-    "packages/db/drizzle/wa/meta/0004_snapshot.json",
-    "packages/db/drizzle/wa/meta/0005_snapshot.json",
-    "packages/db/drizzle/wa/meta/0006_snapshot.json",
-    "packages/db/drizzle/wa/meta/0007_snapshot.json",
-    "packages/db/drizzle/wa/meta/_journal.json",
-    "packages/db/src/schema/wa/fixtures/ai-manager-public.json",
-    "packages/db/src/schema/wa/fixtures/generate.ts",
-    "packages/db/src/schema/wa/introspect.ts",
-    "packages/db/src/schema/wa/tables/ai-settings.ts",
-    "packages/db/src/schema/wa/tables/bytea.ts",
-    "packages/db/src/schema/wa/tables/enums.ts",
-    "packages/db/src/schema/wa/tables/index.ts",
-    "packages/db/src/schema/wa/tables/limits.ts",
-    "packages/db/src/schema/wa/tables/proxy-settings.ts",
-    "packages/db/src/schema/wa/tables/session-links.ts",
-    "packages/db/src/schema/wa/tables/suggestions.ts",
-    "packages/db/src/schema/wa/tables/tables.ts",
-    "packages/db/src/schema/wa/wa.db.unit.test.ts",
-    "packages/db/src/schema/wa/wa.unit.test.ts",
-    "packages/wa-engine/src/auth-state/auth-state.db.unit.test.ts",
-    "packages/wa-engine/src/auth-state/index.ts",
-    "packages/wa-engine/src/db/index.ts"
-  ],
+  "at": "2026-10-16T02:56:51.054Z",
+  "commit": "e578080e7ed41e003edea3b38c4a57a902853d1e",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/db/src/schema/wa/index.ts",
@@ -62,32 +21,32 @@
     {
       "name": "cmd: pnpm --filter @crm/db typecheck",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db test",
       "status": "pass",
-      "detail": "ok em 8.6s"
+      "detail": "ok em 10.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
       "status": "pass",
-      "detail": "ok em 4.2s"
+      "detail": "ok em 5.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 1.9s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 3.8s"
+      "detail": "ok em 4.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -147,7 +106,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "40 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
