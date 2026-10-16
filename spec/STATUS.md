@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T23 (Fole/Prisma), T29 (Cinzel/Radar), T39 (Torno/Sonda); Bigorna/Lupa a despachar.
+- Em andamento: T23 (Fole/Prisma), T29 (Cinzel/Radar), T39 (Torno/Sonda), T30 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -44,7 +44,7 @@
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
 | 5 | T29 | App wa-worker e RPC interno | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | TODO | | | 0 | |
+| 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T31 | Departamentos e horários de atendimento | TODO | | | 0 | |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
