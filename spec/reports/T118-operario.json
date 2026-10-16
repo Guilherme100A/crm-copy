@@ -3,9 +3,9 @@
   "task": "T118",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:53:17.234Z",
-  "commit": "15b72227eba57a24ac2f5ec402eee8b3c83ae065",
-  "base": "15b7222",
+  "at": "2026-10-16T05:58:13.727Z",
+  "commit": "9ab2fc69f7b92bb8742eb9310ef8a7233013c1be",
+  "base": "032bff9",
   "changedFiles": [
     "apps/api/vitest.config.ts",
     "apps/wa-worker/vitest.config.ts",
@@ -19,25 +19,25 @@
     "packages/wa-engine/vitest.config.ts",
     "packages/wa-gateway-rpc/vitest.config.ts",
     "packages/wa-port/vitest.config.ts",
-    "scripts/e2e/serve.mjs",
     "scripts/e2e/ports.mjs",
-    "scripts/e2e/ports.unit.test.mjs"
+    "scripts/e2e/ports.unit.test.mjs",
+    "scripts/e2e/serve.mjs"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 15.6s"
+      "detail": "ok em 8.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 7.6s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 38.1s"
+      "detail": "ok em 40.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
