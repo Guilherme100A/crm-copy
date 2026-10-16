@@ -98,7 +98,7 @@
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
-| 7 | T70 | UI kanban: lista e quadro | IN_PROGRESS | Torno | Sonda | 0 | |
+| 7 | T70 | UI kanban: lista e quadro | IN_PROGRESS | Torno | Sonda | 1 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
