@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): verifies em fila, um por vez (máquina sem memória): T126 (Lupa) → integrar T126 → T47 → T88 → T94; T127 integra logo após a T47.
+- Em andamento (3 pares): T47 verify (Bigorna/Lupa) → T127 (Cinzel/Radar); T88 verify do tester (Sonda); T94 aguarda janela. Piloto de agentes sob demanda (proposta do usuário) começa quando T88/T47 forem integradas.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -138,7 +138,7 @@
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
-| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | VERIFYING | Bigorna | Lupa | 1 | correção da rejeição 1 (retry do Purchase; AC-T79-04 por evento); verify do tester em andamento |
+| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | BLOCKED | Cinzel | Radar | 0 | aguarda a T47: verify do tester 10/11, AC-T127-01 falha porque ninguém projeta session.connection em crm.connections.connection_state (applyConnectionEvent sem chamador); o código da T127 está pronto, integrar logo depois da T47 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
