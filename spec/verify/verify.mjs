@@ -273,8 +273,9 @@ function runPlaywright(report, task, dir, files, mobileIds) {
   if (existsSync(out)) rmSync(out)
   // desktop sempre; mobile só com os ACs de layout/responsivo (grep do projeto mobile no playwright.config)
   const mobileGrep = mobileIds.map((id) => id.replace(/-/g, '\\-')).join('|')
-  const projects = mobileGrep ? '--project desktop --project mobile' : '--project desktop'
-  const r = run(`pnpm exec playwright test --config ${config} --reporter=json ${projects} ${dir}`, { env: { PLAYWRIGHT_JSON_OUTPUT_NAME: out, E2E_MOBILE_GREP: mobileGrep } })
+  // forma --project=<nome>: no Playwright 1.63 `--project` é variádico e engoliria o diretório que vem depois
+  const projects = mobileGrep ? '--project=desktop --project=mobile' : '--project=desktop'
+  const r = run(`pnpm exec playwright test ${dir} --config ${config} --reporter=json ${projects}`, { env: { PLAYWRIGHT_JSON_OUTPUT_NAME: out, E2E_MOBILE_GREP: mobileGrep } })
   if (!existsSync(out)) {
     report.add('execução playwright', 'fail', `sem relatório JSON (exit ${r.code})`)
     report.checks.at(-1).output = r.tail
