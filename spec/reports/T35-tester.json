@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T35",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T06:39:38.936Z",
+  "commit": "8072f33e304190153173cff87f1e25ca5fbdebe1",
+  "base": "8072f33",
+  "changedFiles": [
+    "tests/acceptance/T35/content.test.ts",
+    "tests/acceptance/T35/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T35-01, AC-T35-02, AC-T35-03, AC-T35-04, AC-T35-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "10 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T35-01",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T35-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T35-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T35-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T35-05",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

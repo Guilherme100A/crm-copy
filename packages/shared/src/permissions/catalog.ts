@@ -17,6 +17,8 @@ export const SETTINGS_AREAS = [
   'accounts',
   'platform_invitations',
   'global_variables',
+  // T35: modelos internos de mensagem (no lugar dos templates WABA).
+  'message_templates',
 ] as const
 export type SettingsArea = (typeof SETTINGS_AREAS)[number]
 
