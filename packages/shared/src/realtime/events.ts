@@ -77,6 +77,12 @@ export const REALTIME_EVENTS = {
       used: z.number().optional(),
       limit: z.number().optional(),
     }),
+
+  // ---- T28: editor de fluxos ----
+  /** Rascunho do fluxo mudou (`flow_graph_updated` da referência): outros editores aplicam ou recarregam o bundle. */
+  'flow.graph_updated': defineEvent(
+    z.looseObject({ flow_id: idSchema, actor_id: idSchema.nullable(), mutation: z.string() }),
+    'flows.view',
   ),
 } as const satisfies Record<string, RealtimeEventDef>
 

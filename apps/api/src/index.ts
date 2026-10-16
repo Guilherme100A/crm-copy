@@ -4,3 +4,4 @@ export {}
 export * from './app'
 export * from './config'
 export * from './routes/events/index'
+export * from './routes/flows/index'
