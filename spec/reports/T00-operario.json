@@ -1,0 +1,243 @@
+{
+  "version": 1,
+  "task": "T00",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T02:31:03.986Z",
+  "commit": "a4ebcd3bbdf873df97344cdde57a6f810c630530",
+  "base": "a5d1283",
+  "changedFiles": [
+    ".gitignore",
+    ".env.example",
+    ".gitattributes",
+    ".npmrc",
+    ".nvmrc",
+    ".prettierrc",
+    "apps/api/package.json",
+    "apps/api/src/index.ts",
+    "apps/api/tsconfig.json",
+    "apps/api/vitest.config.ts",
+    "apps/wa-worker/package.json",
+    "apps/wa-worker/src/index.ts",
+    "apps/wa-worker/tsconfig.json",
+    "apps/wa-worker/vitest.config.ts",
+    "apps/web/package.json",
+    "apps/web/src/index.ts",
+    "apps/web/tsconfig.json",
+    "apps/web/vitest.config.ts",
+    "apps/worker/package.json",
+    "apps/worker/src/index.ts",
+    "apps/worker/tsconfig.json",
+    "apps/worker/vitest.config.ts",
+    "docs/README.md",
+    "eslint.config.mjs",
+    "package.json",
+    "packages/ai/package.json",
+    "packages/ai/src/index.ts",
+    "packages/ai/tsconfig.json",
+    "packages/ai/vitest.config.ts",
+    "packages/core/package.json",
+    "packages/core/src/index.ts",
+    "packages/core/tsconfig.json",
+    "packages/core/vitest.config.ts",
+    "packages/db/package.json",
+    "packages/db/src/index.ts",
+    "packages/db/tsconfig.json",
+    "packages/db/vitest.config.ts",
+    "packages/node-kit/package.json",
+    "packages/node-kit/src/index.ts",
+    "packages/node-kit/tsconfig.json",
+    "packages/node-kit/vitest.config.ts",
+    "packages/shared/package.json",
+    "packages/shared/src/index.ts",
+    "packages/shared/tsconfig.json",
+    "packages/shared/vitest.config.ts",
+    "packages/wa-engine/package.json",
+    "packages/wa-engine/src/index.ts",
+    "packages/wa-engine/tsconfig.json",
+    "packages/wa-engine/vitest.config.ts",
+    "packages/wa-gateway-rpc/package.json",
+    "packages/wa-gateway-rpc/src/index.ts",
+    "packages/wa-gateway-rpc/tsconfig.json",
+    "packages/wa-gateway-rpc/vitest.config.ts",
+    "packages/wa-port/package.json",
+    "packages/wa-port/src/index.ts",
+    "packages/wa-port/tsconfig.json",
+    "packages/wa-port/vitest.config.ts",
+    "pnpm-lock.yaml",
+    "pnpm-workspace.yaml",
+    "tsconfig.base.json"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: pnpm-workspace.yaml",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: tsconfig.base.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: eslint.config.mjs",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: .env.example",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/api/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/worker/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/wa-worker/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/web/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/shared/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/db/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-port/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-engine/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-gateway-rpc/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/ai/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/core/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/node-kit/package.json",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm install",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm -r typecheck",
+      "status": "pass",
+      "detail": "ok em 10.8s"
+    },
+    {
+      "name": "cmd: pnpm -r lint",
+      "status": "pass",
+      "detail": "ok em 17.3s"
+    },
+    {
+      "name": "cmd: pnpm -r test",
+      "status": "pass",
+      "detail": "ok em 5.3s"
+    },
+    {
+      "name": "cmd: pnpm -r build",
+      "status": "pass",
+      "detail": "ok em 6.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "60 arquivo(s) alterado(s)"
+    }
+  ]
+}
