@@ -55,6 +55,8 @@ export function ChatConversation({ chatId, search }: { chatId: string; search: C
           </h2>
           {chat?.contact.phone_e164 && chat.contact.name ? <p className="truncate text-xs text-muted-foreground">{chat.contact.phone_e164}</p> : null}
         </div>
+        {/* T91: no mobile o painel lateral abre por um botão no cabeçalho (o slot renderiza o botão e o sheet). */}
+        {!isDesktop && CHAT_SLOTS.panel ? <PanelSlot chatId={chatId} chat={chat} isDesktop={false} /> : null}
       </header>
       <div className="min-h-0 flex-1 overflow-y-auto">
         {Thread ? (
@@ -72,6 +74,19 @@ export function ChatConversation({ chatId, search }: { chatId: string; search: C
       ) : null}
     </section>
   )
+}
+
+/** T91: o slot do painel (renderizado só se existir). */
+function PanelSlot(props: { chatId: string; chat: ChatListItem | undefined; isDesktop: boolean }) {
+  const Panel = CHAT_SLOTS.panel
+  return Panel ? <Panel {...props} /> : null
+}
+
+/** T91: no desktop o painel recebe o chat como a conversa (cache da lista, depois `GET /api/chats/:id`). */
+function DesktopPanel({ chatId }: { chatId: string }) {
+  const cached = useCachedChat(chatId)
+  const detail = useQuery({ ...chatDetailQuery(chatId), placeholderData: cached })
+  return <PanelSlot key={chatId} chatId={chatId} chat={detail.data ?? cached} isDesktop />
 }
 
 export function ChatConversationEmpty() {
@@ -108,7 +123,7 @@ export function ChatLayout({ search, chatId, children }: { search: ChatSearch; c
       </div>
       {Panel && chatId ? (
         <aside data-testid="chat-panel-slot" className="min-h-0 overflow-y-auto rounded-lg border bg-card">
-          <Panel chatId={chatId} chat={undefined} isDesktop />
+          <DesktopPanel chatId={chatId} />
         </aside>
       ) : null}
     </div>

@@ -234,6 +234,10 @@ export class ChatLifecycleService {
     // O ator pode ter perdido o escopo (ex.: transferiu para outro departamento): decora sem checar escopo.
     const dto = (await this.query.decorate([updated]))[0]!
     await this.publish(updated, 'chat.updated', { chat_id: updated.id, chat: dto })
+    // T91: mudou o escopo (departamento/conexão)? Avisa também o escopo ANTIGO: quem perdeu o acesso recebe o evento,
+    // refaz a lista e o chat some sem recarregar (o servidor já não o devolve).
+    if (chat.departmentId !== updated.departmentId || chat.connectionId !== updated.connectionId)
+      await this.publish(chat, 'chat.updated', { chat_id: updated.id, chat: dto })
     return dto
   }
 

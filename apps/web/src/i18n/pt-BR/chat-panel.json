@@ -1,0 +1,113 @@
+{
+  "title": "Ações do chat",
+  "open": "Abrir ações do chat",
+  "close": "Fechar",
+  "cancel": "Cancelar",
+  "retry": "Tentar novamente",
+  "errors": {
+    "load": "Não foi possível carregar.",
+    "action": "Não foi possível concluir a ação."
+  },
+  "contact": {
+    "title": "Contato"
+  },
+  "kanban": {
+    "title": "CRM e Kanban",
+    "board": "Quadro",
+    "column": "Etapa",
+    "none": "Fora do kanban"
+  },
+  "department": {
+    "title": "Departamento",
+    "none": "Sem departamento",
+    "other": "Outro departamento",
+    "hint": "Trocar o departamento transfere o atendimento."
+  },
+  "assignee": {
+    "title": "Responsável",
+    "none": "Sem responsável (fila)",
+    "me": "Atribuir a mim"
+  },
+  "agent": {
+    "title": "Agente de IA",
+    "none": "Desligado",
+    "off": "Desligar",
+    "offTitle": "Desligar o agente?",
+    "offBody": "O agente de IA deixa de responder neste chat."
+  },
+  "labels": {
+    "title": "Etiquetas",
+    "empty": "Nenhuma etiqueta aplicada.",
+    "add": "Adicionar etiqueta",
+    "remove": "Remover {name}",
+    "removeTitle": "Remover etiqueta?",
+    "removeBody": "A etiqueta \"{name}\" sai deste chat.",
+    "removeAction": "Remover"
+  },
+  "flows": {
+    "title": "Fluxos ativos",
+    "empty": "Nenhum fluxo ativo.",
+    "trigger": "Disparar fluxo",
+    "stop": "Parar fluxo",
+    "stopTitle": "Parar o fluxo?",
+    "stopBody": "O fluxo \"{name}\" será interrompido neste chat.",
+    "unnamed": "Fluxo",
+    "status": {
+      "running": "Em execução",
+      "waiting": "Aguardando",
+      "paused": "Pausado",
+      "completed": "Concluído",
+      "failed": "Falhou",
+      "cancelled": "Cancelado"
+    }
+  },
+  "trigger": {
+    "title": "Disparar fluxo",
+    "flow": "Fluxo",
+    "choose": "Escolha um fluxo",
+    "empty": "Nenhum fluxo ativo e publicado.",
+    "submit": "Disparar"
+  },
+  "schedule": {
+    "section": "Agendamentos",
+    "new": "Agendar",
+    "empty": "Nenhum agendamento pendente.",
+    "pending": "Pendentes neste chat",
+    "cancel": "Cancelar agendamento",
+    "cancelTitle": "Cancelar agendamento?",
+    "cancelBody": "A mensagem ou o fluxo não será mais executado.",
+    "title": "Agendar mensagem ou fluxo",
+    "kind": {
+      "message": "Mensagem",
+      "flow": "Fluxo"
+    },
+    "quickReply": "Conteúdo",
+    "textOnly": "Só texto",
+    "text": "Mensagem",
+    "flow": "Fluxo",
+    "flowHint": "Executa um fluxo ativo neste horário.",
+    "runAt": "Data e hora",
+    "window": "No máximo {days} dias à frente.",
+    "repeat": "Repetir",
+    "submit": "Agendar",
+    "recurrence": {
+      "one_off": "Não repetir",
+      "daily": "A cada dia",
+      "weekly": "A cada semana",
+      "monthly": "A cada mês"
+    },
+    "errors": {
+      "date": "Informe data e hora.",
+      "past": "Escolha um horário no futuro.",
+      "too_far": "No máximo {days} dias à frente.",
+      "text": "Escreva a mensagem.",
+      "flow": "Escolha o fluxo."
+    }
+  },
+  "notes": {
+    "title": "Notas",
+    "placeholder": "Escreva uma nota interna...",
+    "add": "Adicionar nota",
+    "empty": "Nenhuma nota ainda..."
+  }
+}

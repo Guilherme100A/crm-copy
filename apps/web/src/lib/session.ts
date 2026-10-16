@@ -1,5 +1,5 @@
 // Sessão no cliente: perfil (`GET /api/auth/profile`), empresa ativa e permissões efetivas (SPEC 3.3; spec 18 §5.4).
-// O perfil traz o papel do usuário em cada empresa; as permissões saem da matriz padrão do papel (`@crm/shared`).
+// O perfil traz o papel e as permissões efetivas de cada empresa (as que o servidor aplica); sem elas, a matriz do papel.
 // O servidor sempre revalida com `requirePerm`: aqui é só para esconder/desabilitar e guiar a navegação.
 import { queryOptions, type QueryClient } from '@tanstack/react-query'
 import { effectivePermissions, type CompanyRole, type PermissionKey, type User } from '@crm/shared'
@@ -10,6 +10,8 @@ export interface CompanySummary {
   name: string
   slug: string
   role: CompanyRole
+  /** T91: permissões efetivas que o servidor aplica (lista explícita do membro ou matriz do papel). */
+  effective_permissions?: PermissionKey[]
 }
 
 export interface Profile {
@@ -51,9 +53,12 @@ export function sessionFrom(profile: Profile): Session {
   const company = profile.companies.find((c) => c.id === profile.user.last_company_id) ?? profile.companies[0] ?? null
   const isSupport = profile.user.system_role === 'support'
   const role = company?.role ?? null
-  const perms = role
-    ? effectivePermissions({ role, permission_keys: null, system_role: profile.user.system_role })
-    : new Set<PermissionKey>(['profile.view'])
+  // As do servidor quando o perfil traz (respeitam a lista explícita do membro); a matriz do papel é só fallback.
+  const perms = !role
+    ? new Set<PermissionKey>(['profile.view'])
+    : Array.isArray(company?.effective_permissions)
+      ? new Set<PermissionKey>(company.effective_permissions)
+      : effectivePermissions({ role, permission_keys: null, system_role: profile.user.system_role })
   return {
     user: profile.user,
     companies: profile.companies,

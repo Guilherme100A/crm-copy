@@ -3,7 +3,7 @@ import { randomBytes } from 'node:crypto'
 import { and, asc, eq, gt, isNull, sql } from 'drizzle-orm'
 import { apiTokens, companies, companyMembers, passwordResets, userProfiles, users, type Database, type MemberRole } from '@crm/db'
 import { hashPassword, verifyPassword, type BlobStore, type Mailer } from '@crm/node-kit'
-import { DEFAULT_LOCALE, type Locale, type User } from '@crm/shared'
+import { DEFAULT_LOCALE, effectivePermissions, type Locale, type PermissionKey, type User } from '@crm/shared'
 import { apiTokenDisplayPrefix, generateApiToken, generateSessionToken, hashToken } from '../platform/tokens'
 import type { SessionService } from '../platform/session-service'
 import { AuthError, isUniqueViolation } from './errors'
@@ -21,6 +21,8 @@ export interface CompanySummary {
   name: string
   slug: string
   role: MemberRole
+  /** T91: permissões efetivas do usuário nesta empresa (as que o servidor aplica). */
+  effective_permissions: PermissionKey[]
 }
 
 export interface AuthServiceOptions {
@@ -148,12 +150,25 @@ export class AuthService {
   }
 
   async listCompanies(userId: string): Promise<CompanySummary[]> {
-    return this.db
-      .select({ id: companies.id, name: companies.name, slug: companies.slug, role: companyMembers.role })
+    const rows = await this.db
+      .select({
+        id: companies.id,
+        name: companies.name,
+        slug: companies.slug,
+        role: companyMembers.role,
+        permissionKeys: companyMembers.permissionKeys,
+        systemRole: users.systemRole,
+      })
       .from(companyMembers)
       .innerJoin(companies, eq(companies.id, companyMembers.companyId))
+      .innerJoin(users, eq(users.id, companyMembers.userId))
       .where(eq(companyMembers.userId, userId))
       .orderBy(asc(companyMembers.createdAt), asc(companies.name))
+    // T91: as permissões efetivas (lista explícita do membro ou matriz do papel), o mesmo cálculo do servidor.
+    return rows.map(({ permissionKeys, systemRole, ...c }) => ({
+      ...c,
+      effective_permissions: [...effectivePermissions({ role: c.role, permissionKeys, systemRole })].sort(),
+    }))
   }
 
   // ---------- login ----------

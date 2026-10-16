@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "task": "T91",
+  "role": "tester",
+  "ok": false,
+  "at": "2026-10-16T10:43:16.960Z",
+  "commit": "6798cecaa811e91b439ae892f5fdd0da5665fc4b",
+  "base": "6798cec",
+  "changedFiles": [
+    "tests/acceptance/T91/panel.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T91-01, AC-T91-02, AC-T91-03, AC-T91-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "fail",
+      "detail": "21 passed, 1 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T91-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T91-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T91-03",
+      "status": "pass",
+      "detail": "8 passed"
+    },
+    {
+      "name": "AC-T91-04",
+      "status": "fail",
+      "detail": "7 passed, 1 failed: T91\\panel.e2e.ts › T91 — disparar fluxo, permissões e mobile › AC-T91-04 no mobile o painel abre como sheet e fecha; no desktop é coluna lateral [mobile]",
+      "failures": [
+        {
+          "title": "T91\\panel.e2e.ts › T91 — disparar fluxo, permissões e mobile › AC-T91-04 no mobile o painel abre como sheet e fecha; no desktop é coluna lateral",
+          "project": "mobile",
+          "messages": [
+            "TimeoutError: apiRequestContext.post: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - → POST http://127.0.0.1:30526/__e2e/reset\u001b[22m\n\u001b[2m    - user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/153.0.8010.12 Safari/537.36\u001b[22m\n\u001b[2m    - accept: */*\u001b[22m\n\u001b[2m    - accept-encoding: gzip,deflate,br\u001b[22m\n\u001b[2m    - x-requested-with: crm\u001b[22m\n\n\n   at helpers\\e2e.ts:16\n\n  14 | /** Restaura o seed-base (POST /__e2e/reset, só com E2E=1). */\n  15 | export async function resetSeed(request: APIRequestContext) {\n> 16 |   const res = await request.post('/__e2e/reset', { headers: { 'x-requested-with': 'crm' } })\n     |                             ^\n  17 |   expect(res.status(), await res.text()).toBe(200)\n  18 | }\n  19 |\n    at resetSeed (C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T91\\tests\\acceptance\\helpers\\e2e.ts:16:29)\n    at C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T91\\tests\\acceptance\\T91\\panel.e2e.ts:8:9"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "1 arquivo(s) alterado(s)"
+    }
+  ]
+}

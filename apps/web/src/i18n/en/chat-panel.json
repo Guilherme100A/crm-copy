@@ -1,0 +1,113 @@
+{
+  "title": "Chat actions",
+  "open": "Open chat actions",
+  "close": "Close",
+  "cancel": "Cancel",
+  "retry": "Try again",
+  "errors": {
+    "load": "Couldn't load.",
+    "action": "Couldn't complete the action."
+  },
+  "contact": {
+    "title": "Contact"
+  },
+  "kanban": {
+    "title": "CRM & Kanban",
+    "board": "Board",
+    "column": "Stage",
+    "none": "Not on a board"
+  },
+  "department": {
+    "title": "Department",
+    "none": "No department",
+    "other": "Other department",
+    "hint": "Changing the department transfers the conversation."
+  },
+  "assignee": {
+    "title": "Assignee",
+    "none": "Unassigned (queue)",
+    "me": "Assign to me"
+  },
+  "agent": {
+    "title": "AI agent",
+    "none": "Off",
+    "off": "Turn off",
+    "offTitle": "Turn off the agent?",
+    "offBody": "The AI agent stops replying in this chat."
+  },
+  "labels": {
+    "title": "Labels",
+    "empty": "No labels applied.",
+    "add": "Add label",
+    "remove": "Remove {name}",
+    "removeTitle": "Remove label?",
+    "removeBody": "The label \"{name}\" will be removed from this chat.",
+    "removeAction": "Remove"
+  },
+  "flows": {
+    "title": "Active flows",
+    "empty": "No active flows.",
+    "trigger": "Trigger flow",
+    "stop": "Stop flow",
+    "stopTitle": "Stop the flow?",
+    "stopBody": "The flow \"{name}\" will be stopped in this chat.",
+    "unnamed": "Flow",
+    "status": {
+      "running": "Running",
+      "waiting": "Waiting",
+      "paused": "Paused",
+      "completed": "Completed",
+      "failed": "Failed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "trigger": {
+    "title": "Trigger flow",
+    "flow": "Flow",
+    "choose": "Choose a flow",
+    "empty": "No active published flows.",
+    "submit": "Trigger"
+  },
+  "schedule": {
+    "section": "Schedules",
+    "new": "Schedule",
+    "empty": "No pending schedules.",
+    "pending": "Pending in this chat",
+    "cancel": "Cancel schedule",
+    "cancelTitle": "Cancel schedule?",
+    "cancelBody": "The message or flow will no longer run.",
+    "title": "Schedule message or flow",
+    "kind": {
+      "message": "Message",
+      "flow": "Flow"
+    },
+    "quickReply": "Content",
+    "textOnly": "Text only",
+    "text": "Message",
+    "flow": "Flow",
+    "flowHint": "Runs an active flow at this time.",
+    "runAt": "Date and time",
+    "window": "Up to {days} days ahead.",
+    "repeat": "Repeat",
+    "submit": "Schedule",
+    "recurrence": {
+      "one_off": "Don't repeat",
+      "daily": "Every day",
+      "weekly": "Every week",
+      "monthly": "Every month"
+    },
+    "errors": {
+      "date": "Enter date and time.",
+      "past": "Pick a time in the future.",
+      "too_far": "Up to {days} days ahead.",
+      "text": "Write the message.",
+      "flow": "Choose the flow."
+    }
+  },
+  "notes": {
+    "title": "Notes",
+    "placeholder": "Write an internal note...",
+    "add": "Add note",
+    "empty": "No notes yet..."
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "title": "Acciones del chat",
+  "open": "Abrir acciones del chat",
+  "close": "Cerrar",
+  "cancel": "Cancelar",
+  "retry": "Reintentar",
+  "errors": {
+    "load": "No fue posible cargar.",
+    "action": "No fue posible completar la acción."
+  },
+  "contact": {
+    "title": "Contacto"
+  },
+  "kanban": {
+    "title": "CRM y Kanban",
+    "board": "Tablero",
+    "column": "Etapa",
+    "none": "Fuera del kanban"
+  },
+  "department": {
+    "title": "Departamento",
+    "none": "Sin departamento",
+    "other": "Otro departamento",
+    "hint": "Cambiar el departamento transfiere la atención."
+  },
+  "assignee": {
+    "title": "Responsable",
+    "none": "Sin responsable (cola)",
+    "me": "Asignarme"
+  },
+  "agent": {
+    "title": "Agente de IA",
+    "none": "Apagado",
+    "off": "Apagar",
+    "offTitle": "¿Apagar el agente?",
+    "offBody": "El agente de IA deja de responder en este chat."
+  },
+  "labels": {
+    "title": "Etiquetas",
+    "empty": "Ninguna etiqueta aplicada.",
+    "add": "Agregar etiqueta",
+    "remove": "Quitar {name}",
+    "removeTitle": "¿Quitar etiqueta?",
+    "removeBody": "La etiqueta \"{name}\" se quita de este chat.",
+    "removeAction": "Quitar"
+  },
+  "flows": {
+    "title": "Flujos activos",
+    "empty": "Ningún flujo activo.",
+    "trigger": "Disparar flujo",
+    "stop": "Detener flujo",
+    "stopTitle": "¿Detener el flujo?",
+    "stopBody": "El flujo \"{name}\" se detendrá en este chat.",
+    "unnamed": "Flujo",
+    "status": {
+      "running": "En ejecución",
+      "waiting": "En espera",
+      "paused": "Pausado",
+      "completed": "Completado",
+      "failed": "Falló",
+      "cancelled": "Cancelado"
+    }
+  },
+  "trigger": {
+    "title": "Disparar flujo",
+    "flow": "Flujo",
+    "choose": "Elige un flujo",
+    "empty": "Ningún flujo activo y publicado.",
+    "submit": "Disparar"
+  },
+  "schedule": {
+    "section": "Programaciones",
+    "new": "Programar",
+    "empty": "Ninguna programación pendiente.",
+    "pending": "Pendientes en este chat",
+    "cancel": "Cancelar programación",
+    "cancelTitle": "¿Cancelar programación?",
+    "cancelBody": "El mensaje o el flujo ya no se ejecutará.",
+    "title": "Programar mensaje o flujo",
+    "kind": {
+      "message": "Mensaje",
+      "flow": "Flujo"
+    },
+    "quickReply": "Contenido",
+    "textOnly": "Solo texto",
+    "text": "Mensaje",
+    "flow": "Flujo",
+    "flowHint": "Ejecuta un flujo activo a esta hora.",
+    "runAt": "Fecha y hora",
+    "window": "Hasta {days} días adelante.",
+    "repeat": "Repetir",
+    "submit": "Programar",
+    "recurrence": {
+      "one_off": "No repetir",
+      "daily": "Cada día",
+      "weekly": "Cada semana",
+      "monthly": "Cada mes"
+    },
+    "errors": {
+      "date": "Indica fecha y hora.",
+      "past": "Elige una hora en el futuro.",
+      "too_far": "Hasta {days} días adelante.",
+      "text": "Escribe el mensaje.",
+      "flow": "Elige el flujo."
+    }
+  },
+  "notes": {
+    "title": "Notas",
+    "placeholder": "Escribe una nota interna...",
+    "add": "Agregar nota",
+    "empty": "Aún no hay notas..."
+  }
+}
