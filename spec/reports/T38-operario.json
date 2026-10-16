@@ -3,17 +3,14 @@
   "task": "T38",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T07:16:46.239Z",
-  "commit": "2c0684c7d633314e7688e5fd45236c1efbe241a4",
-  "base": "2c0684c",
+  "at": "2026-10-16T07:18:37.222Z",
+  "commit": "43843631c5ce3202f53e996ebfdeaf979b070b3e",
+  "base": "64277c1",
   "changedFiles": [
     ".env.example",
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
     "apps/api/src/routes/ai-keys/ai-keys.db.unit.test.ts",
     "apps/api/src/routes/ai-keys/index.ts",
+    "apps/api/src/routes/index.ts",
     "docs/ai-keys.md",
     "packages/core/src/ai-keys/errors.ts",
     "packages/core/src/ai-keys/http.ts",
@@ -23,40 +20,43 @@
     "packages/core/src/ai-keys/providers.unit.test.ts",
     "packages/core/src/ai-keys/service.db.unit.test.ts",
     "packages/core/src/ai-keys/service.ts",
-    "packages/db/drizzle/crm/0016_t38_ai_keys.sql",
-    "packages/db/drizzle/crm/meta/0016_snapshot.json",
-    "packages/db/src/schema/crm/ai-keys.ts"
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/0017_t38_ai_keys.sql",
+    "packages/db/drizzle/crm/meta/0017_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/ai-keys.ts",
+    "packages/db/src/schema/crm/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.0s"
+      "detail": "ok em 9.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 35.6s"
+      "detail": "ok em 31.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 8.5s"
+      "detail": "ok em 8.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.0s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 27.7s"
+      "detail": "ok em 24.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
