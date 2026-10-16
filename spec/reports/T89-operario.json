@@ -3,14 +3,10 @@
   "task": "T89",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T15:37:16.042Z",
-  "commit": "f6b2460b08f6d19e7db84ca6354879b88f5de2a1",
-  "base": "f6b2460",
+  "at": "2026-10-16T19:56:43.341Z",
+  "commit": "c3a0d8fdb44192010137614fdaa3ed62e4eb514d",
+  "base": "d38a3e2",
   "changedFiles": [
-    "apps/web/src/routeTree.gen.ts",
-    "apps/web/src/routes/settings/inbound-webhooks.tsx",
-    "apps/worker/src/index.ts",
-    "scripts/e2e/api.ts",
     "apps/web/src/features/settings-webhooks/api.ts",
     "apps/web/src/features/settings-webhooks/config-tab.tsx",
     "apps/web/src/features/settings-webhooks/edit-page.tsx",
@@ -24,50 +20,54 @@
     "apps/web/src/i18n/en/settings-webhooks.json",
     "apps/web/src/i18n/es/settings-webhooks.json",
     "apps/web/src/i18n/pt-BR/settings-webhooks.json",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/settings/inbound-webhooks.tsx",
     "apps/web/src/routes/settings/inbound-webhooks/$webhookId/edit.tsx",
     "apps/web/src/routes/settings/inbound-webhooks/index.tsx",
-    "apps/web/src/routes/settings/inbound-webhooks/new.tsx"
+    "apps/web/src/routes/settings/inbound-webhooks/new.tsx",
+    "apps/worker/src/index.ts",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 26.2s"
+      "detail": "ok em 16.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 4.3s"
+      "detail": "ok em 4.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 32.5s"
+      "detail": "ok em 38.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 13.3s"
+      "detail": "ok em 11.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 6.5s"
+      "detail": "ok em 5.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 7.9s"
+      "detail": "ok em 10.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.9s"
+      "detail": "ok em 0.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.3s"
+      "detail": "ok em 32.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

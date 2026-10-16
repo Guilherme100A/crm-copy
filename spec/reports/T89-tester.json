@@ -2,10 +2,10 @@
   "version": 1,
   "task": "T89",
   "role": "tester",
-  "ok": false,
-  "at": "2026-10-16T15:47:01.573Z",
-  "commit": "f6b2460b08f6d19e7db84ca6354879b88f5de2a1",
-  "base": "f6b2460",
+  "ok": true,
+  "at": "2026-10-16T19:58:08.408Z",
+  "commit": "c3a0d8fdb44192010137614fdaa3ed62e4eb514d",
+  "base": "d38a3e2",
   "changedFiles": [
     "tests/acceptance/T89/webhooks.e2e.ts"
   ],
@@ -47,29 +47,33 @@
     },
     {
       "name": "execução playwright",
-      "status": "fail",
-      "detail": "sem relatório JSON (exit 134)",
-      "output": "15: 00007FF7AFC8EC4F \r\n16: 00007FF7AFC8EAB3 \r\n17: 00007FF7AFC8D2E3 \r\n18: 00007FF7AFC84706 \r\n19: 00007FF7AFF22ABF \r\n20: 00007FF7AFF193D8 \r\n21: 00007FF7AFF18BFD \r\n22: 00007FF7AFF1969C \r\n23: 00007FF7AF99A9BB \r\n24: 0000017C2FE775FA \r\n 1: 00007FF7B13750BF \r\n 2: 00007FF7AFF9DD27 \r\n 3: 00007FF7AF915BC6 \r\n 4: 00007FF7B0A825D2 \r\n 5: 00007FF7B095CC94 \r\n 6: 00007FF7B0E5F11D \r\n 7: 00007FF7B0E60C72 \r\n 8: 00007FF7B0E6144D \r\n 9: 00007FF7B0E5ACB6 \r\n10: 00007FF7B0E4ECBC \r\n11: 00007FF7B0E4EAD6 \r\n12: 00007FF7B0E615AD \r\n13: 00007FF7B1036BFD \r\n14: 00007FF7B0F273EE \r\n15: 00007FF7B0F27AE0 \r\n16: 00007FF7B0A92489 \r\n17: 00007FF7B09CBA2D \r\n18: 00007FF7B09A58A0 \r\n19: 00007FF7B09A29A2 \r\n20: 00007FF7B09A25BE \r\n21: 00007FF7AFF119DF \r\n22: 00007FF7AFED6A2D \r\n23: 00007FF7AFED6725 \r\n24: 00007FF7B078F2CF \r\n25: 00007FF7B12B954B \r\n26: 00007FF7AFFF3136 \r\n27: 00007FF7B16B35B3 \r\n28: 00007FF93113CD87 \r\n29: 00007FF931E2CAEC \r\n"
+      "status": "pass",
+      "detail": "16 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
     },
     {
       "name": "AC-T89-01",
-      "status": "fail",
-      "detail": "nenhum teste executado com este ID"
+      "status": "pass",
+      "detail": "4 passed"
     },
     {
       "name": "AC-T89-02",
-      "status": "fail",
-      "detail": "nenhum teste executado com este ID"
+      "status": "pass",
+      "detail": "6 passed"
     },
     {
       "name": "AC-T89-03",
-      "status": "fail",
-      "detail": "nenhum teste executado com este ID"
+      "status": "pass",
+      "detail": "4 passed"
     },
     {
       "name": "AC-T89-04",
-      "status": "fail",
-      "detail": "nenhum teste executado com este ID"
+      "status": "pass",
+      "detail": "2 passed"
     },
     {
       "name": "escopo de arquivos",
