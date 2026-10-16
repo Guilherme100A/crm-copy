@@ -49,3 +49,5 @@
 - Testes de `scripts/e2e/*.unit.test.mjs` rodam no vitest do `@crm/api`, não no verify de tarefas só-db; rode à mão. (T128)
 - Harness em segundo plano: `E2E_IGNORE_STDIN=1 node scripts/e2e/serve.mjs` (sem isso ele sai ao fechar o stdin). O seed não tem contatos, conexões nem figurinhas: crie pela API no teste. (T58, T53)
 - Decisão que muda comportamento existente: procure o teste que trava o comportamento antigo (ex.: `contacts.db.unit.test.ts`) e ajuste-o de forma mínima (`*.unit.test.ts` é compartilhado, SPEC 2.4). (T58)
+- No mobile (< 1024 px) o hub de Configurações não tem os botões `settings-tab-<id>`: usa `settings-tab-select` → `settings-tab-select-search` → `settings-tab-option-<id>` (`aria-selected`). Testes de abas novas conferem a aba pelo select no mobile. (T53/T58)
+- Tarefas de UI feitas em paralelo podem quebrar os E2E uma da outra só no gate (base nova): o tester ajusta o teste, sem afrouxar o AC. (T58)
