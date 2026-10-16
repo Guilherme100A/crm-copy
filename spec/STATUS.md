@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T20 (Cinzel/Radar), T24 (Torno/Sonda), T25 (Bigorna/Lupa), T49 (Fole/Prisma).
+- Em andamento: T21 (Cinzel/Radar), T23 (Fole/Prisma), T24 (Torno/Sonda), T28 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -35,14 +35,14 @@
 | 3 | T17 | Harness E2E (API com fakes, seed, reset) | MERGED | Torno | Sonda | 0 | 06e42c8 |
 | 3 | T19 | Fluxos: schema e repositório | MERGED | Cinzel | Radar | 0 | 744ecca |
 | 3 | T24 | UsageGuard e provider medido | IN_PROGRESS | Torno | Sonda | 0 | |
-| 4 | T20 | WA: SendPipeline, deliver e health | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 4 | T21 | WA: outbox de eventos, mídia e contatos | TODO | | | 0 | |
+| 4 | T20 | WA: SendPipeline, deliver e health | MERGED | Cinzel | Radar | 0 | b77551d |
+| 4 | T21 | WA: outbox de eventos, mídia e contatos | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 4 | T22 | Empresas, equipe, convites e permissões | MERGED | Bigorna | Lupa | 0 | 23a441a |
-| 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | TODO | | | 0 | |
-| 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | IN_PROGRESS | Fole | Prisma | 0 | |
+| 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | MERGED | Bigorna | Lupa | 0 | 0119e46 |
 | 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
-| 4 | T28 | API de fluxos, pastas, nós e arestas | TODO | | | 0 | |
+| 4 | T28 | API de fluxos, pastas, nós e arestas | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T29 | App wa-worker e RPC interno | TODO | | | 0 | |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | TODO | | | 0 | |
 | 5 | T31 | Departamentos e horários de atendimento | TODO | | | 0 | |
@@ -67,7 +67,7 @@
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | TODO | | | 0 | |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | TODO | | | 0 | |
-| 6 | T49 | Chats: envio, mídia e leitura | IN_PROGRESS | Fole | Prisma | 0 | |
+| 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | TODO | | | 0 | |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | TODO | | | 0 | |
 | 6 | T52 | Agentes de IA: base de conhecimento | TODO | | | 0 | |
