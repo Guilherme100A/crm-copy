@@ -193,3 +193,5 @@
 | templating (T11) | `{{customer.name}}` não é reconhecido (só first_name/full_name): avaliar alias por paridade com a referência | T85 |
 | montagem do worker | `configureCrmNodes({ publisher })` (T63) e `configureLogicNodes({ publisher })` (T41) não são chamados no boot: os nós funcionam mas não publicam eventos no SSE | T63, T41 |
 | harness E2E / testes | bancos crm_e2e_*/crm_test_*/crm_acc_* de execuções mortas acumulam (72 apagados em 2026-10-16 após queda do Postgres por memória): o harness deve limpar órfãos sem conexão ao subir | infra |
+| UI chat (polimento) | a 1366 px com lista + conversa + painel a conversa fica com ~370 px e o compositor (T85) aperta: lista recolhível (T69) ou container queries no compositor | T91 |
+| T50 (desempenho) | painel do chat (T91) acha o card do chat com 1 chamada por coluna: criar rota dedicada "card do chat por quadro" | T91 |
