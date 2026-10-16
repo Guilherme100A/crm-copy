@@ -1,0 +1,26 @@
+{
+  "label": "Empresas",
+  "active": "Empresa ativa",
+  "open": "Trocar de empresa",
+  "search": "Buscar empresa",
+  "empty": "Nenhuma empresa encontrada.",
+  "loading": "Carregando…",
+  "loadMore": "Carregar mais empresas",
+  "roles": {
+    "owner": "Proprietário",
+    "admin": "Administrador",
+    "member": "Membro"
+  },
+  "create": {
+    "open": "Criar empresa",
+    "name": "Nome da empresa",
+    "cancel": "Cancelar",
+    "submit": "Criar"
+  },
+  "errors": {
+    "load": "Não foi possível carregar as empresas.",
+    "switch": "Não foi possível trocar de empresa.",
+    "retry": "Tentar novamente",
+    "generic": "Não foi possível criar a empresa."
+  }
+}

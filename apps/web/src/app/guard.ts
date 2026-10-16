@@ -4,10 +4,14 @@ import { loginPath } from '@/lib/redirect'
 import type { Session } from '@/lib/session'
 import { canAccess, homeOf, LEGACY_REDIRECTS } from './access'
 
-/** Rotas públicas (sem shell e sem sessão obrigatória). */
-export const PUBLIC_PATHS = ['/login'] as const
+/** Rotas públicas (sem shell e sem sessão obrigatória). T36: telas de autenticação (spec 01 §2). */
+export const PUBLIC_PATHS = ['/login', '/register', '/cadastro', '/forgot-password', '/reset-password'] as const
 
-export const isPublicPath = (pathname: string) => (PUBLIC_PATHS as readonly string[]).includes(pathname)
+/** T36: rotas abertas por prefixo (com ou sem sessão, sem shell): o convite (`/invitations/<token>`). */
+export const OPEN_PATH_PREFIXES = ['/invitations/', '/invitation/'] as const
+
+export const isPublicPath = (pathname: string) =>
+  (PUBLIC_PATHS as readonly string[]).includes(pathname) || OPEN_PATH_PREFIXES.some((p) => pathname.startsWith(p))
 
 export type GuardDecision =
   | { kind: 'allow' }

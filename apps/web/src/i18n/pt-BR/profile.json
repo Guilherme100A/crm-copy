@@ -1,0 +1,38 @@
+{
+  "title": "Meu perfil",
+  "tabs": {
+    "personal": "Dados pessoais",
+    "security": "Segurança",
+    "preferences": "Preferências"
+  },
+  "fields": {
+    "name": "Nome",
+    "email": "E-mail",
+    "currentPassword": "Senha atual",
+    "whatsapp": "WhatsApp pessoal",
+    "whatsappPlaceholder": "55DDDNÚMERO",
+    "newPassword": "Nova senha",
+    "passwordConfirmation": "Confirmar nova senha"
+  },
+  "personal": {
+    "currentPasswordHint": "Para trocar o e-mail, confirme sua senha atual.",
+    "whatsappHint": "Número pessoal (não utilizado nas automações)."
+  },
+  "security": {
+    "submit": "Alterar senha",
+    "saved": "Senha alterada."
+  },
+  "preferences": {
+    "language": "Idioma",
+    "theme": "Tema",
+    "themeHint": "Atalho: {shortcut}"
+  },
+  "save": "Salvar",
+  "saving": "Salvando…",
+  "saved": "Alterações salvas.",
+  "errors": {
+    "currentPassword": "A senha atual não corresponde.",
+    "emailTaken": "Este e-mail já está em uso.",
+    "generic": "Não foi possível salvar. Tente novamente."
+  }
+}

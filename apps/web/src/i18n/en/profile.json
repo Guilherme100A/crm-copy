@@ -1,0 +1,38 @@
+{
+  "title": "My profile",
+  "tabs": {
+    "personal": "Personal",
+    "security": "Security",
+    "preferences": "Preferences"
+  },
+  "fields": {
+    "name": "Name",
+    "email": "Email",
+    "currentPassword": "Current password",
+    "whatsapp": "Personal WhatsApp",
+    "whatsappPlaceholder": "Country + area code + number",
+    "newPassword": "New password",
+    "passwordConfirmation": "Confirm new password"
+  },
+  "personal": {
+    "currentPasswordHint": "To change your email, confirm your current password.",
+    "whatsappHint": "Personal number (not used in automations)."
+  },
+  "security": {
+    "submit": "Change password",
+    "saved": "Password changed."
+  },
+  "preferences": {
+    "language": "Language",
+    "theme": "Theme",
+    "themeHint": "Shortcut: {shortcut}"
+  },
+  "save": "Save",
+  "saving": "Saving…",
+  "saved": "Changes saved.",
+  "errors": {
+    "currentPassword": "Current password doesn't match.",
+    "emailTaken": "This email is already in use.",
+    "generic": "Couldn't save. Try again."
+  }
+}

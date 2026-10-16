@@ -3,6 +3,7 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { Menu as MenuIcon, MoreHorizontal, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
+import { CompanySwitcher } from '@/features/company-switcher/company-switcher'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
@@ -19,17 +20,6 @@ function AppName({ collapsed = false }: { collapsed?: boolean }) {
     <span data-testid="shell-app-name" className={cn('truncate text-base font-semibold', collapsed && 'sr-only')}>
       {APP_NAME}
     </span>
-  )
-}
-
-function CompanyBadge({ session, collapsed = false }: { session: Session; collapsed?: boolean }) {
-  const t = useT()
-  if (collapsed || !session.company) return null
-  return (
-    <div data-testid="shell-company" className="rounded-md border px-3 py-2 text-xs">
-      <div className="text-muted-foreground">{t('company.active')}</div>
-      <div className="truncate font-medium">{session.company.name}</div>
-    </div>
   )
 }
 
@@ -103,7 +93,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
               {collapsed ? <PanelLeftOpen className="size-4" /> : <PanelLeftClose className="size-4" />}
             </button>
           </div>
-          <CompanyBadge session={session} collapsed={collapsed} />
+          <CompanySwitcher session={session} collapsed={collapsed} />
           <div className="-mx-1 min-h-0 flex-1 overflow-y-auto px-1">
             <NavList session={session} collapsed={collapsed} />
           </div>
@@ -168,7 +158,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
                 <X className="size-4" />
               </button>
             </div>
-            <CompanyBadge session={session} />
+            <CompanySwitcher session={session} />
             <div className="flex-1">
               <NavList session={session} onNavigate={() => setDrawerOpen(false)} />
             </div>

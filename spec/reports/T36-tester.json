@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "task": "T36",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T07:46:13.570Z",
+  "commit": "ae9e87a18c1131e77ff16280c173476a1fc0b0c2",
+  "base": "ae9e87a",
+  "changedFiles": [
+    "tests/acceptance/T36/auth-ui.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T36-01, AC-T36-02, AC-T36-03, AC-T36-04, AC-T36-05, AC-T36-06, AC-T36-07"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "34 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T36-01",
+      "status": "pass",
+      "detail": "10 passed"
+    },
+    {
+      "name": "AC-T36-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T36-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T36-04",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T36-05",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T36-06",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T36-07",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "1 arquivo(s) alterado(s)"
+    }
+  ]
+}

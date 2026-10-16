@@ -10,7 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CadastroRouteImport } from './routes/cadastro'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as RegisterRouteImport } from './routes/register'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AgentesIndexRouteImport } from './routes/agentes/index'
 import { Route as ChatsIndexRouteImport } from './routes/chats/index'
@@ -19,6 +23,8 @@ import { Route as CrmsIndexRouteImport } from './routes/crms/index'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
 import { Route as FacebookIndexRouteImport } from './routes/facebook/index'
 import { Route as FlowsIndexRouteImport } from './routes/flows/index'
+import { Route as InvitationTokenRouteImport } from './routes/invitation/$token'
+import { Route as InvitationsTokenRouteImport } from './routes/invitations/$token'
 import { Route as MassDispatchesIndexRouteImport } from './routes/mass-dispatches/index'
 import { Route as ProfileIndexRouteImport } from './routes/profile/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
@@ -31,9 +37,29 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CadastroRoute = CadastroRouteImport.update({
+  id: '/cadastro',
+  path: '/cadastro',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminIndexRoute = AdminIndexRouteImport.update({
@@ -76,6 +102,16 @@ const FlowsIndexRoute = FlowsIndexRouteImport.update({
   path: '/flows/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InvitationTokenRoute = InvitationTokenRouteImport.update({
+  id: '/invitation/$token',
+  path: '/invitation/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InvitationsTokenRoute = InvitationsTokenRouteImport.update({
+  id: '/invitations/$token',
+  path: '/invitations/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MassDispatchesIndexRoute = MassDispatchesIndexRouteImport.update({
   id: '/mass-dispatches/',
   path: '/mass-dispatches/',
@@ -109,7 +145,13 @@ const WelcomeIndexRoute = WelcomeIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/invitation/$token': typeof InvitationTokenRoute
+  '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
@@ -127,7 +169,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/invitation/$token': typeof InvitationTokenRoute
+  '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
   '/support/access': typeof SupportAccessRoute
   '/admin': typeof AdminIndexRoute
@@ -146,7 +194,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/cadastro': typeof CadastroRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
+  '/register': typeof RegisterRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/invitation/$token': typeof InvitationTokenRoute
+  '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
@@ -166,7 +220,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/cadastro'
+    | '/forgot-password'
     | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/invitation/$token'
+    | '/invitations/$token'
     | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin/'
@@ -184,7 +244,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/cadastro'
+    | '/forgot-password'
     | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/invitation/$token'
+    | '/invitations/$token'
     | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin'
@@ -202,7 +268,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/cadastro'
+    | '/forgot-password'
     | '/login'
+    | '/register'
+    | '/reset-password'
+    | '/invitation/$token'
+    | '/invitations/$token'
     | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin/'
@@ -221,7 +293,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CadastroRoute: typeof CadastroRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
+  RegisterRoute: typeof RegisterRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
+  InvitationTokenRoute: typeof InvitationTokenRoute
+  InvitationsTokenRoute: typeof InvitationsTokenRoute
   SettingsInboundWebhooksRoute: typeof SettingsInboundWebhooksRoute
   SupportAccessRoute: typeof SupportAccessRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -247,11 +325,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cadastro': {
+      id: '/cadastro'
+      path: '/cadastro'
+      fullPath: '/cadastro'
+      preLoaderRoute: typeof CadastroRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/login': {
       id: '/login'
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/': {
@@ -310,6 +416,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FlowsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/invitation/$token': {
+      id: '/invitation/$token'
+      path: '/invitation/$token'
+      fullPath: '/invitation/$token'
+      preLoaderRoute: typeof InvitationTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/invitations/$token': {
+      id: '/invitations/$token'
+      path: '/invitations/$token'
+      fullPath: '/invitations/$token'
+      preLoaderRoute: typeof InvitationsTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mass-dispatches/': {
       id: '/mass-dispatches/'
       path: '/mass-dispatches'
@@ -357,7 +477,13 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CadastroRoute: CadastroRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
+  RegisterRoute: RegisterRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
+  InvitationTokenRoute: InvitationTokenRoute,
+  InvitationsTokenRoute: InvitationsTokenRoute,
   SettingsInboundWebhooksRoute: SettingsInboundWebhooksRoute,
   SupportAccessRoute: SupportAccessRoute,
   AdminIndexRoute: AdminIndexRoute,

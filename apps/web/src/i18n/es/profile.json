@@ -1,0 +1,38 @@
+{
+  "title": "Mi perfil",
+  "tabs": {
+    "personal": "Datos personales",
+    "security": "Seguridad",
+    "preferences": "Preferencias"
+  },
+  "fields": {
+    "name": "Nombre",
+    "email": "Correo electrónico",
+    "currentPassword": "Contraseña actual",
+    "whatsapp": "WhatsApp personal",
+    "whatsappPlaceholder": "País + área + número",
+    "newPassword": "Nueva contraseña",
+    "passwordConfirmation": "Confirmar nueva contraseña"
+  },
+  "personal": {
+    "currentPasswordHint": "Para cambiar el correo, confirma tu contraseña actual.",
+    "whatsappHint": "Número personal (no se usa en las automatizaciones)."
+  },
+  "security": {
+    "submit": "Cambiar contraseña",
+    "saved": "Contraseña cambiada."
+  },
+  "preferences": {
+    "language": "Idioma",
+    "theme": "Tema",
+    "themeHint": "Atajo: {shortcut}"
+  },
+  "save": "Guardar",
+  "saving": "Guardando…",
+  "saved": "Cambios guardados.",
+  "errors": {
+    "currentPassword": "La contraseña actual no coincide.",
+    "emailTaken": "Este correo ya está en uso.",
+    "generic": "No fue posible guardar. Inténtalo de nuevo."
+  }
+}

@@ -1,24 +1,18 @@
-// `/login` (público). Já autenticado: vai para o `?redirect=` seguro ou para a home do papel (spec 18 §2.2).
-import { createFileRoute, redirect } from '@tanstack/react-router'
+// `/login` (público, só deslogado). Já autenticado: vai ao `?redirect=` seguro ou à home do papel (spec 18 §2.2).
+import { createFileRoute } from '@tanstack/react-router'
 import { z } from 'zod'
-import { homeOf } from '@/app/access'
-import { splitHref } from '@/app/guard'
+import { redirectIfAuthenticated } from '@/features/auth/guest'
 import { LoginPage } from '@/features/auth/login-page'
-import { safeRedirect } from '@/lib/redirect'
+
+const opt = z.string().optional().catch(undefined)
 
 export const Route = createFileRoute('/login')({
-  validateSearch: z.object({ redirect: z.string().optional().catch(undefined), message: z.string().optional().catch(undefined) }),
-  beforeLoad: ({ context, search }) => {
-    const session = (context as { session?: Parameters<typeof homeOf>[0] | null }).session
-    if (session) {
-      const { to, search: s } = splitHref(safeRedirect(search.redirect, homeOf(session)))
-      throw redirect({ to, search: s, replace: true } as never)
-    }
-  },
+  validateSearch: z.object({ redirect: opt, message: opt, email: opt }),
+  beforeLoad: ({ context, search }) => redirectIfAuthenticated(context, search.redirect),
   component: LoginRoute,
 })
 
 function LoginRoute() {
-  const { redirect: target, message } = Route.useSearch()
-  return <LoginPage redirect={target} message={message} />
+  const { redirect, message, email } = Route.useSearch()
+  return <LoginPage redirect={redirect} message={message} email={email} />
 }

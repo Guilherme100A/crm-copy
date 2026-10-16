@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "task": "T36",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T07:42:23.505Z",
+  "commit": "ae9e87a18c1131e77ff16280c173476a1fc0b0c2",
+  "base": "ae9e87a",
+  "changedFiles": [
+    "apps/web/src/app/guard.ts",
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/features/auth/login-page.tsx",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/login.tsx",
+    "apps/web/src/routes/profile/index.tsx",
+    "apps/web/src/features/auth/api.ts",
+    "apps/web/src/features/auth/auth.unit.test.ts",
+    "apps/web/src/features/auth/forgot-password-page.tsx",
+    "apps/web/src/features/auth/guest.ts",
+    "apps/web/src/features/auth/invitation-page.tsx",
+    "apps/web/src/features/auth/password.ts",
+    "apps/web/src/features/auth/register-page.tsx",
+    "apps/web/src/features/auth/register-route.tsx",
+    "apps/web/src/features/auth/reset-password-page.tsx",
+    "apps/web/src/features/auth/ui.tsx",
+    "apps/web/src/features/company-switcher/company-switcher.tsx",
+    "apps/web/src/features/company-switcher/company-switcher.unit.test.ts",
+    "apps/web/src/features/company-switcher/switch.ts",
+    "apps/web/src/features/profile/profile-page.tsx",
+    "apps/web/src/i18n/en/auth.json",
+    "apps/web/src/i18n/en/company-switcher.json",
+    "apps/web/src/i18n/en/profile.json",
+    "apps/web/src/i18n/es/auth.json",
+    "apps/web/src/i18n/es/company-switcher.json",
+    "apps/web/src/i18n/es/profile.json",
+    "apps/web/src/i18n/pt-BR/auth.json",
+    "apps/web/src/i18n/pt-BR/company-switcher.json",
+    "apps/web/src/i18n/pt-BR/profile.json",
+    "apps/web/src/routes/cadastro.tsx",
+    "apps/web/src/routes/forgot-password.tsx",
+    "apps/web/src/routes/invitation/$token.tsx",
+    "apps/web/src/routes/invitations/$token.tsx",
+    "apps/web/src/routes/register.tsx",
+    "apps/web/src/routes/reset-password.tsx"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: apps/web/src/routes/login.tsx",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 5.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 2.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "35 arquivo(s) alterado(s)"
+    }
+  ]
+}

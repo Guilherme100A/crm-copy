@@ -1,0 +1,26 @@
+{
+  "label": "Companies",
+  "active": "Active company",
+  "open": "Switch company",
+  "search": "Search company",
+  "empty": "No companies found.",
+  "loading": "Loading…",
+  "loadMore": "Load more companies",
+  "roles": {
+    "owner": "Owner",
+    "admin": "Admin",
+    "member": "Member"
+  },
+  "create": {
+    "open": "Create company",
+    "name": "Company name",
+    "cancel": "Cancel",
+    "submit": "Create"
+  },
+  "errors": {
+    "load": "Couldn't load companies.",
+    "switch": "Couldn't switch company.",
+    "retry": "Try again",
+    "generic": "Couldn't create the company."
+  }
+}
