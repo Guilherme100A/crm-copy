@@ -3,34 +3,34 @@
   "task": "T62",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T09:44:47.986Z",
-  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
-  "base": "a7bbd86",
+  "at": "2026-10-16T09:47:01.989Z",
+  "commit": "8134e6dd85775ba545df006f748f1d0c04ff2f1c",
+  "base": "796dd86",
   "changedFiles": [
     "packages/core/src/flows/engine/control.ts",
-    "packages/core/src/flows/nodes/index.ts",
-    "packages/core/src/index.ts",
     "packages/core/src/flows/engine/reentry.db.unit.test.ts",
+    "packages/core/src/flows/nodes/index.ts",
     "packages/core/src/flows/nodes/interactive/handlers.ts",
     "packages/core/src/flows/nodes/interactive/index.ts",
     "packages/core/src/flows/nodes/interactive/menu.ts",
-    "packages/core/src/flows/nodes/interactive/menu.unit.test.ts"
+    "packages/core/src/flows/nodes/interactive/menu.unit.test.ts",
+    "packages/core/src/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 12.0s"
+      "detail": "ok em 10.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 8.2s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 42.2s"
+      "detail": "ok em 60.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
