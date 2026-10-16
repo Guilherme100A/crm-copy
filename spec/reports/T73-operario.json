@@ -3,23 +3,21 @@
   "task": "T73",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T20:06:10.530Z",
-  "commit": "d38a3e280c85f90c9683630953bc916802a8f2de",
-  "base": "d38a3e2",
+  "at": "2026-10-16T20:23:20.477Z",
+  "commit": "85fc26eb4dab9336e28368c6b3d3f5cc554ecdc7",
+  "base": "218b712",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
     "apps/api/src/routes/hooks-sales/index.ts",
+    "apps/api/src/routes/index.ts",
     "apps/api/src/routes/sale-sources/index.ts",
     "apps/api/src/routes/sale-sources/sale-sources.db.unit.test.ts",
+    "apps/worker/src/index.ts",
     "apps/worker/src/jobs/inbound-sales/inbound-sales.unit.test.ts",
     "apps/worker/src/jobs/inbound-sales/index.ts",
+    "apps/worker/src/registry.ts",
     "packages/core/src/attribution/index.ts",
     "packages/core/src/attribution/service.ts",
+    "packages/core/src/index.ts",
     "packages/core/src/sale-sources/index.ts",
     "packages/core/src/sale-sources/mapping.ts",
     "packages/core/src/sale-sources/mapping.unit.test.ts",
@@ -28,53 +26,55 @@
     "packages/core/src/sale-sources/service.ts",
     "packages/db/drizzle/crm/0028_t73_sale_sources.sql",
     "packages/db/drizzle/crm/meta/0028_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
     "packages/db/src/schema/crm/sale-sources.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.2s"
+      "detail": "ok em 17.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 5.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 97.5s"
+      "detail": "ok em 167.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 15.8s"
+      "detail": "ok em 23.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 25.7s"
+      "detail": "ok em 43.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 11.1s"
+      "detail": "ok em 15.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.8s"
+      "detail": "ok em 7.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 92.5s"
+      "detail": "ok em 125.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

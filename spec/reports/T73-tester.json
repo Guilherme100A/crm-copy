@@ -3,9 +3,9 @@
   "task": "T73",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T20:08:19.488Z",
-  "commit": "d38a3e280c85f90c9683630953bc916802a8f2de",
-  "base": "d38a3e2",
+  "at": "2026-10-16T20:23:42.916Z",
+  "commit": "85fc26eb4dab9336e28368c6b3d3f5cc554ecdc7",
+  "base": "218b712",
   "changedFiles": [
     "tests/acceptance/T73/sale-sources.test.ts",
     "tests/acceptance/T73/setup.ts"
