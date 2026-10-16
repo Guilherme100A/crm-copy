@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T27 (Bigorna/Lupa), T38 (Torno/Sonda), T46 (Cinzel/Radar).
+- Em andamento (3 pares): T27 (Bigorna/Lupa), T38 (Torno/Sonda), T61 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -64,7 +64,7 @@
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
-| 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
@@ -79,7 +79,7 @@
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | TODO | | | 0 | |
-| 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | TODO | | | 0 | |
+| 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
