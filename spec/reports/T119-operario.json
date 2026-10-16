@@ -3,9 +3,9 @@
   "task": "T119",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:44:56.162Z",
-  "commit": "15b72227eba57a24ac2f5ec402eee8b3c83ae065",
-  "base": "15b7222",
+  "at": "2026-10-16T05:49:04.705Z",
+  "commit": "362a8f01764b4e8925320f392143570c5714cbc1",
+  "base": "5b22cbb",
   "changedFiles": [
     "apps/api/src/routes/chat-messages/index.ts",
     "apps/api/src/routes/chat-messages/scope.db.unit.test.ts"
@@ -14,32 +14,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.8s"
+      "detail": "ok em 13.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 5.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 37.5s"
+      "detail": "ok em 44.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 8.9s"
+      "detail": "ok em 15.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.2s"
+      "detail": "ok em 6.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 23.3s"
+      "detail": "ok em 34.1s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
