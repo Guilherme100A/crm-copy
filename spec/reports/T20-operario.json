@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "task": "T20",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T04:15:35.502Z",
+  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
+  "base": "c4f303c",
+  "changedFiles": [
+    "packages/wa-engine/package.json",
+    "packages/wa-engine/src/index.ts",
+    "packages/wa-engine/src/health/index.ts",
+    "packages/wa-engine/src/health/monitor.ts",
+    "packages/wa-engine/src/health/monitor.unit.test.ts",
+    "packages/wa-engine/src/health/score.ts",
+    "packages/wa-engine/src/health/score.unit.test.ts",
+    "packages/wa-engine/src/health/service.db.unit.test.ts",
+    "packages/wa-engine/src/health/service.ts",
+    "packages/wa-engine/src/send/consent.db.unit.test.ts",
+    "packages/wa-engine/src/send/consent.ts",
+    "packages/wa-engine/src/send/deliver.ts",
+    "packages/wa-engine/src/send/deliver.unit.test.ts",
+    "packages/wa-engine/src/send/forbidden.db.unit.test.ts",
+    "packages/wa-engine/src/send/groups.unit.test.ts",
+    "packages/wa-engine/src/send/index.ts",
+    "packages/wa-engine/src/send/pipeline.db.unit.test.ts",
+    "packages/wa-engine/src/send/pipeline.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/wa-engine/src/send/pipeline.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-engine/src/send/deliver.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-engine/src/health/score.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
+      "status": "pass",
+      "detail": "ok em 8.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine lint",
+      "status": "pass",
+      "detail": "ok em 4.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-engine test",
+      "status": "pass",
+      "detail": "ok em 18.0s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "18 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -1,0 +1,87 @@
+{
+  "version": 1,
+  "task": "T20",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T04:17:02.873Z",
+  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
+  "base": "c4f303c",
+  "changedFiles": [
+    "tests/acceptance/T20/deliver.test.ts",
+    "tests/acceptance/T20/health.test.ts",
+    "tests/acceptance/T20/pipeline.test.ts",
+    "tests/acceptance/T20/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T20-01, AC-T20-02, AC-T20-03, AC-T20-04, AC-T20-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "3 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "40 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T20-01",
+      "status": "pass",
+      "detail": "14 passed"
+    },
+    {
+      "name": "AC-T20-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T20-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T20-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T20-05",
+      "status": "pass",
+      "detail": "15 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "4 arquivo(s) alterado(s)"
+    }
+  ]
+}
