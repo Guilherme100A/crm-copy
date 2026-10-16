@@ -3,20 +3,17 @@
   "task": "T50",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:56:53.321Z",
-  "commit": "15b72227eba57a24ac2f5ec402eee8b3c83ae065",
-  "base": "15b7222",
+  "at": "2026-10-16T06:06:31.064Z",
+  "commit": "9aca4aaf530299b8aa787428c8a4ec5fcf62068a",
+  "base": "95ea5ae",
   "changedFiles": [
     "apps/api/src/index.ts",
     "apps/api/src/routes/chats/index.ts",
     "apps/api/src/routes/index.ts",
-    "packages/core/src/chats/query/service.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/api/src/routes/kanban/index.ts",
     "apps/api/src/routes/kanban/kanban.db.unit.test.ts",
+    "packages/core/src/chats/query/service.ts",
+    "packages/core/src/index.ts",
     "packages/core/src/kanban/errors.ts",
     "packages/core/src/kanban/index.ts",
     "packages/core/src/kanban/kanban.db.unit.test.ts",
@@ -25,7 +22,10 @@
     "packages/core/src/kanban/stats.unit.test.ts",
     "packages/db/drizzle/crm/0011_t50_kanban.sql",
     "packages/db/drizzle/crm/meta/0011_snapshot.json",
-    "packages/db/src/schema/crm/kanban.ts"
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/kanban.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -36,32 +36,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.4s"
+      "detail": "ok em 9.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 5.1s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 32.0s"
+      "detail": "ok em 27.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 8.9s"
+      "detail": "ok em 9.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 18.5s"
+      "detail": "ok em 43.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
