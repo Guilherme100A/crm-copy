@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T19 (Cinzel/Radar), T22 (Bigorna/Lupa), T26 (Fole/Prisma), T117 (Torno/Sonda).
+- Em andamento: T18 (Torno/Sonda), T19 (Cinzel/Radar), T22 (Bigorna/Lupa), T26 (Fole/Prisma).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -27,7 +27,7 @@
 | 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | MERGED | Bigorna | Lupa | 0 | 99960bf |
 | 2 | T11 | Templating: interpolação de variáveis | MERGED | Fole | Prisma | 0 | 08ed152 |
 | 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | MERGED | Cinzel | Radar | 0 | 29da6b8 |
-| 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | TODO | | | 0 | |
+| 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | IN_PROGRESS | Torno | Sonda | 0 | |
 | 3 | T13 | WA: SessionManager e proxy | MERGED | Fole | Prisma | 0 | 41738af |
 | 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | MERGED | Cinzel | Radar | 0 | 9edeadc |
 | 3 | T15 | Autenticação, cadastro, perfil e senha | MERGED | Torno | Sonda | 0 | 224aad1 |
@@ -129,5 +129,5 @@
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
-| 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | IN_PROGRESS | Torno | Sonda | 0 | |
+| 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
