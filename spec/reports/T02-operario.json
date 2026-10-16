@@ -3,33 +3,10 @@
   "task": "T02",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:41:54.949Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
-  "base": "197d4c2",
-  "changedFiles": [
-    "packages/shared/package.json",
-    "packages/shared/src/index.ts",
-    "packages/shared/tsconfig.json",
-    "pnpm-lock.yaml",
-    "packages/shared/src/dto/company.ts",
-    "packages/shared/src/dto/index.ts",
-    "packages/shared/src/dto/member.ts",
-    "packages/shared/src/dto/user.ts",
-    "packages/shared/src/errors/codes.ts",
-    "packages/shared/src/errors/codes.unit.test.ts",
-    "packages/shared/src/ids.ts",
-    "packages/shared/src/misc.unit.test.ts",
-    "packages/shared/src/money.ts",
-    "packages/shared/src/pagination.ts",
-    "packages/shared/src/permissions/catalog.ts",
-    "packages/shared/src/permissions/defaults.ts",
-    "packages/shared/src/permissions/resolve.ts",
-    "packages/shared/src/permissions/resolve.unit.test.ts",
-    "packages/shared/src/phone.ts",
-    "packages/shared/src/phone.unit.test.ts",
-    "packages/shared/src/realtime/events.ts",
-    "packages/shared/src/realtime/events.unit.test.ts"
-  ],
+  "at": "2026-10-16T02:43:06.606Z",
+  "commit": "92ea70ca2879ee90fd3c0c905c20e8ff1fb5d608",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/shared/src/errors/codes.ts",
@@ -54,12 +31,12 @@
     {
       "name": "cmd: pnpm --filter @crm/shared lint",
       "status": "pass",
-      "detail": "ok em 2.4s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/shared test",
       "status": "pass",
-      "detail": "ok em 1.6s"
+      "detail": "ok em 1.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -119,7 +96,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "22 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

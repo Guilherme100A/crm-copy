@@ -3,28 +3,10 @@
   "task": "T05",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:46:12.334Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
-  "base": "197d4c2",
-  "changedFiles": [
-    "packages/node-kit/package.json",
-    "packages/node-kit/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/node-kit/src/blob-store.ts",
-    "packages/node-kit/src/blob-store.unit.test.ts",
-    "packages/node-kit/src/config.ts",
-    "packages/node-kit/src/config.unit.test.ts",
-    "packages/node-kit/src/crypto.ts",
-    "packages/node-kit/src/crypto.unit.test.ts",
-    "packages/node-kit/src/logger.ts",
-    "packages/node-kit/src/logger.unit.test.ts",
-    "packages/node-kit/src/mailer.ts",
-    "packages/node-kit/src/mailer.unit.test.ts",
-    "packages/node-kit/src/password.ts",
-    "packages/node-kit/src/password.unit.test.ts",
-    "packages/node-kit/src/redis.ts",
-    "packages/node-kit/src/redis.unit.test.ts"
-  ],
+  "at": "2026-10-16T02:46:49.950Z",
+  "commit": "e1d9947c7b21045e749698fb8eca9b2d39f1f620",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/node-kit/src/logger.ts",
@@ -49,17 +31,17 @@
     {
       "name": "cmd: pnpm --filter @crm/node-kit typecheck",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 3.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/node-kit lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 2.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/node-kit test",
       "status": "pass",
-      "detail": "ok em 1.5s"
+      "detail": "ok em 1.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -119,7 +101,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "17 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

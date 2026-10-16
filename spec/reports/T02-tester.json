@@ -3,18 +3,10 @@
   "task": "T02",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T02:42:54.439Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
-  "base": "197d4c2",
-  "changedFiles": [
-    "tests/acceptance/T02/browser-build.mjs",
-    "tests/acceptance/T02/browser-build.test.ts",
-    "tests/acceptance/T02/contract.ts",
-    "tests/acceptance/T02/errors.test.ts",
-    "tests/acceptance/T02/permissions.test.ts",
-    "tests/acceptance/T02/phone.test.ts",
-    "tests/acceptance/T02/realtime.test.ts"
-  ],
+  "at": "2026-10-16T02:43:08.809Z",
+  "commit": "92ea70ca2879ee90fd3c0c905c20e8ff1fb5d608",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "7 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

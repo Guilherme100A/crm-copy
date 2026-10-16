@@ -3,26 +3,10 @@
   "task": "T03",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:45:47.884Z",
-  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
-  "base": "197d4c2",
-  "changedFiles": [
-    "packages/wa-port/package.json",
-    "packages/wa-port/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/wa-port/src/contract/index.ts",
-    "packages/wa-port/src/contract/suite.ts",
-    "packages/wa-port/src/contract/suite.unit.test.ts",
-    "packages/wa-port/src/errors.ts",
-    "packages/wa-port/src/errors.unit.test.ts",
-    "packages/wa-port/src/events.ts",
-    "packages/wa-port/src/events.unit.test.ts",
-    "packages/wa-port/src/gateway.ts",
-    "packages/wa-port/src/gateway.unit.test.ts",
-    "packages/wa-port/src/testing/fake-gateway.ts",
-    "packages/wa-port/src/testing/fake-gateway.unit.test.ts",
-    "packages/wa-port/src/testing/index.ts"
-  ],
+  "at": "2026-10-16T02:47:04.682Z",
+  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/wa-port/src/gateway.ts",
@@ -47,17 +31,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-port typecheck",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 2.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-port lint",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 2.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-port test",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 3.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -117,7 +101,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "15 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

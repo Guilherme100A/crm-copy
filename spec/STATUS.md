@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Onda atual: **1** (T01, T02, T03, T05 em andamento; T04 na fila)
+- Em andamento: T04 (Fole/Prisma), T10 (Bigorna/Lupa), T08 (Torno/Sonda), T06 (Cinzel/Radar)
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -15,16 +15,16 @@
 | Onda | Tarefa | Título | Estado | Operário | Tester | Rejeições | Notas |
 |---|---|---|---|---|---|---|---|
 | 0 | T00 | Scaffold do monorepo | MERGED | Bigorna | Lupa | 0 | 197d4c2 |
-| 1 | T01 | @crm/db: client, migrações e tabelas-base | IN_PROGRESS | Bigorna | Lupa | 0 | |
-| 1 | T02 | @crm/shared: contratos isomórficos | IN_PROGRESS | Fole | Prisma | 0 | |
-| 1 | T03 | @crm/wa-port: WaGateway, WaEvent, fake e suíte de contrato | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 1 | T04 | @crm/ai: portas LLM/TTS/STT e fakes | TODO | | | 0 | |
-| 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | IN_PROGRESS | Torno | Sonda | 0 | |
-| 2 | T06 | WA: schema public.* e auth state cifrado | TODO | | | 0 | |
+| 1 | T01 | @crm/db: client, migrações e tabelas-base | MERGED | Bigorna | Lupa | 0 | 779aa56 |
+| 1 | T02 | @crm/shared: contratos isomórficos | MERGED | Fole | Prisma | 0 | 92ea70c |
+| 1 | T03 | @crm/wa-port: WaGateway, WaEvent, fake e suíte de contrato | MERGED | Cinzel | Radar | 0 | eff38af |
+| 1 | T04 | @crm/ai: portas LLM/TTS/STT e fakes | IN_PROGRESS | Fole | Prisma | 0 | |
+| 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | MERGED | Torno | Sonda | 0 | e1d9947 |
+| 2 | T06 | WA: schema public.* e auth state cifrado | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 2 | T07 | WA: transporte (interface, Fake e Baileys) | TODO | | | 0 | |
-| 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | TODO | | | 0 | |
+| 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | IN_PROGRESS | Torno | Sonda | 0 | |
 | 2 | T09 | Worker: esqueleto, consumidor do wsm:events e jobs | TODO | | | 0 | |
-| 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | TODO | | | 0 | |
+| 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 2 | T11 | Templating: interpolação de variáveis | TODO | | | 0 | |
 | 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | TODO | | | 0 | |
 | 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | TODO | | | 0 | |
