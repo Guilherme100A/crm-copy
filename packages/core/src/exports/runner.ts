@@ -14,6 +14,7 @@ import { toJobDto, type BackgroundJobRow, type JobDto } from './service'
 export const PROGRESS_EVERY_ROWS = 1000
 /** Tamanho máximo da mensagem de erro gravada. */
 const MAX_ERROR = 500
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
 
 export interface RunJobDeps {
   db: Database
@@ -202,4 +203,19 @@ export async function runImportJob(deps: RunJobDeps, jobId: string): Promise<Job
     await run.update({ counters })
     return run.fail(err, progress)
   }
+}
+
+/**
+ * Marca `failed` com a mensagem um job que não chegou ao runner (ou cujo runner lançou): dependências ausentes, erro
+ * ao montá-las, falha de banco no claim. Só a partir de `queued`/`processing`; job terminado fica como está.
+ * Devolve se marcou.
+ */
+export async function failBackgroundJob(db: Database, jobId: string, err: unknown, now: Date = new Date()): Promise<boolean> {
+  if (!UUID_RE.test(jobId)) return false
+  const rows = await db
+    .update(backgroundJobs)
+    .set({ status: 'failed', error: errorText(err), fileKey: null, fileSize: null, finishedAt: now, updatedAt: now })
+    .where(and(eq(backgroundJobs.id, jobId), inArray(backgroundJobs.status, ['queued', 'processing'])))
+    .returning({ id: backgroundJobs.id })
+  return rows.length > 0
 }

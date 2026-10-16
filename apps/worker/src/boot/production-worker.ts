@@ -1,6 +1,6 @@
 // Boot de produção do worker num lugar só (T120): o `main.ts` e os testes de montagem usam a MESMA função.
 // config → crypto (`CREDENTIALS_KEY`) → migrations → WaGateway (WA_GATEWAY=rpc|fake) → módulos configurados →
-// startWorker → `flow_run.updated`.
+// startWorker → `flow_run.updated` → agendador da varredura dos webhooks de entrada.
 import { join } from 'node:path'
 import { FsExportFileStore } from '@crm/core'
 import { createDb, runMigrations, type Database } from '@crm/db'
@@ -10,6 +10,7 @@ import { createWaGatewayFromEnv, type WaGatewayFromEnv } from '@crm/wa-gateway-r
 import type { Redis } from 'ioredis'
 import { loadWorkerConfig, type WorkerConfig } from './config'
 import { attachFlowRunEvents } from './flow-run-events'
+import { INBOUND_WEBHOOKS_QUEUE, scheduleInboundWebhooksSweep } from '../jobs/inbound-webhooks'
 import { configureWorkerProduction, type WorkerProduction, type WorkerProductionDeps } from './production'
 import { startWorker, type WorkerApp } from './start'
 
@@ -85,6 +86,9 @@ export async function startProductionWorker(opts: StartProductionWorkerOptions =
     },
   })
   offRunEvents = attachFlowRunEvents(app.workers, { db, publisher: production.publisher, logger })
+  // T81/T127: varredura repetível dos requests de webhook `pending` cujo enqueue falhou (fila do próprio worker).
+  const inboundQueue = app.queues.get(INBOUND_WEBHOOKS_QUEUE)
+  if (inboundQueue) await scheduleInboundWebhooksSweep(inboundQueue)
 
   return { config, db, redis, wa, app, production, stop: () => app.stop() }
 }

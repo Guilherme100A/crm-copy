@@ -7,6 +7,7 @@
 // `error`, `reason` e `processed_at`.
 import { and, asc, eq, gte, inArray, lt, sql } from 'drizzle-orm'
 import { connections, contacts, inboundWebhookRequests, inboundWebhooks, kanbanCards, labels, type Database, type InboundWebhookStep } from '@crm/db'
+import type { WaGateway } from '@crm/wa-port'
 import type { RealtimePublisher } from '../realtime/publisher'
 import { ContactsError } from '../contacts/errors'
 import { normalizeContactEmail, normalizeContactPhone } from '../contacts/normalize'
@@ -43,6 +44,11 @@ export interface InboundWebhookProcessorOptions {
   publisher?: Pick<RealtimePublisher, 'publish'>
   /** Ouvintes da escuta de amostra (Redis). Sem ele, não publica amostras. */
   redis?: SampleRedis
+  /**
+   * Fronteira WhatsApp do processo: o contato criado pelo webhook tem o consentimento (`webhook`, SPEC 10.1 nº 1)
+   * repassado ao gateway, senão o gate de envio recusa a mensagem do fluxo (`contact_not_found`).
+   */
+  waGateway?: Pick<WaGateway, 'recordConsent'>
   now?: () => Date
   logger?: { warn(obj: object, msg?: string): void }
 }
@@ -62,6 +68,15 @@ const QUIET_REASONS = new Set(['not_configured', 'unchanged'])
 
 export class InboundWebhookProcessor {
   constructor(private readonly opts: InboundWebhookProcessorOptions) {}
+
+  /**
+   * Contato novo do webhook: consentimento com origem `webhook` no CRM (a T26 grava `manual` na criação) e no gateway.
+   * O ContactsService fica sem gateway de propósito, para não repassar um consentimento `manual`.
+   */
+  private async recordWebhookConsent(companyId: string, contact: ContactDto): Promise<void> {
+    await this.db.update(contacts).set({ consent: true, consentSource: 'webhook' }).where(and(eq(contacts.companyId, companyId), eq(contacts.id, contact.id)))
+    if (contact.phone_e164) await this.opts.waGateway?.recordConsent({ phone: contact.phone_e164, source: 'webhook', name: contact.name || null })
+  }
 
   private get db() {
     return this.opts.db
@@ -153,6 +168,7 @@ export class InboundWebhookProcessor {
       else {
         contact = await contactsSvc.create(hook.companyId, { name, phone, email }, {}, 'webhook')
         created = true
+        await this.recordWebhookConsent(hook.companyId, contact)
       }
       ok('resolve_customer')
       phase = 'identity_fields'

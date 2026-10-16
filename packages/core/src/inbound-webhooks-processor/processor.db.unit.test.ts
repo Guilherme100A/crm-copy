@@ -240,3 +240,21 @@ describe('InboundWebhookProcessor', () => {
     expect(queued).toContainEqual({ d: pending, o: { jobId: `iwr-${pending.requestId}` } })
   })
 })
+
+describe('consentimento do contato criado pelo webhook (T127)', () => {
+  it("contato novo: consent_source 'webhook' no CRM e recordConsent 'webhook' no gateway; contato existente não repassa de novo", async () => {
+    const co = await company()
+    const hook = await webhook(co, { field_paths: { full_name: path('n'), phone: path('f') } })
+    const consents: unknown[] = []
+    const waGateway = { recordConsent: async (input: unknown) => void consents.push(input) }
+    const p = new InboundWebhookProcessor({ db, waGateway, publisher: publisher as never })
+    const r = await p.process(await receive(co, hook.id, { n: 'Ivo Lima', f: '+5511922221111' }))
+    expect(r.status).toBe('processed')
+    const [c] = await db.select().from(contacts).where(eq(contacts.companyId, co))
+    expect(c).toMatchObject({ phoneE164: '+5511922221111', consent: true, consentSource: 'webhook', origin: 'webhook' })
+    expect(consents).toEqual([{ phone: '+5511922221111', source: 'webhook', name: 'Ivo Lima' }])
+
+    await p.process(await receive(co, hook.id, { n: 'Ivo Lima', f: '+5511922221111', x: 1 }))
+    expect(consents).toHaveLength(1)
+  })
+})

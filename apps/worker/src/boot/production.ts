@@ -5,8 +5,15 @@
 //   importações (T27/T67), o agente de IA (T68) com LLM e voz por empresa (BYOK, T38) e cota/carteira (T24) e os
 //   disparos em massa (T74/T122), que iniciam os fluxos com o mesmo registry de nós e os timers do processo.
 //   T125: Gerenciador Meta (meta-sync), Conversions API (meta-capi, nó pixel) e vendas aprovadas ao Pixel.
+//   T127: webhooks de entrada (T81), fontes de venda (T73), pagamentos (T111), nós externos com IA medida (T42), base
+//   de conhecimento (T52) e criação assistida de agente (T79), com o FlowControl, o LLM e o UsageGuard do processo.
 import {
   AiKeysService,
+  AiKnowledgeService,
+  configureExternalNodes,
+  configurePaymentNodes,
+  FlowEngine,
+  PaymentIntegrationsService,
   ChatSendService,
   configureCrmNodes,
   configureLogicNodes,
@@ -32,13 +39,15 @@ import {
   type FlowStepJobData,
   type FlowTimerJobData,
   type MassDispatchRunnerDeps,
+  type RunPublisher,
 } from '@crm/core'
 import type { AiKeyProvider, Database } from '@crm/db'
-import { FakeLlm, toPttOgg, type LlmProvider, type LlmRequest, type LlmResult } from '@crm/ai'
+import { createAiSdkProvider, FakeLlm, LLM_PROVIDERS, toPttOgg, type LlmProvider, type LlmProviderId, type LlmRequest, type LlmResult } from '@crm/ai'
 import { FsBlobStore, type BlobStore, type Logger } from '@crm/node-kit'
 import type { WaGateway } from '@crm/wa-port'
 import type { Redis } from 'ioredis'
 import { configureChatsConsumer } from '../consumers/chats'
+import { configureConnectionsConsumer } from '../consumers/connections'
 import { configureFlowTriggers, flowTriggers } from '../consumers/flow-triggers'
 import { configureAiAgent } from '../jobs/ai-agent'
 import { configureContactsImport } from '../jobs/contacts-import'
@@ -49,10 +58,18 @@ import { configureSchedules } from '../jobs/schedules'
 import { configureMassDispatch } from '../jobs/mass-dispatch'
 import { configureMetaAds } from '../jobs/meta-ads'
 import { configureMetaCapi, metaCapiEnqueuer } from '../jobs/meta-capi'
+import { configureAiAgentLab } from '../jobs/ai-agent-lab'
+import { configureAiKnowledge } from '../jobs/ai-knowledge'
+import { configureInboundSales } from '../jobs/inbound-sales'
+import { configureInboundWebhooks } from '../jobs/inbound-webhooks'
+import { configurePaymentWebhooks } from '../jobs/payment-webhooks'
 import { capiSalePublisher, configurePixelNodes, fxRatesFromEnv, metaConfigFromEnv, MetaProfilesService } from '@crm/core'
 
 type Env = Record<string, string | undefined>
 type KeysResolver = Pick<AiKeysService, 'resolveCredentials'>
+type LlmForKey = (companyId: string, keyId: string) => Promise<{ llm: LlmProvider; provider: LlmProviderId }>
+
+const isLlmProvider = (p: string): p is LlmProviderId => (LLM_PROVIDERS as readonly string[]).includes(p)
 
 /**
  * `AI_MODE=fake`: o FakeLlm atrás do MESMO resolvedor da empresa — cada chamada exige a chave efetiva (BYOK ou da
@@ -60,6 +77,9 @@ type KeysResolver = Pick<AiKeysService, 'resolveCredentials'>
  * um provedor real.
  */
 export class CompanyKeyedFakeLlm implements LlmProvider {
+  /** Chamadas pela chave de uma integração (`llmForKey`, bloco de IA com `ai_integration_id`). */
+  readonly keyedCalls: { companyId: string; keyId: string; provider: LlmProviderId }[] = []
+
   constructor(
     private readonly keys: KeysResolver,
     readonly fake: FakeLlm = new FakeLlm(),
@@ -69,12 +89,42 @@ export class CompanyKeyedFakeLlm implements LlmProvider {
     await this.keys.resolveCredentials(req.tenantId, req.model.provider as AiKeyProvider)
     return this.fake.generate(req)
   }
+
+  /** O FakeLlm com a chave já aberta (a da integração), sem passar pelo resolvedor da empresa. */
+  forKey(companyId: string, keyId: string, provider: LlmProviderId): LlmProvider {
+    return {
+      generate: <T>(req: LlmRequest<T>) => {
+        this.keyedCalls.push({ companyId, keyId, provider })
+        return this.fake.generate(req)
+      },
+    }
+  }
 }
 
 /** LLM das empresas: AI SDK com a chave de cada empresa (T38) ou, com `AI_MODE=fake`, o FakeLlm pelo mesmo resolvedor. */
 export function companyLlmFromEnv(keys: KeysResolver, env: Env = process.env): LlmProvider {
   if (env.AI_MODE?.trim().toLowerCase() === 'fake') return new CompanyKeyedFakeLlm(keys)
   return createCompanyLlmProvider({ keys })
+}
+
+/**
+ * LLM pela chave de uma integração (T42, `ai_integration_id`): abre a chave por `credentialsForKey` (inexistente ou de
+ * outra empresa → erro, e o nó segue a falha). Com o LLM fake do processo, a chamada vai para o MESMO FakeLlm.
+ */
+export function llmForKeyFrom(keys: Pick<AiKeysService, 'credentialsForKey'>, llm: LlmProvider): LlmForKey {
+  return async (companyId, keyId) => {
+    const { apiKey, provider } = await keys.credentialsForKey(companyId, keyId)
+    if (!isLlmProvider(provider)) throw new Error(`a chave ${keyId} é de ${provider}, não de um provedor de LLM`)
+    if (llm instanceof CompanyKeyedFakeLlm) return { llm: llm.forKey(companyId, keyId, provider), provider }
+    return { llm: createAiSdkProvider({ resolveCredentials: async () => ({ apiKey }) }), provider }
+  }
+}
+
+/** `AI_AGENT_CREATE_MODEL=provider:modelo` do env do boot (modelo da criação assistida, T79). */
+function composeModelFromEnv(env: Env): { provider: string; model: string } | undefined {
+  const v = env.AI_AGENT_CREATE_MODEL?.trim()
+  const at = v ? v.indexOf(':') : -1
+  return v && at > 0 ? { provider: v.slice(0, at), model: v.slice(at + 1) } : undefined
 }
 
 export interface WorkerProductionDeps {
@@ -121,6 +171,8 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   const chatSend = new ChatSendService({ db, waGateway, resolveSession, media, pttConverter, publisher, ...logger })
 
   configureChatsConsumer({ db, waGateway, resolveConnection: crmConnectionsResolver(db), publisher, ...logger })
+  // T47/T127: status das conexões com o banco, o realtime, o gateway e o Redis do processo (o mailer segue o env).
+  configureConnectionsConsumer({ db, publisher, gateway: waGateway, redis, ...logger })
   configureFlowTimer({ db, ...logger })
   // T64: agendamentos enviam pelo mesmo ChatSendService e iniciam fluxos pelo motor do processo.
   configureSchedules({ db, chatSend, waGateway })
@@ -141,7 +193,10 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   configureContactsImport({ files, waGateway })
 
   const guard = new UsageGuard({ db, redis, realtime: publisher })
+  // T52: o turno do agente recebe os trechos da base de conhecimento do agente.
+  const knowledge = new AiKnowledgeService({ db }).asKnowledgeSearch()
   configureAiAgent({
+    knowledge,
     db,
     llm,
     waGateway,
@@ -192,7 +247,36 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   configureMetaCapi({ db, ...capiEnv })
   configurePixelNodes(capiEnv)
   let capiEnqueue: ReturnType<typeof metaCapiEnqueuer> | undefined
-  configureCrmNodes({ publisher: capiSalePublisher(publisher, { enqueue: (data, opts) => (capiEnqueue ??= metaCapiEnqueuer())(data, opts), ...logger }) })
+  const capiSaleEnqueue = (data: Parameters<ReturnType<typeof metaCapiEnqueuer>>[0], opts: { jobId: string }) => (capiEnqueue ??= metaCapiEnqueuer())(data, opts)
+  const salesPublisher = capiSalePublisher(publisher, { enqueue: capiSaleEnqueue, ...logger })
+  configureCrmNodes({ publisher: salesPublisher })
+
+  // T127. Fontes de venda (T73): a venda criada aprovada sai pelo `sale.recorded` envelopado; a que passa de pendente a
+  // aprovada, pelo `capiEnqueue` (mesmo enfileirador preguiçoso).
+  configureInboundSales({ db, publisher: salesPublisher, capiEnqueue: capiSaleEnqueue, ...logger })
+  // Webhooks de entrada (T81): o fluxo inicia pelo motor do processo (registry de produção, enqueue do flow-step,
+  // ganchos do FlowControl); a varredura dos pendentes é agendada no start (`production-worker.ts`).
+  const flowEngine = new FlowEngine({
+    db,
+    wa: waGateway,
+    registry,
+    llm,
+    enqueue: (data) => flowStepEnqueuer((stepQueue ??= defineQueue<FlowStepJobData>(FLOW_STEP_QUEUE)))(data),
+    hooks: control.engineHooks(),
+    ...logger,
+  })
+  configureInboundWebhooks({ db, engine: flowEngine, control, redis, publisher, waGateway, ...logger })
+  // Pagamentos (T111): cobrança do nó e confirmação do webhook pelas integrações com o cipher (`CREDENTIALS_KEY`) e o
+  // env do boot (`XPAG_API_URL`, `API_PUBLIC_URL`); o webhook retoma o run pelo FlowControl do processo.
+  const paymentIntegrations = new PaymentIntegrationsService({ db, env })
+  configurePaymentNodes({ paymentIntegrations })
+  configurePaymentWebhooks({ db, control, integrations: paymentIntegrations, ...logger })
+  // Nós externos (T42): bloco de IA medido pelo UsageGuard (`feature = 'flow_ai'`), chave por integração.
+  configureExternalNodes({ llm, llmForKey: llmForKeyFrom(keys, llm), guard })
+  // Base de conhecimento (T52) e criação assistida de agente (T79) com o LLM e o guard do processo.
+  configureAiKnowledge({ db, redis, publisher, ...logger })
+  const composeModel = composeModelFromEnv(env)
+  configureAiAgentLab({ db, redis, llm, guard, publisher: publisher as unknown as RunPublisher, knowledge, ...(composeModel ? { composeModel } : {}), ...logger })
 
   return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }
 }
