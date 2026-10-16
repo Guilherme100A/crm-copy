@@ -112,7 +112,7 @@
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
-| 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | REJECTED (1) | Bigorna | Lupa | 1 | |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | TODO | | | 0 | |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
