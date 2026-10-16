@@ -10,3 +10,6 @@ playwright-report/
 !.env.example
 storage/
 *.tsbuildinfo
+
+# orquestração: temporários dos scripts/orq (regen de migrations, cópia do integrate, hold do vigia)
+.orq-tmp/
