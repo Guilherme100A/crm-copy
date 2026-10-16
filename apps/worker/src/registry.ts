@@ -13,6 +13,7 @@ import { registerExportsJob } from './jobs/exports'
 import { registerFlowTriggersConsumer } from './consumers/flow-triggers'
 import { registerContactsImportJob } from './jobs/contacts-import'
 import { registerContactsBulkJobs } from './jobs/contacts-bulk'
+import { registerMassDispatchJob } from './jobs/mass-dispatch'
 
 export interface QueueDefinition {
   name: string
@@ -78,3 +79,4 @@ registerExportsJob(registry)
 registerFlowTriggersConsumer()
 registerContactsImportJob()
 registerContactsBulkJobs()
+registerMassDispatchJob(registry)

@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T74",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T08:44:04.883Z",
+  "commit": "591c109b453e6d73e21e385cdfe8d3bb71ca4293",
+  "base": "591c109",
+  "changedFiles": [
+    "tests/acceptance/T74/runner.test.ts",
+    "tests/acceptance/T74/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T74-01, AC-T74-02, AC-T74-03, AC-T74-04, AC-T74-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "12 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T74-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T74-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T74-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T74-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T74-05",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -137,6 +137,20 @@ export const REALTIME_EVENTS = {
       error: z.string().nullable().optional(),
     }),
   ),
+  /** Disparo em massa mudou (preparação, status, contadores) — T74, no máximo 1/s por disparo. */
+  'mass_dispatch.updated': defineEvent(
+    z.looseObject({
+      mass_dispatch_id: idSchema,
+      status: z.string(),
+      preparation_progress: z.looseObject({}).optional(),
+      total_count: z.number(),
+      pending_count: z.number(),
+      sent_count: z.number(),
+      failed_count: z.number(),
+      skipped_count: z.number(),
+    }),
+    'contacts.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS
