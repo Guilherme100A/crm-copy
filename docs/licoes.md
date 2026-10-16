@@ -38,3 +38,10 @@
 ## Segurança e API
 - **O `requestLogger` não pode logar token de URL** (`/api/hooks/**`, convites, reset de senha). Mascare. (T72, T109, T22)
 - **Validação que normaliza em silêncio esconde erro:** o fuso inválido vira America/Sao_Paulo com 200. Prefira 422. (T78)
+
+## Do piloto sob demanda (2026-10-16)
+- O seed do harness E2E não tem conexão de WhatsApp: telas que listam conexões precisam criar uma (`POST /api/connections {name}`, gateway fake, status `pending`). (T53)
+- Textos do hub/shell vivem em `i18n/*/shell.json` (T23): uma tarefa que mexe no hub põe as chaves novas no JSON do próprio módulo (ex.: `settings-company:hub.*`). (T53)
+- Não rode prettier em arquivos compartilhados: o código existente não segue o printWidth 120 e o diff deixa de ser aditivo (o verify de escopo/union no gate sofre). Formate só os seus arquivos. (T53)
+- Handlers de realtime registrados em módulo carregado sob demanda (lazy) não entram no SSE já aberto: `lib/realtime.ts` registra os tipos ao conectar. (T53)
+- Webhook de entrada que cria contato precisa registrar consentimento `webhook` no gateway, senão o wa-engine recusa o envio (`contact_not_found`). (T127)
