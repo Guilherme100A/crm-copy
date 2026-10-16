@@ -20,6 +20,7 @@ import { registerMetaCapiJob } from './jobs/meta-capi'
 import { registerAiKnowledgeJob } from './jobs/ai-knowledge'
 import { registerPaymentWebhooksJob } from './jobs/payment-webhooks'
 
+import { registerAiAgentLabJob } from './jobs/ai-agent-lab'
 export interface QueueDefinition {
   name: string
   opts: Omit<DefineQueueOptions, 'connection'>
@@ -90,3 +91,4 @@ registerMetaAdsJob(registry)
 registerMetaCapiJob(registry)
 registerAiKnowledgeJob(registry)
 registerPaymentWebhooksJob(registry)
+registerAiAgentLabJob(registry)

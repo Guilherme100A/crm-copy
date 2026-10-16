@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "task": "T79",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-16T14:36:21.139Z",
+  "commit": "97fcdf4f613f8b094813e8385bf44b96b6bb56ec",
+  "base": "60b794b",
+  "changedFiles": [
+    "apps/api/src/routes/ai-agent-lab/ai-agent-lab.db.unit.test.ts",
+    "apps/api/src/routes/ai-agent-lab/index.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/jobs/ai-agent-lab/ai-agent-lab.unit.test.ts",
+    "apps/worker/src/jobs/ai-agent-lab/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/ai-agent-lab/index.ts",
+    "packages/core/src/ai-agent-lab/prompt.ts",
+    "packages/core/src/ai-agent-lab/prompt.unit.test.ts",
+    "packages/core/src/ai-agent-lab/service.db.unit.test.ts",
+    "packages/core/src/ai-agent-lab/service.ts",
+    "packages/core/src/index.ts",
+    "packages/shared/src/realtime/events.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 18.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 5.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "fail",
+      "detail": "exit 1 em 128.1s",
+      "output": "\n> @crm/api@0.0.0 test C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T79\\apps\\api\n> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T79/apps/api\n\n ❯ src/e2e/e2e.db.unit.test.ts (7 tests | 1 failed) 31943ms\n   ❯ AC-T17-03 reset (1)\n     × restaura o seed-base em ≤ 3 s e limpa as chaves de teste 17251ms\n\n Test Files  1 failed | 39 passed (40)\n      Tests  1 failed | 221 passed (222)\n   Start at  11:31:06\n   Duration  126.92s (tests 77%, import 20%, transform 3%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T79\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/e2e/e2e.db.unit.test.ts > AC-T17-03 reset > restaura o seed-base em ≤ 3 s e limpa as chaves de teste\nAssertionError: expected 15411 to be less than 3000\n ❯ src/e2e/e2e.db.unit.test.ts:103:29\n    101|     const res = await app.request('/__e2e/reset', { method: 'POST' })\n    102|     expect(res.status).toBe(200)\n    103|     expect(Date.now() - t0).toBeLessThan(3000)\n       |                             ^\n    104|     // T37: os seeds de módulo registrados (ex.: ai-prices) rodam depo…\n    105|     const body = (await res.json()) as { ok: boolean; applied: string[…\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 20.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 40.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 14.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 96.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "13 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -187,6 +187,20 @@ export const REALTIME_EVENTS = {
     }),
     'flows.view',
   ),
+  // ---- T79: criação assistida de agente (run extract → compose → persist) ----
+  'ai_agent.run.updated': defineEvent(
+    z.looseObject({
+      run: z.looseObject({
+        id: idSchema,
+        status: z.enum(['queued', 'running', 'completed', 'failed']),
+        stage: z.enum(['extract', 'compose', 'persist']).nullable(),
+        warnings: z.array(z.string()),
+        agent_id: idSchema.nullable(),
+        error_message: z.string().nullable(),
+      }),
+    }),
+    'flows.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

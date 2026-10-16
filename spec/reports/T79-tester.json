@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T79",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T14:36:54.685Z",
+  "commit": "97fcdf4f613f8b094813e8385bf44b96b6bb56ec",
+  "base": "60b794b",
+  "changedFiles": [
+    "tests/acceptance/T79/lab.test.ts",
+    "tests/acceptance/T79/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T79-01, AC-T79-02, AC-T79-03, AC-T79-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "16 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T79-01",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T79-02",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T79-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T79-04",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

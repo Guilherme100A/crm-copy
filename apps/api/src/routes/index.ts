@@ -45,6 +45,7 @@ import { inboundWebhooksRoutes } from './inbound-webhooks/index'
 import { hooksRoutes } from './hooks/index'
 import { hooksPaymentsRoutes } from './hooks-payments/index'
 import { dashboardRoutes } from './dashboard/index'
+import { aiAgentLabRoutes } from './ai-agent-lab/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -67,6 +68,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', flowsRoutes(deps))
   // T38: antes dos agentes, que leem deps.aiProviderKeys (passa a ser BYOK: empresa + plataforma).
   aiKeysDefaults(deps)
+  app.route('/', aiAgentLabRoutes(deps)) // T79: antes de /api/ai-agents/:id
   app.route('/', aiAgentsRoutes(deps))
   app.route('/', aiVoicesRoutes(deps))
   app.route('/', aiKnowledgeRoutes(deps))
