@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 126 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T65 (Cinzel/Radar).
+- Em andamento (3 pares): T89 (Torno/Sonda), T126 (Bigorna/Lupa), T73 (Cinzel/Radar).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -80,7 +80,7 @@
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
-| 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
+| 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
@@ -94,7 +94,7 @@
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
 | 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |
-| 7 | T65 | Dashboard: métricas de atendimento | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 7 | T65 | Dashboard: métricas de atendimento | MERGED | Cinzel | Radar | 0 | ecdf3c6 |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
