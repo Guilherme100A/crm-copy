@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Próxima onda: **0** (T00)
+- Onda atual: **1** (T01, T02, T03, T05 em andamento; T04 na fila)
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -14,12 +14,12 @@
 
 | Onda | Tarefa | Título | Estado | Operário | Tester | Rejeições | Notas |
 |---|---|---|---|---|---|---|---|
-| 0 | T00 | Scaffold do monorepo | TODO | | | 0 | |
-| 1 | T01 | @crm/db: client, migrações e tabelas-base | TODO | | | 0 | |
-| 1 | T02 | @crm/shared: contratos isomórficos | TODO | | | 0 | |
-| 1 | T03 | @crm/wa-port: WaGateway, WaEvent, fake e suíte de contrato | TODO | | | 0 | |
+| 0 | T00 | Scaffold do monorepo | MERGED | Bigorna | Lupa | 0 | 197d4c2 |
+| 1 | T01 | @crm/db: client, migrações e tabelas-base | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 1 | T02 | @crm/shared: contratos isomórficos | IN_PROGRESS | Fole | Prisma | 0 | |
+| 1 | T03 | @crm/wa-port: WaGateway, WaEvent, fake e suíte de contrato | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 1 | T04 | @crm/ai: portas LLM/TTS/STT e fakes | TODO | | | 0 | |
-| 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | TODO | | | 0 | |
+| 1 | T05 | @crm/node-kit: logger, cripto, config, Redis/BullMQ, storage, e-mail | IN_PROGRESS | Torno | Sonda | 0 | |
 | 2 | T06 | WA: schema public.* e auth state cifrado | TODO | | | 0 | |
 | 2 | T07 | WA: transporte (interface, Fake e Baileys) | TODO | | | 0 | |
 | 2 | T08 | API: esqueleto, middlewares e contexto multiempresa | TODO | | | 0 | |

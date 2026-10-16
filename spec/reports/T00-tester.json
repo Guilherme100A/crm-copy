@@ -3,24 +3,10 @@
   "task": "T00",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T02:31:32.010Z",
-  "commit": "a4ebcd3bbdf873df97344cdde57a6f810c630530",
-  "base": "a5d1283",
-  "changedFiles": [
-    "tests/acceptance/T00/brand.test.ts",
-    "tests/acceptance/T00/build.test.ts",
-    "tests/acceptance/T00/contract.ts",
-    "tests/acceptance/T00/env-example.test.ts",
-    "tests/acceptance/T00/lint-boundary.test.ts",
-    "tests/acceptance/T00/tsconfig.test.ts",
-    "tests/acceptance/T00/workspaces.test.ts",
-    "tests/acceptance/helpers/exec.ts",
-    "tests/acceptance/helpers/factories.ts",
-    "tests/acceptance/helpers/http.ts",
-    "tests/acceptance/helpers/index.ts",
-    "tests/acceptance/helpers/pg.ts",
-    "tests/acceptance/vitest.config.ts"
-  ],
+  "at": "2026-10-16T02:33:08.741Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: tests/acceptance/vitest.config.ts",
@@ -95,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "13 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
