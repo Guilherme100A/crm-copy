@@ -138,7 +138,7 @@
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
-| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | REJECTED (1) | Bigorna | Lupa | 1 | AC-03: ai-agent-lab AC-T79-04 espera ~1 s real; AC-04: AC-T125-02 timeout sob carga |
+| 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | VERIFYING | Bigorna | Lupa | 1 | correção da rejeição 1 (retry do Purchase; AC-T79-04 por evento); verify do tester em andamento |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | BLOCKED | Cinzel | Radar | 0 | aguarda a T47: verify do tester 10/11, AC-T127-01 falha porque ninguém projeta session.connection em crm.connections.connection_state (applyConnectionEvent sem chamador); o código da T127 está pronto, integrar logo depois da T47 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
@@ -220,3 +220,4 @@
 | T83 | A lista de contatos (T77) navega para /mass-dispatches com `history.state.massDispatchDraft = { open_create, mode, ids, except_ids, filters, count }` (tipo `MassDispatchDraft` exportado em `apps/web/src/features/contacts/selection.ts`): a T83 deve abrir o modal de criação com esse rascunho | T77 |
 | harness E2E | Não há rota `/__e2e` para levar uma sessão a STABLE (o `session_state` vem do FakeWaGateway); o E2E da T77 intercepta `GET /api/connections`. Avaliar rota no harness quando a T71/T107 precisarem | T77 |
 | motor de fluxos (endurecimento) | Publicar efeitos dos nós (realtime e enfileiramentos como o `sale.recorded` → meta-capi) só DEPOIS do commit da transação do passo (gancho pós-commit no runner). A T126 contornou o Purchase com retry no job (opção A); esta é a correção estrutural (opção B da Bigorna, mesma causa do achado da T123) | T126 |
+| API (production.ts) | `META_CAPI_JOB_OPTS` em `apps/api/src/production.ts` ainda usa backoff exponencial de 30 s: alinhar com a fila meta-capi da T126 (`{ attempts: 5, backoff: { type: 'meta-capi' } }`) para que uma venda ainda não visível também tente em 2 s | T126 |
