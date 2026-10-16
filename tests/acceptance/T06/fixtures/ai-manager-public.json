@@ -1,0 +1,946 @@
+{
+  "source": "ai-manager packages/db/drizzle 0000_init.sql, 0001_session_limits.sql, 0002_suggestions.sql, 0003_ai_settings.sql, 0004_session_router.sql, 0005_session_phone_optional.sql, 0006_proxy_settings.sql, 0007_session_browser.sql",
+  "tables": [
+    "ai_settings",
+    "audit_logs",
+    "contacts",
+    "health_events",
+    "message_events",
+    "messages",
+    "proxies",
+    "proxy_settings",
+    "session_credentials",
+    "session_limits",
+    "session_links",
+    "session_route_runs",
+    "sessions",
+    "suggestions",
+    "webhooks"
+  ],
+  "columns": {
+    "ai_settings": [
+      {
+        "name": "api_key_auth_tag",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "api_key_ciphertext",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "api_key_iv",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "api_key_key_version",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "confidence_threshold",
+        "data_type": "real",
+        "udt_name": "float4",
+        "nullable": true
+      },
+      {
+        "name": "enabled",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "smallint",
+        "udt_name": "int2",
+        "nullable": false
+      },
+      {
+        "name": "max_tokens",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "model_large",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "model_small",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "provider",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "timeout_ms",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "audit_logs": [
+      {
+        "name": "action",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "actor",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "detail",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "nullable": false
+      },
+      {
+        "name": "target_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "target_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      }
+    ],
+    "contacts": [
+      {
+        "name": "consent",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "consent_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "consent_source",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "last_contact_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "name",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "opt_out",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "phone",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "health_events": [
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "detail",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "nullable": false
+      },
+      {
+        "name": "session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "type",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      }
+    ],
+    "message_events": [
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "detail",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": true
+      },
+      {
+        "name": "from_status",
+        "data_type": "USER-DEFINED",
+        "udt_name": "message_status",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "bigint",
+        "udt_name": "int8",
+        "nullable": false
+      },
+      {
+        "name": "message_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "to_status",
+        "data_type": "USER-DEFINED",
+        "udt_name": "message_status",
+        "nullable": false
+      }
+    ],
+    "messages": [
+      {
+        "name": "attempts",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": false
+      },
+      {
+        "name": "contact_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": true
+      },
+      {
+        "name": "content",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "delivered_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "direction",
+        "data_type": "USER-DEFINED",
+        "udt_name": "message_direction",
+        "nullable": false
+      },
+      {
+        "name": "error",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "phone",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "read_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "sent_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "data_type": "USER-DEFINED",
+        "udt_name": "message_status",
+        "nullable": false
+      },
+      {
+        "name": "transport_message_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "proxies": [
+      {
+        "name": "available",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "error_count",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": false
+      },
+      {
+        "name": "host",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "last_changed_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "last_check_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "last_error",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "name",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "password_auth_tag",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "password_ciphertext",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "password_iv",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": true
+      },
+      {
+        "name": "password_key_version",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "port",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": false
+      },
+      {
+        "name": "protocol",
+        "data_type": "USER-DEFINED",
+        "udt_name": "proxy_protocol",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "username",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      }
+    ],
+    "proxy_settings": [
+      {
+        "name": "id",
+        "data_type": "smallint",
+        "udt_name": "int2",
+        "nullable": false
+      },
+      {
+        "name": "ip_limit_enabled",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "max_sessions_per_ip",
+        "data_type": "smallint",
+        "udt_name": "int2",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "session_credentials": [
+      {
+        "name": "auth_tag",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": false
+      },
+      {
+        "name": "ciphertext",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": false
+      },
+      {
+        "name": "iv",
+        "data_type": "bytea",
+        "udt_name": "bytea",
+        "nullable": false
+      },
+      {
+        "name": "key_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "key_type",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "key_version",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": false
+      },
+      {
+        "name": "session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "session_limits": [
+      {
+        "name": "per_day",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "per_hour",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "per_minute",
+        "data_type": "integer",
+        "udt_name": "int4",
+        "nullable": true
+      },
+      {
+        "name": "reduced_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "reduction_factor",
+        "data_type": "real",
+        "udt_name": "float4",
+        "nullable": false
+      },
+      {
+        "name": "reduction_reason",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "session_links": [
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "created_by",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "enabled",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "rules",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": false
+      },
+      {
+        "name": "source_session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "target_session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      }
+    ],
+    "session_route_runs": [
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "error",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "inbound_id",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "link_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "message_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": true
+      },
+      {
+        "name": "status",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      }
+    ],
+    "sessions": [
+      {
+        "name": "browser",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": true
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "last_connected_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "name",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "note",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "phone",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "proxy_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": true
+      },
+      {
+        "name": "requires_restart",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "data_type": "USER-DEFINED",
+        "udt_name": "session_status",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "warmup_started_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      }
+    ],
+    "suggestions": [
+      {
+        "name": "confidence",
+        "data_type": "real",
+        "udt_name": "float4",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "decided_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": true
+      },
+      {
+        "name": "decided_by",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "error",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "inbound_message_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "intent",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "model",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "sent_message_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": true
+      },
+      {
+        "name": "session_id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "status",
+        "data_type": "USER-DEFINED",
+        "udt_name": "suggestion_status",
+        "nullable": false
+      },
+      {
+        "name": "text",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      }
+    ],
+    "webhooks": [
+      {
+        "name": "channel",
+        "data_type": "USER-DEFINED",
+        "udt_name": "webhook_channel",
+        "nullable": false
+      },
+      {
+        "name": "config",
+        "data_type": "jsonb",
+        "udt_name": "jsonb",
+        "nullable": false
+      },
+      {
+        "name": "created_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "enabled",
+        "data_type": "boolean",
+        "udt_name": "bool",
+        "nullable": false
+      },
+      {
+        "name": "events",
+        "data_type": "ARRAY",
+        "udt_name": "_text",
+        "nullable": false
+      },
+      {
+        "name": "id",
+        "data_type": "uuid",
+        "udt_name": "uuid",
+        "nullable": false
+      },
+      {
+        "name": "name",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      },
+      {
+        "name": "secret",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": true
+      },
+      {
+        "name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "udt_name": "timestamptz",
+        "nullable": false
+      },
+      {
+        "name": "url",
+        "data_type": "text",
+        "udt_name": "text",
+        "nullable": false
+      }
+    ]
+  },
+  "enums": {
+    "message_direction": [
+      "outbound",
+      "inbound"
+    ],
+    "message_status": [
+      "queued",
+      "processing",
+      "sent",
+      "delivered",
+      "read",
+      "failed",
+      "retrying",
+      "cancelled"
+    ],
+    "proxy_protocol": [
+      "http",
+      "https",
+      "socks5"
+    ],
+    "session_status": [
+      "NEW",
+      "WARMING",
+      "STABLE",
+      "DEGRADED",
+      "PAUSED",
+      "DISCONNECTED"
+    ],
+    "suggestion_status": [
+      "pending_approval",
+      "approved",
+      "rejected",
+      "sent",
+      "failed"
+    ],
+    "webhook_channel": [
+      "discord",
+      "telegram",
+      "email",
+      "http"
+    ]
+  }
+}

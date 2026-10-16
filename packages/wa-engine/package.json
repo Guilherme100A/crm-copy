@@ -15,5 +15,11 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@crm/db": "workspace:*",
+    "@crm/node-kit": "workspace:*",
+    "@whiskeysockets/baileys": "7.0.0-rc14",
+    "drizzle-orm": "0.45.3"
   }
 }

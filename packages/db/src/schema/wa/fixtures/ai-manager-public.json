@@ -1,0 +1,1419 @@
+{
+  "tables": [
+    "ai_settings",
+    "audit_logs",
+    "contacts",
+    "health_events",
+    "message_events",
+    "messages",
+    "proxies",
+    "proxy_settings",
+    "session_credentials",
+    "session_limits",
+    "session_links",
+    "session_route_runs",
+    "sessions",
+    "suggestions",
+    "webhooks"
+  ],
+  "columns": [
+    {
+      "table": "ai_settings",
+      "column": "api_key_auth_tag",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "api_key_ciphertext",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "api_key_iv",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "api_key_key_version",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "confidence_threshold",
+      "type": "real",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "enabled",
+      "type": "boolean",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "id",
+      "type": "smallint",
+      "nullable": false,
+      "default": "1"
+    },
+    {
+      "table": "ai_settings",
+      "column": "max_tokens",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "model_large",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "model_small",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "provider",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "timeout_ms",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "ai_settings",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "audit_logs",
+      "column": "action",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "audit_logs",
+      "column": "actor",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "audit_logs",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "audit_logs",
+      "column": "detail",
+      "type": "jsonb",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "audit_logs",
+      "column": "id",
+      "type": "bigint",
+      "nullable": false,
+      "default": "nextval('audit_logs_id_seq'::regclass)"
+    },
+    {
+      "table": "audit_logs",
+      "column": "target_id",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "audit_logs",
+      "column": "target_type",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "consent",
+      "type": "boolean",
+      "nullable": false,
+      "default": "false"
+    },
+    {
+      "table": "contacts",
+      "column": "consent_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "consent_source",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "contacts",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "contacts",
+      "column": "last_contact_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "name",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "opt_out",
+      "type": "boolean",
+      "nullable": false,
+      "default": "false"
+    },
+    {
+      "table": "contacts",
+      "column": "phone",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "contacts",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "health_events",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "health_events",
+      "column": "detail",
+      "type": "jsonb",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "health_events",
+      "column": "id",
+      "type": "bigint",
+      "nullable": false,
+      "default": "nextval('health_events_id_seq'::regclass)"
+    },
+    {
+      "table": "health_events",
+      "column": "session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "health_events",
+      "column": "type",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "message_events",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "message_events",
+      "column": "detail",
+      "type": "jsonb",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "message_events",
+      "column": "from_status",
+      "type": "message_status",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "message_events",
+      "column": "id",
+      "type": "bigint",
+      "nullable": false,
+      "default": "nextval('message_events_id_seq'::regclass)"
+    },
+    {
+      "table": "message_events",
+      "column": "message_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "message_events",
+      "column": "to_status",
+      "type": "message_status",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "attempts",
+      "type": "integer",
+      "nullable": false,
+      "default": "0"
+    },
+    {
+      "table": "messages",
+      "column": "contact_id",
+      "type": "uuid",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "content",
+      "type": "jsonb",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "messages",
+      "column": "delivered_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "direction",
+      "type": "message_direction",
+      "nullable": false,
+      "default": "'outbound'::message_direction"
+    },
+    {
+      "table": "messages",
+      "column": "error",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "messages",
+      "column": "phone",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "read_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "sent_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "status",
+      "type": "message_status",
+      "nullable": false,
+      "default": "'queued'::message_status"
+    },
+    {
+      "table": "messages",
+      "column": "transport_message_id",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "messages",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "proxies",
+      "column": "available",
+      "type": "boolean",
+      "nullable": false,
+      "default": "true"
+    },
+    {
+      "table": "proxies",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "proxies",
+      "column": "error_count",
+      "type": "integer",
+      "nullable": false,
+      "default": "0"
+    },
+    {
+      "table": "proxies",
+      "column": "host",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "proxies",
+      "column": "last_changed_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "last_check_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "last_error",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "name",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "password_auth_tag",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "password_ciphertext",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "password_iv",
+      "type": "bytea",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "password_key_version",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "port",
+      "type": "integer",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "protocol",
+      "type": "proxy_protocol",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "proxies",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "proxies",
+      "column": "username",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "proxy_settings",
+      "column": "id",
+      "type": "smallint",
+      "nullable": false,
+      "default": "1"
+    },
+    {
+      "table": "proxy_settings",
+      "column": "ip_limit_enabled",
+      "type": "boolean",
+      "nullable": false,
+      "default": "false"
+    },
+    {
+      "table": "proxy_settings",
+      "column": "max_sessions_per_ip",
+      "type": "smallint",
+      "nullable": false,
+      "default": "3"
+    },
+    {
+      "table": "proxy_settings",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "session_credentials",
+      "column": "auth_tag",
+      "type": "bytea",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "ciphertext",
+      "type": "bytea",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "iv",
+      "type": "bytea",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "key_id",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "key_type",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "key_version",
+      "type": "integer",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_credentials",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "session_limits",
+      "column": "per_day",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "per_hour",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "per_minute",
+      "type": "integer",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "reduced_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "reduction_factor",
+      "type": "real",
+      "nullable": false,
+      "default": "1"
+    },
+    {
+      "table": "session_limits",
+      "column": "reduction_reason",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_limits",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "session_links",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "session_links",
+      "column": "created_by",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_links",
+      "column": "enabled",
+      "type": "boolean",
+      "nullable": false,
+      "default": "false"
+    },
+    {
+      "table": "session_links",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "session_links",
+      "column": "rules",
+      "type": "jsonb",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_links",
+      "column": "source_session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_links",
+      "column": "target_session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_route_runs",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "session_route_runs",
+      "column": "error",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_route_runs",
+      "column": "inbound_id",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_route_runs",
+      "column": "link_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "session_route_runs",
+      "column": "message_id",
+      "type": "uuid",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "session_route_runs",
+      "column": "status",
+      "type": "text",
+      "nullable": false,
+      "default": "'claimed'::text"
+    },
+    {
+      "table": "sessions",
+      "column": "browser",
+      "type": "jsonb",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "sessions",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "sessions",
+      "column": "last_connected_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "name",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "note",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "phone",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "proxy_id",
+      "type": "uuid",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "sessions",
+      "column": "requires_restart",
+      "type": "boolean",
+      "nullable": false,
+      "default": "false"
+    },
+    {
+      "table": "sessions",
+      "column": "status",
+      "type": "session_status",
+      "nullable": false,
+      "default": "'NEW'::session_status"
+    },
+    {
+      "table": "sessions",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "sessions",
+      "column": "warmup_started_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "confidence",
+      "type": "real",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "suggestions",
+      "column": "decided_at",
+      "type": "timestamp with time zone",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "decided_by",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "error",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "suggestions",
+      "column": "inbound_message_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "intent",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "model",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "sent_message_id",
+      "type": "uuid",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "session_id",
+      "type": "uuid",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "status",
+      "type": "suggestion_status",
+      "nullable": false,
+      "default": "'pending_approval'::suggestion_status"
+    },
+    {
+      "table": "suggestions",
+      "column": "text",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "suggestions",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "webhooks",
+      "column": "channel",
+      "type": "webhook_channel",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "webhooks",
+      "column": "config",
+      "type": "jsonb",
+      "nullable": false,
+      "default": "'{}'::jsonb"
+    },
+    {
+      "table": "webhooks",
+      "column": "created_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "webhooks",
+      "column": "enabled",
+      "type": "boolean",
+      "nullable": false,
+      "default": "true"
+    },
+    {
+      "table": "webhooks",
+      "column": "events",
+      "type": "_text",
+      "nullable": false,
+      "default": "'{}'::text[]"
+    },
+    {
+      "table": "webhooks",
+      "column": "id",
+      "type": "uuid",
+      "nullable": false,
+      "default": "gen_random_uuid()"
+    },
+    {
+      "table": "webhooks",
+      "column": "name",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    },
+    {
+      "table": "webhooks",
+      "column": "secret",
+      "type": "text",
+      "nullable": true,
+      "default": null
+    },
+    {
+      "table": "webhooks",
+      "column": "updated_at",
+      "type": "timestamp with time zone",
+      "nullable": false,
+      "default": "now()"
+    },
+    {
+      "table": "webhooks",
+      "column": "url",
+      "type": "text",
+      "nullable": false,
+      "default": null
+    }
+  ],
+  "enums": [
+    {
+      "name": "message_direction",
+      "values": [
+        "outbound",
+        "inbound"
+      ]
+    },
+    {
+      "name": "message_status",
+      "values": [
+        "queued",
+        "processing",
+        "sent",
+        "delivered",
+        "read",
+        "failed",
+        "retrying",
+        "cancelled"
+      ]
+    },
+    {
+      "name": "proxy_protocol",
+      "values": [
+        "http",
+        "https",
+        "socks5"
+      ]
+    },
+    {
+      "name": "session_status",
+      "values": [
+        "NEW",
+        "WARMING",
+        "STABLE",
+        "DEGRADED",
+        "PAUSED",
+        "DISCONNECTED"
+      ]
+    },
+    {
+      "name": "suggestion_status",
+      "values": [
+        "pending_approval",
+        "approved",
+        "rejected",
+        "sent",
+        "failed"
+      ]
+    },
+    {
+      "name": "webhook_channel",
+      "values": [
+        "discord",
+        "telegram",
+        "email",
+        "http"
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "table": "ai_settings",
+      "name": "ai_settings_limits_check",
+      "definition": "CHECK ((((max_tokens IS NULL) OR (max_tokens >= 1)) AND ((timeout_ms IS NULL) OR (timeout_ms >= 1))))"
+    },
+    {
+      "table": "ai_settings",
+      "name": "ai_settings_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "ai_settings",
+      "name": "ai_settings_singleton_check",
+      "definition": "CHECK ((id = 1))"
+    },
+    {
+      "table": "ai_settings",
+      "name": "ai_settings_threshold_check",
+      "definition": "CHECK (((confidence_threshold IS NULL) OR ((confidence_threshold >= (0)::double precision) AND (confidence_threshold <= (1)::double precision))))"
+    },
+    {
+      "table": "audit_logs",
+      "name": "audit_logs_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "contacts",
+      "name": "contacts_phone_e164_check",
+      "definition": "CHECK ((phone ~ '^\\+[1-9][0-9]{1,14}$'::text))"
+    },
+    {
+      "table": "contacts",
+      "name": "contacts_phone_unique",
+      "definition": "UNIQUE (phone)"
+    },
+    {
+      "table": "contacts",
+      "name": "contacts_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "health_events",
+      "name": "health_events_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "health_events",
+      "name": "health_events_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "message_events",
+      "name": "message_events_message_id_messages_id_fk",
+      "definition": "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "message_events",
+      "name": "message_events_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "messages",
+      "name": "messages_contact_id_contacts_id_fk",
+      "definition": "FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE SET NULL"
+    },
+    {
+      "table": "messages",
+      "name": "messages_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "messages",
+      "name": "messages_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "proxies",
+      "name": "proxies_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "proxies",
+      "name": "proxies_port_check",
+      "definition": "CHECK (((port >= 1) AND (port <= 65535)))"
+    },
+    {
+      "table": "proxy_settings",
+      "name": "proxy_settings_max_check",
+      "definition": "CHECK (((max_sessions_per_ip >= 1) AND (max_sessions_per_ip <= 50)))"
+    },
+    {
+      "table": "proxy_settings",
+      "name": "proxy_settings_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "proxy_settings",
+      "name": "proxy_settings_singleton_check",
+      "definition": "CHECK ((id = 1))"
+    },
+    {
+      "table": "session_credentials",
+      "name": "session_credentials_pk",
+      "definition": "PRIMARY KEY (session_id, key_type, key_id)"
+    },
+    {
+      "table": "session_credentials",
+      "name": "session_credentials_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "session_limits",
+      "name": "session_limits_factor_check",
+      "definition": "CHECK (((reduction_factor > (0)::double precision) AND (reduction_factor <= (1)::double precision)))"
+    },
+    {
+      "table": "session_limits",
+      "name": "session_limits_pkey",
+      "definition": "PRIMARY KEY (session_id)"
+    },
+    {
+      "table": "session_limits",
+      "name": "session_limits_positive_check",
+      "definition": "CHECK (((COALESCE(per_minute, 1) >= 1) AND (COALESCE(per_hour, 1) >= 1) AND (COALESCE(per_day, 1) >= 1)))"
+    },
+    {
+      "table": "session_limits",
+      "name": "session_limits_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_distinct_sessions",
+      "definition": "CHECK ((source_session_id <> target_session_id))"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_source_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (source_session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_target_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (target_session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "session_route_runs",
+      "name": "session_route_runs_link_id_inbound_id_pk",
+      "definition": "PRIMARY KEY (link_id, inbound_id)"
+    },
+    {
+      "table": "session_route_runs",
+      "name": "session_route_runs_link_id_session_links_id_fk",
+      "definition": "FOREIGN KEY (link_id) REFERENCES session_links(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "session_route_runs",
+      "name": "session_route_runs_message_id_messages_id_fk",
+      "definition": "FOREIGN KEY (message_id) REFERENCES messages(id) ON DELETE SET NULL"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_proxy_id_proxies_id_fk",
+      "definition": "FOREIGN KEY (proxy_id) REFERENCES proxies(id) ON DELETE SET NULL"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_proxy_id_unique",
+      "definition": "UNIQUE (proxy_id)"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_confidence_check",
+      "definition": "CHECK (((confidence >= (0)::double precision) AND (confidence <= (1)::double precision)))"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_inbound_message_id_messages_id_fk",
+      "definition": "FOREIGN KEY (inbound_message_id) REFERENCES messages(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_pkey",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_sent_message_id_messages_id_fk",
+      "definition": "FOREIGN KEY (sent_message_id) REFERENCES messages(id) ON DELETE SET NULL"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_session_id_sessions_id_fk",
+      "definition": "FOREIGN KEY (session_id) REFERENCES sessions(id) ON DELETE CASCADE"
+    },
+    {
+      "table": "webhooks",
+      "name": "webhooks_pkey",
+      "definition": "PRIMARY KEY (id)"
+    }
+  ],
+  "indexes": [
+    {
+      "table": "ai_settings",
+      "name": "ai_settings_pkey",
+      "definition": "CREATE UNIQUE INDEX ai_settings_pkey ON public.ai_settings USING btree (id)"
+    },
+    {
+      "table": "audit_logs",
+      "name": "audit_logs_created_idx",
+      "definition": "CREATE INDEX audit_logs_created_idx ON public.audit_logs USING btree (created_at)"
+    },
+    {
+      "table": "audit_logs",
+      "name": "audit_logs_pkey",
+      "definition": "CREATE UNIQUE INDEX audit_logs_pkey ON public.audit_logs USING btree (id)"
+    },
+    {
+      "table": "contacts",
+      "name": "contacts_phone_unique",
+      "definition": "CREATE UNIQUE INDEX contacts_phone_unique ON public.contacts USING btree (phone)"
+    },
+    {
+      "table": "contacts",
+      "name": "contacts_pkey",
+      "definition": "CREATE UNIQUE INDEX contacts_pkey ON public.contacts USING btree (id)"
+    },
+    {
+      "table": "health_events",
+      "name": "health_events_pkey",
+      "definition": "CREATE UNIQUE INDEX health_events_pkey ON public.health_events USING btree (id)"
+    },
+    {
+      "table": "health_events",
+      "name": "health_events_session_created_idx",
+      "definition": "CREATE INDEX health_events_session_created_idx ON public.health_events USING btree (session_id, created_at)"
+    },
+    {
+      "table": "message_events",
+      "name": "message_events_message_id_idx",
+      "definition": "CREATE INDEX message_events_message_id_idx ON public.message_events USING btree (message_id, created_at)"
+    },
+    {
+      "table": "message_events",
+      "name": "message_events_pkey",
+      "definition": "CREATE UNIQUE INDEX message_events_pkey ON public.message_events USING btree (id)"
+    },
+    {
+      "table": "messages",
+      "name": "messages_pkey",
+      "definition": "CREATE UNIQUE INDEX messages_pkey ON public.messages USING btree (id)"
+    },
+    {
+      "table": "messages",
+      "name": "messages_session_status_idx",
+      "definition": "CREATE INDEX messages_session_status_idx ON public.messages USING btree (session_id, status)"
+    },
+    {
+      "table": "messages",
+      "name": "messages_transport_message_id_idx",
+      "definition": "CREATE INDEX messages_transport_message_id_idx ON public.messages USING btree (transport_message_id)"
+    },
+    {
+      "table": "proxies",
+      "name": "proxies_pkey",
+      "definition": "CREATE UNIQUE INDEX proxies_pkey ON public.proxies USING btree (id)"
+    },
+    {
+      "table": "proxy_settings",
+      "name": "proxy_settings_pkey",
+      "definition": "CREATE UNIQUE INDEX proxy_settings_pkey ON public.proxy_settings USING btree (id)"
+    },
+    {
+      "table": "session_credentials",
+      "name": "session_credentials_pk",
+      "definition": "CREATE UNIQUE INDEX session_credentials_pk ON public.session_credentials USING btree (session_id, key_type, key_id)"
+    },
+    {
+      "table": "session_limits",
+      "name": "session_limits_pkey",
+      "definition": "CREATE UNIQUE INDEX session_limits_pkey ON public.session_limits USING btree (session_id)"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_pkey",
+      "definition": "CREATE UNIQUE INDEX session_links_pkey ON public.session_links USING btree (id)"
+    },
+    {
+      "table": "session_links",
+      "name": "session_links_source_idx",
+      "definition": "CREATE INDEX session_links_source_idx ON public.session_links USING btree (source_session_id, enabled)"
+    },
+    {
+      "table": "session_route_runs",
+      "name": "session_route_runs_link_id_inbound_id_pk",
+      "definition": "CREATE UNIQUE INDEX session_route_runs_link_id_inbound_id_pk ON public.session_route_runs USING btree (link_id, inbound_id)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_pkey",
+      "definition": "CREATE UNIQUE INDEX sessions_pkey ON public.sessions USING btree (id)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_proxy_id_unique",
+      "definition": "CREATE UNIQUE INDEX sessions_proxy_id_unique ON public.sessions USING btree (proxy_id)"
+    },
+    {
+      "table": "sessions",
+      "name": "sessions_status_idx",
+      "definition": "CREATE INDEX sessions_status_idx ON public.sessions USING btree (status)"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_inbound_message_unique",
+      "definition": "CREATE UNIQUE INDEX suggestions_inbound_message_unique ON public.suggestions USING btree (inbound_message_id)"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_pkey",
+      "definition": "CREATE UNIQUE INDEX suggestions_pkey ON public.suggestions USING btree (id)"
+    },
+    {
+      "table": "suggestions",
+      "name": "suggestions_session_status_idx",
+      "definition": "CREATE INDEX suggestions_session_status_idx ON public.suggestions USING btree (session_id, status, created_at)"
+    },
+    {
+      "table": "webhooks",
+      "name": "webhooks_pkey",
+      "definition": "CREATE UNIQUE INDEX webhooks_pkey ON public.webhooks USING btree (id)"
+    }
+  ]
+}

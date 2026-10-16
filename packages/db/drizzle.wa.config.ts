@@ -4,7 +4,7 @@ import { defineConfig } from 'drizzle-kit'
 // Gerar: pnpm --filter @crm/db db:generate:wa --name <txx>_<slug>
 export default defineConfig({
   dialect: 'postgresql',
-  schema: './src/schema/wa/index.ts',
+  schema: './src/schema/wa/tables/index.ts',
   out: './drizzle/wa',
   schemaFilter: ['public'],
   migrations: { schema: 'drizzle', table: '__drizzle_migrations' },
