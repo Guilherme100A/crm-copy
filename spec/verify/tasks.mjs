@@ -169,7 +169,7 @@ const RAW = [
       testerRequiredFiles: ['tests/acceptance/playwright.config.ts'], e2e: true }),
 
   // ---------------- Contas, equipe, configurações ----------------
-  T('T31', 'Departamentos e horários de atendimento', ['T22'], [core('departments'), core('business-hours'), route('departments'), route('business-hours'), schema('departments')], ['api', 'core'],
+  T('T31', 'Departamentos e horários de atendimento', ['T22'], [core('departments'), core('business-hours'), route('departments'), route('business-hours'), schema('departments'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.department_id */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/business-hours/is-open.ts'] }),
   T('T32', 'Acesso de suporte', ['T22', 'T16'], [core('support-access'), route('support-access'), schema('support-access')], ['api', 'core'],
     { requiredFiles: ['packages/core/src/support-access/index.ts'] }),
