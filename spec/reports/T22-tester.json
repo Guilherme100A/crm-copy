@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "task": "T22",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:42:34.111Z",
+  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
+  "base": "13a99a5",
+  "changedFiles": [
+    "tests/acceptance/T22/companies-team.test.ts",
+    "tests/acceptance/T22/deactivate.test.ts",
+    "tests/acceptance/T22/invitations.test.ts",
+    "tests/acceptance/T22/setup.ts",
+    "tests/acceptance/helpers/sse.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T22-01, AC-T22-02, AC-T22-03, AC-T22-04, AC-T22-05, AC-T22-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "3 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "27 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T22-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T22-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T22-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T22-04",
+      "status": "pass",
+      "detail": "9 passed"
+    },
+    {
+      "name": "AC-T22-05",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T22-06",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}

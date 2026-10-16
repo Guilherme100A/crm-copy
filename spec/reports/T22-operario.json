@@ -1,0 +1,139 @@
+{
+  "version": 1,
+  "task": "T22",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:50:59.329Z",
+  "commit": "13a99a5e4fa9da2b01a80330f25738e0950bc81d",
+  "base": "13a99a5",
+  "changedFiles": [
+    "apps/api/package.json",
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "pnpm-lock.yaml",
+    "apps/api/src/routes/companies/guard.ts",
+    "apps/api/src/routes/companies/guard.unit.test.ts",
+    "apps/api/src/routes/companies/index.ts",
+    "apps/api/src/routes/invitations/index.ts",
+    "apps/api/src/routes/team/index.ts",
+    "apps/api/src/routes/team/support.ts",
+    "packages/core/src/companies/index.ts",
+    "packages/core/src/companies/service.ts",
+    "packages/core/src/companies/sessions-source.ts",
+    "packages/core/src/companies/slug.ts",
+    "packages/core/src/invitations/index.ts",
+    "packages/core/src/invitations/service.ts",
+    "packages/core/src/team/errors.ts",
+    "packages/core/src/team/index.ts",
+    "packages/core/src/team/service.ts",
+    "packages/core/src/team/team.db.unit.test.ts",
+    "packages/core/src/team/team.unit.test.ts",
+    "packages/db/drizzle/crm/0003_t22_team.sql",
+    "packages/db/drizzle/crm/meta/0003_snapshot.json",
+    "packages/db/src/schema/crm/team.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/team/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/api/src/routes/team/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 7.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 6.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 5.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "26 arquivo(s) alterado(s)"
+    }
+  ]
+}

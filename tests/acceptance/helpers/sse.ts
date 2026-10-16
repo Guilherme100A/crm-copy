@@ -1,5 +1,6 @@
 // Cliente SSE caixa-preta (text/event-stream) sobre fetch ou app.request(), com leitura incremental.
 // Cópia compartilhada do cliente da suíte T16 (usada por T117 e seguintes).
+// Cliente SSE caixa-preta (text/event-stream) sobre fetch ou app.request(), com leitura incremental (origem: T16).
 export interface SseMessage {
   event: string
   id?: string
