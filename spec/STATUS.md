@@ -144,3 +144,9 @@
 | endurecimento | `requestLogger` (T08) loga `c.req.path` com token em `/api/invitations/:token*` e `/api/auth/password-resets/:token` — redigir | T22, T15 |
 | endurecimento | FK composta `(company_id, contact_id)` em `flow_runs` (hoje FK só por `contact_id`) | T19 |
 | endurecimento | Streams SSE de empresa desativada não caem (heartbeat confere sessão/vínculo, não `active`) | T22 |
+| T30 | BullMQ 6.3.8 recusa `:` em jobId: usar `run-<id>-seq-<n>` (`flowStepJobId` da T25), não `run:<id>:seq:<n>` | T25 |
+| T21 / wa-port | `SendRequest` sem `quoted` (resposta citada) e `viewOnce`; porta sem `markRead` (recibo de leitura) — hoje só gravados no CRM | T49 |
+| T29 / wa-engine | mídia enviada pelo CRM chega como `MediaRef { url: 'blob:<sha256>' }`: o engine lê do BlobStore compartilhado (`STORAGE_DIR`) | T49 |
+| revisar | loop_guard de 50 nós por job (T25) falha fluxos legítimos > 50 nós sem espera; janela at-least-once entre `send` e o registro do passo (fechar com idempotency key no gateway) | T25 |
+| ambiente | cota mensal do context7 esgotada (2026-10-16): agentes usam STACK.md + código/tipos instalados | T25 |
+| ambiente | testes instáveis sob carga (8 agentes no mesmo Postgres/Redis): o gate repete 1x antes de rejeitar | T20 |
