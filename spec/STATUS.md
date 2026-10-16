@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T70 (Torno/Sonda), T124 (Bigorna/Lupa), T125 (Cinzel/Radar).
+- Em andamento (3 pares): T70 (Torno/Sonda), T109 (Bigorna/Lupa), T125 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -63,7 +63,7 @@
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
-| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
+| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
@@ -136,7 +136,7 @@
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
 | 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | MERGED | Bigorna | Lupa | 1 | 3c26ad8 |
-| 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
