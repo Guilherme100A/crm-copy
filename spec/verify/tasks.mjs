@@ -206,7 +206,7 @@ const RAW = [
   T('T66', 'Contatos: filtros avançados e ações em massa', ['T26', 'T27', 'T50'], ['packages/core/src/contacts-bulk/**', route('contacts-bulk'), job('contacts-bulk'), 'packages/core/src/contacts/**', 'apps/api/src/routes/contacts/**' /* aditivo: filtros avançados na listagem da T26 */], ['api', 'worker', 'core']),
   T('T67', 'Contatos: importação CSV e do WhatsApp', ['T26', 'T27'], ['packages/core/src/contacts-import/**', route('contacts-import'), job('contacts-import')], ['api', 'worker', 'core']),
   T('T69', 'UI chats: lista e filtros', ['T48', 'T23'], [...ui('chat'), 'apps/web/src/features/chat-list/**', i18n('chat-list')], ['web'], { e2e: true }),
-  T('T75', 'UI chats: conversa', ['T69', 'T49'], ['apps/web/src/features/chat-thread/**', i18n('chat-thread')], ['web'], { e2e: true }),
+  T('T75', 'UI chats: conversa', ['T69', 'T49'], ['apps/web/src/features/chat-thread/**', i18n('chat-thread'), 'apps/api/src/routes/chat-messages/**', 'packages/core/src/chats/send/**' /* aditivo: mídia por mensagem, reações na lista, retry */], ['api', 'core', 'web'], { e2e: true }),
   T('T85', 'UI chats: compositor', ['T75', 'T64'], ['apps/web/src/features/chat-composer/**', i18n('chat-composer')], ['web'], { e2e: true }),
   T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**', i18n('chat-panel')], ['web'], { e2e: true }),
   T('T77', 'UI contatos: lista e seleção em massa', ['T66', 'T23'], [...ui('contacts')], ['web'], { e2e: true }),
