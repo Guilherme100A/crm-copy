@@ -3,24 +3,10 @@
   "task": "T16",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:21:31.531Z",
-  "commit": "e3575e7bf57cd9e0ade76f269b5870938e5fef95",
-  "base": "e3575e7",
-  "changedFiles": [
-    "apps/api/src/index.ts",
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "apps/api/src/routes/events/index.ts",
-    "packages/core/src/realtime/access.ts",
-    "packages/core/src/realtime/connection.ts",
-    "packages/core/src/realtime/hub.ts",
-    "packages/core/src/realtime/index.ts",
-    "packages/core/src/realtime/publisher.ts",
-    "packages/core/src/realtime/realtime.unit.test.ts",
-    "packages/core/src/realtime/scope-filter.ts",
-    "packages/core/src/realtime/stream-id.ts",
-    "packages/core/src/realtime/types.ts"
-  ],
+  "at": "2026-10-16T03:25:32.195Z",
+  "commit": "617036f1b0f89a1c77826171c8d3c057a2256b5a",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/core/src/realtime/publisher.ts",
@@ -35,32 +21,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 6.7s"
+      "detail": "ok em 5.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 2.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 6.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 5.0s"
+      "detail": "ok em 5.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 2.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -120,7 +106,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "13 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

@@ -3,15 +3,10 @@
   "task": "T16",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:23:43.553Z",
-  "commit": "e3575e7bf57cd9e0ade76f269b5870938e5fef95",
-  "base": "e3575e7",
-  "changedFiles": [
-    "tests/acceptance/T16/events.test.ts",
-    "tests/acceptance/T16/fanout.test.ts",
-    "tests/acceptance/T16/setup.ts",
-    "tests/acceptance/T16/sse.ts"
-  ],
+  "at": "2026-10-16T03:26:04.674Z",
+  "commit": "617036f1b0f89a1c77826171c8d3c057a2256b5a",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -81,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "4 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
