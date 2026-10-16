@@ -20,6 +20,17 @@ export interface InboundReply {
 export type AdvanceResult =
   | { advanced: true; handle: string; status: 'running' | 'completed'; expectedSeq: number }
   | { advanced: false; reason: 'not_found' | 'not_waiting' | 'stale' | 'paused' | 'not_reply' | 'cancelled' }
+  // T111: confirmação de pagamento (`not_payment`: a espera não é desta cobrança; `busy`: passo em execução, tentar
+  // de novo; `no_edge`: o nó Pagamento não tem a saída `payment_approved`).
+  | { advanced: false; reason: 'not_payment' | 'busy' | 'no_edge' }
+
+/** T111: o que o webhook de pagamento aplica no run retomado. */
+export interface PaymentResume {
+  /** Cobrança (`payment_charges.id`) que o run espera. */
+  chargeId: string
+  /** Variáveis do run depois da confirmação (recebe as atuais). */
+  vars?: (current: Record<string, unknown>) => Record<string, unknown>
+}
 
 export interface FlowControlOptions {
   db: Database
@@ -211,6 +222,58 @@ export class FlowControl {
     })
     for (const s of toSchedule) await this.scheduleWait(s.runId, s.seq, s.wait)
     return { resumed_runs: count }
+  }
+
+  // ---------------------------------------------------------------- T111: pagamento
+
+  /** Webhook aprovado para o run que espera NO nó Pagamento (`wait.kind = 'payment'` desta cobrança). */
+  async resolvePayment(runId: string, input: PaymentResume): Promise<AdvanceResult> {
+    return this.advance(runId, (run, wait) => {
+      if (wait.kind !== 'payment' || wait.charge_id !== input.chargeId) return { reason: 'not_reply' as const }
+      return { handle: wait.handles.reply ?? 'source', vars: input.vars ? input.vars({ ...(run.vars ?? {}) }) : undefined }
+    }).then((r) => (!r.advanced && r.reason === 'not_reply' ? { advanced: false as const, reason: 'not_payment' as const } : r))
+  }
+
+  /**
+   * "Interrompe o contato" (19 §5.5): leva o run — esperando (qualquer espera) ou já concluído — ao destino da aresta
+   * `handle` do nó Pagamento `nodeKey`, cancelando o timer pendente. Run em execução → `busy` (o job tenta de novo);
+   * pausado/cancelado/falho → não move.
+   */
+  async interruptForPayment(runId: string, input: PaymentResume & { nodeKey: string; handle: string }): Promise<AdvanceResult> {
+    let timer: FlowTimerJobData | null = null
+    let enqueue: FlowStepJobData | null = null
+    const result = await this.db.transaction(async (tx): Promise<AdvanceResult> => {
+      const run = await this.lock(tx, runId)
+      if (!run) return { advanced: false, reason: 'not_found' }
+      if (run.status === 'cancelled') return { advanced: false, reason: 'cancelled' }
+      if (run.status === 'paused') return { advanced: false, reason: 'paused' }
+      if (run.status === 'running') return { advanced: false, reason: 'busy' }
+      if (run.status !== 'waiting' && run.status !== 'completed') return { advanced: false, reason: 'not_waiting' }
+      const [flow] = await tx.select({ status: flows.status }).from(flows).where(eq(flows.id, run.flowId)).limit(1)
+      if (flow?.status === 'paused') return { advanced: false, reason: 'paused' }
+      const edge = (await this.definition(tx, run.versionId))?.edges.find((e) => e.from === input.nodeKey && e.handle === input.handle)
+      if (!edge) return { advanced: false, reason: 'no_edge' }
+      const wait = run.status === 'waiting' ? parseWait(run.wait) : null
+      const seq = run.seq + 1
+      await tx
+        .update(flowRuns)
+        .set({
+          status: 'running',
+          currentNodeKey: edge.to,
+          seq,
+          wait: null,
+          vars: input.vars ? input.vars({ ...(run.vars ?? {}) }) : run.vars,
+          finishedAt: null,
+          updatedAt: sql`now()`,
+        })
+        .where(eq(flowRuns.id, run.id))
+      if (wait?.deadline_at) timer = { runId, seq: run.seq, gen: wait.timer_gen ?? 0 }
+      enqueue = { runId, expectedSeq: seq }
+      return { advanced: true, handle: input.handle, status: 'running', expectedSeq: seq }
+    })
+    if (timer) await this.cancelTimer(timer)
+    if (enqueue) await this.opts.enqueueStep?.(enqueue)
+    return result
   }
 
   // ---------------------------------------------------------------- internos

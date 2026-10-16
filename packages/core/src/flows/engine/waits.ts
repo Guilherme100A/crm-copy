@@ -5,7 +5,8 @@
 /** Prazo máximo de espera e de atraso (06 §4.5). */
 export const MAX_WAIT_MS = 31 * 24 * 60 * 60 * 1000
 
-export type FlowWaitKind = 'timer' | 'reply'
+/** T111: `payment` = confirmação de pagamento do bloco Pagamento (só o webhook retoma; a resposta do lead não). */
+export type FlowWaitKind = 'timer' | 'reply' | 'payment'
 
 export interface FlowWait {
   kind: FlowWaitKind
@@ -70,10 +71,35 @@ export function waitDelay(delayMs: number, opts: { handle?: string; now?: () => 
   return { kind: 'timer', handles: { timeout: opts.handle ?? 'source' }, deadline_at: deadline({ delayMs }, opts.now), delay_ms: delayMs }
 }
 
+/**
+ * T111: espera da confirmação de pagamento até o fim do `listener_ttl`. `approved` é o handle seguido quando o
+ * webhook confirma (`FlowControl.resolvePayment`); ao vencer segue `timeout` (sem aresta = run `completed`).
+ */
+export function waitForPayment(opts: { chargeId: string; transactionId: string; deadlineAt: Date | string; approved: string; timeout?: string; now?: () => Date }): FlowWait {
+  return {
+    kind: 'payment',
+    handles: { reply: opts.approved, timeout: opts.timeout ?? 'payment_listener_expired' },
+    deadline_at: deadline({ deadlineAt: opts.deadlineAt }, opts.now),
+    charge_id: opts.chargeId,
+    transaction_id: opts.transactionId,
+  }
+}
+
 /** Lê/normaliza o `wait` salvo em `flow_runs.wait` (aceita `delay_ms` e `handle` soltos). */
 export function parseWait(raw: unknown, now?: () => Date): FlowWait | null {
   if (!raw || typeof raw !== 'object') return null
   const w = raw as Record<string, unknown>
+  // T111: espera de pagamento mantém o tipo (não vira `reply`: a mensagem do lead não a retoma).
+  if (w.kind === 'payment') {
+    const h = (w.handles && typeof w.handles === 'object' ? w.handles : {}) as Record<string, unknown>
+    return {
+      ...w,
+      kind: 'payment',
+      handles: { reply: typeof h.reply === 'string' ? h.reply : 'source', timeout: typeof h.timeout === 'string' ? h.timeout : 'payment_listener_expired' },
+      deadline_at: typeof w.deadline_at === 'string' ? w.deadline_at : null,
+      timer_gen: typeof w.timer_gen === 'number' ? w.timer_gen : 0,
+    } as FlowWait
+  }
   const kind: FlowWaitKind = w.kind === 'timer' ? 'timer' : 'reply'
   const rawHandles = (w.handles && typeof w.handles === 'object' ? w.handles : {}) as Record<string, unknown>
   const handles: FlowWait['handles'] =

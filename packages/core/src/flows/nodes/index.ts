@@ -8,6 +8,7 @@ import { registerExternalNodes as registerExternalGroup } from './external/index
 import { registerCrmNodes as registerCrmGroup } from './crm/index'
 import { registerInteractiveNodes as registerInteractiveGroup } from './interactive/index'
 import { registerLogicNodes as registerLogicGroup } from './logic/index'
+import { registerPaymentNodes as registerPaymentGroup } from './payment/index'
 import { registerPixelNodes as registerPixelGroup } from './pixel/index'
 
 /** Grupo → tarefa dona e tipos de nó (06 §3.5; SPEC T41, T42, T51, T62, T63, T104, T111). */
@@ -28,7 +29,7 @@ export const startHandler: NodeHandler = {
   execute: () => ({ next: 'source' }),
 }
 
-function registerStub(group: NodeGroup) {
+export function registerStub(group: NodeGroup) {
   return (registry: NodeRegistry) => {
     for (const type of NODE_GROUPS[group].types) registry.register(type, notImplemented(type))
     return registry
@@ -42,7 +43,7 @@ const registerMessageNodes = (registry: NodeRegistry) => registerMessagingNodes(
 const registerInteractiveNodes = (registry: NodeRegistry) => registerInteractiveGroup(registry) // T62
 const registerCrmNodes = (registry: NodeRegistry) => registerCrmGroup(registry) // T63
 const registerPixelNodes = (registry: NodeRegistry) => registerPixelGroup(registry) // T104
-const registerPaymentNodes = registerStub('payment') // T111
+const registerPaymentNodes = (registry: NodeRegistry) => registerPaymentGroup(registry) // T111
 
 export function registerNodeGroups(registry: NodeRegistry): NodeRegistry {
   registry.register('start', startHandler)

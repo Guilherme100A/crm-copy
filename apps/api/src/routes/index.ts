@@ -43,6 +43,7 @@ import { metaEntitiesRoutes } from './meta-entities/index'
 import { paymentIntegrationsRoutes } from './payment-integrations/index'
 import { inboundWebhooksRoutes } from './inbound-webhooks/index'
 import { hooksRoutes } from './hooks/index'
+import { hooksPaymentsRoutes } from './hooks-payments/index'
 import { dashboardRoutes } from './dashboard/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
@@ -94,5 +95,6 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', paymentIntegrationsRoutes(deps))
   app.route('/', inboundWebhooksRoutes(deps))
   app.route('/', hooksRoutes(deps))
+  app.route('/', hooksPaymentsRoutes(deps))
   app.route('/', dashboardRoutes(deps))
 }

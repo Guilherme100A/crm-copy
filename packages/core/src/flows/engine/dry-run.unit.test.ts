@@ -3,7 +3,7 @@ import type { FlowDefinition } from '@crm/shared'
 import { idempotencyKey, stepKey, type NodeHandler } from './context'
 import { dryRun } from './dry-run'
 import { NODE_GROUPS } from '../nodes/index'
-import { createNodeRegistry } from './registry'
+import { createNodeRegistry, notImplemented } from './registry'
 import { LOOP_GUARD_ERROR } from './runner'
 
 const node = (id: string, type: string) => ({ id, type, name: id, position: { x: 0, y: 0 }, actions: [] })
@@ -67,7 +67,9 @@ describe('dry-run (mesmo laço do motor, sem banco nem gateway real)', () => {
   })
 
   it('stubs dos grupos lançam node_not_implemented; tipo sem handler idem', async () => {
-    const r = await dryRun({ definition: def([node('start', 'start'), node('t', 'payment')], [edge('start', 'source', 't')]) })
+    // T111: todos os grupos já têm handler; o stub é registrado explicitamente.
+    const stubbed = createNodeRegistry().register('payment', notImplemented('payment'))
+    const r = await dryRun({ definition: def([node('start', 'start'), node('t', 'payment')], [edge('start', 'source', 't')]), registry: stubbed })
     expect([r.status, r.error]).toEqual(['failed', 'node_not_implemented:payment'])
     const reg = createNodeRegistry()
     for (const g of Object.values(NODE_GROUPS)) for (const t of g.types) expect(reg.has(t), t).toBe(true)

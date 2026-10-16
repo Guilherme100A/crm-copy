@@ -18,6 +18,7 @@ import { registerSchedulesJob } from './jobs/schedules'
 import { registerMetaAdsJob } from './jobs/meta-ads'
 import { registerMetaCapiJob } from './jobs/meta-capi'
 import { registerAiKnowledgeJob } from './jobs/ai-knowledge'
+import { registerPaymentWebhooksJob } from './jobs/payment-webhooks'
 
 export interface QueueDefinition {
   name: string
@@ -88,3 +89,4 @@ registerSchedulesJob(registry)
 registerMetaAdsJob(registry)
 registerMetaCapiJob(registry)
 registerAiKnowledgeJob(registry)
+registerPaymentWebhooksJob(registry)
