@@ -3,6 +3,7 @@
 import type { NodeType } from '@crm/shared'
 import type { NodeHandler } from '../engine/context'
 import { notImplemented, type NodeRegistry } from '../engine/registry'
+import { registerMessagingNodes } from './messaging/index'
 
 /** Grupo → tarefa dona e tipos de nó (06 §3.5; SPEC T41, T42, T51, T62, T63, T104, T111). */
 export const NODE_GROUPS = {
@@ -32,7 +33,7 @@ function registerStub(group: NodeGroup) {
 // Uma linha por grupo: a tarefa dona troca `registerStub('<grupo>')` pelo registrador real.
 const registerLogicNodes = registerStub('logic') // T41
 const registerExternalNodes = registerStub('external') // T42
-const registerMessageNodes = registerStub('messages') // T51
+const registerMessageNodes = (registry: NodeRegistry) => registerMessagingNodes(registry) // T51
 const registerInteractiveNodes = registerStub('interactive') // T62
 const registerCrmNodes = registerStub('crm') // T63
 const registerPixelNodes = registerStub('pixel') // T104

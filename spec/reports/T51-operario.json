@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "task": "T51",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T06:53:46.663Z",
+  "commit": "f48c9b5174cc53b6d5dbc95feced00e99f6c7017",
+  "base": "f48c9b5",
+  "changedFiles": [
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/flows/nodes/messaging/data.ts",
+    "packages/core/src/flows/nodes/messaging/handlers.ts",
+    "packages/core/src/flows/nodes/messaging/index.ts",
+    "packages/core/src/flows/nodes/messaging/messaging.unit.test.ts",
+    "packages/core/src/flows/nodes/messaging/pix.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 4.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 22.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "7 arquivo(s) alterado(s)"
+    }
+  ]
+}
