@@ -3,17 +3,17 @@
   "task": "T128",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T23:21:22.927Z",
-  "commit": "5abdea0f2b143c56994814dd825b5246304362d5",
-  "base": "5abdea0",
+  "at": "2026-10-16T23:33:42.645Z",
+  "commit": "b9a9cb7a9f735b15d53a42708f271c5705579679",
+  "base": "c19e225",
   "changedFiles": [
     "docs/testing.md",
     "packages/db/src/testing.ts",
-    "scripts/e2e/orphans.mjs",
-    "scripts/e2e/serve.mjs",
     "packages/db/src/testing/template.db.unit.test.ts",
     "packages/db/src/testing/template.ts",
     "packages/db/src/testing/template.unit.test.ts",
+    "scripts/e2e/orphans.mjs",
+    "scripts/e2e/serve.mjs",
     "scripts/e2e/template-db.mjs",
     "scripts/e2e/template-db.unit.test.mjs"
   ],
@@ -26,12 +26,12 @@
     {
       "name": "cmd: pnpm --filter @crm/db lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db test",
       "status": "pass",
-      "detail": "ok em 87.4s (afetados desde a base)"
+      "detail": "ok em 65.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
