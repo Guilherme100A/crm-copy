@@ -201,3 +201,4 @@
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
 | harness E2E (T17) | `POST /__e2e/reset` passa de 15 s sob carga; o cliente desiste e o próximo reset começa por cima → 500 duplicate key companies_pkey: serializar o reset (mutex) e subir o timeout do resetSeed (junto com a limpeza de bancos órfãos) | T70 |
 | (T125) montagem Meta | `configureMetaCapi({ db })` no boot e `capiSalePublisher` na API/worker (vendas aprovadas → Pixel) | T104 |
+| montagem do worker | `configureExternalNodes({ llm por empresa, llmForKey via AiKeysService.credentialsForKey, guard: UsageGuard })` (T42) no boot: sem isso o nó de IA usa o ctx.llm sem medição | T42 |
