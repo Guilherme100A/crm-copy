@@ -140,6 +140,7 @@
 | T40 | criar `crm.connections` com `session_id` e `company_id` (o resolver padrão da T33 consulta essas colunas); registrar a fonte com `registerCompanySessionsSource` (T22); FK `chats.connection_id` | T22, T33 |
 | T31 / T39 | FKs `chats.department_id` (T31) e `chats.ai_agent_id` (T39) | T33 |
 | T46 / T29 | injetar `waGateway` e resolver no worker via `configureChatsConsumer` | T33 |
+| T29 | composição do wa-worker: `queue = new MessageQueue({ deliver: createDeliver({ antiban, health: monitor, limits }), antiban })`; `monitor = new HealthMonitor({ db, queueControl: queue, manager })`; no SessionManager `onConnected/onDisconnected/resumeState` = hooks do monitor + `bindTransportSession` no connect | T20 |
 | endurecimento | `requestLogger` (T08) loga `c.req.path` com token em `/api/invitations/:token*` e `/api/auth/password-resets/:token` — redigir | T22, T15 |
 | endurecimento | FK composta `(company_id, contact_id)` em `flow_runs` (hoje FK só por `contact_id`) | T19 |
 | endurecimento | Streams SSE de empresa desativada não caem (heartbeat confere sessão/vínculo, não `active`) | T22 |
