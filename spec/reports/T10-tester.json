@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "task": "T10",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:00:30.977Z",
+  "commit": "779aa560ad12e8e1156efa1864e66d9b70925bb9",
+  "base": "779aa56",
+  "changedFiles": [
+    "tests/acceptance/T10/actions.test.ts",
+    "tests/acceptance/T10/migrate.test.ts",
+    "tests/acceptance/T10/support.ts",
+    "tests/acceptance/T10/unsupported.test.ts",
+    "tests/acceptance/T10/validate.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T10-01, AC-T10-02, AC-T10-03, AC-T10-04, AC-T10-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "4 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "95 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T10-01",
+      "status": "pass",
+      "detail": "12 passed"
+    },
+    {
+      "name": "AC-T10-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T10-03",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T10-04",
+      "status": "pass",
+      "detail": "8 passed"
+    },
+    {
+      "name": "AC-T10-05",
+      "status": "pass",
+      "detail": "67 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}
