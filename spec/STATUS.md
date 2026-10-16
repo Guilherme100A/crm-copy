@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T21 (Cinzel/Radar), T23 (Fole/Prisma), T24 (Torno/Sonda), T28 (Bigorna/Lupa).
+- Em andamento: T21 (Cinzel/Radar), T23 (Fole/Prisma), T28 (Bigorna/Lupa), T39 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -34,7 +34,7 @@
 | 3 | T16 | Realtime: SSE, fan-out e replay | MERGED | Bigorna | Lupa | 0 | 53c0005 |
 | 3 | T17 | Harness E2E (API com fakes, seed, reset) | MERGED | Torno | Sonda | 0 | 06e42c8 |
 | 3 | T19 | Fluxos: schema e repositório | MERGED | Cinzel | Radar | 0 | 744ecca |
-| 3 | T24 | UsageGuard e provider medido | IN_PROGRESS | Torno | Sonda | 0 | |
+| 3 | T24 | UsageGuard e provider medido | MERGED | Torno | Sonda | 0 | 7c3ecd8 |
 | 4 | T20 | WA: SendPipeline, deliver e health | MERGED | Cinzel | Radar | 0 | b77551d |
 | 4 | T21 | WA: outbox de eventos, mídia e contatos | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 4 | T22 | Empresas, equipe, convites e permissões | MERGED | Bigorna | Lupa | 0 | 23a441a |
@@ -53,7 +53,7 @@
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
-| 5 | T39 | Agentes de IA: schema e CRUD | TODO | | | 0 | |
+| 5 | T39 | Agentes de IA: schema e CRUD | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | TODO | | | 0 | |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
 | 5 | T42 | Nós externos (HTTP e IA) | TODO | | | 0 | |
