@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "task": "T45",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T13:55:17.640Z",
+  "commit": "c9d86e3a72e9e467f028cae408bdf020f3177a5c",
+  "base": "c9d86e3",
+  "changedFiles": [
+    "apps/web/package.json",
+    "apps/web/src/routeTree.gen.ts",
+    "pnpm-lock.yaml",
+    "apps/web/src/features/flow-editor/canvas/api.ts",
+    "apps/web/src/features/flow-editor/canvas/autosave.ts",
+    "apps/web/src/features/flow-editor/canvas/editor.tsx",
+    "apps/web/src/features/flow-editor/canvas/flow-editor.unit.test.ts",
+    "apps/web/src/features/flow-editor/canvas/flow-node.tsx",
+    "apps/web/src/features/flow-editor/canvas/model.ts",
+    "apps/web/src/features/flow-editor/canvas/realtime.ts",
+    "apps/web/src/features/flow-editor/index.ts",
+    "apps/web/src/features/flow-editor/node-editors/registry.ts",
+    "apps/web/src/features/flow-editor/palette/catalog.ts",
+    "apps/web/src/features/flow-editor/palette/palette.tsx",
+    "apps/web/src/features/flow-editor/properties/properties-panel.tsx",
+    "apps/web/src/i18n/en/flow-editor.json",
+    "apps/web/src/i18n/es/flow-editor.json",
+    "apps/web/src/i18n/pt-BR/flow-editor.json",
+    "apps/web/src/routes/flows/$flowId/edit.tsx",
+    "apps/web/src/routes/flows/$flowId/index.tsx"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 12.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 5.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 6.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 5.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "20 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "task": "T45",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T13:58:16.684Z",
+  "commit": "c9d86e3a72e9e467f028cae408bdf020f3177a5c",
+  "base": "c9d86e3",
+  "changedFiles": [
+    "tests/acceptance/T45/editor.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T45-01, AC-T45-02, AC-T45-03, AC-T45-04, AC-T45-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "18 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T45-01",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T45-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T45-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T45-04",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "AC-T45-05",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "1 arquivo(s) alterado(s)"
+    }
+  ]
+}

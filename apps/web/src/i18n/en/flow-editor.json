@@ -1,0 +1,85 @@
+{
+  "common": { "close": "Close", "retry": "Try again", "cancel": "Cancel" },
+  "editor": {
+    "loading": "Loading flow...",
+    "loadError": "Could not load the flow.",
+    "back": "Back to flows",
+    "edit": "Edit",
+    "viewOnly": "Read-only view.",
+    "noPermission": "You do not have permission to edit flows",
+    "actionError": "Could not complete the action.",
+    "renameHint": "Click to edit the title"
+  },
+  "palette": {
+    "open": "Tools",
+    "title": "Blocks",
+    "search": "Search blocks…",
+    "empty": "No blocks found.",
+    "hint": "Drag to the canvas or click to add"
+  },
+  "groups": { "messages": "Messages", "interaction": "Interaction", "logic": "Logic", "crm": "CRM", "integrations": "Integrations" },
+  "types": {
+    "start": "Start",
+    "message": "Message",
+    "tags": "Labels",
+    "pix": "Pix",
+    "interactive_menu": "Interactive menu",
+    "menu": "Option list",
+    "carousel": "Carousel",
+    "wait_response": "Wait for reply",
+    "chat_controller": "Chat status",
+    "notification": "Notification",
+    "condition": "Condition",
+    "distributor": "Distributor",
+    "connection_flow": "Run flow",
+    "pixel": "Pixel",
+    "smart_interval": "Smart interval",
+    "department": "Department",
+    "integration": "HTTP request",
+    "ai": "AI block",
+    "ai_agent": "AI agent",
+    "kanban": "Kanban",
+    "manipulator": "Edit data",
+    "approved_sale": "Approved sale",
+    "payment": "Payment",
+    "unsupported": "Unsupported block"
+  },
+  "node": {
+    "copy": "Copy",
+    "delete": "Delete",
+    "unsupported": "Unsupported ({type})",
+    "actions": "{n} action(s)"
+  },
+  "handles": { "source": "Next", "success": "Success", "failure": "Failure", "other": "Other", "timeout": "Timeout" },
+  "properties": {
+    "title": "Properties",
+    "name": "Name",
+    "description": "Description",
+    "actions": "Actions",
+    "noActions": "No actions configured.",
+    "noEditor": "The editor for this block is not available yet.",
+    "nodes": "Nodes",
+    "edges": "Connections",
+    "hint": "Select a block to see its properties."
+  },
+  "clipboard": { "copied": "{n} block(s) copied" },
+  "status": {
+    "draft": "Draft",
+    "active": "Active",
+    "paused": "Paused",
+    "archived": "Archived",
+    "activate": "Activate",
+    "pause": "Pause",
+    "activated": "Flow activated"
+  },
+  "save": { "saving": "Saving…", "error": "Save failed", "savedAt": "Saved at {time}" },
+  "errors": { "title": "{n} problem(s) prevent activating the flow" },
+  "edge": { "delete": "Delete connection" },
+  "delete": {
+    "title": "Delete",
+    "oneNode": "Are you sure you want to delete the node {name}?",
+    "manyNodes": "Are you sure you want to delete {n} nodes?",
+    "edges": "Are you sure you want to delete {n} connection(s)?",
+    "confirm": "Delete"
+  }
+}

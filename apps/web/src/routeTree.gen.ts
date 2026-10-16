@@ -34,6 +34,8 @@ import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as SettingsInboundWebhooksRouteImport } from './routes/settings/inbound-webhooks'
 import { Route as SupportAccessRouteImport } from './routes/support/access'
 import { Route as WelcomeIndexRouteImport } from './routes/welcome/index'
+import { Route as FlowsFlowIdIndexRouteImport } from './routes/flows/$flowId/index'
+import { Route as FlowsFlowIdEditRouteImport } from './routes/flows/$flowId/edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -160,6 +162,16 @@ const WelcomeIndexRoute = WelcomeIndexRouteImport.update({
   path: '/welcome/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlowsFlowIdIndexRoute = FlowsFlowIdIndexRouteImport.update({
+  id: '/flows/$flowId/',
+  path: '/flows/$flowId/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FlowsFlowIdEditRoute = FlowsFlowIdEditRouteImport.update({
+  id: '/flows/$flowId/edit',
+  path: '/flows/$flowId/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -187,6 +199,8 @@ export interface FileRoutesByFullPath {
   '/profile/': typeof ProfileIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/welcome/': typeof WelcomeIndexRoute
+  '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/flows/$flowId/': typeof FlowsFlowIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -213,6 +227,8 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileIndexRoute
   '/settings': typeof SettingsIndexRoute
   '/welcome': typeof WelcomeIndexRoute
+  '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/flows/$flowId': typeof FlowsFlowIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -241,6 +257,8 @@ export interface FileRoutesById {
   '/profile/': typeof ProfileIndexRoute
   '/settings/': typeof SettingsIndexRoute
   '/welcome/': typeof WelcomeIndexRoute
+  '/flows/$flowId/edit': typeof FlowsFlowIdEditRoute
+  '/flows/$flowId/': typeof FlowsFlowIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -270,6 +288,8 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/settings/'
     | '/welcome/'
+    | '/flows/$flowId/edit'
+    | '/flows/$flowId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -296,6 +316,8 @@ export interface FileRouteTypes {
     | '/profile'
     | '/settings'
     | '/welcome'
+    | '/flows/$flowId/edit'
+    | '/flows/$flowId'
   id:
     | '__root__'
     | '/'
@@ -323,6 +345,8 @@ export interface FileRouteTypes {
     | '/profile/'
     | '/settings/'
     | '/welcome/'
+    | '/flows/$flowId/edit'
+    | '/flows/$flowId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -349,6 +373,8 @@ export interface RootRouteChildren {
   ProfileIndexRoute: typeof ProfileIndexRoute
   SettingsIndexRoute: typeof SettingsIndexRoute
   WelcomeIndexRoute: typeof WelcomeIndexRoute
+  FlowsFlowIdEditRoute: typeof FlowsFlowIdEditRoute
+  FlowsFlowIdIndexRoute: typeof FlowsFlowIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -528,6 +554,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WelcomeIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flows/$flowId/': {
+      id: '/flows/$flowId/'
+      path: '/flows/$flowId'
+      fullPath: '/flows/$flowId/'
+      preLoaderRoute: typeof FlowsFlowIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/flows/$flowId/edit': {
+      id: '/flows/$flowId/edit'
+      path: '/flows/$flowId/edit'
+      fullPath: '/flows/$flowId/edit'
+      preLoaderRoute: typeof FlowsFlowIdEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -569,6 +609,8 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileIndexRoute: ProfileIndexRoute,
   SettingsIndexRoute: SettingsIndexRoute,
   WelcomeIndexRoute: WelcomeIndexRoute,
+  FlowsFlowIdEditRoute: FlowsFlowIdEditRoute,
+  FlowsFlowIdIndexRoute: FlowsFlowIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

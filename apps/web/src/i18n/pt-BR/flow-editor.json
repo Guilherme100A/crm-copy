@@ -1,0 +1,85 @@
+{
+  "common": { "close": "Fechar", "retry": "Tentar novamente", "cancel": "Cancelar" },
+  "editor": {
+    "loading": "Carregando fluxo...",
+    "loadError": "Não foi possível carregar o fluxo.",
+    "back": "Voltar para fluxos",
+    "edit": "Editar",
+    "viewOnly": "Visualização somente leitura.",
+    "noPermission": "Você não tem permissão para editar fluxos",
+    "actionError": "Não foi possível concluir a ação.",
+    "renameHint": "Clique para editar o título"
+  },
+  "palette": {
+    "open": "Ferramentas",
+    "title": "Blocos",
+    "search": "Buscar blocos…",
+    "empty": "Nenhum bloco encontrado.",
+    "hint": "Arraste para o canvas ou clique para adicionar"
+  },
+  "groups": { "messages": "Mensagens", "interaction": "Interação", "logic": "Lógica", "crm": "CRM", "integrations": "Integrações" },
+  "types": {
+    "start": "Início",
+    "message": "Mensagem",
+    "tags": "Etiquetas",
+    "pix": "Pix",
+    "interactive_menu": "Menu interativo",
+    "menu": "Lista de opções",
+    "carousel": "Carrossel",
+    "wait_response": "Aguardar resposta",
+    "chat_controller": "Status do chat",
+    "notification": "Notificação",
+    "condition": "Condição",
+    "distributor": "Distribuidor",
+    "connection_flow": "Executar fluxo",
+    "pixel": "Pixel",
+    "smart_interval": "Intervalo inteligente",
+    "department": "Departamento",
+    "integration": "Requisição HTTP",
+    "ai": "Bloco de IA",
+    "ai_agent": "Agente de IA",
+    "kanban": "Kanban",
+    "manipulator": "Manipular dados",
+    "approved_sale": "Venda aprovada",
+    "payment": "Pagamento",
+    "unsupported": "Bloco não suportado"
+  },
+  "node": {
+    "copy": "Copiar",
+    "delete": "Excluir",
+    "unsupported": "Não suportado ({type})",
+    "actions": "{n} ação(ões)"
+  },
+  "handles": { "source": "Próximo", "success": "Sucesso", "failure": "Falha", "other": "Outro", "timeout": "Tempo esgotado" },
+  "properties": {
+    "title": "Propriedades",
+    "name": "Nome",
+    "description": "Descrição",
+    "actions": "Ações",
+    "noActions": "Nenhuma ação configurada.",
+    "noEditor": "O editor deste bloco ainda não está disponível.",
+    "nodes": "Nós",
+    "edges": "Conexões",
+    "hint": "Selecione um bloco para ver as propriedades."
+  },
+  "clipboard": { "copied": "{n} bloco(s) copiado(s)" },
+  "status": {
+    "draft": "Rascunho",
+    "active": "Ativo",
+    "paused": "Pausado",
+    "archived": "Arquivado",
+    "activate": "Ativar",
+    "pause": "Pausar",
+    "activated": "Fluxo ativado"
+  },
+  "save": { "saving": "Salvando…", "error": "Erro ao salvar", "savedAt": "Salvo às {time}" },
+  "errors": { "title": "{n} problema(s) impedem ativar o fluxo" },
+  "edge": { "delete": "Excluir conexão" },
+  "delete": {
+    "title": "Excluir",
+    "oneNode": "Tem certeza que deseja excluir o nó {name}?",
+    "manyNodes": "Tem certeza que deseja excluir {n} nós?",
+    "edges": "Tem certeza que deseja excluir {n} conexão(ões)?",
+    "confirm": "Excluir"
+  }
+}

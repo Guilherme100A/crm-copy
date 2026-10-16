@@ -1,0 +1,85 @@
+{
+  "common": { "close": "Cerrar", "retry": "Reintentar", "cancel": "Cancelar" },
+  "editor": {
+    "loading": "Cargando flujo...",
+    "loadError": "No se pudo cargar el flujo.",
+    "back": "Volver a flujos",
+    "edit": "Editar",
+    "viewOnly": "Vista de solo lectura.",
+    "noPermission": "No tienes permiso para editar flujos",
+    "actionError": "No se pudo completar la acción.",
+    "renameHint": "Haz clic para editar el título"
+  },
+  "palette": {
+    "open": "Herramientas",
+    "title": "Bloques",
+    "search": "Buscar bloques…",
+    "empty": "No se encontraron bloques.",
+    "hint": "Arrastra al lienzo o haz clic para agregar"
+  },
+  "groups": { "messages": "Mensajes", "interaction": "Interacción", "logic": "Lógica", "crm": "CRM", "integrations": "Integraciones" },
+  "types": {
+    "start": "Inicio",
+    "message": "Mensaje",
+    "tags": "Etiquetas",
+    "pix": "Pix",
+    "interactive_menu": "Menú interactivo",
+    "menu": "Lista de opciones",
+    "carousel": "Carrusel",
+    "wait_response": "Esperar respuesta",
+    "chat_controller": "Estado del chat",
+    "notification": "Notificación",
+    "condition": "Condición",
+    "distributor": "Distribuidor",
+    "connection_flow": "Ejecutar flujo",
+    "pixel": "Píxel",
+    "smart_interval": "Intervalo inteligente",
+    "department": "Departamento",
+    "integration": "Solicitud HTTP",
+    "ai": "Bloque de IA",
+    "ai_agent": "Agente de IA",
+    "kanban": "Kanban",
+    "manipulator": "Manipular datos",
+    "approved_sale": "Venta aprobada",
+    "payment": "Pago",
+    "unsupported": "Bloque no compatible"
+  },
+  "node": {
+    "copy": "Copiar",
+    "delete": "Eliminar",
+    "unsupported": "No compatible ({type})",
+    "actions": "{n} acción(es)"
+  },
+  "handles": { "source": "Siguiente", "success": "Éxito", "failure": "Fallo", "other": "Otro", "timeout": "Tiempo agotado" },
+  "properties": {
+    "title": "Propiedades",
+    "name": "Nombre",
+    "description": "Descripción",
+    "actions": "Acciones",
+    "noActions": "No hay acciones configuradas.",
+    "noEditor": "El editor de este bloque aún no está disponible.",
+    "nodes": "Nodos",
+    "edges": "Conexiones",
+    "hint": "Selecciona un bloque para ver sus propiedades."
+  },
+  "clipboard": { "copied": "{n} bloque(s) copiado(s)" },
+  "status": {
+    "draft": "Borrador",
+    "active": "Activo",
+    "paused": "Pausado",
+    "archived": "Archivado",
+    "activate": "Activar",
+    "pause": "Pausar",
+    "activated": "Flujo activado"
+  },
+  "save": { "saving": "Guardando…", "error": "Error al guardar", "savedAt": "Guardado a las {time}" },
+  "errors": { "title": "{n} problema(s) impiden activar el flujo" },
+  "edge": { "delete": "Eliminar conexión" },
+  "delete": {
+    "title": "Eliminar",
+    "oneNode": "¿Seguro que deseas eliminar el nodo {name}?",
+    "manyNodes": "¿Seguro que deseas eliminar {n} nodos?",
+    "edges": "¿Seguro que deseas eliminar {n} conexión(es)?",
+    "confirm": "Eliminar"
+  }
+}
