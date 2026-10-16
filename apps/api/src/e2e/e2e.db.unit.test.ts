@@ -3,7 +3,7 @@
 import { randomBytes } from 'node:crypto'
 import { eq } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { createDb, SEED_BASE, users, type Database } from '@crm/db'
+import { createDb, listSeedModules, SEED_BASE, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../app'
@@ -101,7 +101,11 @@ describe('AC-T17-03 reset', () => {
     const res = await app.request('/__e2e/reset', { method: 'POST' })
     expect(res.status).toBe(200)
     expect(Date.now() - t0).toBeLessThan(3000)
-    expect(await res.json()).toMatchObject({ ok: true, applied: ['base'] })
+    // T37: os seeds de módulo registrados (ex.: ai-prices) rodam depois do seed-base.
+    const body = (await res.json()) as { ok: boolean; applied: string[] }
+    expect(body).toMatchObject({ ok: true })
+    expect(body.applied[0]).toBe('base')
+    expect(body.applied).toEqual(['base', ...listSeedModules().map((m) => m.name)])
 
     const rows = await db.select({ id: users.id, email: users.email, name: users.name }).from(users)
     expect(rows.map((r) => r.email).sort()).toEqual(Object.values(SEED_BASE.users).map((u) => u.email).sort())

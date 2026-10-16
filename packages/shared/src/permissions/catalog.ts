@@ -39,6 +39,8 @@ export const PERMISSION_CATALOG = [
   { group: 'webhooks', keys: ved('webhooks') },
   { group: 'connections', keys: ved('connections') },
   { group: 'facebook', keys: ['facebook.campaigns', 'facebook.pixel', 'facebook.profiles'] },
+  // T37: ver carteira, extrato, resumo e cotas de IA da empresa.
+  { group: 'ai_usage', keys: ['ai_usage.view'] },
   { group: 'team', keys: ved('team') },
   { group: 'settings', keys: ['settings.view', ...settingsMatrix(SETTINGS_AREAS)] },
 ] as const

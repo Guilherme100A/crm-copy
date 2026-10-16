@@ -55,17 +55,19 @@ describe('AC-T17-05 seeds de módulo', () => {
     const mod = (name: string, order?: number): SeedModule => ({ name, order, run: () => void ran.push(name) })
     const offs = [mod('zeta'), mod('alpha', 200), mod('beta', 10), mod('gamma'), mod('aaa', 10)].map((m) => registerSeedModule(m))
     try {
-      expect(listSeedModules().map((m) => m.name)).toEqual(['aaa', 'beta', 'gamma', 'zeta', 'alpha'])
+      // T37: seeds reais registrados (ex.: ai-prices) ficam fora da comparação; a ordem dos do teste é a prova.
+      const mine = (names: string[]) => names.filter((n) => n === 'base' || ['aaa', 'beta', 'gamma', 'zeta', 'alpha'].includes(n))
+      expect(mine(listSeedModules().map((m) => m.name))).toEqual(['aaa', 'beta', 'gamma', 'zeta', 'alpha'])
       for (let i = 0; i < 2; i++) {
         ran.length = 0
         const { applied } = await resetAndSeed(db)
-        expect(applied).toEqual(['base', 'aaa', 'beta', 'gamma', 'zeta', 'alpha'])
+        expect(mine(applied)).toEqual(['base', 'aaa', 'beta', 'gamma', 'zeta', 'alpha'])
         expect(ran).toEqual(['aaa', 'beta', 'gamma', 'zeta', 'alpha'])
       }
     } finally {
       for (const off of offs) off()
     }
-    expect(listSeedModules()).toEqual([])
+    expect(listSeedModules().filter((m) => ['aaa', 'beta', 'gamma', 'zeta', 'alpha'].includes(m.name))).toEqual([])
   })
 
   it('nome repetido ou reservado → erro; módulo recebe db e passwordHash', async () => {

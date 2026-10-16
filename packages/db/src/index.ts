@@ -4,3 +4,5 @@ export {}
 export * from './schema/index.js'
 export * from './client.js'
 export * from './seed/index.js'
+// T37: preços padrão de IA (seed e boot).
+export * from './seed/modules/ai-prices.js'

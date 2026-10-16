@@ -2,5 +2,6 @@
 // num arquivo próprio em `seed/modules/<módulo>.ts`. A ordem de execução vem de `order` (default 100) e do nome,
 // nunca da posição aqui: `runSeeds` ordena de forma determinística.
 import type { SeedModule } from '../index.js'
+import { aiPricesSeed } from './ai-prices.js'
 
-export const SEED_MODULES: SeedModule[] = []
+export const SEED_MODULES: SeedModule[] = [aiPricesSeed]

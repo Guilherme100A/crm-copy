@@ -13,6 +13,7 @@ import {
   type TimerScheduler,
 } from '@crm/core'
 import { createDb, runMigrations } from '@crm/db'
+import { ensureDefaultAiPrices } from '@crm/db'
 import { join } from 'node:path'
 import { bullConnection, createLogger, FsBlobStore, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
 import { createWaGatewayFromEnv } from '@crm/wa-gateway-rpc'
@@ -27,6 +28,7 @@ async function main() {
 
   const db = createDb(config.DATABASE_URL)
   await runMigrations(db)
+  await ensureDefaultAiPrices(db)
   const redis = redisConnection({ url: config.REDIS_URL })
 
   // T46: WaGateway real (WA_GATEWAY=rpc → wa-worker por RPC + stream) ou FakeWaGateway (WA_GATEWAY=fake).

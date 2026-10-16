@@ -4,6 +4,7 @@
 import { join } from 'node:path'
 import { FsExportFileStore } from '@crm/core'
 import { createDb, runMigrations, type Database } from '@crm/db'
+import { ensureDefaultAiPrices } from '@crm/db'
 import { createLogger, FsBlobStore, initCredentialsCrypto, redisConnection, type Logger } from '@crm/node-kit'
 import { createWaGatewayFromEnv, type WaGatewayFromEnv } from '@crm/wa-gateway-rpc'
 import type { Redis } from 'ioredis'
@@ -48,6 +49,7 @@ export async function startProductionWorker(opts: StartProductionWorkerOptions =
   const ownsDb = !opts.db
   const db = opts.db ?? createDb(config.DATABASE_URL)
   if (opts.migrate ?? true) await runMigrations(db)
+  await ensureDefaultAiPrices(db)
   const wa = createWaGatewayFromEnv(env, { redis: config.REDIS_URL, logger })
   // Capacidades do backend: falha aqui não impede o boot (valem as do perfil).
   await wa.rpc?.refreshCapabilities().catch((err: unknown) => logger.warn({ err }, 'não foi possível consultar as capacidades do wa-worker'))

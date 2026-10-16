@@ -31,6 +31,8 @@ import { exportsRoutes } from './exports/index'
 import { aiKeysDefaults, aiKeysRoutes } from './ai-keys/index'
 import { connectionFlowConfigsRoutes } from './connection-flow-configs/index'
 import { schedulesRoutes } from './schedules/index'
+import { aiUsageRoutes } from './ai-usage/index'
+import { platformAiRoutes } from './platform-ai/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -69,4 +71,6 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', aiKeysRoutes(deps))
   app.route('/', connectionFlowConfigsRoutes(deps))
   app.route('/', schedulesRoutes(deps))
+  app.route('/', aiUsageRoutes(deps))
+  app.route('/', platformAiRoutes(deps))
 }

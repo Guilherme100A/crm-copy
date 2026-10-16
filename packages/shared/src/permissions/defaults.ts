@@ -46,6 +46,8 @@ const ADMIN: readonly PermissionKey[] = [
   'connections.edit',
   'connections.delete',
   'chat.block',
+  // T37: consumo de IA da empresa (member não).
+  'ai_usage.view',
   // T48: assumir/atribuir chat de outro atendente e excluir chat (member não tem).
   'chat.assign_others',
   'chat.delete',
