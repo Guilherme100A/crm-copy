@@ -3,12 +3,10 @@
   "task": "T69",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T08:05:18.929Z",
-  "commit": "c4e120ecd28e570fceaeeb305f29388428a731bb",
-  "base": "c4e120e",
+  "at": "2026-10-16T08:11:17.646Z",
+  "commit": "58153e61fb517e400045219e71acfe47b930de08",
+  "base": "788437b",
   "changedFiles": [
-    "apps/web/src/routeTree.gen.ts",
-    "apps/web/src/routes/chats/index.tsx",
     "apps/web/src/features/chat-list/api.ts",
     "apps/web/src/features/chat-list/chat-list-panel.tsx",
     "apps/web/src/features/chat-list/chat-list.unit.test.ts",
@@ -23,34 +21,36 @@
     "apps/web/src/i18n/es/chat.json",
     "apps/web/src/i18n/pt-BR/chat-list.json",
     "apps/web/src/i18n/pt-BR/chat.json",
+    "apps/web/src/routeTree.gen.ts",
     "apps/web/src/routes/chats/$chatId.tsx",
+    "apps/web/src/routes/chats/index.tsx",
     "apps/web/src/routes/chats/route.tsx"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 8.7s"
+      "detail": "ok em 6.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 5.9s"
+      "detail": "ok em 4.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 4.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.9s"
+      "detail": "ok em 0.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.6s"
+      "detail": "ok em 16.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
