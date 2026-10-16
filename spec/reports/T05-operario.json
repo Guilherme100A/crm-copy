@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "task": "T05",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T02:46:12.334Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "packages/node-kit/package.json",
+    "packages/node-kit/src/index.ts",
+    "pnpm-lock.yaml",
+    "packages/node-kit/src/blob-store.ts",
+    "packages/node-kit/src/blob-store.unit.test.ts",
+    "packages/node-kit/src/config.ts",
+    "packages/node-kit/src/config.unit.test.ts",
+    "packages/node-kit/src/crypto.ts",
+    "packages/node-kit/src/crypto.unit.test.ts",
+    "packages/node-kit/src/logger.ts",
+    "packages/node-kit/src/logger.unit.test.ts",
+    "packages/node-kit/src/mailer.ts",
+    "packages/node-kit/src/mailer.unit.test.ts",
+    "packages/node-kit/src/password.ts",
+    "packages/node-kit/src/password.unit.test.ts",
+    "packages/node-kit/src/redis.ts",
+    "packages/node-kit/src/redis.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/node-kit/src/logger.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/node-kit/src/crypto.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/node-kit/src/blob-store.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/node-kit/src/mailer.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/node-kit typecheck",
+      "status": "pass",
+      "detail": "ok em 3.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/node-kit lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/node-kit test",
+      "status": "pass",
+      "detail": "ok em 1.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}
