@@ -3,15 +3,22 @@
 // (`vite preview` com proxy /api, quando apps/web existir). Imprime as URLs em linhas KEY=VALUE e por fim E2E_READY.
 // Encerrar: "q" + Enter, fechar o stdin, Ctrl+C ou SIGTERM → derruba os filhos e remove o banco (exit 0).
 //
-// Env opcionais: E2E_API_PORT / E2E_WEB_PORT (0 = porta livre), DATABASE_URL (servidor base),
-// E2E_REDIS_URL (default redis://127.0.0.1:6379/14), E2E_SKIP_WEB=1, E2E_WEB_BUILD=0.
+// Portas (T118): derivadas do caminho do worktree (scripts/e2e/ports.mjs), para worktrees em paralelo não colidirem;
+// porta derivada ocupada → erro claro (nunca cai noutra porta e fala com o servidor errado). Ao ficar pronto grava
+// a identidade em test-results/e2e-server.json (o Playwright só reaproveita servidor deste worktree) e a apaga ao sair.
+// Nenhum filho herda o stdin deste processo (ele é lido aqui; herdá-lo travava o build da web no Windows).
+//
+// Env opcionais: E2E_API_PORT / E2E_WEB_PORT (0 = porta livre), E2E_PORTS_ROOT (outro root só para as portas),
+// E2E_SERVER_INFO (onde gravar a identidade), E2E_IGNORE_STDIN=1 (não lê o stdin; rodar em segundo plano),
+// DATABASE_URL (servidor base), E2E_REDIS_URL (default redis://127.0.0.1:6379/14), E2E_SKIP_WEB=1, E2E_WEB_BUILD=0.
 import { spawn, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
-import { existsSync, readdirSync } from 'node:fs'
+import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { createRequire } from 'node:module'
 import { createServer } from 'node:net'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { e2ePorts, isOwnServerRunning, normalizeRoot, readServerInfo, serverInfoPath } from './ports.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pg = createRequire(join(ROOT, 'packages', 'db', 'package.json'))('pg')
@@ -27,13 +34,19 @@ function withDatabase(baseUrl, name) {
   return u.toString()
 }
 
-async function freePort(preferred = 0) {
+/** Confere que a porta está livre (0 = escolhe uma livre) e devolve a porta real. Ocupada → erro claro. */
+async function reservePort(port, label) {
   return new Promise((resolve, reject) => {
     const srv = createServer()
-    srv.once('error', reject)
-    srv.listen(Number(preferred) || 0, '127.0.0.1', () => {
-      const { port } = srv.address()
-      srv.close(() => resolve(port))
+    srv.once('error', (err) => {
+      if (err.code === 'EADDRINUSE') {
+        const envName = label === 'api' ? 'E2E_API_PORT' : 'E2E_WEB_PORT'
+        reject(new Error(`porta ${port} (${label}) ocupada: outro harness deste worktree já está de pé ou há colisão; encerre-o ou defina ${envName}`))
+      } else reject(err)
+    })
+    srv.listen(port, '127.0.0.1', () => {
+      const { port: real } = srv.address()
+      srv.close(() => resolve(real))
     })
   })
 }
@@ -95,7 +108,9 @@ async function main() {
   const baseUrl = process.env.DATABASE_URL || 'postgres://wsm:wsm@127.0.0.1:5432/crm'
   const redisUrl = process.env.E2E_REDIS_URL || 'redis://127.0.0.1:6379/14'
   const dbName = `crm_e2e_${randomBytes(5).toString('hex')}`
-  const apiPort = await freePort(process.env.E2E_API_PORT)
+  const ports = e2ePorts(ROOT)
+  const infoPath = serverInfoPath(ROOT)
+  const apiPort = await reservePort(ports.api, 'api')
   const apiUrl = `http://127.0.0.1:${apiPort}`
 
   const children = []
@@ -104,6 +119,8 @@ async function main() {
   const cleanup = async (code) => {
     if (finished) return
     finished = true
+    // A identidade só é removida se for deste processo (não apaga a de outro harness de pé).
+    if (readServerInfo(ROOT)?.pid === process.pid) rmSync(infoPath, { force: true })
     await Promise.all(children.map((c) => stopChild(c)))
     if (dbCreated) {
       try {
@@ -119,12 +136,14 @@ async function main() {
   }
   process.on('SIGINT', () => void cleanup(0))
   process.on('SIGTERM', () => void cleanup(0))
-  process.stdin.setEncoding('utf8')
-  process.stdin.on('data', (chunk) => {
-    if (chunk.trim() === 'q') void cleanup(0)
-  })
-  process.stdin.on('end', () => void cleanup(0))
-  process.stdin.resume()
+  if (process.env.E2E_IGNORE_STDIN !== '1') {
+    process.stdin.setEncoding('utf8')
+    process.stdin.on('data', (chunk) => {
+      if (chunk.trim() === 'q') void cleanup(0)
+    })
+    process.stdin.on('end', () => void cleanup(0))
+    process.stdin.resume()
+  }
 
   try {
     await admin(baseUrl, `CREATE DATABASE "${dbName}"`)
@@ -164,10 +183,12 @@ async function main() {
 
     let webUrl = ''
     if (process.env.E2E_SKIP_WEB !== '1' && webAvailable()) {
-      const webPort = await freePort(process.env.E2E_WEB_PORT)
+      const webPort = await reservePort(ports.web, 'web')
       const webEnv = { ...process.env, E2E: '1', E2E_API_URL: apiUrl }
       if (process.env.E2E_WEB_BUILD !== '0' && !existsSync(join(ROOT, 'apps', 'web', 'dist', 'index.html'))) {
-        const b = spawnSync('pnpm', ['--filter', '@crm/web', 'build'], { cwd: ROOT, env: webEnv, stdio: 'inherit', shell: IS_WIN })
+        log('apps/web/dist ausente: build da web')
+        // stdin 'ignore': herdar o stdin (que este processo lê) deixava o pnpm parado sem lançar o vite (T118).
+        const b = spawnSync('pnpm', ['--filter', '@crm/web', 'build'], { cwd: ROOT, env: webEnv, stdio: ['ignore', 'inherit', 'inherit'], shell: IS_WIN })
         if (b.status !== 0) throw new Error('build da web falhou')
       }
       const web = spawn('pnpm', ['--filter', '@crm/web', 'exec', 'vite', 'preview', '--host', '127.0.0.1', '--port', String(webPort), '--strictPort'], {
@@ -190,10 +211,29 @@ async function main() {
       }
     }
 
+    mkdirSync(dirname(infoPath), { recursive: true })
+    const info = {
+      root: normalizeRoot(ROOT),
+      api_url: apiUrl,
+      web_url: webUrl,
+      api_port: apiPort,
+      web_port: webUrl ? Number(new URL(webUrl).port) : null,
+      database: dbName,
+      pid: process.pid,
+      started_at: new Date().toISOString(),
+    }
+    // Dois harnesses no mesmo checkout (um com E2E_*_PORT): não sobrescreve a identidade de outro servidor vivo.
+    const current = readServerInfo(ROOT)
+    if (current && current.pid !== process.pid && isOwnServerRunning(ROOT)) {
+      log(`${infoPath} já é do servidor pid ${current.pid}; identidade deste harness não gravada`)
+    } else {
+      writeFileSync(infoPath, `${JSON.stringify(info, null, 2)}\n`)
+    }
     out(`E2E_API_URL=${apiUrl}`)
     out(`E2E_WEB_URL=${webUrl}`)
     out(`E2E_WEB=${webUrl ? 'up' : 'absent'}`)
     out(`E2E_DATABASE=${dbName}`)
+    out(`E2E_SERVER_INFO=${infoPath}`)
     out('E2E_READY')
   } catch (err) {
     log(err.message)
@@ -201,4 +241,8 @@ async function main() {
   }
 }
 
-void main()
+main().catch((err) => {
+  // Falhas antes do banco existir (porta ocupada, porta inválida): mensagem clara, sem stack.
+  log(err.message)
+  process.exit(1)
+})

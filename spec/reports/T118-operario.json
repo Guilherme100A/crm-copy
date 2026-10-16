@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "task": "T118",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T05:53:17.234Z",
+  "commit": "15b72227eba57a24ac2f5ec402eee8b3c83ae065",
+  "base": "15b7222",
+  "changedFiles": [
+    "apps/api/vitest.config.ts",
+    "apps/wa-worker/vitest.config.ts",
+    "apps/web/vitest.config.ts",
+    "apps/worker/vitest.config.ts",
+    "packages/ai/vitest.config.ts",
+    "packages/core/vitest.config.ts",
+    "packages/db/vitest.config.ts",
+    "packages/node-kit/vitest.config.ts",
+    "packages/shared/vitest.config.ts",
+    "packages/wa-engine/vitest.config.ts",
+    "packages/wa-gateway-rpc/vitest.config.ts",
+    "packages/wa-port/vitest.config.ts",
+    "scripts/e2e/serve.mjs",
+    "scripts/e2e/ports.mjs",
+    "scripts/e2e/ports.unit.test.mjs"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 15.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 7.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 38.1s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}

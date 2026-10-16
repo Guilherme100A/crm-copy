@@ -7,5 +7,8 @@ export default defineConfig({
     include: ['src/**/*.unit.test.{ts,tsx}'],
     environment: 'node',
     env: { ANTIBAN_MODE: 'passthrough' },
+    // Máquina compartilhada por vários worktrees (T118): folga para builds/bancos concorrentes.
+    testTimeout: 30_000,
+    hookTimeout: 60_000,
   },
 })

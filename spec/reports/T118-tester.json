@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "task": "T118",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T05:55:19.413Z",
+  "commit": "15b72227eba57a24ac2f5ec402eee8b3c83ae065",
+  "base": "15b7222",
+  "changedFiles": [
+    "tests/acceptance/playwright.config.ts",
+    "tests/acceptance/T118/harness.test.ts",
+    "tests/acceptance/T118/own-server.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T118-01, AC-T118-02, AC-T118-03"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "5 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "2 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T118-01",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "AC-T118-02",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T118-03",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "3 arquivo(s) alterado(s)"
+    }
+  ]
+}
