@@ -4,6 +4,7 @@ import type { NodeType } from '@crm/shared'
 import type { NodeHandler } from '../engine/context'
 import { notImplemented, type NodeRegistry } from '../engine/registry'
 import { registerMessagingNodes } from './messaging/index'
+import { registerExternalNodes as registerExternalGroup } from './external/index'
 import { registerCrmNodes as registerCrmGroup } from './crm/index'
 import { registerInteractiveNodes as registerInteractiveGroup } from './interactive/index'
 import { registerLogicNodes as registerLogicGroup } from './logic/index'
@@ -36,7 +37,7 @@ function registerStub(group: NodeGroup) {
 
 // Uma linha por grupo: a tarefa dona troca `registerStub('<grupo>')` pelo registrador real.
 const registerLogicNodes = (registry: NodeRegistry) => registerLogicGroup(registry) // T41
-const registerExternalNodes = registerStub('external') // T42
+const registerExternalNodes = (registry: NodeRegistry) => registerExternalGroup(registry) // T42
 const registerMessageNodes = (registry: NodeRegistry) => registerMessagingNodes(registry) // T51
 const registerInteractiveNodes = (registry: NodeRegistry) => registerInteractiveGroup(registry) // T62
 const registerCrmNodes = (registry: NodeRegistry) => registerCrmGroup(registry) // T63

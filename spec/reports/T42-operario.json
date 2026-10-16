@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "task": "T42",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T11:13:13.908Z",
+  "commit": "3c26ad8a990b508916487d263d516b7b3358b312",
+  "base": "3c26ad8",
+  "changedFiles": [
+    "packages/core/src/flows/nodes/index.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/flows/nodes/external/external.db.unit.test.ts",
+    "packages/core/src/flows/nodes/external/handlers.ts",
+    "packages/core/src/flows/nodes/external/http.ts",
+    "packages/core/src/flows/nodes/external/http.unit.test.ts",
+    "packages/core/src/flows/nodes/external/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 86.9s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "7 arquivo(s) alterado(s)"
+    }
+  ]
+}

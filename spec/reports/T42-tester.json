@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T42",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T11:17:00.191Z",
+  "commit": "3c26ad8a990b508916487d263d516b7b3358b312",
+  "base": "3c26ad8",
+  "changedFiles": [
+    "tests/acceptance/T42/external.test.ts",
+    "tests/acceptance/T42/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T42-01, AC-T42-02, AC-T42-03, AC-T42-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "17 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T42-01",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T42-02",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T42-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T42-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}
