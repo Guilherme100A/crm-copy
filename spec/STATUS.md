@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T13 (Fole/Prisma), T14 (Cinzel/Radar), T15 (Torno/Sonda), T16 (Bigorna/Lupa). Ondas 0-1 completas; onda 2 completa.
+- Em andamento: T12 (Cinzel/Radar), T22 (Bigorna/Lupa), T26 (Fole/Prisma), T117 (Torno/Sonda). Ondas 0-2 completas.
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -26,21 +26,21 @@
 | 2 | T09 | Worker: esqueleto, consumidor do wsm:events e jobs | MERGED | Cinzel | Radar | 0 | 8350d8d |
 | 2 | T10 | Fluxos: FlowDefinition, handles, validate e configs de ação | MERGED | Bigorna | Lupa | 0 | 99960bf |
 | 2 | T11 | Templating: interpolação de variáveis | MERGED | Fole | Prisma | 0 | 08ed152 |
-| 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | TODO | | | 0 | |
+| 2 | T12 | Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 2 | T18 | Consumo de IA: preços, ledger, carteira e porta BillingProvider | TODO | | | 0 | |
-| 3 | T13 | WA: SessionManager e proxy | IN_PROGRESS | Fole | Prisma | 0 | |
-| 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | IN_PROGRESS | Cinzel | Radar | 0 | |
-| 3 | T15 | Autenticação, cadastro, perfil e senha | IN_PROGRESS | Torno | Sonda | 0 | |
-| 3 | T16 | Realtime: SSE, fan-out e replay | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 3 | T13 | WA: SessionManager e proxy | MERGED | Fole | Prisma | 0 | 41738af |
+| 3 | T14 | WA: fila por sessão, antiban, warm-up e limites | MERGED | Cinzel | Radar | 0 | 9edeadc |
+| 3 | T15 | Autenticação, cadastro, perfil e senha | MERGED | Torno | Sonda | 0 | 224aad1 |
+| 3 | T16 | Realtime: SSE, fan-out e replay | MERGED | Bigorna | Lupa | 0 | 53c0005 |
 | 3 | T17 | Harness E2E (API com fakes, seed, reset) | TODO | | | 0 | |
 | 3 | T19 | Fluxos: schema e repositório | TODO | | | 0 | |
 | 3 | T24 | UsageGuard e provider medido | TODO | | | 0 | |
 | 4 | T20 | WA: SendPipeline, deliver e health | TODO | | | 0 | |
 | 4 | T21 | WA: outbox de eventos, mídia e contatos | TODO | | | 0 | |
-| 4 | T22 | Empresas, equipe, convites e permissões | TODO | | | 0 | |
+| 4 | T22 | Empresas, equipe, convites e permissões | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | TODO | | | 0 | |
 | 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | TODO | | | 0 | |
-| 4 | T26 | Contatos, etiquetas e campos personalizados | TODO | | | 0 | |
+| 4 | T26 | Contatos, etiquetas e campos personalizados | IN_PROGRESS | Fole | Prisma | 0 | |
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | TODO | | | 0 | |
 | 5 | T29 | App wa-worker e RPC interno | TODO | | | 0 | |
@@ -129,4 +129,5 @@
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
+| 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | IN_PROGRESS | Torno | Sonda | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |

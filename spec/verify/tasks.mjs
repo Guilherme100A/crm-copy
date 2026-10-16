@@ -321,6 +321,10 @@ const RAW = [
     ['packages/core/src/mcp-oauth/**', route('mcp-oauth'), schema('mcp-oauth'), 'apps/web/src/features/mcp-oauth/**', i18n('mcp-oauth')], ['api', 'core', 'web'],
     { e2e: true }),
 
+  T('T117', 'Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único', ['T13', 'T15', 'T16'],
+    ['apps/api/src/routes/auth/**', 'apps/api/src/server.ts', 'packages/wa-engine/src/transport/baileys.ts'], ['api', 'wa-engine'],
+    { requiredFiles: ['apps/api/src/server.ts'] }),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],

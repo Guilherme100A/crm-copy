@@ -2014,6 +2014,16 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T117 — Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único
+**Objetivo:** fechar pendências cruzadas encontradas na integração das ondas 2–3 (T13/T15/T16 feitas em paralelo).
+**Paths:** `apps/api/src/routes/auth/**`, `apps/api/src/server.ts`, `packages/wa-engine/src/transport/baileys.ts`.
+**Depende de:** T13, T15, T16
+**Entregáveis:** (1) `POST /api/auth/logout` chama `RealtimePublisher.endSession(sessionId)` (T16) após revogar a sessão; o reset de senha (T15, que revoga todas as sessões) chama `endUserSessions(userId)`. (2) `server.ts` chama `stopRealtimeHub(redis)` no shutdown, antes de fechar o Redis. (3) `BaileysTransport` não reaplica `makeCacheableSignalKeyStore` quando o auth state recebido já é cacheável (T06 já envolve); um único cache por sessão.
+**Critérios de aceitação**
+- **AC-T117-01** Com um cliente SSE conectado em `/api/events`, `POST /api/auth/logout` da mesma sessão fecha o stream em **< 2 s** (sem esperar o heartbeat); outra sessão do mesmo usuário continua recebendo eventos.
+- **AC-T117-02** Concluir um reset de senha (`PATCH /api/auth/password-resets/:token`) fecha em < 2 s todos os streams SSE abertos daquele usuário.
+- **AC-T117-03** O `server.ts` (processo real) com um cliente SSE conectado encerra com exit 0 em < 5 s após SIGTERM/`process.emit('SIGTERM')`.
+
 ---
 
 ### T102 — Integração E2E final
