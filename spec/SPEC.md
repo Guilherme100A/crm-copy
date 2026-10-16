@@ -2023,7 +2023,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T120-01** Montado como produção: mensagem recebida que casa uma palavra-chave dispara o fluxo; o nó de mensagem envia 1 vez pelo wa-worker e a mensagem aparece em `GET /api/chats/:id/messages` com `sender_type: flow` (sem envio duplicado).
 - **AC-T120-02** Fora do horário configurado, a mensagem automática é enviada e aparece no histórico do chat com `sender_type: system`.
 - **AC-T120-03** Agente de IA ativo com chave BYOK da empresa responde (LLM falso injetado pelo resolvedor da empresa) e grava 1 linha em `ai_usage`; com a carteira esgotada, nenhuma chamada ao LLM é feita.
-- **AC-T120-04** Importação de contatos (CSV) e exportação de contatos rodam no worker montado e terminam `completed`, com o arquivo no `STORAGE_DIR` compartilhado.
+- **AC-T120-04** Importação de contatos (CSV, T67) e uma exportação (kind registrado no teste; a exportação de contatos em si é da T66) rodam no worker montado e terminam `completed`, com o arquivo no `STORAGE_DIR` compartilhado e baixável pela API.
 - **AC-T120-05** Resolver um chat dispara o gatilho de "atendimento finalizado" configurado na conexão; uma mudança de estado de run publica `flow_run.updated` via SSE.
 
 ### T118 — Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada
