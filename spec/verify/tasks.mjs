@@ -138,7 +138,7 @@ const RAW = [
     { requiredFiles: ['packages/wa-engine/src/queue/queue.ts', 'packages/wa-engine/src/antiban/adapter.ts'] }),
   T('T20', 'WA: SendPipeline, deliver e health', ['T13', 'T14'], ['packages/wa-engine/src/send/**', 'packages/wa-engine/src/health/**'], ['wa-engine'],
     { requiredFiles: ['packages/wa-engine/src/send/pipeline.ts', 'packages/wa-engine/src/send/deliver.ts', 'packages/wa-engine/src/health/score.ts'] }),
-  T('T21', 'WA: outbox de eventos, mídia e contatos', ['T13'], ['packages/wa-engine/src/events/**', 'packages/wa-engine/src/media/**', 'packages/wa-engine/src/contacts/**'], ['wa-engine'],
+  T('T21', 'WA: outbox de eventos, mídia e contatos', ['T13'], ['packages/wa-engine/src/events/**', 'packages/wa-engine/src/media/**', 'packages/wa-engine/src/contacts/**', 'packages/wa-port/src/**' /* aditivo: historical, clientMessageId, quoted, viewOnce, markRead */], ['wa-engine'],
     { requiredFiles: ['packages/wa-engine/src/events/outbox.ts', 'packages/wa-engine/src/media/index.ts'] }),
   T('T29', 'App wa-worker e RPC interno', ['T20', 'T21'], ['apps/wa-worker/**'], ['wa-worker'],
     { requiredFiles: ['apps/wa-worker/src/main.ts', 'apps/wa-worker/src/rpc/server.ts'] }),
