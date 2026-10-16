@@ -171,5 +171,6 @@ describe('runMigrations (Postgres real)', () => {
     expect(await publicSnapshot(t.url)).toEqual(before)
     expect(await tablesIn(t.url, 'public')).toEqual(['audit_logs', 'contacts', 'sessions'])
     expect(await query(t.url, `select phone from public.contacts`)).toEqual([{ phone: '+5511999999999' }])
-  })
+    // Aplica todas as migrations crm (cada tarefa acrescenta uma): sob carga passava do timeout padrão de 5 s (T24).
+  }, 30_000)
 })

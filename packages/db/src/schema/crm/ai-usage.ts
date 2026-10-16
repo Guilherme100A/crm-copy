@@ -58,7 +58,8 @@ export const aiPricingSettings = crm.table(
   ],
 )
 
-export const AI_USAGE_STATUSES = ['charged', 'refunded'] as const
+// `error` (T24): chamada que falhou no provedor; gravada sem custo e sem débito.
+export const AI_USAGE_STATUSES = ['charged', 'refunded', 'error'] as const
 export type AiUsageStatus = (typeof AI_USAGE_STATUSES)[number]
 export const aiUsageStatusEnum = crm.enum('ai_usage_status', AI_USAGE_STATUSES)
 
@@ -91,6 +92,11 @@ export const aiUsage = crm.table(
     sourceId: text('source_id'),
     actorUserId: uuid('actor_user_id').references(() => users.id, { onDelete: 'set null' }),
     createdAt: createdAt(),
+    // T24 (UsageGuard): funcionalidade que consumiu (ex.: `ai_agent`, `flow_copilot`), agente e código do erro.
+    feature: text('feature'),
+    /** Sem FK: a tabela de agentes é de outra tarefa (T39). */
+    agentId: uuid('agent_id'),
+    errorCode: text('error_code'),
   },
   (t) => [
     uniqueIndex('ai_usage_request_uq').on(t.requestId),
