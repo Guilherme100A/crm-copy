@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "task": "T04",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T02:48:33.789Z",
+  "commit": "197d4c2b83e2c4378aa9d77273db6ce29801d60b",
+  "base": "197d4c2",
+  "changedFiles": [
+    "packages/ai/package.json",
+    "packages/ai/src/index.ts",
+    "pnpm-lock.yaml",
+    "packages/ai/src/port/errors.ts",
+    "packages/ai/src/port/index.ts",
+    "packages/ai/src/port/llm.ts",
+    "packages/ai/src/port/llm.unit.test.ts",
+    "packages/ai/src/port/meter.ts",
+    "packages/ai/src/port/voice.ts",
+    "packages/ai/src/testing/fake-llm.ts",
+    "packages/ai/src/testing/fake-llm.unit.test.ts",
+    "packages/ai/src/testing/fake-voice.ts",
+    "packages/ai/src/testing/fake-voice.unit.test.ts",
+    "packages/ai/src/testing/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/ai/src/port/llm.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/ai/src/port/voice.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/ai/src/testing/fake-llm.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/ai typecheck",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/ai lint",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/ai test",
+      "status": "pass",
+      "detail": "ok em 2.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "14 arquivo(s) alterado(s)"
+    }
+  ]
+}
