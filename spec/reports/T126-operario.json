@@ -3,91 +3,91 @@
   "task": "T126",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T21:06:58.063Z",
-  "commit": "4837880ec25a47204825974909971e643376dbeb",
-  "base": "4837880",
+  "at": "2026-10-16T21:47:09.226Z",
+  "commit": "eec841e014234022e51d9aef5756dddc18d54428",
+  "base": "9e68de9",
   "changedFiles": [
     "apps/api/src/e2e/e2e-reset.db.unit.test.ts",
     "apps/api/src/e2e/e2e.db.unit.test.ts",
+    "apps/api/src/test-setup-redis.ts",
+    "apps/api/src/test-setup.ts",
     "apps/api/vitest.config.ts",
+    "apps/wa-worker/src/test-setup.ts",
     "apps/wa-worker/vitest.config.ts",
     "apps/worker/src/boot/production-worker.db.unit.test.ts",
     "apps/worker/src/jobs/meta-capi/index.ts",
     "apps/worker/src/jobs/meta-capi/meta-capi.unit.test.ts",
+    "apps/worker/src/test-setup.ts",
     "apps/worker/vitest.config.ts",
+    "docs/testing.md",
     "packages/core/src/ai-agent-lab/service.db.unit.test.ts",
     "packages/core/src/ai-runtime/runtime.db.unit.test.ts",
     "packages/core/src/ai-runtime/scheduler.unit.test.ts",
+    "packages/core/src/jobs/queue-isolation-a.db.unit.test.ts",
+    "packages/core/src/jobs/queue-isolation-b.db.unit.test.ts",
     "packages/core/src/jobs/queues.unit.test.ts",
+    "packages/core/src/meta-capi/sales.db.unit.test.ts",
     "packages/core/src/meta-capi/sales.ts",
+    "packages/core/src/test-setup-queue-probe.ts",
+    "packages/core/src/test-setup.ts",
     "packages/core/vitest.config.ts",
     "packages/db/src/migrations.db.unit.test.ts",
     "packages/db/src/seed/index.ts",
     "packages/db/src/seed/seed.db.unit.test.ts",
-    "packages/db/src/testing.ts",
-    "packages/db/vitest.config.ts",
-    "packages/wa-engine/vitest.config.ts",
-    "packages/wa-gateway-rpc/vitest.config.ts",
-    "apps/api/src/test-setup-redis.ts",
-    "apps/api/src/test-setup.ts",
-    "apps/wa-worker/src/test-setup.ts",
-    "apps/worker/src/test-setup.ts",
-    "docs/testing.md",
-    "packages/core/src/jobs/queue-isolation-a.db.unit.test.ts",
-    "packages/core/src/jobs/queue-isolation-b.db.unit.test.ts",
-    "packages/core/src/meta-capi/sales.db.unit.test.ts",
-    "packages/core/src/test-setup-queue-probe.ts",
-    "packages/core/src/test-setup.ts",
     "packages/db/src/test-setup.ts",
     "packages/db/src/testing.db.unit.test.ts",
+    "packages/db/src/testing.ts",
+    "packages/db/vitest.config.ts",
     "packages/wa-engine/src/test-setup.ts",
-    "packages/wa-gateway-rpc/src/test-setup.ts"
+    "packages/wa-engine/vitest.config.ts",
+    "packages/wa-gateway-rpc/src/test-setup.ts",
+    "packages/wa-gateway-rpc/vitest.config.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 14.5s"
+      "detail": "ok em 13.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.0s"
+      "detail": "ok em 18.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 102.5s"
+      "detail": "ok em 111.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 15.5s"
+      "detail": "ok em 13.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 2.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 41.2s"
+      "detail": "ok em 30.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 11.4s"
+      "detail": "ok em 9.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.7s"
+      "detail": "ok em 5.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 121.2s"
+      "detail": "ok em 110.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
