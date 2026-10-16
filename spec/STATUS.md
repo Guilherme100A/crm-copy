@@ -136,7 +136,7 @@
 
 | Tarefa | Pendência | Origem |
 |---|---|---|
-| T21 | `incomingMessageSchema` (wa-port) ganha `historical: z.literal(true).optional()` (aditivo), senão o AC-T33-03 só vale via `history.batch` | T33 (Fole) |
+| T21 | `incomingMessageSchema` (wa-port) ganha `historical: z.literal(true).optional()` (aditivo), senão o AC-T33-03 só vale via `history.batch`; `SendRequest` ganha `clientMessageId?` (aditivo) para idempotência ponta a ponta do envio dos chats | T33, T49 |
 | T40 | criar `crm.connections` com `session_id` e `company_id` (o resolver padrão da T33 consulta essas colunas); registrar a fonte com `registerCompanySessionsSource` (T22); FK `chats.connection_id` | T22, T33 |
 | T31 / T39 | FKs `chats.department_id` (T31) e `chats.ai_agent_id` (T39) | T33 |
 | T46 / T29 | injetar `waGateway` e resolver no worker via `configureChatsConsumer` | T33 |
