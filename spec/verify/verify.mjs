@@ -2,7 +2,7 @@
 // Verificação de tarefas para Orquestrador, Operários e Testers (SPEC.md seção 6).
 //
 //   node spec/verify/verify.mjs list                         # tarefas, ondas, deps e status dos relatórios
-//   node spec/verify/verify.mjs plan [--max 8]               # lotes por onda, ordenados pelo caminho crítico
+//   node spec/verify/verify.mjs plan [--max 4]               # lotes por onda, ordenados pelo caminho crítico
 //   node spec/verify/verify.mjs lint-spec                    # SPEC.md × tasks.mjs (headings, ACs, ondas)
 //   node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands]
 //   node spec/verify/verify.mjs wave <n>                     # regressão de todas as tarefas até a onda n
@@ -452,7 +452,7 @@ function parseArgs(argv) {
 function usage() {
   console.log(`Uso:
   node spec/verify/verify.mjs list
-  node spec/verify/verify.mjs plan [--max 8]
+  node spec/verify/verify.mjs plan [--max 4]
   node spec/verify/verify.mjs lint-spec
   node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands]
   node spec/verify/verify.mjs wave <n>`)
@@ -468,7 +468,7 @@ if (cmd === 'list') {
   process.exit(0)
 }
 if (cmd === 'plan') {
-  plan(opts.max > 0 ? opts.max : 8)
+  plan(opts.max > 0 ? opts.max : 4)
   process.exit(0)
 }
 if (cmd === 'lint-spec') process.exit(lintSpec() ? 0 : 1)

@@ -4,6 +4,7 @@
 > Esta spec converte as features em **tarefas executáveis** por um **Orquestrador**, seus **Operários** (implementam) e **Testers** (validam).
 > Todo critério de aceitação tem um ID `AC-Txx-nn` rastreável até um teste que passa (`spec/verify/verify.mjs`).
 > Gerada em 2026-10-15. Método e rigor copiados de `spec/_ref_wsm_SPEC.md` (já validado pelo usuário).
+> **Revisão 1 (2026-10-15):** respostas do usuário à antiga §10.2 incorporadas (consentimento sem gate para importados, integrações de venda iguais à referência, OpenRouter, copiloto e MCP antecipados com OAuth, i18n pt-BR/en/es, marcos com nomes próprios, KPIs fechados, limites ilimitados por padrão, 4 pares em paralelo). Regra geral do usuário: em dúvida de escopo, fazer como o produto de referência faz.
 
 ---
 
@@ -15,12 +16,12 @@
 | 2. Protocolo de execução | Orquestrador |
 | 3. Contratos globais (arquitetura, pacotes, multiempresa, auth, erros, realtime, filas, testes, UI) | Operários e Testers |
 | 4. Grafo de tarefas (ondas e paralelismo) | Orquestrador |
-| 5. Tarefas T00–T102 com critérios de aceitação | Operários e Testers |
+| 5. Tarefas T00–T115 com critérios de aceitação | Operários e Testers |
 | 6. Scripts de verificação | todos |
 | 7. Prompts de despacho | Orquestrador |
 | 8. Fora de escopo | todos |
 | 9. Riscos | Orquestrador e humano |
-| 10. Decisões assumidas e dúvidas para o usuário | Orquestrador e humano |
+| 10. Decisões fechadas, decisões assumidas e dúvidas | Orquestrador e humano |
 
 - Raiz do projeto: `C:\Users\green\Downloads\leonas\leonas-crm` (repositório git próprio). A spec fica em `spec/`.
 - Referência somente leitura: `C:\Users\green\Downloads\leonas\ai-manager` (padrões, código a espelhar no `wa-engine`).
@@ -57,7 +58,7 @@
 ### 1.4 Regras invioláveis (valem para todo código)
 1. Credenciais do WhatsApp **nunca** em texto puro (DB, logs, arquivos, respostas da API). Auth state só cifrado no Postgres.
 2. Nenhum envio fora do pipeline: todo envio do CRM passa por `WaGateway.send` → `SendPipeline` (gates + fila por sessão + antiban). `transport.sendMessage` só existe em `packages/wa-engine/src/send|transport`.
-3. Nenhum envio para contato com `opt_out = true` ou sem consentimento registrado (gate `contactAllowed`). O CRM registra consentimento quando o contato inicia a conversa (`consent_source = 'inbound'`) ou por importação com consentimento explícito.
+3. Nenhum envio para contato com `opt_out = true` — o opt-out **sempre** bloqueia (gate `contactAllowed`). Como no produto de referência, não há exigência de consentimento prévio para importados: todo contato criado pelo CRM recebe consentimento automaticamente com a origem (`consent_source = 'inbound' | 'manual' | 'import' | 'webhook' | 'sale'`), repassado ao `WaGateway.recordConsent`, para que o pipeline (e o gate do ai-manager no modo extensão) aceite o envio.
 4. O sistema **para** a sessão diante de sinais anormais (403, rajada de erros, health crítico). Nunca aumenta atividade automaticamente para compensar.
 5. Proibido: entrar em grupos automaticamente, fabricar conversas, gerar mensagens artificiais para "aquecer" ou alterar reputação.
 6. Proibido prometer segurança contra ban em UI, API, logs ou docs. Health Score é só indicador operacional.
@@ -81,7 +82,7 @@ TODO ──dispatch──▶ IN_PROGRESS ──operário DONE──▶ VERIFYING
 ```
 
 ### 2.2 Passo a passo por onda
-1. `node spec/verify/verify.mjs plan --max <N>` lista os lotes da onda, ordenados pelo caminho crítico (`h` = altura). **N recomendado: 8 pares** (16 agentes) por vez; ajuste à capacidade da máquina.
+1. `node spec/verify/verify.mjs plan --max 4` lista os lotes da onda, ordenados pelo caminho crítico (`h` = altura). **N = 4 pares** (4 Operários + 4 Testers) por vez — decisão do usuário.
 2. Para cada tarefa do lote cujas dependências estão `MERGED`: criar o worktree (2.4), despachar Operário e Tester em paralelo (prompts da seção 7) com `maestri ask --batch`.
 3. Operário reporta `DONE` → `node spec/verify/verify.mjs Txx --role operario --base <ref-de-partida>` dentro do worktree.
    - Falhou → `REJECTED`; reenviar a saída e `spec/reports/Txx-operario.json`.
@@ -169,6 +170,7 @@ web ──▶ shared (somente)  — fala com a API por HTTP/SSE
 - **Escopo de chat** (`chatScope`): departamentos e conexões do membro (vazio = todos; owner/admin ignoram). Aplica-se a listas, detalhes, contadores, SSE e notificações.
 - **Empresa ativa:** header `X-Company-Id` em toda requisição autenticada (validado contra a membership); sem header, vale `users.last_company_id`. SSE recebe `?company_id=`. Troca de empresa no cliente = trocar o header, invalidar todo o cache do TanStack Query e reabrir o SSE.
 - Toda tabela de domínio em `crm.*` tem `company_id uuid not null` + índice começando por `company_id`. Repositórios recebem `ctx.companyId` obrigatório. Cross-tenant → 404 `NOT_FOUND`.
+- **Limites de quantidade por empresa** (conexões, agentes de IA, membros, fluxos, webhooks): **ilimitados por padrão** (`null`); o admin da plataforma pode definir um limite por empresa (T95). Limite definido e atingido → 409 `LIMIT_REACHED`. A cota mensal de disparos em massa segue a regra do produto de referência (T60).
 
 ### 3.4 Autenticação
 - Sessão por **token opaco** (32 bytes aleatórios), guardado só como SHA-256 em `crm.auth_sessions` (`user_id, token_hash, expires_at, revoked_at, last_seen_at, user_agent, ip`). TTL **30 dias deslizante** (`AUTH_SESSION_TTL_DAYS`).
@@ -197,7 +199,7 @@ Formato: `{ "error": { "code": "…", "message": "…", "details"?: … } }`. Va
 | `WARMUP_LIMIT` | 429 | limite diário de warm-up da sessão |
 | `QUOTA_EXCEEDED` | 429 | créditos/cota de IA ou cota de disparos esgotada |
 | `SESSION_NOT_CONNECTED` | 409 | conexão WhatsApp fora de `WARMING/STABLE` |
-| `CONTACT_NOT_ALLOWED` | 403 | opt-out ou sem consentimento |
+| `CONTACT_NOT_ALLOWED` | 403 | contato com opt-out (ou sem consentimento registrado no engine) |
 | `UPSTREAM_ERROR` | 502 | provedor externo (IA, Meta) falhou; mensagem sanitizada |
 | `INTERNAL` | 500 | erro não tratado (sem stack na resposta) |
 
@@ -224,7 +226,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - Eventos `WaEvent v1` no Redis Stream **`wsm:events`** (consumer group `crm`): `message.inbound`, `message.status`, `session.state`, `session.connection`, `session.qr`, `session.pairing_code`, `contact.upsert`, `contact.lid_mapping`, `presence.update`, `history.batch`. Entrega *at-least-once*; idempotência no CRM por `(session_id, message_id)`.
 - Estados da sessão (fonte: ai-manager): `NEW → WARMING → STABLE ↔ DEGRADED`, `PAUSED`, `DISCONNECTED`. Mapeamento para a UI de Conexões: `08-conexoes.md` + T40.
 - Identidade: contato com `phone_e164` **ou** `wa_lid` (unicidade parcial por empresa em cada um); merge quando chega `contact.lid_mapping`. Nunca usar o JID cru como chave.
-- **Mensagens de grupo não entram no inbox do CRM** nesta versão (o ingest as ignora; ver 10.2).
+- **Mensagens de grupo não entram no inbox do CRM** (como no produto de referência; o ingest as ignora — decisão fechada 10.1).
 - Menus, botões, listas, carrossel e Pix são enviados **como texto** (menu numerado, chave Pix + copia-e-cola). Mensagens interativas nativas: fora de escopo (8.3).
 
 ### 3.9 Filas, streams e jobs
@@ -238,12 +240,13 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - Unitários junto do código: `*.unit.test.ts` (puros/fakes) e `*.db.unit.test.ts` (Postgres real em banco descartável `crm_test_<rand>` via `createTempDatabase({ migrate: true })` do `@crm/db/testing`).
 - Aceitação: `tests/acceptance/Txx/*.test.ts` (Vitest; HTTP via `app.request()` ou servidor local; worker via filas reais em Redis db 1 com prefixo aleatório) e `tests/acceptance/Txx/*.e2e.ts` (Playwright 1.63, projetos **`desktop`** 1366×768 e **`mobile`** 390×844, Chromium).
 - E2E usa o **harness** (T17): `node scripts/e2e/serve.mjs` sobe API + web com `WA_GATEWAY=fake`, `AI_MODE=fake`, `MAIL_TRANSPORT=memory`, banco descartável com seed, e expõe `/__e2e/*` (reset, emitir evento WhatsApp, ler e-mails) **somente com `E2E=1`**.
-- Fakes oficiais: `FakeTransport` (wa-engine), `FakeWaGateway` (wa-port/testing), `FakeLlm`/`FakeTts`/`FakeStt` (ai/testing), mailer `memory` (node-kit), `FakeMetaGraph` (servidor HTTP local, T99).
+- Fakes oficiais: `FakeTransport` (wa-engine), `FakeWaGateway` (wa-port/testing), `FakeLlm`/`FakeTts`/`FakeStt` (ai/testing), mailer `memory` (node-kit), `FakeMetaGraph` (T99), `FakeXPag`/`FakeZenith` (T109/T110), `FakeNotasy` (T112), `FakeUtmify` (T113) — servidores HTTP locais.
 - `ANTIBAN_MODE=passthrough` explícito na config de teste (produção nunca decide por `NODE_ENV`).
 
 ### 3.11 UI (padrões que todo AC de UI pressupõe)
 - Rotas TanStack Router baseadas em arquivo (`apps/web/src/routes/**`); filtros e abas em **search params tipados** (`validateSearch` com zod). Dados com TanStack Query; eventos SSE atualizam/invalidam o cache.
-- Design system: Tailwind 4 + shadcn (Base UI), tokens claro/escuro, tema segue o sistema e alterna com Ctrl/Cmd+M. i18n com chaves (pt-BR completo; en/es fora desta versão).
+- Design system: Tailwind 4 + shadcn (Base UI), tokens claro/escuro, tema segue o sistema e alterna com Ctrl/Cmd+M.
+- **i18n completo em pt-BR, en e es** (pt-BR é o padrão e o fallback). Cada tarefa de UI entrega as chaves do seu módulo nas **três** línguas em `apps/web/src/i18n/{pt-BR,en,es}/<módulo>.json`; nenhum texto visível fica fora do i18n. O comando `pnpm --filter @crm/web i18n:check` (T23) falha se faltar chave em alguma língua e roda no verify de toda tarefa de UI.
 - **Estados obrigatórios** em toda tela de dados: carregando (skeleton), vazio (com ação primária), erro (mensagem + "Tentar novamente"), sem permissão (oculto ou "Acesso negado").
 - **Mobile (390 px):** sem rolagem horizontal da página, navegação inferior, tabelas viram cartões, painéis laterais viram *sheet*.
 - `data-testid` kebab-case `<módulo>-<elemento>` em todo elemento citado num AC (os Testers preferem papéis/rótulos acessíveis e usam `data-testid` quando não houver).
@@ -252,30 +255,32 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ### 3.12 Variáveis de ambiente (mínimo; `.env.example`)
 `APP_NAME`, `NODE_ENV`, `LOG_LEVEL`, `DATABASE_URL` (padrão `postgres://wsm:wsm@127.0.0.1:5432/crm`), `REDIS_URL` (padrão `redis://127.0.0.1:6379/1`), `CREDENTIALS_KEY` (32 bytes base64), `AUTH_SESSION_TTL_DAYS`, `API_PUBLIC_URL`, `WEB_PUBLIC_URL`, `STORAGE_DIR`, `MAIL_TRANSPORT` (`smtp|memory`), `SMTP_URL`, `MAIL_FROM`, `WA_GATEWAY` (`rpc|fake`), `WA_RPC_URL`, `WA_RPC_PROFILE` (`crm|ai-manager`), `INTERNAL_TOKEN`, `WA_TRANSPORT` (`baileys|fake`, só wa-worker), `ANTIBAN_MODE`, `ANTIBAN_PRESET`, `WA_EVENTS_STREAM` (`wsm:events`), `AI_MODE` (`real|fake`), `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GOOGLE_API_KEY`, `ELEVENLABS_API_KEY`, `GROQ_API_KEY`, `FFMPEG_PATH`, `META_GRAPH_URL` (padrão `https://graph.facebook.com/v26.0`), `META_APP_ID`, `META_APP_SECRET`, `AFFILIATE_PORTAL_URL`, `PLATFORM_ADMIN_EMAIL`, `PLATFORM_ADMIN_PASSWORD` (seed), `E2E` (só harness).
 
+**3.12.1 Variáveis acrescentadas por tarefas posteriores** (cada tarefa adiciona as suas ao `.env.example`, que é compartilhado e aditivo; o AC-T00-05 cobre só a lista acima): `OPENROUTER_API_KEY` (T12), `TUTORIALS_URL`, `SUPPORT_PROVIDER`, `SUPPORT_SCRIPT_URL`, `SUPPORT_PHONE` (T108), `XPAG_API_URL` (T109), `ZENITH_API_URL`, `ZENITH_CLIENT_ID`, `ZENITH_CLIENT_SECRET`, `ZENITH_REDIRECT_URI` (T110), `NOTASY_API_URL` (T112), `UTMIFY_API_URL` (T113), `MCP_OAUTH_ISSUER` (T115). URLs de provedores externos sempre configuráveis para apontar aos fakes nos testes.
+
 ## 4. Grafo de tarefas (ondas)
 
 > Gerado de `spec/verify/tasks.mjs` (a onda é o caminho mais longo de dependências; `minWave` adia de propósito tarefas de baixa prioridade). `verify.mjs lint-spec` confere esta tabela.
 
 ### 4.1 Paralelismo por onda
 
-| Onda | Tarefas | Operários + Testers em paralelo (máx.) | Lotes com N=8 pares |
+| Onda | Tarefas | Tarefas na onda (máx. paralelo teórico) | Lotes com 4 pares |
 |---|---|---|---|
-| 0 | T00 | 1 + 1 | 1 |
-| 1 | T01, T02, T03, T04, T05 | 5 + 5 | 1 |
-| 2 | T06, T07, T08, T09, T10, T11, T12, T18 | 8 + 8 | 1 |
-| 3 | T13, T14, T15, T16, T17, T19, T24 | 7 + 7 | 1 |
-| 4 | T20, T21, T22, T23, T25, T26, T27, T28 | 8 + 8 | 1 |
-| 5 | T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T67, T72, T99 | 20 + 20 | 3 |
-| 6 | T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T73, T80, T84, T101, T104 | 21 + 21 | 3 |
-| 7 | T62, T63, T64, T65, T66, T68, T69, T70, T71, T74, T78, T81, T90, T103, T105, T107 | 16 + 16 | 2 |
-| 8 | T75, T76, T77, T79, T82, T83, T87, T89, T106 | 9 + 9 | 2 |
-| 9 | T85, T86, T88, T91 | 4 + 4 | 1 |
-| 10 | T92, T93, T94 | 3 + 3 | 1 |
-| 11 | T95, T96, T97, T98, T108 | 5 + 5 | 1 |
-| 12 | T100 | 1 + 1 | 1 |
-| 13 | T102 | 1 + 1 | 1 |
+| 0 | T00 | 1 | 1 |
+| 1 | T01, T02, T03, T04, T05 | 5 | 2 |
+| 2 | T06, T07, T08, T09, T10, T11, T12, T18 | 8 | 2 |
+| 3 | T13, T14, T15, T16, T17, T19, T24 | 7 | 2 |
+| 4 | T20, T21, T22, T23, T25, T26, T27, T28 | 8 | 2 |
+| 5 | T29, T30, T31, T32, T33, T34, T35, T36, T37, T38, T39, T40, T41, T42, T43, T44, T45, T67, T72, T99, T109 | 21 | 6 |
+| 6 | T46, T47, T48, T49, T50, T51, T52, T53, T54, T55, T56, T57, T58, T59, T60, T61, T73, T80, T84, T93, T94, T101, T104, T110, T111, T112, T113 | 27 | 7 |
+| 7 | T62, T63, T64, T65, T66, T68, T69, T70, T71, T74, T78, T81, T90, T103, T105, T107, T114, T115 | 18 | 5 |
+| 8 | T75, T76, T77, T79, T82, T83, T87, T89, T106 | 9 | 3 |
+| 9 | T85, T86, T88, T91 | 4 | 1 |
+| 10 | T92 | 1 | 1 |
+| 11 | T95, T96, T97, T98, T108 | 5 | 2 |
+| 12 | T100 | 1 | 1 |
+| 13 | T102 | 1 | 1 |
 
-**Total:** 109 tarefas em 14 ondas. Com o limite recomendado de 8 pares simultâneos, a ordem dentro da onda segue o caminho crítico (`verify.mjs plan --max 8`).
+**Total:** 116 tarefas em 14 ondas. Execução decidida pelo usuário: **4 pares Operário+Tester em paralelo** (8 agentes), o que dá **36 lotes** no total; dentro da onda, a ordem segue o caminho crítico (`verify.mjs plan --max 4`).
 
 ### 4.2 Tabela de tarefas
 
@@ -330,6 +335,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | T26, T27 |  |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | T26 |  |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | T22 |  |
+| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | T22 |  |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | T29 |  |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | T40, T09, T16 |  |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | T33, T31 |  |
@@ -349,8 +355,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | T34, T33 |  |
 | 6 | T80 | Vozes (ElevenLabs) | T38, T12 |  |
 | 6 | T84 | UI: central de notificações | T33, T23 | sim |
+| 6 | T93 | Assistente (copiloto) de fluxo | T28, T24, T12, T16, T45 | sim |
+| 6 | T94 | Servidor MCP (token estático) | T26, T28, T40 | sim |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | T99, T09, T16 |  |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | T99, T25, T34 |  |
+| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | T109 |  |
+| 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | T109, T30 |  |
+| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | T34, T22 |  |
+| 6 | T113 | UTMify: integração e envio de vendas aprovadas | T34, T22 |  |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | T30, T51 |  |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | T25, T48, T50, T34 |  |
 | 7 | T64 | Agendamento de mensagens | T49, T35 |  |
@@ -367,6 +379,8 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 | 7 | T103 | Meta: edição de status, nome e orçamento | T101 |  |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | T101, T73 |  |
 | 7 | T107 | Indicador de conexões desconectadas no menu | T47, T23 | sim |
+| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | T110, T111, T112, T113, T45, T59 | sim |
+| 7 | T115 | MCP: OAuth para conectores (Claude) | T94 | sim |
 | 8 | T75 | UI chats: conversa | T69, T49 | sim |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | T70, T27 | sim |
 | 8 | T77 | UI contatos: lista e seleção em massa | T66, T23 | sim |
@@ -381,26 +395,24 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 | 9 | T88 | UI agentes: lista e editor | T79, T80, T52, T23 | sim |
 | 9 | T91 | UI chats: painel lateral e agendamentos | T75, T64 | sim |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | T88 | sim |
-| 10 | T93 | Assistente (copiloto) de fluxo | T28, T24, T12, T16, T45 | sim |
-| 10 | T94 | Servidor MCP (token estático) | T26, T28, T40 | sim |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | T22, T60 |  |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | T22, T46, T37 |  |
 | 11 | T97 | Afiliação: captura de indicação e link externo | T36 | sim |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | T46 |  |
 | 11 | T108 | Tutoriais e widget de suporte plugável | T23 | sim |
 | 12 | T100 | UI admin interno | T95, T96, T23 | sim |
-| 13 | T102 | Integração E2E final | T85, T86, T87, T91, T92, T89, T90, T83, T82, T76, T71, T84, T53, T54, T58, T59, T44, T56, T57, T93, T94, T97, T98, T100, T105, T106, T107, T108 | sim |
+| 13 | T102 | Integração E2E final | T85, T86, T87, T91, T92, T89, T90, T83, T82, T76, T71, T84, T53, T54, T58, T59, T44, T56, T57, T93, T94, T97, T98, T100, T105, T106, T107, T108, T114, T115 | sim |
 
 ---
+
 ## 5. Tarefas
 
+> As tarefas aparecem em ordem aproximada de onda; **a onda oficial de cada tarefa é a da tabela 4.2** (calculada pelo `tasks.mjs`).
 > Formato: **Objetivo**, **Paths** (onde o Operário pode escrever, além dos compartilhados), **Depende de**, **Ref** (seções de feature a ler),
 > **Entregáveis/Contratos**, **Critérios de aceitação** e **Notas para o Tester**. Paths exatos e comandos de verificação: `spec/verify/tasks.mjs`.
 > Toda tarefa de API inclui implicitamente: isolamento multiempresa (3.3, cross-tenant → 404), `requirePerm` nas rotas, validação zod (422) e auditoria das mutações (3.6). Toda tarefa de UI inclui os estados e o comportamento mobile da seção 3.11. Esses itens são cobrados pelos ACs listados quando citados explicitamente.
 
 ---
-
-### Onda 0
 
 ### T00 — Scaffold do monorepo
 **Objetivo:** base que todas as tarefas usam, espelhando o ai-manager (`AI-MANAGER-MAP.md#1-visão-geral`).
@@ -418,8 +430,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Notas para o Tester:** criar `tests/acceptance/vitest.config.ts` (config da suíte, `ANTIBAN_MODE=passthrough`, timeouts) e `tests/acceptance/helpers/` (exec de comandos, cliente HTTP, factories, banco descartável).
 
 ---
-
-### Onda 1
 
 ### T01 — @crm/db: client, migrações e tabelas-base
 **Objetivo:** persistência com dois conjuntos de migrations independentes (WhatsApp em `public`, CRM em `crm`), para conviver com o banco do ai-manager.
@@ -506,8 +516,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
-### Onda 2
-
 ### T06 — WA: schema public.* e auth state cifrado
 **Objetivo:** tabelas do WhatsApp **idênticas** às do ai-manager e auth state Baileys cifrado no Postgres.
 **Paths:** `packages/db/src/schema/wa/**`, `packages/db/drizzle/wa/**`, `packages/db/drizzle.wa.config.ts`, `packages/wa-engine/src/auth-state/**`, `packages/wa-engine/src/db/**`
@@ -575,7 +583,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/shared/src/flows/**`
 **Depende de:** T02
 **Ref:** `06-fluxos.md#3-modelo-de-dados--campos` (3.3–3.9), `06-fluxos.md#compatibilidade-baileys-clone`.
-**Entregáveis:** `FlowDefinition` (`schema: 'crm.flow/v1'`, `nodes`, `edges`, `entry`, `variables`, `refs`) em zod; handles normalizados `kind[:id]` (`source`, `option:<id>`, `timeout`, `other`, `failure`, `success`, `output:<key>`); um schema por `node_type` e por `action_type` (`flows/actions/<type>.ts`); tipos fora de escopo (`kieai_integration`, `payment`, `make_call`, `template_meta`) presentes só como `unsupported`; `validate(def)` → lista de erros por `nodeId`; `migrate(def)` (ex.: `menu` → `interactive_menu`).
+**Entregáveis:** `FlowDefinition` (`schema: 'crm.flow/v1'`, `nodes`, `edges`, `entry`, `variables`, `refs`) em zod; handles normalizados `kind[:id]` (`source`, `option:<id>`, `timeout`, `other`, `failure`, `success`, `output:<key>`); um schema por `node_type` e por `action_type` (`flows/actions/<type>.ts`); tipos fora de escopo (`kieai_integration`, `leonapay`, `make_call`, `template_meta`) presentes só como `unsupported`; `payment` (bloco Pagamento) e `approved_sale` (Venda aprovada) são **suportados** (revisão 1); `validate(def)` → lista de erros por `nodeId`; `migrate(def)` (ex.: `menu` → `interactive_menu`).
 **Critérios de aceitação**
 - **AC-T10-01** `validate` acusa, com o `nodeId`: nenhum nó após o start, dois edges no mesmo (nó, handle), nó inalcançável, ciclo sem nó de espera, config inválida do action.
 - **AC-T10-02** Fluxo válido de exemplo (start → mensagem → menu → 2 opções + timeout) passa sem erros e faz round-trip JSON idêntico.
@@ -605,13 +613,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/ai/src/{aisdk,elevenlabs,groq,audio}/**`
 **Depende de:** T04, T05
 **Ref:** `STACK.md` Bloco F (F.1–F.4, F.6, F.7) e Bloco E §2–3.
-**Entregáveis:** `createAiSdkProvider({ resolveCredentials })` (cria `createAnthropic|createOpenAI|createGoogle` **por empresa**, `maxRetries: 0`, `instructions`, `isStepCount(maxSteps (+1 com output))`, `store: false` na OpenAI, usage normalizado, `providerData` preservado); `ElevenLabsTts`; `GroqStt` (`whisper-large-v3-turbo`, `language: 'pt'`); `toPttOgg(buffer)` via ffmpeg (`FFMPEG_PATH`, Ogg/Opus mono 48 kHz, duração) com runner injetável. Versões exatas do STACK F.1.
+**Entregáveis:** `createAiSdkProvider({ resolveCredentials })` (cria `createAnthropic|createOpenAI|createGoogle|createOpenRouter` **por empresa**; OpenRouter via `@openrouter/ai-sdk-provider@3.1.0` — STACK F.8, `maxRetries: 0`, `instructions`, `isStepCount(maxSteps (+1 com output))`, `store: false` na OpenAI, usage normalizado, `providerData` preservado); `ElevenLabsTts`; `GroqStt` (`whisper-large-v3-turbo`, `language: 'pt'`); `toPttOgg(buffer)` via ffmpeg (`FFMPEG_PATH`, Ogg/Opus mono 48 kHz, duração) com runner injetável. Versões exatas do STACK F.1.
 **Critérios de aceitação**
 - **AC-T12-01** (com `MockLanguageModelV4`) uma chamada com 2 tools e `output` devolve `object` validado, `steps` e `usage` com `cacheReadTokens`/`reasoningTokens` mapeados de `inputTokenDetails`/`outputTokenDetails`.
 - **AC-T12-02** O adapter nunca passa `model` como string: o modelo vem de uma instância criada por empresa com a chave resolvida (spy em `resolveCredentials` por `companyId`).
 - **AC-T12-03** Para OpenAI, `providerOptions.openai.store === false`; `maxRetries === 0` para os três provedores.
 - **AC-T12-04** `ElevenLabsTts` e `GroqStt` (fetch injetado) enviam modelo, voz/idioma corretos e mapeiam 401/429/5xx para `LlmUpstreamError` com mensagem sem a chave.
 - **AC-T12-05** `toPttOgg` chama o ffmpeg com `-ac 1 -c:a libopus` e saída `ogg`; runner falhando → erro tipado; nenhum teste executa ffmpeg real.
+- **AC-T12-06** Provedor `openrouter`: modelo no formato `fornecedor/modelo` (ex.: `anthropic/claude-sonnet-5-5`), `compatibility: 'strict'`, `usage: { include: true }`, sem fallback silencioso de provedor; o custo informado pela OpenRouter é exposto em `LlmUsage` (fetch mockado).
 
 ---
 
@@ -629,8 +638,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T18-05** `NoopBillingProvider.createCheckout` lança `BillingNotConfiguredError`; nenhuma rota HTTP importa `billing/`.
 
 ---
-
-### Onda 3
 
 ### T13 — WA: SessionManager e proxy
 **Objetivo:** criar, autenticar, persistir, reconectar e controlar sessões (fork do ai-manager).
@@ -737,8 +744,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T24-04** Erro do provedor grava `ai_usage.status = 'error'` sem débito.
 - **AC-T24-05** A reconciliação corrige divergência entre o contador Redis e o Postgres (teste com contador adulterado).
 
-### Onda 4
-
 ### T20 — WA: SendPipeline, deliver e health
 **Objetivo:** todo envio passa pelos gates e pelo antiban; sinais anormais pausam a sessão.
 **Paths:** `packages/wa-engine/src/{send,health}/**`
@@ -790,7 +795,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `apps/web/**` (depois desta tarefa, as demais tarefas de UI só escrevem nos seus Paths e nos registros compartilhados)
 **Depende de:** T15, T16, T17
 **Ref:** `18-shell-navegacao-tutoriais-suporte.md#24-shell-layout-e-seus-elementos` a `#28`, `#51-atalhos-de-teclado`, `#52-home-por-papel`, `#53-guarda-de-permissões-por-rota-…`, `#510-seletor-de-empresa-…`, `#23-página-404`; `21-realtime-e-plataforma.md#plataforma`; `STACK.md` Bloco D.
-**Entregáveis:** Vite 8 + React 19.3 + TanStack Router (rotas por arquivo, `routeTree.gen.ts`) + Query; Tailwind 4 + shadcn (Base UI) com tokens claro/escuro; layout (sidebar 240/64 px colapsável e persistida, header, breadcrumbs, barra inferior mobile Início/Chats/Kanban/Fluxos/Mais), `nav.ts` (registro de itens com permissão), `features/settings/tabs.ts` (registro do hub `/settings?tab=`), guards (autenticado, público, permissão por prefixo com toast 1× por caminho, platform admin, support), home por papel (sem loop em `/welcome`), página 404, `lib/http.ts` (cookie, `X-Company-Id`, `X-Requested-With`, 401 → sonda única em `/api/auth/profile` → `/login?redirect=`), `lib/realtime.ts` (`useRealtime`: EventSource, reconexão em `online`/`visibilitychange`, despacho para o cache), i18n pt-BR, tema + Ctrl/Cmd+M (ignora inputs), `APP_NAME` no título.
+**Entregáveis:** Vite 8 + React 19.3 + TanStack Router (rotas por arquivo, `routeTree.gen.ts`) + Query; Tailwind 4 + shadcn (Base UI) com tokens claro/escuro; layout (sidebar 240/64 px colapsável e persistida, header, breadcrumbs, barra inferior mobile Início/Chats/Kanban/Fluxos/Mais), `nav.ts` (registro de itens com permissão), `features/settings/tabs.ts` (registro do hub `/settings?tab=`), guards (autenticado, público, permissão por prefixo com toast 1× por caminho, platform admin, support), home por papel (sem loop em `/welcome`), página 404, `lib/http.ts` (cookie, `X-Company-Id`, `X-Requested-With`, 401 → sonda única em `/api/auth/profile` → `/login?redirect=`), `lib/realtime.ts` (`useRealtime`: EventSource, reconexão em `online`/`visibilitychange`, despacho para o cache), i18n com as **três** línguas (`pt-BR`, `en`, `es`; arquivos por módulo em `src/i18n/<língua>/<módulo>.json`, carregados por glob) e script `i18n:check`, seletor de idioma no menu do usuário, tema + Ctrl/Cmd+M (ignora inputs), `APP_NAME` no título.
 **Critérios de aceitação**
 - **AC-T23-01** Sem sessão, qualquer rota interna redireciona para `/login?redirect=<rota>`; o redirect ignora valores com `//`, `://` ou `\`.
 - **AC-T23-02** Com sessão, a sidebar mostra só os itens permitidos pelo papel do seed; acessar por URL uma rota sem permissão leva à primeira rota permitida e mostra o aviso uma vez.
@@ -798,6 +803,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T23-04** No `mobile` (390 px) a barra inferior aparece, a sidebar vira drawer e nenhuma página do shell tem rolagem horizontal.
 - **AC-T23-05** Rota inexistente mostra a página 404 com link para a home do papel; usuário sem permissão de dashboard não entra em loop em `/welcome`.
 - **AC-T23-06** Um 401 numa chamada qualquer gera uma única sonda de perfil e redireciona ao login; o título da aba e os textos usam `APP_NAME`.
+- **AC-T23-07** Trocar o idioma para `en` e para `es` muda os textos do shell e o atributo `<html lang>` sem recarregar, e a escolha persiste; `pnpm --filter @crm/web i18n:check` falha quando uma chave existe em `pt-BR` e falta em `en` ou `es` (teste com arquivo temporário).
 
 **Notas para o Tester:** criar `tests/acceptance/playwright.config.ts` (projetos `desktop` 1366×768 e `mobile` 390×844 Chromium, `webServer` = `node scripts/e2e/serve.mjs`, `baseURL` impresso pelo harness) e `tests/acceptance/helpers/e2e.ts` (login por papel do seed, reset entre testes).
 
@@ -808,7 +814,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/flows/engine/{runner,registry,context,dry-run}*`, `packages/core/src/flows/nodes/index.ts`, `apps/worker/src/jobs/flow-step/**`
 **Depende de:** T19, T11, T09
 **Ref:** `06-fluxos.md#42-execução`, `#55-execução-pelo-chat`, D3 §9b.
-**Entregáveis:** run = estado em `flow_runs`; job `flow-step { runId, expectedSeq }`; `SELECT … FOR UPDATE` + `seq`; laço síncrono até nó de espera/fim com limite de **50 passos por job** (`failed: loop_guard`); `NodeHandler.execute(ctx) → { next } | { wait } | { end } | { jump }`; `ctx` com `wa` (WaGateway), `vars`, `render`, `repo`, `llm`, `log`, `idempotencyKey(actionId)` = hash(runId, seq, actionId); registro de grupos de nós em `nodes/index.ts` (stubs para os grupos das tarefas T41, T42, T51, T62, T63, T104); erro → handle `failure` se existir, senão `failed`; modo dry-run com gateway fake e store em memória.
+**Entregáveis:** run = estado em `flow_runs`; job `flow-step { runId, expectedSeq }`; `SELECT … FOR UPDATE` + `seq`; laço síncrono até nó de espera/fim com limite de **50 passos por job** (`failed: loop_guard`); `NodeHandler.execute(ctx) → { next } | { wait } | { end } | { jump }`; `ctx` com `wa` (WaGateway), `vars`, `render`, `repo`, `llm`, `log`, `idempotencyKey(actionId)` = hash(runId, seq, actionId); registro de grupos de nós em `nodes/index.ts` (stubs para os grupos das tarefas T41, T42, T51, T62, T63, T104, T111); erro → handle `failure` se existir, senão `failed`; modo dry-run com gateway fake e store em memória.
 **Critérios de aceitação**
 - **AC-T25-01** Um run com handlers de teste percorre start → A → B → fim, grava um `flow_run_steps` por nó e termina `completed`.
 - **AC-T25-02** Grafo com ciclo sem espera termina `failed` com `loop_guard` após 50 passos.
@@ -830,7 +836,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T26-02** Contato só com `wa_lid` (sem telefone) é aceito; `mergeIdentity` funde o contato LID no contato PN, preservando etiquetas, campos e o id do mais antigo.
 - **AC-T26-03** Chave de campo personalizado nova gravada num contato aparece no catálogo; `PATCH /api/custom-fields/:key` só muda a descrição; chave < 2 caracteres → 422; campos de sistema não editáveis.
 - **AC-T26-04** Etiqueta: nome 2–50 e cor `#RRGGBB` (senão 422); excluir remove os vínculos; listagem traz `contacts_count`.
-- **AC-T26-05** Consentimento registrado no contato é repassado ao `WaGateway.recordConsent` (FakeWaGateway registra a chamada); `opt_out` chama `optOut`.
+- **AC-T26-05** Todo contato criado (manual, via API) recebe `consent = true` com `consent_source = 'manual'`, repassado ao `WaGateway.recordConsent` (FakeWaGateway registra a chamada); marcar `opt_out` chama `optOut` e bloqueia envios até ser revertido manualmente.
 - **AC-T26-06** Membro sem `contacts.view` recebe 403 em `GET /api/contacts`; contato de outra empresa → 404.
 
 ---
@@ -865,8 +871,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T28-06** `duplicate` copia nós, ações e arestas com novos ids e status `draft`.
 
 ---
-
-### Onda 5
 
 ### T29 — App wa-worker e RPC interno
 **Objetivo:** processo dono dos sockets Baileys, falando com o CRM pelo mesmo protocolo de RPC do ai-manager.
@@ -986,6 +990,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T36-04** Trocar de empresa no seletor atualiza o nome no header, invalida os dados carregados (lista recarrega com dados da nova empresa) e reabre o SSE.
 - **AC-T36-05** Convite aberto sem login leva ao login com retorno ao convite; aceitar mostra a empresa nova no seletor.
 - **AC-T36-06** Todas as telas desta tarefa funcionam no projeto `mobile` sem rolagem horizontal.
+- **AC-T36-07** Em `/profile` → Preferências, escolher `en` ou `es` salva o `locale` no servidor e as telas passam a usar a língua escolhida também após novo login.
 
 ---
 
@@ -1008,13 +1013,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/ai-keys/**`, `apps/api/src/routes/ai-keys/**`, `packages/db/src/schema/crm/ai-keys.ts`
 **Depende de:** T12, T22
 **Ref:** `07-agentes-ia.md#38-aiintegration-integrationsai`, `19-integracoes.md#33-ai_integration-…`, `#56-ia`.
-**Entregáveis:** `ai_provider_keys` (provedor fixo após criar, nome, segredo cifrado, dica `…abcd`); CRUD; `POST /api/ai-keys/:id/test`; `GET /api/ai-keys/:id/models` e `/voices` (ElevenLabs); `resolveCredentials(companyId, provider)` (chave da empresa, senão chave da plataforma por env); permissão `settings.integrations.*`.
+**Entregáveis:** `ai_provider_keys` (provedores `anthropic|openai|google|openrouter|elevenlabs|groq`; provedor fixo após criar, nome, segredo cifrado, dica `…abcd`); CRUD; `POST /api/ai-keys/:id/test`; `GET /api/ai-keys/:id/models` e `/voices` (ElevenLabs); `resolveCredentials(companyId, provider)` (chave da empresa, senão chave da plataforma por env); permissão `settings.integrations.*`.
 **Critérios de aceitação**
 - **AC-T38-01** O segredo nunca aparece em resposta da API nem no log (teste capturando o output do pino); a listagem mostra só `configured` e a dica.
 - **AC-T38-02** `PATCH` com segredo vazio mantém o segredo atual; trocar o provedor → 422.
 - **AC-T38-03** `test` usa o provedor injetado (fake) e devolve `{ ok, latency_ms, error? }` com erro sem a chave.
 - **AC-T38-04** Excluir chave usada por agente → 409 com a lista de agentes.
 - **AC-T38-05** `resolveCredentials` prefere a chave da empresa e cai para a da plataforma; sem nenhuma → erro tipado.
+- **AC-T38-06** Chave `openrouter`: `GET /api/ai-keys/:id/models` devolve a lista de modelos da OpenRouter (fetch mockado) no formato `fornecedor/modelo`, usada pelos seletores de modelo de agentes e do nó de IA.
 
 ---
 
@@ -1023,11 +1029,11 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/ai-agents/**`, `apps/api/src/routes/ai-agents/**`, `packages/db/src/schema/crm/ai-agents.ts`
 **Depende de:** T22, T26
 **Ref:** `07-agentes-ia.md#31-aiagent`, `#32-agentsettings`, `#33-agentskill-habilidade`, `#35-collectionfield-…`, `#36-media-enviável`, `#4-estados-e-transições`, `#5-ações-e-regras-de-negócio`, `#6-endpoints-da-api`.
-**Entregáveis:** `ai_agents` (status `draft|active|paused`, objetivo, persona, regras, prompt gerado/editado, blocos travados, `model: LlmModelRef`, preset `economy|balanced|advanced` resolvido por empresa), `ai_agent_settings` (zod com defaults de 07#3.2: buffer, divisão, áudio, entender áudio/imagem/comprovante, assinar nome, horário, pausar com humano, limite de travamento, ação sem saldo), `ai_agent_skills`, `ai_collection_fields` (5 padrão), `ai_agent_media` (≤ 8 arquivos, 8 MB); `GET|POST /api/ai-agents`, `GET|PATCH|DELETE /api/ai-agents/:id`, `POST /:id/{duplicate,publish,pause}`, avatar e mídia; limite de agentes por empresa (`LIMIT_REACHED`); permissões `flows.view|edit` (07#8).
+**Entregáveis:** `ai_agents` (status `draft|active|paused`, objetivo, persona, regras, prompt gerado/editado, blocos travados, `model: LlmModelRef`, preset `economy|balanced|advanced` resolvido por empresa), `ai_agent_settings` (zod com defaults de 07#3.2: buffer, divisão, áudio, entender áudio/imagem/comprovante, assinar nome, horário, pausar com humano, limite de travamento, ação sem saldo), `ai_agent_skills`, `ai_collection_fields` (5 padrão), `ai_agent_media` (≤ 8 arquivos, 8 MB); `GET|POST /api/ai-agents`, `GET|PATCH|DELETE /api/ai-agents/:id`, `POST /:id/{duplicate,publish,pause}`, avatar e mídia; limite opcional de agentes por empresa (ilimitado por padrão); permissões `flows.view|edit` (07#8).
 **Critérios de aceitação**
 - **AC-T39-01** Criar agente sem settings aplica os defaults de 07#3.2; settings inválidas → 422 com o campo.
 - **AC-T39-02** `publish` de agente sem prompt ou sem modelo → 422; publicado → `active`; `pause` → `paused`; transições inválidas → 409.
-- **AC-T39-03** Ao atingir o limite de agentes da empresa, criar/duplicar → 409 `LIMIT_REACHED`.
+- **AC-T39-03** Sem limite definido (padrão), a empresa cria quantos agentes quiser; com limite definido pelo admin da plataforma e atingido, criar/duplicar → 409 `LIMIT_REACHED`.
 - **AC-T39-04** `duplicate` copia settings, habilidades e campos de coleta, com status `draft`.
 - **AC-T39-05** Excluir agente vinculado a fluxo ou chat ativo devolve 409 com as referências, a menos que `force=1`.
 - **AC-T39-06** Modelo de provedor sem chave configurada (empresa nem plataforma) → 422 `provider_not_configured`.
@@ -1039,9 +1045,9 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/connections/**`, `apps/api/src/routes/connections/**`, `packages/db/src/schema/crm/connections.ts`
 **Depende de:** T22, T03
 **Ref:** `08-conexoes.md#31-connection`, `#32-perfil-whatsapp`, `#5-ações-e-regras-de-negócio`, `#6-endpoints-da-api`, `#compatibilidade-baileys-clone`.
-**Entregáveis:** `crm.connections` 1:1 com a sessão (`session_id`, empresa, nome 2–100, `disconnected_at`, notificar envios pelo celular, mensagens temporárias, salvar contatos, agendada para exclusão); status de UI derivado (`pending|connecting|connected|paused|disconnected|banned`, com badges de aquecimento/saúde); `GET /api/connections` (busca, status, `status_counts`), `POST`, `GET|PUT /:id`, `POST /:id/{connect,disconnect,restart,schedule-deletion}`, `GET /:id/qr`, `POST /:id/pairing-code` (`^[1-9]\d{6,14}$`), `POST|DELETE /:id/proxy`, `POST /:id/instance-settings`, `GET|PATCH /:id/whatsapp-profile` (só se `capabilities.businessProfile`); limite de conexões por empresa; permissões `connections.view|edit|delete`.
+**Entregáveis:** `crm.connections` 1:1 com a sessão (`session_id`, empresa, nome 2–100, `disconnected_at`, notificar envios pelo celular, mensagens temporárias, salvar contatos, agendada para exclusão); status de UI derivado (`pending|connecting|connected|paused|disconnected|banned`, com badges de aquecimento/saúde); `GET /api/connections` (busca, status, `status_counts`), `POST`, `GET|PUT /:id`, `POST /:id/{connect,disconnect,restart,schedule-deletion}`, `GET /:id/qr`, `POST /:id/pairing-code` (`^[1-9]\d{6,14}$`), `POST|DELETE /:id/proxy`, `POST /:id/instance-settings`, `GET|PATCH /:id/whatsapp-profile` (só se `capabilities.businessProfile`); limite opcional de conexões por empresa (ilimitado por padrão); permissões `connections.view|edit|delete`.
 **Critérios de aceitação**
-- **AC-T40-01** Criar conexão cria a sessão no gateway (FakeWaGateway) e o vínculo `crm.connections`; ao atingir o limite da empresa → 409 `LIMIT_REACHED`.
+- **AC-T40-01** Criar conexão cria a sessão no gateway (FakeWaGateway) e o vínculo `crm.connections`; sem limite definido não há teto; com limite definido pelo admin e atingido → 409 `LIMIT_REACHED`.
 - **AC-T40-02** `GET /:id/qr` devolve o QR mais recente do gateway; `pairing-code` com número inválido → 422 e válido → código.
 - **AC-T40-03** O status de UI segue o mapeamento (ex.: `STABLE` + aberto → `connected` com badge; `PAUSED` → `paused`; `loggedOut` → `disconnected`; `forbidden` → `banned`).
 - **AC-T40-04** Proxy com senha: a resposta mostra só host, porta, usuário e `has_password`; alterar o proxy marca "requer reinício".
@@ -1118,14 +1124,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/contacts-import/**`, `apps/api/src/routes/contacts-import/**`, `apps/worker/src/jobs/contacts-import/**`
 **Depende de:** T26, T27
 **Ref:** `05-contatos.md#36-job-de-importação-…`, `#5-ações-e-regras-de-negócio-features`, `#9-integrações-externas`.
-**Entregáveis:** `POST /api/contacts/imports` (multipart CSV, modo upsert, criar etiquetas ausentes, etiquetas padrão, coluna de consentimento), `GET /api/contacts/imports/:id`, `GET /api/contacts/import-template.csv`; parse em streaming (papaparse no servidor, `NODE_STREAM_INPUT`, detecção de `;`/`,` e de Windows-1252); `POST /api/contacts/import-from-whatsapp { connection_id }` via `WaGateway.listContacts`; progresso por `job.progress`.
+**Entregáveis:** `POST /api/contacts/imports` (multipart CSV, modo upsert, criar etiquetas ausentes, etiquetas padrão, coluna opcional de opt-out), `GET /api/contacts/imports/:id`, `GET /api/contacts/import-template.csv`; parse em streaming (papaparse no servidor, `NODE_STREAM_INPUT`, detecção de `;`/`,` e de Windows-1252); `POST /api/contacts/import-from-whatsapp { connection_id }` via `WaGateway.listContacts`; progresso por `job.progress`.
 **Critérios de aceitação**
 - **AC-T67-01** Linha sem telefone válido entra no relatório como "Linha N: telefone inválido" e as demais são importadas; o relatório agrupa erros iguais.
 - **AC-T67-02** Reimportar o mesmo arquivo atualiza (contagem `updated`) em vez de duplicar.
 - **AC-T67-03** Etiqueta inexistente é criada só com a opção ligada; etiquetas do CSV têm prioridade sobre as padrão.
 - **AC-T67-04** CSV em Windows-1252 com `;` é lido com acentos corretos.
 - **AC-T67-05** Importar do WhatsApp exige conexão conectada (senão 409); contatos só com LID entram sem telefone; o resultado traz `imported/updated/skipped`.
-- **AC-T67-06** Contatos importados só recebem `consent = true` quando a coluna de consentimento do CSV diz que sim (o padrão é `false`).
+- **AC-T67-06** Todo contato importado (CSV ou WhatsApp) recebe `consent = true` com `consent_source = 'import'`, repassado ao `WaGateway.recordConsent`; uma coluna `opt_out` verdadeira no CSV importa o contato já com opt-out.
 
 ---
 
@@ -1154,8 +1160,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T99-03** `refresh-ad-accounts` faz upsert das contas sem mudar `included_in_dashboard` das existentes.
 - **AC-T99-04** Nenhuma resposta de `/api/meta/profiles` contém o token (snapshot do JSON).
 - **AC-T99-05** Membro sem `facebook.profiles` (ou não owner/admin) → 403 em PUT/DELETE/refresh.
-
-### Onda 6
 
 ### T46 — @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream
 **Objetivo:** a implementação de produção do `WaGateway`, igual para o wa-worker próprio e para o ai-manager.
@@ -1285,13 +1289,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/dashboard/{sales,bootstrap,milestones}/**`, `apps/api/src/routes/dashboard/**`
 **Depende de:** T34
 **Ref:** `02-dashboard.md#31-filtros-estado-da-página`, `#32-get-dashboard--sales`, `#34-get-dashboardbootstrap`, `#5-ações-e-regras-de-negócio-features`; `15-trilha-do-predador.md#32-níveis-…`.
-**Entregáveis:** `GET /api/dashboard?start_date&end_date&connection_ids[]&product_ids[]&force_refresh` (bloco `sales` só com `dashboard.sales`), cache Redis 5 min por (empresa, período, filtros); `GET /api/dashboard/bootstrap` (produtos, conexões, grupos de filtro, avisos/banners ativos, `lifetime_revenue`, `leads_count`); fórmulas documentadas em `docs/kpis.md` (decisão: `ticket = receita/vendas`, `conversão = vendas/novos leads`, `lucro = receita − gasto Meta − despesas`, despesa fixa rateada por dias do intervalo); marcos de faturamento com nomes neutros em configuração (`computeMilestone`).
+**Entregáveis:** `GET /api/dashboard?start_date&end_date&connection_ids[]&product_ids[]&force_refresh` (bloco `sales` só com `dashboard.sales`), cache Redis 5 min por (empresa, período, filtros); `GET /api/dashboard/bootstrap` (produtos, conexões, grupos de filtro, avisos/banners ativos, `lifetime_revenue`, `leads_count`); fórmulas **fechadas** (decisão do usuário, documentadas em `docs/kpis.md`): `ticket médio = faturamento ÷ vendas`, `conversão = vendas ÷ leads novos` (leads novos = contatos que iniciaram conversa no período), `ROAS = faturamento ÷ gasto Meta` (nulo com gasto 0), `lucro antes das taxas = faturamento − gasto Meta`, `lucro = lucro antes das taxas − despesas`, onde cada regra de despesa vigente (02#3.5) soma: `fixed` → valor × (dias do intervalo ∩ vigência ÷ dias do período `day|week|month`), `percent` → % sobre a base `revenue|spend|profit_pre`; gasto Meta vem da porta `AdSpendProvider` (padrão 0; T101 registra a implementação); marcos de faturamento (`computeMilestone`) com os 6 limiares da referência e **nomes próprios**: 1 "Primeira Marca" (R$ 50 mil), 2 "Tração" (R$ 100 mil), 3 "Escala" (R$ 250 mil), 4 "Expansão" (R$ 500 mil), 5 "Clube do Milhão" (R$ 1 milhão), 6 "Referência no Mercado" (R$ 2 milhões), com descrições curtas próprias e i18n.
 **Critérios de aceitação**
 - **AC-T55-01** Com a fixture de vendas, KPIs, séries (granularidade hora para 1 dia, dia para o resto), por hora, por conexão, por UF ("Desconhecido") e por produto batem com os valores esperados no fuso da empresa.
 - **AC-T55-02** Período anterior = mesma duração terminando no dia anterior ao início; tendência neutra quando o anterior é 0 ou |Δ| < 0,05%.
 - **AC-T55-03** Segunda chamada idêntica vem do cache; `force_refresh=1` recalcula.
 - **AC-T55-04** Sem `dashboard.sales`, a resposta não tem o bloco de vendas nem `lifetime_revenue`.
-- **AC-T55-05** `computeMilestone`: < 50 mil → sem selo (progresso relativo a 0); 75 mil → nível 1 com 50% até 100 mil; ≥ 2 milhões → máximo; nomes vêm da configuração neutra.
+- **AC-T55-05** `computeMilestone`: < 50 mil → sem selo (progresso relativo a 0); 75 mil → "Primeira Marca" com 50% até "Tração"; ≥ 2 milhões → "Referência no Mercado" e nível máximo; nenhum nome ou descrição do produto de referência aparece.
+- **AC-T55-06** Com fixture de vendas, gasto Meta (fake de `AdSpendProvider`) e duas regras de despesa (fixa mensal rateada e percentual sobre faturamento), ticket, conversão, ROAS, lucro antes das taxas e lucro batem com os valores calculados à mão; ROAS é nulo com gasto 0.
 
 ---
 
@@ -1347,11 +1352,11 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/mass-dispatch/**`, `apps/api/src/routes/mass-dispatch/**`, `packages/db/src/schema/crm/mass-dispatch.ts`
 **Depende de:** T26, T43
 **Ref:** `10-disparos-em-massa.md#31-formulário-de-criação-wizard` a `#34-cota-…`, `#4-estados-e-transições`, `#5-ações-e-regras-de-negócio`, `#compatibilidade-baileys-clone`.
-**Entregáveis:** `mass_dispatches` (status `preparing|scheduled|running|paused|completed|cancelled|failed`, dias da semana, janela, fuso, intervalo mín/máx 0–120 s, limite diário, início, contadores, progresso de preparação), `mass_dispatch_targets` (conexão + fluxo), `mass_dispatch_recipients` (variante A/B, status `pending|started|failed|cancelled|skipped`); manifesto `ids | all_except + filtros`; cota mensal `conexões × limite_por_conexão (500) + bônus`; `GET /api/mass-dispatches/quota`, CRUD de leitura, `POST` (multipart manifest), `POST /:id/cancel`; só contatos com consentimento entram (os demais contam como `skipped`); permissão nova `mass_dispatch.create`.
+**Entregáveis:** `mass_dispatches` (status `preparing|scheduled|running|paused|completed|cancelled|failed`, dias da semana, janela, fuso, intervalo mín/máx 0–120 s, limite diário, início, contadores, progresso de preparação), `mass_dispatch_targets` (conexão + fluxo), `mass_dispatch_recipients` (variante A/B, status `pending|started|failed|cancelled|skipped`); manifesto `ids | all_except + filtros`; cota mensal `conexões × limite_por_conexão (500) + bônus`; `GET /api/mass-dispatches/quota`, CRUD de leitura, `POST` (multipart manifest), `POST /:id/cancel`; contatos com opt-out entram como `skipped` (sem exigência de consentimento prévio — regra 1.4 nº 3); permissão nova `mass_dispatch.create`.
 **Critérios de aceitação**
 - **AC-T60-01** Criar sem cota suficiente → 429 `QUOTA_EXCEEDED`; com público maior que a cota restante → aviso `only_first_n` e só N destinatários.
 - **AC-T60-02** `interval_max < interval_min`, janela vazia ou sem dias da semana → 422; limite diário acima da capacidade de warm-up das conexões gera aviso.
-- **AC-T60-03** Manifesto `all_except` com filtros resolve o público excluindo os ids informados; contatos sem consentimento entram como `skipped`.
+- **AC-T60-03** Manifesto `all_except` com filtros resolve o público excluindo os ids informados; contatos com opt-out entram como `skipped`; contatos importados sem histórico de conversa são aceitos.
 - **AC-T60-04** Cancelar devolve a cota dos destinatários não iniciados (`released_count`) e cancela os jobs pendentes.
 - **AC-T60-05** Fluxos-alvo precisam estar ativos e ser acionáveis; conexão desconectada no alvo → 409.
 
@@ -1381,7 +1386,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T73-01** Token inválido → 404; HMAC errado → 401; mesmo `external_id` duas vezes → 1 venda com status atualizado.
 - **AC-T73-02** Payload que o mapeamento não resolve vira evento `failed` com o caminho que faltou; replay reprocessa após corrigir o mapeamento.
 - **AC-T73-03** `test` devolve o `SaleEvent` resultante de uma amostra colada sem gravar nada.
-- **AC-T73-04** Venda cria ou encontra o contato pelo telefone e herda a atribuição; first touch nunca é sobrescrito, last touch sim.
+- **AC-T73-04** Venda cria ou encontra o contato pelo telefone (contato novo com `consent_source = 'sale'`) e herda a atribuição; first touch nunca é sobrescrito, last touch sim.
 - **AC-T73-05** Rotacionar o token invalida a URL antiga (404).
 
 ---
@@ -1407,6 +1412,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T84-02** Mensagem do chat aberto no momento não notifica.
 - **AC-T84-03** Clicar no item abre `/chat/<id>`; itens com mais de 1 h somem.
 - **AC-T84-04** Preferências (ativo, volume 0–100, navegador, toast, sons) persistem e "Restaurar padrão" volta aos valores de 14#10; volume 0 não toca som.
+- **AC-T84-05** Evento genérico `notification.created { title, body, url? }` (ex.: push da Venda aprovada) aparece como toast e item na central, respeitando as mesmas preferências.
 
 ---
 
@@ -1438,8 +1444,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
-### Onda 7
-
 ### T62 — Nós interativos (menu, carrossel, espera de resposta)
 **Paths:** `packages/core/src/flows/nodes/interactive/**`
 **Depende de:** T30, T51
@@ -1462,7 +1466,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T63-02** `change_chat_status` aceita só o enum interno (`waiting|attending|resolved`) e publica `chat.updated`; `set_department` transfere o chat.
 - **AC-T63-03** `create_kanban_card` cria o card com valor (ou atualiza se o chat já tiver card no quadro); `remove_kanban_card` remove.
 - **AC-T63-04** Manipulador: `set`, `add`, `subtract`, `multiply`, `divide` (divisão por zero → `failure`); `set_created_at` aceita `dd/MM/aaaa HH:mm:ss` e ISO.
-- **AC-T63-05** `register_approved_sale` grava a venda pelo `SalesService` (origem `flow`) e `control_ai_agent` liga/desliga o agente no chat.
+- **AC-T63-05** `register_approved_sale` grava a venda pelo `SalesService` (origem `flow`) com produto, valor (fallback fora da faixa), moeda e cliente renderizados, guarda `note_issuer_id` e `utmify_integration_id` da configuração na venda (consumidos por T112/T113) e publica `notification.created` com o título/corpo de push renderizados; `control_ai_agent` liga/desliga o agente no chat.
 
 ---
 
@@ -1552,7 +1556,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T71-02** Conectar: abas QR (atualiza com `connection.qr_updated`) e "Código no telefone"; ao conectar (`connection.connected` via harness), o modal fecha e o status muda sem recarregar.
 - **AC-T71-03** Modais de proxy (senha mascarada, aviso de reinício), configurações da instância e "Parar todos os fluxos" (exige digitar o nome).
 - **AC-T71-04** Reconexão com fluxos pausados abre o modal "Retomar/Cancelar"; nenhum texto da tela menciona API Oficial, Embedded Signup ou "imune a ban".
-- **AC-T71-05** Limite de conexões atingido desabilita "Nova conexão" com a explicação; layout `mobile` em cartões.
+- **AC-T71-05** Sem limite definido, "Nova conexão" fica sempre disponível; com limite definido e atingido, o botão fica desabilitado com a explicação; layout `mobile` em cartões.
 
 ---
 
@@ -1637,8 +1641,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T107-02** `connection.disconnected` via SSE liga o indicador sem nova consulta; `connection.connected` dispara nova consulta.
 - **AC-T107-03** Não aparece para `support` nem para quem não tem `connections.view` (owner sempre vê).
 - **AC-T107-04** Trocar de empresa refaz a consulta.
-
-### Onda 8
 
 ### T75 — UI chats: conversa
 **Paths:** `apps/web/src/features/chat-thread/**`
@@ -1750,8 +1752,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
-### Onda 9
-
 ### T85 — UI chats: compositor
 **Paths:** `apps/web/src/features/chat-composer/**`
 **Depende de:** T75, T64
@@ -1801,8 +1801,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
-### Onda 10
-
 ### T92 — UI agentes: teste ao vivo, criação assistida e vozes
 **Paths:** `apps/web/src/features/{agent-lab,agent-voices}/**`
 **Depende de:** T88
@@ -1833,7 +1831,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/mcp/**`, `apps/api/src/routes/mcp/**`, `packages/db/src/schema/crm/mcp.ts`, `apps/web/src/{routes,features}/settings-mcp/**`
 **Depende de:** T26, T28, T40
 **Ref:** `09-webhooks-entrada.md#34-mcpcredential`, `#6-endpoints-da-api` (MCP).
-**Entregáveis:** credenciais (`auth_type: static`, hash do token mostrado uma vez, expiração, último uso); endpoint MCP (Streamable HTTP, `@modelcontextprotocol/sdk` — versão a confirmar no context7 antes de usar) com ferramentas **somente leitura** (contatos, conexões, fluxos, chats resumidos) isoladas por empresa; tela `/settings?tab=mcp_credentials`. OAuth: fora de escopo.
+**Entregáveis:** credenciais (`auth_type: static`, hash do token mostrado uma vez, expiração, último uso); endpoint MCP (Streamable HTTP, `@modelcontextprotocol/sdk` — versão a confirmar no context7 antes de usar) com ferramentas **somente leitura** (contatos, conexões, fluxos, chats resumidos) isoladas por empresa; tela `/settings?tab=mcp_credentials`. O tipo `oauth` (conector do Claude) é entregue no T115.
 **Critérios de aceitação**
 - **AC-T94-01** Criar credencial mostra o token uma única vez; a listagem só mostra nome, status, expiração e último uso.
 - **AC-T94-02** Token inválido, expirado ou revogado → 401 no endpoint MCP.
@@ -1841,8 +1839,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T94-04** A tela permite criar, copiar (uma vez) e revogar, com estado vazio e layout `mobile`.
 
 ---
-
-### Onda 11
 
 ### T95 — Admin: usuários, empresas, limites e cotas
 **Paths:** `packages/core/src/admin/**`, `apps/api/src/routes/admin/**`
@@ -1852,7 +1848,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Critérios de aceitação**
 - **AC-T95-01** Qualquer `/api/admin/*` sem `platform_admin` → 403 (inclusive owner de empresa).
 - **AC-T95-02** `PUT` de usuário ignora mudança de e-mail e só troca a senha quando informada (≥ 6); toda ação grava `admin_audit_log`.
-- **AC-T95-03** Limites de empresa validados (inteiros ≥ 0) e aplicados: reduzir o limite de conexões abaixo do atual impede novas, sem desconectar as existentes.
+- **AC-T95-03** Limites de empresa são opcionais (vazio = ilimitado, o padrão) e validados (inteiros ≥ 0); definir o limite de conexões abaixo do atual impede novas, sem desconectar as existentes; remover o limite volta a ilimitado.
 - **AC-T95-04** Bônus de disparos soma no período atual sem mudar o limite global; mudar `per_connection_limit` recalcula a cota base.
 
 ---
@@ -1864,7 +1860,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Critérios de aceitação**
 - **AC-T96-01** CRUD de avisos (tipo `info|warning|error|success`, prioridade, expiração, ativo) e banners (imagem obrigatória); o cliente (`GET /api/announcements`, `/api/banners` e bootstrap) recebe só ativos e não expirados, por prioridade decrescente.
 - **AC-T96-02** `GET /api/admin/health` devolve por fila BullMQ (waiting/active/failed/delayed/paused), Redis (memória), Postgres (conexões, tamanho) e lag do grupo `crm` no `wsm:events`.
-- **AC-T96-03** `GET /api/admin/wa/sessions` lista as sessões de todas as empresas pelo `WaGateway` com estado e empresa dona; funciona com o perfil `crm` (e com o perfil `ai-manager` no teste de T98).
+- **AC-T96-03** `GET /api/admin/wa/sessions` lista as sessões de todas as empresas pelo `WaGateway` com estado e empresa dona no perfil `crm`; com `WA_RPC_PROFILE=ai-manager` (modo extensão) a rota responde 404 e o admin mostra só dados do CRM — as sessões ficam no painel do ai-manager.
 - **AC-T96-04** Segredos de plataforma (chaves de IA/ElevenLabs/Groq) são só de escrita: a leitura devolve `configured` e máscara; o uso de IA por empresa/modelo agrega `ai_usage`.
 
 ---
@@ -1906,8 +1902,6 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
-### Onda 12
-
 ### T100 — UI admin interno
 **Paths:** `apps/web/src/{routes,features}/admin/**`
 **Depende de:** T95, T96, T23
@@ -1916,16 +1910,115 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T100-01** `/admin?tab=` com aba inválida volta para "Visão geral"; o item "Admin" só aparece para `platform_admin`.
 - **AC-T100-02** Usuários e Empresas: listas paginadas (20) com busca (debounce 450 ms) que reiniciam ao trocar de aba; modal de usuário valida e-mail e senha ≥ 6.
 - **AC-T100-03** Avisos e Banners com upload de imagem e prévia; um aviso ativo aparece como pop-up no app do cliente e respeita "fechar".
-- **AC-T100-04** Saúde, Sessões WhatsApp e IA mostram "atualizado às HH:MM" com botão Atualizar; recarga/ajuste de créditos com nota obrigatória e confirmação.
+- **AC-T100-04** Saúde, Sessões WhatsApp e IA mostram "atualizado às HH:MM" com botão Atualizar (a aba Sessões não aparece no modo extensão); recarga/ajuste de créditos com nota obrigatória e confirmação.
 
 ---
 
-### Onda 13
+### T109 — Pagamentos ao lead: porta, chaves e adapter XPag
+**Objetivo:** cobrança ao lead dentro do fluxo, como no produto de referência, atrás de uma porta por gateway. (Não confundir com a porta `BillingProvider` da plataforma, que continua só interface.)
+**Paths:** `packages/core/src/payments/{port,keys,xpag}/**`, `apps/api/src/routes/payment-integrations/**`, `packages/db/src/schema/crm/payments.ts`
+**Depende de:** T22
+**Ref:** `19-integracoes.md#31-payment_integration-chave-de-pagamento-…`, `#46-matriz-gateway--moeda--método-…` (linhas XPag), `#52-xpag--zenith-modal-de-chave`, `#6-endpoints-da-api` (Pagamentos), `#8-permissões`.
+**Entregáveis/Contratos:**
+- Porta `PaymentGateway { id; supported(): {currency, methods[]}[]; createCharge(req) → { transaction_id, status, checkout_url?, payment_code?, qr_image_url?, bank_info?, expires_at? }; parseWebhook(rawBody, headers) → PaymentEvent[]; testConnection() }` e `PaymentEvent { type: 'payment.approved'|'payment.failed'|'payment.expired'|'payment.refunded', transaction_id, amount_cents, currency, paid_at }`.
+- `payment_integrations` (empresa, `label` ≥ 2, `gateway` fixo após criar, `client_id`, `client_secret` cifrado, `secret_configured`, `secret_hint`, `webhook_secret` cifrado, `webhook_url` derivada), `payment_charges` (empresa, integração, run/contato, valor, moeda, método, `transaction_id`, status `created|approved|failed|expired|refunded`, `listener_until`).
+- CRUD `GET|POST /api/payment-integrations`, `PUT|DELETE /:id`, `POST /:id/test-connection`; permissão `settings.integrations.*`.
+- Adapter **XPag** (BRL PIX; MXN SPEI/OXXO; COP NEQUI/BREB; ARS sem "chave sem valor"; limites OXXO MX$10–10.000 e COP ≥ 10.000) com `XPAG_API_URL` e `FakeXPag` (servidor HTTP local). Contrato HTTP real da XPag: o Operário confirma na documentação oficial antes de implementar; sem acesso → `BLOCKED`.
+- O gateway "Leona Pay" **não** é implementado (ver 10.3).
+**Critérios de aceitação**
+- **AC-T109-01** Segredos (`client_secret`, `webhook_secret`) nunca aparecem em resposta nem em log; editar com segredo vazio mantém o atual; trocar o `gateway` → 422.
+- **AC-T109-02** `test-connection` chama o `FakeXPag` e devolve `{ ok: true }`; credencial recusada pelo fake → `{ ok: false, error }` sem expor a chave.
+- **AC-T109-03** `createCharge` no XPag com BRL/PIX devolve `transaction_id` e código copia-e-cola; combinação moeda × método fora da matriz → erro de validação antes da chamada; ARS com "chave sem valor" → erro "em breve".
+- **AC-T109-04** `parseWebhook` do XPag com assinatura válida converte o payload do fake em `payment.approved`; assinatura inválida → erro e nenhum evento.
+- **AC-T109-05** Excluir integração usada por bloco Pagamento de fluxo ativo → 409 com a lista de fluxos.
+
+---
+
+### T110 — Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook)
+**Paths:** `packages/core/src/payments/zenith/**`, `apps/api/src/routes/zenith-oauth/**`
+**Depende de:** T109
+**Ref:** `19-integracoes.md#46-…` (linhas Zenith), `#47-estados-de-callback-oauth`, `#52-xpag--zenith-modal-de-chave`.
+**Entregáveis:** adapter **Zenith** (BRL pix; COP pse/bre-b-llave/nequi; MXN oxxo/spei/codi; PEN yape/plin/bank-transfer/cash; ARS bank-transfer; INR upi; PHP gcash/maya; com as expirações e validações de telefone/documento da matriz) por chave (`X-API-Key`/`X-API-Secret`) ou OAuth (`POST /api/zenith-oauth/start {label?, installation_id?}` → `oauth_url`; `POST /api/zenith-oauth/exchange {code, state}` no servidor; `state` assinado empresa+usuário e de uso único); registro automático do webhook na Zenith ao conectar; `POST /api/payment-integrations/:id/rotate-credentials`; `FakeZenith`.
+**Critérios de aceitação**
+- **AC-T110-01** OAuth: `start` devolve URL com `state` assinado; `exchange` com `state` inválido, reutilizado ou de outra empresa → erro e nenhuma integração criada; válido → integração com `zenith_oauth = true` e chaves só no servidor.
+- **AC-T110-02** Ao conectar, o webhook é registrado no `FakeZenith` com a URL pública da integração (`zenith_webhook_url` exibida somente leitura).
+- **AC-T110-03** `createCharge` respeita moeda × método e validações (Nequi exige celular colombiano de 10 dígitos começando com 3; GCash/Maya celular filipino; BRL pix exige nome, e-mail e CPF/CNPJ) antes de chamar o fake.
+- **AC-T110-04** `rotate-credentials` troca as credenciais no fake e a antiga deixa de funcionar; webhook do fake com pagamento aprovado vira `payment.approved`.
+
+---
+
+### T111 — Bloco Pagamento no fluxo e confirmação por webhook
+**Paths:** `packages/core/src/flows/nodes/payment/**`, `packages/core/src/payments/webhooks/**`, `apps/api/src/routes/hooks-payments/**`, `apps/worker/src/jobs/payment-webhooks/**`
+**Depende de:** T109, T30
+**Ref:** `19-integracoes.md#38-bloco-pagamento-do-fluxo-…`, `#55-mapeamento-evento-de-pagamento--ações`; `06-fluxos.md#35-tipos-de-nó-…` (payment).
+**Entregáveis:** handler do nó `payment` (`create_payment_charge`: gateway, integração, moeda, método, valor com variáveis e "chave sem valor", dados do pagador com variáveis, escuta por `listener_ttl`), saídas `charge_created`, `payment_approved`, `error`; variáveis expostas (`{gateway.transaction_id}`, `{gateway.checkout_url}`, `{gateway.payment_code}`, `{gateway.qr_url}`, `{gateway.value}`, `{gateway.error}`); espera `kind: 'payment'` até o fim do TTL; endpoint público `POST /api/hooks/payments/:integrationId/:token` (202 + fila `payment-webhooks`), idempotente por `transaction_id`.
+**Critérios de aceitação**
+- **AC-T111-01** O nó cria a cobrança (fake), segue `charge_created` com as variáveis preenchidas e deixa o run esperando a confirmação.
+- **AC-T111-02** Webhook de pagamento aprovado dentro do TTL retoma o run pelo handle `payment_approved` e preenche `{gateway.value}`; o mesmo webhook entregue duas vezes retoma uma vez só.
+- **AC-T111-03** Webhook depois do TTL só atualiza `payment_charges` (não retoma o run); erro do gateway na criação segue `error` com `{gateway.error}`.
+- **AC-T111-04** Token inválido no endpoint público → 404; assinatura inválida → 401 e nada é processado.
+- **AC-T111-05** O valor aceita vírgula ou ponto e variáveis (`{preco}`); "chave sem valor" cria cobrança sem valor fixo e usa o valor pago informado pelo webhook.
+
+---
+
+### T112 — Emissão de NF (Notasy) na venda aprovada
+**Paths:** `packages/core/src/invoicing/**`, `apps/api/src/routes/invoice-integrations/**`, `apps/worker/src/jobs/invoices/**`, `packages/db/src/schema/crm/invoicing.ts`
+**Depende de:** T34, T22
+**Ref:** `19-integracoes.md#32-invoice_integration-emissor-de-nf-…`, `#42-status-de-emissão-de-nf-da-venda-…`, `#54-emissão-de-nf-notasy`, `#6-endpoints-da-api` (Emissores de NF).
+**Entregáveis:** porta `InvoiceIssuer { issue(sale, customer, product) → { external_id, status, pdf_url? } }` + adapter **Notasy** (`NOTASY_API_URL`, token por empresa) + `FakeNotasy`; `invoice_integrations` (provedor `notasy`, nome da empresa ≥ 2, token cifrado, `token_configured`); `sale_invoices` (venda, emissor, status conforme 19#4.2, tentativas, erro, número/PDF); job na fila `invoices` disparado por `sale.recorded` quando a venda tem `note_issuer_id`; `POST /api/sales/:id/reemit-invoice { invoice_integration_id? }`; CRUD `/api/invoice-integrations`. Contrato HTTP real da Notasy: confirmar na documentação oficial; sem acesso → `BLOCKED`.
+**Critérios de aceitação**
+- **AC-T112-01** Venda aprovada com `note_issuer_id` enfileira uma emissão; o fake responde e o status da nota passa pelos estados de 19#4.2 até emitida, com evento `sale.updated`.
+- **AC-T112-02** Venda sem `note_issuer_id` não emite; emissor sem token configurado → status de erro "emissor não configurado".
+- **AC-T112-03** Falha do fake → nova tentativa com backoff (no máximo 3) e depois status de erro com a mensagem; `reemit-invoice` reenfileira, inclusive escolhendo outro emissor.
+- **AC-T112-04** O token nunca aparece em resposta nem em log; excluir emissor usado por bloco "Venda aprovada" avisa que o bloco deixará de emitir.
+
+---
+
+### T113 — UTMify: integração e envio de vendas aprovadas
+**Paths:** `packages/core/src/utmify/**`, `apps/api/src/routes/utmify/**`, `apps/worker/src/jobs/utmify/**`, `packages/db/src/schema/crm/utmify.ts`
+**Depende de:** T34, T22
+**Ref:** `11-facebook-ads.md#36-utmify_integration-…`, `19-integracoes.md#34-utmify_integration--ver-arquivo-11`, `#39-bloco-venda-aprovada-…`.
+**Entregáveis:** porta `SalesTracker { pushSale(sale, attribution) }` + adapter **UTMify** (`UTMIFY_API_URL`) + `FakeUtmify`; `utmify_integrations` (nome da empresa ≥ 2, token cifrado, `token_configured`); job na fila `utmify` disparado por `sale.recorded` quando a venda tem `utmify_integration_id`, enviando valor, moeda, produto, cliente e atribuição (`utm_*`, `source_id`/CTWA) e o status (aprovada, reembolsada); CRUD `/api/utmify-integrations`. Contrato HTTP real: confirmar na documentação oficial; sem acesso → `BLOCKED`.
+**Critérios de aceitação**
+- **AC-T113-01** Venda aprovada com `utmify_integration_id` envia um evento ao fake com valor, moeda, produto e os `utm_*` do contato.
+- **AC-T113-02** Reembolso da mesma venda envia atualização de status; o mesmo evento não é enviado duas vezes (idempotência por venda + status).
+- **AC-T113-03** Erro do fake → retry com backoff e, esgotado, registro de falha visível na venda.
+- **AC-T113-04** Token só de escrita (nunca devolvido nem logado).
+
+---
+
+### T114 — UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada
+**Paths:** `apps/web/src/{routes,features}/settings-payments/**`, `apps/web/src/features/flow-editor/node-editors/payment/**`, `apps/web/src/features/sale-invoice/**`, i18n `settings-payments`
+**Depende de:** T110, T111, T112, T113, T45, T59
+**Ref:** `19-integracoes.md#2-telas-e-rotas`, `#25-modais`, `#51-hub`, `#52-xpag--zenith-modal-de-chave`, `#38-bloco-pagamento-…`, `#39-bloco-venda-aprovada-…`.
+**Critérios de aceitação**
+- **AC-T114-01** O hub de integrações ganha os cards de Pagamentos (XPag, Zenith), NF (Notasy) e UTMify (registrados no catálogo compartilhado), com status Ativo/Inativo e busca.
+- **AC-T114-02** Modal de chave XPag/Zenith: validações do servidor, segredo mascarado, "Testar conexão" na edição; "Conectar com Zenith" leva ao OAuth (fake) e volta com toast de sucesso ou erro.
+- **AC-T114-03** Editor do bloco Pagamento mostra só moedas e métodos válidos para o gateway escolhido (matriz 19#4.6), campos condicionais por método e as saídas `charge_created`/`payment_approved`/`error` no canvas.
+- **AC-T114-04** Editor do bloco Venda aprovada: produto (com "+ Criar novo produto…"), valor/moeda/cliente com variáveis, emissor de NF ("Não emitir nota automaticamente") e UTMify ("Não enviar para UTMify"), título e corpo do push.
+- **AC-T114-05** No histórico de vendas, a venda mostra o status da nota e o botão "Reemitir nota", que reenfileira e mostra "Emissão reenfileirada"; textos em pt-BR, en e es; layout `mobile` sem rolagem horizontal.
+
+---
+
+### T115 — MCP: OAuth para conectores (Claude)
+**Objetivo:** credenciais MCP do tipo `oauth` exigidas pela spec 09, para conectores como o do Claude.
+**Paths:** `packages/core/src/mcp-oauth/**`, `apps/api/src/routes/mcp-oauth/**`, `packages/db/src/schema/crm/mcp-oauth.ts`, `apps/web/src/features/mcp-oauth/**`, i18n `mcp-oauth`
+**Depende de:** T94
+**Ref:** `09-webhooks-entrada.md#34-mcpcredential`, `#4-estados-e-transições`, `#5-ações-e-regras-de-negócio` (item 9). Especificação de autorização do MCP e versão do `@modelcontextprotocol/sdk`: confirmar no context7 antes de implementar.
+**Entregáveis:** servidor de autorização OAuth 2.1 para o endpoint MCP da empresa: metadados (`/.well-known/oauth-authorization-server` e `oauth-protected-resource`), registro dinâmico de cliente, `/authorize` com login do usuário e tela de consentimento (escolhe a empresa), PKCE S256 obrigatório, `/token` com access token curto + refresh token (hash no banco), revogação; credencial `auth_type: oauth` com status `pending → connected` (com `connected_client_hint`) → revogada; UI de criação mostra a URL e os passos do conector.
+**Critérios de aceitação**
+- **AC-T115-01** Fluxo completo com cliente de teste: registro dinâmico → `/authorize` (login + consentimento) → código → `/token` com PKCE válido → token aceito no endpoint MCP; PKCE inválido ou ausente → `invalid_grant`.
+- **AC-T115-02** A credencial passa de `pending` para `connected` com o nome do cliente; revogar invalida access e refresh tokens na hora (401 no endpoint MCP).
+- **AC-T115-03** O token OAuth só dá acesso à empresa escolhida no consentimento, com as mesmas ferramentas somente leitura do T94.
+- **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
+- **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
+
+---
 
 ### T102 — Integração E2E final
 **Objetivo:** provar o sistema montado. Tarefa principalmente do Tester; o Operário só corrige integrações.
 **Paths (Operário):** `apps/**`, `packages/**`, `scripts/**` (só correções de integração, nada de feature nova)
-**Depende de:** todas as tarefas de UI e T98
+**Depende de:** todas as tarefas de UI, T98 e T115
 **Critérios de aceitação**
 - **AC-T102-01** Jornada de onboarding: cadastro → empresa criada → conectar WhatsApp (QR fake) → conexão "Conectada" → contato manda mensagem → chat aparece na fila em tempo real.
 - **AC-T102-02** Jornada de atendimento: atendente assume, responde (texto e áudio PTT), move o card no kanban, resolve; métricas de atendimento refletem o chat.
@@ -1942,7 +2035,7 @@ Todos em `spec/verify/`, Node puro (sem dependências), multiplataforma.
 
 ```bash
 node spec/verify/verify.mjs list                        # tarefas, ondas, deps, nº de ACs e status dos relatórios
-node spec/verify/verify.mjs plan --max 8                # lotes por onda ordenados pelo caminho crítico
+node spec/verify/verify.mjs plan --max 4                # lotes por onda ordenados pelo caminho crítico (4 pares = decisão do usuário)
 node spec/verify/verify.mjs lint-spec                   # SPEC.md × tasks.mjs (seções, ACs únicos e em sequência, ≥3 por tarefa, tabela de ondas)
 node spec/verify/verify.mjs T26 --role operario --base <ref>   # checks do Operário (escopo bloqueante com --base)
 node spec/verify/verify.mjs T26 --role tester --base <ref>     # checks do Tester (cobertura e execução dos ACs)
@@ -2003,7 +2096,7 @@ Teste falhando por bug de produto → REJECT com o ID do AC, o esperado e o obti
 ### 7.3 Orquestrador (lembrete)
 ```text
 Você é o ORQUESTRADOR ("Claude Code") do leonas-crm. Siga a seção 2. Não escreve código de produto nem testes; só você commita.
-Antes de cada onda: verify.mjs plan --max 8. Para cada tarefa: worktree, Operário + Tester em paralelo (7.1, 7.2) via maestri ask --batch.
+Antes de cada onda: verify.mjs plan --max 4 (4 pares Operário+Tester em paralelo). Para cada tarefa: worktree, Operário + Tester em paralelo (7.1, 7.2) via maestri ask --batch.
 Verifique com --base, aceite só com os dois verify em exit 0, integre em main (2.5), rode a regressão da onda e atualize spec/STATUS.md.
 Após 3 rejeições na mesma tarefa, pare e escale ao humano.
 ```
@@ -2012,9 +2105,10 @@ Após 3 rejeições na mesma tarefa, pare e escale ao humano.
 
 ## 8. Fora de escopo
 
-### 8.1 Cobrança (decisão do usuário)
-Assinaturas por instância, planos e preços, faturas, reembolsos, checkout (cartão, Pix, boleto), gateways da plataforma (Stripe, Pagar.me, Paddle, Guru, Asaas), legado Stripe, inadimplência e bloqueio, downgrade/troca de conexões, compra de tokens, cotação e pacotes, autorrecarga, carteira paga, admin de assinaturas e migrações de billing, comprovante Pix no admin. Ref: `12-cobrancas-assinaturas-tokens.md#22`–`#5.4`, `20-admin-interno.md` (3.3–3.4, 3.11).
+### 8.1 Cobrança do SaaS (assinatura da plataforma)
+Assinaturas por instância, planos e preços, faturas, reembolsos, checkout do SaaS (cartão, Pix, boleto), gateways da plataforma (Stripe, Pagar.me, Paddle, Guru, Asaas), legado Stripe, inadimplência e bloqueio, downgrade/troca de conexões, compra de tokens, cotação e pacotes, autorrecarga, admin de assinaturas e migrações de billing, comprovante Pix no admin. Ref: `12-cobrancas-assinaturas-tokens.md` (exceto tokens), `20-admin-interno.md` (3.3–3.4, 3.11).
 **Fica:** consumo e cota de IA por empresa com recarga manual pelo admin (T18, T24, T37, T59) e a porta `BillingProvider` só como interface (T18).
+**Não confundir:** cobrança **ao lead** dentro dos fluxos (gateways XPag/Zenith, T109–T111), NF (T112) e UTMify (T113) **estão no escopo** (revisão 1).
 
 ### 8.2 Requer WABA / Cloud API (`[REQUER WABA]`)
 | Item | Spec | Tratamento no clone |
@@ -2034,7 +2128,7 @@ Regra: `WaCapabilities` (T03) com todas as flags **desligadas** por padrão; com
 | Item | Tratamento |
 |---|---|
 | Botões, listas e menus interativos; carrossel; imagem em botões | Texto: menu numerado com casamento por número/título (T62); carrossel = imagens com legenda + menu numerado. Nativo: **fora desta versão** |
-| Botão Pix | Texto com chave e "copia e cola" EMV (T51) |
+| Botão Pix | Texto com chave e "copia e cola" EMV (T51); cobranças de gateway enviam o código/URL como texto (T111) |
 | Reagir, marcar como lido | Melhor esforço com a key salva; a UI esconde a ação se faltar a key |
 | Chamadas de voz (`make_call`, `missed_call`) | Só registro do evento `call`; originar chamada: **fora** |
 | Importar/sincronizar etiquetas do WhatsApp Business | **Fora** (etiquetas internas são a fonte da verdade) |
@@ -2042,14 +2136,13 @@ Regra: `WaCapabilities` (T03) com todas as flags **desligadas** por padrão; com
 | Variáveis CTWA | Opcionais; vazias quando ausentes |
 
 ### 8.4 Outros
-- **Mensagens de grupo no inbox** (ignoradas pelo ingest nesta versão).
-- Tradução de fluxo e de chat; provedores Kie.ai, Fish Audio, OpenRouter (pendente, 10.2), Qwen, Lara.
-- Pagamento/cobrança ao lead dentro do fluxo (bloco Pagamento, XPag, Zenith, Leona Pay); emissão de NF (Notasy); UTMify (envio de vendas) — pendentes de decisão (10.2).
-- MCP com OAuth (só token estático, T94); ferramentas do assistente de fluxo além da edição do grafo (busca na web, interpretador de código, geração de imagem).
-- Programa de afiliados interno e Rewardful (só captura do código + link externo, T97); resgate de prêmios dos marcos.
+- **Mensagens de grupo no inbox** (como no produto de referência: ignoradas pelo ingest).
+- **Gateway "Leona Pay"** (gateway da própria empresa de referência, com cadastro de conta, OAuth e multiempresa): fora até decisão (10.3) — conflita com a marca neutra (regra 1.4 nº 9) e depende de parceria com o dono do serviço.
+- Tradução de fluxo e de chat; provedores Kie.ai, Fish Audio, Qwen, Lara.
+- Ferramentas do assistente de fluxo além da edição do grafo (busca na web, interpretador de código, geração de imagem).
+- Programa de afiliados interno e Rewardful (só captura do código + link externo, T97); resgate de prêmios dos marcos (link externo só se configurado).
 - Infra de nuvem no admin (AWS, ALB, Supabase, Sidekiq, ActionCable); tradutor de fluxo no admin.
 - Codec ofuscado do editor de fluxos; telemetria `client_debug_events`; widget de suporte de terceiros fixo (vira provedor plugável, T108); onboarding/tour.
-- i18n `en` e `es` (a infraestrutura de i18n existe; só `pt-BR` é entregue).
 - Armazenamento S3 (só `FsBlobStore` + porta), deploy com Docker em produção (compose só opcional), embeddings/vetores na base de conhecimento (busca textual).
 
 ---
@@ -2060,23 +2153,35 @@ Regra: `WaCapabilities` (T03) com todas as flags **desligadas** por padrão; com
 |---|---|---|---|
 | R1 | Baileys é RC (7.0.0-rc14) e não oficial: mudanças de protocolo e risco de banimento dos números | Alto | Versão fixa, transporte isolado (T07), antiban + warm-up + pausa automática (T14, T20), FakeTransport em todos os testes, nenhuma promessa de imunidade |
 | R2 | Antiban e warm-up deixam disparos e respostas mais lentos do que o usuário espera | Médio | UI explica o ritmo real (T83); reagendamento em vez de falha (T74); limites por conexão visíveis |
-| R3 | Gate de consentimento do ai-manager bloqueia disparo para contatos importados sem consentimento | Médio | Consentimento `inbound` automático, coluna de consentimento no import (T67), destinatários sem consentimento contam como `skipped` e aparecem no relatório (10.2) |
+| R3 | Sem gate de consentimento para importados: disparos para listas frias aumentam o risco de denúncia e banimento | Alto | Opt-out por palavra-chave sempre ativo (T33), antiban/warm-up e pausa em 403 (T20), cota de disparos e intervalos (T60, T74), aviso no wizard de disparo |
 | R4 | Identidade LID × telefone: contatos duplicados ou fundidos errado | Médio | Unicidade parcial dupla + merge por `lid_mapping` (T26, T33), testes de idempotência |
-| R5 | Ondas 5–7 com 16–21 tarefas: conflitos em arquivos compartilhados e migrations | Médio | Worktrees, Paths disjuntos, registros aditivos, regeneração de migration, lotes de 8 pares, regressão por onda |
-| R6 | Fórmulas de KPI inferidas (ticket, conversão, lucro, rateio) | Médio | Documentadas em `docs/kpis.md` (T55) e listadas para validação (10.2) |
-| R7 | AI SDK 7 muda rápido e atrasa recursos novos dos provedores | Médio | Só um adapter importa `ai` (T12); porta `LlmProvider` permite adapter direto |
-| R8 | Custo de IA sem cobrança: consumo sem receita | Médio | Cota `hard` por empresa, recarga manual, ledger com custo real × créditos (T18, T24) |
-| R9 | Testes E2E instáveis (SSE, timers, Windows) | Médio | Harness determinístico (T17), relógio e RNG injetáveis, `retries` só no Playwright, reset entre testes |
-| R10 | Máquina de dev Windows: memória, disco (o disco já encheu nesta sessão), Postgres/Redis nativos, ffmpeg e Chromium do Playwright | Médio | `VITEST_MAX_WORKERS=4`, `pnpm -r` serial, `infra-local.mjs`, ffmpeg só mockado nos testes, `playwright install chromium` documentado em `spec/INFRA.md`; monitorar espaço livre antes de cada onda |
-| R11 | Modo extensão depende de mudanças aditivas no ai-manager (fora deste repo) | Médio | Perfil `ai-manager` com detecção de capacidades e doc do patch (T98); o CRM funciona sozinho |
+| R5 | Ondas 5–7 com 18–27 tarefas: conflitos em arquivos compartilhados e migrations; com 4 pares em paralelo, essas ondas levam vários lotes | Médio | Worktrees, Paths disjuntos, registros aditivos, regeneração de migration, regressão por onda; ordem pelo caminho crítico (`plan --max 4`) |
+| R6 | APIs de XPag, Zenith, Notasy e UTMify não verificadas nesta pesquisa (sem doc no context7) | Médio | Adapters atrás de portas com fakes; o Operário confirma na documentação oficial e reporta `BLOCKED` se não tiver acesso |
+| R7 | AI SDK 7 e o provider da OpenRouter mudam rápido e atrasam recursos novos | Médio | Só um adapter importa `ai`/`@openrouter/ai-sdk-provider` (T12); porta `LlmProvider` permite adapter direto |
+| R8 | Custo de IA sem cobrança do SaaS: consumo sem receita | Médio | Cota `hard` por empresa, recarga manual, ledger com custo real × créditos (T18, T24) |
+| R9 | Testes E2E instáveis (SSE, timers, Windows) e o triplo de chaves de i18n | Médio | Harness determinístico (T17), relógio e RNG injetáveis, reset entre testes; `i18n:check` em todo verify de UI |
+| R10 | Máquina de dev Windows: memória, disco (chegou a 0 bytes livres em 2026-10-15), Postgres/Redis nativos, ffmpeg e Chromium | Médio | `VITEST_MAX_WORKERS=4`, `pnpm -r` serial, `infra-local.mjs`, ffmpeg mockado nos testes, espaço livre conferido antes de cada onda (`spec/INFRA.md`) |
+| R11 | Modo extensão depende de mudanças aditivas no ai-manager (fora deste repo) | Médio | Perfil `ai-manager` com detecção de capacidades e doc do patch A1–A7 (T98); o CRM funciona sozinho |
 | R12 | Meta Graph v26.0 muda a cada versão; rate limit BUC | Baixo | Versão em env, cliente próprio com fake (T99), adiamento de job em vez de falha (T101) |
-| R13 | Volume do history sync FULL na primeira conexão | Baixo | Sync completo desligado por padrão (10.1); mensagens históricas não disparam automações (T33) |
+| R13 | Volume do history sync FULL na primeira conexão | Baixo | Sync completo desligado por padrão (10.2); mensagens históricas não disparam automações (T33) |
+| R14 | OAuth do MCP (servidor de autorização próprio) é superfície de segurança nova | Médio | PKCE obrigatório, tokens curtos com hash, rotação e detecção de reuso de refresh token, consentimento por empresa (T115) |
 
 ---
 
-## 10. Decisões assumidas e dúvidas para o usuário
+## 10. Decisões
 
-### 10.1 Decisões assumidas (revisáveis; o Orquestrador pode seguir com elas)
+### 10.1 Decisões fechadas pelo usuário (revisão 1, 2026-10-15)
+Regra geral: em dúvida de escopo, fazer como o produto de referência faz.
+1. **Consentimento:** sem exigência de consentimento prévio para importados. Importação (CSV/WhatsApp), cadastro manual, webhooks e vendas registram consentimento automaticamente (`consent_source = 'import' | 'manual' | 'webhook' | 'sale'`; `inbound` quando o contato inicia), repassado ao gateway para o pipeline e o gate do ai-manager aceitarem o envio. **Opt-out sempre bloqueia.** (Regra 1.4 nº 3; T26, T33, T60, T67, T73.)
+2. **Grupos de WhatsApp:** não entram no inbox (como na referência). (3.8, T33.)
+3. **Integrações de venda iguais à referência:** cobrança ao lead dentro do fluxo com gateways (XPag e Zenith, com webhooks de confirmação), emissão de NF (Notasy) e UTMify no bloco "Venda aprovada", tudo atrás de portas com fakes. A porta `BillingProvider` da plataforma continua só interface; a assinatura do SaaS segue fora. (T109–T114; gateway "Leona Pay": ver 10.3.)
+4. **Extras iguais à referência:** OpenRouter como provedor de LLM (`@openrouter/ai-sdk-provider@3.1.0`, STACK F.8; T12, T38); assistente (copiloto) de fluxo e servidor MCP na onda mais cedo que as dependências permitem (agora onda 6), com credenciais por token Bearer e **OAuth** (exigido pela spec 09; T94, T115); **i18n completo pt-BR/en/es** (T23 cria as três línguas e o `i18n:check`; toda tarefa de UI entrega as chaves nas três; AC de troca de idioma em T23 e T36).
+5. **Marcos de faturamento:** os 6 limiares da referência (R$ 50 mil, 100 mil, 250 mil, 500 mil, 1 milhão, 2 milhões) com nomes próprios: "Primeira Marca", "Tração", "Escala", "Expansão", "Clube do Milhão", "Referência no Mercado". (T55, T78.)
+6. **KPIs:** ticket médio = faturamento ÷ vendas; conversão = vendas ÷ leads novos; ROAS = faturamento ÷ gasto Meta; lucro = faturamento − gasto Meta − despesas pelas regras de 02#3.5 (fixa rateada pelo período, percentual sobre faturamento/gasto/lucro antes das taxas). (T55.)
+7. **Limites por empresa:** ilimitados por padrão; o admin da plataforma pode definir limites por empresa (conexões, agentes, membros, fluxos, webhooks). A cota de disparos em massa segue a regra da referência (`conexões × limite por conexão + bônus`, ajustável pelo admin). **Admin interno no modo extensão:** mostra só dados do CRM; as sessões ficam no painel do ai-manager. (3.3, T39, T40, T60, T71, T95, T96, T100.)
+8. **Execução:** 4 pares Operário+Tester em paralelo (`verify.mjs plan --max 4`). (2.2.)
+
+### 10.2 Decisões assumidas (revisáveis; o Orquestrador pode seguir com elas)
 1. Cadastro cria automaticamente a empresa "Minha empresa" com o usuário como `owner` (T15).
 2. Sessão por cookie httpOnly com TTL de 30 dias deslizante; empresa ativa por header `X-Company-Id` (permite abas com empresas diferentes).
 3. Convites de membro e de plataforma unificados num só modelo (`kind`); o aceite cria o usuário se ele ainda não existir.
@@ -2087,21 +2192,13 @@ Regra: `WaCapabilities` (T03) com todas as flags **desligadas** por padrão; com
 8. Proxy opcional por conexão (como "chip pessoal" do ai-manager); com proxy configurado nunca conecta direto.
 9. Mídia recebida baixada na hora (áudio, imagem, documento até o limite) para STT e visão; armazenamento em disco local.
 10. History sync FULL desligado: só mensagens novas entram no CRM.
-11. Créditos de IA como **saldo pré-pago** com recarga manual pelo admin + cota mensal opcional; uso com chave própria da empresa (BYOK) é **medido, mas não debita créditos**.
-12. Limites por empresa (conexões, agentes, membros, disparos) definidos pelo admin da plataforma, com padrões em `platform_settings`.
-13. Mover card para coluna de conversão **não** cria venda automaticamente.
-14. Vendas em várias moedas são exibidas por moeda (sem câmbio automático), exceto o gasto Meta que usa a moeda de exibição escolhida.
-15. Variáveis globais editáveis por owner/admin (o original liberava para todos).
-16. Base de conhecimento com busca textual no Postgres (sem embeddings).
+11. Créditos de IA como saldo pré-pago com recarga manual pelo admin + cota mensal opcional; uso com chave própria da empresa (BYOK, inclusive OpenRouter) é medido, mas não debita créditos.
+12. Mover card para coluna de conversão **não** cria venda automaticamente.
+13. Vendas em várias moedas são exibidas por moeda (sem câmbio automático), exceto o gasto Meta, que usa a moeda de exibição escolhida.
+14. Variáveis globais editáveis por owner/admin.
+15. Base de conhecimento com busca textual no Postgres (sem embeddings).
+16. "Push" do bloco Venda aprovada = notificação no app (`notification.created`, T63/T84); não há app móvel nativo.
 
-### 10.2 Dúvidas para o usuário (respostas mudam tarefas)
-1. **Grupos de WhatsApp** devem aparecer no inbox de chats? (hoje: ignorados.)
-2. **NF-e (Notasy), UTMify e cobrança ao lead dentro do fluxo** (gateway por empresa): entram em alguma versão? (hoje: fora.)
-3. **OpenRouter** como provedor extra de LLM (via `@ai-sdk/openai-compatible`)?
-4. **Consentimento:** aceitar o gate do ai-manager (disparo só para contatos com consentimento registrado) ou existe uma política diferente para listas importadas?
-5. Valores padrão dos **limites por empresa** (conexões, agentes de IA, membros, disparos por conexão = 500/mês?).
-6. **Fórmulas de KPI** do dashboard (ticket, conversão, lucro, rateio de despesa fixa, "novos leads") — confirmar as de T55.
-7. **Marcos de faturamento** (antiga "Trilha"): manter? Com quais nomes e valores?
-8. Assistente (copiloto) de fluxo e servidor MCP são prioridade (hoje adiados para a onda 10)?
-9. Admin interno no modo extensão: o CRM mostra só os dados do CRM ou também administra as sessões do ai-manager?
-10. Idiomas `en`/`es` são necessários nesta versão?
+### 10.3 Dúvidas abertas para o usuário
+1. **Gateway "Leona Pay":** a referência integra o gateway da própria empresa (cadastro de conta, OAuth, multiempresa). Implementar um adapter para ele (exige parceria/credenciais e cita a marca no código, contra a regra 1.4 nº 9) ou ficar só com XPag e Zenith?
+2. **Acesso à documentação das APIs** de XPag, Zenith, Notasy e UTMify (contas sandbox/credenciais de teste). Sem isso, os Operários de T109–T113 implementam contra os fakes e marcam o contrato real como `[NÃO VERIFICADO]`.

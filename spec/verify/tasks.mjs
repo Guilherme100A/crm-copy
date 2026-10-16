@@ -33,6 +33,7 @@ export const SHARED_PATHS = [
   'apps/web/src/routeTree.gen.ts',
   'apps/web/src/app/nav.ts',
   'apps/web/src/features/settings/tabs.ts',
+  'apps/web/src/features/integrations/catalog.ts',
   'packages/db/src/schema/crm/index.ts',
   'packages/db/drizzle/crm/**',
   'packages/db/src/seed/modules/**',
@@ -58,7 +59,8 @@ const std = (...ws) =>
     if (!WORKSPACES[w]) throw new Error(`workspace desconhecido em tasks.mjs: ${w}`)
     return [`pnpm --filter ${WORKSPACES[w]} typecheck`, `pnpm --filter ${WORKSPACES[w]} lint`, `pnpm --filter ${WORKSPACES[w]} test`]
   })
-const web = () => [...std('web'), 'pnpm --filter @crm/web build']
+// i18n:check (criado no T23) falha se alguma chave faltar em pt-BR, en ou es.
+const web = () => [...std('web'), 'pnpm --filter @crm/web i18n:check', 'pnpm --filter @crm/web build']
 
 // Atalhos de paths por módulo.
 const schema = (m) => `packages/db/src/schema/crm/${m}.ts`
@@ -66,7 +68,8 @@ const core = (m) => `packages/core/src/${m}/**`
 const route = (m) => `apps/api/src/routes/${m}/**`
 const job = (m) => `apps/worker/src/jobs/${m}/**`
 const consumer = (m) => `apps/worker/src/consumers/${m}/**`
-const ui = (m) => [`apps/web/src/routes/${m}/**`, `apps/web/src/features/${m}/**`, `apps/web/src/i18n/pt-BR/${m}.json`]
+const i18n = (m) => `apps/web/src/i18n/*/${m}.json`
+const ui = (m) => [`apps/web/src/routes/${m}/**`, `apps/web/src/features/${m}/**`, i18n(m)]
 
 /**
  * id, título, deps, paths, workspaces (comandos), opções:
@@ -162,7 +165,7 @@ const RAW = [
     { requiredFiles: ['packages/core/src/business-hours/is-open.ts'] }),
   T('T32', 'Acesso de suporte', ['T22', 'T16'], [core('support-access'), route('support-access'), schema('support-access')], ['api', 'core'],
     { requiredFiles: ['packages/core/src/support-access/index.ts'] }),
-  T('T36', 'UI: autenticação, perfil e troca de empresa', ['T22', 'T23'], [...ui('auth'), ...ui('profile'), 'apps/web/src/features/company-switcher/**'], ['web'],
+  T('T36', 'UI: autenticação, perfil e troca de empresa', ['T22', 'T23'], [...ui('auth'), ...ui('profile'), 'apps/web/src/features/company-switcher/**', i18n('company-switcher')], ['web'],
     { requiredFiles: ['apps/web/src/routes/auth/login.tsx'], e2e: true }),
   T('T53', 'UI: empresa, departamentos e horários', ['T31', 'T36'], [...ui('settings-company'), ...ui('settings-departments'), ...ui('settings-hours')], ['web'], { e2e: true }),
   T('T54', 'UI: equipe, permissões, convites e suporte', ['T32', 'T36'], [...ui('settings-team'), ...ui('settings-invitations'), ...ui('settings-support')], ['web'], { e2e: true }),
@@ -186,13 +189,13 @@ const RAW = [
   T('T64', 'Agendamento de mensagens', ['T49', 'T35'], [core('schedules'), job('schedules'), route('schedules'), schema('schedules')], ['api', 'worker', 'core']),
   T('T66', 'Contatos: filtros avançados e ações em massa', ['T26', 'T27', 'T50'], ['packages/core/src/contacts-bulk/**', route('contacts-bulk'), job('contacts-bulk')], ['api', 'worker', 'core']),
   T('T67', 'Contatos: importação CSV e do WhatsApp', ['T26', 'T27'], ['packages/core/src/contacts-import/**', route('contacts-import'), job('contacts-import')], ['api', 'worker', 'core']),
-  T('T69', 'UI chats: lista e filtros', ['T48', 'T23'], [...ui('chat'), 'apps/web/src/features/chat-list/**'], ['web'], { e2e: true }),
-  T('T75', 'UI chats: conversa', ['T69', 'T49'], ['apps/web/src/features/chat-thread/**'], ['web'], { e2e: true }),
-  T('T85', 'UI chats: compositor', ['T75', 'T64'], ['apps/web/src/features/chat-composer/**'], ['web'], { e2e: true }),
-  T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**'], ['web'], { e2e: true }),
+  T('T69', 'UI chats: lista e filtros', ['T48', 'T23'], [...ui('chat'), 'apps/web/src/features/chat-list/**', i18n('chat-list')], ['web'], { e2e: true }),
+  T('T75', 'UI chats: conversa', ['T69', 'T49'], ['apps/web/src/features/chat-thread/**', i18n('chat-thread')], ['web'], { e2e: true }),
+  T('T85', 'UI chats: compositor', ['T75', 'T64'], ['apps/web/src/features/chat-composer/**', i18n('chat-composer')], ['web'], { e2e: true }),
+  T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**', i18n('chat-panel')], ['web'], { e2e: true }),
   T('T77', 'UI contatos: lista e seleção em massa', ['T66', 'T23'], [...ui('contacts')], ['web'], { e2e: true }),
-  T('T86', 'UI contatos: formulário, importação e jobs', ['T77', 'T67'], ['apps/web/src/features/contact-form/**', 'apps/web/src/features/contact-jobs/**'], ['web'], { e2e: true }),
-  T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', 'apps/web/src/i18n/pt-BR/notifications.json'], ['web'], { e2e: true }),
+  T('T86', 'UI contatos: formulário, importação e jobs', ['T77', 'T67'], ['apps/web/src/features/contact-form/**', 'apps/web/src/features/contact-jobs/**', i18n('contact-form')], ['web'], { e2e: true }),
+  T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', i18n('notifications')], ['web'], { e2e: true }),
 
   // ---------------- Kanban, vendas, dashboard ----------------
   T('T50', 'Kanban: quadros, colunas e cards', ['T33'], [core('kanban'), route('kanban'), schema('kanban')], ['api', 'core'],
@@ -202,9 +205,9 @@ const RAW = [
   T('T55', 'Dashboard: métricas de vendas, bootstrap e marcos', ['T34'], ['packages/core/src/dashboard/sales/**', 'packages/core/src/dashboard/bootstrap/**', 'packages/core/src/dashboard/milestones/**', route('dashboard')], ['api', 'core']),
   T('T65', 'Dashboard: métricas de atendimento', ['T48'], ['packages/core/src/dashboard/attendance/**', route('dashboard-attendance')], ['api', 'core']),
   T('T70', 'UI kanban: lista e quadro', ['T50', 'T23'], [...ui('crms')], ['web'], { e2e: true }),
-  T('T76', 'UI kanban: modais, filtros, estatísticas e exportação', ['T70', 'T27'], ['apps/web/src/features/kanban-tools/**'], ['web'], { e2e: true }),
+  T('T76', 'UI kanban: modais, filtros, estatísticas e exportação', ['T70', 'T27'], ['apps/web/src/features/kanban-tools/**', i18n('kanban-tools')], ['web'], { e2e: true }),
   T('T78', 'UI dashboard: filtros e vendas', ['T55', 'T23'], [...ui('dashboard')], ['web'], { e2e: true }),
-  T('T87', 'UI dashboard: histórico, atendimento e marcos', ['T78', 'T65'], ['apps/web/src/features/dashboard-attendance/**', 'apps/web/src/features/dashboard-history/**'], ['web'], { e2e: true }),
+  T('T87', 'UI dashboard: histórico, atendimento e marcos', ['T78', 'T65'], ['apps/web/src/features/dashboard-attendance/**', 'apps/web/src/features/dashboard-history/**', i18n('dashboard-attendance')], ['web'], { e2e: true }),
 
   // ---------------- Fluxos ----------------
   T('T10', 'Fluxos: FlowDefinition, handles, validate e configs de ação', ['T02'], ['packages/shared/src/flows/**'], ['shared'],
@@ -226,11 +229,11 @@ const RAW = [
     ['packages/core/src/flows/triggers/**', route('connection-flow-configs'), consumer('flow-triggers'), schema('flow-triggers')], ['api', 'worker', 'core']),
   T('T62', 'Nós interativos (menu, carrossel, espera de resposta)', ['T30', 'T51'], ['packages/core/src/flows/nodes/interactive/**'], ['core']),
   T('T63', 'Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente)', ['T25', 'T48', 'T50', 'T34'], ['packages/core/src/flows/nodes/crm/**'], ['core']),
-  T('T82', 'Simulador de fluxos', ['T41', 'T42', 'T51', 'T62', 'T63', 'T45'], [route('flow-simulate'), 'apps/web/src/features/flow-simulator/**'], ['api', 'web'], { e2e: true }),
+  T('T82', 'Simulador de fluxos', ['T41', 'T42', 'T51', 'T62', 'T63', 'T45'], [route('flow-simulate'), 'apps/web/src/features/flow-simulator/**', i18n('flow-simulator')], ['api', 'web'], { e2e: true }),
   T('T44', 'UI fluxos: lista e pastas', ['T28', 'T23'], [...ui('flows')], ['web'], { e2e: true }),
-  T('T45', 'UI fluxos: canvas do editor', ['T28', 'T23'], ['apps/web/src/features/flow-editor/canvas/**', 'apps/web/src/features/flow-editor/palette/**', 'apps/web/src/features/flow-editor/properties/**', 'apps/web/src/features/flow-editor/index.ts*'], ['web'], { e2e: true }),
-  T('T56', 'UI editores de nó: mensagem e interativos', ['T45', 'T10'], ['apps/web/src/features/flow-editor/node-editors/messaging/**', 'apps/web/src/features/flow-editor/node-editors/interactive/**'], ['web'], { e2e: true }),
-  T('T57', 'UI editores de nó: lógica, CRM e externos', ['T45', 'T10'], ['apps/web/src/features/flow-editor/node-editors/logic/**', 'apps/web/src/features/flow-editor/node-editors/crm/**', 'apps/web/src/features/flow-editor/node-editors/external/**'], ['web'], { e2e: true }),
+  T('T45', 'UI fluxos: canvas do editor', ['T28', 'T23'], ['apps/web/src/features/flow-editor/canvas/**', 'apps/web/src/features/flow-editor/palette/**', 'apps/web/src/features/flow-editor/properties/**', 'apps/web/src/features/flow-editor/index.ts*', i18n('flow-editor')], ['web'], { e2e: true }),
+  T('T56', 'UI editores de nó: mensagem e interativos', ['T45', 'T10'], ['apps/web/src/features/flow-editor/node-editors/messaging/**', 'apps/web/src/features/flow-editor/node-editors/interactive/**', i18n('node-editors-messaging')], ['web'], { e2e: true }),
+  T('T57', 'UI editores de nó: lógica, CRM e externos', ['T45', 'T10'], ['apps/web/src/features/flow-editor/node-editors/logic/**', 'apps/web/src/features/flow-editor/node-editors/crm/**', 'apps/web/src/features/flow-editor/node-editors/external/**', i18n('node-editors-logic')], ['web'], { e2e: true }),
 
   // ---------------- Conexões ----------------
   T('T40', 'Conexões: API, QR, pareamento, proxy e perfil', ['T22', 'T03'], [core('connections'), route('connections'), schema('connections')], ['api', 'core'],
@@ -254,9 +257,9 @@ const RAW = [
   T('T79', 'Agentes: teste ao vivo, geração de prompt e criação assistida', ['T68'], ['packages/core/src/ai-agent-lab/**', route('ai-agent-lab'), job('ai-agent-lab')], ['api', 'worker', 'core']),
   T('T80', 'Vozes (ElevenLabs)', ['T38', 'T12'], [core('ai-voices'), route('ai-voices'), schema('ai-voices')], ['api', 'core']),
   T('T88', 'UI agentes: lista e editor', ['T79', 'T80', 'T52', 'T23'], [...ui('agents')], ['web'], { e2e: true }),
-  T('T92', 'UI agentes: teste ao vivo, criação assistida e vozes', ['T88'], ['apps/web/src/features/agent-lab/**', 'apps/web/src/features/agent-voices/**'], ['web'], { e2e: true }),
-  T('T93', 'Assistente (copiloto) de fluxo', ['T28', 'T24', 'T12', 'T16', 'T45'], [core('flow-copilot'), route('flow-copilot'), schema('flow-copilot'), 'apps/web/src/features/flow-copilot/**'], ['api', 'core', 'web'],
-    { e2e: true, minWave: 10 }),
+  T('T92', 'UI agentes: teste ao vivo, criação assistida e vozes', ['T88'], ['apps/web/src/features/agent-lab/**', 'apps/web/src/features/agent-voices/**', i18n('agent-lab')], ['web'], { e2e: true }),
+  T('T93', 'Assistente (copiloto) de fluxo', ['T28', 'T24', 'T12', 'T16', 'T45'], [core('flow-copilot'), route('flow-copilot'), schema('flow-copilot'), 'apps/web/src/features/flow-copilot/**', i18n('flow-copilot')], ['api', 'core', 'web'],
+    { e2e: true }),
 
   // ---------------- Webhooks, vendas externas, disparos, MCP ----------------
   T('T72', 'Webhooks de entrada: CRUD e recepção pública', ['T26'], [core('inbound-webhooks'), route('inbound-webhooks'), 'apps/api/src/routes/hooks/**', schema('inbound-webhooks')], ['api', 'core']),
@@ -267,12 +270,12 @@ const RAW = [
   T('T60', 'Disparos em massa: API e cota', ['T26', 'T43'], [core('mass-dispatch'), route('mass-dispatch'), schema('mass-dispatch')], ['api', 'core']),
   T('T74', 'Disparos em massa: preparação e agendador', ['T60', 'T30'], ['packages/core/src/mass-dispatch-runner/**', job('mass-dispatch')], ['worker', 'core']),
   T('T83', 'UI disparos em massa', ['T60', 'T74', 'T23'], [...ui('mass-dispatch')], ['web'], { e2e: true }),
-  T('T94', 'Servidor MCP (token estático)', ['T26', 'T28', 'T40'], [core('mcp'), route('mcp'), schema('mcp'), ...ui('settings-mcp')], ['api', 'core', 'web'], { e2e: true, minWave: 10 }),
+  T('T94', 'Servidor MCP (token estático)', ['T26', 'T28', 'T40'], [core('mcp'), route('mcp'), schema('mcp'), ...ui('settings-mcp')], ['api', 'core', 'web'], { e2e: true }),
 
   // ---------------- Admin interno, afiliação, extensão, Meta, E2E ----------------
   T('T95', 'Admin: usuários, empresas, limites e cotas', ['T22', 'T60'], [core('admin'), route('admin')], ['api', 'core'], { minWave: 11 }),
   T('T96', 'Admin: avisos, banners, saúde, sessões WhatsApp e IA', ['T22', 'T46', 'T37'], [core('admin-ops'), route('admin-ops'), schema('admin')], ['api', 'core'], { minWave: 11 }),
-  T('T97', 'Afiliação: captura de indicação e link externo', ['T36'], ['packages/core/src/affiliate/**', 'apps/web/src/features/affiliate/**'], ['core', 'web'], { e2e: true, minWave: 11 }),
+  T('T97', 'Afiliação: captura de indicação e link externo', ['T36'], ['packages/core/src/affiliate/**', 'apps/web/src/features/affiliate/**', i18n('affiliate')], ['core', 'web'], { e2e: true, minWave: 11 }),
   T('T98', 'Extensão: perfil ai-manager do gateway e documentação', ['T46'], ['packages/wa-gateway-rpc/src/profiles/ai-manager/**', 'docs/extension/**'], ['wa-gateway-rpc'], { minWave: 11 }),
   T('T100', 'UI admin interno', ['T95', 'T96', 'T23'], [...ui('admin')], ['web'], { e2e: true }),
 
@@ -289,10 +292,28 @@ const RAW = [
   T('T106', 'UI Facebook: gerenciador, pixel e perfis', ['T101', 'T103', 'T104', 'T23'], [...ui('facebook')], ['web'], { e2e: true }),
 
   // ---------------- Shell: extras da spec 18 ----------------
-  T('T107', 'Indicador de conexões desconectadas no menu', ['T47', 'T23'], ['apps/web/src/features/shell-disconnect/**', route('connections-alert')], ['api', 'web'], { e2e: true }),
-  T('T108', 'Tutoriais e widget de suporte plugável', ['T23'], ['apps/web/src/features/support-widget/**', 'apps/web/src/features/tutorials/**'], ['web'], { e2e: true, minWave: 11 }),
+  T('T107', 'Indicador de conexões desconectadas no menu', ['T47', 'T23'], ['apps/web/src/features/shell-disconnect/**', route('connections-alert'), i18n('shell-disconnect')], ['api', 'web'], { e2e: true }),
+  T('T108', 'Tutoriais e widget de suporte plugável', ['T23'], ['apps/web/src/features/support-widget/**', 'apps/web/src/features/tutorials/**', i18n('support-widget')], ['web'], { e2e: true, minWave: 11 }),
 
-  T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108'],
+  // ---------------- Integrações de venda (revisão 1: iguais à referência) ----------------
+  T('T109', 'Pagamentos ao lead: porta, chaves e adapter XPag', ['T22'],
+    ['packages/core/src/payments/port/**', 'packages/core/src/payments/keys/**', 'packages/core/src/payments/xpag/**', route('payment-integrations'), schema('payments')], ['api', 'core'],
+    { requiredFiles: ['packages/core/src/payments/port/index.ts', 'packages/core/src/payments/xpag/index.ts'] }),
+  T('T110', 'Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook)', ['T109'],
+    ['packages/core/src/payments/zenith/**', route('zenith-oauth')], ['api', 'core']),
+  T('T111', 'Bloco Pagamento no fluxo e confirmação por webhook', ['T109', 'T30'],
+    ['packages/core/src/flows/nodes/payment/**', 'packages/core/src/payments/webhooks/**', route('hooks-payments'), job('payment-webhooks')], ['api', 'worker', 'core']),
+  T('T112', 'Emissão de NF (Notasy) na venda aprovada', ['T34', 'T22'],
+    [core('invoicing'), route('invoice-integrations'), job('invoices'), schema('invoicing')], ['api', 'worker', 'core']),
+  T('T113', 'UTMify: integração e envio de vendas aprovadas', ['T34', 'T22'],
+    [core('utmify'), route('utmify'), job('utmify'), schema('utmify')], ['api', 'worker', 'core']),
+  T('T114', 'UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada', ['T110', 'T111', 'T112', 'T113', 'T45', 'T59'],
+    [...ui('settings-payments'), 'apps/web/src/features/flow-editor/node-editors/payment/**', 'apps/web/src/features/sale-invoice/**'], ['web'], { e2e: true }),
+  T('T115', 'MCP: OAuth para conectores (Claude)', ['T94'],
+    ['packages/core/src/mcp-oauth/**', route('mcp-oauth'), schema('mcp-oauth'), 'apps/web/src/features/mcp-oauth/**', i18n('mcp-oauth')], ['api', 'core', 'web'],
+    { e2e: true }),
+
+  T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],
       e2e: true,
@@ -340,7 +361,7 @@ export const FORBIDDEN = [
   },
   {
     id: 'F-AI-BOUNDARY',
-    regex: /from\s+['"](ai|@ai-sdk\/[\w-]+|@anthropic-ai\/sdk|openai|@google\/genai|@elevenlabs\/elevenlabs-js|groq-sdk)['"]/,
+    regex: /from\s+['"](ai|@ai-sdk\/[\w-]+|@openrouter\/ai-sdk-provider|@anthropic-ai\/sdk|openai|@google\/genai|@elevenlabs\/elevenlabs-js|groq-sdk)['"]/,
     include: PRODUCT, exclude: [...NOT_TESTS, 'packages/ai/src/aisdk/**', 'packages/ai/src/elevenlabs/**', 'packages/ai/src/groq/**'], exts: TS,
     message: 'SDKs de IA só nos adapters de packages/ai (SPEC 1.4 #11)',
   },

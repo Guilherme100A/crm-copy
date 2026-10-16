@@ -4,10 +4,11 @@
 > Gerado em 2026-10-15 a partir de `spec/verify/tasks.mjs`. Ondas e dependências: SPEC §4. Comando útil: `node spec/verify/verify.mjs list`.
 
 ## Resumo
-- Tarefas: 109 · Ondas: 14 (0–13) · ACs: 527
+- Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
 - Próxima onda: **0** (T00)
 - Bloqueios: nenhum
-- Dúvidas abertas para o usuário: SPEC §10.2
+- Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
+- Dúvidas abertas para o usuário: SPEC §10.3 (gateway Leona Pay; acesso às APIs de XPag, Zenith, Notasy e UTMify)
 
 ## Tarefas
 
@@ -62,6 +63,7 @@
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | TODO | | | 0 | |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
+| 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | TODO | | | 0 | |
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | TODO | | | 0 | |
@@ -81,8 +83,14 @@
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
+| 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
+| 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | TODO | | | 0 | |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | TODO | | | 0 | |
+| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
+| 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | TODO | | | 0 | |
+| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
+| 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | TODO | | | 0 | |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | TODO | | | 0 | |
 | 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
@@ -99,6 +107,8 @@
 | 7 | T103 | Meta: edição de status, nome e orçamento | TODO | | | 0 | |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
+| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
+| 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | TODO | | | 0 | |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | TODO | | | 0 | |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
@@ -113,8 +123,6 @@
 | 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
 | 9 | T91 | UI chats: painel lateral e agendamentos | TODO | | | 0 | |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
-| 10 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
-| 10 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
 | 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |

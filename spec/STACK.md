@@ -27,6 +27,7 @@
 | sharp | 0.35.4 | lock | binário nativo na mesma imagem do worker |
 | ai (Vercel AI SDK) | **7.0.142 (exato)** | novo | Node ≥ 22, ESM; só o adapter `llm-aisdk` importa (Bloco F) |
 | @ai-sdk/anthropic / openai / google | **4.0.81 / 4.0.95 / 4.0.98 (exatos)** | novo | major 4 ↔ `ai@7`; subir os quatro juntos |
+| @openrouter/ai-sdk-provider | **3.1.0 (exato)** | novo (revisão 1) | peer `ai ^7`, spec V4, Node ≥ 22; plano B `@ai-sdk/openai-compatible@3.0.70` (F.8) |
 | @anthropic-ai/sdk | 0.128.0 | lock | 0.135.0 disponível sem breaking; usado pelo `AiProvider` do ai-manager e por adapter direto se preciso |
 | openai / @google/genai | 7.34.0 / 2.30.0 | novo (opcional) | só para adapter direto atrás da mesma porta; openai@7 exige Node ≥ 22 |
 | @elevenlabs/elevenlabs-js / groq-sdk | 2.73.0 / 1.6.0 | novo | TTS / STT confirmados pelo usuário |
@@ -49,7 +50,7 @@
 | Meta Marketing / CAPI | **cliente `fetch` próprio sobre Graph API v26.0** | SDK oficial publicado (24.0.1) ainda aponta para v24, que expirou em 06/10/2026, e usa token global (ruim p/ multi-tenant) |
 | TTS (vozes dos agentes) | **ElevenLabs** (`@elevenlabs/elevenlabs-js` 2.73.0, `eleven_flash_v2_5`) — ✅ confirmado pelo usuário | melhor pt-BR, clonagem de voz, saída opus; sempre passar por ffmpeg → Ogg/Opus mono para PTT. Fallback: OpenAI `gpt-4o-mini-tts` |
 | STT (áudios recebidos) | **Groq `whisper-large-v3-turbo`** (`groq-sdk` 1.6.0) — ✅ confirmado pelo usuário | ~US$0,04/h, aceita ogg, API compatível com OpenAI; `language: 'pt'` sempre |
-| LLM (multi-provider por agente) — ✅ requisito do usuário | **Porta própria `LlmProvider` + adapter único sobre Vercel AI SDK 7** (`ai` + `@ai-sdk/anthropic\|openai\|google`); adapter direto do SDK oficial só para recurso exclusivo | um `generateText` cobre tools multi-step, structured output e usage dos 3 provedores; porta limita o lock-in a 1 arquivo; custo calculado por tabela própria `crm.llm_prices`; ver Bloco F |
+| LLM (multi-provider por agente) — ✅ requisito do usuário | **Porta própria `LlmProvider` + adapter único sobre Vercel AI SDK 7** (`ai` + `@ai-sdk/anthropic\|openai\|google`); adapter direto do SDK oficial só para recurso exclusivo | um `generateText` cobre tools multi-step, structured output e usage dos 3 provedores; porta limita o lock-in a 1 arquivo; custo calculado por tabela própria `crm.llm_prices`; ver Bloco F | **Revisão 1:** OpenRouter também (F.8).
 | Limites de uso de IA (substitui cobrança) | **cota de tokens/custo por empresa** (Redis + `crm.ai_usage`), checada antes de cada chamada | ✅ decisão do usuário: sem cobrança por agora (Stripe/Asaas fora do escopo) |
 | E-mail | **nodemailer 10.1.1** com transporte singleton `pool: true` + DKIM | alternativa transacional: Resend / SES v2 |
 
@@ -2295,3 +2296,54 @@ Alternativa aceitável: se o produto ficar **só com Anthropic** no início, um 
 `@anthropic-ai/sdk` (alinhado ao ai-manager: 0.128.0, ou 0.135.0 se o ai-manager subir) atrás da mesma
 porta é mais simples e tem zero lag de features; o AI SDK entra quando OpenAI/Gemini forem obrigatórios.
 Como o requisito diz que o agente escolhe o provedor por empresa, a recomendação continua sendo o AI SDK.
+
+### F.8 OpenRouter (provider LLM via Vercel AI SDK `ai@7.0.142`)
+
+**Recomendação:** `@openrouter/ai-sdk-provider@3.1.0` (pin exato). Plano B: `@ai-sdk/openai-compatible@3.0.70`.
+
+Verificado no npm registry (`/latest`, 2026-10-15) e no context7 (`/openrouterteam/ai-sdk-provider`):
+
+| Pacote | Versão | peerDeps | @ai-sdk/provider | engines |
+|---|---|---|---|---|
+| `@openrouter/ai-sdk-provider` | 3.1.0 | `ai ^7.0.0`, `zod ^3.25.76 \|\| ^4.1.8` | 4.0.16 (só devDep) | node >=22 |
+| `@ai-sdk/openai-compatible` | 3.0.70 | `zod ^3.25.76 \|\| ^4.1.8` | 4.0.28 (dep) | node >=22 |
+
+As duas opções implementam a spec V4 e funcionam com ai@7. A escolha ficou com o provider oficial do OpenRouter por três motivos:
+- declara `ai ^7` como peer, então a compatibilidade com ai@7 é garantida pelo pacote;
+- já traz a contabilidade de uso/custo em `providerMetadata.openrouter.usage`;
+- tem `providerOptions.openrouter`: reasoning, `cacheControl`, roteamento de provider, `api_keys` (BYOK).
+
+O `openai-compatible` também fala com `https://openrouter.ai/api/v1`, mas não tipa o custo nem os extras do OpenRouter.
+
+**Setup (≤10 linhas):**
+```ts
+import { createOpenRouter } from '@openrouter/ai-sdk-provider';
+import { generateText } from 'ai';
+const openrouter = createOpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY,   // default: lê OPENROUTER_API_KEY
+  appName: 'Leonas CRM',                     // -> header X-OpenRouter-Title
+  appUrl: 'https://leonas.app',              // -> header HTTP-Referer
+});
+const model = openrouter('anthropic/claude-sonnet-5-5', { usage: { include: true } });
+const r = await generateText({ model, prompt: 'Oi', tools: { /* tool() do ai@7 */ } });
+console.log(r.usage.inputTokens, r.providerMetadata?.openrouter?.usage?.cost);
+```
+
+Alternativa: `createOpenAICompatible({ name: 'openrouter', baseURL: 'https://openrouter.ai/api/v1', apiKey })`. Nesse caso os headers vão em `headers: {...}`.
+
+**Capacidades**
+- **Tool calling:** funciona (`generateText`/`streamText` com `tools`, multi-step). O exemplo no context7 usa um modelo Anthropic.
+- **Structured output:** `generateObject` e `Output.object` funcionam via JSON schema/tools. A qualidade depende do modelo roteado; prefira modelos que suportem `response_format`.
+- **Usage:** os campos padrão do v7 (`inputTokens`, `inputTokenDetails.cacheReadTokens`, `outputTokenDetails.reasoningTokens`) vêm sempre.
+- **Custo:** com `usage: { include: true }`, o custo aparece em `providerMetadata.openrouter.usage.cost` (em créditos/USD) e em `costDetails.upstreamInferenceCost` (BYOK).
+- **Formato do model id:** `vendor/model`, por exemplo `anthropic/claude-sonnet-5-5` ou `openai/gpt-4o`. Confira o id exato em `GET /api/v1/models`. Sufixos como `:free`, `:nitro` e `:online` alteram roteamento e preço.
+
+**Armadilhas**
+1. **Header do título:** o provider manda `X-OpenRouter-Title`, não `X-Title`. Se o painel exigir `X-Title`, passe esse header manualmente em `headers`.
+2. **`compatibility`:** o default é `'compatible'`, que não envia `stream_options.include_usage`. Em `streamText`, use `compatibility: 'strict'` ou `usage.include` se precisar de usage no stream.
+3. **Versão do ai:** os pacotes 2.x e anteriores do `@openrouter/ai-sdk-provider` são para ai@5/6 (spec V2/V3) e quebram com ai@7. Não aceite uma resolução abaixo de 3.x.
+4. **Node:** os dois pacotes exigem Node >=22, então alinhe `engines` e as imagens Docker.
+5. **Prompt caching Anthropic:** use `providerOptions.openrouter.cacheControl` (vira `cache_control`), não o `providerOptions.anthropic`.
+6. **Erros:** erros do upstream chegam como `APICallError`. Pode haver fallback silencioso de provider, então fixe via `provider: { order, allow_fallbacks:false }` em `extraBody` quando precisar de determinismo.
+7. **Faturamento:** o custo reportado é o do OpenRouter, com markup e créditos. Para cobrar o cliente, persista o `cost` por chamada.
+8. **`decisionModel`/`evaluationModel`:** são alpha. Exigem `baseURL` terminado em `/v1`; caso contrário, lançam `LoadSettingError`.
