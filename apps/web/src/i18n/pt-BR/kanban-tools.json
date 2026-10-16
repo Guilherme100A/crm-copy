@@ -1,0 +1,81 @@
+{
+  "common": { "cancel": "Cancelar", "save": "Salvar", "error": "Não foi possível concluir a ação.", "retry": "Tentar novamente", "close": "Fechar" },
+  "column": {
+    "add": "Adicionar coluna",
+    "newTitle": "Nova coluna",
+    "editTitle": "Editar coluna",
+    "name": "Nome",
+    "namePlaceholder": "Nome da coluna",
+    "nameRequired": "Informe o nome da coluna.",
+    "color": "Cor",
+    "auto": "Automático",
+    "conversion": "Marcar como conversão",
+    "preview": "Pré-visualização",
+    "menu": "Ações da coluna {name}",
+    "edit": "Editar coluna",
+    "markConversion": "Marcar como conversão",
+    "unmarkConversion": "Desmarcar conversão",
+    "delete": "Excluir coluna",
+    "deleteTitle": "Excluir coluna?",
+    "deleteBody": "A coluna \"{name}\" será excluída. Todos os cartões serão perdidos."
+  },
+  "card": {
+    "add": "Adicionar card",
+    "title": "Criar cartão",
+    "search": "Buscar chats...",
+    "loading": "Carregando chats...",
+    "empty": "Todos os chats já possuem cartões",
+    "noResults": "Nenhum chat encontrado.",
+    "loadMore": "Carregar mais chats",
+    "save": "Criar cartão"
+  },
+  "filters": {
+    "title": "Filtros",
+    "assigned": "Responsável",
+    "anyone": "Qualquer um",
+    "me": "Eu",
+    "nobody": "Sem responsável",
+    "column": "Etapa",
+    "allColumns": "Todas as etapas",
+    "from": "Atualizado de",
+    "to": "Atualizado até",
+    "badRange": "A data final é antes da inicial.",
+    "apply": "Aplicar",
+    "clear": "Limpar",
+    "labels": "Etiquetas",
+    "noLabels": "Nenhuma etiqueta cadastrada."
+  },
+  "stats": {
+    "title": "Estatísticas do funil",
+    "show": "Ver estatísticas",
+    "hide": "Ocultar estatísticas",
+    "loading": "Carregando estatísticas...",
+    "fromPrevious": "Conversão da etapa anterior",
+    "leads": "Total de leads",
+    "overall": "Conversão geral",
+    "purchases": "Compras",
+    "revenue": "Faturamento"
+  },
+  "export": {
+    "button": "Exportar leads em planilha",
+    "title": "Exportação",
+    "queued": "Na fila",
+    "processing": "Processando",
+    "completed": "Concluída ({n} linhas)",
+    "failed": "Falhou",
+    "download": "Baixar planilha",
+    "startError": "Não foi possível iniciar a exportação."
+  },
+  "board": {
+    "newTitle": "Novo quadro",
+    "editTitle": "Editar quadro",
+    "name": "Nome do quadro",
+    "nameRequired": "Informe o nome do quadro.",
+    "preview": "O quadro começa com estas colunas:",
+    "previewColumns": { "new": "Novo", "qualification": "Qualificação", "won": "Ganho" },
+    "create": "Criar quadro",
+    "delete": "Excluir quadro",
+    "deleteTitle": "Excluir quadro?",
+    "deleteBody": "O quadro \"{name}\" e todos os cartões serão excluídos. Esta ação não pode ser desfeita."
+  }
+}

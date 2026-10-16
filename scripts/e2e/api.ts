@@ -7,7 +7,7 @@ import { createApp } from '../../apps/api/src/app'
 import { loadApiConfig } from '../../apps/api/src/config'
 import type { HandledEvent } from '../../apps/api/src/e2e/index'
 import { stopRealtimeHub } from '../../apps/api/src/routes/events/index'
-import { createRegistry, registry as processRegistry, startWorker } from '../../apps/worker/src/index'
+import { configureExports, createRegistry, registry as processRegistry, startWorker } from '../../apps/worker/src/index'
 import { createDb, resetAndSeed, runMigrations } from '../../packages/db/src/index'
 import { createLogger, initCredentialsCrypto, redisConnection } from '../../packages/node-kit/src/index'
 import { WA_EVENT_TYPES } from '../../packages/wa-port/src/index'
@@ -36,6 +36,8 @@ async function main() {
     reg.on(type, (event, ctx) => {
       deliveries.push({ stream_id: ctx.streamId, type: event.type, event_key: ctx.eventKey, at: new Date().toISOString() })
     })
+  // Exports/imports (T27) no worker in-process, como no boot de produção.
+  configureExports({ db, redis, logger })
   const worker = await startWorker({
     registry: reg,
     db,

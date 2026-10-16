@@ -174,7 +174,7 @@ describe('api do quadro', () => {
         const column = new URL(url, 'http://x').searchParams.get('column_id')!
         return json({
           items: [card(`${column}1`, column, 100)],
-          page: { page: 1, limit: 20, total: 1 },
+          page: { page: 1, limit: 20, total_count: 1, has_more: false },
           columns: [
             { column_id: 'a', total_count: 1, total_value_cents: 100 },
             { column_id: 'b', total_count: 1, total_value_cents: 100 },
@@ -197,7 +197,7 @@ describe('api do quadro', () => {
         seen.push({ url, body: typeof init.body === 'string' ? init.body : undefined })
         if (url.includes('/move'))
           return json({ card: card('1', 'b'), columns: [{ column_id: 'b', total_count: 2, total_value_cents: 0 }] })
-        return json({ items: [], page: { page: 2, limit: 20, total: 21 }, columns: [] })
+        return json({ items: [], page: { page: 2, limit: 20, total_count: 21, has_more: false }, columns: [] })
       },
     })
     await fetchMoreCards('b1', 'a', 20)

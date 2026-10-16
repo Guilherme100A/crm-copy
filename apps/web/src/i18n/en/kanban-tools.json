@@ -1,0 +1,81 @@
+{
+  "common": { "cancel": "Cancel", "save": "Save", "error": "Could not complete the action.", "retry": "Try again", "close": "Close" },
+  "column": {
+    "add": "Add column",
+    "newTitle": "New column",
+    "editTitle": "Edit column",
+    "name": "Name",
+    "namePlaceholder": "Column name",
+    "nameRequired": "Enter the column name.",
+    "color": "Color",
+    "auto": "Automatic",
+    "conversion": "Mark as conversion",
+    "preview": "Preview",
+    "menu": "Column {name} actions",
+    "edit": "Edit column",
+    "markConversion": "Mark as conversion",
+    "unmarkConversion": "Unmark conversion",
+    "delete": "Delete column",
+    "deleteTitle": "Delete column?",
+    "deleteBody": "The column \"{name}\" will be deleted. All cards will be lost."
+  },
+  "card": {
+    "add": "Add card",
+    "title": "Create card",
+    "search": "Search chats...",
+    "loading": "Loading chats...",
+    "empty": "All chats already have cards",
+    "noResults": "No chats found.",
+    "loadMore": "Load more chats",
+    "save": "Create card"
+  },
+  "filters": {
+    "title": "Filters",
+    "assigned": "Assignee",
+    "anyone": "Anyone",
+    "me": "Me",
+    "nobody": "Unassigned",
+    "column": "Stage",
+    "allColumns": "All stages",
+    "from": "Updated from",
+    "to": "Updated until",
+    "badRange": "The end date is before the start date.",
+    "apply": "Apply",
+    "clear": "Clear",
+    "labels": "Labels",
+    "noLabels": "No labels yet."
+  },
+  "stats": {
+    "title": "Funnel statistics",
+    "show": "Show statistics",
+    "hide": "Hide statistics",
+    "loading": "Loading statistics...",
+    "fromPrevious": "Conversion from previous stage",
+    "leads": "Total leads",
+    "overall": "Overall conversion",
+    "purchases": "Purchases",
+    "revenue": "Revenue"
+  },
+  "export": {
+    "button": "Export leads to spreadsheet",
+    "title": "Export",
+    "queued": "Queued",
+    "processing": "Processing",
+    "completed": "Done ({n} rows)",
+    "failed": "Failed",
+    "download": "Download spreadsheet",
+    "startError": "Could not start the export."
+  },
+  "board": {
+    "newTitle": "New board",
+    "editTitle": "Edit board",
+    "name": "Board name",
+    "nameRequired": "Enter the board name.",
+    "preview": "The board starts with these columns:",
+    "previewColumns": { "new": "New", "qualification": "Qualification", "won": "Won" },
+    "create": "Create board",
+    "delete": "Delete board",
+    "deleteTitle": "Delete board?",
+    "deleteBody": "The board \"{name}\" and all its cards will be deleted. This cannot be undone."
+  }
+}

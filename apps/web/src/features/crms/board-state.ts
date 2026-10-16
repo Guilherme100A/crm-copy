@@ -13,6 +13,8 @@ export interface BoardState {
   columns: ColumnDto[]
   cards: Record<string, CardDto[]>
   totals: Record<string, ColumnTotals>
+  /** Colunas exibidas quando há filtro de etapa (T76); null = todas. */
+  visible?: string[] | null
 }
 
 export function initialBoardState(
@@ -20,6 +22,7 @@ export function initialBoardState(
   columns: ColumnDto[],
   pages: { columnId: string; items: CardDto[]; total: number }[],
   totals: Record<string, ColumnTotals>,
+  visible: string[] | null = null,
 ): BoardState {
   const cards: Record<string, CardDto[]> = {}
   const t: Record<string, ColumnTotals> = {}
@@ -28,7 +31,7 @@ export function initialBoardState(
     cards[c.id] = page?.items ?? []
     t[c.id] = totals[c.id] ?? { count: page?.total ?? cards[c.id]!.length, valueCents: sumValues(cards[c.id]!) }
   }
-  return { crm: { id: crm.id, name: crm.name }, columns, cards, totals: t }
+  return { crm: { id: crm.id, name: crm.name }, columns, cards, totals: t, visible }
 }
 
 const sumValues = (cards: readonly CardDto[]) => cards.reduce((s, c) => s + (c.value_cents || 0), 0)

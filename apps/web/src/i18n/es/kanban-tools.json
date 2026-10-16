@@ -1,0 +1,81 @@
+{
+  "common": { "cancel": "Cancelar", "save": "Guardar", "error": "No se pudo completar la acción.", "retry": "Reintentar", "close": "Cerrar" },
+  "column": {
+    "add": "Agregar columna",
+    "newTitle": "Nueva columna",
+    "editTitle": "Editar columna",
+    "name": "Nombre",
+    "namePlaceholder": "Nombre de la columna",
+    "nameRequired": "Indica el nombre de la columna.",
+    "color": "Color",
+    "auto": "Automático",
+    "conversion": "Marcar como conversión",
+    "preview": "Vista previa",
+    "menu": "Acciones de la columna {name}",
+    "edit": "Editar columna",
+    "markConversion": "Marcar como conversión",
+    "unmarkConversion": "Desmarcar conversión",
+    "delete": "Eliminar columna",
+    "deleteTitle": "¿Eliminar columna?",
+    "deleteBody": "La columna \"{name}\" será eliminada. Se perderán todas las tarjetas."
+  },
+  "card": {
+    "add": "Agregar tarjeta",
+    "title": "Crear tarjeta",
+    "search": "Buscar chats...",
+    "loading": "Cargando chats...",
+    "empty": "Todos los chats ya tienen tarjetas",
+    "noResults": "No se encontraron chats.",
+    "loadMore": "Cargar más chats",
+    "save": "Crear tarjeta"
+  },
+  "filters": {
+    "title": "Filtros",
+    "assigned": "Responsable",
+    "anyone": "Cualquiera",
+    "me": "Yo",
+    "nobody": "Sin responsable",
+    "column": "Etapa",
+    "allColumns": "Todas las etapas",
+    "from": "Actualizado desde",
+    "to": "Actualizado hasta",
+    "badRange": "La fecha final es anterior a la inicial.",
+    "apply": "Aplicar",
+    "clear": "Limpiar",
+    "labels": "Etiquetas",
+    "noLabels": "No hay etiquetas."
+  },
+  "stats": {
+    "title": "Estadísticas del embudo",
+    "show": "Ver estadísticas",
+    "hide": "Ocultar estadísticas",
+    "loading": "Cargando estadísticas...",
+    "fromPrevious": "Conversión desde la etapa anterior",
+    "leads": "Total de leads",
+    "overall": "Conversión general",
+    "purchases": "Compras",
+    "revenue": "Facturación"
+  },
+  "export": {
+    "button": "Exportar leads a hoja de cálculo",
+    "title": "Exportación",
+    "queued": "En cola",
+    "processing": "Procesando",
+    "completed": "Completada ({n} filas)",
+    "failed": "Falló",
+    "download": "Descargar hoja de cálculo",
+    "startError": "No se pudo iniciar la exportación."
+  },
+  "board": {
+    "newTitle": "Nuevo tablero",
+    "editTitle": "Editar tablero",
+    "name": "Nombre del tablero",
+    "nameRequired": "Indica el nombre del tablero.",
+    "preview": "El tablero empieza con estas columnas:",
+    "previewColumns": { "new": "Nuevo", "qualification": "Calificación", "won": "Ganado" },
+    "create": "Crear tablero",
+    "delete": "Eliminar tablero",
+    "deleteTitle": "¿Eliminar tablero?",
+    "deleteBody": "El tablero \"{name}\" y todas sus tarjetas serán eliminados. No se puede deshacer."
+  }
+}

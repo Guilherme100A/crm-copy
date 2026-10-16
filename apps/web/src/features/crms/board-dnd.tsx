@@ -7,7 +7,7 @@ import { move } from '@dnd-kit/helpers'
 import { DragDropProvider, KeyboardSensor, PointerSensor, type DragDropManager, type DragEndEvent, type DragOverEvent } from '@dnd-kit/react'
 import { useSortable } from '@dnd-kit/react/sortable'
 import { GripVertical, Loader2 } from 'lucide-react'
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { useT } from '@/i18n'
 import { cn } from '@/lib/utils'
@@ -49,9 +49,22 @@ export interface KanbanBoardProps {
   onMoveCard: (cardId: string, toColumnId: string, toIndex?: number) => void
   onMoveColumn: (columnId: string, toIndex: number) => void
   onLoadMore: (columnId: string) => void
+  /** Extras da T76: menu no cabeçalho da coluna e ação no rodapé ("Adicionar card"). */
+  renderColumnMenu?: (column: ColumnDto) => ReactNode
+  renderColumnFooter?: (column: ColumnDto) => ReactNode
 }
 
-export function KanbanBoard({ state, labels, loadingMore, onOpenCard, onMoveCard, onMoveColumn, onLoadMore }: KanbanBoardProps) {
+export function KanbanBoard({
+  state,
+  labels,
+  loadingMore,
+  onOpenCard,
+  onMoveCard,
+  onMoveColumn,
+  onLoadMore,
+  renderColumnMenu,
+  renderColumnFooter,
+}: KanbanBoardProps) {
   const [preview, setPreview] = useState<Order | null>(null)
   const dragging = useRef(false)
   const base = useMemo(() => orderOf(state), [state])
@@ -120,7 +133,7 @@ export function KanbanBoard({ state, labels, loadingMore, onOpenCard, onMoveCard
       <div
         data-testid="crms-board-scroll"
         className="flex min-h-0 flex-1 snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain pb-3 lg:snap-none"      >
-        {order.columns.map((columnId, index) => {
+        {(state.visible ? order.columns.filter((id) => state.visible!.includes(id)) : order.columns).map((columnId, index) => {
           const column = columnsById.get(columnId)
           if (!column) return null
           const cards = (order.cards[columnId] ?? []).map((cid) => cardsById.get(cid)).filter((c): c is CardDto => !!c)
@@ -133,6 +146,9 @@ export function KanbanBoard({ state, labels, loadingMore, onOpenCard, onMoveCard
               more={hasMore(state, columnId)}
               loadingMore={!!loadingMore[columnId]}
               onLoadMore={() => onLoadMore(columnId)}
+              reorderable={!state.visible}
+              menu={renderColumnMenu?.(column)}
+              footer={renderColumnFooter?.(column)}
             >
               {cards.map((card, i) => (
                 <SortableCard
@@ -161,6 +177,9 @@ function SortableColumn({
   more,
   loadingMore,
   onLoadMore,
+  reorderable,
+  menu,
+  footer,
   children,
 }: {
   column: ColumnDto
@@ -169,7 +188,11 @@ function SortableColumn({
   more: boolean
   loadingMore: boolean
   onLoadMore: () => void
-  children: React.ReactNode[]
+  /** Com filtro de etapa só uma coluna aparece: sem alça de reordenar. */
+  reorderable: boolean
+  menu?: ReactNode
+  footer?: ReactNode
+  children: ReactNode[]
 }) {
   const t = useT('crms')
   const { ref, handleRef, isDragging } = useSortable({
@@ -198,6 +221,7 @@ function SortableColumn({
         <button
           ref={handleRef}
           type="button"
+          hidden={!reorderable}
           data-testid={`crms-column-handle-${column.id}`}
           aria-label={t('board.dragColumn', { name: column.name })}
           className="flex size-7 shrink-0 cursor-grab touch-none items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent focus-visible:ring-2 focus-visible:ring-ring active:cursor-grabbing"
@@ -211,6 +235,7 @@ function SortableColumn({
         <span data-testid={`crms-column-count-${column.id}`} className="rounded-full bg-background px-2 py-0.5 text-xs font-medium tabular-nums">
           {totals.count}
         </span>
+        {menu}
       </header>
       <p data-testid={`crms-column-value-${column.id}`} className="px-3 pt-2 text-xs font-medium text-muted-foreground tabular-nums">
         {formatBRL(totals.valueCents)}
@@ -229,6 +254,7 @@ function SortableColumn({
           </Button>
         ) : null}
       </div>
+      {footer ? <div className="border-t p-2">{footer}</div> : null}
     </section>
   )
 }

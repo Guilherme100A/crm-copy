@@ -1,10 +1,11 @@
 // `/crms` (04 §2): indicadores agregados, busca local por nome e grade de quadros com mini-funil e métricas.
-// Criar/editar/excluir quadro são da T76.
+// Criar/editar/excluir quadro vêm da T76 (`useBoardDialogs`).
 import { useQuery } from '@tanstack/react-query'
 import { Link } from '@tanstack/react-router'
 import { Columns3, DollarSign, LayoutGrid, Search, TrendingUp } from 'lucide-react'
 import { useMemo, useState, type ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
+import { useBoardDialogs } from '@/features/kanban-tools/board-modal'
 import { useI18n, useT } from '@/i18n'
 import { boardsQuery, type BoardDto } from './api'
 import { columnColor, filterBoards, formatBRL, formatPercent, overviewOf } from './format'
@@ -16,6 +17,7 @@ export function CrmsListPage() {
   const boards = useMemo(() => q.data ?? [], [q.data])
   const overview = useMemo(() => overviewOf(boards), [boards])
   const visible = useMemo(() => filterBoards(boards, search), [boards, search])
+  const dialogs = useBoardDialogs()
 
   return (
     <section data-testid="crms-page" className="mx-auto flex w-full max-w-7xl flex-col gap-5">
@@ -58,9 +60,12 @@ export function CrmsListPage() {
           </Button>
         </div>
       ) : boards.length === 0 ? (
-        <p data-testid="crms-empty" className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
-          {t('list.empty')}
-        </p>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          <p data-testid="crms-empty" className="flex items-center justify-center rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
+            {t('list.empty')}
+          </p>
+          {dialogs.newTile}
+        </div>
       ) : visible.length === 0 ? (
         <p data-testid="crms-search-empty" className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
           {t('list.searchEmpty', { q: search.trim() })}
@@ -69,11 +74,13 @@ export function CrmsListPage() {
         <ul data-testid="crms-grid" className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {visible.map((b) => (
             <li key={b.id} className="min-w-0">
-              <BoardTile board={b} />
+              <BoardTile board={b} actions={dialogs.actions(b)} />
             </li>
           ))}
+          {dialogs.newTile ? <li className="min-w-0">{dialogs.newTile}</li> : null}
         </ul>
       )}
+      {dialogs.dialogs}
     </section>
   )
 }
@@ -94,7 +101,7 @@ function Stat({ testid, icon, label, value }: { testid: string; icon: ReactNode;
   )
 }
 
-function BoardTile({ board }: { board: BoardDto }) {
+function BoardTile({ board, actions }: { board: BoardDto; actions?: ReactNode }) {
   const t = useT('crms')
   const { locale } = useI18n()
   const columns = [...board.columns].sort((a, b) => a.position - b.position)
@@ -107,13 +114,16 @@ function BoardTile({ board }: { board: BoardDto }) {
       data-testid={`crms-board-${board.id}`}
       className="flex h-full flex-col gap-3 rounded-xl border bg-card p-4 transition-colors outline-none hover:border-primary/50 focus-visible:ring-2 focus-visible:ring-ring"
     >
-      <div className="min-w-0">
-        <h2 data-testid={`crms-board-name-${board.id}`} className="truncate font-semibold">
-          {board.name}
-        </h2>
-        <p data-testid={`crms-board-columns-${board.id}`} className="text-xs text-muted-foreground">
-          {t('list.board.columns', { n: board.quantity_of_columns || columns.length })}
-        </p>
+      <div className="flex min-w-0 items-start gap-2">
+        <div className="min-w-0 flex-1">
+          <h2 data-testid={`crms-board-name-${board.id}`} className="truncate font-semibold">
+            {board.name}
+          </h2>
+          <p data-testid={`crms-board-columns-${board.id}`} className="text-xs text-muted-foreground">
+            {t('list.board.columns', { n: board.quantity_of_columns || columns.length })}
+          </p>
+        </div>
+        {actions}
       </div>
 
       <div data-testid={`crms-board-funnel-${board.id}`} className="flex flex-col gap-1">

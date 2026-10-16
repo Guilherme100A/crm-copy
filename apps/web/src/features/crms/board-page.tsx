@@ -1,31 +1,40 @@
 // `/crms/$crmId` (04 §2 "Quadro"): breadcrumb e o quadro arrastável. Mover card/coluna é otimista (contagens e somas
-// na hora); erro do servidor recarrega o quadro e avisa (AC-T70-02). Clicar no card abre a conversa.
+// na hora); erro do servidor recarrega o quadro e avisa (AC-T70-02). Clicar no card abre a conversa. A T76 acrescenta
+// as ferramentas (filtros na URL, estatísticas, exportação, modais de coluna/card) via `useBoardTools`.
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
 import { ChevronRight } from 'lucide-react'
 import { useCallback, useMemo, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useBoardTools } from '@/features/kanban-tools/board-tools'
+import { toApiFilters, type BoardSearch } from '@/features/kanban-tools/filters'
+import { statsKey } from '@/features/kanban-tools/api'
 import { useT } from '@/i18n'
 import { notify } from '@/lib/toast'
-import { boardKey, boardQuery, boardsKey, fetchMoreCards, labelsQuery, moveCardRequest, moveColumnRequest, type CardDto } from './api'
+import { boardKey, boardQuery, boardsKey, fetchMoreCards, filteredBoardKey, labelsQuery, moveCardRequest, moveColumnRequest, type CardDto } from './api'
 import { KanbanBoard } from './board-dnd'
 import { appendCards, applyTotals, moveCard, moveColumn, replaceCard, type BoardState } from './board-state'
 
-export function CrmBoardPage({ crmId }: { crmId: string }) {
+const NO_SEARCH: BoardSearch = {}
+const noop = () => undefined
+
+export function CrmBoardPage({ crmId, search = NO_SEARCH, onSearch = noop }: { crmId: string; search?: BoardSearch; onSearch?: (next: BoardSearch) => void }) {
   const t = useT('crms')
   const queryClient = useQueryClient()
   const navigate = useNavigate()
-  const q = useQuery(boardQuery(queryClient, crmId))
+  const filters = useMemo(() => toApiFilters(search), [search])
+  const q = useQuery(boardQuery(queryClient, crmId, filters))
   const labels = useQuery(labelsQuery())
   const [loadingMore, setLoadingMore] = useState<Record<string, boolean>>({})
 
-  const key = useMemo(() => boardKey(crmId), [crmId])
+  const key = useMemo(() => filteredBoardKey(crmId, filters), [crmId, filters])
   const current = useCallback(() => queryClient.getQueryData<BoardState>(key), [queryClient, key])
 
   const reload = useCallback(() => {
-    void queryClient.invalidateQueries({ queryKey: key })
+    void queryClient.invalidateQueries({ queryKey: boardKey(crmId) })
     void queryClient.invalidateQueries({ queryKey: boardsKey })
-  }, [queryClient, key])
+    void queryClient.invalidateQueries({ queryKey: statsKey(crmId) })
+  }, [queryClient, crmId])
 
   const onMoveCard = useCallback(
     (cardId: string, toColumnId: string, toIndex?: number) => {
@@ -39,6 +48,7 @@ export function CrmBoardPage({ crmId }: { crmId: string }) {
           const s = current()
           if (s) queryClient.setQueryData<BoardState>(key, replaceCard(applyTotals(s, totals), card))
           void queryClient.invalidateQueries({ queryKey: boardsKey })
+          void queryClient.invalidateQueries({ queryKey: statsKey(crmId) })
         },
         () => {
           notify('crms-move-error', t('board.moveError'))
@@ -71,7 +81,7 @@ export function CrmBoardPage({ crmId }: { crmId: string }) {
     (columnId: string) => {
       const loaded = current()?.cards[columnId]?.length ?? 0
       setLoadingMore((m) => ({ ...m, [columnId]: true }))
-      fetchMoreCards(crmId, columnId, loaded)
+      fetchMoreCards(crmId, columnId, loaded, filters)
         .then(
           ({ items, total }) => {
             const s = current()
@@ -81,13 +91,16 @@ export function CrmBoardPage({ crmId }: { crmId: string }) {
         )
         .finally(() => setLoadingMore((m) => ({ ...m, [columnId]: false })))
     },
-    [crmId, current, key, queryClient, t],
+    [crmId, current, filters, key, queryClient, t],
   )
+
+  const tools = useBoardTools({ crmId, state: q.data, search, onSearch })
 
   const onOpenCard = useCallback((card: CardDto) => void navigate({ to: '/chats/$chatId', params: { chatId: card.chat_id } }), [navigate])
 
   return (
     <section data-testid="crms-board-page" className="flex h-[calc(100dvh-10rem)] min-h-96 w-full min-w-0 flex-col gap-4 lg:h-[calc(100dvh-5rem)]">
+      <div className="flex flex-wrap items-center justify-between gap-2">
       <nav aria-label="breadcrumb" className="flex min-w-0 items-center gap-1 text-sm">
         <Link to="/crms" data-testid="crms-board-back" className="shrink-0 text-muted-foreground hover:text-foreground">
           {t('board.back')}
@@ -97,6 +110,9 @@ export function CrmBoardPage({ crmId }: { crmId: string }) {
           {q.data?.crm.name ?? ''}
         </h1>
       </nav>
+        {tools.toolbar}
+      </div>
+      <div className="flex max-h-[45%] shrink-0 flex-col gap-3 overflow-y-auto empty:hidden">{tools.panels}</div>
 
       {q.isPending ? (
         <p data-testid="crms-board-loading" className="text-sm text-muted-foreground">
@@ -122,8 +138,11 @@ export function CrmBoardPage({ crmId }: { crmId: string }) {
           onMoveCard={onMoveCard}
           onMoveColumn={onMoveColumn}
           onLoadMore={onLoadMore}
+          renderColumnMenu={tools.renderColumnMenu}
+          renderColumnFooter={tools.renderColumnFooter}
         />
       )}
+      {tools.dialogs}
     </section>
   )
 }

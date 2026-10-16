@@ -3,6 +3,7 @@
 // resultado nele de forma otimista; um refetch recarrega cada coluna com tantos cards quantos já estavam carregados.
 import { queryOptions, type QueryClient } from '@tanstack/react-query'
 import { api, HttpError } from '@/lib/http'
+import { toQuery, type ApiFilters } from '@/features/kanban-tools/filters'
 import { initialBoardState, type BoardState, type ColumnTotals } from './board-state'
 
 export interface ColumnDto {
@@ -50,7 +51,7 @@ export interface ColumnTotalsDto {
 
 interface CardsPage {
   items: CardDto[]
-  page: { page: number; limit: number; total: number }
+  page: { page: number; limit: number; total_count: number; has_more: boolean }
   columns: ColumnTotalsDto[]
 }
 
@@ -62,6 +63,8 @@ const enc = encodeURIComponent
 export const CRMS_KEY = ['crms'] as const
 export const boardsKey = [...CRMS_KEY, 'list'] as const
 export const boardKey = (id: string) => [...CRMS_KEY, 'board', id] as const
+/** Quadro com filtros (T76): `boardKey(id)` continua sendo o prefixo de todas as variações. */
+export const filteredBoardKey = (id: string, filters: ApiFilters = {}) => [...boardKey(id), filters] as const
 
 export const boardsQuery = () =>
   queryOptions({ queryKey: boardsKey, queryFn: async () => (await api.get<{ items: BoardDto[] }>('/api/crms')).items })
@@ -69,40 +72,45 @@ export const boardsQuery = () =>
 const totalsOf = (columns: readonly ColumnTotalsDto[]): Record<string, ColumnTotals> =>
   Object.fromEntries(columns.map((c) => [c.column_id, { count: c.total_count, valueCents: c.total_value_cents }]))
 
-const fetchCards = (crmId: string, columnId: string, page: number, limit: number) =>
-  api.get<CardsPage>(`/api/crms/${enc(crmId)}/cards`, { query: { column_id: columnId, page, limit } })
+const fetchCards = (crmId: string, columnId: string, page: number, limit: number, filters: ApiFilters = {}) =>
+  api.get<CardsPage>(`/api/crms/${enc(crmId)}/cards`, { query: { ...toQuery(filters), column_id: columnId, page, limit } })
 
-/** Quadro + primeira página de cada coluna (ou o tanto já carregado, num refetch). */
-export const boardQuery = (queryClient: QueryClient, crmId: string) =>
+/**
+ * Quadro + primeira página de cada coluna (ou o tanto já carregado, num refetch). Com filtro de etapa (T76) só aquela
+ * coluna é buscada e exibida; as outras continuam no estado (destinos de "Mover para…") sem cards.
+ */
+export const boardQuery = (queryClient: QueryClient, crmId: string, filters: ApiFilters = {}) =>
   queryOptions({
-    queryKey: boardKey(crmId),
+    queryKey: filteredBoardKey(crmId, filters),
     queryFn: async (): Promise<BoardState> => {
-      const prev = queryClient.getQueryData<BoardState>(boardKey(crmId))
+      const prev = queryClient.getQueryData<BoardState>(filteredBoardKey(crmId, filters))
       const { crm } = await api.get<{ crm: BoardDto }>(`/api/crms/${enc(crmId)}`)
       const columns = [...crm.columns].sort((a, b) => a.position - b.position)
+      const loaded = filters.column_id ? columns.filter((c) => c.id === filters.column_id) : columns
       const pages = await Promise.all(
-        columns.map((c) => {
-          const loaded = prev?.cards[c.id]?.length ?? 0
-          const limit = Math.min(MAX_LIMIT, Math.max(CARD_PAGE_SIZE, loaded))
-          return fetchCards(crmId, c.id, 1, limit)
+        loaded.map((c) => {
+          const have = prev?.cards[c.id]?.length ?? 0
+          const limit = Math.min(MAX_LIMIT, Math.max(CARD_PAGE_SIZE, have))
+          return fetchCards(crmId, c.id, 1, limit, filters)
         }),
       )
       const totals = pages[0] ? totalsOf(pages[0].columns) : {}
       return initialBoardState(
         crm,
         columns,
-        columns.map((c, i) => ({ columnId: c.id, items: pages[i]!.items, total: pages[i]!.page.total })),
+        loaded.map((c, i) => ({ columnId: c.id, items: pages[i]!.items, total: pages[i]!.page.total_count })),
         totals,
+        filters.column_id ? loaded.map((c) => c.id) : null,
       )
     },
   })
 
 /** Próxima página da coluna (sem repetir cards já carregados). */
-export async function fetchMoreCards(crmId: string, columnId: string, loaded: number): Promise<{ items: CardDto[]; total: number }> {
+export async function fetchMoreCards(crmId: string, columnId: string, loaded: number, filters: ApiFilters = {}): Promise<{ items: CardDto[]; total: number }> {
   // Página de 20 alinhada ao que já está na tela; se o quadro mudou no meio, o dedupe do estado resolve.
   const page = Math.floor(loaded / CARD_PAGE_SIZE) + 1
-  const r = await fetchCards(crmId, columnId, page, CARD_PAGE_SIZE)
-  return { items: r.items, total: r.page.total }
+  const r = await fetchCards(crmId, columnId, page, CARD_PAGE_SIZE, filters)
+  return { items: r.items, total: r.page.total_count }
 }
 
 export async function moveCardRequest(crmId: string, cardId: string, body: { new_column_id: string; before_card_id: string | null }) {

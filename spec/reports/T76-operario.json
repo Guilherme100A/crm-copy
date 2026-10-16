@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "task": "T76",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T13:10:50.983Z",
+  "commit": "9751708088d3d7422072d29bfac091506c0cb426",
+  "base": "9751708",
+  "changedFiles": [
+    "apps/web/src/features/crms/api.ts",
+    "apps/web/src/features/crms/board-dnd.tsx",
+    "apps/web/src/features/crms/board-page.tsx",
+    "apps/web/src/features/crms/board-state.ts",
+    "apps/web/src/features/crms/crms.unit.test.ts",
+    "apps/web/src/features/crms/list-page.tsx",
+    "apps/web/src/routes/crms/$crmId.tsx",
+    "packages/core/src/index.ts",
+    "scripts/e2e/api.ts",
+    "apps/web/src/features/kanban-tools/api.ts",
+    "apps/web/src/features/kanban-tools/board-modal.tsx",
+    "apps/web/src/features/kanban-tools/board-tools.tsx",
+    "apps/web/src/features/kanban-tools/card-modal.tsx",
+    "apps/web/src/features/kanban-tools/column-menu.tsx",
+    "apps/web/src/features/kanban-tools/column-modal.tsx",
+    "apps/web/src/features/kanban-tools/dialog.tsx",
+    "apps/web/src/features/kanban-tools/export-control.tsx",
+    "apps/web/src/features/kanban-tools/filters-panel.tsx",
+    "apps/web/src/features/kanban-tools/filters.ts",
+    "apps/web/src/features/kanban-tools/kanban-tools.unit.test.ts",
+    "apps/web/src/features/kanban-tools/realtime.ts",
+    "apps/web/src/features/kanban-tools/stats-panel.tsx",
+    "apps/web/src/i18n/en/kanban-tools.json",
+    "apps/web/src/i18n/es/kanban-tools.json",
+    "apps/web/src/i18n/pt-BR/kanban-tools.json",
+    "packages/core/src/kanban/export.db.unit.test.ts",
+    "packages/core/src/kanban/export.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 24.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 9.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 58.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 8.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 9.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "27 arquivo(s) alterado(s)"
+    }
+  ]
+}
