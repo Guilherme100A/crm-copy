@@ -3,18 +3,14 @@
   "task": "T33",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:57:58.188Z",
-  "commit": "9c532463ec7fa1714c4c41b3cdda9fefe4faeb85",
-  "base": "9c53246",
+  "at": "2026-10-16T04:06:07.721Z",
+  "commit": "4e2ea144b31641c99577e84f757041f3b964f22f",
+  "base": "06e42c8",
   "changedFiles": [
-    "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/worker/src/consumers/chats/chats.db.unit.test.ts",
     "apps/worker/src/consumers/chats/index.ts",
+    "apps/worker/src/index.ts",
+    "apps/worker/src/registry.ts",
     "packages/core/src/chats/ingest/chat-ingest.db.unit.test.ts",
     "packages/core/src/chats/ingest/chat-ingest.ts",
     "packages/core/src/chats/ingest/index.ts",
@@ -24,9 +20,13 @@
     "packages/core/src/chats/model/merge.ts",
     "packages/core/src/chats/model/rules.ts",
     "packages/core/src/chats/model/rules.unit.test.ts",
-    "packages/db/drizzle/crm/0004_t33_chats.sql",
-    "packages/db/drizzle/crm/meta/0004_snapshot.json",
-    "packages/db/src/schema/crm/chats.ts"
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/0007_t33_chats.sql",
+    "packages/db/drizzle/crm/meta/0007_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/chats.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -37,32 +37,32 @@
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 8.3s"
+      "detail": "ok em 6.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.5s"
+      "detail": "ok em 2.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 7.3s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.1s"
+      "detail": "ok em 6.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 2.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 6.5s"
+      "detail": "ok em 9.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
