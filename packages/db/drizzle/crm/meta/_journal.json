@@ -85,6 +85,13 @@
       "when": 1792129246681,
       "tag": "0011_t50_kanban",
       "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1792131846846,
+      "tag": "0012_t34_sales",
+      "breakpoints": true
     }
   ]
 }
