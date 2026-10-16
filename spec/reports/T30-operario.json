@@ -3,41 +3,41 @@
   "task": "T30",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:59:59.815Z",
-  "commit": "bc0974387e388910af82e1d25de4ed661e78242b",
-  "base": "bc09743",
+  "at": "2026-10-16T05:08:25.259Z",
+  "commit": "bfcb312bc2d3baee3b5a689af8bc964ca11e9cf7",
+  "base": "9cd0f6a",
   "changedFiles": [
     "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
     "apps/worker/src/jobs/flow-timer/flow-timer.unit.test.ts",
     "apps/worker/src/jobs/flow-timer/index.ts",
+    "apps/worker/src/registry.ts",
     "packages/core/src/flows/engine/control.db.unit.test.ts",
     "packages/core/src/flows/engine/control.ts",
     "packages/core/src/flows/engine/timers.ts",
     "packages/core/src/flows/engine/timers.unit.test.ts",
-    "packages/core/src/flows/engine/waits.ts"
+    "packages/core/src/flows/engine/waits.ts",
+    "packages/core/src/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 8.4s"
+      "detail": "ok em 8.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 2.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 9.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 7.3s"
+      "detail": "ok em 9.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
@@ -47,7 +47,7 @@
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 14.6s"
+      "detail": "ok em 21.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
