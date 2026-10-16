@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "task": "T47",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T22:28:51.486Z",
+  "commit": "51e15e8fb02a36c39a6a003e55447e1d363db2d3",
+  "base": "51e15e8",
+  "changedFiles": [
+    "apps/worker/src/index.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/worker/src/consumers/connections/connections.db.unit.test.ts",
+    "apps/worker/src/consumers/connections/index.ts",
+    "packages/core/src/connections-status/dedupe.db.unit.test.ts",
+    "packages/core/src/connections-status/dedupe.ts",
+    "packages/core/src/connections-status/email.ts",
+    "packages/core/src/connections-status/email.unit.test.ts",
+    "packages/core/src/connections-status/index.ts",
+    "packages/core/src/connections-status/projector.db.unit.test.ts",
+    "packages/core/src/connections-status/projector.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 14.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 18.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 34.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 183.9s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "13 arquivo(s) alterado(s)"
+    }
+  ]
+}

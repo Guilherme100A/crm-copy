@@ -5,6 +5,7 @@ import type { WaEventType } from '@crm/wa-port'
 import type { Processor } from 'bullmq'
 import type { EventHandler, HandlerOptions } from './consumers/framework'
 import { registerChatsConsumer } from './consumers/chats'
+import { registerConnectionsConsumer } from './consumers/connections'
 import { registerFlowStepJob } from './jobs/flow-step'
 import { registerFlowTimerJob } from './jobs/flow-timer'
 import { registerAiAgentJob } from './jobs/ai-agent'
@@ -79,6 +80,7 @@ export function createRegistry(): WorkerRegistry {
 /** Registry do processo. Módulos acrescentam abaixo (uma linha por módulo), ex.: `registerChatsConsumer(registry)`. */
 export const registry: WorkerRegistry = createRegistry()
 registerChatsConsumer(registry)
+registerConnectionsConsumer(registry)
 registerFlowStepJob(registry)
 registerFlowTimerJob(registry)
 registerAiAgentJob(registry)

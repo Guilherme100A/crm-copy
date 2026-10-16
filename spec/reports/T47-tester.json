@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T47",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T22:30:07.353Z",
+  "commit": "51e15e8fb02a36c39a6a003e55447e1d363db2d3",
+  "base": "51e15e8",
+  "changedFiles": [
+    "tests/acceptance/T47/connections-status.test.ts",
+    "tests/acceptance/T47/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T47-01, AC-T47-02, AC-T47-03, AC-T47-04, AC-T47-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "11 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T47-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T47-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T47-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T47-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T47-05",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

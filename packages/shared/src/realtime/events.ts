@@ -36,6 +36,20 @@ const kanbanCardEventData = () =>
     from_column_id: idSchema.optional(),
   })
 
+/** Base dos eventos `connection.*` e `flow.auto_paused|resumed` (T47). */
+const connectionEventData = () => z.looseObject({ connection_id: idSchema, session_id: z.string() })
+
+/** Queda de conexão (`connection.disconnected|disconnected_alert|banned_alert`, T47). */
+const connectionDropData = () =>
+  connectionEventData().extend({
+    name: z.string(),
+    phone_number: z.string().nullable(),
+    reason: z.enum(['transient', 'loggedOut', 'forbidden']).nullable(),
+    status_code: z.number().int().nullable(),
+    status: z.string(),
+    disconnected_at: z.string(),
+  })
+
 export const REALTIME_EVENTS = {
   /** Dados da empresa mudaram (nome, fuso, status…): o cliente recarrega a empresa. */
   'company.updated': defineEvent(
@@ -210,6 +224,53 @@ export const REALTIME_EVENTS = {
     }),
     'webhooks.view',
   ),
+  // ---- T47: conexões (ConnectionsChannel da referência; 08-conexoes.md §7) ----
+  'connection.created': defineEvent(connectionEventData(), 'connections.view'),
+  'connection.updated': defineEvent(connectionEventData(), 'connections.view'),
+  'connection.deleted': defineEvent(connectionEventData(), 'connections.view'),
+  /** Status de UI recalculado (estado da sessão + último `session.connection`). */
+  'connection.status_changed': defineEvent(
+    connectionEventData().extend({
+      status: z.string(),
+      session_state: z.string().nullable(),
+      connection_state: z.enum(['open', 'close']).nullable(),
+      badges: z.array(z.string()),
+    }),
+    'connections.view',
+  ),
+  /** QR novo (data URL): dá para vincular um aparelho, por isso exige `connections.edit`. */
+  'connection.qr_updated': defineEvent(connectionEventData().extend({ qr_code: z.string() }), 'connections.edit'),
+  'connection.pairing_code': defineEvent(connectionEventData().extend({ code: z.string() }), 'connections.edit'),
+  'connection.connected': defineEvent(
+    connectionEventData().extend({ name: z.string(), phone_number: z.string().nullable(), connected_at: z.string() }),
+    'connections.view',
+  ),
+  /** Toda queda (`session.connection` close). */
+  'connection.disconnected': defineEvent(connectionDropData(), 'connections.view'),
+  /** Alerta da queda (não forbidden), no máximo 1 a cada 5 s por conexão. */
+  'connection.disconnected_alert': defineEvent(connectionDropData(), 'connections.view'),
+  /** Queda por 403 (forbidden): conexão `banned`. Mesmo dedupe do alerta de queda. */
+  'connection.banned_alert': defineEvent(connectionDropData(), 'connections.view'),
+  /** Reconectou com runs pausados pela queda: contagens para o modal retomar/cancelar. */
+  'connection.reconnected_with_paused_flows': defineEvent(
+    connectionEventData().extend({
+      name: z.string(),
+      paused_count: z.number().int(),
+      waiting_count: z.number().int(),
+      failed_count: z.number().int(),
+      received_count: z.number().int(),
+      total_leads: z.number().int(),
+    }),
+    'connections.view',
+  ),
+  'connection.health_degraded': defineEvent(connectionEventData().extend({ from: z.string(), to: z.string() }), 'connections.view'),
+  /** Runs `waiting` da conexão pausados na queda. */
+  'flow.auto_paused': defineEvent(
+    connectionEventData().extend({ paused_count: z.number().int(), run_ids: z.array(idSchema), flow_ids: z.array(idSchema) }),
+    'flows.view',
+  ),
+  /** Runs pausados na queda retomados (ação "Retomar" do modal). */
+  'flow.resumed': defineEvent(connectionEventData().extend({ resumed_count: z.number().int() }), 'flows.view'),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS
