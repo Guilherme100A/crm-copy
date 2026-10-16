@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "task": "T08",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:05:03.177Z",
+  "commit": "eff38af9bb1bb373505bd661a1cf12bde1cc7d13",
+  "base": "eff38af",
+  "changedFiles": [
+    "tests/acceptance/T08/health.test.ts",
+    "tests/acceptance/T08/middlewares.test.ts",
+    "tests/acceptance/T08/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T08-01, AC-T08-02, AC-T08-03, AC-T08-04, AC-T08-05, AC-T08-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "27 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T08-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T08-02",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "AC-T08-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T08-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T08-05",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T08-06",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "3 arquivo(s) alterado(s)"
+    }
+  ]
+}

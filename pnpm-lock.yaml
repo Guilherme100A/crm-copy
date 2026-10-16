@@ -39,7 +39,32 @@ importers:
         specifier: 5.0.1
         version: 5.0.1(@types/node@22.20.4)(vite@8.3.4(@types/node@22.20.4)(esbuild@0.27.7)(tsx@4.23.15))
 
-  apps/api: {}
+  apps/api:
+    dependencies:
+      '@crm/core':
+        specifier: workspace:^
+        version: link:../../packages/core
+      '@crm/db':
+        specifier: workspace:^
+        version: link:../../packages/db
+      '@crm/node-kit':
+        specifier: workspace:^
+        version: link:../../packages/node-kit
+      '@crm/shared':
+        specifier: workspace:^
+        version: link:../../packages/shared
+      '@hono/node-server':
+        specifier: 2.1.1
+        version: 2.1.1(hono@4.13.8)
+      drizzle-orm:
+        specifier: 0.45.3
+        version: 0.45.3(@types/pg@8.23.1)(pg@8.23.0)
+      hono:
+        specifier: 4.13.8
+        version: 4.13.8
+      zod:
+        specifier: 4.6.5
+        version: 4.6.5
 
   apps/wa-worker: {}
 
@@ -53,7 +78,20 @@ importers:
         specifier: 4.6.5
         version: 4.6.5
 
-  packages/core: {}
+  packages/core:
+    dependencies:
+      '@crm/db':
+        specifier: workspace:^
+        version: link:../db
+      '@crm/node-kit':
+        specifier: workspace:^
+        version: link:../node-kit
+      '@crm/shared':
+        specifier: workspace:^
+        version: link:../shared
+      drizzle-orm:
+        specifier: 0.45.3
+        version: 0.45.3(@types/pg@8.23.1)(pg@8.23.0)
 
   packages/db:
     dependencies:
@@ -816,6 +854,12 @@ packages:
 
   '@hapi/hoek@9.3.0':
     resolution: {integrity: sha512-/c6rf4UJlmHlC9b5BaNvzAcFv7HZ2QHaV0D4/HNlBdvFnvQq8RI4kYdhyPCl7Xj+oWvTWQ8ujhqS53LIgAe6KQ==}
+
+  '@hono/node-server@2.1.1':
+    resolution: {integrity: sha512-ELuehkj5VCBdgEw9zs+ivkKwyzzUCSQuE96YmiPvn1ECBoZCczbFXJLeEGMTYjphP6gydh4pHMqEYPVMYUVgQg==}
+    engines: {node: '>=20'}
+    peerDependencies:
+      hono: ^4
 
   '@humanfs/core@0.19.2':
     resolution: {integrity: sha512-UhXNm+CFMWcbChXywFwkmhqjs3PRCmcSa/hfBgLIb7oQ5HNb1wS0icWsGtSAUNgefHeI+eBrA8I1fxmbHsGdvA==}
@@ -1804,6 +1848,10 @@ packages:
   hashery@1.5.1:
     resolution: {integrity: sha512-iZyKG96/JwPz1N55vj2Ie2vXbhu440zfUfJvSwEqEbeLluk7NnapfGqa7LH0mOsnDxTF85Mx8/dyR6HfqcbmbQ==}
     engines: {node: '>=20'}
+
+  hono@4.13.8:
+    resolution: {integrity: sha512-/Gng7NfoykZl2pjukW5Z6+8Yxm3BPRf86GTbQnt0SbySkvax4fyL4H3HhY1cCpBGmiW9XDRFzRV+CXK2W8QudQ==}
+    engines: {node: '>=16.9.0'}
 
   hookified@1.15.1:
     resolution: {integrity: sha512-MvG/clsADq1GPM2KGo2nyfaWVyn9naPiXrqIe4jYjXNZQt238kWyOGrsyc/DmRAQ+Re6yeo6yX/yoNCG5KAEVg==}
@@ -2928,6 +2976,10 @@ snapshots:
 
   '@hapi/hoek@9.3.0': {}
 
+  '@hono/node-server@2.1.1(hono@4.13.8)':
+    dependencies:
+      hono: 4.13.8
+
   '@humanfs/core@0.19.2':
     dependencies:
       '@humanfs/types': 0.15.0
@@ -3777,6 +3829,8 @@ snapshots:
   hashery@1.5.1:
     dependencies:
       hookified: 1.15.1
+
+  hono@4.13.8: {}
 
   hookified@1.15.1: {}
 
