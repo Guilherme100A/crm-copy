@@ -37,6 +37,8 @@ const ADMIN: readonly PermissionKey[] = [
   'flows.delete',
   'contacts.edit',
   'contacts.delete',
+  // T60: disparos em massa (member não).
+  'mass_dispatch.create',
   'webhooks.view',
   'webhooks.edit',
   'webhooks.delete',

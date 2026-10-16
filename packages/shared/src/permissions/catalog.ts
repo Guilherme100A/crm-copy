@@ -34,6 +34,8 @@ export const PERMISSION_CATALOG = [
   { group: 'kanban', keys: ved('kanban') },
   { group: 'flows', keys: [...ved('flows'), 'flows.run'] },
   { group: 'contacts', keys: ved('contacts') },
+  // T60: criar/cancelar disparos em massa (ler é contacts.view).
+  { group: 'mass_dispatch', keys: ['mass_dispatch.create'] },
   { group: 'webhooks', keys: ved('webhooks') },
   { group: 'connections', keys: ved('connections') },
   { group: 'facebook', keys: ['facebook.campaigns', 'facebook.pixel', 'facebook.profiles'] },

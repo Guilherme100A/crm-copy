@@ -134,6 +134,13 @@
       "when": 1792135740967,
       "tag": "0018_t61_flow_triggers",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1792137498251,
+      "tag": "0019_t60_mass_dispatch",
+      "breakpoints": true
     }
   ]
 }

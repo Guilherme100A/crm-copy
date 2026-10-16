@@ -26,6 +26,7 @@ import { productsRoutes } from './products/index'
 import { salesRoutes } from './sales/index'
 import { connectionsRoutes } from './connections/index'
 import { contentRoutes } from './content/index'
+import { massDispatchRoutes } from './mass-dispatch/index'
 import { exportsRoutes } from './exports/index'
 import { aiKeysDefaults, aiKeysRoutes } from './ai-keys/index'
 import { connectionFlowConfigsRoutes } from './connection-flow-configs/index'
@@ -62,6 +63,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', salesRoutes(deps))
   app.route('/', connectionsRoutes(deps))
   app.route('/', contentRoutes(deps))
+  app.route('/', massDispatchRoutes(deps))
   app.route('/', exportsRoutes(deps))
   app.route('/', aiKeysRoutes(deps))
   app.route('/', connectionFlowConfigsRoutes(deps))
