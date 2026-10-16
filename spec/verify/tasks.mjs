@@ -43,6 +43,7 @@ export const SHARED_PATHS = [
   'packages/db/drizzle/crm/**',
   'packages/db/src/seed/modules/**',
   'packages/shared/src/permissions/catalog.ts',
+  'packages/shared/src/permissions/defaults.ts', // matriz padrão por papel: só acréscimo de chaves novas
   'packages/shared/src/realtime/events.ts',
   'packages/shared/src/errors/codes.ts',
 ]
