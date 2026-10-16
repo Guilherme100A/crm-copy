@@ -3,9 +3,9 @@
   "task": "T94",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T23:20:59.259Z",
-  "commit": "51e15e8fb02a36c39a6a003e55447e1d363db2d3",
-  "base": "51e15e8",
+  "at": "2026-10-16T23:31:42.983Z",
+  "commit": "5fc150530b4234dee1d56ba5905462e2f72dac56",
+  "base": "b24d969",
   "changedFiles": [
     "tests/acceptance/T94/mcp-credentials.e2e.ts",
     "tests/acceptance/T94/mcp.test.ts",
