@@ -1,0 +1,1252 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T77\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "tests/acceptance/T77"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T77\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T77/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T77/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T77/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T77/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T77/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T77\\",
+      "url": "http://127.0.0.1:21480",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "21480",
+        "E2E_API_PORT": "21481",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T77\\contacts.e2e.ts",
+      "file": "T77/contacts.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T77 — cabeçalho, busca e filtros",
+          "file": "T77/contacts.e2e.ts",
+          "line": 133,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-01 cabeçalho mostra a contagem exata sem filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12922,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:45:53.787Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-e88d91cd9b1c572f4704",
+              "file": "T77/contacts.e2e.ts",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 com filtro ativo e total desconhecido o cabeçalho mostra \"N+\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4115,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:06.877Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-31b9ad2fe9317829b5fe",
+              "file": "T77/contacts.e2e.ts",
+              "line": 143,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 busca espera 500 ms após a última tecla e faz uma só requisição",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8878,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:11.006Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-046d10cb43501814d2cc",
+              "file": "T77/contacts.e2e.ts",
+              "line": 155,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 filtros viram chips removíveis e \"Limpar filtros\" tira todos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3237,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:19.898Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-4cf8c85a542bb8774114",
+              "file": "T77/contacts.e2e.ts",
+              "line": 191,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 cabeçalho mostra a contagem exata sem filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1802,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:26.296Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-c04aff9f57b837340dd8",
+              "file": "T77/contacts.e2e.ts",
+              "line": 134,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 com filtro ativo e total desconhecido o cabeçalho mostra \"N+\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3572,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:28.230Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-5dda9ba6d97b6701a788",
+              "file": "T77/contacts.e2e.ts",
+              "line": 143,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 busca espera 500 ms após a última tecla e faz uma só requisição",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6096,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:31.813Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-05fb5f46a6f531688790",
+              "file": "T77/contacts.e2e.ts",
+              "line": 155,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-01 filtros viram chips removíveis e \"Limpar filtros\" tira todos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3217,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:37.920Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-6bb94198fe0930e423bf",
+              "file": "T77/contacts.e2e.ts",
+              "line": 191,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T77 — seleção em massa",
+          "file": "T77/contacts.e2e.ts",
+          "line": 232,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-02 Shift+clique seleciona o intervalo entre dois contatos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2972,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:23.149Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-f36e688489e3c34d5ea1",
+              "file": "T77/contacts.e2e.ts",
+              "line": 233,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-02 \"Todos do filtro\" mostra o total do filtro e desconta os excluídos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2971,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:26.131Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-eace05555ac301890f7b",
+              "file": "T77/contacts.e2e.ts",
+              "line": 249,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-02 Shift+clique seleciona o intervalo entre dois contatos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2970,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:41.151Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-482985edbcb0196c3ddd",
+              "file": "T77/contacts.e2e.ts",
+              "line": 233,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-02 \"Todos do filtro\" mostra o total do filtro e desconta os excluídos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3594,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:44.137Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-85ffc8cdfc60a058a0e3",
+              "file": "T77/contacts.e2e.ts",
+              "line": 249,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T77 — seleção da conta",
+          "file": "T77/contacts.e2e.ts",
+          "line": 279,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-02 sem filtro o menu oferece \"Todos da conta\" com o total da conta e descontos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3590,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:29.113Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-4a190f340c79980f3fca",
+              "file": "T77/contacts.e2e.ts",
+              "line": 280,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-02 sem filtro o menu oferece \"Todos da conta\" com o total da conta e descontos",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1863,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:47.741Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-510cbad4b647f9fcb22e",
+              "file": "T77/contacts.e2e.ts",
+              "line": 280,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T77 — barra de ações em massa",
+          "file": "T77/contacts.e2e.ts",
+          "line": 295,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-03 \"Exportar CSV\" sem seleção exporta o filtro atual (modo filtered) com campos personalizados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3807,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:32.714Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-48c533d8664fe1d3c9bd",
+              "file": "T77/contacts.e2e.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 excluir pede confirmação, mostra o progresso e remove só os selecionados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5919,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:36.533Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-64ae270205236f2f6f50",
+              "file": "T77/contacts.e2e.ts",
+              "line": 317,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 exportar envia os ids selecionados (modo ids)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2877,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:42.463Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-6c588d08400cd3535950",
+              "file": "T77/contacts.e2e.ts",
+              "line": 350,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 exportar \"todos do filtro\" envia all_except com os excluídos e o filtro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9905,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:45.355Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-f60476a3866008c995ec",
+              "file": "T77/contacts.e2e.ts",
+              "line": 371,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 disparo em massa abre o wizard com os selecionados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 9060,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:46:55.273Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-2f3da2837ca632e7f8f2",
+              "file": "T77/contacts.e2e.ts",
+              "line": 392,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 disparo com \"todos do filtro\" leva all_except, os excluídos, o filtro e a contagem efetiva",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 8488,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:04.348Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-3746e8efa293417505c6",
+              "file": "T77/contacts.e2e.ts",
+              "line": 411,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 \"Exportar CSV\" sem seleção exporta o filtro atual (modo filtered) com campos personalizados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5387,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:49.616Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-73f799d495f538c75fc3",
+              "file": "T77/contacts.e2e.ts",
+              "line": 296,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 excluir pede confirmação, mostra o progresso e remove só os selecionados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4544,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:55.019Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-20789bf7ea2188e00c95",
+              "file": "T77/contacts.e2e.ts",
+              "line": 317,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 exportar envia os ids selecionados (modo ids)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2860,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:59.578Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-7aa77b3b242aba24623d",
+              "file": "T77/contacts.e2e.ts",
+              "line": 350,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 exportar \"todos do filtro\" envia all_except com os excluídos e o filtro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5765,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:02.450Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-afc1b4b63d2070ee9329",
+              "file": "T77/contacts.e2e.ts",
+              "line": 371,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 disparo em massa abre o wizard com os selecionados",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2709,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:08.226Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-205841448067f34cf144",
+              "file": "T77/contacts.e2e.ts",
+              "line": 392,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-03 disparo com \"todos do filtro\" leva all_except, os excluídos, o filtro e a contagem efetiva",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7867,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:10.945Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-c08894cf323e8aa20c62",
+              "file": "T77/contacts.e2e.ts",
+              "line": 411,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T77 — WhatsApp e troca de empresa",
+          "file": "T77/contacts.e2e.ts",
+          "line": 432,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-04 \"Importar do WhatsApp\" só aparece com conexão conectada",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6324,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:12.856Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-feacccb5600277a3e3e9",
+              "file": "T77/contacts.e2e.ts",
+              "line": 433,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-04 trocar de empresa limpa a seleção e os filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2721,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:19.191Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-63e265e91b2e7d032558",
+              "file": "T77/contacts.e2e.ts",
+              "line": 455,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-04 \"Importar do WhatsApp\" só aparece com conexão conectada",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 12859,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:18.822Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-482daeb88ae0b8f3c781",
+              "file": "T77/contacts.e2e.ts",
+              "line": 433,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-04 trocar de empresa limpa a seleção e os filtros",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 6662,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:31.692Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-7ed8f4bddb45a21f6ab8",
+              "file": "T77/contacts.e2e.ts",
+              "line": 455,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T77 — layout",
+          "file": "T77/contacts.e2e.ts",
+          "line": 476,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T77-05 no mobile a tabela vira cartões e a seleção continua funcionando",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2529,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:47:21.923Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-e615129eac1f2a680493",
+              "file": "T77/contacts.e2e.ts",
+              "line": 477,
+              "column": 3
+            },
+            {
+              "title": "AC-T77-05 no mobile a tabela vira cartões e a seleção continua funcionando",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2995,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-16T20:48:38.367Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "ee14aed397b29a0d8b54-d58da11a2e71cff59b79",
+              "file": "T77/contacts.e2e.ts",
+              "line": 477,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-16T20:45:26.131Z",
+    "duration": 197467.105,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
