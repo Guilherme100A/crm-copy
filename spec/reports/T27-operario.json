@@ -3,20 +3,16 @@
   "task": "T27",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T07:11:09.165Z",
-  "commit": "2c0684c7d633314e7688e5fd45236c1efbe241a4",
-  "base": "2c0684c",
+  "at": "2026-10-16T07:13:32.257Z",
+  "commit": "43c8518747ad178bb534ac410bfab4de0f3d851a",
+  "base": "e18279f",
   "changedFiles": [
+    "apps/api/src/routes/exports/index.ts",
     "apps/api/src/routes/index.ts",
     "apps/worker/src/index.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/realtime/events.ts",
-    "apps/api/src/routes/exports/index.ts",
     "apps/worker/src/jobs/exports/exports.unit.test.ts",
     "apps/worker/src/jobs/exports/index.ts",
+    "apps/worker/src/registry.ts",
     "docs/exports.md",
     "packages/core/src/exports/csv.ts",
     "packages/core/src/exports/exports.db.unit.test.ts",
@@ -26,9 +22,13 @@
     "packages/core/src/exports/registry.ts",
     "packages/core/src/exports/runner.ts",
     "packages/core/src/exports/service.ts",
+    "packages/core/src/index.ts",
     "packages/db/drizzle/crm/0016_t27_background_jobs.sql",
     "packages/db/drizzle/crm/meta/0016_snapshot.json",
-    "packages/db/src/schema/crm/exports.ts"
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/exports.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -39,17 +39,17 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 9.5s"
+      "detail": "ok em 9.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 30.2s"
+      "detail": "ok em 29.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
@@ -59,27 +59,27 @@
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 2.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 8.9s"
+      "detail": "ok em 9.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 11.3s"
+      "detail": "ok em 14.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.2s"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 24.1s"
+      "detail": "ok em 30.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
