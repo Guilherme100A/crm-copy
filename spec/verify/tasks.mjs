@@ -181,7 +181,7 @@ const RAW = [
   // ---------------- Contas, equipe, configurações ----------------
   T('T31', 'Departamentos e horários de atendimento', ['T22'], [core('departments'), core('business-hours'), route('departments'), route('business-hours'), schema('departments'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.department_id */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/business-hours/is-open.ts'] }),
-  T('T32', 'Acesso de suporte', ['T22', 'T16'], [core('support-access'), route('support-access'), schema('support-access')], ['api', 'core'],
+  T('T32', 'Acesso de suporte', ['T22', 'T16'], [core('support-access'), route('support-access'), schema('support-access'), 'apps/api/src/middleware/company.ts', 'packages/core/src/platform/company-context.ts' /* aditivo: contexto de empresa por concessão de suporte (AC-T32-02) */, 'apps/api/src/routes/events/index.ts', 'packages/core/src/realtime/access.ts' /* aditivo: SSE do usuário support sem vínculo (AC-T32-03) */, 'packages/core/src/auth/auth-service.ts' /* aditivo: listCompanies inclui empresas concedidas */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/support-access/index.ts'] }),
   T('T36', 'UI: autenticação, perfil e troca de empresa', ['T22', 'T23'], [...ui('auth'), ...ui('profile'), 'apps/web/src/features/company-switcher/**', i18n('company-switcher'), 'apps/web/src/app/guard.ts' /* aditivo: rotas públicas */, 'apps/web/src/app/shell/app-shell.tsx' /* troca CompanyBadge por CompanySwitcher */], ['web'],
     { requiredFiles: ['apps/web/src/routes/login.tsx'], e2e: true }),

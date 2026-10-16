@@ -46,7 +46,7 @@
 | 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | MERGED | Bigorna | Lupa | 0 | edee67b |
 | 5 | T31 | Departamentos e horários de atendimento | MERGED | Torno | Sonda | 0 | 9cd0f6a |
-| 5 | T32 | Acesso de suporte | TODO | | | 0 | |
+| 5 | T32 | Acesso de suporte | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T32.md; libera contexto de empresa, SSE e listCompanies (aditivo) |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
@@ -200,6 +200,7 @@
 | ambiente (resolvido pela T121) | filas BullMQ do CRM com prefixo fixo + Redis db 1 compartilhado: workers de testes de worktrees diferentes roubam jobs | T120 |
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
 | T102 / web | Sem tratamento global de `company_inactive` (403) na web; `company.updated` não chega ao SSE (handler em módulo lazy: registrar no boot do realtime); hub sem abas permitidas mostra "Nenhuma seção"; "Nova Conta", "Convidar membro", "Sair da empresa" e redirects /departments e /business-hours sem AC | T53 |
+| T54 | Tela do próprio usuário de suporte (`apps/web/src/routes/support/access.tsx`, hoje placeholder) não está em nenhum Path: incluir na T54 | T32 (brief) |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
