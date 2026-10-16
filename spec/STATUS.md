@@ -181,3 +181,4 @@
 | T48 (lifecycle) | ao resolver o chat, chamar `FlowTriggers.handleAttendanceFinished({ companyId, chatId })` (T61) | T61 |
 | decisão | mensagem automática fora do horário (T61) e mensagens de nós de fluxo (T51) não aparecem no histórico do chat — mesma pendência de registro no chat | T61 |
 | produção (T37 ou seed) | sem linha em `crm.llm_prices` para o modelo, o agente falha com "sem preço vigente": criar seed de preços padrão da plataforma (modelos do STACK F) e/ou gestão pelo admin (T37) | T120 |
+| T75 / T85 / T91 (UI do chat) | usar o contrato de slots da T69: criar `apps/web/src/features/<módulo>/chat-slot.tsx` com `export const chatSlot = { area: thread|composer|panel, Component }` (props chatId, chat, isDesktop; ver features/chat/slots.ts) — sem editar arquivos da T69 | T69 |
