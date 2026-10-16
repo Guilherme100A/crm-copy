@@ -17,6 +17,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
+    "@crm/ai": "workspace:^",
     "@crm/db": "workspace:^",
     "@crm/node-kit": "workspace:^",
     "@crm/shared": "workspace:^",

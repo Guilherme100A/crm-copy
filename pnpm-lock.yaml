@@ -126,6 +126,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@crm/ai':
+        specifier: workspace:^
+        version: link:../ai
       '@crm/db':
         specifier: workspace:^
         version: link:../db

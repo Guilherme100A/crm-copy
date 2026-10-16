@@ -5,6 +5,7 @@ import type { WaEventType } from '@crm/wa-port'
 import type { Processor } from 'bullmq'
 import type { EventHandler, HandlerOptions } from './consumers/framework'
 import { registerChatsConsumer } from './consumers/chats'
+import { registerFlowStepJob } from './jobs/flow-step'
 
 export interface QueueDefinition {
   name: string
@@ -62,3 +63,4 @@ export function createRegistry(): WorkerRegistry {
 /** Registry do processo. Módulos acrescentam abaixo (uma linha por módulo), ex.: `registerChatsConsumer(registry)`. */
 export const registry: WorkerRegistry = createRegistry()
 registerChatsConsumer(registry)
+registerFlowStepJob(registry)
