@@ -186,3 +186,6 @@
 | wa-port / engine | cronograma de warm-up replicado no core (T60: 7 dias, 20, ×1.8) para avisos de capacidade: se o engine ficar configurável, expor o cronograma pela wa-port (risco de divergência) | T60 |
 | T74 | jobs de preparação/envio do disparo devem levar `dispatchId` em `data` (o cancel da T60 remove por ele); distribuição dos destinatários com `target_id` null entre vários alvos | T60 |
 | ambiente (resolvido pela T121) | filas BullMQ do CRM com prefixo fixo + Redis db 1 compartilhado: workers de testes de worktrees diferentes roubam jobs | T120 |
+| montagem do worker | `configureMassDispatch({ db, wa, redis })` (T74) não é chamado no boot de produção (`startProductionWorker`, T120) | T74 |
+| harness E2E | `serve.mjs` usa Redis db 14 fixo: dois harnesses simultâneos dividem o stream `wsm:events`/grupo crm e um rouba eventos do outro — derivar db ou nome do stream do worktree (como as portas da T118) | T75 |
+| ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
