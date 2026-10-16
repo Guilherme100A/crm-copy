@@ -3,43 +3,43 @@
   "task": "T43",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T05:34:49.867Z",
-  "commit": "9d66def8912b3465a3f6a34bb6cab48fcee4db1e",
-  "base": "9d66def",
+  "at": "2026-10-16T05:36:50.456Z",
+  "commit": "8b8e9fac6985b065cf1217976df0af63a7d5521a",
+  "base": "17c3156",
   "changedFiles": [
     "apps/api/src/index.ts",
-    "apps/api/src/routes/flows/index.ts",
-    "apps/api/src/routes/index.ts",
-    "packages/shared/src/permissions/catalog.ts",
-    "packages/shared/src/permissions/defaults.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/api/src/routes/flow-runs/flow-runs.db.unit.test.ts",
     "apps/api/src/routes/flow-runs/index.ts",
     "apps/api/src/routes/flow-runs/services.ts",
     "apps/api/src/routes/flow-share/flow-share.db.unit.test.ts",
     "apps/api/src/routes/flow-share/index.ts",
-    "apps/api/src/routes/flow-share/transfer.ts"
+    "apps/api/src/routes/flow-share/transfer.ts",
+    "apps/api/src/routes/flows/index.ts",
+    "apps/api/src/routes/index.ts",
+    "packages/shared/src/permissions/catalog.ts",
+    "packages/shared/src/permissions/defaults.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 8.0s"
+      "detail": "ok em 8.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.8s"
+      "detail": "ok em 3.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 31.9s"
+      "detail": "ok em 22.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 6.9s"
+      "detail": "ok em 7.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
@@ -49,7 +49,7 @@
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 18.1s"
+      "detail": "ok em 17.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
