@@ -3,64 +3,64 @@
   "task": "T127",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T22:54:58.080Z",
-  "commit": "2d973fd41a7285851b15e95723b7cd7dffd4942e",
-  "base": "2d973fd",
+  "at": "2026-10-16T23:10:58.702Z",
+  "commit": "60e0037a98c1e81b19d60680a000c32b1cb64795",
+  "base": "c2ec482",
   "changedFiles": [
+    "apps/worker/src/boot/production-integrations.db.unit.test.ts",
     "apps/worker/src/boot/production-worker.ts",
     "apps/worker/src/boot/production.ts",
+    "apps/worker/src/jobs/exports/exports-fail.db.unit.test.ts",
     "apps/worker/src/jobs/exports/index.ts",
     "packages/core/src/exports/runner.ts",
     "packages/core/src/inbound-webhooks-processor/processor.db.unit.test.ts",
-    "packages/core/src/inbound-webhooks-processor/processor.ts",
-    "apps/worker/src/boot/production-integrations.db.unit.test.ts",
-    "apps/worker/src/jobs/exports/exports-fail.db.unit.test.ts"
+    "packages/core/src/inbound-webhooks-processor/processor.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 15.1s"
+      "detail": "ok em 20.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.0s"
+      "detail": "ok em 3.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 135.3s (afetados desde a base)"
+      "detail": "ok em 155.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 16.1s"
+      "detail": "ok em 12.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 2.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 51.0s (afetados desde a base)"
+      "detail": "ok em 50.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 11.8s"
+      "detail": "ok em 9.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.7s"
+      "detail": "ok em 4.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 16.7s (afetados desde a base)"
+      "detail": "ok em 121.7s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
