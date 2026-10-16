@@ -3,9 +3,9 @@
   "task": "T46",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T07:00:52.865Z",
-  "commit": "d968079e28384918835d0c42fa32598a739103b8",
-  "base": "25b0ca7",
+  "at": "2026-10-16T07:05:51.848Z",
+  "commit": "e48dae1ab9bc1fe69d584358a66e0d2e8639c9d9",
+  "base": "b9818d0",
   "changedFiles": [
     ".env.example",
     "apps/api/package.json",
@@ -44,17 +44,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
       "status": "pass",
-      "detail": "ok em 6.0s"
+      "detail": "ok em 6.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
       "status": "pass",
-      "detail": "ok em 2.2s"
+      "detail": "ok em 2.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
       "status": "pass",
-      "detail": "ok em 6.6s"
+      "detail": "ok em 6.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
