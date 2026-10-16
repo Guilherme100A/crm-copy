@@ -2,19 +2,29 @@
 // `crm_test_*` e `crm_acc_*` no Postgres compartilhado até ele cair por memória. Só esses prefixos são candidatos,
 // e só caem os SEM conexão ativa, mais antigos que N minutos e fora da lista protegida (bancos de harnesses vivos).
 // O DROP é simples (sem FORCE): se alguém conectar no meio, falha e o banco fica.
+// T128: também os bancos-modelo `crm_tpl_<set>_<hash>` de hash antigo (sem conexão, mais antigos que N minutos, sem
+// ninguém criando-os); os do hash atual deste checkout nunca caem. O modelo perde o IS_TEMPLATE antes do DROP.
 import { createRequire } from 'node:module'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { currentTemplateNames, TEMPLATE_PREFIX } from './template-db.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pg = createRequire(join(ROOT, 'packages', 'db', 'package.json'))('pg')
 
 export const ORPHAN_PREFIXES = ['crm_e2e_', 'crm_test_', 'crm_acc_']
 export const DEFAULT_ORPHAN_MIN_AGE_MIN = 30
+/** Mesma classe do advisory lock de criação do modelo (packages/db/src/testing/template.ts), no banco `postgres`. */
+const TEMPLATE_LOCK_CLASS = 7_345_128
 
 /** Banco de teste do projeto (nunca `crm`, `postgres`, `template*`, `wsm*` ou outro nome). */
 export function isOrphanCandidate(name) {
   return typeof name === 'string' && /^[a-z0-9_]+$/.test(name) && ORPHAN_PREFIXES.some((p) => name.startsWith(p) && name.length > p.length)
+}
+
+/** Banco-modelo das migrações (T128): `crm_tpl_<set>_<hash12>`. */
+export function isTemplateCandidate(name) {
+  return typeof name === 'string' && /^crm_tpl_(all|wa|crm)_[0-9a-f]{12}$/.test(name)
 }
 
 /** Idade mínima em ms a partir do env (`E2E_ORPHAN_MIN_AGE_MIN`, padrão 30; aceita 0). */
@@ -30,10 +40,20 @@ const quoteIdent = (name) => `"${name.replace(/"/g, '""')}"`
 /**
  * Apaga os bancos de teste órfãos. `protect`: nomes que nunca caem (harnesses vivos). Devolve os apagados e os mantidos
  * (com o motivo). Bancos fora dos prefixos de teste não aparecem. `match` restringe ainda mais os candidatos (testes).
+ * `currentTemplates`: modelos que nunca caem (padrão: os do hash atual deste checkout; motivo `current`).
  */
-export async function cleanupOrphanDatabases({ baseUrl, minAgeMs = DEFAULT_ORPHAN_MIN_AGE_MIN * 60_000, now = new Date(), protect = [], dryRun = false, match = null } = {}) {
+export async function cleanupOrphanDatabases({
+  baseUrl,
+  minAgeMs = DEFAULT_ORPHAN_MIN_AGE_MIN * 60_000,
+  now = new Date(),
+  protect = [],
+  dryRun = false,
+  match = null,
+  currentTemplates = currentTemplateNames(),
+} = {}) {
   if (!baseUrl) throw new Error('baseUrl obrigatório')
   const keepSet = new Set(protect)
+  const currentSet = new Set(currentTemplates)
   const c = new pg.Client({ connectionString: baseUrl })
   await c.connect()
   const dropped = []
@@ -43,16 +63,22 @@ export async function cleanupOrphanDatabases({ baseUrl, minAgeMs = DEFAULT_ORPHA
       `select d.datname as name,
               (select count(*)::int from pg_stat_activity a where a.datname = d.datname) as connections
        from pg_database d
-       where not d.datistemplate and (${ORPHAN_PREFIXES.map((_, i) => `d.datname like $${i + 1}`).join(' or ')})
+       where (not d.datistemplate and (${ORPHAN_PREFIXES.map((_, i) => `d.datname like $${i + 1}`).join(' or ')}))
+          or d.datname like $${ORPHAN_PREFIXES.length + 1}
        order by d.datname`,
-      ORPHAN_PREFIXES.map((p) => `${p.replace(/_/g, '\\_')}%`),
+      [...ORPHAN_PREFIXES, TEMPLATE_PREFIX].map((p) => `${p.replace(/_/g, '\\_')}%`),
     )
     for (const row of rows) {
       const name = row.name
-      if (!isOrphanCandidate(name)) continue
+      const template = isTemplateCandidate(name)
+      if (!template && !isOrphanCandidate(name)) continue
       if (match && !match.test(name)) continue
       if (keepSet.has(name)) {
         kept.push({ name, reason: 'protected' })
+        continue
+      }
+      if (template && currentSet.has(name)) {
+        kept.push({ name, reason: 'current' })
         continue
       }
       if (row.connections > 0) {
@@ -78,6 +104,12 @@ export async function cleanupOrphanDatabases({ baseUrl, minAgeMs = DEFAULT_ORPHA
         dropped.push(name)
         continue
       }
+      if (template) {
+        const reason = await dropTemplate(baseUrl, name)
+        if (reason) kept.push({ name, reason })
+        else dropped.push(name)
+        continue
+      }
       try {
         await c.query(`DROP DATABASE IF EXISTS ${quoteIdent(name)}`)
         dropped.push(name)
@@ -90,4 +122,34 @@ export async function cleanupOrphanDatabases({ baseUrl, minAgeMs = DEFAULT_ORPHA
     await c.end()
   }
   return { dropped, kept }
+}
+
+/**
+ * Remove um modelo antigo sob o mesmo advisory lock da criação (no banco `postgres`): se outro processo o está criando
+ * agora, fica (`locked`). Devolve o motivo de ter ficado, ou null se caiu.
+ */
+async function dropTemplate(baseUrl, name) {
+  const u = new URL(baseUrl)
+  u.pathname = '/postgres'
+  const c = new pg.Client({ connectionString: u.toString() })
+  await c.connect()
+  try {
+    const { rows } = await c.query('select pg_try_advisory_lock($1, hashtext($2)) as ok', [TEMPLATE_LOCK_CLASS, name])
+    if (!rows[0]?.ok) return 'locked'
+    try {
+      await c.query(`ALTER DATABASE ${quoteIdent(name)} WITH IS_TEMPLATE false`)
+      try {
+        await c.query(`DROP DATABASE IF EXISTS ${quoteIdent(name)}`)
+        return null
+      } catch {
+        // Alguém conectou (ou clonava) no meio: volta a ser modelo e fica.
+        await c.query(`ALTER DATABASE ${quoteIdent(name)} WITH IS_TEMPLATE true`).catch(() => undefined)
+        return 'in_use'
+      }
+    } finally {
+      await c.query('select pg_advisory_unlock($1, hashtext($2))', [TEMPLATE_LOCK_CLASS, name])
+    }
+  } finally {
+    await c.end()
+  }
 }

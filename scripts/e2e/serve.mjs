@@ -20,6 +20,11 @@
 // T124: E2E_RESET_TIMEOUT_MS (padrão 60000; vai à API e ao e2e-server.json em reset_timeout_ms). Ao subir, apaga os
 // bancos de teste órfãos (crm_e2e_/crm_test_/crm_acc_ sem conexão e mais antigos que E2E_ORPHAN_MIN_AGE_MIN, padrão
 // 30), preservando os de harnesses vivos; E2E_ORPHAN_CLEANUP=0 desliga. Resultado em "orphans" e E2E_ORPHANS_DROPPED.
+//
+// T128: o banco nasce clonado do banco-modelo das migrações (scripts/e2e/template-db.mjs, docs/testing.md) e a API
+// aplica só o seed; o reset (/__e2e/reset) esvazia as tabelas e reaplica o seed nesse mesmo banco. Saem
+// E2E_DATABASE_TEMPLATE (modelo usado) e E2E_DATABASE_READY_MS (banco criado + seed, até o /health). A limpeza de órfãos
+// também remove modelos de hash antigo. CRM_TEST_TEMPLATE=0 = banco vazio + todas as migrações (como antes).
 import { spawn, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -30,6 +35,7 @@ import { fileURLToPath } from 'node:url'
 import { e2ePorts, e2eRedis, isOwnServerRunning, maskRedisUrl, normalizeRoot, readServerInfo, serverInfoPath } from './ports.mjs'
 import { claimRedisDb, liveHarnessDatabases } from './redis-claim.mjs'
 import { cleanupOrphanDatabases, orphanMinAgeMs } from './orphans.mjs'
+import { cloneTemplateDatabase } from './template-db.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pg = createRequire(join(ROOT, 'packages', 'db', 'package.json'))('pg')
@@ -139,6 +145,7 @@ async function main() {
 
   const children = []
   let dbCreated = false
+  let dbTemplate = null
   let finished = false
   const cleanup = async (code) => {
     if (finished) return
@@ -188,7 +195,16 @@ async function main() {
         log(`limpeza de bancos órfãos falhou: ${err.message}`)
       }
     }
-    await admin(baseUrl, `CREATE DATABASE "${dbName}"`)
+    // T128: clone do banco-modelo das migrações (criado e migrado uma vez por hash); a API só confere as migrações
+    // (nenhuma pendente) e aplica o seed. CRM_TEST_TEMPLATE=0 → banco vazio e a API roda todas as migrações.
+    const dbT0 = Date.now()
+    if (process.env.CRM_TEST_TEMPLATE !== '0') {
+      const tpl = await cloneTemplateDatabase(dbName, { baseUrl, set: 'all' })
+      dbTemplate = tpl.name
+      log(`banco ${dbName} clonado de ${tpl.name}${tpl.created ? ' (modelo criado agora)' : ''} em ${tpl.cloneMs} ms`)
+    } else {
+      await admin(baseUrl, `CREATE DATABASE "${dbName}"`)
+    }
     dbCreated = true
 
     const env = {
@@ -225,6 +241,8 @@ async function main() {
       }
     })
     await waitHealth(apiUrl, HEALTH_TIMEOUT_MS, api)
+    // Banco pronto para uso = criado + migrações conferidas + seed (feitos pela API antes do /health).
+    const dbReadyMs = Date.now() - dbT0
 
     let webUrl = ''
     if (process.env.E2E_SKIP_WEB !== '1' && webAvailable()) {
@@ -264,6 +282,7 @@ async function main() {
       api_port: apiPort,
       web_port: webUrl ? Number(new URL(webUrl).port) : null,
       database: dbName,
+      database_template: dbTemplate,
       reset_timeout_ms: resetTimeoutMs,
       orphans: { dropped: orphans.dropped, kept: orphans.kept, min_age_min: orphanMinAgeMs() / 60_000 },
       redis: { url: maskRedisUrl(redisUrl), db: redisDb, stream: redisPlan.stream, queue_prefix: redisPlan.queuePrefix, source: redisPlan.source },
@@ -281,6 +300,8 @@ async function main() {
     out(`E2E_WEB_URL=${webUrl}`)
     out(`E2E_WEB=${webUrl ? 'up' : 'absent'}`)
     out(`E2E_DATABASE=${dbName}`)
+    out(`E2E_DATABASE_TEMPLATE=${dbTemplate ?? ''}`)
+    out(`E2E_DATABASE_READY_MS=${dbReadyMs}`)
     out(`E2E_ORPHANS_DROPPED=${orphans.dropped.length}`)
     out(`E2E_REDIS_URL=${maskRedisUrl(redisUrl)}`)
     out(`E2E_WA_EVENTS_STREAM=${redisPlan.stream}`)

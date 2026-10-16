@@ -1,6 +1,9 @@
 import { createHash, randomBytes } from 'node:crypto'
 import pg from 'pg'
 import { DEFAULT_DATABASE_URL, migrateUrl, type MigrationSetOption } from './client.js'
+import { cloneTemplateDatabase, templatesEnabled } from './testing/template.js'
+
+export * from './testing/template.js'
 
 // `@crm/db/testing` — bancos descartáveis para testes *.db.unit.test.ts e de aceitação (SPEC 3.10), e o prefixo de
 // filas BullMQ por arquivo de teste (T126). Regras em docs/testing.md.
@@ -8,6 +11,11 @@ import { DEFAULT_DATABASE_URL, migrateUrl, type MigrationSetOption } from './cli
 export interface TempDatabase {
   name: string
   url: string
+  /**
+   * T128: modelo de onde o banco foi clonado (`migrate` com modelos ligados). `created` só quando esta chamada criou e
+   * migrou o modelo; nas demais nenhuma migração rodou.
+   */
+  template?: { name: string; created: boolean }
   /**
    * Remove o banco depois que as conexões dele terminam (T126: espera até `dropWaitMs`). Conexão ainda viva ao fim da
    * espera → o banco NÃO é removido (sem `WITH (FORCE)`, que dispararia 57P01 em pools/workers ainda em uso) e fica para
@@ -42,12 +50,20 @@ export function withDatabase(baseUrl: string, database: string): string {
 
 const quoteIdent = (name: string) => `"${name.replace(/"/g, '""')}"`
 
-/** Cria um banco `crm_test_<rand>`, opcionalmente já migrado. */
+/**
+ * Cria um banco `crm_test_<rand>`, opcionalmente já migrado. T128: com `migrate`, clona o banco-modelo do conjunto
+ * (`crm_tpl_<set>_<hash12>`, criado e migrado uma vez por hash das migrações) em vez de rodar as migrações;
+ * `CRM_TEST_TEMPLATE=0` volta à migração completa.
+ */
 export async function createTempDatabase(opts: CreateTempDatabaseOptions = {}): Promise<TempDatabase> {
   const baseUrl = opts.baseUrl ?? process.env.DATABASE_URL ?? DEFAULT_DATABASE_URL
   const name = randomDatabaseName(opts.prefix)
   const url = withDatabase(baseUrl, name)
   const drop = () => dropWhenIdle(baseUrl, name, opts.dropWaitMs ?? DEFAULT_DROP_WAIT_MS)
+  if (opts.migrate && templatesEnabled()) {
+    const tpl = await cloneTemplateDatabase(name, { baseUrl, set: opts.set ?? 'all' })
+    return { name, url, drop, template: { name: tpl.name, created: tpl.created } }
+  }
   await adminQuery(baseUrl, `CREATE DATABASE ${quoteIdent(name)}`)
   if (opts.migrate) {
     try {

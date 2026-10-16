@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "task": "T128",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T23:30:36.585Z",
+  "commit": "5abdea0f2b143c56994814dd825b5246304362d5",
+  "base": "5abdea0",
+  "changedFiles": [
+    "tests/acceptance/T128/fixtures/clone-child.mjs",
+    "tests/acceptance/T128/harness.test.ts",
+    "tests/acceptance/T128/support.ts",
+    "tests/acceptance/T128/template.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T128-01, AC-T128-02, AC-T128-03, AC-T128-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "11 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T128-01",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T128-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T128-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T128-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "4 arquivo(s) alterado(s)"
+    }
+  ]
+}
