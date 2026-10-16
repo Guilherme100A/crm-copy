@@ -71,7 +71,7 @@
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
 | 6 | T52 | Agentes de IA: base de conhecimento | MERGED | Cinzel | Radar | 0 | 6a89eb9 |
-| 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
+| 6 | T53 | UI: empresa, departamentos e horários | IN_PROGRESS | Prumo | (vaga) | 0 | piloto sob demanda; despacho 19:39 |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
@@ -140,6 +140,7 @@
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | VERIFYING | Cinzel | Radar | 0 | T47 integrada; verifies de novo sobre e40a877+ |
+| 8 | T128 | Harness de testes: banco-modelo por hash das migrações | IN_PROGRESS | Forja | (vaga) | 0 | piloto sob demanda; despacho 19:39 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
