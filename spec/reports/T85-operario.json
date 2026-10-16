@@ -3,9 +3,9 @@
   "task": "T85",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T09:50:02.328Z",
-  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
-  "base": "a7bbd86",
+  "at": "2026-10-16T09:59:16.489Z",
+  "commit": "4c660cb9312b3cc600cd5a3888617e44115328d6",
+  "base": "b41d707",
   "changedFiles": [
     "apps/api/src/e2e/index.ts",
     "apps/api/src/e2e/ptt.unit.test.ts",
@@ -25,27 +25,27 @@
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 9.8s"
+      "detail": "ok em 6.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 5.4s"
+      "detail": "ok em 3.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 5.3s"
+      "detail": "ok em 5.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.9s"
+      "detail": "ok em 0.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.0s"
+      "detail": "ok em 3.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

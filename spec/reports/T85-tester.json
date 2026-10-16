@@ -3,9 +3,9 @@
   "task": "T85",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T09:55:36.419Z",
-  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
-  "base": "a7bbd86",
+  "at": "2026-10-16T10:01:27.758Z",
+  "commit": "4c660cb9312b3cc600cd5a3888617e44115328d6",
+  "base": "b41d707",
   "changedFiles": [
     "tests/acceptance/T85/composer.e2e.ts"
   ],
