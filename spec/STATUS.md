@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T34 (Torno/Sonda), T40 (Cinzel/Radar, conserto), T50 (Bigorna/Lupa), T118 (Fole/Prisma).
+- Em andamento (3 pares): T35 (Bigorna/Lupa), T40 (Cinzel/Radar, integração da FK), T68 (Torno/Sonda).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -48,8 +48,8 @@
 | 5 | T31 | Departamentos e horários de atendimento | MERGED | Torno | Sonda | 0 | 9cd0f6a |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
-| 5 | T34 | Vendas, produtos, despesas e grupos de filtro | IN_PROGRESS | Torno | Sonda | 0 | |
-| 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | TODO | | | 0 | |
+| 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
+| 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
@@ -68,7 +68,7 @@
 | 6 | T47 | Conexões: projeção de status, eventos e alertas | TODO | | | 0 | |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
-| 6 | T50 | Kanban: quadros, colunas e cards | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | TODO | | | 0 | |
 | 6 | T52 | Agentes de IA: base de conhecimento | TODO | | | 0 | |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
@@ -96,7 +96,7 @@
 | 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | TODO | | | 0 | |
-| 7 | T68 | Runtime do agente de IA | TODO | | | 0 | |
+| 7 | T68 | Runtime do agente de IA | IN_PROGRESS | Torno | Sonda | 0 | |
 | 7 | T69 | UI chats: lista e filtros | TODO | | | 0 | |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
@@ -130,7 +130,7 @@
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
-| 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | IN_PROGRESS | Fole | Prisma | 0 | |
+| 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
