@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "task": "T19",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T03:42:08.019Z",
+  "commit": "29da6b851e8633cbdda66793ae84ff2ad1ee8a27",
+  "base": "29da6b8",
+  "changedFiles": [
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/core/src/flows/store/errors.ts",
+    "packages/core/src/flows/store/index.ts",
+    "packages/core/src/flows/store/store.db.unit.test.ts",
+    "packages/core/src/flows/store/store.ts",
+    "packages/db/drizzle/crm/0003_t19_flows.sql",
+    "packages/db/drizzle/crm/meta/0003_snapshot.json",
+    "packages/db/src/schema/crm/flows.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/flows/store/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 4.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "10 arquivo(s) alterado(s)"
+    }
+  ]
+}

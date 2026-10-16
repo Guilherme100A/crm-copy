@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "task": "T19",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:42:18.297Z",
+  "commit": "29da6b851e8633cbdda66793ae84ff2ad1ee8a27",
+  "base": "29da6b8",
+  "changedFiles": [
+    "tests/acceptance/T19/constraints.test.ts",
+    "tests/acceptance/T19/store.test.ts",
+    "tests/acceptance/T19/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T19-01, AC-T19-02, AC-T19-03, AC-T19-04, AC-T19-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "2 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "20 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T19-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T19-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T19-03",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T19-04",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T19-05",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "3 arquivo(s) alterado(s)"
+    }
+  ]
+}
