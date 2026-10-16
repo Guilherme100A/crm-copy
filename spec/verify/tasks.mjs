@@ -349,6 +349,9 @@ const RAW = [
   T('T122', 'Redis do harness E2E por worktree e disparos na montagem de produção', ['T74', 'T118', 'T120'],
     ['scripts/e2e/**', 'apps/worker/src/boot/**'], ['api', 'worker'], { e2e: true }),
 
+  T('T123', 'Montagem: eventos dos nós de lógica e CRM e alias customer.name', ['T41', 'T63', 'T120'],
+    ['apps/worker/src/boot/**', 'packages/core/src/templating/**'], ['worker', 'core']),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],

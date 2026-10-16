@@ -2014,6 +2014,16 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T123 — Montagem: eventos dos nós de lógica e CRM e alias customer.name
+**Objetivo:** fechar as pendências de montagem da T41 e da T63 (os nós funcionam mas não publicam no SSE em produção) e a paridade de variável apontada na T85.
+**Paths:** `apps/worker/src/boot/**`, `packages/core/src/templating/**`.
+**Depende de:** T41, T63, T120
+**Entregáveis:** (1) `startProductionWorker` chama `configureLogicNodes({ publisher })` e `configureCrmNodes({ publisher })` com o `RealtimePublisher` do processo. (2) O render (T11) aceita `{{customer.name}}` como alias de `full_name` (e `{name}` se a referência usar), sem mudar as variáveis existentes.
+**Critérios de aceitação**
+- **AC-T123-01** Montado como produção (padrão da T120): um run que passa por um nó distribuidor publica `flow.distributor_updated` recebido por um cliente SSE da empresa.
+- **AC-T123-02** Montado como produção: um nó de etiqueta publica `contact.updated`, um nó de status publica `chat.updated` e um nó de venda aprovada publica `notification.created`, todos recebidos via SSE.
+- **AC-T123-03** `{{customer.name}}` renderiza o nome completo do contato; os testes de templating existentes (T11) continuam passando sem alteração.
+
 ### T122 — Redis do harness E2E por worktree e disparos na montagem de produção
 **Objetivo:** dois achados das ondas 7–8: (a) o harness E2E (T17/T118) usa Redis db 14 fixo e dois harnesses simultâneos dividem o stream `wsm:events`/grupo `crm`, perdendo eventos (T75); (b) o boot de produção (T120) não chama `configureMassDispatch` (T74).
 **Paths:** `scripts/e2e/**`, `apps/worker/src/boot/**`.
