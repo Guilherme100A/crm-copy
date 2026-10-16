@@ -106,7 +106,7 @@ Envio: `maestri ask "Claude Code" "<mensagem>"`.
 - O verify roda com `--base <commit de partida>`, o que torna a **checagem de escopo bloqueante**.
 - Duas tarefas da mesma onda têm **Paths disjuntos** (garantido pela seção 4). A sobreposição permitida é só nos **arquivos compartilhados** (lista exata em `SHARED_PATHS` de `spec/verify/tasks.mjs`), que só podem ser alterados de forma **aditiva**:
   - manifestos (`package.json`s, `pnpm-lock.yaml`, `pnpm-workspace.yaml`), `.env.example`, `docs/**`;
-  - pontos de registro: `packages/*/src/index.ts`, `apps/api/src/routes/index.ts`, `apps/worker/src/registry.ts`, `apps/web/src/app/nav.ts`, `apps/web/src/features/settings/tabs.ts`, `apps/web/src/routeTree.gen.ts` (gerado);
+  - pontos de registro: `packages/*/src/index.ts`, `apps/*/src/index.ts`, `apps/api/src/routes/index.ts`, `apps/worker/src/registry.ts`, `apps/web/src/app/nav.ts`, `apps/web/src/features/settings/tabs.ts`, `apps/web/src/routeTree.gen.ts` (gerado);
   - catálogos: `packages/shared/src/permissions/catalog.ts`, `packages/shared/src/realtime/events.ts`, `packages/shared/src/errors/codes.ts`;
   - banco: `packages/db/src/schema/crm/index.ts`, `packages/db/drizzle/crm/**`, `packages/db/src/seed/modules/**`.
 - **Migrations:** cada tarefa que cria tabela escreve o schema em `packages/db/src/schema/crm/<módulo>.ts` (Path da própria tarefa) e gera **uma migration nova** com `pnpm --filter @crm/db db:generate:crm --name <txx>_<slug>`. Nunca edita migration existente. Se o journal conflitar na integração, o Orquestrador pede ao Operário que **regenere** a migration sobre o `main` atualizado.

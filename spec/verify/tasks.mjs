@@ -28,6 +28,7 @@ export const SHARED_PATHS = [
   'apps/*/package.json',
   'packages/*/package.json',
   'packages/*/src/index.ts',
+  'apps/*/src/index.ts',
   'apps/api/src/routes/index.ts',
   'apps/worker/src/registry.ts',
   'apps/web/src/routeTree.gen.ts',
@@ -46,6 +47,8 @@ export const SHARED_PATHS = [
 export const IGNORED_PATHS = [
   'spec/reports/**',
   'spec/STATUS.md',
+  'spec/verify/**', // só o Orquestrador altera; sincronizado nos worktrees ativos
+  'spec/SPEC.md',
   '**/node_modules/**',
   '**/dist/**',
   'test-results/**',
