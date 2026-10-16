@@ -5,6 +5,7 @@ import { authRoutes } from './auth/index'
 import { healthRoutes } from './health/index'
 import { eventsRoutes } from './events/index'
 import { contactsImportRoutes } from './contacts-import/index'
+import { contactsBulkRoutes } from './contacts-bulk/index'
 import { contactsRoutes } from './contacts/index'
 import { labelsRoutes } from './labels/index'
 import { customFieldsRoutes } from './custom-fields/index'
@@ -38,6 +39,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', authRoutes(deps))
   app.route('/', eventsRoutes(deps))
   app.route('/', contactsImportRoutes(deps)) // antes de /api/contacts/:id (T67)
+  app.route('/', contactsBulkRoutes(deps)) // antes de /api/contacts/:id (T66)
   app.route('/', contactsRoutes(deps))
   app.route('/', labelsRoutes(deps))
   app.route('/', customFieldsRoutes(deps))

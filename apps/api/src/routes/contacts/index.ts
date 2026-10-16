@@ -72,15 +72,17 @@ function toInput(b: Body): ContactInput {
 }
 
 /** `?label_ids=a&label_ids=b`, `?label_ids[]=a` ou `?label_ids=a,b`. */
-const idList = z.preprocess(
+export const idList = z.preprocess(
   (v) => (v === undefined ? undefined : (Array.isArray(v) ? v : [v]).flatMap((x) => String(x).split(',')).map((x) => x.trim()).filter(Boolean)),
   z.array(z.uuid()).max(100).optional(),
 )
 const date = z.iso.date().optional()
 
-const listQuery = pageQuerySchema.extend({
+export const listQuery = pageQuerySchema.extend({
   search: z.string().max(200).optional(),
   label_ids: idList,
+  // T66: contatos com card do kanban (de algum chat) numa destas colunas.
+  crm_column_ids: idList,
   custom_field_key: z.string().max(255).optional(),
   custom_field_value: z.string().max(500).optional(),
   created_at_from: date,
@@ -92,16 +94,16 @@ const duplicatesQuery = z.object({ name: z.string().max(200).optional(), phone: 
 const mergeSchema = z.object({ lid: z.string().min(1).max(64), pn: z.string().min(1).max(64) }).strict()
 
 /** Query com chaves repetidas (`label_ids`) e o formato `label_ids[]`. */
-function rawQuery(c: Context<AppEnv>): Record<string, unknown> {
+export function rawQuery(c: Context<AppEnv>): Record<string, unknown> {
   const out: Record<string, unknown> = {}
   for (const [k, values] of Object.entries(c.req.queries())) {
     const key = k.endsWith('[]') ? k.slice(0, -2) : k
-    out[key] = key === 'label_ids' ? [...((out[key] as string[] | undefined) ?? []), ...values] : values.at(-1)
+    out[key] = key === 'label_ids' || key === 'crm_column_ids' ? [...((out[key] as string[] | undefined) ?? []), ...values] : values.at(-1)
   }
   return out
 }
 
-const nextDay = (d: string) => new Date(new Date(`${d}T00:00:00Z`).getTime() + 86_400_000)
+export const nextDay = (d: string) => new Date(new Date(`${d}T00:00:00Z`).getTime() + 86_400_000)
 
 export function contactsRoutes(deps: ResolvedDeps) {
   const service = new ContactsService({ db: deps.db, ...(deps.waGateway ? { waGateway: deps.waGateway } : {}) })
@@ -117,6 +119,7 @@ export function contactsRoutes(deps: ResolvedDeps) {
         skipTotal: q.skip_total || q.skip_total_count === '1' || q.skip_total_count === 'true',
         ...(q.search ? { search: q.search } : {}),
         ...(q.label_ids?.length ? { labelIds: q.label_ids } : {}),
+        ...(q.crm_column_ids?.length ? { crmColumnIds: q.crm_column_ids } : {}),
         ...(q.custom_field_key ? { customFieldKey: q.custom_field_key } : {}),
         ...(q.custom_field_value ? { customFieldValue: q.custom_field_value } : {}),
         ...(q.created_at_from ? { createdAtFrom: new Date(`${q.created_at_from}T00:00:00Z`) } : {}),

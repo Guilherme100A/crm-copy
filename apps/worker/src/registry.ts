@@ -12,6 +12,7 @@ import { registerAiAgentConsumer } from './consumers/ai-agent'
 import { registerExportsJob } from './jobs/exports'
 import { registerFlowTriggersConsumer } from './consumers/flow-triggers'
 import { registerContactsImportJob } from './jobs/contacts-import'
+import { registerContactsBulkJobs } from './jobs/contacts-bulk'
 
 export interface QueueDefinition {
   name: string
@@ -76,3 +77,4 @@ registerAiAgentConsumer()
 registerExportsJob(registry)
 registerFlowTriggersConsumer()
 registerContactsImportJob()
+registerContactsBulkJobs()

@@ -61,16 +61,23 @@ export interface ContactInput {
   adMediaUrl?: string | null
 }
 
-export interface ListContactsQuery {
-  page: number
-  limit: number
-  skipTotal?: boolean
+/** Filtros da listagem (05 §3.3), também usados pela exportação e pela exclusão em massa (T66). */
+export interface ContactFilters {
   search?: string
+  /** Etiqueta no contato OU em algum chat dele (T66); várias = qualquer uma. */
   labelIds?: string[]
+  /** Contato com card do kanban (de algum chat dele) numa destas colunas (T66). */
+  crmColumnIds?: string[]
   customFieldKey?: string
   customFieldValue?: string
   createdAtFrom?: Date
   createdAtTo?: Date
+}
+
+export interface ListContactsQuery extends ContactFilters {
+  page: number
+  limit: number
+  skipTotal?: boolean
 }
 
 export interface WhatsAppContactInput {
@@ -172,6 +179,42 @@ function searchCondition(raw: string): SQL | undefined {
   return or(...parts)
 }
 
+/**
+ * Condições SQL dos filtros (sempre com a empresa). Etiqueta: no contato ou num chat dele; etapa do kanban: card de
+ * algum chat do contato na coluna; campo personalizado: tem a chave e, com valor, contém (sem diferenciar caixa).
+ */
+export function contactFilterConditions(companyId: string, q: ContactFilters): SQL[] {
+  const conds: SQL[] = [eq(contacts.companyId, companyId)]
+  const search = q.search ? searchCondition(q.search) : undefined
+  if (search) conds.push(search)
+  if (q.labelIds?.length) {
+    const ids = sql.join(
+      q.labelIds.map((id) => sql`${id}::uuid`),
+      sql`, `,
+    )
+    conds.push(sql`(
+      exists (select 1 from ${contactLabels} where ${contactLabels.contactId} = ${contacts.id} and ${contactLabels.labelId} in (${ids}))
+      or exists (select 1 from crm.chats ch join crm.chat_labels cl on cl.chat_id = ch.id
+                 where ch.contact_id = ${contacts.id} and ch.company_id = ${companyId} and cl.label_id in (${ids})))`)
+  }
+  if (q.crmColumnIds?.length) {
+    const ids = sql.join(
+      q.crmColumnIds.map((id) => sql`${id}::uuid`),
+      sql`, `,
+    )
+    conds.push(sql`exists (select 1 from crm.chats ch join crm.crm_cards cc on cc.chat_id = ch.id
+                 where ch.contact_id = ${contacts.id} and ch.company_id = ${companyId} and cc.column_id in (${ids}))`)
+  }
+  if (q.customFieldKey) {
+    const key = q.customFieldKey.trim().toLowerCase()
+    if (q.customFieldValue) conds.push(sql`${contacts.customFields} ->> ${key} ilike ${`%${q.customFieldValue}%`}`)
+    else conds.push(sql`${contacts.customFields} ? ${key}`)
+  }
+  if (q.createdAtFrom) conds.push(gte(contacts.createdAt, q.createdAtFrom))
+  if (q.createdAtTo) conds.push(lt(contacts.createdAt, q.createdAtTo))
+  return conds
+}
+
 export class ContactsService {
   private readonly db: Database
   private readonly fields: CustomFieldsService
@@ -192,22 +235,7 @@ export class ContactsService {
   }
 
   async list(companyId: string, q: ListContactsQuery): Promise<{ items: ContactDto[]; page: PageMeta }> {
-    const conds: SQL[] = [eq(contacts.companyId, companyId)]
-    const search = q.search ? searchCondition(q.search) : undefined
-    if (search) conds.push(search)
-    if (q.labelIds?.length) {
-      conds.push(
-        sql`exists (select 1 from ${contactLabels} where ${contactLabels.contactId} = ${contacts.id} and ${inArray(contactLabels.labelId, q.labelIds)})`,
-      )
-    }
-    if (q.customFieldKey) {
-      const key = q.customFieldKey.trim().toLowerCase()
-      if (q.customFieldValue) conds.push(sql`${contacts.customFields} ->> ${key} ilike ${`%${q.customFieldValue}%`}`)
-      else conds.push(sql`${contacts.customFields} ? ${key}`)
-    }
-    if (q.createdAtFrom) conds.push(gte(contacts.createdAt, q.createdAtFrom))
-    if (q.createdAtTo) conds.push(lt(contacts.createdAt, q.createdAtTo))
-    const where = and(...conds)
+    const where = and(...contactFilterConditions(companyId, q))
 
     const rows = await this.db
       .select()
