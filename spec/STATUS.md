@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T66 (Bigorna/Lupa), T69 (Torno/Sonda), T120 (Cinzel/Radar).
+- Em andamento (3 pares): T60 (Bigorna/Lupa), T69 (Torno/Sonda), T120 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -78,7 +78,7 @@
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | TODO | | | 0 | |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
-| 6 | T60 | Disparos em massa: API e cota | TODO | | | 0 | |
+| 6 | T60 | Disparos em massa: API e cota | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | TODO | | | 0 | |
 | 6 | T80 | Vozes (ElevenLabs) | TODO | | | 0 | |
@@ -95,7 +95,7 @@
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | TODO | | | 0 | |
 | 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
-| 7 | T66 | Contatos: filtros avançados e ações em massa | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | IN_PROGRESS | Torno | Sonda | 0 | |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
