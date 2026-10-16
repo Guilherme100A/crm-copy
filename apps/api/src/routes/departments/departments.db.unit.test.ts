@@ -2,7 +2,7 @@ import { randomBytes } from 'node:crypto'
 import { eq } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { passesScope } from '@crm/core'
-import { chats, companyMembers, contacts, createDb, flows, memberDepartments, users, type Database } from '@crm/db'
+import { chats, companyMembers, connections, contacts, createDb, flows, memberDepartments, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../../app'
@@ -41,6 +41,9 @@ beforeAll(async () => {
   db = createDb(temp.url, { max: 6 })
   redis = redisConnection({ url: process.env.REDIS_URL ?? 'redis://127.0.0.1:6379/1' })
   app = createApp({ db, redis, mailer: new MemoryMailer(), trustProxy: true, logger: createLogger({ level: 'silent' }) })
+  // T40: chats/member_connections/business_hour_configs.connection_id referenciam crm.connections.
+  const owner = await signUp()
+  await db.insert(connections).values({ id: CONN, companyId: owner.companyId, sessionId: `s-${rnd()}`, name: 'Conexão' })
 }, 60_000)
 
 afterAll(async () => {

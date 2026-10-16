@@ -6,6 +6,7 @@ import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createClient, type ApiClient } from '../helpers/http'
 import { fakeEmail, uniqueId } from '../helpers/factories'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -109,10 +110,12 @@ export async function insertFlow(env: Env, companyId: string, name = uniqueId('F
 
 export async function insertChat(env: Env, companyId: string, departmentId: string | null) {
   const [contact] = await env.q(`INSERT INTO crm.contacts (company_id, name) VALUES ($1, $2) RETURNING id`, [companyId, uniqueId('Contato')])
-  const [chat] = await env.q(`INSERT INTO crm.chats (company_id, connection_id, contact_id, department_id) VALUES ($1, gen_random_uuid(), $2, $3) RETURNING id`, [
+  const connectionId = await ensureConnection(env.q, companyId)
+  const [chat] = await env.q(`INSERT INTO crm.chats (company_id, connection_id, contact_id, department_id) VALUES ($1, $4, $2, $3) RETURNING id`, [
     companyId,
     contact.id,
     departmentId,
+    connectionId,
   ])
   return chat.id as string
 }
@@ -121,3 +124,6 @@ export const fieldPaths = (res: { body: Any }) =>
   (res.body?.error?.details?.fields ?? []).map((f: Any) => (Array.isArray(f.path) ? f.path.join('.') : String(f.path)))
 
 export const uuid = () => crypto.randomUUID()
+
+/** Conexão real da empresa (FK connection_id desde a T40). */
+export const newConnection = (env: Env, companyId: string) => ensureConnection(env.q, companyId)

@@ -2,7 +2,7 @@
 import { randomBytes } from 'node:crypto'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { FlowControl, FlowEngine, type FlowStepJobData, type FlowTimerJobData } from '@crm/core'
-import { chats, companyMembers, contacts, createDb, flowRuns, type Database } from '@crm/db'
+import { chats, companyMembers, connections, contacts, createDb, flowRuns, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -54,6 +54,8 @@ async function activeFlow(a: Who) {
 
 async function chat(a: Who, connectionId = crypto.randomUUID()) {
   const [c] = await db.insert(contacts).values({ companyId: a.companyId, name: 'Lead', phoneE164: `+55119${Math.floor(10_000_000 + Math.random() * 89_999_999)}` }).returning()
+  // T40: chats.connection_id referencia crm.connections.
+  await db.insert(connections).values({ id: connectionId, companyId: a.companyId, sessionId: `s-${rnd()}`, name: 'Conexão' }).onConflictDoNothing()
   const [ch] = await db.insert(chats).values({ companyId: a.companyId, connectionId, contactId: c!.id }).returning()
   return { chatId: ch!.id, contactId: c!.id, connectionId }
 }

@@ -10,6 +10,7 @@ import { MemoryMailer, redisConnection } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
 import { createClient, type ApiClient } from '../helpers/http'
 import { fakeEmail, uniqueId } from '../helpers/factories'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -169,12 +170,13 @@ export async function seedChat(env: Env, companyId: string, s: ChatSeed = {}) {
   const msgs = s.messages ?? []
   const lastAt = msgs.length ? new Date(Date.parse(createdAt) + msgs.length * 1000).toISOString() : null
   const lastInbound = msgs.lastIndexOf('in')
+  const connectionId = await ensureConnection(env.q, companyId, s.connectionId ? { id: s.connectionId } : {})
   const [chat] = await env.q(
     `INSERT INTO crm.chats (company_id, connection_id, contact_id, status, department_id, assigned_user_id, created_at, opened_at, last_message_at, last_inbound_at, resolved_at)
-     VALUES ($1, coalesce($2::uuid, gen_random_uuid()), $3, $4, $5, $6, $7, $7, $8, $9, $10) RETURNING id`,
+     VALUES ($1, $2::uuid, $3, $4, $5, $6, $7, $7, $8, $9, $10) RETURNING id`,
     [
       companyId,
-      s.connectionId ?? null,
+      connectionId,
       contact.id,
       s.status ?? 'waiting',
       s.departmentId ?? null,

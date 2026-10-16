@@ -7,6 +7,7 @@ import { randomBytes, randomUUID } from 'node:crypto'
 import { createDb } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FakeWaGateway } from '@crm/wa-port/testing'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -55,6 +56,7 @@ export async function tenant(env: Env, settings: Record<string, unknown> = {}) {
   const published: Published[] = []
   const inbound: Any[] = []
   const gateway = new FakeWaGateway()
+  await ensureConnection(env.q, companyId, { id: connectionId, sessionId })
   const sessions = new Map([[sessionId, { companyId, connectionId }]])
   const deps = {
     db: env.db,

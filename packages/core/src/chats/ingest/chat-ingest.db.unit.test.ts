@@ -1,6 +1,6 @@
 // Postgres real (SPEC 3.10): banco descartável; FakeWaGateway e publisher em memória.
-import { randomBytes, randomUUID } from 'node:crypto'
-import { auditLogs, chats, companies, contacts, createDb, messages, type Database } from '@crm/db'
+import { randomBytes } from 'node:crypto'
+import { auditLogs, chats, companies, connections, contacts, createDb, messages, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import type { IncomingMessage, WaEvent } from '@crm/wa-port'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -27,8 +27,10 @@ async function setup(settings: Record<string, unknown> = {}) {
   const slug = `c-${randomBytes(4).toString('hex')}`
   const [company] = await db.insert(companies).values({ name: slug, slug, settings }).returning({ id: companies.id })
   const companyId = company!.id
-  const connectionId = randomUUID()
   const sessionId = `sess-${randomBytes(4).toString('hex')}`
+  // T40: chats.connection_id referencia crm.connections; a conexão precisa existir.
+  const [connection] = await db.insert(connections).values({ companyId, sessionId, name: 'Conexão teste' }).returning({ id: connections.id })
+  const connectionId = connection!.id
   const gw = new FakeWaGateway()
   const published: Array<{ type: string; data: Record<string, unknown> }> = []
   const inbound: CrmInboundEvent[] = []

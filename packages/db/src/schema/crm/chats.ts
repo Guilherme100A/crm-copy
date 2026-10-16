@@ -2,6 +2,7 @@ import { sql } from 'drizzle-orm'
 import { boolean, index, integer, jsonb, primaryKey, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
 import { companies, users } from './base.js'
 import { aiAgents } from './ai-agents.js'
+import { connections } from './connections.js'
 import { contacts, labels } from './contacts.js'
 import { departments } from './departments.js'
 import { createdAt, crm, updatedAt } from './schema.js'
@@ -30,7 +31,10 @@ export const chats = crm.table(
     companyId: uuid('company_id')
       .notNull()
       .references(() => companies.id, { onDelete: 'cascade' }),
-    connectionId: uuid('connection_id').notNull(),
+    // FK da T40: não se apaga conexão com chats (a exclusão definitiva decide o destino deles).
+    connectionId: uuid('connection_id')
+      .notNull()
+      .references(() => connections.id, { onDelete: 'restrict' }),
     contactId: uuid('contact_id')
       .notNull()
       .references(() => contacts.id, { onDelete: 'cascade' }),

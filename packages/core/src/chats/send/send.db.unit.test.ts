@@ -3,7 +3,7 @@ import { randomBytes, randomUUID } from 'node:crypto'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { chats, companies, contacts, createDb, messages, users, type Database } from '@crm/db'
+import { chats, companies, connections, contacts, createDb, messages, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FsBlobStore } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -34,7 +34,9 @@ async function setup() {
   const [company] = await db.insert(companies).values({ name: slug, slug }).returning({ id: companies.id })
   const [user] = await db.insert(users).values({ email: `${slug}@x.com`, passwordHash: 'x', name: 'Bia' }).returning({ id: users.id })
   const [contact] = await db.insert(contacts).values({ companyId: company!.id, name: 'Ana', phoneE164: '+5511999990001' }).returning({ id: contacts.id })
-  const [chat] = await db.insert(chats).values({ companyId: company!.id, connectionId: randomUUID(), contactId: contact!.id }).returning()
+  // T40: chats.connection_id referencia crm.connections.
+  const [connection] = await db.insert(connections).values({ companyId: company!.id, sessionId: `sess-${slug}`, name: 'Conexão teste' }).returning({ id: connections.id })
+  const [chat] = await db.insert(chats).values({ companyId: company!.id, connectionId: connection!.id, contactId: contact!.id }).returning()
   const gw = new FakeWaGateway({ sessions: [{ id: 'sess-1', state: 'STABLE' }] })
   const published: Array<{ type: string; data: Record<string, unknown> }> = []
   const conversions: string[] = []

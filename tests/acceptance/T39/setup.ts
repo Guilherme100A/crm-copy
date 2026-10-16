@@ -12,6 +12,7 @@ import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FsBlobStore, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createClient, type ApiClient } from '../helpers/http'
 import { fakeEmail, uniqueId } from '../helpers/factories'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -166,8 +167,8 @@ export async function linkFlow(env: Env, companyId: string, agentId: string) {
 export async function linkChat(env: Env, companyId: string, agentId: string, status: 'waiting' | 'attending' | 'resolved') {
   const [contact] = await env.q(`INSERT INTO crm.contacts (company_id, name) VALUES ($1, $2) RETURNING id`, [companyId, uniqueId('Contato')])
   const [chat] = await env.q(
-    `INSERT INTO crm.chats (company_id, connection_id, contact_id, status, ai_agent_id) VALUES ($1, gen_random_uuid(), $2, $3, $4) RETURNING id`,
-    [companyId, contact.id, status, agentId],
+    `INSERT INTO crm.chats (company_id, connection_id, contact_id, status, ai_agent_id) VALUES ($1, $5, $2, $3, $4) RETURNING id`,
+    [companyId, contact.id, status, agentId, await ensureConnection(env.q, companyId)],
   )
   return chat.id as string
 }

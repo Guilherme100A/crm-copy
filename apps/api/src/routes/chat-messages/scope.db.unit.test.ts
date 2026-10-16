@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { count, eq, isNotNull } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { chats, companyMembers, contacts, createDb, departments, messageReactions, messages, users, type Database } from '@crm/db'
+import { chats, companyMembers, connections, contacts, createDb, departments, messageReactions, messages, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, FsBlobStore, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -90,6 +90,8 @@ beforeAll(async () => {
     logger: createLogger({ level: 'silent' }),
   })
   owner = await signUp()
+  // T40: chats.connection_id referencia crm.connections.
+  await db.insert(connections).values({ id: CONN, companyId: owner.companyId, sessionId: `s-${rnd()}`, name: 'Conexão' })
   const [x] = await db.insert(departments).values({ companyId: owner.companyId, name: 'X' }).returning({ id: departments.id })
   const [y] = await db.insert(departments).values({ companyId: owner.companyId, name: 'Y' }).returning({ id: departments.id })
   deptX = x!.id

@@ -3,7 +3,7 @@
 import { afterAll, afterEach, beforeAll, describe, expect, it } from 'vitest'
 import { expectApiError } from '../helpers/http'
 import { connectSse, envelopeOf, sleep, summary, type SseConnection } from '../helpers/sse'
-import { addMember, createDepartment, type Env, fieldPaths, insertChat, insertFlow, newOwner, startEnv, uuid } from './setup'
+import { addMember, createDepartment, type Env, fieldPaths, insertChat, insertFlow, newConnection, newOwner, startEnv, uuid } from './setup'
 
 let env: Env
 const open: SseConnection[] = []
@@ -111,7 +111,7 @@ describe('T31 — horários de atendimento', () => {
 
   it('AC-T31-03 config ativa com ação message sem texto → 422 message_text', async () => {
     const o = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, o.companyId)
     for (const message_text of [undefined, '', '   ']) {
       const res = await o.c.put(`/api/business-hours/${conn}`, { active: true, action_type: 'message', message_text, business_hours: hours([[1, '09:00', '18:00']]) })
       expectApiError(res, 'VALIDATION_ERROR', 422)
@@ -122,7 +122,7 @@ describe('T31 — horários de atendimento', () => {
   it('AC-T31-03 config ativa com ação flow sem fluxo (ou fluxo de outra empresa) → 422 flow_id', async () => {
     const o = await newOwner(env)
     const other = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, o.companyId)
     const none = await o.c.put(`/api/business-hours/${conn}`, { active: true, action_type: 'flow', business_hours: hours([[1, '09:00', '18:00']]) })
     expectApiError(none, 'VALIDATION_ERROR', 422)
     expect(fieldPaths(none)).toContain('flow_id')
@@ -134,7 +134,7 @@ describe('T31 — horários de atendimento', () => {
 
   it('AC-T31-03 PUT substitui config e intervalos', async () => {
     const o = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, o.companyId)
     const first = await o.c.put(`/api/business-hours/${conn}`, {
       active: true,
       action_type: 'message',
@@ -163,7 +163,7 @@ describe('T31 — horários de atendimento', () => {
     ['day_of_week', { day_of_week: 7, start_time: '09:00', end_time: '10:00', active: true }],
   ])('AC-T31-03 PUT com intervalo inválido (%s) → 422 e a config anterior fica intacta (transação)', async (_field, bad) => {
     const o = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, o.companyId)
     const okBody = { active: true, action_type: 'message', message_text: 'Volte amanhã', business_hours: hours([[1, '09:00', '18:00']]) }
     expect((await o.c.put(`/api/business-hours/${conn}`, okBody)).status).toBe(200)
     const before = (await o.c.get(`/api/business-hours/${conn}`)).body.config
@@ -186,7 +186,7 @@ describe('T31 — horários de atendimento', () => {
   it('AC-T31-03 config de horário de outra empresa não vaza', async () => {
     const a = await newOwner(env)
     const b = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, a.companyId)
     await a.c.put(`/api/business-hours/${conn}`, { active: true, action_type: 'message', message_text: 'Fechado A', business_hours: hours([[1, '09:00', '18:00']]) })
     const got = await b.c.get(`/api/business-hours/${conn}`)
     expect(got.body?.config?.message_text ?? null).not.toBe('Fechado A')
@@ -194,7 +194,7 @@ describe('T31 — horários de atendimento', () => {
 
   it('AC-T31-03 DELETE de fluxo referenciado por horário de atendimento → 409 com a referência', async () => {
     const o = await newOwner(env)
-    const conn = uuid()
+    const conn = await newConnection(env, o.companyId)
     const flowId = await insertFlow(env, o.companyId)
     const put = await o.c.put(`/api/business-hours/${conn}`, { active: true, action_type: 'flow', flow_id: flowId, business_hours: hours([[1, '09:00', '18:00']]) })
     expect(put.status, put.text).toBe(200)

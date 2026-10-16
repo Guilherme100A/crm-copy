@@ -1,7 +1,7 @@
 // Kanban por HTTP + integração com a lista de chats (T48/T50), Postgres real.
 import { randomBytes } from 'node:crypto'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { chats, companyMembers, contacts, createDb, type Database } from '@crm/db'
+import { chats, companyMembers, connections, contacts, createDb, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../../app'
@@ -39,7 +39,9 @@ async function owner(): Promise<Who> {
 
 async function chat(companyId: string) {
   const [ct] = await db.insert(contacts).values({ companyId, name: 'Lead', phoneE164: `+55119${Math.floor(10_000_000 + Math.random() * 89_999_999)}` }).returning()
-  const [ch] = await db.insert(chats).values({ companyId, connectionId: crypto.randomUUID(), contactId: ct!.id }).returning()
+  // T40: chats.connection_id referencia crm.connections.
+  const [conn] = await db.insert(connections).values({ companyId, sessionId: `s-${rnd()}`, name: 'Conexão' }).returning()
+  const [ch] = await db.insert(chats).values({ companyId, connectionId: conn!.id, contactId: ct!.id }).returning()
   return ch!.id
 }
 

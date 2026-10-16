@@ -1,6 +1,6 @@
 // Postgres real: colunas (0..n−1), cards (ordem, 409, totais, filtro OU), exclusão de coluna e escopo de chat.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { chatLabels, chats, companies, companyMembers, contacts, createDb, departments, labels, memberDepartments, users, type Database } from '@crm/db'
+import { chatLabels, chats, companies, companyMembers, connections, contacts, createDb, departments, labels, memberDepartments, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { KanbanError } from './errors'
 import { KanbanService, createKanbanCard, systemActor } from './service'
@@ -25,7 +25,9 @@ async function company() {
 async function chat(companyId: string, opts: { departmentId?: string | null } = {}) {
   n += 1
   const [ct] = await db.insert(contacts).values({ companyId, name: `Lead ${n}`, phoneE164: `+55119777${String(n).padStart(5, '0')}` }).returning()
-  const [ch] = await db.insert(chats).values({ companyId, connectionId: crypto.randomUUID(), contactId: ct!.id, departmentId: opts.departmentId ?? null }).returning()
+  // T40: chats.connection_id referencia crm.connections.
+  const [conn] = await db.insert(connections).values({ companyId, sessionId: `s-${crypto.randomUUID()}`, name: 'Conexão' }).returning()
+  const [ch] = await db.insert(chats).values({ companyId, connectionId: conn!.id, contactId: ct!.id, departmentId: opts.departmentId ?? null }).returning()
   return ch!.id
 }
 

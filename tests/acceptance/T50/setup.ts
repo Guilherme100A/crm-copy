@@ -9,6 +9,7 @@ import { FakeWaGateway } from '@crm/wa-port/testing'
 import { createClient, type ApiClient } from '../helpers/http'
 import { fakeEmail, fakePhone, uniqueId } from '../helpers/factories'
 import { connectSse, type SseConnection } from '../helpers/sse'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -116,8 +117,8 @@ export interface ChatSeed {
 export async function seedChat(env: Env, companyId: string, s: ChatSeed = {}): Promise<string> {
   const [ct] = await env.q(`INSERT INTO crm.contacts (company_id, name, phone_e164) VALUES ($1, $2, $3) RETURNING id`, [companyId, s.name ?? uniqueId('Contato'), fakePhone()])
   const [ch] = await env.q(
-    `INSERT INTO crm.chats (company_id, connection_id, contact_id, status, department_id) VALUES ($1, gen_random_uuid(), $2, $3, $4) RETURNING id`,
-    [companyId, ct.id, s.status ?? 'waiting', s.departmentId ?? null],
+    `INSERT INTO crm.chats (company_id, connection_id, contact_id, status, department_id) VALUES ($1, $5, $2, $3, $4) RETURNING id`,
+    [companyId, ct.id, s.status ?? 'waiting', s.departmentId ?? null, await ensureConnection(env.q, companyId)],
   )
   return ch.id
 }

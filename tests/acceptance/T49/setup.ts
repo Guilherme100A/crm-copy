@@ -12,6 +12,7 @@ import { FsBlobStore, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
 import { createClient } from '../helpers/http'
 import { fakeEmail, uniqueId } from '../helpers/factories'
+import { ensureConnection } from '../helpers/connections'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Any = any
@@ -122,6 +123,7 @@ export async function owner(env: Env): Promise<Owner> {
   const sessionId = env.gateway.addSession({ state: 'STABLE' }).id
   env.sessions.set(`${companyId}:${connectionId}`, sessionId)
   env.connections.set(sessionId, { companyId, connectionId })
+  await ensureConnection(env.q, companyId, { id: connectionId, sessionId })
   return { c, userId: row.id, companyId, connectionId, sessionId }
 }
 

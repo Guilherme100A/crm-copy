@@ -1,7 +1,7 @@
 import { randomBytes } from 'node:crypto'
 import { eq } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { chats, companyMembers, contacts, createDb, departments, messages, users, type Database } from '@crm/db'
+import { chats, companyMembers, connections, contacts, createDb, departments, messages, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -99,6 +99,9 @@ beforeAll(async () => {
     logger: createLogger({ level: 'silent' }),
     chatPublisher: { publish: async (companyId, type, data, opts) => void published.push({ companyId, type, data, scope: opts?.scope }) },
   })
+  // T40: chats.connection_id referencia crm.connections.
+  const holder = await signUp()
+  await db.insert(connections).values({ id: CONN, companyId: holder.companyId, sessionId: `s-${rnd()}`, name: 'Conexão' })
 }, 60_000)
 
 afterAll(async () => {

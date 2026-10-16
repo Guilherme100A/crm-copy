@@ -1,6 +1,6 @@
 // Ponta a ponta: XADD no stream → StreamConsumer → ingest de chats → Postgres (banco descartável, Redis db 1).
-import { randomBytes, randomUUID } from 'node:crypto'
-import { chats, companies, createDb, messages, type Database } from '@crm/db'
+import { randomBytes } from 'node:crypto'
+import { chats, companies, connections, createDb, messages, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { redisConnection } from '@crm/node-kit'
 import { eq } from 'drizzle-orm'
@@ -46,10 +46,12 @@ describe('consumidor de chats', () => {
     const inbound: string[] = []
     const off = onCrmInbound((e) => void inbound.push(e.message_id))
 
+    // T40: chats.connection_id referencia crm.connections.
+    const [connection] = await db.insert(connections).values({ companyId, sessionId, name: 'Conexão teste' }).returning({ id: connections.id })
     const registry = registerChatsConsumer(createRegistry(), {
       db,
       publisher: { publish: async (_c, type) => void published.push(type) },
-      resolveConnection: async (sid) => (sid === sessionId ? { companyId, connectionId: randomUUID() } : null),
+      resolveConnection: async (sid) => (sid === sessionId ? { companyId, connectionId: connection!.id } : null),
     })
     const app = await startWorker({ registry, db, redis, consumer: { stream, group: `g-${slug}`, blockMs: 50 }, handleSignals: false, exitProcess: false })
     try {

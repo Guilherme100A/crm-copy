@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { eq, sql } from 'drizzle-orm'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import { AGENT_SETTINGS_DEFAULTS } from '@crm/core'
-import { chats, companies, companyMembers, contacts, createDb, flowNodeActions, flowNodes, flows, platformSettings, users, type Database } from '@crm/db'
+import { chats, companies, companyMembers, connections, contacts, createDb, flowNodeActions, flowNodes, flows, platformSettings, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, FsBlobStore, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { createApp, type RedisClient } from '../../app'
@@ -207,9 +207,11 @@ describe('AC-T39-05 excluir com referências', () => {
     const [node] = await db.insert(flowNodes).values({ companyId: s.companyId, flowId: flow!.id, key: 'n1', type: 'ai_agent', name: 'Agente', positionX: 0, positionY: 0 }).returning({ id: flowNodes.id })
     await db.insert(flowNodeActions).values({ companyId: s.companyId, nodeId: node!.id, key: 'a1', type: 'control_ai_agent', config: { mode: 'activate', agent_id: agent.id } })
     const [contact] = await db.insert(contacts).values({ companyId: s.companyId, name: 'Cli' }).returning({ id: contacts.id })
+    // T40: chats.connection_id referencia crm.connections.
+    const [connection] = await db.insert(connections).values({ companyId: s.companyId, sessionId: `sess-${rnd()}`, name: 'Conexão teste' }).returning({ id: connections.id })
     const [chat] = await db
       .insert(chats)
-      .values({ companyId: s.companyId, connectionId: '00000000-0000-4000-8000-0000000000c1', contactId: contact!.id, status: 'attending', aiAgentId: agent.id })
+      .values({ companyId: s.companyId, connectionId: connection!.id, contactId: contact!.id, status: 'attending', aiAgentId: agent.id })
       .returning({ id: chats.id })
 
     const res = await call(s, 'DELETE', `/api/ai-agents/${agent.id}`)

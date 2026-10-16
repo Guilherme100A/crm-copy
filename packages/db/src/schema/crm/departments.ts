@@ -1,12 +1,13 @@
 import { sql } from 'drizzle-orm'
 import { boolean, check, index, integer, primaryKey, smallint, text, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
 import { companies, companyMembers } from './base.js'
+import { connections } from './connections.js'
 import { flows } from './flows.js'
 import { createdAt, crm, updatedAt } from './schema.js'
 
 // Departamentos, escopo de chat por membro e horários de atendimento por conexão (T31; 16 §3.2–3.3).
-// Toda tabela tem company_id (SPEC 3.3) com índice começando por ele. `connection_id` é uuid solto: a tabela de
-// conexões é da T40, que acrescenta a FK.
+// Toda tabela tem company_id (SPEC 3.3) com índice começando por ele. `connection_id` referencia crm.connections
+// (FK acrescentada pela T40; excluir a conexão remove o vínculo/horário).
 
 const companyId = () =>
   uuid('company_id')
@@ -52,7 +53,9 @@ export const memberConnections = crm.table(
     memberId: uuid('member_id')
       .notNull()
       .references(() => companyMembers.id, { onDelete: 'cascade' }),
-    connectionId: uuid('connection_id').notNull(),
+    connectionId: uuid('connection_id')
+      .notNull()
+      .references(() => connections.id, { onDelete: 'cascade' }),
     createdAt: createdAt(),
   },
   (t) => [primaryKey({ columns: [t.memberId, t.connectionId] }), index('member_connections_company_conn_idx').on(t.companyId, t.connectionId)],
@@ -67,7 +70,9 @@ export const businessHourConfigs = crm.table(
   {
     id: uuid('id').primaryKey().defaultRandom(),
     companyId: companyId(),
-    connectionId: uuid('connection_id').notNull(),
+    connectionId: uuid('connection_id')
+      .notNull()
+      .references(() => connections.id, { onDelete: 'cascade' }),
     active: boolean('active').notNull().default(false),
     actionType: text('action_type').$type<BusinessHourAction>().notNull().default('message'),
     messageText: text('message_text'),

@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "task": "T40",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T06:26:12.383Z",
+  "commit": "e74ff0eccfa0d6a898ad9fa9182a2d60e7e9c5c7",
+  "base": "59d345b",
+  "changedFiles": [
+    "apps/api/src/routes/ai-agents/ai-agents.db.unit.test.ts",
+    "apps/api/src/routes/chat-messages/scope.db.unit.test.ts",
+    "apps/api/src/routes/chats/chats.db.unit.test.ts",
+    "apps/api/src/routes/connections/connections.db.unit.test.ts",
+    "apps/api/src/routes/connections/index.ts",
+    "apps/api/src/routes/departments/departments.db.unit.test.ts",
+    "apps/api/src/routes/flow-runs/flow-runs.db.unit.test.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/kanban/kanban.db.unit.test.ts",
+    "apps/worker/src/consumers/chats/chats.db.unit.test.ts",
+    "packages/core/src/chats/ingest/chat-ingest.db.unit.test.ts",
+    "packages/core/src/chats/send/send.db.unit.test.ts",
+    "packages/core/src/connections/errors.ts",
+    "packages/core/src/connections/index.ts",
+    "packages/core/src/connections/service.ts",
+    "packages/core/src/connections/status.ts",
+    "packages/core/src/connections/status.unit.test.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/kanban/kanban.db.unit.test.ts",
+    "packages/db/drizzle/crm/0012_t40_connections.sql",
+    "packages/db/drizzle/crm/meta/0012_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/chats.ts",
+    "packages/db/src/schema/crm/connections.ts",
+    "packages/db/src/schema/crm/departments.ts",
+    "packages/db/src/schema/crm/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/connections/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 15.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 34.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 3.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 19.7s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "26 arquivo(s) alterado(s)"
+    }
+  ]
+}
