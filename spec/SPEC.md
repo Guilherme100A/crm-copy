@@ -109,6 +109,7 @@ Envio: `maestri ask "Claude Code" "<mensagem>"`.
   - pontos de registro: `packages/*/src/index.ts`, `apps/*/src/index.ts`, `apps/api/src/routes/index.ts`, `apps/api/src/middleware/public-routes.ts` (rotas públicas), `apps/worker/src/registry.ts`, `apps/web/src/app/nav.ts`, `apps/web/src/features/settings/tabs.ts`, `apps/web/src/routeTree.gen.ts` (gerado);
   - catálogos: `packages/shared/src/permissions/catalog.ts`, `packages/shared/src/realtime/events.ts`, `packages/shared/src/errors/codes.ts`;
   - banco: `packages/db/src/schema/crm/index.ts`, `packages/db/drizzle/crm/**`, `packages/db/src/seed/modules/**`.
+- **Testes unitários de outras tarefas** (`*.unit.test.ts`, `*.db.unit.test.ts`): o Operário pode fazer ajuste **mínimo** quando a tarefa atual invalida legitimamente uma suposição deles (ex.: rota que passou a existir, contagem exata de tabelas). Deve preservar o que o teste prova e **declarar no relatório** (arquivo, motivo). Testes de aceitação (`tests/**`) nunca.
 - **Migrations:** cada tarefa que cria tabela escreve o schema em `packages/db/src/schema/crm/<módulo>.ts` (Path da própria tarefa) e gera **uma migration nova** com `pnpm --filter @crm/db db:generate:crm --name <txx>_<slug>`. Nunca edita migration existente. Se o journal conflitar na integração, o Orquestrador pede ao Operário que **regenere** a migration sobre o `main` atualizado.
 - `apps/web/src/routeTree.gen.ts` é gerado pelo plugin do TanStack Router: em conflito, regenerar (`pnpm --filter @crm/web routes:gen`) em vez de mesclar à mão.
 

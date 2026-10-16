@@ -31,6 +31,9 @@ export const SHARED_PATHS = [
   'apps/*/src/index.ts',
   'apps/api/src/routes/index.ts',
   'apps/api/src/middleware/public-routes.ts',
+  // Testes unitários de outras tarefas: ajuste MÍNIMO só quando a tarefa atual invalida legitimamente
+  // uma suposição deles (ex.: rota que passou a existir); declarar no relatório (SPEC 2.4).
+  'apps/**/*.unit.test.ts', 'packages/**/*.unit.test.ts',
   'apps/worker/src/registry.ts',
   'apps/web/src/routeTree.gen.ts',
   'apps/web/src/app/nav.ts',
