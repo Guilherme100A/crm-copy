@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T46 (Cinzel/Radar), T51 (Bigorna/Lupa), T68 (Torno/Sonda).
+- Em andamento (3 pares): T27 (Bigorna/Lupa), T38 (Torno/Sonda), T46 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -41,7 +41,7 @@
 | 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | MERGED | Fole | Prisma | 0 | 0e50449 |
 | 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | MERGED | Bigorna | Lupa | 0 | 0119e46 |
 | 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
-| 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
+| 4 | T27 | Jobs genéricos de exportação e importação | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
 | 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | MERGED | Bigorna | Lupa | 0 | edee67b |
@@ -52,7 +52,7 @@
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
 | 5 | T36 | UI: autenticação, perfil e troca de empresa | TODO | | | 0 | |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
-| 5 | T38 | Chaves de provedores de IA (BYOK) | TODO | | | 0 | |
+| 5 | T38 | Chaves de provedores de IA (BYOK) | IN_PROGRESS | Torno | Sonda | 0 | |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
 | 5 | T40 | Conexões: API, QR, pareamento, proxy e perfil | MERGED | Cinzel | Radar | 0 | e3baa0e |
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | TODO | | | 0 | |
@@ -69,7 +69,7 @@
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
-| 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
 | 6 | T52 | Agentes de IA: base de conhecimento | TODO | | | 0 | |
 | 6 | T53 | UI: empresa, departamentos e horários | TODO | | | 0 | |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
@@ -96,7 +96,7 @@
 | 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | TODO | | | 0 | |
-| 7 | T68 | Runtime do agente de IA | IN_PROGRESS | Torno | Sonda | 0 | |
+| 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | TODO | | | 0 | |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
