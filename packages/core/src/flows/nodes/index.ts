@@ -4,6 +4,7 @@ import type { NodeType } from '@crm/shared'
 import type { NodeHandler } from '../engine/context'
 import { notImplemented, type NodeRegistry } from '../engine/registry'
 import { registerMessagingNodes } from './messaging/index'
+import { registerInteractiveNodes as registerInteractiveGroup } from './interactive/index'
 import { registerLogicNodes as registerLogicGroup } from './logic/index'
 
 /** Grupo → tarefa dona e tipos de nó (06 §3.5; SPEC T41, T42, T51, T62, T63, T104, T111). */
@@ -35,7 +36,7 @@ function registerStub(group: NodeGroup) {
 const registerLogicNodes = (registry: NodeRegistry) => registerLogicGroup(registry) // T41
 const registerExternalNodes = registerStub('external') // T42
 const registerMessageNodes = (registry: NodeRegistry) => registerMessagingNodes(registry) // T51
-const registerInteractiveNodes = registerStub('interactive') // T62
+const registerInteractiveNodes = (registry: NodeRegistry) => registerInteractiveGroup(registry) // T62
 const registerCrmNodes = registerStub('crm') // T63
 const registerPixelNodes = registerStub('pixel') // T104
 const registerPaymentNodes = registerStub('payment') // T111

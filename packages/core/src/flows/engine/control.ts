@@ -91,14 +91,20 @@ export class FlowControl {
     await this.timers.schedule({ runId, seq, gen: wait.timer_gen ?? 0 }, Math.max(0, delay))
   }
 
-  /** Resposta do lead para o run em espera `reply`: segue o handle de resposta. */
+  /**
+   * Resposta do lead para o run em espera `reply`: segue o handle de resposta. Com `wait.reentry` (T62: menus e
+   * buffer), a resposta volta ao PRÓPRIO nó, que decide o handle: o run fica no nó atual e as respostas se acumulam
+   * em `vars.__replies`.
+   */
   async resolveReply(runId: string, inbound: InboundReply): Promise<AdvanceResult> {
     return this.advance(runId, (run, wait) => {
       if (wait.kind !== 'reply') return { reason: 'not_reply' as const }
-      return {
-        handle: wait.handles.reply ?? 'source',
-        vars: { ...(run.vars ?? {}), last_user_message: inbound.text ?? '', reply: { ...inbound } },
+      const vars = { ...(run.vars ?? {}), last_user_message: inbound.text ?? '', reply: { ...inbound } }
+      if (wait.reentry === true) {
+        const prev = (run.vars as Record<string, unknown> | null)?.__replies
+        return { handle: wait.handles.reply ?? 'source', stay: true, vars: { ...vars, __replies: [...(Array.isArray(prev) ? prev : []), { ...inbound }] } }
       }
+      return { handle: wait.handles.reply ?? 'source', vars }
     })
   }
 
@@ -219,7 +225,7 @@ export class FlowControl {
    */
   private async advance(
     runId: string,
-    pick: (run: RunRow, wait: FlowWait) => { handle: string; vars?: Record<string, unknown> } | { reason: 'not_reply' },
+    pick: (run: RunRow, wait: FlowWait) => { handle: string; vars?: Record<string, unknown>; stay?: boolean } | { reason: 'not_reply' },
     guard?: { seq: number; gen: number },
   ): Promise<AdvanceResult> {
     let timer: FlowTimerJobData | null = null
@@ -239,9 +245,9 @@ export class FlowControl {
 
       const choice = pick(run, wait)
       if ('reason' in choice) return { advanced: false, reason: choice.reason }
-      const definition = await this.definition(tx, run.versionId)
       const from = run.currentNodeKey ?? ''
-      const edge = definition?.edges.find((e) => e.from === from && e.handle === choice.handle)
+      // `stay` (espera com reentry): reexecuta o mesmo nó, sem seguir aresta.
+      const edge = choice.stay ? { to: from } : (await this.definition(tx, run.versionId))?.edges.find((e) => e.from === from && e.handle === choice.handle)
       const seq = run.seq + 1
       const done = !edge
       await tx

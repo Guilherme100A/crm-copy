@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "task": "T62",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T09:45:06.361Z",
+  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
+  "base": "a7bbd86",
+  "changedFiles": [
+    "tests/acceptance/T62/interactive.test.ts",
+    "tests/acceptance/T62/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T62-01, AC-T62-02, AC-T62-03, AC-T62-04, AC-T62-05"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "11 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T62-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T62-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T62-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T62-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T62-05",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}
