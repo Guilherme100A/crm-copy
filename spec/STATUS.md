@@ -167,3 +167,4 @@
 | teste instável | `packages/wa-engine/src/send/forbidden.db.unit.test.ts` (T20) falhou 1x com "expected 1 to be 0.5" (redução após 403) sob carga | T40 |
 | T46 / T38 | produção do worker chama `configureAiAgent({ llm, waGateway, ... })` (T68): na T46 com o provedor da plataforma (env); a T38 troca por resolução BYOK por empresa | T68 |
 | fluxos (T63 ou ajuste) | mensagens enviadas por nós de fluxo (T51, `ctx.wa.send` idempotente, actor `flow:<runId>`) não ficam registradas no chat: gravar `crm.messages` (sender_type flow) sem reenviar, ex. `ChatSendService.recordOutbound` | T51 |
+| risco | `ai_conversation_state.history` em jsonb reordena chaves do `providerData`; hoje ok (assinaturas são strings), mas se um provedor exigir bytes exatos, guardar como texto | T68 |
