@@ -93,6 +93,8 @@ function T(id, title, deps, paths, ws, opts = {}) {
     commands: opts.commands ?? (ws.includes('web') ? [...std(...ws.filter((w) => w !== 'web')), ...web()] : std(...ws)),
     requiredFiles: opts.requiredFiles ?? [],
     testerRequiredFiles: opts.testerRequiredFiles,
+    // testes de aceitação de OUTRAS tarefas que o Tester desta pode ajustar (só quando esta tarefa invalida uma suposição deles)
+    testerPaths: opts.testerPaths,
     infra: opts.infra ?? true,
     e2e: opts.e2e ?? false,
     minWave: opts.minWave ?? 0,
@@ -246,7 +248,7 @@ const RAW = [
 
   // ---------------- Conexões ----------------
   T('T40', 'Conexões: API, QR, pareamento, proxy e perfil', ['T22', 'T03'], [core('connections'), route('connections'), schema('connections'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.connection_id */, 'packages/db/src/schema/crm/departments.ts' /* aditivo: FKs connection_id (T31) */], ['api', 'core'],
-    { requiredFiles: ['packages/core/src/connections/index.ts'] }),
+    { requiredFiles: ['packages/core/src/connections/index.ts'], testerPaths: ['tests/acceptance/T33/**', 'tests/acceptance/T39/**', 'tests/acceptance/T48/**', 'tests/acceptance/T49/**', 'tests/acceptance/T50/**', 'tests/acceptance/T119/**'] /* FK chats.connection_id */ }),
   T('T47', 'Conexões: projeção de status, eventos e alertas', ['T40', 'T09', 'T16'], ['packages/core/src/connections-status/**', consumer('connections')], ['worker', 'core']),
   T('T71', 'UI conexões', ['T40', 'T47', 'T23'], [...ui('connections')], ['web'], { e2e: true }),
 

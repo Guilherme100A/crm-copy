@@ -350,7 +350,7 @@ function verifyTester(task, opts) {
   if (task.testerRequiredFiles) checkFiles(report, task.testerRequiredFiles, 'arquivo')
   checkForbidden(report, TESTER_FORBIDDEN)
   checkAcceptance(report, task)
-  checkScope(report, [`tests/acceptance/${task.id}/**`, 'tests/acceptance/helpers/**', 'tests/acceptance/*.config.ts'], [], opts, (f) => f.startsWith('tests/'))
+  checkScope(report, [`tests/acceptance/${task.id}/**`, 'tests/acceptance/helpers/**', 'tests/acceptance/*.config.ts', ...(task.testerPaths ?? [])], [], opts, (f) => f.startsWith('tests/'))
   return report
 }
 
