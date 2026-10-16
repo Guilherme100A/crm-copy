@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T21 (Cinzel/Radar), T23 (Fole/Prisma), T28 (Bigorna/Lupa), T39 (Torno/Sonda).
+- Em andamento: T23 (Fole/Prisma), T29 (Cinzel/Radar), T39 (Torno/Sonda); Bigorna/Lupa a despachar.
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -36,14 +36,14 @@
 | 3 | T19 | Fluxos: schema e repositório | MERGED | Cinzel | Radar | 0 | 744ecca |
 | 3 | T24 | UsageGuard e provider medido | MERGED | Torno | Sonda | 0 | 7c3ecd8 |
 | 4 | T20 | WA: SendPipeline, deliver e health | MERGED | Cinzel | Radar | 0 | b77551d |
-| 4 | T21 | WA: outbox de eventos, mídia e contatos | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 4 | T21 | WA: outbox de eventos, mídia e contatos | MERGED | Cinzel | Radar | 0 | 0106f10 |
 | 4 | T22 | Empresas, equipe, convites e permissões | MERGED | Bigorna | Lupa | 0 | 23a441a |
 | 4 | T23 | Web: shell, design system, i18n, guards e cliente HTTP | IN_PROGRESS | Fole | Prisma | 0 | |
 | 4 | T25 | Motor de fluxos: runner, registro de nós e dry-run | MERGED | Bigorna | Lupa | 0 | 0119e46 |
 | 4 | T26 | Contatos, etiquetas e campos personalizados | MERGED | Fole | Prisma | 0 | 02c7c96 |
 | 4 | T27 | Jobs genéricos de exportação e importação | TODO | | | 0 | |
-| 4 | T28 | API de fluxos, pastas, nós e arestas | IN_PROGRESS | Bigorna | Lupa | 0 | |
-| 5 | T29 | App wa-worker e RPC interno | TODO | | | 0 | |
+| 4 | T28 | API de fluxos, pastas, nós e arestas | MERGED | Bigorna | Lupa | 0 | 98d18dc |
+| 5 | T29 | App wa-worker e RPC interno | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | TODO | | | 0 | |
 | 5 | T31 | Departamentos e horários de atendimento | TODO | | | 0 | |
 | 5 | T32 | Acesso de suporte | TODO | | | 0 | |
