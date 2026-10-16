@@ -2120,6 +2120,20 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
+### T127 — Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA
+**Objetivo:** fechar as pendências de "montagem do worker" acumuladas no `spec/STATUS.md` (T42, T52, T73, T79, T81, T111 e o job travado em `queued` da T27), para que o worker de produção execute tudo o que já passa nos testes de unidade.
+**Paths:** `apps/worker/src/boot/**`, `apps/worker/src/main.ts`, `apps/worker/src/jobs/exports/**`, `packages/core/src/exports/**`.
+**Depende de:** T42, T52, T73, T79, T81, T111, T125
+**Entregáveis:** em `configureWorkerProduction` (padrão da T120/T125, com as dependências do processo e filas criadas no primeiro uso): (1) `configureInboundWebhooks({ db, engine, control, redis, publisher })` com o `FlowControl` e o registry do processo, e `scheduleInboundWebhooksSweep` no start do worker. (2) `configureInboundSales({ db, publisher: capiSalePublisher(...), capiEnqueue })` reaproveitando o `capiEnqueue` preguiçoso da T125. (3) `configurePaymentWebhooks({ db, control })` com o mesmo `FlowControl` e `configurePaymentNodes({ paymentIntegrations })` com o cipher/env de produção. (4) `configureExternalNodes({ llm, llmForKey, guard })`: `llmForKey` via `AiKeysService.credentialsForKey` e o `UsageGuard` do processo. (5) `configureAiKnowledge({ db, redis })` e `knowledge: new AiKnowledgeService({ db }).asKnowledgeSearch()` no `configureAiAgent`. (6) `configureAiAgentLab({ db, redis, llm, guard, publisher })` com o LLM do processo (inclusive o fake de `AI_MODE=fake`). (7) Job de `crm.background_jobs` cujo processor lança erro antes do runner fica `failed` com a mensagem, e não `queued` para sempre.
+**Critérios de aceitação**
+- **AC-T127-01** Montado como produção: um POST na URL pública de um webhook de entrada com fluxo vinculado é processado pelo worker (o request sai de `pending` com `processed_at` preenchido) e inicia o fluxo para o contato do mapeamento; o agendador da varredura de pendentes fica registrado na fila.
+- **AC-T127-02** Montado como produção: um evento aprovado numa fonte de venda (T73) cria a venda e gera exatamente 1 Purchase no FakeMetaGraph para o pixel com `auto_send_sales`; um evento que nasce `pending` não gera Purchase, e a mesma venda passando a `approved` gera exatamente 1.
+- **AC-T127-03** Montado como produção: num fluxo com bloco Pagamento (T111) aguardando, o webhook de confirmação do gateway (fake) retoma o run pela saída `paymentApproved`.
+- **AC-T127-04** Montado como produção: o nó de IA de um fluxo grava uma linha em `ai_usage` com `feature = 'flow_ai'`; com `ai_integration_id` usa a chave daquela integração; com a cota esgotada, o nó segue a saída de falha sem chamar o LLM.
+- **AC-T127-05** Montado como produção: um documento enviado à base de conhecimento de um agente é processado pelo job ai-knowledge (fica pronto) e o turno do agente (FakeLlm) recebe o trecho buscado da base.
+- **AC-T127-06** Montado como produção: o teste ao vivo do agente (job ai-agent-lab, T79) usa o LLM do processo (o FakeLlm configurado registra a chamada) e mede o consumo pelo `UsageGuard`.
+- **AC-T127-07** Um job de exportação cujo kind não tem processor configurado (ou cujo processor lança erro antes do runner) termina com `status = 'failed'` e a mensagem do erro em `crm.background_jobs`.
+
 ### T102 — Integração E2E final
 **Objetivo:** provar o sistema montado. Tarefa principalmente do Tester; o Operário só corrige integrações.
 **Paths (Operário):** `apps/**`, `packages/**`, `scripts/**` (só correções de integração, nada de feature nova)

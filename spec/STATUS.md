@@ -4,8 +4,8 @@
 > Gerado em 2026-10-15 a partir de `spec/verify/tasks.mjs`. Ondas e dependências: SPEC §4. Comando útil: `node spec/verify/verify.mjs list`.
 
 ## Resumo
-- Tarefas: 126 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T77 (Torno/Sonda), T126 (Bigorna/Lupa), T73 (Cinzel/Radar).
+- Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
+- Em andamento (3 pares): T77 (Torno/Sonda), T126 (Bigorna/Lupa), T127 (Cinzel/Radar).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -80,7 +80,7 @@
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
-| 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
@@ -139,6 +139,7 @@
 | 8 | T124 | Harness E2E: reset serializado e limpeza de bancos órfãos | MERGED | Bigorna | Lupa | 0 | 6f2cfff |
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
