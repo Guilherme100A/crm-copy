@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T91 (Torno/Sonda), T101 (Cinzel/Radar), T123 (Bigorna/Lupa).
+- Em andamento (3 pares): T91 (Torno/Sonda, rejeição 1), T104 (Cinzel/Radar), T123 (Bigorna/Lupa, rejeição 1).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -86,7 +86,7 @@
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
-| 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | TODO | | | 0 | |
+| 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | TODO | | | 0 | |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
