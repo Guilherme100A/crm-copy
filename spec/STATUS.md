@@ -154,3 +154,5 @@
 | engine (T14/T20) | `quoted`/`viewOnce` aceitos no RPC mas não aplicados: deliver precisa levar `SendOptions` — mudança aditiva no engine | T29 |
 | transporte (T07) | `profile.setName/setStatus/setPicture` respondem 501 NOT_SUPPORTED: falta API no transporte | T29 |
 | engine | reconciliação de mensagens `processing` após crash não gracioso (send-guard/reconcile do ai-manager) | T29 |
+| T28 (ajuste) | rota `POST /api/flows/:id/pause` só muda o status: deve chamar `FlowControl.pauseFlow`/`resumeFlow` (T30) para congelar e retomar os runs | T30 |
+| T46 / boot do worker | produção chama `configureFlowTimer({ db })` e `configureFlowStep({ wa })` (respostas via crm.inbound e envio pelos nós) | T30 |
