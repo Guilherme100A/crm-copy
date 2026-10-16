@@ -191,12 +191,18 @@ importers:
       baileys-antiban:
         specifier: 4.10.0
         version: 4.10.0
+      bullmq:
+        specifier: 6.3.8
+        version: 6.3.8(ioredis@6.0.0)(pg@8.23.0)
       drizzle-orm:
         specifier: 0.45.3
         version: 0.45.3(@types/pg@8.23.1)(pg@8.23.0)
       https-proxy-agent:
         specifier: 9.1.0
         version: 9.1.0
+      ioredis:
+        specifier: 6.0.0
+        version: 6.0.0
       sharp:
         specifier: 0.35.4
         version: 0.35.4(@types/node@22.20.4)

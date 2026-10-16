@@ -13,10 +13,30 @@
       "types": "./src/transport/index.ts",
       "development": "./src/transport/index.ts",
       "default": "./dist/transport/index.js"
+    },
+    "./queue": {
+      "types": "./src/queue/index.ts",
+      "development": "./src/queue/index.ts",
+      "default": "./dist/queue/index.js"
+    },
+    "./antiban": {
+      "types": "./src/antiban/index.ts",
+      "development": "./src/antiban/index.ts",
+      "default": "./dist/antiban/index.js"
+    },
+    "./warmup": {
+      "types": "./src/warmup/index.ts",
+      "development": "./src/warmup/index.ts",
+      "default": "./dist/warmup/index.js"
+    },
+    "./safety": {
+      "types": "./src/safety/index.ts",
+      "development": "./src/safety/index.ts",
+      "default": "./dist/safety/index.js"
     }
   },
   "scripts": {
-    "build": "tsup src/index.ts src/transport/index.ts --format esm --target node22 --platform node --clean",
+    "build": "tsup src/index.ts src/transport/index.ts src/queue/index.ts src/antiban/index.ts src/warmup/index.ts src/safety/index.ts --format esm --target node22 --platform node --clean",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run --passWithNoTests"
@@ -27,8 +47,10 @@
     "@crm/wa-port": "workspace:*",
     "@whiskeysockets/baileys": "7.0.0-rc14",
     "baileys-antiban": "4.10.0",
+    "bullmq": "6.3.8",
     "drizzle-orm": "0.45.3",
     "https-proxy-agent": "9.1.0",
+    "ioredis": "6.0.0",
     "sharp": "0.35.4",
     "socks-proxy-agent": "10.1.0"
   }
