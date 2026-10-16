@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T36 (Torno/Sonda), T61 (Cinzel/Radar), T67 (Bigorna/Lupa).
+- Em andamento (3 pares): T36 (Torno/Sonda), T66 (Bigorna/Lupa), T120 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -60,7 +60,7 @@
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
 | 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
 | 5 | T45 | UI fluxos: canvas do editor | TODO | | | 0 | |
-| 5 | T67 | Contatos: importação CSV e do WhatsApp | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | TODO | | | 0 | |
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | TODO | | | 0 | |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | TODO | | | 0 | |
@@ -95,7 +95,7 @@
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | TODO | | | 0 | |
 | 7 | T64 | Agendamento de mensagens | TODO | | | 0 | |
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
-| 7 | T66 | Contatos: filtros avançados e ações em massa | TODO | | | 0 | |
+| 7 | T66 | Contatos: filtros avançados e ações em massa | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | TODO | | | 0 | |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
@@ -132,7 +132,7 @@
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
-| 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | TODO | | | 0 | |
+| 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | IN_PROGRESS | Cinzel | Radar | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
