@@ -322,7 +322,7 @@ const RAW = [
   T('T111', 'Bloco Pagamento no fluxo e confirmação por webhook', ['T109', 'T30'],
     ['packages/core/src/flows/nodes/payment/**', 'packages/core/src/flows/engine/waits.ts', 'packages/core/src/flows/engine/control.ts', 'packages/core/src/payments/webhooks/**', route('hooks-payments'), job('payment-webhooks')], ['api', 'worker', 'core']),
   T('T112', 'Emissão de NF (Notasy) na venda aprovada', ['T34', 'T22'],
-    [core('invoicing'), route('invoice-integrations'), job('invoices'), schema('invoicing')], ['api', 'worker', 'core']),
+    [core('invoicing'), route('invoice-integrations'), job('invoices'), schema('invoicing'), 'apps/worker/src/boot/production.ts', 'apps/api/src/production.ts' /* aditivo: encadear o emissor de NF no salesPublisher */], ['api', 'worker', 'core']),
   T('T113', 'UTMify: integração e envio de vendas aprovadas', ['T34', 'T22'],
     [core('utmify'), route('utmify'), job('utmify'), schema('utmify')], ['api', 'worker', 'core']),
   T('T114', 'UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada', ['T110', 'T111', 'T112', 'T113', 'T45', 'T59'],

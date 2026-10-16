@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T94 no gate; testers sob demanda: T128 (Sentinela) → T58; T112 em preparo (brief). Vaga dupla de verify.
+- Em andamento (só agentes sob demanda; pares fixos dispensados após a T94): T128 no gate; T58 tester (Vigia); T112 operário. Vaga dupla de verify.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -76,7 +76,7 @@
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
-| 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | VERIFYING | Esquadro | (vaga) | 0 | piloto: operário DONE em ~25 min (verify 0, base d2ef5b8); tester na fila da vaga |
+| 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | VERIFYING | Esquadro | Vigia | 0 | piloto: operário DONE em ~25 min (verify 0, base d2ef5b8); tester na fila da vaga ; tester em andamento |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | TODO | | | 0 | |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
@@ -84,12 +84,12 @@
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
-| 6 | T94 | Servidor MCP (token estático) | VERIFYING | Cinzel | Radar | 0 | operário e tester APROVADOS (base 51e15e8); no gate |
+| 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
-| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | TODO | | | 0 | |
+| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T112.md; libera boot de produção (aditivo) |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
@@ -140,7 +140,7 @@
 | 8 | T125 | Montagem de produção da Meta (insights, CAPI e vendas ao Pixel) | MERGED | Cinzel | Radar | 0 | b209e1d |
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
-| 8 | T128 | Harness de testes: banco-modelo por hash das migrações | VERIFYING | Forja | Sentinela | 0 | piloto: operário DONE em ~42 min (verify 0, base 5abdea0; createTempDatabase 2 s → 0,8 s) |
+| 8 | T128 | Harness de testes: banco-modelo por hash das migrações | VERIFYING | Forja | Sentinela | 0 | piloto: operário DONE em ~42 min (verify 0, base 5abdea0; createTempDatabase 2 s → 0,8 s) ; tester APROVADO (11/11, ~8 min); no gate |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
