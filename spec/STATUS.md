@@ -100,7 +100,7 @@
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
-| 7 | T74 | Disparos em massa: preparação e agendador | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | TODO | | | 0 | |
 | 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
@@ -109,7 +109,7 @@
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
-| 8 | T75 | UI chats: conversa | IN_PROGRESS | Torno | Sonda | 0 | |
+| 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | TODO | | | 0 | |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | TODO | | | 0 | |
@@ -134,6 +134,7 @@
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | TODO | | | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)

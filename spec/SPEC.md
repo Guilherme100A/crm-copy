@@ -2014,6 +2014,15 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T122 — Redis do harness E2E por worktree e disparos na montagem de produção
+**Objetivo:** dois achados das ondas 7–8: (a) o harness E2E (T17/T118) usa Redis db 14 fixo e dois harnesses simultâneos dividem o stream `wsm:events`/grupo `crm`, perdendo eventos (T75); (b) o boot de produção (T120) não chama `configureMassDispatch` (T74).
+**Paths:** `scripts/e2e/**`, `apps/worker/src/boot/**`.
+**Depende de:** T74, T118, T120
+**Entregáveis:** (1) `serve.mjs` deriva do worktree (mesmo hash das portas da T118) o db do Redis OU os nomes de stream/prefixos usados pelo harness, sobrescrevível por `E2E_REDIS_URL`; documentar em `docs/`. (2) `startProductionWorker` chama `configureMassDispatch({ db, wa, redis })`.
+**Critérios de aceitação**
+- **AC-T122-01** Dois harnesses de worktrees diferentes rodando ao mesmo tempo: cada `message.inbound` emitido por `/__e2e/wa/emit` em um deles é entregue ao worker daquele harness (0 perdas em 20 eventos por harness).
+- **AC-T122-02** No worker montado como produção (padrão da T120), um disparo em massa criado pela API (T60) é preparado e envia ao menos 1 mensagem pelo wa-worker fake, terminando `completed`.
+
 ### T121 — Isolamento de filas BullMQ nos testes e remetente flow
 **Objetivo:** eliminar a interferência entre worktrees: as filas do CRM têm nome/prefixo fixos e todos usam o Redis db 1, então workers de testes de um worktree consomem jobs de outro (runs presos, imports em queued — observado na T120).
 **Paths:** `packages/core/src/jobs/**`, `packages/db/src/schema/crm/chats.ts`, `apps/*/vitest.config.ts`, `packages/*/vitest.config.ts` (o Tester ajusta `tests/acceptance/vitest.config.ts`/helpers).
