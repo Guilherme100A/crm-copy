@@ -207,7 +207,7 @@ const RAW = [
   T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', i18n('notifications')], ['web'], { e2e: true }),
 
   // ---------------- Kanban, vendas, dashboard ----------------
-  T('T50', 'Kanban: quadros, colunas e cards', ['T33'], [core('kanban'), route('kanban'), schema('kanban')], ['api', 'core'],
+  T('T50', 'Kanban: quadros, colunas e cards', ['T33'], [core('kanban'), route('kanban'), schema('kanban'), 'packages/core/src/chats/query/**', 'apps/api/src/routes/chats/**' /* aditivo: filtro crm/kanban e PATCH de coluna (T48) */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/kanban/index.ts'] }),
   T('T34', 'Vendas, produtos, despesas e grupos de filtro', ['T26'], [core('sales'), core('products'), route('sales'), route('products'), schema('sales')], ['api', 'core'],
     { requiredFiles: ['packages/core/src/sales/index.ts'] }),
