@@ -85,7 +85,7 @@
 | 6 | T84 | UI: central de notificações | TODO | | | 0 | |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | TODO | | | 0 | |
-| 6 | T101 | Meta: estrutura, insights e bundle assíncrono | IN_PROGRESS | Cinzel | Radar | 0 | |
+| 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | TODO | | | 0 | |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | TODO | | | 0 | |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | TODO | | | 0 | |
@@ -135,7 +135,7 @@
 | 7 | T120 | Montagem de produção e registro de mensagens automáticas no chat | MERGED | Cinzel | Radar | 0 | a357920 |
 | 7 | T121 | Isolamento de filas BullMQ nos testes e remetente flow | MERGED | Cinzel | Radar | 0 | bdc4846 |
 | 8 | T122 | Redis do harness E2E por worktree e disparos na montagem de produção | MERGED | Bigorna | Lupa | 0 | b3c4ef7 |
-| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | IN_PROGRESS | Bigorna | Lupa | 0 | |
+| 8 | T123 | Montagem: eventos dos nós de lógica e CRM e alias customer.name | IN_PROGRESS | Bigorna | Lupa | 1 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
@@ -198,3 +198,4 @@
 | montagem do worker | `configureMetaAds({ db, redis, publisher })` (T101) não é chamado no boot: o processor meta-sync responde "não configurado" | T101 |
 | Meta | `meta_ads_display_currency` da empresa não existe no schema (default BRL ou query); métricas internas `purchases_leona` ficam null até a T105 | T101 |
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
+| motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
