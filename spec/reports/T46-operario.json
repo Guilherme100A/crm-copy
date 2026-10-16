@@ -1,0 +1,120 @@
+{
+  "version": 1,
+  "task": "T46",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T07:00:52.865Z",
+  "commit": "d968079e28384918835d0c42fa32598a739103b8",
+  "base": "25b0ca7",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/package.json",
+    "apps/api/src/server.ts",
+    "apps/worker/package.json",
+    "apps/worker/src/boot/production.ts",
+    "apps/worker/src/boot/production.unit.test.ts",
+    "apps/worker/src/main.ts",
+    "packages/wa-gateway-rpc/README.md",
+    "packages/wa-gateway-rpc/package.json",
+    "packages/wa-gateway-rpc/src/config.ts",
+    "packages/wa-gateway-rpc/src/config.unit.test.ts",
+    "packages/wa-gateway-rpc/src/contract.db.unit.test.ts",
+    "packages/wa-gateway-rpc/src/errors.ts",
+    "packages/wa-gateway-rpc/src/gateway.ts",
+    "packages/wa-gateway-rpc/src/gateway.unit.test.ts",
+    "packages/wa-gateway-rpc/src/index.ts",
+    "packages/wa-gateway-rpc/src/profiles.ts",
+    "packages/wa-gateway-rpc/src/rpc-client.ts",
+    "packages/wa-gateway-rpc/src/stream.ts",
+    "packages/wa-gateway-rpc/src/stream.unit.test.ts",
+    "packages/wa-gateway-rpc/src/testing/index.ts",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/wa-gateway-rpc/src/gateway.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: packages/wa-gateway-rpc/src/profiles.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
+      "status": "pass",
+      "detail": "ok em 6.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
+      "status": "pass",
+      "detail": "ok em 2.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
+      "status": "pass",
+      "detail": "ok em 6.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}

@@ -59,6 +59,9 @@ importers:
       '@crm/shared':
         specifier: workspace:^
         version: link:../../packages/shared
+      '@crm/wa-gateway-rpc':
+        specifier: workspace:^
+        version: link:../../packages/wa-gateway-rpc
       '@crm/wa-port':
         specifier: workspace:^
         version: link:../../packages/wa-port
@@ -168,6 +171,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@crm/ai':
+        specifier: workspace:*
+        version: link:../../packages/ai
       '@crm/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -177,6 +183,9 @@ importers:
       '@crm/node-kit':
         specifier: workspace:*
         version: link:../../packages/node-kit
+      '@crm/wa-gateway-rpc':
+        specifier: workspace:*
+        version: link:../../packages/wa-gateway-rpc
       '@crm/wa-port':
         specifier: workspace:*
         version: link:../../packages/wa-port
@@ -337,7 +346,24 @@ importers:
         specifier: 1.5.6
         version: 1.5.6
 
-  packages/wa-gateway-rpc: {}
+  packages/wa-gateway-rpc:
+    dependencies:
+      '@crm/node-kit':
+        specifier: workspace:*
+        version: link:../node-kit
+      '@crm/wa-port':
+        specifier: workspace:*
+        version: link:../wa-port
+      ioredis:
+        specifier: 6.0.0
+        version: 6.0.0
+    devDependencies:
+      '@crm/db':
+        specifier: workspace:*
+        version: link:../db
+      '@crm/wa-worker':
+        specifier: workspace:*
+        version: link:../../apps/wa-worker
 
   packages/wa-port:
     dependencies:

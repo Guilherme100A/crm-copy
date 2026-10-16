@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "task": "T46",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T07:05:15.975Z",
+  "commit": "d968079e28384918835d0c42fa32598a739103b8",
+  "base": "25b0ca7",
+  "changedFiles": [
+    "tests/acceptance/T46/assembly.test.ts",
+    "tests/acceptance/T46/contract.test.ts",
+    "tests/acceptance/T46/gateway.test.ts",
+    "tests/acceptance/T46/support.ts",
+    "tests/acceptance/helpers/wa-worker.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T46-01, AC-T46-02, AC-T46-03, AC-T46-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "3 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "30 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T46-01",
+      "status": "pass",
+      "detail": "19 passed"
+    },
+    {
+      "name": "AC-T46-02",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T46-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T46-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}

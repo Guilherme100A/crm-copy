@@ -1,7 +1,9 @@
 // Processo da API: carrega config, migra, cria o app e abre a porta (@hono/node-server).
 import { serve } from '@hono/node-server'
+import { bullTimerScheduler, defineQueue, FlowControl, type FlowStepJobData, type FlowTimerJobData, type TimerScheduler } from '@crm/core'
 import { createDb, runMigrations } from '@crm/db'
-import { createLogger, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
+import { bullConnection, createLogger, initCredentialsCrypto, redisConnection } from '@crm/node-kit'
+import { createWaGatewayFromEnv } from '@crm/wa-gateway-rpc'
 import { createApp } from './app'
 import { loadApiConfig } from './config'
 import { stopRealtimeHub } from './routes/events/index'
@@ -15,6 +17,27 @@ async function main() {
   await runMigrations(db)
   const redis = redisConnection({ url: config.REDIS_URL })
 
+  // T46: WaGateway real (WA_GATEWAY=rpc → wa-worker por RPC + stream) ou FakeWaGateway (WA_GATEWAY=fake).
+  const wa = createWaGatewayFromEnv(process.env, { redis, logger })
+  await wa.rpc?.refreshCapabilities().catch((err: unknown) => logger.warn({ err }, 'não foi possível consultar as capacidades do wa-worker'))
+  logger.info({ wa_gateway: wa.mode }, 'WaGateway configurado')
+
+  // T43/T46: filas `flow-step`/`flow-timer` da API criadas sob demanda aqui, para o shutdown fechá-las.
+  const connection = bullConnection({ url: config.REDIS_URL })
+  let stepQueue: ReturnType<typeof defineQueue<FlowStepJobData>> | undefined
+  let timerQueue: ReturnType<typeof defineQueue<FlowTimerJobData>> | undefined
+  const timerQueueOf = () => (timerQueue ??= defineQueue<FlowTimerJobData>('flow-timer', { connection }))
+  // jobId igual ao do worker (T25): `run-<id>-seq-<n>` (o BullMQ recusa `:`).
+  const flowStepEnqueue = async (job: FlowStepJobData) => {
+    stepQueue ??= defineQueue<FlowStepJobData>('flow-step', { connection })
+    await stepQueue.add('flow-step', job, { jobId: `run-${job.runId}-seq-${job.expectedSeq}` })
+  }
+  const timers: TimerScheduler = {
+    schedule: (data, delayMs) => bullTimerScheduler(timerQueueOf()).schedule(data, delayMs),
+    cancel: (data) => bullTimerScheduler(timerQueueOf()).cancel(data),
+  }
+  const flowControl = new FlowControl({ db, timers, enqueueStep: flowStepEnqueue, logger })
+
   const app = createApp({
     db,
     redis,
@@ -22,6 +45,9 @@ async function main() {
     sessionTtlDays: config.AUTH_SESSION_TTL_DAYS,
     cookieSecure: config.NODE_ENV === 'production',
     trustProxy: config.TRUST_PROXY,
+    waGateway: wa.gateway,
+    flowStepEnqueue,
+    flowControl,
   })
 
   const server = serve({ fetch: app.fetch, hostname: config.HOST, port: config.PORT }, (info) => {
@@ -43,7 +69,13 @@ async function main() {
       .catch((err: unknown) => logger.warn({ err }, 'failed to stop realtime hub'))
       .then(() => {
         server.close(() => {
-          void Promise.allSettled([db.$client.end(), redis.quit()]).then(() => process.exit(0))
+          void Promise.allSettled([
+            stepQueue?.close(),
+            timerQueue?.close(),
+            wa.close(),
+          ])
+            .then(() => Promise.allSettled([db.$client.end(), redis.quit()]))
+            .then(() => process.exit(0))
         })
         sockets.closeIdleConnections?.()
         setTimeout(() => sockets.closeAllConnections?.(), DRAIN_MS).unref()
