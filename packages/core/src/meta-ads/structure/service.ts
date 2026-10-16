@@ -2,6 +2,7 @@
 // filtro), junta estrutura + insights dos 3 níveis por conta, num job (`meta-sync`) ou na hora. Estado e cache no
 // Redis: pronto por 5 min; o último pronto fica 24 h para o caso de limite da Meta (devolvido com aviso). Progresso
 // por SSE `meta.bundle.progress` (`loading|refreshing → partial → ready`). Limite de uso por conta: adia, não falha.
+import { randomBytes } from 'node:crypto'
 import { and, asc, eq, inArray } from 'drizzle-orm'
 import { companies, metaAdAccounts, type Database } from '@crm/db'
 import type { Redis } from 'ioredis'
@@ -12,6 +13,8 @@ import { bundleKey, normalizeBundleParams, type BundleParams, type RawBundleQuer
 
 export const META_SYNC_QUEUE = 'meta-sync'
 export const BUNDLE_CACHE_TTL_S = 5 * 60
+/** T103: validade da geração do cache da empresa (bem acima do TTL do bundle). */
+export const BUNDLE_GEN_TTL_S = 24 * 3600
 export const BUNDLE_LAST_TTL_S = 24 * 3600
 export const BUNDLE_STATE_TTL_S = 15 * 60
 export const DEFAULT_DISPLAY_CURRENCY = 'BRL'
@@ -107,6 +110,19 @@ export class MetaBundleService {
   private rateKey(fbAccountId: string) {
     return `${this.prefix}:ratelimit:${fbAccountId}`
   }
+  /**
+   * T103: chave do cache de 5 min com a geração da empresa. `invalidateCompany` troca a geração e todos os bundles
+   * prontos da empresa (qualquer filtro) deixam de ser achados. Sem geração (nunca invalidada), a chave é a da T101.
+   */
+  private async bundleCacheKey(companyId: string, key: string): Promise<string> {
+    const gen = await this.redis.get(`${this.prefix}:gen:${companyId}`)
+    return gen ? `${this.k('bundle', key)}:g${gen}` : this.k('bundle', key)
+  }
+
+  /** T103: invalida o cache de 5 min de TODOS os bundles da empresa (ex.: depois de editar na Meta). */
+  async invalidateCompany(companyId: string): Promise<void> {
+    await this.redis.set(`${this.prefix}:gen:${companyId}`, `${this.now().getTime().toString(36)}${randomBytes(3).toString('hex')}`, 'EX', BUNDLE_GEN_TTL_S)
+  }
 
   // ---------------------------------------------------------------- leitura (API)
 
@@ -122,7 +138,7 @@ export class MetaBundleService {
     if (accounts.length === 0) return { ...this.empty(key, params, 'ready', 0), warnings: ['no_ad_accounts'] }
 
     if (!req.force_refresh) {
-      const cached = await this.read(this.k('bundle', key))
+      const cached = await this.read(await this.bundleCacheKey(companyId, key))
       if (cached) return { ...cached, cached: true }
       if (req.async) {
         const state = await this.read(this.k('state', key))
@@ -203,12 +219,16 @@ export class MetaBundleService {
   async invalidate(companyId: string, req: BundleRequest): Promise<void> {
     const params = await this.params(companyId, req)
     const accounts = await this.accounts(companyId, params.adAccountIds)
-    await this.redis.del(this.k('bundle', bundleKey(companyId, params, accounts.map((a) => a.id))))
+    const key = bundleKey(companyId, params, accounts.map((a) => a.id))
+    await this.redis.del(this.k('bundle', key))
+    await this.redis.del(await this.bundleCacheKey(companyId, key))
   }
 
   // ---------------------------------------------------------------- montagem
 
   private async build(companyId: string, key: string, params: BundleParams, accounts: AccountRow[]): Promise<BundleEnvelope> {
+    // T103: geração lida no início — uma edição durante a montagem não deixa este bundle (anterior a ela) no cache novo.
+    const cacheKey = await this.bundleCacheKey(companyId, key)
     const env = this.empty(key, params, 'loading', accounts.length)
     const fxMissing = new Set<string>()
     for (const [i, a] of accounts.entries()) {
@@ -238,7 +258,7 @@ export class MetaBundleService {
     env.warnings = [...fxMissing]
     env.generated_at = this.now().toISOString()
     // Só bundle sem erro vai para o cache de 5 min; o "último pronto" guarda sempre (fallback de limite).
-    if (env.errors.length === 0) await this.save('bundle', key, env, BUNDLE_CACHE_TTL_S)
+    if (env.errors.length === 0) await this.redis.set(cacheKey, JSON.stringify({ ...env, cached: false }), 'EX', BUNDLE_CACHE_TTL_S)
     await this.save('last', key, env, BUNDLE_LAST_TTL_S)
     await this.redis.del(this.k('state', key))
     await this.publish(companyId, env)

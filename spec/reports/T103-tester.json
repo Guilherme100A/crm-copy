@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T103",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T12:10:37.188Z",
+  "commit": "b209e1d551ff545d013aedf6a5575f6b8c7f3219",
+  "base": "b209e1d",
+  "changedFiles": [
+    "tests/acceptance/T103/entities.test.ts",
+    "tests/acceptance/T103/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T103-01, AC-T103-02, AC-T103-03, AC-T103-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "16 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T103-01",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T103-02",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T103-03",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T103-04",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

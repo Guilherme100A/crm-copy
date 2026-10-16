@@ -34,6 +34,15 @@ export interface FakeGraphRequest {
   json?: unknown
 }
 
+/** T103: uma mutação recebida em `POST /{id}` (status, name, daily_budget, lifetime_budget; valores como a Graph recebe, em texto). */
+export interface FakeMutation {
+  entityId: string
+  /** `act_x` dono da entidade. */
+  account: string
+  level: 'campaign' | 'adset' | 'ad'
+  fields: Record<string, string>
+}
+
 /** T104: um evento recebido em `POST /{pixel_id}/events` (Conversions API). */
 export interface FakeCapiEvent {
   pixelId: string
@@ -251,7 +260,41 @@ export class FakeMetaGraph {
       }
       return send(200, this.page(items, params, `${this.url}/${version}${endpoint}`))
     }
+    // ---- T103: mutação de campanha/conjunto/anúncio (`POST /{id}`) ----
+    const entityPost = /^\/([^/]+)$/.exec(endpoint)
+    if (entityPost && req.method === 'POST') return this.mutate(entityPost[1]!, params, send, error)
     return error(404, 803, `endpoint fake não suportado: ${endpoint}`, 'GraphMethodException')
+  }
+
+  // ---------------------------------------------------------------- T103: mutações
+
+  /** Mutações recebidas (sem `access_token`/`appsecret_proof`), na ordem. */
+  readonly mutations: FakeMutation[] = []
+
+  /** Entidade da estrutura semeada (`setStructure`) pelo id, com a conta e o nível. */
+  entity(entityId: string): { account: string; level: 'campaign' | 'adset' | 'ad'; entity: Record<string, unknown> } | null {
+    for (const [account, s] of this.structures) {
+      for (const [level, list] of [['campaign', s.campaigns], ['adset', s.adsets], ['ad', s.ads]] as const) {
+        const entity = list.find((e) => String(e.id) === entityId)
+        if (entity) return { account, level, entity }
+      }
+    }
+    return null
+  }
+
+  private mutate(entityId: string, params: Record<string, string>, send: (s: number, j: unknown) => void, error: (s: number, c: number, m: string, t?: string) => void): void {
+    const found = this.entity(entityId)
+    if (!found) return error(400, 100, `Unsupported post request. Object with ID '${entityId}' does not exist, cannot be loaded due to missing permissions, or does not support this operation`, 'GraphMethodException')
+    const fail = this.accountFailures.get(found.account)
+    if (fail) return send(fail.status, { error: fail.error })
+    const fields = Object.fromEntries(Object.entries(params).filter(([k]) => k !== 'access_token' && k !== 'appsecret_proof'))
+    this.mutations.push({ entityId, account: found.account, level: found.level, fields })
+    // Aplica na estrutura (a próxima leitura já vê o valor novo), como a Graph.
+    if (fields.status) Object.assign(found.entity, { status: fields.status, effective_status: fields.status })
+    if (fields.name !== undefined) found.entity.name = fields.name
+    if (fields.daily_budget !== undefined) found.entity.daily_budget = fields.daily_budget
+    if (fields.lifetime_budget !== undefined) found.entity.lifetime_budget = fields.lifetime_budget
+    return send(200, { success: true })
   }
 
   /** Página de uma lista com `paging.next` absoluto (offset no `after`), como a Graph. */
