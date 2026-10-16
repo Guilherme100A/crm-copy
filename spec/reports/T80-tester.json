@@ -3,9 +3,9 @@
   "task": "T80",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T13:23:13.339Z",
-  "commit": "dfd7984e310e6e3ae218c02486c691e7e2c19406",
-  "base": "dfd7984",
+  "at": "2026-10-16T13:28:28.423Z",
+  "commit": "25d436d149eaf13fb3a00e0216fede6835eb94d4",
+  "base": "1fb948c",
   "changedFiles": [
     "tests/acceptance/T80/setup.ts",
     "tests/acceptance/T80/voices.test.ts"
