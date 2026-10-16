@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "task": "T29",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T04:58:40.557Z",
+  "commit": "ea992827c100ca5f71d5298429d2d067b7d77ac0",
+  "base": "ea99282",
+  "changedFiles": [
+    ".env.example",
+    "apps/wa-worker/package.json",
+    "apps/wa-worker/src/index.ts",
+    "pnpm-lock.yaml",
+    "apps/wa-worker/src/boot/attach-queue.ts",
+    "apps/wa-worker/src/boot/blob-refs.ts",
+    "apps/wa-worker/src/boot/boot.unit.test.ts",
+    "apps/wa-worker/src/boot/config.ts",
+    "apps/wa-worker/src/boot/fake-control.ts",
+    "apps/wa-worker/src/boot/start.db.unit.test.ts",
+    "apps/wa-worker/src/boot/start.ts",
+    "apps/wa-worker/src/main.ts",
+    "apps/wa-worker/src/rpc/dedupe.ts",
+    "apps/wa-worker/src/rpc/errors.ts",
+    "apps/wa-worker/src/rpc/rpc.unit.test.ts",
+    "apps/wa-worker/src/rpc/server.ts",
+    "apps/wa-worker/src/rpc/targets.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: apps/wa-worker/src/main.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "arquivo: apps/wa-worker/src/rpc/server.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-worker typecheck",
+      "status": "pass",
+      "detail": "ok em 10.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-worker lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-worker test",
+      "status": "pass",
+      "detail": "ok em 6.8s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}

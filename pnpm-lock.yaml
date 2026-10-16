@@ -72,7 +72,32 @@ importers:
         specifier: 4.6.5
         version: 4.6.5
 
-  apps/wa-worker: {}
+  apps/wa-worker:
+    dependencies:
+      '@crm/db':
+        specifier: workspace:*
+        version: link:../../packages/db
+      '@crm/node-kit':
+        specifier: workspace:*
+        version: link:../../packages/node-kit
+      '@crm/wa-engine':
+        specifier: workspace:*
+        version: link:../../packages/wa-engine
+      '@crm/wa-port':
+        specifier: workspace:*
+        version: link:../../packages/wa-port
+      '@hono/node-server':
+        specifier: 2.1.1
+        version: 2.1.1(hono@4.13.8)
+      drizzle-orm:
+        specifier: 0.45.3
+        version: 0.45.3(@types/pg@8.23.1)(pg@8.23.0)
+      hono:
+        specifier: 4.13.8
+        version: 4.13.8
+      ioredis:
+        specifier: 6.0.0
+        version: 6.0.0
 
   apps/web: {}
 
