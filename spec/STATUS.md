@@ -130,6 +130,8 @@
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | TODO | | | 0 | |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
+| 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | TODO | | | 0 | |
+| 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | TODO | | | 0 | |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)

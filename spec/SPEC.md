@@ -2014,6 +2014,26 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T115-04** Refresh token usado duas vezes (reuso) revoga a cadeia inteira.
 - **AC-T115-05** Na UI, criar credencial do tipo OAuth mostra a URL do servidor MCP e as instruções do conector; o status muda para "Conectada · <cliente>" ao recarregar após a conexão (desktop e `mobile`).
 
+### T118 — Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada
+**Objetivo:** tornar a suíte confiável com 4 pares testando em paralelo na mesma máquina (falhas transitórias observadas nas ondas 3–5).
+**Paths:** `scripts/e2e/**`, `apps/*/vitest.config.ts`, `packages/*/vitest.config.ts` (o Tester ajusta `tests/acceptance/playwright.config.ts` e `tests/acceptance/vitest.config.ts`).
+**Depende de:** T17, T23
+**Entregáveis:** (1) `serve.mjs` nunca herda o stdin nos processos filhos (build do web com `stdio: ['ignore', 'inherit', 'inherit']`). (2) Portas do harness derivadas do worktree (ex.: `E2E_API_PORT`/`E2E_WEB_PORT` por hash do caminho, sobrescrevíveis por env) e `reuseExistingServer` só quando a porta é do próprio worktree. (3) `testTimeout`/`hookTimeout` dos vitest de apps e packages: 30 s / 60 s; testes de tempo real com folga explícita.
+**Critérios de aceitação**
+- **AC-T118-01** Num checkout sem `apps/web/dist`, `node scripts/e2e/serve.mjs` faz o build e fica pronto (sem travar) em ≤ 180 s.
+- **AC-T118-02** Dois worktrees diferentes sobem o harness ao mesmo tempo em portas diferentes; o Playwright de cada um fala com o seu próprio servidor.
+- **AC-T118-03** Os `vitest.config.ts` de todos os apps e packages declaram `testTimeout` ≥ 30000 e `hookTimeout` ≥ 60000.
+
+### T119 — Escopo de chat nas rotas de mensagens e mídia (segurança)
+**Objetivo:** fechar o vazamento apontado na T48: as rotas da T49 não aplicam o escopo de chat (T31/T48).
+**Paths:** `apps/api/src/routes/chat-messages/**`, `apps/api/src/routes/media/**`, `packages/core/src/chats/send/**`.
+**Depende de:** T48, T49
+**Entregáveis:** todas as rotas de mensagens (listar, enviar, mídia, ler, reagir, apagar, encaminhar) resolvem o chat por `ChatQueryService.row(actor, id)` (T48); chat fora do escopo → 404, sem efeito colateral (nada gravado, nada enviado ao gateway).
+**Critérios de aceitação**
+- **AC-T119-01** Membro com escopo do departamento X recebe 404 ao listar mensagens, enviar texto, enviar mídia, marcar como lido, reagir e apagar num chat do departamento Y; o FakeWaGateway não registra envio.
+- **AC-T119-02** Owner/admin e membro sem restrição continuam conseguindo todas essas ações; um membro passa a ver o chat assim que ganha o escopo.
+- **AC-T119-03** Encaminhar uma mensagem de um chat fora do escopo → 404.
+
 ### T117 — Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único
 **Objetivo:** fechar pendências cruzadas encontradas na integração das ondas 2–3 (T13/T15/T16 feitas em paralelo).
 **Paths:** `apps/api/src/routes/auth/**`, `apps/api/src/server.ts`, `packages/wa-engine/src/transport/baileys.ts`, `packages/wa-engine/src/auth-state/index.ts` (só para marcar o store cacheável).

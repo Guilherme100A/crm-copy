@@ -326,6 +326,12 @@ const RAW = [
     ['apps/api/src/routes/auth/**', 'apps/api/src/server.ts', 'packages/wa-engine/src/transport/baileys.ts', 'packages/wa-engine/src/auth-state/index.ts'], ['api', 'wa-engine'],
     { requiredFiles: ['apps/api/src/server.ts'] }),
 
+  T('T118', 'Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada', ['T17', 'T23'],
+    ['scripts/e2e/**', 'apps/*/vitest.config.ts', 'packages/*/vitest.config.ts'], ['api'],
+    { e2e: true }),
+  T('T119', 'Escopo de chat nas rotas de mensagens e mídia (segurança)', ['T48', 'T49'],
+    ['apps/api/src/routes/chat-messages/**', 'apps/api/src/routes/media/**', 'packages/core/src/chats/send/**'], ['api', 'core']),
+
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],
