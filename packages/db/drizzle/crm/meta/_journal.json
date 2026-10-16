@@ -169,6 +169,13 @@
       "when": 1792146828491,
       "tag": "0023_t104_meta_pixels",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1792150931015,
+      "tag": "0024_t109_payments",
+      "breakpoints": true
     }
   ]
 }

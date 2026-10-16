@@ -38,6 +38,7 @@ import { metaProfilesRoutes } from './meta-profiles/index'
 import { metaStructureRoutes } from './meta-structure/index'
 import { metaPixelsRoutes } from './meta-pixels/index'
 import { metaEntitiesRoutes } from './meta-entities/index'
+import { paymentIntegrationsRoutes } from './payment-integrations/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -83,4 +84,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', metaStructureRoutes(deps))
   app.route('/', metaPixelsRoutes(deps))
   app.route('/', metaEntitiesRoutes(deps))
+  app.route('/', paymentIntegrationsRoutes(deps))
 }
