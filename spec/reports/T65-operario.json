@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "task": "T65",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T15:36:18.167Z",
+  "commit": "68587af902cccc9314fd3c3d942b6f7fb66eaaad",
+  "base": "68587af",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "packages/core/src/index.ts",
+    "apps/api/src/routes/dashboard-attendance/dashboard-attendance.db.unit.test.ts",
+    "apps/api/src/routes/dashboard-attendance/index.ts",
+    "packages/core/src/dashboard/attendance/README.md",
+    "packages/core/src/dashboard/attendance/calc.ts",
+    "packages/core/src/dashboard/attendance/calc.unit.test.ts",
+    "packages/core/src/dashboard/attendance/index.ts",
+    "packages/core/src/dashboard/attendance/service.db.unit.test.ts",
+    "packages/core/src/dashboard/attendance/service.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 17.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 130.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 27.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 12.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 115.0s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "10 arquivo(s) alterado(s)"
+    }
+  ]
+}
