@@ -15,6 +15,13 @@
       "when": 1792119565792,
       "tag": "0001_t09_jobs",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1792120768435,
+      "tag": "0002_t15_auth",
+      "breakpoints": true
     }
   ]
 }

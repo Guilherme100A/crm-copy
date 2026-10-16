@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "task": "T15",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-16T03:23:22.901Z",
+  "commit": "758d224fcdc5d13e9f01ec725eedf539f102fc4e",
+  "base": "8ce43da",
+  "changedFiles": [
+    "tests/acceptance/T15/auth.test.ts",
+    "tests/acceptance/T15/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T15-01, AC-T15-02, AC-T15-03, AC-T15-04, AC-T15-05, AC-T15-06"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "33 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T15-01",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "AC-T15-02",
+      "status": "pass",
+      "detail": "8 passed"
+    },
+    {
+      "name": "AC-T15-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T15-04",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T15-05",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "AC-T15-06",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

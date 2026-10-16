@@ -3,29 +3,27 @@
   "task": "T15",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:18:01.839Z",
-  "commit": "e3575e7bf57cd9e0ade76f269b5870938e5fef95",
-  "base": "e3575e7",
+  "at": "2026-10-16T03:23:14.245Z",
+  "commit": "758d224fcdc5d13e9f01ec725eedf539f102fc4e",
+  "base": "8ce43da",
   "changedFiles": [
     "apps/api/src/middleware/app.db.unit.test.ts",
     "apps/api/src/middleware/public-routes.ts",
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/migrations.db.unit.test.ts",
-    "packages/db/src/schema.unit.test.ts",
-    "packages/db/src/schema/crm/index.ts",
     "apps/api/src/routes/auth/auth.db.unit.test.ts",
     "apps/api/src/routes/auth/index.ts",
+    "apps/api/src/routes/index.ts",
     "packages/core/src/auth/auth-service.ts",
     "packages/core/src/auth/auth.unit.test.ts",
     "packages/core/src/auth/errors.ts",
     "packages/core/src/auth/image.ts",
     "packages/core/src/auth/index.ts",
     "packages/core/src/auth/normalize.ts",
-    "packages/db/drizzle/crm/0001_t15_auth.sql",
-    "packages/db/drizzle/crm/meta/0001_snapshot.json",
-    "packages/db/src/schema/crm/auth.ts"
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/auth.ts",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/drizzle/crm/0002_t15_auth.sql",
+    "packages/db/drizzle/crm/meta/0002_snapshot.json"
   ],
   "checks": [
     {
@@ -41,32 +39,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 6.2s"
+      "detail": "ok em 5.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 6.7s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 4.9s"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 2.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 3.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -126,7 +124,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "19 arquivo(s) alterado(s)"
+      "detail": "17 arquivo(s) alterado(s)"
     }
   ]
 }
