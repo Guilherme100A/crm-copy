@@ -56,6 +56,7 @@ export const REALTIME_EVENTS = {
   'message.reacted': defineEvent(
     z.looseObject({ chat_id: idSchema, message_id: idSchema, emoji: z.string(), user_id: idSchema.nullable().optional() }),
     'chat.view',
+  ),
   /** Saldo de créditos de IA mudou (T24): o cliente atualiza o chip/cartão da carteira. */
   'ai_wallet.updated': defineEvent(
     z.looseObject({
@@ -67,6 +68,7 @@ export const REALTIME_EVENTS = {
   ),
   /** Aviso de IA (T24): saldo baixo/esgotado (`reason: 'balance'`) ou cota `soft` estourada (`reason: 'quota'`). */
   'ai_wallet.low': defineEvent(
+    z.looseObject({
       reason: z.enum(['balance', 'quota']),
       balance_credits: z.number().optional(),
       status: z.enum(['ok', 'low', 'exhausted']).optional(),
@@ -74,6 +76,7 @@ export const REALTIME_EVENTS = {
       metric: z.enum(['credits', 'cost_micros', 'tokens']).optional(),
       used: z.number().optional(),
       limit: z.number().optional(),
+    }),
   ),
 } as const satisfies Record<string, RealtimeEventDef>
 
