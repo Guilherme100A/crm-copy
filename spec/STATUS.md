@@ -65,7 +65,7 @@
 | 5 | T99 | Meta: cliente Graph, OAuth, perfis e contas de anúncio | MERGED | Cinzel | Radar | 0 | 0bea180 |
 | 5 | T109 | Pagamentos ao lead: porta, chaves e adapter XPag | MERGED | Bigorna | Lupa | 0 | 9556291 |
 | 6 | T46 | @crm/wa-gateway-rpc: adapter WaGateway por RPC + stream | MERGED | Cinzel | Radar | 0 | be05ef4 |
-| 6 | T47 | Conexões: projeção de status, eventos e alertas | IN_PROGRESS | Bigorna | Lupa | 0 | implementada; verify do operário 1 por causa externa (OOM do Postgres; AC-T125-02 corrigido na T126): reroda após o merge da T126 |
+| 6 | T47 | Conexões: projeção de status, eventos e alertas | VERIFYING | Bigorna | Lupa | 0 | operário e tester APROVADOS (base 51e15e8); no gate |
 | 6 | T48 | Chats: lista, filtros, escopo e ciclo de vida | MERGED | Torno | Sonda | 0 | 27d8e7f |
 | 6 | T49 | Chats: envio, mídia e leitura | MERGED | Fole | Prisma | 0 | 3cd9d36 |
 | 6 | T50 | Kanban: quadros, colunas e cards | MERGED | Bigorna | Lupa | 0 | 151c34c |
@@ -120,7 +120,7 @@
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
-| 9 | T88 | UI agentes: lista e editor | IN_PROGRESS | Torno | Sonda | 0 | implementada; aguarda janela de verify (fila: T126 → T47 → T88 → T94; máquina sem memória) |
+| 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
