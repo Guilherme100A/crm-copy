@@ -43,6 +43,13 @@
       "when": 1792122524226,
       "tag": "0005_t18_ai_usage",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1792122672765,
+      "tag": "0006_t22_team",
+      "breakpoints": true
     }
   ]
 }
