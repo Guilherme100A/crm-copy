@@ -3,22 +3,22 @@
   "task": "T49",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T04:23:13.510Z",
-  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
-  "base": "c4f303c",
+  "at": "2026-10-16T04:25:37.449Z",
+  "commit": "a242161bf2a00fcbb148f7cb664acbe5cf03374a",
+  "base": "0119e46",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/api/src/routes/chat-messages/index.ts",
+    "apps/api/src/routes/index.ts",
     "apps/api/src/routes/media/index.ts",
     "packages/core/src/chats/send/idempotency.ts",
     "packages/core/src/chats/send/index.ts",
     "packages/core/src/chats/send/send.db.unit.test.ts",
     "packages/core/src/chats/send/service.ts",
+    "packages/core/src/index.ts",
     "packages/core/src/media/index.ts",
     "packages/core/src/media/service.ts",
-    "packages/core/src/media/service.unit.test.ts"
+    "packages/core/src/media/service.unit.test.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -29,32 +29,32 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 6.9s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 11.0s"
+      "detail": "ok em 11.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 6.0s"
+      "detail": "ok em 6.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.8s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 10.2s"
+      "detail": "ok em 11.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
