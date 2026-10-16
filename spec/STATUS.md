@@ -192,13 +192,12 @@
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
-| harness E2E / testes | bancos crm_e2e_*/crm_test_*/crm_acc_* de execuções mortas acumulam (72 apagados em 2026-10-16 após queda do Postgres por memória): o harness deve limpar órfãos sem conexão ao subir | infra |
 | UI chat (polimento) | a 1366 px com lista + conversa + painel a conversa fica com ~370 px e o compositor (T85) aperta: lista recolhível (T69) ou container queries no compositor | T91 |
 | T50 (desempenho) | painel do chat (T91) acha o card do chat com 1 chamada por coluna: criar rota dedicada "card do chat por quadro" | T91 |
 | montagem do worker | `configureMetaAds({ db, redis, publisher })` (T101) não é chamado no boot: o processor meta-sync responde "não configurado" | T101 |
 | Meta | `meta_ads_display_currency` da empresa não existe no schema (default BRL ou query); métricas internas `purchases_leona` ficam null até a T105 | T101 |
 | regra (motor de fluxos) | código executado DENTRO de um passo não pode gravar por outra conexão linhas que a transação do passo pode travar (deadlock no processo, achado na T123): usar ctx.repo.db | T123 |
 | motor de fluxos (T25) | eventos realtime dos nós saem ANTES do commit do passo (cliente pode ver evento de dado ainda não gravado ou desfeito): publicar após o commit (fila de eventos do passo) | T123 |
-| harness E2E (T17) | `POST /__e2e/reset` passa de 15 s sob carga; o cliente desiste e o próximo reset começa por cima → 500 duplicate key companies_pkey: serializar o reset (mutex) e subir o timeout do resetSeed (junto com a limpeza de bancos órfãos) | T70 |
 | (T125) montagem Meta | `configureMetaCapi({ db })` no boot e `capiSalePublisher` na API/worker (vendas aprovadas → Pixel) | T104 |
 | montagem do worker | `configureExternalNodes({ llm por empresa, llmForKey via AiKeysService.credentialsForKey, guard: UsageGuard })` (T42) no boot: sem isso o nó de IA usa o ctx.llm sem medição | T42 |
+| testes (T17) | `apps/api/src/e2e/e2e.db.unit.test.ts` usa Redis db 13 fixo e o reset apaga crm:* — pode ser o db de um harness vivo (T122 usa 2..15): usar a reserva de db da T122 (e2eRedis/redis-claim) | T124 |
