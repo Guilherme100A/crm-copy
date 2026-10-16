@@ -2,7 +2,8 @@
 // com WA_GATEWAY=fake), o banco, o Redis e o MESMO `STORAGE_DIR` da API ligados a todos os módulos do registry:
 //   chats (T33), flow-timer (T30), flow-step com os nós de mensagem gravando no chat (T51 `record`/`mediaUrl`),
 //   gatilhos (T61, inclusive a mensagem fora do horário no histórico e o "atendimento finalizado"), exportações e
-//   importações (T27/T67) e o agente de IA (T68) com LLM e voz por empresa (BYOK, T38) e cota/carteira (T24).
+//   importações (T27/T67), o agente de IA (T68) com LLM e voz por empresa (BYOK, T38) e cota/carteira (T24) e os
+//   disparos em massa (T74/T122), que iniciam os fluxos com o mesmo registry de nós e os timers do processo.
 import {
   AiKeysService,
   ChatSendService,
@@ -10,8 +11,13 @@ import {
   crmConnectionSessionResolver,
   crmConnectionsResolver,
   flowMessageRecorder,
+  FLOW_TIMER_QUEUE,
+  FlowControl,
   FsExportFileStore,
   MediaService,
+  bullTimerScheduler,
+  defineQueue,
+  flowEngineStarter,
   mediaUrlFrom,
   productionNodeRegistry,
   RealtimePublisher,
@@ -20,6 +26,9 @@ import {
   resolveTts,
   UsageGuard,
   type ExportFileStore,
+  type FlowStepJobData,
+  type FlowTimerJobData,
+  type MassDispatchRunnerDeps,
 } from '@crm/core'
 import type { AiKeyProvider, Database } from '@crm/db'
 import { FakeLlm, toPttOgg, type LlmProvider, type LlmRequest, type LlmResult } from '@crm/ai'
@@ -31,8 +40,9 @@ import { configureFlowTriggers, flowTriggers } from '../consumers/flow-triggers'
 import { configureAiAgent } from '../jobs/ai-agent'
 import { configureContactsImport } from '../jobs/contacts-import'
 import { configureExports } from '../jobs/exports'
-import { configureFlowStep } from '../jobs/flow-step'
+import { FLOW_STEP_QUEUE, configureFlowStep, flowStepEnqueuer } from '../jobs/flow-step'
 import { configureFlowTimer } from '../jobs/flow-timer'
+import { configureMassDispatch } from '../jobs/mass-dispatch'
 
 type Env = Record<string, string | undefined>
 type KeysResolver = Pick<AiKeysService, 'resolveCredentials'>
@@ -134,6 +144,30 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
     resolveTts: (companyId) => resolveTts(companyId, { keys, env }),
     resolveStt: (companyId) => resolveStt(companyId, { keys, env }),
     ...logger,
+  })
+
+  // Disparos em massa (T74): o envio de cada destinatário inicia o fluxo do alvo com o mesmo registry de nós (grava
+  // no chat) e LLM; esperas do fluxo viram timers `flow-timer` e a continuação vai para `flow-step`.
+  // Filas criadas no primeiro uso (configurar não abre conexão com o Redis).
+  let timerQueue: ReturnType<typeof defineQueue<FlowTimerJobData>> | undefined
+  let stepQueue: ReturnType<typeof defineQueue<FlowStepJobData>> | undefined
+  const timers = () => bullTimerScheduler((timerQueue ??= defineQueue<FlowTimerJobData>(FLOW_TIMER_QUEUE)))
+  const control = new FlowControl({
+    db,
+    timers: { schedule: (data, delayMs) => timers().schedule(data, delayMs), cancel: (data) => timers().cancel(data) },
+    enqueueStep: (data) => flowStepEnqueuer((stepQueue ??= defineQueue<FlowStepJobData>(FLOW_STEP_QUEUE)))(data),
+    ...logger,
+  })
+  configureMassDispatch({
+    db,
+    wa: waGateway,
+    redis,
+    overrides: {
+      control,
+      starter: flowEngineStarter({ db, wa: waGateway, control, engine: { registry, llm, hooks: control.engineHooks(), ...logger } }),
+      publisher: publisher as unknown as MassDispatchRunnerDeps['publisher'],
+      ...(deps.logger ? { logger: deps.logger } : {}),
+    },
   })
 
   return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }

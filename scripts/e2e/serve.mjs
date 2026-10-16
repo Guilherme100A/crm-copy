@@ -10,7 +10,12 @@
 //
 // Env opcionais: E2E_API_PORT / E2E_WEB_PORT (0 = porta livre), E2E_PORTS_ROOT (outro root só para as portas),
 // E2E_SERVER_INFO (onde gravar a identidade), E2E_IGNORE_STDIN=1 (não lê o stdin; rodar em segundo plano),
-// DATABASE_URL (servidor base), E2E_REDIS_URL (default redis://127.0.0.1:6379/14), E2E_SKIP_WEB=1, E2E_WEB_BUILD=0.
+// DATABASE_URL (servidor base), E2E_SKIP_WEB=1, E2E_WEB_BUILD=0.
+//
+// Redis (T122): db próprio do worktree (2..15, pelo mesmo hash das portas; reservado com a chave e2e:harness:owner,
+// e o próximo livre se outro worktree vivo já o tiver), stream wsm:events:e2e-<hash> e prefixo de filas
+// crm-e2e-<hash>. E2E_REDIS_URL = exatamente aquele Redis (db incluso, sem reserva); WA_EVENTS_STREAM e
+// CRM_QUEUE_PREFIX sobrescrevem os nomes. O efetivo vai para o e2e-server.json ("redis") e o stdout.
 import { spawn, spawnSync } from 'node:child_process'
 import { randomBytes } from 'node:crypto'
 import { existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
@@ -18,7 +23,8 @@ import { createRequire } from 'node:module'
 import { createServer } from 'node:net'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { e2ePorts, isOwnServerRunning, normalizeRoot, readServerInfo, serverInfoPath } from './ports.mjs'
+import { e2ePorts, e2eRedis, isOwnServerRunning, maskRedisUrl, normalizeRoot, readServerInfo, serverInfoPath } from './ports.mjs'
+import { claimRedisDb } from './redis-claim.mjs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..')
 const pg = createRequire(join(ROOT, 'packages', 'db', 'package.json'))('pg')
@@ -106,7 +112,10 @@ function webAvailable() {
 
 async function main() {
   const baseUrl = process.env.DATABASE_URL || 'postgres://wsm:wsm@127.0.0.1:5432/crm'
-  const redisUrl = process.env.E2E_REDIS_URL || 'redis://127.0.0.1:6379/14'
+  const redisPlan = e2eRedis(ROOT)
+  let redisUrl = redisPlan.url
+  let redisDb = redisPlan.db
+  let releaseRedis = async () => undefined
   const dbName = `crm_e2e_${randomBytes(5).toString('hex')}`
   const ports = e2ePorts(ROOT)
   const infoPath = serverInfoPath(ROOT)
@@ -121,6 +130,7 @@ async function main() {
     finished = true
     // A identidade só é removida se for deste processo (não apaga a de outro harness de pé).
     if (readServerInfo(ROOT)?.pid === process.pid) rmSync(infoPath, { force: true })
+    await releaseRedis()
     await Promise.all(children.map((c) => stopChild(c)))
     if (dbCreated) {
       try {
@@ -146,6 +156,13 @@ async function main() {
   }
 
   try {
+    if (redisPlan.source === 'derived') {
+      const claim = await claimRedisDb(redisPlan.url, redisPlan.db, ROOT)
+      redisUrl = claim.url
+      redisDb = claim.db
+      releaseRedis = claim.release
+      if (claim.db !== redisPlan.db) log(`Redis db ${redisPlan.db} já é de outro harness vivo; usando o db ${claim.db}`)
+    }
     await admin(baseUrl, `CREATE DATABASE "${dbName}"`)
     dbCreated = true
 
@@ -158,6 +175,8 @@ async function main() {
       HOST: '127.0.0.1',
       DATABASE_URL: withDatabase(baseUrl, dbName),
       REDIS_URL: redisUrl,
+      WA_EVENTS_STREAM: redisPlan.stream,
+      CRM_QUEUE_PREFIX: redisPlan.queuePrefix,
       CREDENTIALS_KEY: randomBytes(32).toString('base64'),
       WA_GATEWAY: 'fake',
       AI_MODE: 'fake',
@@ -219,6 +238,7 @@ async function main() {
       api_port: apiPort,
       web_port: webUrl ? Number(new URL(webUrl).port) : null,
       database: dbName,
+      redis: { url: maskRedisUrl(redisUrl), db: redisDb, stream: redisPlan.stream, queue_prefix: redisPlan.queuePrefix, source: redisPlan.source },
       pid: process.pid,
       started_at: new Date().toISOString(),
     }
@@ -233,6 +253,8 @@ async function main() {
     out(`E2E_WEB_URL=${webUrl}`)
     out(`E2E_WEB=${webUrl ? 'up' : 'absent'}`)
     out(`E2E_DATABASE=${dbName}`)
+    out(`E2E_REDIS_URL=${maskRedisUrl(redisUrl)}`)
+    out(`E2E_WA_EVENTS_STREAM=${redisPlan.stream}`)
     out(`E2E_SERVER_INFO=${infoPath}`)
     out('E2E_READY')
   } catch (err) {

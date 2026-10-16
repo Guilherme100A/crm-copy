@@ -319,4 +319,32 @@ describe('T120 montado como produção', () => {
     expect(file.status).toBe(200)
     expect(await file.text()).toContain('Maria T120')
   }, 180_000)
+
+  it('AC-T122-02: disparo em massa criado pela API é preparado, envia pelo wa-worker e termina completed', async () => {
+    const flowId = await messageFlow(s, `Disparo ${rnd()}`, `Oferta T122 ${id}`)
+    const phone = `+55119${String(Math.floor(Math.random() * 1e8)).padStart(8, '0')}`
+    const contact = await call(s, 'POST', '/api/contacts', { name: 'Cliente T122', phone })
+    expectStatus(contact, 201)
+    const created = await call(s, 'POST', '/api/mass-dispatches', {
+      targets: [{ connection_id: conn.id, flow_id: flowId }],
+      weekdays: [0, 1, 2, 3, 4, 5, 6],
+      window_start: '00:00',
+      window_end: '23:59',
+      interval_min_seconds: 0,
+      interval_max_seconds: 0,
+      manifest: { version: 1, mode: 'ids', ids: [contact.body.contact.id] },
+    })
+    expectStatus(created, 201)
+    const dispatchId = created.body.mass_dispatch.id
+    const done = await until(
+      'disparo completed',
+      async () => {
+        const d = (await call(s, 'GET', `/api/mass-dispatches/${dispatchId}`)).body.mass_dispatch
+        return d?.status === 'completed' ? d : d?.status === 'failed' ? Promise.reject(new Error(JSON.stringify(d))) : undefined
+      },
+      90_000,
+    )
+    expect(done).toMatchObject({ sent_count: 1, pending_count: 0 })
+    await until('mensagem do disparo no wa-worker', async () => (await sentTexts(conn.sessionId)).includes(`Oferta T122 ${id}`) || undefined)
+  }, 180_000)
 })
