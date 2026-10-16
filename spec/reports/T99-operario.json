@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "task": "T99",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T09:53:15.284Z",
+  "commit": "a7bbd86e90ba0b77d7a3452975a9a85d9015df62",
+  "base": "a7bbd86",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/src/routes/index.ts",
+    "packages/core/package.json",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "apps/api/src/routes/meta-oauth/index.ts",
+    "apps/api/src/routes/meta-profiles/index.ts",
+    "apps/api/src/routes/meta-profiles/meta-profiles.db.unit.test.ts",
+    "apps/api/src/routes/meta-profiles/shared.ts",
+    "packages/core/src/meta-ads/client/graph.ts",
+    "packages/core/src/meta-ads/client/graph.unit.test.ts",
+    "packages/core/src/meta-ads/client/index.ts",
+    "packages/core/src/meta-ads/client/testing/fake-graph.ts",
+    "packages/core/src/meta-ads/client/testing/index.ts",
+    "packages/core/src/meta-ads/profiles/index.ts",
+    "packages/core/src/meta-ads/profiles/oauth.ts",
+    "packages/core/src/meta-ads/profiles/oauth.unit.test.ts",
+    "packages/core/src/meta-ads/profiles/service.ts",
+    "packages/db/drizzle/crm/0021_t99_meta_ads.sql",
+    "packages/db/drizzle/crm/meta/0021_snapshot.json",
+    "packages/db/src/schema/crm/meta-ads.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/meta-ads/client/graph.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 11.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 65.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 41.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "22 arquivo(s) alterado(s)"
+    }
+  ]
+}
