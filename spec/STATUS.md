@@ -121,7 +121,7 @@
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
 | 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
-| 9 | T91 | UI chats: painel lateral e agendamentos | IN_PROGRESS | Torno | Sonda | 0 | |
+| 9 | T91 | UI chats: painel lateral e agendamentos | IN_PROGRESS | Torno | Sonda | 1 | |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
@@ -195,3 +195,5 @@
 | harness E2E / testes | bancos crm_e2e_*/crm_test_*/crm_acc_* de execuções mortas acumulam (72 apagados em 2026-10-16 após queda do Postgres por memória): o harness deve limpar órfãos sem conexão ao subir | infra |
 | UI chat (polimento) | a 1366 px com lista + conversa + painel a conversa fica com ~370 px e o compositor (T85) aperta: lista recolhível (T69) ou container queries no compositor | T91 |
 | T50 (desempenho) | painel do chat (T91) acha o card do chat com 1 chamada por coluna: criar rota dedicada "card do chat por quadro" | T91 |
+| montagem do worker | `configureMetaAds({ db, redis, publisher })` (T101) não é chamado no boot: o processor meta-sync responde "não configurado" | T101 |
+| Meta | `meta_ads_display_currency` da empresa não existe no schema (default BRL ou query); métricas internas `purchases_leona` ficam null até a T105 | T101 |
