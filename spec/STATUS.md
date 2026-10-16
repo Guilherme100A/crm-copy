@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T70 (Torno/Sonda, rejeição 1), T103 (Cinzel/Radar), T109 (Bigorna/Lupa).
+- Em andamento (3 pares): T76 (Torno/Sonda), T103 (Cinzel/Radar), T109 (Bigorna/Lupa).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -98,7 +98,7 @@
 | 7 | T66 | Contatos: filtros avançados e ações em massa | MERGED | Bigorna | Lupa | 0 | 5352144 |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
-| 7 | T70 | UI kanban: lista e quadro | IN_PROGRESS | Torno | Sonda | 1 | |
+| 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 |  |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | TODO | | | 0 | |
@@ -110,7 +110,7 @@
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
-| 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | TODO | | | 0 | |
+| 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | IN_PROGRESS | Torno | Sonda | 0 | |
 | 8 | T77 | UI contatos: lista e seleção em massa | TODO | | | 0 | |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | TODO | | | 0 | |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
