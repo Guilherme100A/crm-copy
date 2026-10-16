@@ -2,26 +2,24 @@
   "version": 1,
   "task": "T24",
   "role": "operario",
-  "ok": true,
-  "at": "2026-10-16T04:34:44.321Z",
-  "commit": "c4f303c0ccf8bdb4c4774c8ce3759f092f9b147e",
-  "base": "c4f303c",
+  "ok": false,
+  "at": "2026-10-16T04:35:59.585Z",
+  "commit": "7d2adb5070f1fbab8c7c2488f50d5f3159e1ff42",
+  "base": "649f800",
   "changedFiles": [
-    "packages/core/package.json",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/migrations.db.unit.test.ts",
-    "packages/db/src/schema/crm/ai-usage.ts",
-    "packages/shared/src/realtime/events.ts",
-    "pnpm-lock.yaml",
     "packages/core/src/ai-metering/guard.db.unit.test.ts",
     "packages/core/src/ai-metering/guard.ts",
     "packages/core/src/ai-metering/index.ts",
     "packages/core/src/ai-metering/meter.ts",
     "packages/core/src/ai-metering/metering.unit.test.ts",
     "packages/core/src/ai-metering/period.ts",
+    "packages/core/src/index.ts",
     "packages/db/drizzle/crm/0008_t24_ai_metering.sql",
-    "packages/db/drizzle/crm/meta/0008_snapshot.json"
+    "packages/db/drizzle/crm/meta/0008_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/migrations.db.unit.test.ts",
+    "packages/db/src/schema/crm/ai-usage.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
@@ -31,18 +29,20 @@
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
-      "status": "pass",
-      "detail": "ok em 10.1s"
+      "status": "fail",
+      "detail": "exit 2 em 2.7s",
+      "output": "\n> @crm/core@0.0.0 typecheck C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T24\\packages\\core\n> tsc --noEmit\n\n../shared/src/realtime/events.ts(60,22): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(69,18): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(70,13): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(71,22): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(72,13): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(73,13): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(74,13): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(75,11): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(76,12): error TS1005: ',' expected.\r\n../shared/src/realtime/events.ts(78,1): error TS1135: Argument expression expected.\r\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T24\\packages\\core:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/core@0.0.0 typecheck: `tsc --noEmit`\nExit status 2\n"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 4.8s"
+      "detail": "ok em 4.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
-      "status": "pass",
-      "detail": "ok em 12.2s"
+      "status": "fail",
+      "detail": "exit 1 em 19.3s",
+      "output": "\n  Plugin: vite:oxc\n  File: C:/Users/green/Downloads/leonas/leonas-crm-wt/T24/packages/shared/src/realtime/events.ts\n ❯ transformWithOxc ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7581:19\n ❯ TransformPluginContext.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7653:26\n ❯ EnvironmentPluginContainer.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:8545:51\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20184:26\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/8]⎯\n\n FAIL  src/contacts/contacts.db.unit.test.ts [ src/contacts/contacts.db.unit.test.ts ]\n FAIL  src/realtime/realtime.unit.test.ts [ src/realtime/realtime.unit.test.ts ]\n FAIL  src/team/team.db.unit.test.ts [ src/team/team.db.unit.test.ts ]\n FAIL  src/team/team.unit.test.ts [ src/team/team.unit.test.ts ]\n FAIL  src/chats/ingest/chat-ingest.db.unit.test.ts [ src/chats/ingest/chat-ingest.db.unit.test.ts ]\nError: Transform failed with 1 error:\n\n\u001b[31m[PARSE_ERROR] \u001b[0mExpected `,` or `)` but found `:`\n    \u001b[38;5;246m╭\u001b[0m\u001b[38;5;246m─\u001b[0m\u001b[38;5;246m[\u001b[0m ../shared/src/realtime/events.ts:60:22 \u001b[38;5;246m]\u001b[0m\n    \u001b[38;5;246m│\u001b[0m\n \u001b[38;5;246m56 │\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m'\u001b[0m\u001b[38;5;249mm\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249ms\u001b[0m\u001b[38;5;249ms\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mg\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249m.\u001b[0m\u001b[38;5;249mr\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mc\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249md\u001b[0m\u001b[38;5;249m'\u001b[0m\u001b[38;5;249m:\u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249md\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mf\u001b[0m\u001b[38;5;249mi\u001b[0m\u001b[38;5;249mn\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mE\u001b[0m\u001b[38;5;249mv\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mn\u001b[0m\u001b[38;5;249mt\u001b[0m(\n \u001b[38;5;240m   │\u001b[0m                                 ┬  \n \u001b[38;5;240m   │\u001b[0m                                 ╰── Opened here\n \u001b[38;5;240m   │\u001b[0m \n \u001b[38;5;246m60 │\u001b[0m \u001b[38;5;249m \u001b[0m\u001b[38;5;249m \u001b[0m\u001b[38;5;249m'\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mi\u001b[0m\u001b[38;5;249m_\u001b[0m\u001b[38;5;249mw\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249ml\u001b[0m\u001b[38;5;249ml\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249m.\u001b[0m\u001b[38;5;249mu\u001b[0m\u001b[38;5;249mp\u001b[0m\u001b[38;5;249md\u001b[0m\u001b[38;5;249ma\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249md\u001b[0m\u001b[38;5;249m'\u001b[0m:\u001b[38;5;249m \u001b[0m\u001b[38;5;249md\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mf\u001b[0m\u001b[38;5;249mi\u001b[0m\u001b[38;5;249mn\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mE\u001b[0m\u001b[38;5;249mv\u001b[0m\u001b[38;5;249me\u001b[0m\u001b[38;5;249mn\u001b[0m\u001b[38;5;249mt\u001b[0m\u001b[38;5;249m(\u001b[0m\n \u001b[38;5;240m   │\u001b[0m                      ┬  \n \u001b[38;5;240m   │\u001b[0m                      ╰── `,` or `)` expected\n\u001b[38;5;246m────╯\u001b[0m\n\n  Plugin: vite:oxc\n  File: C:/Users/green/Downloads/leonas/leonas-crm-wt/T24/packages/shared/src/realtime/events.ts\n ❯ transformWithOxc ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7581:19\n ❯ TransformPluginContext.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:7653:26\n ❯ EnvironmentPluginContainer.transform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:8545:51\n ❯ loadAndTransform ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:20184:26\n ❯ fetchModule ../../node_modules/.pnpm/vite@8.3.4_@types+node@22.20.4_esbuild@0.27.7_tsx@4.23.15/node_modules/vite/dist/node/chunks/node.js:36165:15\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[2/8]⎯\n\n"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -102,7 +102,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "15 arquivo(s) alterado(s)"
+      "detail": "13 arquivo(s) alterado(s)"
     }
   ]
 }
