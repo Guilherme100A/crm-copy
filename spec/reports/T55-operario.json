@@ -3,14 +3,13 @@
   "task": "T55",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T12:51:43.416Z",
-  "commit": "ba65df3b085de90e89b15012e8a4dae18ba148a0",
-  "base": "ba65df3",
+  "at": "2026-10-16T13:07:06.509Z",
+  "commit": "f3a73bbdb8afd9e101c73b6331fe0f9e366a886c",
+  "base": "6a28a65",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
     "apps/api/src/routes/dashboard/dashboard.db.unit.test.ts",
     "apps/api/src/routes/dashboard/index.ts",
+    "apps/api/src/routes/index.ts",
     "docs/kpis.md",
     "packages/core/src/dashboard/bootstrap/index.ts",
     "packages/core/src/dashboard/milestones/index.ts",
@@ -18,38 +17,39 @@
     "packages/core/src/dashboard/sales/calc.unit.test.ts",
     "packages/core/src/dashboard/sales/index.ts",
     "packages/core/src/dashboard/sales/service.db.unit.test.ts",
-    "packages/core/src/dashboard/sales/service.ts"
+    "packages/core/src/dashboard/sales/service.ts",
+    "packages/core/src/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 14.2s"
+      "detail": "ok em 15.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 4.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 101.3s"
+      "detail": "ok em 91.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 17.5s"
+      "detail": "ok em 12.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 8.7s"
+      "detail": "ok em 6.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 84.5s"
+      "detail": "ok em 71.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
