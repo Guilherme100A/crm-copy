@@ -1,0 +1,40 @@
+{
+  "list": {
+    "title": "CRMs",
+    "subtitle": "Track your sales funnels",
+    "search": "Search kanban...",
+    "empty": "No boards yet.",
+    "searchEmpty": "No boards found for \"{q}\".",
+    "error": "Could not load the boards.",
+    "retry": "Try again",
+    "stats": {
+      "boards": "Boards",
+      "cards": "Cards in pipeline",
+      "value": "Pipeline value",
+      "conversion": "Average conversion"
+    },
+    "board": {
+      "columns": "{n} columns",
+      "cards": "Cards",
+      "value": "Total value",
+      "converted": "Converted",
+      "rate": "Conversion",
+      "updated": "Updated {date}"
+    }
+  },
+  "board": {
+    "back": "CRMs",
+    "loading": "Loading board...",
+    "error": "Could not load the board.",
+    "retry": "Try again",
+    "noColumns": "This board has no columns yet.",
+    "dragColumn": "Drag column {name}",
+    "dropHere": "Drag cards here",
+    "loadMore": "Load more",
+    "loadMoreError": "Could not load more cards.",
+    "moveTo": "Move to…",
+    "moveError": "Could not move the card. The board was reloaded.",
+    "columnMoveError": "Could not move the column. The board was reloaded.",
+    "unread": "{n} unread"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "task": "T70",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-16T11:48:31.952Z",
+  "commit": "30f44bf37e5350207743f023248c1c59e1f28954",
+  "base": "b6ffdc6",
+  "changedFiles": [
+    "apps/web/package.json",
+    "apps/web/src/features/crms/api.ts",
+    "apps/web/src/features/crms/board-dnd.tsx",
+    "apps/web/src/features/crms/board-page.tsx",
+    "apps/web/src/features/crms/board-state.ts",
+    "apps/web/src/features/crms/card-view.tsx",
+    "apps/web/src/features/crms/crms.unit.test.ts",
+    "apps/web/src/features/crms/format.ts",
+    "apps/web/src/features/crms/list-page.tsx",
+    "apps/web/src/features/crms/realtime.ts",
+    "apps/web/src/i18n/en/crms.json",
+    "apps/web/src/i18n/es/crms.json",
+    "apps/web/src/i18n/pt-BR/crms.json",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/crms/$crmId.tsx",
+    "apps/web/src/routes/crms/index.tsx",
+    "pnpm-lock.yaml"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 12.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 4.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}

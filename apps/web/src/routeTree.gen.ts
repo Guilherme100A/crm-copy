@@ -22,6 +22,7 @@ import { Route as ChatsIndexRouteImport } from './routes/chats/index'
 import { Route as ChatsChatIdRouteImport } from './routes/chats/$chatId'
 import { Route as ConnectionsIndexRouteImport } from './routes/connections/index'
 import { Route as CrmsIndexRouteImport } from './routes/crms/index'
+import { Route as CrmsCrmIdRouteImport } from './routes/crms/$crmId'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
 import { Route as FacebookIndexRouteImport } from './routes/facebook/index'
 import { Route as FlowsIndexRouteImport } from './routes/flows/index'
@@ -99,6 +100,11 @@ const CrmsIndexRoute = CrmsIndexRouteImport.update({
   path: '/crms/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CrmsCrmIdRoute = CrmsCrmIdRouteImport.update({
+  id: '/crms/$crmId',
+  path: '/crms/$crmId',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CustomersIndexRoute = CustomersIndexRouteImport.update({
   id: '/customers/',
   path: '/customers/',
@@ -164,6 +170,7 @@ export interface FileRoutesByFullPath {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
+  '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -189,6 +196,7 @@ export interface FileRoutesByTo {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
+  '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -216,6 +224,7 @@ export interface FileRoutesById {
   '/register': typeof RegisterRoute
   '/reset-password': typeof ResetPasswordRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
+  '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRoute
@@ -244,6 +253,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/chats/$chatId'
+    | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -269,6 +279,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/chats/$chatId'
+    | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -295,6 +306,7 @@ export interface FileRouteTypes {
     | '/register'
     | '/reset-password'
     | '/chats/$chatId'
+    | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/settings/inbound-webhooks'
@@ -321,6 +333,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   RegisterRoute: typeof RegisterRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  CrmsCrmIdRoute: typeof CrmsCrmIdRoute
   InvitationTokenRoute: typeof InvitationTokenRoute
   InvitationsTokenRoute: typeof InvitationsTokenRoute
   SettingsInboundWebhooksRoute: typeof SettingsInboundWebhooksRoute
@@ -431,6 +444,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CrmsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/crms/$crmId': {
+      id: '/crms/$crmId'
+      path: '/crms/$crmId'
+      fullPath: '/crms/$crmId'
+      preLoaderRoute: typeof CrmsCrmIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/customers/': {
       id: '/customers/'
       path: '/customers'
@@ -533,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   RegisterRoute: RegisterRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  CrmsCrmIdRoute: CrmsCrmIdRoute,
   InvitationTokenRoute: InvitationTokenRoute,
   InvitationsTokenRoute: InvitationsTokenRoute,
   SettingsInboundWebhooksRoute: SettingsInboundWebhooksRoute,

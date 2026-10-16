@@ -1,0 +1,40 @@
+{
+  "list": {
+    "title": "CRMs",
+    "subtitle": "Sigue tus embudos de ventas",
+    "search": "Buscar kanban...",
+    "empty": "Aún no hay tableros.",
+    "searchEmpty": "No se encontraron tableros para \"{q}\".",
+    "error": "No se pudieron cargar los tableros.",
+    "retry": "Reintentar",
+    "stats": {
+      "boards": "Tableros",
+      "cards": "Tarjetas en el pipeline",
+      "value": "Valor en el pipeline",
+      "conversion": "Conversión media"
+    },
+    "board": {
+      "columns": "{n} columnas",
+      "cards": "Tarjetas",
+      "value": "Valor total",
+      "converted": "Convertidos",
+      "rate": "Conversión",
+      "updated": "Actualizado {date}"
+    }
+  },
+  "board": {
+    "back": "CRMs",
+    "loading": "Cargando tablero...",
+    "error": "No se pudo cargar el tablero.",
+    "retry": "Reintentar",
+    "noColumns": "Este tablero aún no tiene columnas.",
+    "dragColumn": "Arrastrar columna {name}",
+    "dropHere": "Arrastra tarjetas aquí",
+    "loadMore": "Cargar más",
+    "loadMoreError": "No se pudieron cargar más tarjetas.",
+    "moveTo": "Mover a…",
+    "moveError": "No se pudo mover la tarjeta. El tablero se recargó.",
+    "columnMoveError": "No se pudo mover la columna. El tablero se recargó.",
+    "unread": "{n} sin leer"
+  }
+}

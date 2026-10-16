@@ -1,0 +1,40 @@
+{
+  "list": {
+    "title": "CRMs",
+    "subtitle": "Acompanhe seus funis de vendas",
+    "search": "Buscar kanban...",
+    "empty": "Nenhum quadro criado ainda.",
+    "searchEmpty": "Nenhum quadro encontrado para \"{q}\".",
+    "error": "Não foi possível carregar os quadros.",
+    "retry": "Tentar novamente",
+    "stats": {
+      "boards": "Quadros",
+      "cards": "Cards no pipeline",
+      "value": "Valor no pipeline",
+      "conversion": "Conversão média"
+    },
+    "board": {
+      "columns": "{n} colunas",
+      "cards": "Cards",
+      "value": "Valor total",
+      "converted": "Convertidos",
+      "rate": "Conversão",
+      "updated": "Atualizado {date}"
+    }
+  },
+  "board": {
+    "back": "CRMs",
+    "loading": "Carregando quadro...",
+    "error": "Não foi possível carregar o quadro.",
+    "retry": "Tentar novamente",
+    "noColumns": "Este quadro ainda não tem colunas.",
+    "dragColumn": "Arrastar coluna {name}",
+    "dropHere": "Arraste cards aqui",
+    "loadMore": "Carregar mais",
+    "loadMoreError": "Não foi possível carregar mais cards.",
+    "moveTo": "Mover para…",
+    "moveError": "Não foi possível mover o card. O quadro foi recarregado.",
+    "columnMoveError": "Não foi possível mover a coluna. O quadro foi recarregado.",
+    "unread": "{n} não lidas"
+  }
+}

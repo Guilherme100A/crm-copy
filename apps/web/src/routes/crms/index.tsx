@@ -1,7 +1,11 @@
-// Rota provisória do shell (T23); a tarefa do módulo substitui este arquivo.
+// `/crms` (spec 18; permissão kanban.view): lista de quadros com indicadores (T70).
 import { createFileRoute } from '@tanstack/react-router'
-import { PlaceholderPage } from '@/components/placeholder-page'
+import { CrmsListPage } from '@/features/crms/list-page'
+import { registerCrmsRealtime } from '@/features/crms/realtime'
+
+// Handlers do SSE registrados junto com a árvore de rotas (antes de o shell abrir a conexão).
+registerCrmsRealtime()
 
 export const Route = createFileRoute('/crms/')({
-  component: () => <PlaceholderPage id="kanban" titleKey="pages.kanban" />,
+  component: CrmsListPage,
 })
