@@ -3,17 +3,13 @@
   "task": "T60",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T08:10:12.437Z",
-  "commit": "5352144dab14de3c3f913beec1fb08fe6eeea063",
-  "base": "5352144",
+  "at": "2026-10-16T08:16:19.920Z",
+  "commit": "d3b07fc3522c3347459f91d6f5bc8cef1aab66ae",
+  "base": "10fa4d0",
   "changedFiles": [
     "apps/api/src/routes/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/permissions/catalog.ts",
-    "packages/shared/src/permissions/defaults.ts",
     "apps/api/src/routes/mass-dispatch/index.ts",
+    "packages/core/src/index.ts",
     "packages/core/src/mass-dispatch/index.ts",
     "packages/core/src/mass-dispatch/jobs.ts",
     "packages/core/src/mass-dispatch/mass-dispatch.db.unit.test.ts",
@@ -22,38 +18,42 @@
     "packages/core/src/mass-dispatch/service.ts",
     "packages/db/drizzle/crm/0019_t60_mass_dispatch.sql",
     "packages/db/drizzle/crm/meta/0019_snapshot.json",
-    "packages/db/src/schema/crm/mass-dispatch.ts"
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/mass-dispatch.ts",
+    "packages/shared/src/permissions/catalog.ts",
+    "packages/shared/src/permissions/defaults.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 22.7s"
+      "detail": "ok em 12.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 7.6s"
+      "detail": "ok em 4.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 77.3s"
+      "detail": "ok em 43.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 14.2s"
+      "detail": "ok em 10.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 20.5s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 33.1s"
+      "detail": "ok em 53.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
