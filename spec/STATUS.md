@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T36 (Torno/Sonda), T66 (Bigorna/Lupa), T120 (Cinzel/Radar).
+- Em andamento (3 pares): T66 (Bigorna/Lupa), T69 (Torno/Sonda), T120 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -50,7 +50,7 @@
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
-| 5 | T36 | UI: autenticação, perfil e troca de empresa | IN_PROGRESS | Torno | Sonda | 0 | |
+| 5 | T36 | UI: autenticação, perfil e troca de empresa | MERGED | Torno | Sonda | 0 | c4e120e |
 | 5 | T37 | API de consumo de IA (empresa e plataforma) | TODO | | | 0 | |
 | 5 | T38 | Chaves de provedores de IA (BYOK) | MERGED | Torno | Sonda | 0 | 69bc234 |
 | 5 | T39 | Agentes de IA: schema e CRUD | MERGED | Torno | Sonda | 0 | 9b9a320 |
@@ -97,7 +97,7 @@
 | 7 | T65 | Dashboard: métricas de atendimento | TODO | | | 0 | |
 | 7 | T66 | Contatos: filtros avançados e ações em massa | IN_PROGRESS | Bigorna | Lupa | 0 | |
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
-| 7 | T69 | UI chats: lista e filtros | TODO | | | 0 | |
+| 7 | T69 | UI chats: lista e filtros | IN_PROGRESS | Torno | Sonda | 0 | |
 | 7 | T70 | UI kanban: lista e quadro | TODO | | | 0 | |
 | 7 | T71 | UI conexões | TODO | | | 0 | |
 | 7 | T74 | Disparos em massa: preparação e agendador | TODO | | | 0 | |
