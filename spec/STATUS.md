@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 116 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (3 pares): T63 (Bigorna/Lupa), T85 (Torno/Sonda), T101 (Cinzel/Radar).
+- Em andamento (3 pares): T63 (Bigorna/Lupa), T91 (Torno/Sonda), T101 (Cinzel/Radar).
 - Bloqueios: nenhum
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (SPEC §10.3)
@@ -118,10 +118,10 @@
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
 | 8 | T89 | UI webhooks de entrada | TODO | | | 0 | |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
-| 9 | T85 | UI chats: compositor | IN_PROGRESS | Torno | Sonda | 0 | |
+| 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | TODO | | | 0 | |
 | 9 | T88 | UI agentes: lista e editor | TODO | | | 0 | |
-| 9 | T91 | UI chats: painel lateral e agendamentos | TODO | | | 0 | |
+| 9 | T91 | UI chats: painel lateral e agendamentos | IN_PROGRESS | Torno | Sonda | 0 | |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
