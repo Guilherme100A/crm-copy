@@ -163,3 +163,4 @@
 | SPEC (Codice) | Paths das tarefas de UI devem seguir as URLs da spec 18 (ex.: `/customers`, `/chats`, `/crms`, `/agentes`); `requiredFile` da T36 é `routes/auth/login.tsx` mas a URL é `/login` (a T23 renderiza `features/auth/login-page.tsx` em `routes/login.tsx`) | T23 |
 | worker (T25/T30) | ninguém publica `flow_run.updated` (está no catálogo): o worker deve publicar mudanças de estado dos runs | T43 |
 | T08/server.ts | no shutdown fechar as filas BullMQ criadas sob demanda pela API (flow-step, flow-timer) | T43 |
+| endurecimento | `GET /api/media/:id` escopado só por empresa (id = HMAC do conteúdo, não adivinhável, só aparece em mensagens visíveis): avaliar vínculo mídia↔chat | T119 |
