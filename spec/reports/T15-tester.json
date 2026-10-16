@@ -3,13 +3,10 @@
   "task": "T15",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:23:22.901Z",
-  "commit": "758d224fcdc5d13e9f01ec725eedf539f102fc4e",
-  "base": "8ce43da",
-  "changedFiles": [
-    "tests/acceptance/T15/auth.test.ts",
-    "tests/acceptance/T15/setup.ts"
-  ],
+  "at": "2026-10-16T03:24:00.676Z",
+  "commit": "b0347fadf0916eb068d0e1b46857dc6562538878",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
