@@ -3,8 +3,8 @@
   "task": "T58",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T23:41:00.492Z",
-  "commit": "9acbd81b5581c83a76057de37cfbc4e8ae11a9ed",
+  "at": "2026-10-16T23:50:10.603Z",
+  "commit": "b8cc9f846d58a6a92707cdd621147d2aa72184ca",
   "base": "683ccbf",
   "changedFiles": [
     "apps/web/src/features/settings-fields/api.ts",
@@ -53,32 +53,32 @@
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 12.1s"
+      "detail": "ok em 11.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 7.0s"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 106.3s"
+      "detail": "ok em 104.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 8.6s"
+      "detail": "ok em 11.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 9.1s"
+      "detail": "ok em 11.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -88,7 +88,7 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 2.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
