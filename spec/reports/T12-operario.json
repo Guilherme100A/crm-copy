@@ -3,26 +3,10 @@
   "task": "T12",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:31:57.830Z",
-  "commit": "224aad161623d77996fb82d273a239c221feff87",
-  "base": "224aad1",
-  "changedFiles": [
-    "packages/ai/package.json",
-    "packages/ai/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/ai/src/aisdk/index.ts",
-    "packages/ai/src/aisdk/provider.ts",
-    "packages/ai/src/aisdk/provider.unit.test.ts",
-    "packages/ai/src/audio/index.ts",
-    "packages/ai/src/audio/ptt.ts",
-    "packages/ai/src/audio/ptt.unit.test.ts",
-    "packages/ai/src/elevenlabs/index.ts",
-    "packages/ai/src/elevenlabs/tts.ts",
-    "packages/ai/src/elevenlabs/tts.unit.test.ts",
-    "packages/ai/src/groq/index.ts",
-    "packages/ai/src/groq/stt.ts",
-    "packages/ai/src/groq/stt.unit.test.ts"
-  ],
+  "at": "2026-10-16T03:33:05.111Z",
+  "commit": "bd4a31f76f8fbb587aac876f761be88b839268c0",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/ai/src/aisdk/provider.ts",
@@ -37,17 +21,17 @@
     {
       "name": "cmd: pnpm --filter @crm/ai typecheck",
       "status": "pass",
-      "detail": "ok em 3.7s"
+      "detail": "ok em 2.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/ai lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/ai test",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -107,7 +91,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "15 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

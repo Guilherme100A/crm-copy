@@ -3,16 +3,10 @@
   "task": "T12",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:32:25.838Z",
-  "commit": "224aad161623d77996fb82d273a239c221feff87",
-  "base": "224aad1",
-  "changedFiles": [
-    "tests/acceptance/T12/aisdk.test.ts",
-    "tests/acceptance/T12/audio.test.ts",
-    "tests/acceptance/T12/openrouter.test.ts",
-    "tests/acceptance/T12/support.ts",
-    "tests/acceptance/T12/voice.test.ts"
-  ],
+  "at": "2026-10-16T03:33:07.300Z",
+  "commit": "bd4a31f76f8fbb587aac876f761be88b839268c0",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -82,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
