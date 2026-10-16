@@ -1,6 +1,6 @@
 // Lista de conversas (T48; 03 F01–F14): filtros, escopo da T31, cursor de 15 e contadores por aba.
 import { and, asc, desc, eq, getTableColumns, gte, inArray, isNull, lte, or, sql, type SQL } from 'drizzle-orm'
-import { CHAT_STATUSES, chatLabels, chats, companyMembers, contacts, departments, labels, messages, users, type ChatStatus, type Database } from '@crm/db'
+import { CHAT_STATUSES, chatLabels, chats, companyMembers, contacts, departments, kanbanCards, labels, messages, users, type ChatStatus, type Database } from '@crm/db'
 import { foldText } from '../../departments'
 import { toChatDto, type ChatDto, type ChatRow } from '../model/dto'
 import { chatInvalid, chatNotFound } from '../lifecycle/errors'
@@ -24,6 +24,9 @@ export interface ChatListQuery {
   department_ids?: string[]
   label_ids?: string[]
   contact_id?: string
+  /** T50: só chats com card neste quadro Kanban (e, com `crm_column_id`, nesta coluna). */
+  crm_id?: string
+  crm_column_id?: string
   cursor?: string
   limit?: number
 }
@@ -85,6 +88,13 @@ export class ChatQueryService {
     if (q.contact_id) conds.push(eq(chats.contactId, q.contact_id))
     if (q.label_ids?.length)
       conds.push(sql`exists (select 1 from ${chatLabels} where ${chatLabels.chatId} = ${chats.id} and ${inArray(chatLabels.labelId, q.label_ids)})`)
+    // T50: filtro por quadro/coluna do Kanban (card do chat).
+    if (q.crm_id || q.crm_column_id)
+      conds.push(
+        sql`exists (select 1 from ${kanbanCards} where ${kanbanCards.chatId} = ${chats.id} and ${kanbanCards.companyId} = ${actor.companyId}${
+          q.crm_id ? sql` and ${kanbanCards.crmId} = ${q.crm_id}` : sql``
+        }${q.crm_column_id ? sql` and ${kanbanCards.columnId} = ${q.crm_column_id}` : sql``})`,
+      )
     if (q.response_status) {
       // Última mensagem do chat (as notas internas ficam em outra tabela e não contam).
       const lastInbound = sql`(select ${messages.direction} from ${messages} where ${messages.chatId} = ${chats.id} order by ${messages.createdAt} desc, ${messages.id} desc limit 1) = 'inbound'`

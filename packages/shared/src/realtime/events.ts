@@ -26,6 +26,16 @@ const flowRunEventData = () =>
     status: z.string(),
   })
 
+/** Dados dos eventos `kanban.card.*` (T50). */
+const kanbanCardEventData = () =>
+  z.looseObject({
+    crm_id: idSchema,
+    card_id: idSchema,
+    chat_id: idSchema,
+    column_id: idSchema,
+    from_column_id: idSchema.optional(),
+  })
+
 export const REALTIME_EVENTS = {
   /** Dados da empresa mudaram (nome, fuso, status…): o cliente recarrega a empresa. */
   'company.updated': defineEvent(
@@ -103,6 +113,17 @@ export const REALTIME_EVENTS = {
   'flow_run.updated': defineEvent(flowRunEventData(), 'flows.view'),
   /** Run cancelado (manual, novo disparo para o contato, cancelar todos da conexão). */
   'flow_run.cancelled': defineEvent(flowRunEventData(), 'flows.view'),
+  // ---- T50: Kanban (publicados com o escopo do chat) ----
+  'kanban.card.created': defineEvent(kanbanCardEventData(), 'kanban.view'),
+  'kanban.card.updated': defineEvent(kanbanCardEventData(), 'kanban.view'),
+  /** Card mudou de coluna/posição; `from_column_id` = coluna de origem. */
+  'kanban.card.moved': defineEvent(kanbanCardEventData(), 'kanban.view'),
+  'kanban.card.deleted': defineEvent(kanbanCardEventData(), 'kanban.view'),
+  /** Coluna criada, editada, excluída ou movida (o cliente recarrega as colunas do quadro). */
+  'kanban.column.changed': defineEvent(
+    z.looseObject({ crm_id: idSchema, column_id: idSchema.nullable().optional(), action: z.enum(['created', 'updated', 'deleted', 'moved']) }),
+    'kanban.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

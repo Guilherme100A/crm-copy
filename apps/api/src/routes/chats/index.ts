@@ -10,11 +10,21 @@ import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { validate } from '../../lib/validate'
 import { setAudit } from '../../middleware/audit'
 import { requirePerm } from '../../middleware/authorize'
+import { kanbanServiceFor, kanbanToApi } from '../kanban/index'
 
 function toApiError(err: unknown): unknown {
   if (!(err instanceof ChatsError)) return err
   const code = { not_found: 'NOT_FOUND', validation: 'VALIDATION_ERROR', invalid_transition: 'INVALID_TRANSITION', forbidden: 'FORBIDDEN' } as const
   return new ApiError(code[err.code], err.message, err.details)
+}
+
+/** Erros do Kanban (T50) no PATCH de quadro/coluna. */
+async function kanban<T>(fn: () => Promise<T>): Promise<T> {
+  try {
+    return await fn()
+  } catch (err) {
+    throw kanbanToApi(err)
+  }
 }
 
 async function domain<T>(fn: () => Promise<T>): Promise<T> {
@@ -35,6 +45,9 @@ const listQuery = z.object({
   created_from: z.string().max(40).optional(),
   created_to: z.string().max(40).optional(),
   contact_id: uuid.optional(),
+  // T50: chats com card no quadro/coluna do Kanban.
+  crm_id: uuid.optional(),
+  crm_column_id: uuid.optional(),
   cursor: z.string().max(500).optional(),
   limit: z.coerce.number().int().min(1).max(50).optional(),
 })
@@ -61,7 +74,13 @@ function readListQuery(c: Context<AppEnv>): ChatListQuery {
 const openSchema = z.object({ contact_id: z.string().max(64), connection_id: z.string().max(64) })
 const assignSchema = z.object({ user_id: z.string().max(64).nullish() })
 const patchSchema = z
-  .object({ department_id: z.string().max(64).nullable().optional(), ai_agent_id: z.string().max(64).nullable().optional() })
+  .object({
+    department_id: z.string().max(64).nullable().optional(),
+    ai_agent_id: z.string().max(64).nullable().optional(),
+    // T50: quadro/coluna do Kanban (cria/move o card; `crm_column_id: null` tira do quadro). Exige kanban.edit.
+    crm_id: z.string().max(64).optional(),
+    crm_column_id: z.string().max(64).nullable().optional(),
+  })
   .strict()
 const noteSchema = z.object({ body: z.string().max(20_000) })
 const labelSchema = z.object({ label_id: z.string().max(64) })
@@ -102,10 +121,21 @@ export function chatsRoutes(deps: ResolvedDeps) {
   app.get('/api/chats/:id', view, async (c) => c.json({ chat: await domain(() => query.get(actorOf(c), c.req.param('id'))) }, 200))
 
   app.patch('/api/chats/:id', view, validate('json', patchSchema), async (c) => {
-    const body = c.req.valid('json')
-    const chat = await domain(() => service.update(actorOf(c), c.req.param('id'), body))
-    audit(c, 'update', chat.id, { fields: Object.keys(body) })
-    return c.json({ chat }, 200)
+    const { crm_id, crm_column_id, ...body } = c.req.valid('json')
+    const actor = actorOf(c)
+    const id = c.req.param('id')
+    // T50: quadro/coluna do Kanban — o chat precisa estar no escopo (ChatQueryService.row → 404 fora dele).
+    let card: unknown = undefined
+    if (crm_id !== undefined || crm_column_id !== undefined) {
+      if (crm_id === undefined)
+        throw new ApiError('VALIDATION_ERROR', 'Informe crm_id junto com crm_column_id', { fields: [{ path: 'crm_id', message: 'obrigatório com crm_column_id' }] })
+      if (!(getCompanyCtx(c).perms as ReadonlySet<string>).has('kanban.edit')) throw new ApiError('FORBIDDEN', 'Permissão insuficiente', { permission: 'kanban.edit' })
+      await domain(() => query.row(actor, id))
+      card = await kanban(() => kanbanServiceFor(deps).setChatColumn(actor, id, crm_id, crm_column_id))
+    }
+    const chat = Object.keys(body).length ? await domain(() => service.update(actor, id, body)) : await domain(() => query.get(actor, id))
+    audit(c, 'update', chat.id, { fields: [...Object.keys(body), ...(card !== undefined ? ['crm_id', 'crm_column_id'] : [])] })
+    return c.json(card !== undefined ? { chat, card } : { chat }, 200)
   })
 
   app.delete('/api/chats/:id', requirePerm('chat.delete'), async (c) => {
