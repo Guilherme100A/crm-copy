@@ -3,16 +3,10 @@
   "task": "T10",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:00:30.977Z",
-  "commit": "779aa560ad12e8e1156efa1864e66d9b70925bb9",
-  "base": "779aa56",
-  "changedFiles": [
-    "tests/acceptance/T10/actions.test.ts",
-    "tests/acceptance/T10/migrate.test.ts",
-    "tests/acceptance/T10/support.ts",
-    "tests/acceptance/T10/unsupported.test.ts",
-    "tests/acceptance/T10/validate.test.ts"
-  ],
+  "at": "2026-10-16T03:00:44.046Z",
+  "commit": "8796946ebc475c0a1c3a5659011fd4611be5b266",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -77,7 +71,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

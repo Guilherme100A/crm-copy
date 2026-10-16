@@ -3,25 +3,10 @@
   "task": "T07",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:59:09.978Z",
-  "commit": "911e046439786f320d476751d027d535109ddd77",
-  "base": "911e046",
-  "changedFiles": [
-    "packages/wa-engine/package.json",
-    "packages/wa-engine/src/index.ts",
-    "pnpm-lock.yaml",
-    "packages/wa-engine/src/transport/baileys.ts",
-    "packages/wa-engine/src/transport/baileys.unit.test.ts",
-    "packages/wa-engine/src/transport/emitter.ts",
-    "packages/wa-engine/src/transport/fake.ts",
-    "packages/wa-engine/src/transport/fake.unit.test.ts",
-    "packages/wa-engine/src/transport/fingerprint.ts",
-    "packages/wa-engine/src/transport/index.ts",
-    "packages/wa-engine/src/transport/message.ts",
-    "packages/wa-engine/src/transport/message.unit.test.ts",
-    "packages/wa-engine/src/transport/proxy-agent.ts",
-    "packages/wa-engine/src/transport/types.ts"
-  ],
+  "at": "2026-10-16T03:02:03.529Z",
+  "commit": "3dc6d3eef4273fddd6e581d4cc34748ee140b42d",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/wa-engine/src/transport/types.ts",
@@ -41,17 +26,17 @@
     {
       "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 4.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 4.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 1.4s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -111,7 +96,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "14 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

@@ -3,15 +3,10 @@
   "task": "T07",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-16T03:00:59.846Z",
-  "commit": "911e046439786f320d476751d027d535109ddd77",
-  "base": "911e046",
-  "changedFiles": [
-    "tests/acceptance/T07/baileys.test.ts",
-    "tests/acceptance/T07/boundary.test.ts",
-    "tests/acceptance/T07/contract.ts",
-    "tests/acceptance/T07/fake.test.ts"
-  ],
+  "at": "2026-10-16T03:02:05.898Z",
+  "commit": "3dc6d3eef4273fddd6e581d4cc34748ee140b42d",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -81,7 +76,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "4 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

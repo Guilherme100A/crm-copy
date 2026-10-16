@@ -3,54 +3,10 @@
   "task": "T10",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T03:00:28.763Z",
-  "commit": "779aa560ad12e8e1156efa1864e66d9b70925bb9",
-  "base": "779aa56",
-  "changedFiles": [
-    "packages/shared/package.json",
-    "packages/shared/src/index.ts",
-    "packages/shared/src/flows/actions/add_tags.ts",
-    "packages/shared/src/flows/actions/ai_call.ts",
-    "packages/shared/src/flows/actions/change_chat_status.ts",
-    "packages/shared/src/flows/actions/common.ts",
-    "packages/shared/src/flows/actions/control_ai_agent.ts",
-    "packages/shared/src/flows/actions/create_kanban_card.ts",
-    "packages/shared/src/flows/actions/create_payment_charge.ts",
-    "packages/shared/src/flows/actions/delay_between_messages.ts",
-    "packages/shared/src/flows/actions/distribute_contacts.ts",
-    "packages/shared/src/flows/actions/evaluate_condition.ts",
-    "packages/shared/src/flows/actions/execute_flow.ts",
-    "packages/shared/src/flows/actions/index.ts",
-    "packages/shared/src/flows/actions/make_http_request.ts",
-    "packages/shared/src/flows/actions/menu-options.ts",
-    "packages/shared/src/flows/actions/register_approved_sale.ts",
-    "packages/shared/src/flows/actions/remove_kanban_card.ts",
-    "packages/shared/src/flows/actions/remove_tags.ts",
-    "packages/shared/src/flows/actions/save_user_data.ts",
-    "packages/shared/src/flows/actions/send_carousel.ts",
-    "packages/shared/src/flows/actions/send_contact.ts",
-    "packages/shared/src/flows/actions/send_file.ts",
-    "packages/shared/src/flows/actions/send_interactive_menu.ts",
-    "packages/shared/src/flows/actions/send_message.ts",
-    "packages/shared/src/flows/actions/send_multi_media.ts",
-    "packages/shared/src/flows/actions/send_notification.ts",
-    "packages/shared/src/flows/actions/send_option_list.ts",
-    "packages/shared/src/flows/actions/send_pix_button.ts",
-    "packages/shared/src/flows/actions/send_pixel_event.ts",
-    "packages/shared/src/flows/actions/send_sticker.ts",
-    "packages/shared/src/flows/actions/set_contact_custom_field.ts",
-    "packages/shared/src/flows/actions/set_created_at.ts",
-    "packages/shared/src/flows/actions/set_department.ts",
-    "packages/shared/src/flows/actions/smart_interval.ts",
-    "packages/shared/src/flows/actions/wait_for_response.ts",
-    "packages/shared/src/flows/definition.ts",
-    "packages/shared/src/flows/examples.ts",
-    "packages/shared/src/flows/handles.ts",
-    "packages/shared/src/flows/index.ts",
-    "packages/shared/src/flows/migrate.ts",
-    "packages/shared/src/flows/nodes.ts",
-    "packages/shared/src/flows/validate.ts"
-  ],
+  "at": "2026-10-16T03:00:42.047Z",
+  "commit": "8796946ebc475c0a1c3a5659011fd4611be5b266",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "arquivo: packages/shared/src/flows/definition.ts",
@@ -65,17 +21,17 @@
     {
       "name": "cmd: pnpm --filter @crm/shared typecheck",
       "status": "pass",
-      "detail": "ok em 2.4s"
+      "detail": "ok em 3.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/shared lint",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 3.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/shared test",
       "status": "pass",
-      "detail": "ok em 1.4s"
+      "detail": "ok em 1.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -135,7 +91,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "43 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

@@ -3,8 +3,8 @@
   "task": "T06",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-16T02:56:51.054Z",
-  "commit": "e578080e7ed41e003edea3b38c4a57a902853d1e",
+  "at": "2026-10-16T03:02:35.158Z",
+  "commit": "3dc6d3eef4273fddd6e581d4cc34748ee140b42d",
   "base": null,
   "changedFiles": [],
   "checks": [
@@ -26,27 +26,27 @@
     {
       "name": "cmd: pnpm --filter @crm/db lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 2.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db test",
       "status": "pass",
-      "detail": "ok em 10.0s"
+      "detail": "ok em 10.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine typecheck",
       "status": "pass",
-      "detail": "ok em 5.3s"
+      "detail": "ok em 5.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-engine test",
       "status": "pass",
-      "detail": "ok em 4.3s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
