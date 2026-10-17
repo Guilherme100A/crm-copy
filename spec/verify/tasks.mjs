@@ -308,7 +308,7 @@ const RAW = [
   T('T103', 'Meta: edição de status, nome e orçamento', ['T101'], ['packages/core/src/meta-ads/mutations/**', route('meta-entities'), 'packages/core/src/meta-ads/client/**', 'packages/core/src/meta-ads/structure/service.ts' /* aditivo: mutações no fake e invalidação por geração */], ['api', 'core']),
   T('T104', 'Meta: Pixel, Conversions API e nó de fluxo pixel', ['T99', 'T25', 'T34'],
     ['packages/core/src/meta-capi/**', 'packages/core/src/flows/nodes/pixel/**', route('meta-pixels'), job('meta-capi'), schema('meta-pixels'), 'packages/core/src/meta-ads/client/**' /* aditivo: CAPI no FakeMetaGraph */, 'packages/shared/src/flows/handles.ts' /* pixel: source + success + failure */], ['api', 'worker', 'core']),
-  T('T105', 'Meta: vendas internas × anúncios (CTWA) e ROAS', ['T101', 'T73'], ['packages/core/src/meta-ads/sales-join/**'], ['core']),
+  T('T105', 'Meta: vendas internas × anúncios (CTWA) e ROAS', ['T101', 'T73'], ['packages/core/src/meta-ads/sales-join/**', 'packages/core/src/meta-ads/structure/service.ts', 'packages/core/src/meta-ads/structure/metrics.ts' /* aditivo: opção internalSales no build do bundle (métricas no Gerenciador) */], ['core']),
   T('T106', 'UI Facebook: gerenciador, pixel e perfis', ['T101', 'T103', 'T104', 'T23'], [...ui('facebook')], ['web'], { e2e: true }),
 
   // ---------------- Shell: extras da spec 18 ----------------

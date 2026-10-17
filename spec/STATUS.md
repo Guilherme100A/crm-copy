@@ -105,7 +105,7 @@
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
-| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
+| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera service.ts/metrics.ts do meta-ads (aditivo) |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
@@ -114,7 +114,7 @@
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
-| 8 | T83 | UI disparos em massa | IN_PROGRESS | Forja | (vaga) | 0 | libera harness (configureMassDispatch, aditivo) |
+| 8 | T83 | UI disparos em massa | VERIFYING | Forja | (vaga) | 0 | op ~20 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
