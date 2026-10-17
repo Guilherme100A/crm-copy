@@ -1,0 +1,87 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "back": "Voltar",
+    "retry": "Tentar de novo"
+  },
+  "entry": {
+    "new": "Novo contato",
+    "openChat": "Abrir chat com {name}",
+    "openChatShort": "Abrir chat",
+    "edit": "Editar {name}",
+    "editShort": "Editar",
+    "actions": "Ações"
+  },
+  "search": {
+    "title": "Novo contato",
+    "placeholder": "Digite para buscar contatos existentes",
+    "hint": "Digite pelo menos 2 caracteres (nome, telefone ou e-mail) para ver se o contato já existe.",
+    "loading": "Buscando...",
+    "error": "Não foi possível buscar contatos.",
+    "empty": "Nenhum contato encontrado.",
+    "found": "{n} contato(s) encontrado(s). Edite o existente ou crie um novo.",
+    "noPhone": "Sem telefone",
+    "edit": "Editar",
+    "create": "Criar novo contato"
+  },
+  "form": {
+    "createTitle": "Novo contato",
+    "editTitle": "Editar contato",
+    "save": "Salvar contato",
+    "saveChanges": "Salvar alterações",
+    "saveOpenChat": "Salvar e abrir conversa",
+    "created": "Contato criado",
+    "updated": "Contato atualizado",
+    "editExisting": "Editar o existente",
+    "loading": "Carregando contato...",
+    "loadError": "Não foi possível carregar o contato."
+  },
+  "fields": {
+    "name": "Nome completo",
+    "phone": "Telefone",
+    "country": "País",
+    "phonePlaceholderBr": "DDD + número",
+    "phonePlaceholder": "Número",
+    "email": "E-mail",
+    "state": "UF",
+    "statePlaceholder": "UF",
+    "city": "Cidade",
+    "cityPlaceholder": "Escolha a UF",
+    "zip": "CEP",
+    "labels": "Etiquetas",
+    "noLabels": "Nenhuma etiqueta nesta empresa.",
+    "customFields": "Campos personalizados",
+    "cfKey": "Nome",
+    "cfValue": "Valor",
+    "cfRemove": "Remover campo",
+    "cfAdd": "Adicionar campo",
+    "ad": "Dados do anúncio",
+    "ctwaClid": "Click ID do anúncio",
+    "sourceId": "ID da origem",
+    "sourceUrl": "URL da origem"
+  },
+  "errors": {
+    "nameRequired": "Informe o nome.",
+    "phone": {
+      "required": "Informe o telefone.",
+      "short": "Telefone curto demais.",
+      "long": "Telefone longo demais.",
+      "invalid": "Telefone inválido para o país escolhido."
+    },
+    "email": "E-mail inválido.",
+    "zip": "CEP deve ter 8 dígitos.",
+    "conflict": "Já existe um contato com estes dados.",
+    "conflictPhone": "Telefone já cadastrado em outro contato.",
+    "conflictEmail": "E-mail já cadastrado em outro contato.",
+    "forbidden": "Você não tem permissão para alterar contatos.",
+    "generic": "Não foi possível salvar o contato."
+  },
+  "openChat": {
+    "title": "Escolha a conexão",
+    "search": "Buscar por nome, telefone ou status",
+    "empty": "Nenhuma conexão encontrada.",
+    "confirm": "Abrir conversa",
+    "error": "Não foi possível abrir a conversa.",
+    "noConnection": "Nenhuma conexão de WhatsApp cadastrada."
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "back": "Back",
+    "retry": "Try again"
+  },
+  "entry": {
+    "new": "New contact",
+    "openChat": "Open chat with {name}",
+    "openChatShort": "Open chat",
+    "edit": "Edit {name}",
+    "editShort": "Edit",
+    "actions": "Actions"
+  },
+  "search": {
+    "title": "New contact",
+    "placeholder": "Type to search existing contacts",
+    "hint": "Type at least 2 characters (name, phone or email) to check whether the contact already exists.",
+    "loading": "Searching...",
+    "error": "Could not search contacts.",
+    "empty": "No contacts found.",
+    "found": "{n} contact(s) found. Edit the existing one or create a new one.",
+    "noPhone": "No phone",
+    "edit": "Edit",
+    "create": "Create new contact"
+  },
+  "form": {
+    "createTitle": "New contact",
+    "editTitle": "Edit contact",
+    "save": "Save contact",
+    "saveChanges": "Save changes",
+    "saveOpenChat": "Save and open chat",
+    "created": "Contact created",
+    "updated": "Contact updated",
+    "editExisting": "Edit existing",
+    "loading": "Loading contact...",
+    "loadError": "Could not load the contact."
+  },
+  "fields": {
+    "name": "Full name",
+    "phone": "Phone",
+    "country": "Country",
+    "phonePlaceholderBr": "Area code + number",
+    "phonePlaceholder": "Number",
+    "email": "Email",
+    "state": "State",
+    "statePlaceholder": "State",
+    "city": "City",
+    "cityPlaceholder": "Choose the state",
+    "zip": "ZIP code",
+    "labels": "Labels",
+    "noLabels": "No labels in this company.",
+    "customFields": "Custom fields",
+    "cfKey": "Name",
+    "cfValue": "Value",
+    "cfRemove": "Remove field",
+    "cfAdd": "Add field",
+    "ad": "Ad data",
+    "ctwaClid": "Ad click ID",
+    "sourceId": "Source ID",
+    "sourceUrl": "Source URL"
+  },
+  "errors": {
+    "nameRequired": "Enter the name.",
+    "phone": {
+      "required": "Enter the phone.",
+      "short": "Phone is too short.",
+      "long": "Phone is too long.",
+      "invalid": "Invalid phone for the selected country."
+    },
+    "email": "Invalid email.",
+    "zip": "ZIP code must have 8 digits.",
+    "conflict": "A contact with this data already exists.",
+    "conflictPhone": "Phone already used by another contact.",
+    "conflictEmail": "Email already used by another contact.",
+    "forbidden": "You are not allowed to change contacts.",
+    "generic": "Could not save the contact."
+  },
+  "openChat": {
+    "title": "Choose the connection",
+    "search": "Search by name, phone or status",
+    "empty": "No connections found.",
+    "confirm": "Open chat",
+    "error": "Could not open the chat.",
+    "noConnection": "No WhatsApp connection registered."
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "retry": "Intentar de nuevo"
+  },
+  "entry": {
+    "recentExports": "Exportaciones recientes",
+    "importCsv": "Importar CSV"
+  },
+  "import": {
+    "title": "Importar contactos desde CSV",
+    "intro": "Usa la planilla modelo (separador ;). Los contactos con el mismo teléfono se actualizan.",
+    "template": "Descargar planilla modelo",
+    "defaultLabels": "Etiquetas predeterminadas (opcional)",
+    "defaultLabelsHint": "Se aplican a las filas del CSV sin etiquetas; las etiquetas del CSV tienen prioridad y se crean si faltan.",
+    "noLabels": "No hay etiquetas en esta empresa.",
+    "select": "Seleccionar CSV para importar",
+    "labelsNote": "Las etiquetas quedan en el contacto y se copian a la conversación al abrir el chat.",
+    "submit": "Importar",
+    "failed": "La importación falló.",
+    "background": "La importación sigue en segundo plano si cierras esta ventana.",
+    "phase": {
+      "starting": "En cola...",
+      "reading": "Leyendo el archivo...",
+      "importing": "Importando contactos...",
+      "completed": "Importación finalizada",
+      "failed": "La importación falló"
+    },
+    "processed": "{n} de {total} filas",
+    "partial": "{created} creados · {updated} actualizados · {skipped} omitidos · {errors} errores",
+    "done": "Importación finalizada",
+    "counts": {
+      "created": "Creados",
+      "updated": "Actualizados",
+      "skipped": "Omitidos",
+      "errors": "Errores"
+    },
+    "labelsCreated": "Etiquetas creadas: {names}",
+    "warnings": "Avisos",
+    "warningItem": "{message} ({n}x)",
+    "errorsTitle": "Errores por fila",
+    "errorCount": "{n}x",
+    "errorLines": "Filas: {lines}",
+    "extraErrors": "{n} error(es) más fuera de los grupos mostrados.",
+    "errors": {
+      "type": "Selecciona un archivo .csv.",
+      "size": "El archivo supera los 50 MB.",
+      "forbidden": "No tienes permiso para importar contactos.",
+      "start": "No se pudo iniciar la importación."
+    }
+  },
+  "exports": {
+    "title": "Exportaciones recientes",
+    "loading": "Cargando...",
+    "error": "No se pudieron cargar las exportaciones.",
+    "empty": "No hay exportaciones recientes.",
+    "hint": "Se muestran las 3 más recientes; la más antigua sale de la lista en la próxima exportación.",
+    "rows": "{n} filas",
+    "unnamed": "Exportación de contactos",
+    "download": "Descargar {name}",
+    "status": {
+      "queued": "En cola",
+      "processing": "Procesando",
+      "completed": "Lista",
+      "failed": "Falló"
+    }
+  }
+}

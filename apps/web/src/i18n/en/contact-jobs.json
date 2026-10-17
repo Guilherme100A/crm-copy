@@ -1,0 +1,69 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "retry": "Try again"
+  },
+  "entry": {
+    "recentExports": "Recent exports",
+    "importCsv": "Import CSV"
+  },
+  "import": {
+    "title": "Import contacts from CSV",
+    "intro": "Use the template spreadsheet (; separator). Contacts with the same phone are updated.",
+    "template": "Download template",
+    "defaultLabels": "Default labels (optional)",
+    "defaultLabelsHint": "Applied to CSV rows without labels; labels in the CSV take priority and are created if missing.",
+    "noLabels": "No labels in this company.",
+    "select": "Select CSV to import",
+    "labelsNote": "Labels stay on the contact and are copied to the chat when it is opened.",
+    "submit": "Import",
+    "failed": "The import failed.",
+    "background": "The import keeps running in the background if you close this window.",
+    "phase": {
+      "starting": "Queued...",
+      "reading": "Reading the file...",
+      "importing": "Importing contacts...",
+      "completed": "Import finished",
+      "failed": "Import failed"
+    },
+    "processed": "{n} of {total} rows",
+    "partial": "{created} created · {updated} updated · {skipped} skipped · {errors} errors",
+    "done": "Import finished",
+    "counts": {
+      "created": "Created",
+      "updated": "Updated",
+      "skipped": "Skipped",
+      "errors": "Errors"
+    },
+    "labelsCreated": "Labels created: {names}",
+    "warnings": "Warnings",
+    "warningItem": "{message} ({n}x)",
+    "errorsTitle": "Errors by row",
+    "errorCount": "{n}x",
+    "errorLines": "Rows: {lines}",
+    "extraErrors": "{n} more error(s) outside the groups shown.",
+    "errors": {
+      "type": "Select a .csv file.",
+      "size": "The file exceeds 50 MB.",
+      "forbidden": "You are not allowed to import contacts.",
+      "start": "Could not start the import."
+    }
+  },
+  "exports": {
+    "title": "Recent exports",
+    "loading": "Loading...",
+    "error": "Could not load the exports.",
+    "empty": "No recent exports.",
+    "hint": "The 3 most recent are shown; the oldest leaves the list on the next export.",
+    "rows": "{n} rows",
+    "unnamed": "Contacts export",
+    "download": "Download {name}",
+    "status": {
+      "queued": "Queued",
+      "processing": "Processing",
+      "completed": "Ready",
+      "failed": "Failed"
+    }
+  }
+}

@@ -7,6 +7,8 @@ import { useNavigate } from '@tanstack/react-router'
 import { Download, Filter, MessageCircle, Search, Send, Smartphone, Trash2, X } from 'lucide-react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { useContactActions } from '@/features/contact-form/actions'
+import { useContactJobActions } from '@/features/contact-jobs/actions'
 import { useT } from '@/i18n'
 import { hasAny, profileQuery, sessionFrom } from '@/lib/session'
 import { useIsDesktop } from '@/lib/use-media-query'
@@ -90,6 +92,9 @@ export function ContactsPage({
   const [selection, setSelection] = useState<Selection>(emptySelection)
   const [dialog, setDialog] = useState<Dialog>(null)
   const [text, setText] = useState(search.q ?? '')
+  // T86: Novo contato, Editar/Abrir chat por linha, Importar CSV e Exportações recentes.
+  const contactActions = useContactActions()
+  const jobActions = useContactJobActions()
 
   // Busca com debounce de 500 ms: só a última digitação vira search param (e consulta).
   useEffect(() => {
@@ -157,6 +162,7 @@ export function ContactsPage({
     allLabel: t(filtered ? 'select.allFilter' : 'select.allAccount', { n: totalText }),
     allReady: filterTotal !== null || !hasMore,
     onMenuOpen: () => setMenuOpened(true),
+    rowActions: contactActions.rowActions,
   }
 
   const clearSelection = () => setSelection(emptySelection())
@@ -197,6 +203,7 @@ export function ContactsPage({
               <Smartphone aria-hidden /> {t('actions.importWhatsapp')}
             </Button>
           ) : null}
+          {jobActions.recentExportsButton}
           <Button
             variant="outline"
             size="sm"
@@ -205,6 +212,8 @@ export function ContactsPage({
           >
             <Download aria-hidden /> {t('actions.exportCsv')}
           </Button>
+          {jobActions.importButton}
+          {contactActions.newButton}
         </div>
       </header>
 
@@ -360,6 +369,8 @@ export function ContactsPage({
         connection={connected}
         onClose={() => setDialog(null)}
       />
+      {contactActions.dialogs}
+      {jobActions.dialogs}
     </section>
   )
 }

@@ -2,7 +2,7 @@
 // seleciona o intervalo), avatar com a inicial, telefone (ou o LID) e até 3 etiquetas + "+N". O menu de seleção
 // oferece "visíveis" e "Todos do filtro ({n})" / "Todos da conta ({n})".
 import { ChevronDown, Loader2 } from 'lucide-react'
-import { useEffect, useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent, type ReactNode } from 'react'
 import { useT } from '@/i18n'
 import { cn } from '@/lib/utils'
 import type { ContactDto, ContactLabel } from './api'
@@ -19,6 +19,8 @@ export interface ListSelectionProps {
   /** Total do filtro já conhecido (senão a opção "todos" espera a contagem). */
   allReady: boolean
   onMenuOpen: () => void
+  /** T86: ações por linha (Abrir chat, Editar); sem elas a coluna não aparece. */
+  rowActions?: (c: ContactDto) => ReactNode
 }
 
 const shiftOf = (e: ChangeEvent<HTMLInputElement>) => (e.nativeEvent as MouseEvent).shiftKey === true
@@ -206,6 +208,7 @@ export function ContactsTable({ items, ...sel }: { items: readonly ContactDto[] 
             <th className="px-3 py-2 font-medium">{t('table.name')}</th>
             <th className="w-48 px-3 py-2 font-medium">{t('table.phone')}</th>
             <th className="w-[30%] px-3 py-2 font-medium">{t('table.labels')}</th>
+            {sel.rowActions ? <th className="w-24 px-3 py-2"><span className="sr-only">{t('contact-form:entry.actions')}</span></th> : null}
           </tr>
         </thead>
         <tbody className="divide-y">
@@ -234,6 +237,7 @@ export function ContactsTable({ items, ...sel }: { items: readonly ContactDto[] 
               <td className="px-3 py-2">
                 <LabelChips labels={c.labels} max={3} />
               </td>
+              {sel.rowActions ? <td className="px-3 py-2">{sel.rowActions(c)}</td> : null}
             </tr>
           ))}
         </tbody>
@@ -281,6 +285,7 @@ export function ContactsCards({ items, ...sel }: { items: readonly ContactDto[] 
               </span>
               {c.labels.length ? <LabelChips labels={c.labels} max={2} /> : null}
             </span>
+            {sel.rowActions ? <span className="shrink-0">{sel.rowActions(c)}</span> : null}
           </li>
         ))}
       </ul>
