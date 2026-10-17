@@ -113,7 +113,7 @@
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
-| 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
+| 8 | T82 | Simulador de fluxos | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera editor.tsx (aditivo); simulador sem rede |
 | 8 | T83 | UI disparos em massa | VERIFYING | Forja | (vaga) | 0 | op ~20 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
@@ -128,7 +128,7 @@
 | 11 | T97 | Afiliação: captura de indicação e link externo | VERIFYING | Prumo | (vaga) | 0 | op ~11 min (verify 0, base 5e34a73); tester na fila |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | Esquadro | (vaga) | 0 | libera suite.ts do wa-port (only/skip, aditivo) |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
-| 12 | T100 | UI admin interno | IN_PROGRESS | Lastro | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
+| 12 | T100 | UI admin interno | VERIFYING | Lastro | (vaga) | 0 | op ~25 min (verify 0, base 5e34a73); tester na fila |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
