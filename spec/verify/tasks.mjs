@@ -291,7 +291,7 @@ const RAW = [
   T('T94', 'Servidor MCP (token estático)', ['T26', 'T28', 'T40'], [core('mcp'), route('mcp'), schema('mcp'), ...ui('settings-mcp')], ['api', 'core', 'web'], { e2e: true }),
 
   // ---------------- Admin interno, afiliação, extensão, Meta, E2E ----------------
-  T('T95', 'Admin: usuários, empresas, limites e cotas', ['T22', 'T60'], [core('admin'), route('admin')], ['api', 'core'], { minWave: 11 }),
+  T('T95', 'Admin: usuários, empresas, limites e cotas', ['T22', 'T60'], [core('admin'), route('admin'), 'packages/core/src/invitations/service.ts', 'packages/core/src/flows/store/store.ts', 'packages/core/src/inbound-webhooks/service.ts' /* aditivo: aplicar limites de membros, fluxos e webhooks (AC-T95-03) */, 'apps/api/src/routes/companies/guard.ts' /* aditivo: /api/admin e /api/platform isentos para platform_admin */], ['api', 'core'], { minWave: 11 }),
   T('T96', 'Admin: avisos, banners, saúde, sessões WhatsApp e IA', ['T22', 'T46', 'T37'], [core('admin-ops'), route('admin-ops'), schema('admin')], ['api', 'core'], { minWave: 11 }),
   T('T97', 'Afiliação: captura de indicação e link externo', ['T36'], ['packages/core/src/affiliate/**', 'apps/web/src/features/affiliate/**', i18n('affiliate')], ['core', 'web'], { e2e: true, minWave: 11 }),
   T('T98', 'Extensão: perfil ai-manager do gateway e documentação', ['T46'], ['packages/wa-gateway-rpc/src/profiles/ai-manager/**', 'docs/extension/**'], ['wa-gateway-rpc'], { minWave: 11 }),

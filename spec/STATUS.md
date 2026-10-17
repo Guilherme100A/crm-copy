@@ -123,7 +123,7 @@
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
-| 11 | T95 | Admin: usuários, empresas, limites e cotas | TODO | | | 0 | |
+| 11 | T95 | Admin: usuários, empresas, limites e cotas | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T95.md; libera pontos de limite (membros/fluxos/webhooks) e companyActiveGuard (aditivo) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
 | 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
