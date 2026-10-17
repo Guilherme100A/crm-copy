@@ -11,6 +11,8 @@ const MCP_OAUTH_CLIENT_PATHS: readonly string[] = ['/api/mcp-oauth/register', '/
 
 export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'POST', path: '/api/auth/login' },
+  // SSO do painel do ai-manager (só responde com CRM_SSO_SECRET; ver routes/auth/sso.ts)
+  { method: 'POST', path: '/api/auth/sso' },
   { method: 'POST', path: '/api/auth/register' },
   { method: 'POST', path: '/api/auth/password-resets' },
   { method: 'POST', path: '/api/auth/password-resets/*' },

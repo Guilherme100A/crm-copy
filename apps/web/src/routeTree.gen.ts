@@ -20,6 +20,7 @@ import { Route as AdminIndexRouteImport } from './routes/admin/index'
 import { Route as AgentesIndexRouteImport } from './routes/agentes/index'
 import { Route as AgentesAgentIdRouteImport } from './routes/agentes/$agentId'
 import { Route as AgentesNovoRouteImport } from './routes/agentes/novo'
+import { Route as AuthSsoRouteImport } from './routes/auth/sso'
 import { Route as ChatsIndexRouteImport } from './routes/chats/index'
 import { Route as ChatsChatIdRouteImport } from './routes/chats/$chatId'
 import { Route as ConnectionsIndexRouteImport } from './routes/connections/index'
@@ -99,6 +100,11 @@ const AgentesAgentIdRoute = AgentesAgentIdRouteImport.update({
 const AgentesNovoRoute = AgentesNovoRouteImport.update({
   id: '/agentes/novo',
   path: '/agentes/novo',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthSsoRoute = AuthSsoRouteImport.update({
+  id: '/auth/sso',
+  path: '/auth/sso',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ChatsIndexRoute = ChatsIndexRouteImport.update({
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/agentes/$agentId': typeof AgentesAgentIdRoute
   '/agentes/novo': typeof AgentesNovoRoute
+  '/auth/sso': typeof AuthSsoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/facebook/campaigns': typeof FacebookCampaignsRoute
@@ -277,6 +284,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/agentes/$agentId': typeof AgentesAgentIdRoute
   '/agentes/novo': typeof AgentesNovoRoute
+  '/auth/sso': typeof AuthSsoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/facebook/campaigns': typeof FacebookCampaignsRoute
@@ -315,6 +323,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/agentes/$agentId': typeof AgentesAgentIdRoute
   '/agentes/novo': typeof AgentesNovoRoute
+  '/auth/sso': typeof AuthSsoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/facebook/campaigns': typeof FacebookCampaignsRoute
@@ -355,6 +364,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/agentes/$agentId'
     | '/agentes/novo'
+    | '/auth/sso'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/facebook/campaigns'
@@ -392,6 +402,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/agentes/$agentId'
     | '/agentes/novo'
+    | '/auth/sso'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/facebook/campaigns'
@@ -429,6 +440,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/agentes/$agentId'
     | '/agentes/novo'
+    | '/auth/sso'
     | '/chats/$chatId'
     | '/crms/$crmId'
     | '/facebook/campaigns'
@@ -468,6 +480,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   AgentesAgentIdRoute: typeof AgentesAgentIdRoute
   AgentesNovoRoute: typeof AgentesNovoRoute
+  AuthSsoRoute: typeof AuthSsoRoute
   CrmsCrmIdRoute: typeof CrmsCrmIdRoute
   FacebookCampaignsRoute: typeof FacebookCampaignsRoute
   FacebookPixelRoute: typeof FacebookPixelRoute
@@ -569,6 +582,13 @@ declare module '@tanstack/react-router' {
       path: '/agentes/novo'
       fullPath: '/agentes/novo'
       preLoaderRoute: typeof AgentesNovoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/sso': {
+      id: '/auth/sso'
+      path: '/auth/sso'
+      fullPath: '/auth/sso'
+      preLoaderRoute: typeof AuthSsoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/chats/': {
@@ -792,6 +812,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   AgentesAgentIdRoute: AgentesAgentIdRoute,
   AgentesNovoRoute: AgentesNovoRoute,
+  AuthSsoRoute: AuthSsoRoute,
   CrmsCrmIdRoute: CrmsCrmIdRoute,
   FacebookCampaignsRoute: FacebookCampaignsRoute,
   FacebookPixelRoute: FacebookPixelRoute,

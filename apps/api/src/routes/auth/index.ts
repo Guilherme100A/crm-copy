@@ -15,6 +15,7 @@ import { ApiError } from '../../lib/errors'
 import { RateLimiter } from '../../lib/rate-limiter'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { validate } from '../../lib/validate'
+import { ssoRoutes } from './sso'
 
 declare module '../../lib/types' {
   interface AppDeps {
@@ -162,6 +163,9 @@ export function authRoutes(deps: ResolvedDeps) {
       .catch((err: unknown) => c.get('logger')?.error({ err }, 'failed to write audit log'))
     return c.json({ user: result.user, companies: result.companies }, 200)
   })
+
+  // SSO do painel do ai-manager (`POST /api/auth/sso`; 404 sem CRM_SSO_SECRET).
+  app.route('/', ssoRoutes(deps, service, { cookieSecure }))
 
   const logout = async (c: Context<AppEnv>) => {
     const ctx = getCtx(c)

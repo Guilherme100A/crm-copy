@@ -10,8 +10,11 @@ export const PUBLIC_PATHS = ['/login', '/register', '/cadastro', '/forgot-passwo
 /** T36: rotas abertas por prefixo (com ou sem sessão, sem shell): o convite (`/invitations/<token>`). */
 export const OPEN_PATH_PREFIXES = ['/invitations/', '/invitation/'] as const
 
+/** SSO vindo do painel do ai-manager (`/auth/sso#token=`): aberto com ou sem sessão (troca a sessão pela do token). */
+export const SSO_PATH = '/auth/sso'
+
 export const isPublicPath = (pathname: string) =>
-  (PUBLIC_PATHS as readonly string[]).includes(pathname) || OPEN_PATH_PREFIXES.some((p) => pathname.startsWith(p))
+  (PUBLIC_PATHS as readonly string[]).includes(pathname) || pathname === SSO_PATH || OPEN_PATH_PREFIXES.some((p) => pathname.startsWith(p))
 
 export type GuardDecision =
   | { kind: 'allow' }

@@ -3,7 +3,7 @@ import { randomBytes } from 'node:crypto'
 import { and, asc, eq, gt, inArray, isNull, sql } from 'drizzle-orm'
 import { apiTokens, companies, companyMembers, passwordResets, userProfiles, users, type Database, type MemberRole } from '@crm/db'
 import { hashPassword, verifyPassword, type BlobStore, type Mailer } from '@crm/node-kit'
-import { DEFAULT_LOCALE, effectivePermissions, type Locale, type PermissionKey, type User } from '@crm/shared'
+import { DEFAULT_LOCALE, DEFAULT_ROLE_PERMISSIONS, effectivePermissions, type Locale, type PermissionKey, type User } from '@crm/shared'
 import { apiTokenDisplayPrefix, generateApiToken, generateSessionToken, hashToken } from '../platform/tokens'
 import type { SessionService } from '../platform/session-service'
 import { listActiveSupportGrants, SUPPORT_GRANT_PERMISSIONS } from '../support-access/grants'
@@ -64,6 +64,22 @@ export interface LoginResult {
   token: string
   sessionId: string
   expiresAt: Date
+}
+
+/** Empresa padrão das contas que entram pelo painel do ai-manager (SSO). */
+export const SSO_COMPANY_NAME = 'ai-manager'
+export const SSO_COMPANY_SLUG = 'ai-manager'
+
+export interface SsoLoginInput {
+  email: string
+  name: string
+}
+
+export interface SsoLoginResult extends LoginResult {
+  /** A conta foi criada agora (primeiro SSO desse e-mail). */
+  userCreated: boolean
+  companyId: string
+  role: MemberRole
 }
 
 export type ResetTokenStatus = { valid: true } | { valid: false; reason: 'invalid' | 'expired' | 'used' }
@@ -221,6 +237,93 @@ export class AuthService {
       sessionId: session.sessionId,
       expiresAt: session.expiresAt,
     }
+  }
+
+  // ---------- SSO (painel do ai-manager) ----------
+
+  /**
+   * Entrada pelo painel do ai-manager (o token já foi verificado por quem chama): acha ou cria o usuário pelo e-mail
+   * (senha aleatória que ninguém conhece: só entra por SSO até redefinir), garante a empresa padrão "ai-manager"
+   * (slug fixo) com o usuário dentro e cria a sessão como o login normal. O primeiro usuário vira `owner`; como a
+   * empresa tem no máximo um owner, os seguintes entram como `admin` com a lista explícita de TODAS as permissões.
+   * Vínculo já existente com papel `member` sobe para `admin` com todas as permissões; `owner`/`admin` ficam.
+   */
+  async ssoLogin(input: SsoLoginInput, meta: { userAgent?: string | null; ip?: string | null } = {}): Promise<SsoLoginResult> {
+    const email = normalizeEmail(input.email)
+    const name = input.name.trim().slice(0, 120) || email
+    const findUser = async () =>
+      (await this.db.select({ id: users.id }).from(users).where(sql`lower(${users.email}) = ${email}`).limit(1))[0]
+    let userId = (await findUser())?.id
+    let userCreated = false
+    if (!userId) {
+      const passwordHash = await hashPassword(randomBytes(32).toString('base64url'))
+      try {
+        userId = await this.db.transaction(async (tx) => {
+          const [user] = await tx.insert(users).values({ email, passwordHash, name, systemRole: 'user', locale: DEFAULT_LOCALE }).returning({ id: users.id })
+          await tx.insert(userProfiles).values({ userId: user!.id })
+          return user!.id
+        })
+        userCreated = true
+      } catch (err) {
+        // Dois SSO simultâneos do mesmo e-mail: o outro criou; usa o dele.
+        if (!isUniqueViolation(err, 'users_email_lower_uq')) throw err
+        userId = (await findUser())?.id
+        if (!userId) throw err
+      }
+    }
+
+    await this.db.insert(companies).values({ name: SSO_COMPANY_NAME, slug: SSO_COMPANY_SLUG }).onConflictDoNothing({ target: companies.slug })
+    const [company] = await this.db.select({ id: companies.id }).from(companies).where(eq(companies.slug, SSO_COMPANY_SLUG)).limit(1)
+    if (!company) throw new Error('empresa do SSO não encontrada')
+    const role = await this.ensureSsoMember(company.id, userId)
+    await this.db.update(users).set({ lastCompanyId: company.id, updatedAt: this.now() }).where(eq(users.id, userId))
+
+    const session = await this.sessions.create(userId, meta)
+    return {
+      user: await this.getUser(userId),
+      companies: await this.listCompanies(userId),
+      token: session.token,
+      sessionId: session.sessionId,
+      expiresAt: session.expiresAt,
+      userCreated,
+      companyId: company.id,
+      role,
+    }
+  }
+
+  private async ensureSsoMember(companyId: string, userId: string): Promise<MemberRole> {
+    const allKeys = [...DEFAULT_ROLE_PERMISSIONS.owner]
+    const [member] = await this.db
+      .select({ id: companyMembers.id, role: companyMembers.role })
+      .from(companyMembers)
+      .where(and(eq(companyMembers.companyId, companyId), eq(companyMembers.userId, userId)))
+      .limit(1)
+    if (member) {
+      if (member.role !== 'member') return member.role
+      await this.db.update(companyMembers).set({ role: 'admin', permissionKeys: allKeys, updatedAt: this.now() }).where(eq(companyMembers.id, member.id))
+      return 'admin'
+    }
+    const [owner] = await this.db
+      .select({ id: companyMembers.id })
+      .from(companyMembers)
+      .where(and(eq(companyMembers.companyId, companyId), eq(companyMembers.role, 'owner')))
+      .limit(1)
+    if (!owner) {
+      try {
+        await this.db.insert(companyMembers).values({ companyId, userId, role: 'owner' })
+        return 'owner'
+      } catch (err) {
+        // Outro SSO virou owner ao mesmo tempo (um owner por empresa) ou este mesmo vínculo já entrou: cai para admin.
+        if (!isUniqueViolation(err)) throw err
+      }
+    }
+    await this.db.insert(companyMembers).values({ companyId, userId, role: 'admin', permissionKeys: allKeys }).onConflictDoNothing()
+    const [after] = await this.db
+      .select({ role: companyMembers.role })
+      .from(companyMembers)
+      .where(and(eq(companyMembers.companyId, companyId), eq(companyMembers.userId, userId)))
+      .limit(1)
+    return after?.role ?? 'admin'
   }
 
   // ---------- cadastro ----------

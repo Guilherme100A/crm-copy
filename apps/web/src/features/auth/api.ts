@@ -1,6 +1,7 @@
 // Chamadas das telas de autenticação (T36; spec 01 §3.3, §5). As rotas públicas usam `publicRequest`, e não o
 // cliente do shell: um 401 aqui é "credencial errada", não "sessão expirada" (o cliente do shell sondaria o perfil e
 // navegaria de novo para o login, perdendo o e-mail digitado e o `?redirect=`).
+import { apiUrl } from '@/lib/base'
 import { CSRF_HEADER, CSRF_VALUE, HttpError, type ApiErrorBody } from '@/lib/http'
 import type { CompanySummary, Profile } from '@/lib/session'
 
@@ -10,7 +11,7 @@ type Method = 'GET' | 'POST' | 'PATCH' | 'PUT'
 export async function publicRequest<T>(method: Method, path: string, body?: unknown, fetchFn: typeof fetch = (...a) => globalThis.fetch(...a)): Promise<T> {
   const headers: Record<string, string> = { Accept: 'application/json', [CSRF_HEADER]: CSRF_VALUE }
   if (body !== undefined) headers['Content-Type'] = 'application/json'
-  const res = await fetchFn(path, { method, headers, credentials: 'same-origin', ...(body !== undefined ? { body: JSON.stringify(body) } : {}) })
+  const res = await fetchFn(apiUrl(path), { method, headers, credentials: 'same-origin', ...(body !== undefined ? { body: JSON.stringify(body) } : {}) })
   if (res.ok) {
     if (res.status === 204) return undefined as T
     return ((res.headers.get('content-type') ?? '').includes('application/json') ? await res.json() : undefined) as T
@@ -59,6 +60,8 @@ const enc = encodeURIComponent
 
 export const authApi = {
   login: (email: string, password: string) => publicRequest<Profile>('POST', '/api/auth/login', { email, password }),
+  /** SSO do painel do ai-manager: troca o token (JWT de uso único) pela sessão normal do CRM (cookie). */
+  sso: (token: string) => publicRequest<Profile>('POST', '/api/auth/sso', { token }),
   register: (input: RegisterInput) => publicRequest<{ message?: string }>('POST', '/api/auth/register', input),
   requestReset: (email: string) => publicRequest<{ ok: true }>('POST', '/api/auth/password-resets', { email }),
   checkReset: (token: string) => publicRequest<ResetTokenStatus>('GET', `/api/auth/password-resets/${enc(token)}`),
