@@ -3,90 +3,85 @@
   "task": "T100",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:21:54.360Z",
-  "commit": "5e34a735f71b5dd024f4cff6c0eaad18aa9dc1e5",
-  "base": "5e34a73",
-  "changedFiles": [
-    "apps/api/src/middleware/public-routes.ts",
-    "apps/api/src/routes/admin-ops/index.ts",
-    "apps/web/src/app/shell/app-shell.tsx",
-    "apps/web/src/routes/admin/index.tsx",
-    "packages/core/src/admin-ops/index.ts",
-    "apps/api/src/routes/admin-ops/admin-uploads.db.unit.test.ts",
-    "apps/web/src/features/admin/accounts-tab.tsx",
-    "apps/web/src/features/admin/admin-page.tsx",
-    "apps/web/src/features/admin/admin.unit.test.ts",
-    "apps/web/src/features/admin/ai-tab.tsx",
-    "apps/web/src/features/admin/announcement-popup.tsx",
-    "apps/web/src/features/admin/announcements-tab.tsx",
-    "apps/web/src/features/admin/api.ts",
-    "apps/web/src/features/admin/credits-dialog.tsx",
-    "apps/web/src/features/admin/infra-tabs.tsx",
-    "apps/web/src/features/admin/overview-tab.tsx",
-    "apps/web/src/features/admin/rules.ts",
-    "apps/web/src/features/admin/ui.tsx",
-    "apps/web/src/features/admin/users-tab.tsx",
-    "apps/web/src/i18n/en/admin.json",
-    "apps/web/src/i18n/es/admin.json",
-    "apps/web/src/i18n/pt-BR/admin.json",
-    "packages/core/src/admin-ops/admin-media.ts",
-    "packages/core/src/admin-ops/admin-media.unit.test.ts"
-  ],
+  "at": "2026-10-17T04:07:57.990Z",
+  "commit": "f879ad6d3cd6da737b988aa3a448754153550140",
+  "base": "20d056f",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 17.2s"
+      "detail": "ok em 27.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 8.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 121.8s (afetados desde a base)"
+      "detail": "ok em 161.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 15.6s"
+      "detail": "ok em 14.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 9.3s"
+      "detail": "ok em 6.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 4.8s (afetados desde a base)"
+      "detail": "ok em 223.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 12.7s"
+      "detail": "ok em 22.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 8.5s"
+      "detail": "ok em 8.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 18.5s (afetados desde a base)"
+      "detail": "ok em 22.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 1.0s"
+      "detail": "ok em 0.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 6.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 16.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 2.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 86.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./apps/worker}\" --filter \"...{./packages/core}\" --filter \"!@crm/api\" --filter \"!@crm/core\" --filter \"!@crm/web\" --filter \"!@crm/worker\" test",
+      "status": "pass",
+      "detail": "ok em 0.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -144,9 +139,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "24 arquivo(s) alterado(s)"
+      "detail": "T100, T105"
     }
   ]
 }

@@ -3,15 +3,10 @@
   "task": "T105",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T03:55:44.373Z",
-  "commit": "9bd202be79ab4f951f17110b4c2404f94b1383a0",
-  "base": "9bd202b",
-  "changedFiles": [
-    "tests/acceptance/T105/bundle.test.ts",
-    "tests/acceptance/T105/join.test.ts",
-    "tests/acceptance/T105/service.test.ts",
-    "tests/acceptance/T105/setup.ts"
-  ],
+  "at": "2026-10-17T04:07:57.937Z",
+  "commit": "f879ad6d3cd6da737b988aa3a448754153550140",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -76,7 +71,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "4 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
