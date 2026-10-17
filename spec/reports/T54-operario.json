@@ -3,19 +3,11 @@
   "task": "T54",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T00:57:43.643Z",
-  "commit": "7ad67eed95dcd2fdebcd9560f6e16c2b751731b8",
-  "base": "7ad67ee",
+  "at": "2026-10-17T01:14:36.811Z",
+  "commit": "8fc5f28e31b0f9c88d9cead2ca7d71815a99a5cb",
+  "base": "b755deb",
   "changedFiles": [
     "apps/web/src/app/shell/app-shell.tsx",
-    "apps/web/src/features/settings/tabs.ts",
-    "apps/web/src/lib/http.ts",
-    "apps/web/src/routes/settings/index.tsx",
-    "apps/web/src/routes/support/access.tsx",
-    "packages/core/src/team/service.ts",
-    "packages/core/src/team/team.db.unit.test.ts",
-    "packages/db/src/seed/modules/index.ts",
-    "scripts/e2e/api.ts",
     "apps/web/src/features/settings-invitations/api.ts",
     "apps/web/src/features/settings-invitations/invitations.ts",
     "apps/web/src/features/settings-invitations/panel.tsx",
@@ -35,6 +27,7 @@
     "apps/web/src/features/settings-team/tab.tsx",
     "apps/web/src/features/settings-team/team.ts",
     "apps/web/src/features/settings-team/transfer-dialog.tsx",
+    "apps/web/src/features/settings/tabs.ts",
     "apps/web/src/i18n/en/settings-invitations.json",
     "apps/web/src/i18n/en/settings-support.json",
     "apps/web/src/i18n/en/settings-team.json",
@@ -44,54 +37,61 @@
     "apps/web/src/i18n/pt-BR/settings-invitations.json",
     "apps/web/src/i18n/pt-BR/settings-support.json",
     "apps/web/src/i18n/pt-BR/settings-team.json",
+    "apps/web/src/lib/http.ts",
+    "apps/web/src/routes/settings/index.tsx",
+    "apps/web/src/routes/support/access.tsx",
+    "packages/core/src/team/service.ts",
+    "packages/core/src/team/team.db.unit.test.ts",
+    "packages/db/src/seed/modules/index.ts",
     "packages/db/src/seed/modules/support-user.db.unit.test.ts",
-    "packages/db/src/seed/modules/support-user.ts"
+    "packages/db/src/seed/modules/support-user.ts",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/db typecheck",
       "status": "pass",
-      "detail": "ok em 4.6s"
+      "detail": "ok em 4.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db lint",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 3.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/db test",
       "status": "pass",
-      "detail": "ok em 16.7s (afetados desde a base)"
+      "detail": "ok em 50.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 12.8s"
+      "detail": "ok em 11.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 6.3s"
+      "detail": "ok em 5.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 81.2s (afetados desde a base)"
+      "detail": "ok em 105.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 9.6s"
+      "detail": "ok em 12.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 4.5s"
+      "detail": "ok em 4.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 8.4s (afetados desde a base)"
+      "detail": "ok em 14.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -101,7 +101,12 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 2.4s"
+      "detail": "ok em 12.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...[b755deb]\" --filter \"!@crm/db\" --filter \"!@crm/core\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
