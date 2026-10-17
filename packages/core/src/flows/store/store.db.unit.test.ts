@@ -1,6 +1,19 @@
 // Postgres real (SPEC 3.10): banco descartável migrado.
 import { randomBytes, randomUUID } from 'node:crypto'
-import { companies, contacts, createDb, flowEdges, flowNodes, flowRuns, flowVersions, type Database } from '@crm/db'
+import {
+  businessHourConfigs,
+  companies,
+  connectionFlowConfigs,
+  connections,
+  contacts,
+  createDb,
+  flowEdges,
+  flowNodes,
+  flowRuns,
+  flowVersions,
+  keywordTriggers,
+  type Database,
+} from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FLOW_SCHEMA_VERSION, type FlowDefinition } from '@crm/shared/flows'
 import { eq } from 'drizzle-orm'
@@ -202,5 +215,33 @@ describe('FlowStore', () => {
     expect((await store.getFlow(a, f0.id)).folderId).toBeNull()
     await store.deleteFlow(a, f0.id)
     await expect(store.getFlow(a, f0.id)).rejects.toMatchObject({ code: 'NOT_FOUND' })
+  })
+
+  it('deleteFlowDetaching tira o fluxo das configs, remove gatilhos, desativa o horário e exclui (T44)', async () => {
+    const flow = await store.createFlow(a, { name: 'Usado' })
+    const other = await store.createFlow(a, { name: 'Outro' })
+    const [conn] = await db.insert(connections).values({ companyId: a.companyId, sessionId: `s-${randomUUID()}`, name: 'Loja' }).returning()
+    const [cfg] = await db
+      .insert(connectionFlowConfigs)
+      .values({ companyId: a.companyId, connectionId: conn!.id, defaultResponseFlowId: flow.id, finishedAttendanceFlowId: flow.id, welcomeFlowId: other.id })
+      .returning()
+    const [kwOther] = await db
+      .insert(keywordTriggers)
+      .values([
+        { companyId: a.companyId, configId: cfg!.id, flowId: flow.id, conditions: [{ keyword: 'a', match_type: 'equals' }] },
+        { companyId: a.companyId, configId: cfg!.id, flowId: other.id, conditions: [{ keyword: 'b', match_type: 'equals' }] },
+      ])
+      .returning()
+      .then((rows) => rows.filter((r) => r.flowId === other.id))
+    const [hours] = await db.insert(businessHourConfigs).values({ companyId: a.companyId, connectionId: conn!.id, active: true, actionType: 'flow', flowId: flow.id }).returning()
+
+    await expect(store.deleteFlowDetaching(b, flow.id)).rejects.toMatchObject({ code: 'NOT_FOUND' })
+    expect(await store.deleteFlowDetaching(a, flow.id)).toEqual({ connection_flow_configs: [cfg!.id], business_hour_configs: [hours!.id] })
+    await expect(store.getFlow(a, flow.id)).rejects.toMatchObject({ code: 'NOT_FOUND' })
+    const [cfgAfter] = await db.select().from(connectionFlowConfigs).where(eq(connectionFlowConfigs.id, cfg!.id))
+    expect(cfgAfter).toMatchObject({ defaultResponseFlowId: null, finishedAttendanceFlowId: null, welcomeFlowId: other.id })
+    expect((await db.select().from(keywordTriggers).where(eq(keywordTriggers.configId, cfg!.id))).map((k) => k.id)).toEqual([kwOther!.id])
+    const [hoursAfter] = await db.select().from(businessHourConfigs).where(eq(businessHourConfigs.id, hours!.id))
+    expect(hoursAfter).toMatchObject({ flowId: null, active: false })
   })
 })

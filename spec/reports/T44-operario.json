@@ -1,0 +1,146 @@
+{
+  "version": 1,
+  "task": "T44",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T02:12:51.821Z",
+  "commit": "5789462d2b1285babe6549656e4b20afd7cc8111",
+  "base": "5789462",
+  "changedFiles": [
+    "apps/api/src/routes/flow-share/flow-share.db.unit.test.ts",
+    "apps/api/src/routes/flow-share/index.ts",
+    "apps/api/src/routes/flows/flows.db.unit.test.ts",
+    "apps/api/src/routes/flows/index.ts",
+    "apps/web/src/routes/flows/index.tsx",
+    "packages/core/src/flows/store/store.db.unit.test.ts",
+    "packages/core/src/flows/store/store.ts",
+    "apps/web/src/features/flows/api.ts",
+    "apps/web/src/features/flows/dialogs.tsx",
+    "apps/web/src/features/flows/dnd.tsx",
+    "apps/web/src/features/flows/flows-page.tsx",
+    "apps/web/src/features/flows/flows.unit.test.ts",
+    "apps/web/src/features/flows/model.ts",
+    "apps/web/src/features/flows/tree.tsx",
+    "apps/web/src/features/flows/view.tsx",
+    "apps/web/src/i18n/en/flows.json",
+    "apps/web/src/i18n/es/flows.json",
+    "apps/web/src/i18n/pt-BR/flows.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 12.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 94.4s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 10.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 28.1s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 9.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 4.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 9.0s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 2.6s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "18 arquivo(s) alterado(s)"
+    }
+  ]
+}

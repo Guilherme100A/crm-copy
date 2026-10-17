@@ -1,0 +1,158 @@
+{
+  "title": "Fluxos",
+  "subtitle": "Automatize conversas com fluxos visuais",
+  "search": "Buscar fluxos...",
+  "defaultName": "Novo Fluxo",
+  "blocks": "{n} blocos",
+  "actions": {
+    "import": "Importar",
+    "newFolder": "Pasta",
+    "newFlow": "Novo fluxo",
+    "close": "Fechar",
+    "retry": "Tentar novamente",
+    "cancel": "Cancelar",
+    "delete": "Excluir"
+  },
+  "tree": {
+    "title": "Pastas",
+    "root": "Sem pasta",
+    "home": "Fluxos",
+    "back": "Voltar à pasta anterior",
+    "breadcrumb": "Caminho da pasta",
+    "missing": "Esta pasta não existe mais."
+  },
+  "filter": {
+    "label": "Filtrar por status",
+    "all": "Todos",
+    "active": "Ativos",
+    "paused": "Pausados",
+    "draft": "Rascunhos",
+    "archived": "Arquivados",
+    "folders": "Pastas",
+    "clear": "Limpar"
+  },
+  "viewMode": { "label": "Visualização", "cards": "Cartões", "table": "Tabela" },
+  "sections": { "folders": "Pastas", "flows": "Fluxos de trabalho" },
+  "empty": {
+    "title": "Nenhum fluxo encontrado",
+    "filtered": "Nenhum fluxo corresponde aos filtros.",
+    "create": "Criar primeiro fluxo"
+  },
+  "errors": {
+    "generic": "Não foi possível concluir a ação.",
+    "load": "Não foi possível carregar os fluxos.",
+    "activation": "O fluxo tem {n} problema(s) e não pode ser ativado."
+  },
+  "dnd": {
+    "folderMoved": "Pasta movida",
+    "flowMoved": "Fluxo movido para a pasta",
+    "reordered": "Ordem atualizada",
+    "blocked": "Não é possível mover uma pasta para dentro de uma subpasta dela mesma.",
+    "dragFolder": "Arrastar a pasta {name}",
+    "dragFlow": "Arrastar o fluxo {name}",
+    "dropEnd": "Solte aqui para mover para o fim",
+    "dropHere": "Solte aqui para reordenar"
+  },
+  "folder": {
+    "counts": "{flows} fluxo(s) · {folders} subpasta(s)",
+    "edit": "Editar",
+    "delete": "Excluir",
+    "newTitle": "Nova pasta",
+    "editTitle": "Editar pasta",
+    "name": "Nome da pasta",
+    "nameRequired": "Informe o nome da pasta.",
+    "color": "Cor",
+    "created": "Pasta criada",
+    "updated": "Pasta atualizada",
+    "deleteTitle": "Excluir pasta",
+    "deleteBody": "Excluir a pasta \"{name}\"? Os fluxos e subpastas dela vão para \"Sem pasta\".",
+    "deleted": "Pasta excluída"
+  },
+  "colors": {
+    "blue": "Azul",
+    "green": "Verde",
+    "purple": "Roxo",
+    "orange": "Laranja",
+    "red": "Vermelho",
+    "yellow": "Amarelo",
+    "gray": "Cinza"
+  },
+  "status": { "active": "Ativo", "paused": "Pausado", "draft": "Rascunho", "archived": "Arquivado" },
+  "menu": {
+    "more": "Mais opções",
+    "edit": "Editar",
+    "open": "Abrir",
+    "rename": "Editar nome",
+    "duplicate": "Duplicar",
+    "share": "Compartilhar",
+    "activate": "Ativar",
+    "pause": "Pausar",
+    "archive": "Arquivar",
+    "unarchive": "Desarquivar",
+    "move": "Mover para…",
+    "removeFromFolder": "Remover da pasta",
+    "delete": "Excluir",
+    "duplicated": "Fluxo duplicado",
+    "activateDone": "Fluxo ativado",
+    "pauseDone": "Fluxo pausado",
+    "archiveDone": "Fluxo arquivado",
+    "unarchiveDone": "Fluxo desarquivado",
+    "removedFromFolder": "Fluxo removido da pasta"
+  },
+  "updated": { "today": "Hoje, {time}", "yesterday": "Ontem, {time}" },
+  "table": {
+    "name": "Nome",
+    "status": "Status",
+    "blocks": "Blocos",
+    "updated": "Atualizado",
+    "actions": "Ações",
+    "pagination": "Paginação",
+    "range": "{from}–{to} de {total}",
+    "prev": "Página anterior",
+    "next": "Próxima página"
+  },
+  "rename": {
+    "title": "Editar nome",
+    "label": "Nome do fluxo",
+    "required": "Informe o nome do fluxo.",
+    "done": "Nome atualizado"
+  },
+  "move": { "title": "Mover fluxo", "label": "Pasta de destino", "done": "Fluxo movido" },
+  "delete": {
+    "title": "Excluir fluxo",
+    "question": "Tem certeza que deseja excluir o fluxo \"{name}\"?",
+    "loading": "Calculando o impacto…",
+    "impact": "Impacto da exclusão",
+    "activeRuns": "{n} execução(ões) ativa(s) será(ão) cancelada(s)",
+    "totalRuns": "{n} execução(ões) no histórico será(ão) removida(s)",
+    "configs": "{n} configuração(ões) usam este fluxo",
+    "connectionConfig": "Fluxos padrões da conexão {name} (será desvinculado)",
+    "businessHourConfig": "Horário comercial {name} (será desativado)",
+    "references": "{n} outro(s) fluxo(s) chamam este fluxo",
+    "referenceItem": "{name} (nó: {nodes})",
+    "forceWarning": "Ao confirmar, as configurações acima são desvinculadas ou desativadas e o fluxo é excluído.",
+    "mediaNote": "As mídias usadas pelo fluxo não são removidas.",
+    "confirmForce": "Desvincular e excluir",
+    "done": "Fluxo excluído"
+  },
+  "share": {
+    "title": "Compartilhar fluxo",
+    "body": "Envie este código para importar uma cópia de \"{name}\" em outra conta.",
+    "copy": "Copiar",
+    "copied": "Código copiado",
+    "copiedShort": "Copiado",
+    "note": "Quem importar recebe uma cópia completa e independente do fluxo."
+  },
+  "import": {
+    "title": "Importar fluxo(s)",
+    "label": "Códigos de compartilhamento",
+    "hint": "Vários códigos separados por vírgula ou quebra de linha.",
+    "required": "Informe pelo menos um código.",
+    "tooMany": "Informe no máximo {max} códigos.",
+    "count": "{n} código(s)",
+    "submit": "Importar",
+    "done": "{n} fluxo(s) importado(s)",
+    "ok": "{code}: importado como \"{name}\"",
+    "invalid": "{code}: código inválido"
+  }
+}

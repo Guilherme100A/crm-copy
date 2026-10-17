@@ -4,7 +4,7 @@ import { mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { createDb, labels, type Database } from '@crm/db'
+import { companies, createDb, labels, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { FsBlobStore, createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { eq } from 'drizzle-orm'
@@ -147,6 +147,18 @@ describe('compartilhar e importar', () => {
     expect(r.body.nodes.map((n: Json) => n.id)).not.toContain('p')
     const b = await owner()
     expect((await call(b, 'POST', `/api/flows/${dst.id}/paste-nodes`, { source_flow_id: src.id, nodes: [{ id: 'p' }] })).status).toBe(404)
+  })
+
+  it('importar com o limite de fluxos atingido → 409 LIMIT_REACHED (T44)', async () => {
+    const a = await owner()
+    const flow = (await call(a, 'POST', '/api/flows', { name: 'Origem' })).body.flow
+    const { code } = (await call(a, 'GET', `/api/flows/${flow.id}/share-code`)).body
+    const b = await owner()
+    await call(b, 'POST', '/api/flows', { name: 'Já tenho um' })
+    await db.update(companies).set({ settings: { limits: { flows: 1 } } }).where(eq(companies.id, b.companyId))
+    const imp = await call(b, 'POST', '/api/flows/import', { codes: [code] })
+    expect(imp.status).toBe(409)
+    expect(imp.body.error.code).toBe('LIMIT_REACHED')
   })
 
   it('helpers: código sem caracteres ambíguos; nomes de etiquetas únicos', async () => {

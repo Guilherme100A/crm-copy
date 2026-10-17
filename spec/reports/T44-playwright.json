@@ -1,0 +1,634 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T44\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/acceptance/T44",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "--project=desktop",
+      "--project=mobile"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T44\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T44/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T44/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T44/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T44/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T44/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T44\\",
+      "url": "http://127.0.0.1:30022",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "30022",
+        "E2E_API_PORT": "30023",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T44\\flows-list.e2e.ts",
+      "file": "T44/flows-list.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T44 — lista, busca, filtro e pastas",
+          "file": "T44/flows-list.e2e.ts",
+          "line": 72,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T44-01 /flows lista em cartões e em tabela (?view=table persiste ao recarregar), com paginação 20 por página",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1872,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:18:52.006Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-3ee438f00ba51e58f35c",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 73,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-01 busca em todas as pastas sem acento/maiúsculas e filtro de status (?flow_status=) persiste ao recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2855,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:18:53.990Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-b4f9857afd77cadbc464",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 110,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-01 árvore de pastas e breadcrumb navegam por ?folder=, que sobrevive ao recarregar e ao Voltar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1769,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:18:56.862Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-b34d34d80a5d4ea5b581",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 162,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T44 — arrastar",
+          "file": "T44/flows-list.e2e.ts",
+          "line": 222,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T44-02 arrastar um fluxo para uma pasta da árvore persiste após recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2269,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:18:58.656Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-70d6885d930579aeb8e9",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 223,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-02 arrastar um fluxo sobre outro reordena (fica antes do alvo) e a ordem persiste após recarregar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4246,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:00.959Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-85046a9928df66f43f01",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 243,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-02 arrastar pasta para dentro de uma descendente é bloqueado; para outra pasta, move",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3471,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:05.218Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-ccb40980841cafd706cb",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 294,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T44 — excluir, compartilhar e importar",
+          "file": "T44/flows-list.e2e.ts",
+          "line": 334,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T44-03 excluir mostra o impacto (runs, configs, referências), Cancelar mantém e confirmar com force desvincula e exclui",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1565,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:08.700Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-e7b287cccb1ac2f0041f",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 337,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-03 excluir fluxo sem referências exige confirmação (sem force)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 890,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:10.275Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-0eead5282d25dd88c19e",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 389,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-03 compartilhar mostra o código copiável",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1056,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:11.176Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-e654f9336c3826f59ab7",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 409,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-03 importar aceita vários códigos (vírgula, ponto e vírgula, quebra de linha; dedup) e mostra erro por código",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 944,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:12.243Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-3d93db2ac0aad6da3661",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 427,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T44 — vazio e permissões",
+          "file": "T44/flows-list.e2e.ts",
+          "line": 457,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T44-04 estado vazio mostra \"Criar primeiro fluxo\", que cria o fluxo e abre o editor",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 903,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:13.196Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-e5b0342dd2dda399c115",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 458,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-04 member (sem flows.edit) não vê ações de edição: criar, importar, pasta, alça, editar/excluir",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1174,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:14.108Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-a58b4e00728748a31319",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 476,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T44 — layout",
+          "file": "T44/flows-list.e2e.ts",
+          "line": 517,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T44-05 no mobile a lista vira cartões e a árvore fica num sheet, sem rolagem horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 727,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:15.291Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-618c2a719015436c925f",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 518,
+              "column": 3
+            },
+            {
+              "title": "AC-T44-05 no mobile a lista vira cartões e a árvore fica num sheet, sem rolagem horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 960,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T02:19:16.589Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "407b1aebad479096f3eb-7c73951ea167f87b6b47",
+              "file": "T44/flows-list.e2e.ts",
+              "line": 518,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T02:18:41.467Z",
+    "duration": 36661.1,
+    "expected": 14,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

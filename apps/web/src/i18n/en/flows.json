@@ -1,0 +1,153 @@
+{
+  "title": "Flows",
+  "subtitle": "Automate conversations with visual flows",
+  "search": "Search flows...",
+  "defaultName": "New Flow",
+  "blocks": "{n} blocks",
+  "actions": {
+    "import": "Import",
+    "newFolder": "Folder",
+    "newFlow": "New flow",
+    "close": "Close",
+    "retry": "Try again",
+    "cancel": "Cancel",
+    "delete": "Delete"
+  },
+  "tree": {
+    "title": "Folders",
+    "root": "No folder",
+    "home": "Flows",
+    "back": "Back to previous folder",
+    "breadcrumb": "Folder path",
+    "missing": "This folder no longer exists."
+  },
+  "filter": {
+    "label": "Filter by status",
+    "all": "All",
+    "active": "Active",
+    "paused": "Paused",
+    "draft": "Drafts",
+    "archived": "Archived",
+    "folders": "Folders",
+    "clear": "Clear"
+  },
+  "viewMode": { "label": "View", "cards": "Cards", "table": "Table" },
+  "sections": { "folders": "Folders", "flows": "Workflows" },
+  "empty": {
+    "title": "No flows found",
+    "filtered": "No flows match the filters.",
+    "create": "Create first flow"
+  },
+  "errors": {
+    "generic": "The action could not be completed.",
+    "load": "Could not load the flows.",
+    "activation": "The flow has {n} issue(s) and cannot be activated."
+  },
+  "dnd": {
+    "folderMoved": "Folder moved",
+    "flowMoved": "Flow moved to the folder",
+    "reordered": "Order updated",
+    "blocked": "A folder cannot be moved into one of its own subfolders.",
+    "dragFolder": "Drag folder {name}",
+    "dragFlow": "Drag flow {name}",
+    "dropEnd": "Drop here to move to the end",
+    "dropHere": "Drop here to reorder"
+  },
+  "folder": {
+    "counts": "{flows} flow(s) · {folders} subfolder(s)",
+    "edit": "Edit",
+    "delete": "Delete",
+    "newTitle": "New folder",
+    "editTitle": "Edit folder",
+    "name": "Folder name",
+    "nameRequired": "Enter the folder name.",
+    "color": "Color",
+    "created": "Folder created",
+    "updated": "Folder updated",
+    "deleteTitle": "Delete folder",
+    "deleteBody": "Delete folder \"{name}\"? Its flows and subfolders move to \"No folder\".",
+    "deleted": "Folder deleted"
+  },
+  "colors": {
+    "blue": "Blue",
+    "green": "Green",
+    "purple": "Purple",
+    "orange": "Orange",
+    "red": "Red",
+    "yellow": "Yellow",
+    "gray": "Gray"
+  },
+  "status": { "active": "Active", "paused": "Paused", "draft": "Draft", "archived": "Archived" },
+  "menu": {
+    "more": "More options",
+    "edit": "Edit",
+    "open": "Open",
+    "rename": "Rename",
+    "duplicate": "Duplicate",
+    "share": "Share",
+    "activate": "Activate",
+    "pause": "Pause",
+    "archive": "Archive",
+    "unarchive": "Unarchive",
+    "move": "Move to…",
+    "removeFromFolder": "Remove from folder",
+    "delete": "Delete",
+    "duplicated": "Flow duplicated",
+    "activateDone": "Flow activated",
+    "pauseDone": "Flow paused",
+    "archiveDone": "Flow archived",
+    "unarchiveDone": "Flow unarchived",
+    "removedFromFolder": "Flow removed from folder"
+  },
+  "updated": { "today": "Today, {time}", "yesterday": "Yesterday, {time}" },
+  "table": {
+    "name": "Name",
+    "status": "Status",
+    "blocks": "Blocks",
+    "updated": "Updated",
+    "actions": "Actions",
+    "pagination": "Pagination",
+    "range": "{from}–{to} of {total}",
+    "prev": "Previous page",
+    "next": "Next page"
+  },
+  "rename": { "title": "Rename", "label": "Flow name", "required": "Enter the flow name.", "done": "Name updated" },
+  "move": { "title": "Move flow", "label": "Destination folder", "done": "Flow moved" },
+  "delete": {
+    "title": "Delete flow",
+    "question": "Are you sure you want to delete the flow \"{name}\"?",
+    "loading": "Calculating the impact…",
+    "impact": "Deletion impact",
+    "activeRuns": "{n} active run(s) will be cancelled",
+    "totalRuns": "{n} run(s) in history will be removed",
+    "configs": "{n} setting(s) use this flow",
+    "connectionConfig": "Default flows of connection {name} (will be unlinked)",
+    "businessHourConfig": "Business hours {name} (will be disabled)",
+    "references": "{n} other flow(s) call this flow",
+    "referenceItem": "{name} (node: {nodes})",
+    "forceWarning": "On confirm, the settings above are unlinked or disabled and the flow is deleted.",
+    "mediaNote": "Media used by the flow is not removed.",
+    "confirmForce": "Unlink and delete",
+    "done": "Flow deleted"
+  },
+  "share": {
+    "title": "Share flow",
+    "body": "Send this code to import a copy of \"{name}\" into another account.",
+    "copy": "Copy",
+    "copied": "Code copied",
+    "copiedShort": "Copied",
+    "note": "Whoever imports it gets a complete, independent copy of the flow."
+  },
+  "import": {
+    "title": "Import flow(s)",
+    "label": "Share codes",
+    "hint": "Several codes separated by commas or line breaks.",
+    "required": "Enter at least one code.",
+    "tooMany": "Enter at most {max} codes.",
+    "count": "{n} code(s)",
+    "submit": "Import",
+    "done": "{n} flow(s) imported",
+    "ok": "{code}: imported as \"{name}\"",
+    "invalid": "{code}: invalid code"
+  }
+}

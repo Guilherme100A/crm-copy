@@ -137,7 +137,8 @@ export function flowShareRoutes(deps: ResolvedDeps) {
       const src = { companyId: ref.companyId }
       const flow = await store.getFlow(src, ref.flowId)
       const def = await store.toDefinition(src, ref.flowId)
-      const copy = await store.createFlow(ctx, { name: flow.name, description: flow.description, status: 'draft' })
+      // Limite de fluxos (T95) → 409 LIMIT_REACHED, como no create/duplicate (T44).
+      const copy = await store404(() => store.createFlow(ctx, { name: flow.name, description: flow.description, status: 'draft' }))
       remap.set(flow.id, copy.id)
       sources.push({ code, flow, def, copy })
     }
@@ -169,7 +170,7 @@ export function flowShareRoutes(deps: ResolvedDeps) {
     const body = c.req.valid('json')
     if (body.format !== undefined && body.format !== FLOW_EXPORT_FORMAT)
       throw new ApiError('VALIDATION_ERROR', 'Formato de exportação desconhecido', { fields: [{ path: 'format', message: `use ${FLOW_EXPORT_FORMAT}` }] })
-    const copy = await store.createFlow(ctx, { name: body.flow?.name || undefined, description: body.flow?.description ?? null, status: 'draft' })
+    const copy = await store404(() => store.createFlow(ctx, { name: body.flow?.name || undefined, description: body.flow?.description ?? null, status: 'draft' }))
     try {
       // Estrutura: a mesma conferência do rascunho (T19); inválida → 422 e a cópia é removida.
       const parsed = await store404(() => store.fromDefinition(ctx, copy.id, body.definition))

@@ -1,0 +1,158 @@
+{
+  "title": "Flujos",
+  "subtitle": "Automatiza conversaciones con flujos visuales",
+  "search": "Buscar flujos...",
+  "defaultName": "Nuevo Flujo",
+  "blocks": "{n} bloques",
+  "actions": {
+    "import": "Importar",
+    "newFolder": "Carpeta",
+    "newFlow": "Nuevo flujo",
+    "close": "Cerrar",
+    "retry": "Intentar de nuevo",
+    "cancel": "Cancelar",
+    "delete": "Eliminar"
+  },
+  "tree": {
+    "title": "Carpetas",
+    "root": "Sin carpeta",
+    "home": "Flujos",
+    "back": "Volver a la carpeta anterior",
+    "breadcrumb": "Ruta de la carpeta",
+    "missing": "Esta carpeta ya no existe."
+  },
+  "filter": {
+    "label": "Filtrar por estado",
+    "all": "Todos",
+    "active": "Activos",
+    "paused": "Pausados",
+    "draft": "Borradores",
+    "archived": "Archivados",
+    "folders": "Carpetas",
+    "clear": "Limpiar"
+  },
+  "viewMode": { "label": "Visualización", "cards": "Tarjetas", "table": "Tabla" },
+  "sections": { "folders": "Carpetas", "flows": "Flujos de trabajo" },
+  "empty": {
+    "title": "No se encontraron flujos",
+    "filtered": "Ningún flujo coincide con los filtros.",
+    "create": "Crear primer flujo"
+  },
+  "errors": {
+    "generic": "No se pudo completar la acción.",
+    "load": "No se pudieron cargar los flujos.",
+    "activation": "El flujo tiene {n} problema(s) y no se puede activar."
+  },
+  "dnd": {
+    "folderMoved": "Carpeta movida",
+    "flowMoved": "Flujo movido a la carpeta",
+    "reordered": "Orden actualizado",
+    "blocked": "No se puede mover una carpeta dentro de una de sus subcarpetas.",
+    "dragFolder": "Arrastrar la carpeta {name}",
+    "dragFlow": "Arrastrar el flujo {name}",
+    "dropEnd": "Suelta aquí para mover al final",
+    "dropHere": "Suelta aquí para reordenar"
+  },
+  "folder": {
+    "counts": "{flows} flujo(s) · {folders} subcarpeta(s)",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "newTitle": "Nueva carpeta",
+    "editTitle": "Editar carpeta",
+    "name": "Nombre de la carpeta",
+    "nameRequired": "Ingresa el nombre de la carpeta.",
+    "color": "Color",
+    "created": "Carpeta creada",
+    "updated": "Carpeta actualizada",
+    "deleteTitle": "Eliminar carpeta",
+    "deleteBody": "¿Eliminar la carpeta \"{name}\"? Sus flujos y subcarpetas pasan a \"Sin carpeta\".",
+    "deleted": "Carpeta eliminada"
+  },
+  "colors": {
+    "blue": "Azul",
+    "green": "Verde",
+    "purple": "Morado",
+    "orange": "Naranja",
+    "red": "Rojo",
+    "yellow": "Amarillo",
+    "gray": "Gris"
+  },
+  "status": { "active": "Activo", "paused": "Pausado", "draft": "Borrador", "archived": "Archivado" },
+  "menu": {
+    "more": "Más opciones",
+    "edit": "Editar",
+    "open": "Abrir",
+    "rename": "Editar nombre",
+    "duplicate": "Duplicar",
+    "share": "Compartir",
+    "activate": "Activar",
+    "pause": "Pausar",
+    "archive": "Archivar",
+    "unarchive": "Desarchivar",
+    "move": "Mover a…",
+    "removeFromFolder": "Quitar de la carpeta",
+    "delete": "Eliminar",
+    "duplicated": "Flujo duplicado",
+    "activateDone": "Flujo activado",
+    "pauseDone": "Flujo pausado",
+    "archiveDone": "Flujo archivado",
+    "unarchiveDone": "Flujo desarchivado",
+    "removedFromFolder": "Flujo quitado de la carpeta"
+  },
+  "updated": { "today": "Hoy, {time}", "yesterday": "Ayer, {time}" },
+  "table": {
+    "name": "Nombre",
+    "status": "Estado",
+    "blocks": "Bloques",
+    "updated": "Actualizado",
+    "actions": "Acciones",
+    "pagination": "Paginación",
+    "range": "{from}–{to} de {total}",
+    "prev": "Página anterior",
+    "next": "Página siguiente"
+  },
+  "rename": {
+    "title": "Editar nombre",
+    "label": "Nombre del flujo",
+    "required": "Ingresa el nombre del flujo.",
+    "done": "Nombre actualizado"
+  },
+  "move": { "title": "Mover flujo", "label": "Carpeta de destino", "done": "Flujo movido" },
+  "delete": {
+    "title": "Eliminar flujo",
+    "question": "¿Seguro que deseas eliminar el flujo \"{name}\"?",
+    "loading": "Calculando el impacto…",
+    "impact": "Impacto de la eliminación",
+    "activeRuns": "{n} ejecución(es) activa(s) será(n) cancelada(s)",
+    "totalRuns": "{n} ejecución(es) del historial será(n) eliminada(s)",
+    "configs": "{n} configuración(es) usan este flujo",
+    "connectionConfig": "Flujos predeterminados de la conexión {name} (se desvinculará)",
+    "businessHourConfig": "Horario comercial {name} (se desactivará)",
+    "references": "{n} otro(s) flujo(s) llaman a este flujo",
+    "referenceItem": "{name} (nodo: {nodes})",
+    "forceWarning": "Al confirmar, las configuraciones anteriores se desvinculan o desactivan y el flujo se elimina.",
+    "mediaNote": "Los archivos multimedia del flujo no se eliminan.",
+    "confirmForce": "Desvincular y eliminar",
+    "done": "Flujo eliminado"
+  },
+  "share": {
+    "title": "Compartir flujo",
+    "body": "Envía este código para importar una copia de \"{name}\" en otra cuenta.",
+    "copy": "Copiar",
+    "copied": "Código copiado",
+    "copiedShort": "Copiado",
+    "note": "Quien lo importe recibe una copia completa e independiente del flujo."
+  },
+  "import": {
+    "title": "Importar flujo(s)",
+    "label": "Códigos para compartir",
+    "hint": "Varios códigos separados por coma o salto de línea.",
+    "required": "Ingresa al menos un código.",
+    "tooMany": "Ingresa como máximo {max} códigos.",
+    "count": "{n} código(s)",
+    "submit": "Importar",
+    "done": "{n} flujo(s) importado(s)",
+    "ok": "{code}: importado como \"{name}\"",
+    "invalid": "{code}: código inválido"
+  }
+}

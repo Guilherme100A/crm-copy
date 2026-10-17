@@ -1,12 +1,15 @@
 // FlowStore (T19): pastas, fluxos, rascunho ↔ FlowDefinition e versões publicadas. Toda query filtra pela
 // empresa do contexto (SPEC 3.3); recurso de outra empresa → NOT_FOUND.
 import {
+  businessHourConfigs,
+  connectionFlowConfigs,
   flowEdges,
   flowFolders,
   flowNodeActions,
   flowNodes,
   flows,
   flowVersions,
+  keywordTriggers,
   FLOW_FOLDER_COLORS,
   type Database,
   type FlowFolderColor,
@@ -53,6 +56,15 @@ export interface CreateFlowInput {
   position?: number
 }
 export type UpdateFlowInput = Partial<CreateFlowInput>
+
+/** Configs afetadas por uma exclusão forçada (ids). */
+export interface DetachedFlowReferences {
+  connection_flow_configs: string[]
+  business_hour_configs: string[]
+}
+
+/** Colunas de fluxo padrão da config de conexão (06 §3.8). */
+const CONNECTION_FLOW_COLUMNS = ['welcomeFlowId', 'defaultResponseFlowId', 'finishedConversationFlowId', 'finishedAttendanceFlowId'] as const
 
 export const DEFAULT_FLOW_NAME = 'Novo Fluxo'
 export const START_NODE_KEY = 'start'
@@ -206,6 +218,37 @@ export class FlowStore {
   async deleteFlow(ctx: FlowCtx, id: string): Promise<void> {
     await this.requireFlow(this.db, ctx, id)
     await this.db.delete(flows).where(and(eq(flows.id, id), eq(flows.companyId, ctx.companyId)))
+  }
+
+  /**
+   * Exclusão forçada (T44, 06 §2.3): numa transação, tira o fluxo dos fluxos padrões das conexões, remove os gatilhos
+   * por palavra-chave que o disparam, desativa os horários comerciais que o usavam e exclui o fluxo.
+   */
+  async deleteFlowDetaching(ctx: FlowCtx, id: string): Promise<DetachedFlowReferences> {
+    return this.db.transaction(async (tx) => {
+      await this.requireFlow(tx, ctx, id)
+      const touched = new Set<string>()
+      for (const col of CONNECTION_FLOW_COLUMNS) {
+        const rows = await tx
+          .update(connectionFlowConfigs)
+          .set({ [col]: null, updatedAt: new Date() })
+          .where(and(eq(connectionFlowConfigs.companyId, ctx.companyId), eq(connectionFlowConfigs[col], id)))
+          .returning({ id: connectionFlowConfigs.id })
+        for (const r of rows) touched.add(r.id)
+      }
+      const keywords = await tx
+        .delete(keywordTriggers)
+        .where(and(eq(keywordTriggers.companyId, ctx.companyId), eq(keywordTriggers.flowId, id)))
+        .returning({ configId: keywordTriggers.configId })
+      for (const k of keywords) touched.add(k.configId)
+      const hours = await tx
+        .update(businessHourConfigs)
+        .set({ flowId: null, active: false, updatedAt: new Date() })
+        .where(and(eq(businessHourConfigs.companyId, ctx.companyId), eq(businessHourConfigs.flowId, id)))
+        .returning({ id: businessHourConfigs.id })
+      await tx.delete(flows).where(and(eq(flows.id, id), eq(flows.companyId, ctx.companyId)))
+      return { connection_flow_configs: [...touched], business_hour_configs: hours.map((h) => h.id) }
+    })
   }
 
   // ---------------------------------------------------------------- rascunho ↔ FlowDefinition

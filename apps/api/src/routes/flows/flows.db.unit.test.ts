@@ -1,7 +1,7 @@
 // Rotas do editor de fluxos por HTTP (app.request), com Postgres real.
 import { randomBytes } from 'node:crypto'
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { companyMembers, createDb, flowEdges, flowVersions, type Database } from '@crm/db'
+import { businessHourConfigs, companyMembers, connectionFlowConfigs, connections, createDb, flowEdges, flowVersions, keywordTriggers, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { createLogger, MemoryMailer, redisConnection } from '@crm/node-kit'
 import { eq } from 'drizzle-orm'
@@ -173,6 +173,43 @@ describe('fluxos', () => {
       off()
     }
     expect((await call(a, 'DELETE', `/api/flows/${flow.id}`)).status).toBe(200)
+  })
+})
+
+describe('exclusão forçada (T44)', () => {
+  it('409 lista as configs afetadas; ?force=1 desvincula, desativa o horário e exclui', async () => {
+    const a = await register()
+    const flow = await newFlow(a, 'Boas-vindas')
+    const [conn] = await db.insert(connections).values({ companyId: a.companyId, sessionId: `s-${rnd()}`, name: 'Loja' }).returning()
+    const [cfg] = await db.insert(connectionFlowConfigs).values({ companyId: a.companyId, connectionId: conn!.id, welcomeFlowId: flow.id }).returning()
+    await db.insert(keywordTriggers).values({ companyId: a.companyId, configId: cfg!.id, flowId: flow.id, conditions: [{ keyword: 'oi', match_type: 'equals' }] })
+    const [hours] = await db
+      .insert(businessHourConfigs)
+      .values({ companyId: a.companyId, connectionId: conn!.id, active: true, actionType: 'flow', flowId: flow.id })
+      .returning()
+
+    const del = await call(a, 'DELETE', `/api/flows/${flow.id}`)
+    expect(del.status).toBe(409)
+    expect(del.body.error.details).toMatchObject({
+      error_code: 'flow_referenced',
+      connection_flow_configs: [{ kind: 'connection_flow_config', id: cfg!.id, name: 'Loja' }],
+      business_hour_configs: [{ kind: 'business_hour_config', id: hours!.id }],
+    })
+
+    const forced = await call(a, 'DELETE', `/api/flows/${flow.id}?force=1`)
+    expect(forced.status).toBe(200)
+    expect(forced.body).toEqual({ deleted: true, detached: { connection_flow_configs: [cfg!.id], business_hour_configs: [hours!.id] } })
+    expect((await call(a, 'GET', `/api/flows/${flow.id}`)).status).toBe(404)
+    const [cfgAfter] = await db.select().from(connectionFlowConfigs).where(eq(connectionFlowConfigs.id, cfg!.id))
+    expect(cfgAfter!.welcomeFlowId).toBeNull()
+    const [hoursAfter] = await db.select().from(businessHourConfigs).where(eq(businessHourConfigs.id, hours!.id))
+    expect(hoursAfter).toMatchObject({ flowId: null, active: false })
+  })
+
+  it('?force=1 sem referências exclui normalmente', async () => {
+    const a = await register()
+    const flow = await newFlow(a, 'Solto')
+    expect(await call(a, 'DELETE', `/api/flows/${flow.id}?force=1`)).toEqual({ status: 200, body: { deleted: true } })
   })
 })
 

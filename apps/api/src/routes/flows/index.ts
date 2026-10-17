@@ -247,8 +247,20 @@ export function flowsRoutes(deps: ResolvedDeps) {
     const flow = await run(() => store.getFlow(ctx, c.req.param('id')))
     const impact = await deletionImpact(deps.db, ctx, flow.id, deps.flowReferenceSources)
     const references = [...impact.connection_flow_configs, ...impact.business_hour_configs].filter((r) => BLOCKING_REFERENCE_KINDS.includes(r.kind))
-    if (references.length)
-      throw new ApiError('CONFLICT', 'O fluxo é usado por configurações; remova as referências antes de excluir', { error_code: 'flow_referenced', references })
+    // T44: `?force=1` desvincula/desativa as configs afetadas e exclui (06 §2.3); sem ele, 409 com a lista.
+    const force = ['1', 'true'].includes(c.req.query('force') ?? '')
+    if (references.length && !force)
+      throw new ApiError('CONFLICT', 'O fluxo é usado por configurações; remova as referências antes de excluir', {
+        error_code: 'flow_referenced',
+        references,
+        connection_flow_configs: impact.connection_flow_configs,
+        business_hour_configs: impact.business_hour_configs,
+      })
+    if (references.length) {
+      const detached = await run(() => store.deleteFlowDetaching(ctx, flow.id))
+      setAudit(c, { action: 'flow.delete', targetType: 'flow', targetId: flow.id, detail: { force: true, detached } })
+      return c.json({ deleted: true, detached })
+    }
     await run(() => store.deleteFlow(ctx, flow.id))
     setAudit(c, { action: 'flow.delete', targetType: 'flow', targetId: flow.id })
     return c.json({ deleted: true })
