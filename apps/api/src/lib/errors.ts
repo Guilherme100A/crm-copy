@@ -51,8 +51,11 @@ const STATUS_CODES: Partial<Record<number, ErrorCode>> = {
   502: 'UPSTREAM_ERROR',
 }
 
-/** Erros da fronteira WhatsApp (`SendRejectedError`, `WaGatewayError`) mantêm código e HTTP (SPEC 3.5). */
-const PASSTHROUGH_NAMES = new Set(['SendRejectedError', 'WaGatewayError'])
+/**
+ * Erros da fronteira WhatsApp (`SendRejectedError`, `WaGatewayError`) mantêm código e HTTP (SPEC 3.5).
+ * `CapabilityNotSupportedError` (501): o worker não expõe o alvo (ex.: ai-manager sem `CRM_BRIDGE`), não é erro interno.
+ */
+const PASSTHROUGH_NAMES = new Set(['SendRejectedError', 'WaGatewayError', 'CapabilityNotSupportedError'])
 
 function passthrough(err: unknown): WireError | null {
   if (typeof err !== 'object' || err === null) return null

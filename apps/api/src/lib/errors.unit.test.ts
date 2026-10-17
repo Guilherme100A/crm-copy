@@ -24,6 +24,15 @@ describe('toWireError', () => {
     expect(toWireError(e)).toEqual({ status: 404, code: 'SESSION_NOT_FOUND', message: 'fora' })
   })
 
+  it('capacidade ausente no worker (ex.: ai-manager sem CRM_BRIDGE) → 501 CAPABILITY_NOT_SUPPORTED, não 500', () => {
+    const e = Object.assign(new Error('o worker não suporta messages.send (perfil ai-manager)'), {
+      name: 'CapabilityNotSupportedError',
+      code: 'CAPABILITY_NOT_SUPPORTED',
+      status: 501,
+    })
+    expect(toWireError(e)).toEqual({ status: 501, code: 'CAPABILITY_NOT_SUPPORTED', message: 'o worker não suporta messages.send (perfil ai-manager)' })
+  })
+
   it('desconhecido → 500 INTERNAL genérico', () => {
     expect(toWireError(new Error('detalhe interno'))).toEqual({ status: 500, code: 'INTERNAL', message: 'Internal server error' })
     expect(toWireError(Object.assign(new Error('x'), { code: 'ECONNREFUSED' })).code).toBe('INTERNAL')
