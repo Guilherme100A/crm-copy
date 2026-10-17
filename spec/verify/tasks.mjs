@@ -372,6 +372,7 @@ const RAW = [
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],
       e2e: true,
+      testerPaths: ['tests/acceptance/T23/**'] /* shell.e2e.ts ainda procura page-chats, placeholder que a T69 substituiu */,
     }),
 ]
 
