@@ -3,13 +3,10 @@
   "task": "T97",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T03:38:21.895Z",
-  "commit": "5e34a735f71b5dd024f4cff6c0eaad18aa9dc1e5",
-  "base": "5e34a73",
-  "changedFiles": [
-    "tests/acceptance/T97/affiliate.e2e.ts",
-    "tests/acceptance/T97/app-config.test.ts"
-  ],
+  "at": "2026-10-17T03:50:47.368Z",
+  "commit": "96113e7e9cda1c10f6644e5baa495d3ad66c627e",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -84,7 +81,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }
