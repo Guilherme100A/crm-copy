@@ -1,0 +1,152 @@
+{
+  "common": { "loading": "Cargando…" },
+  "status": {
+    "saved": "Cambios guardados automáticamente",
+    "blocked": "Corrige los errores marcados: el bloque no se guarda mientras haya errores"
+  },
+  "errors": {
+    "required": "Campo obligatorio",
+    "min": "Mínimo {min}",
+    "max": "Máximo {max}",
+    "minItems": "Agrega al menos {min}",
+    "maxItems": "Como máximo {max}",
+    "format": "Formato inválido",
+    "maxWait": "El plazo máximo es de 31 días",
+    "media": "Sube un archivo o indica la URL",
+    "minMax": "El mínimo no puede ser mayor que el máximo",
+    "pixKey": "La clave no corresponde al tipo elegido",
+    "image": "Cada tarjeta necesita una imagen",
+    "duplicateReply": "Los botones de respuesta necesitan títulos distintos",
+    "duplicateId": "Identificador repetido",
+    "phone": "Teléfono inválido (8 a 13 dígitos, sin código de país)",
+    "handle": "Identificador inválido",
+    "aiAudio": "El audio por IA no está disponible",
+    "invalid": "Valor inválido"
+  },
+  "vars": {
+    "insert": "Variable",
+    "contact": "Contacto",
+    "fields": "Campos personalizados",
+    "system": "Sistema",
+    "globals": "Variables globales"
+  },
+  "timeout": {
+    "label": "Plazo para responder",
+    "units": { "seconds": "segundos", "minutes": "minutos", "hours": "horas", "days": "días" },
+    "menuHint": "0 = predeterminado de 2 días; máximo de 31 días",
+    "waitHint": "Máximo de 31 días; después sigue por la salida de plazo"
+  },
+  "media": {
+    "label": "Medio",
+    "source": { "file": "Archivo", "url": "URL" },
+    "choose": "Elegir archivo",
+    "replace": "Cambiar archivo",
+    "attached": "Archivo enviado",
+    "none": "Ningún archivo",
+    "url": "URL del medio",
+    "uploadError": "No se pudo subir el archivo",
+    "type": "Tipo de medio",
+    "types": { "image": "Imagen", "video": "Video", "audio": "Audio" },
+    "ptt": "Enviar como audio grabado",
+    "caption": "Leyenda",
+    "viewOnce": "Visualización única"
+  },
+  "sticker": {
+    "library": "Stickers de la empresa",
+    "empty": "No hay stickers: sube un archivo abajo",
+    "name": "Nombre del sticker"
+  },
+  "preview": { "title": "Vista previa de lo que se enviará" },
+  "actions": {
+    "send_message": "Texto",
+    "send_multi_media": "Medio",
+    "send_file": "Archivo",
+    "send_sticker": "Sticker",
+    "send_contact": "Contacto",
+    "delay_between_messages": "Retraso"
+  },
+  "message": {
+    "actions": "Acciones ({n})",
+    "empty": "Sin acciones. Agrega texto, medio, archivo, sticker, contacto o retraso.",
+    "drag": "Arrastrar para reordenar",
+    "up": "Subir",
+    "down": "Bajar",
+    "remove": "Quitar",
+    "text": "Contenido del mensaje",
+    "textPlaceholder": "¡Hola {first_name}! *negrita* _cursiva_ ~tachado~",
+    "typing": "Escribiendo durante (segundos)"
+  },
+  "file": {
+    "name": "Nombre del archivo",
+    "hint": "Hasta 30 MB; acepta variables"
+  },
+  "contact": { "name": "Nombre del contacto", "phone": "Teléfono del contacto" },
+  "delay": {
+    "mode": "Retraso",
+    "hint": "Hasta {max} segundos",
+    "modes": { "fixed": "Fijo", "random": "Aleatorio entre mínimo y máximo" },
+    "seconds": "Segundos",
+    "min": "Mínimo (s)",
+    "max": "Máximo (s)"
+  },
+  "pix": {
+    "notice": "Se envía como texto con la clave y el código Pix copia y pega.",
+    "type": "Tipo de clave",
+    "types": { "EVP": "Clave aleatoria", "CPF": "CPF", "CNPJ": "CNPJ", "PHONE": "Teléfono", "EMAIL": "Correo" },
+    "key": "Clave Pix",
+    "keyHint": "Con variable (ej.: {g_pix}) la clave se verifica al enviar",
+    "merchant": "Destinatario",
+    "amount": "Valor (R$)",
+    "amountHint": "Vacío = valor libre; acepta variables",
+    "emvAtSend": "(código generado al enviar)",
+    "emvNote": "El código depende de una variable y se arma para cada contacto."
+  },
+  "notification": {
+    "name": "Nombre",
+    "countryCode": "Código de país",
+    "phone": "Teléfono",
+    "phoneHint": "Solo números, sin el código de país",
+    "message": "Mensaje"
+  },
+  "save": {
+    "enabled": "Guardar la respuesta en un campo",
+    "field": "Campo"
+  },
+  "menu": {
+    "defaultButton": "Ver opciones",
+    "baileysNotice": "Se envía como menú numerado en texto: el contacto responde con el número o el título de la opción.",
+    "legacyNotice": "Bloque heredado: prefiere el bloque Menú interactivo.",
+    "type": "Tipo de menú",
+    "types": { "list": "Lista", "button": "Botones", "url": "Enlace", "call": "Llamada" },
+    "message": "Mensaje",
+    "buttonLabel": "Texto del botón",
+    "footer": "Pie",
+    "image": "Enviar una imagen antes del menú",
+    "options": "Opciones ({n})",
+    "handle": "Salida del bloque",
+    "noHandle": "sin salida (enlace)",
+    "optionTitle": "Título",
+    "optionType": "Tipo",
+    "optionTypes": { "REPLY": "Respuesta", "URL": "Enlace", "COPY": "Copiar", "CALL": "Llamar" },
+    "optionDescription": "Descripción",
+    "optionTarget": { "REPLY": "Descripción", "URL": "URL", "COPY": "Texto a copiar", "CALL": "Teléfono" },
+    "addOption": "Agregar opción"
+  },
+  "carousel": {
+    "defaultText": "Elige una opción abajo",
+    "baileysNotice": "Se envía como imágenes con leyenda seguidas de un menú numerado en texto con los botones de respuesta.",
+    "text": "Texto de introducción",
+    "cards": "Tarjetas ({n}/{max})",
+    "card": "Tarjeta {n}",
+    "cardText": "Texto de la tarjeta",
+    "image": "Imagen",
+    "buttons": "Botones ({n}/{max})",
+    "buttonText": "Texto del botón",
+    "addCard": "Agregar tarjeta",
+    "addButton": "Agregar botón"
+  },
+  "wait": {
+    "message": "Enviar un mensaje antes de esperar",
+    "indefinitely": "Esperar sin plazo"
+  }
+}

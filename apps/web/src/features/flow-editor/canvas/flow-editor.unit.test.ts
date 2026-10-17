@@ -168,11 +168,12 @@ describe('paleta, registro, ativação e realtime', () => {
 
   it('registro de editores de nó com fallback', () => {
     const Editor = () => null
-    expect(getNodeEditor('message')).toBeNull()
-    const off = registerNodeEditor('message', Editor)
-    expect(getNodeEditor('message')).toBe(Editor)
+    // `message` já vem registrado pelo glob dos grupos (T56); o teste usa um tipo livre.
+    expect(getNodeEditor('x_test')).toBeNull()
+    const off = registerNodeEditor('x_test', Editor)
+    expect(getNodeEditor('x_test')).toBe(Editor)
     off()
-    expect(getNodeEditor('message')).toBeNull()
+    expect(getNodeEditor('x_test')).toBeNull()
   })
 
   it('422 da ativação traz os erros por nó', () => {

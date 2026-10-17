@@ -32,3 +32,22 @@ export function getNodeEditor(type: string): NodeEditor | null {
 }
 
 export const registeredNodeEditors = (): string[] => [...editors.keys()]
+
+/**
+ * Carga dos grupos (T56/T57): cada pasta `node-editors/<grupo>/index.ts` exporta
+ *   export const nodeEditors: Record<string, NodeEditor> = { message: MessageEditor, … }
+ * e é descoberta por glob (Vite), sem editar este arquivo. Os módulos do glob rodam ANTES deste corpo (imports
+ * içados), então eles não chamam `registerNodeEditor` no topo nem importam valores daqui (só tipos).
+ * Ordem por caminho; o último vence.
+ */
+export function collectNodeEditors(modules: Record<string, unknown>): Record<string, NodeEditor> {
+  const out: Record<string, NodeEditor> = {}
+  for (const path of Object.keys(modules).sort()) {
+    const found = (modules[path] as { nodeEditors?: unknown } | undefined)?.nodeEditors
+    if (!found || typeof found !== 'object') continue
+    for (const [type, editor] of Object.entries(found)) if (typeof editor === 'function') out[type] = editor as NodeEditor
+  }
+  return out
+}
+
+for (const [type, editor] of Object.entries(collectNodeEditors(import.meta.glob('./*/index.ts', { eager: true })))) registerNodeEditor(type, editor)

@@ -1,0 +1,152 @@
+{
+  "common": { "loading": "Loading…" },
+  "status": {
+    "saved": "Changes saved automatically",
+    "blocked": "Fix the highlighted errors: the block is not saved while there are errors"
+  },
+  "errors": {
+    "required": "Required field",
+    "min": "Minimum {min}",
+    "max": "Maximum {max}",
+    "minItems": "Add at least {min}",
+    "maxItems": "At most {max}",
+    "format": "Invalid format",
+    "maxWait": "The maximum timeout is 31 days",
+    "media": "Upload a file or enter the URL",
+    "minMax": "The minimum cannot be greater than the maximum",
+    "pixKey": "Key does not match the selected type",
+    "image": "Each card needs an image",
+    "duplicateReply": "Reply buttons need different titles",
+    "duplicateId": "Duplicate identifier",
+    "phone": "Invalid phone (8 to 13 digits, no country code)",
+    "handle": "Invalid identifier",
+    "aiAudio": "AI audio is not available",
+    "invalid": "Invalid value"
+  },
+  "vars": {
+    "insert": "Variable",
+    "contact": "Contact",
+    "fields": "Custom fields",
+    "system": "System",
+    "globals": "Global variables"
+  },
+  "timeout": {
+    "label": "Time to reply",
+    "units": { "seconds": "seconds", "minutes": "minutes", "hours": "hours", "days": "days" },
+    "menuHint": "0 = default of 2 days; maximum of 31 days",
+    "waitHint": "Maximum of 31 days; then follows the timeout output"
+  },
+  "media": {
+    "label": "Media",
+    "source": { "file": "File", "url": "URL" },
+    "choose": "Choose file",
+    "replace": "Replace file",
+    "attached": "File uploaded",
+    "none": "No file",
+    "url": "Media URL",
+    "uploadError": "Could not upload the file",
+    "type": "Media type",
+    "types": { "image": "Image", "video": "Video", "audio": "Audio" },
+    "ptt": "Send as recorded audio",
+    "caption": "Caption",
+    "viewOnce": "View once"
+  },
+  "sticker": {
+    "library": "Company stickers",
+    "empty": "No stickers yet: upload a file below",
+    "name": "Sticker name"
+  },
+  "preview": { "title": "Preview of what will be sent" },
+  "actions": {
+    "send_message": "Text",
+    "send_multi_media": "Media",
+    "send_file": "File",
+    "send_sticker": "Sticker",
+    "send_contact": "Contact",
+    "delay_between_messages": "Delay"
+  },
+  "message": {
+    "actions": "Actions ({n})",
+    "empty": "No actions. Add text, media, file, sticker, contact or delay.",
+    "drag": "Drag to reorder",
+    "up": "Move up",
+    "down": "Move down",
+    "remove": "Remove",
+    "text": "Message content",
+    "textPlaceholder": "Hi {first_name}! *bold* _italic_ ~strike~",
+    "typing": "Typing for (seconds)"
+  },
+  "file": {
+    "name": "File name",
+    "hint": "Up to 30 MB; accepts variables"
+  },
+  "contact": { "name": "Contact name", "phone": "Contact phone" },
+  "delay": {
+    "mode": "Delay",
+    "hint": "Up to {max} seconds",
+    "modes": { "fixed": "Fixed", "random": "Random between minimum and maximum" },
+    "seconds": "Seconds",
+    "min": "Minimum (s)",
+    "max": "Maximum (s)"
+  },
+  "pix": {
+    "notice": "Sent as text with the key and the Pix copy-and-paste code.",
+    "type": "Key type",
+    "types": { "EVP": "Random key", "CPF": "CPF", "CNPJ": "CNPJ", "PHONE": "Phone", "EMAIL": "Email" },
+    "key": "Pix key",
+    "keyHint": "With a variable (e.g. {g_pix}) the key is checked when sending",
+    "merchant": "Recipient",
+    "amount": "Amount (R$)",
+    "amountHint": "Empty = open amount; accepts variables",
+    "emvAtSend": "(code generated when sending)",
+    "emvNote": "The code depends on a variable and is built for each contact."
+  },
+  "notification": {
+    "name": "Name",
+    "countryCode": "Country code",
+    "phone": "Phone",
+    "phoneHint": "Digits only, without the country code",
+    "message": "Message"
+  },
+  "save": {
+    "enabled": "Save the reply in a field",
+    "field": "Field"
+  },
+  "menu": {
+    "defaultButton": "See options",
+    "baileysNotice": "Sent as a numbered text menu: the contact replies with the option number or title.",
+    "legacyNotice": "Legacy block: prefer the Interactive menu block.",
+    "type": "Menu type",
+    "types": { "list": "List", "button": "Buttons", "url": "Link", "call": "Call" },
+    "message": "Message",
+    "buttonLabel": "Button text",
+    "footer": "Footer",
+    "image": "Send an image before the menu",
+    "options": "Options ({n})",
+    "handle": "Block output",
+    "noHandle": "no output (link)",
+    "optionTitle": "Title",
+    "optionType": "Type",
+    "optionTypes": { "REPLY": "Reply", "URL": "Link", "COPY": "Copy", "CALL": "Call" },
+    "optionDescription": "Description",
+    "optionTarget": { "REPLY": "Description", "URL": "URL", "COPY": "Text to copy", "CALL": "Phone" },
+    "addOption": "Add option"
+  },
+  "carousel": {
+    "defaultText": "Choose an option below",
+    "baileysNotice": "Sent as images with captions followed by a numbered text menu with the reply buttons.",
+    "text": "Intro text",
+    "cards": "Cards ({n}/{max})",
+    "card": "Card {n}",
+    "cardText": "Card text",
+    "image": "Image",
+    "buttons": "Buttons ({n}/{max})",
+    "buttonText": "Button text",
+    "addCard": "Add card",
+    "addButton": "Add button"
+  },
+  "wait": {
+    "message": "Send a message before waiting",
+    "indefinitely": "Wait with no timeout"
+  }
+}

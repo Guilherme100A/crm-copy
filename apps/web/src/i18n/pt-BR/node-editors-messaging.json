@@ -1,0 +1,152 @@
+{
+  "common": { "loading": "Carregando…" },
+  "status": {
+    "saved": "Alterações salvas automaticamente",
+    "blocked": "Corrija os erros destacados: o bloco não é salvo enquanto houver erro"
+  },
+  "errors": {
+    "required": "Campo obrigatório",
+    "min": "Mínimo {min}",
+    "max": "Máximo {max}",
+    "minItems": "Adicione pelo menos {min}",
+    "maxItems": "No máximo {max}",
+    "format": "Formato inválido",
+    "maxWait": "O prazo máximo é 31 dias",
+    "media": "Envie um arquivo ou informe a URL",
+    "minMax": "O mínimo não pode ser maior que o máximo",
+    "pixKey": "Chave fora do formato do tipo escolhido",
+    "image": "Cada cartão precisa de uma imagem",
+    "duplicateReply": "Os botões de resposta precisam de títulos diferentes",
+    "duplicateId": "Identificador repetido",
+    "phone": "Telefone inválido (8 a 13 dígitos, sem DDI)",
+    "handle": "Identificador inválido",
+    "aiAudio": "Áudio por IA não está disponível",
+    "invalid": "Valor inválido"
+  },
+  "vars": {
+    "insert": "Variável",
+    "contact": "Contato",
+    "fields": "Campos personalizados",
+    "system": "Sistema",
+    "globals": "Variáveis globais"
+  },
+  "timeout": {
+    "label": "Prazo para responder",
+    "units": { "seconds": "segundos", "minutes": "minutos", "hours": "horas", "days": "dias" },
+    "menuHint": "0 = padrão de 2 dias; máximo de 31 dias",
+    "waitHint": "Máximo de 31 dias; depois segue pela saída de prazo"
+  },
+  "media": {
+    "label": "Mídia",
+    "source": { "file": "Arquivo", "url": "URL" },
+    "choose": "Escolher arquivo",
+    "replace": "Trocar arquivo",
+    "attached": "Arquivo enviado",
+    "none": "Nenhum arquivo",
+    "url": "URL da mídia",
+    "uploadError": "Não foi possível enviar o arquivo",
+    "type": "Tipo de mídia",
+    "types": { "image": "Imagem", "video": "Vídeo", "audio": "Áudio" },
+    "ptt": "Enviar como áudio gravado",
+    "caption": "Legenda",
+    "viewOnce": "Visualização única"
+  },
+  "sticker": {
+    "library": "Figurinhas da empresa",
+    "empty": "Nenhuma figurinha cadastrada: envie um arquivo abaixo",
+    "name": "Nome da figurinha"
+  },
+  "preview": { "title": "Prévia do que será enviado" },
+  "actions": {
+    "send_message": "Texto",
+    "send_multi_media": "Mídia",
+    "send_file": "Arquivo",
+    "send_sticker": "Figurinha",
+    "send_contact": "Contato",
+    "delay_between_messages": "Atraso"
+  },
+  "message": {
+    "actions": "Ações ({n})",
+    "empty": "Nenhuma ação. Adicione texto, mídia, arquivo, figurinha, contato ou atraso.",
+    "drag": "Arrastar para reordenar",
+    "up": "Subir",
+    "down": "Descer",
+    "remove": "Remover",
+    "text": "Conteúdo da mensagem",
+    "textPlaceholder": "Olá {first_name}! *negrito* _itálico_ ~tachado~",
+    "typing": "Digitando por (segundos)"
+  },
+  "file": {
+    "name": "Nome do arquivo",
+    "hint": "Até 30 MB; aceita variáveis"
+  },
+  "contact": { "name": "Nome do contato", "phone": "Telefone do contato" },
+  "delay": {
+    "mode": "Atraso",
+    "hint": "Até {max} segundos",
+    "modes": { "fixed": "Fixo", "random": "Aleatório entre mínimo e máximo" },
+    "seconds": "Segundos",
+    "min": "Mínimo (s)",
+    "max": "Máximo (s)"
+  },
+  "pix": {
+    "notice": "Enviado como texto com a chave e o código Pix copia e cola.",
+    "type": "Tipo da chave",
+    "types": { "EVP": "Chave aleatória", "CPF": "CPF", "CNPJ": "CNPJ", "PHONE": "Telefone", "EMAIL": "E-mail" },
+    "key": "Chave Pix",
+    "keyHint": "Com variável (ex.: {g_pix}) a chave é conferida no envio",
+    "merchant": "Recebedor",
+    "amount": "Valor (R$)",
+    "amountHint": "Vazio = valor livre; aceita variáveis",
+    "emvAtSend": "(código gerado no envio)",
+    "emvNote": "O código depende de uma variável e é montado para cada contato."
+  },
+  "notification": {
+    "name": "Nome",
+    "countryCode": "DDI",
+    "phone": "Telefone",
+    "phoneHint": "Só números, sem o DDI",
+    "message": "Mensagem"
+  },
+  "save": {
+    "enabled": "Salvar a resposta num campo",
+    "field": "Campo"
+  },
+  "menu": {
+    "defaultButton": "Ver opções",
+    "baileysNotice": "Enviado como menu numerado em texto: o contato responde com o número ou o título da opção.",
+    "legacyNotice": "Bloco legado: prefira o bloco Menu interativo.",
+    "type": "Tipo de menu",
+    "types": { "list": "Lista", "button": "Botões", "url": "Link", "call": "Chamada" },
+    "message": "Mensagem",
+    "buttonLabel": "Texto do botão",
+    "footer": "Rodapé",
+    "image": "Enviar imagem antes do menu",
+    "options": "Opções ({n})",
+    "handle": "Saída do bloco",
+    "noHandle": "sem saída (link)",
+    "optionTitle": "Título",
+    "optionType": "Tipo",
+    "optionTypes": { "REPLY": "Resposta", "URL": "Link", "COPY": "Copiar", "CALL": "Ligar" },
+    "optionDescription": "Descrição",
+    "optionTarget": { "REPLY": "Descrição", "URL": "URL", "COPY": "Texto a copiar", "CALL": "Telefone" },
+    "addOption": "Adicionar opção"
+  },
+  "carousel": {
+    "defaultText": "Escolha uma opção abaixo",
+    "baileysNotice": "Enviado como imagens com legenda seguidas de um menu numerado em texto com os botões de resposta.",
+    "text": "Texto de introdução",
+    "cards": "Cartões ({n}/{max})",
+    "card": "Cartão {n}",
+    "cardText": "Texto do cartão",
+    "image": "Imagem",
+    "buttons": "Botões ({n}/{max})",
+    "buttonText": "Texto do botão",
+    "addCard": "Adicionar cartão",
+    "addButton": "Adicionar botão"
+  },
+  "wait": {
+    "message": "Enviar uma mensagem antes de aguardar",
+    "indefinitely": "Aguardar sem prazo"
+  }
+}
