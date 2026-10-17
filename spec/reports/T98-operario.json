@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "task": "T98",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T03:29:39.131Z",
+  "commit": "965cd9b06b6f880beeb05919cba5c7539dec91b7",
+  "base": "965cd9b",
+  "changedFiles": [
+    ".env.example",
+    "packages/wa-gateway-rpc/src/config.ts",
+    "packages/wa-gateway-rpc/src/index.ts",
+    "packages/wa-port/src/contract/suite.ts",
+    "packages/wa-port/src/contract/suite.unit.test.ts",
+    "docs/extension/ai-manager.md",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/contract.unit.test.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/detect.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/docs.unit.test.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/env.unit.test.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0000_init.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0001_session_limits.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0002_suggestions.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0003_ai_settings.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0004_session_router.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0005_session_phone_optional.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0006_proxy_settings.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0007_session_browser.sql",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/meta/_journal.json",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/index.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/migrations.db.unit.test.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/profile.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/profile.unit.test.ts",
+    "packages/wa-gateway-rpc/src/profiles/ai-manager/testing/simulator.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port typecheck",
+      "status": "pass",
+      "detail": "ok em 2.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port lint",
+      "status": "pass",
+      "detail": "ok em 2.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port test",
+      "status": "pass",
+      "detail": "ok em 2.0s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
+      "status": "pass",
+      "detail": "ok em 7.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
+      "status": "pass",
+      "detail": "ok em 2.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
+      "status": "pass",
+      "detail": "ok em 14.0s (afetados desde a base)"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "24 arquivo(s) alterado(s)"
+    }
+  ]
+}

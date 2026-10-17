@@ -6,6 +6,7 @@ import { FakeWaGateway } from '@crm/wa-port/testing'
 import type { Redis } from 'ioredis'
 import { createRpcGateway, type RpcGatewayOptions, type RpcWaGateway } from './gateway'
 import { gatewayProfileNames, resolveGatewayProfile } from './profiles'
+import { AI_MANAGER_PROFILE_NAME, createLazyAiManagerGateway } from './profiles/ai-manager/index'
 
 export type WaGatewayMode = 'rpc' | 'fake'
 
@@ -83,7 +84,9 @@ export function createWaGatewayFromEnv(env: Env = process.env, opts: CreateWaGat
     return { mode: 'fake', gateway, rpc: undefined, close: async () => undefined }
   }
   const redis = opts.redis ?? cfg.redisUrl
-  const rpc = createRpcGateway({
+  // T98: perfil ai-manager → detecção preguiçosa das capacidades (assinatura síncrona mantida); demais perfis como antes.
+  const create = cfg.profile === AI_MANAGER_PROFILE_NAME ? createLazyAiManagerGateway : createRpcGateway
+  const rpc = create({
     url: cfg.url,
     token: cfg.token,
     profile: resolveGatewayProfile(cfg.profile),

@@ -22,6 +22,61 @@ export interface WaGatewayContractHarness {
 
 export type WaGatewayContractFactory = () => WaGateway | WaGatewayContractHarness | Promise<WaGateway | WaGatewayContractHarness>
 
+/**
+ * Grupos da suíte (T98): cada teste declara os recursos do gateway que exercita além de criar/conectar sessão. Um
+ * backend parcial (ex.: ai-manager sem os alvos aditivos) roda só a parte que tem e registra o resto como `skip`.
+ */
+export const WA_GATEWAY_CONTRACT_GROUPS = ['capabilities', 'sessions', 'send', 'contacts', 'sendGroup', 'markRead', 'cancel', 'groups', 'media', 'events'] as const
+export type WaGatewayContractGroup = (typeof WA_GATEWAY_CONTRACT_GROUPS)[number]
+
+export interface WaGatewayContractOptions {
+  /** Roda só os testes cujos grupos estão TODOS nesta lista. */
+  only?: readonly WaGatewayContractGroup[]
+  /** Pula os testes que usam algum destes grupos. */
+  skip?: readonly WaGatewayContractGroup[]
+}
+
+/** Título de cada teste da suíte → grupos que ele usa. Teste novo sem entrada aqui faz a suíte falhar ao registrar. */
+export const WA_GATEWAY_CONTRACT_TESTS: Readonly<Record<string, readonly WaGatewayContractGroup[]>> = {
+  'capabilities: expõe as cinco flags booleanas': ['capabilities'],
+  'sessões: create devolve sessão NEW que aparece em list e get': ['sessions'],
+  'sessões: get de sessão inexistente rejeita': ['sessions'],
+  'sessões: pause leva a PAUSED e resume sai de PAUSED': ['sessions'],
+  'sessões: remove apaga a sessão': ['sessions'],
+  'send: devolve MessageView queued para a sessão e o telefone pedidos': ['send', 'contacts'],
+  'send: sem actor rejeita com UNAUTHORIZED 401': ['send'],
+  'send: sessão inexistente rejeita com SESSION_NOT_FOUND 404': ['send'],
+  'send: sessão pausada rejeita com SESSION_NOT_CONNECTED 409': ['send', 'sessions'],
+  'send: contato com opt-out rejeita com CONTACT_NOT_ALLOWED 403': ['send', 'contacts'],
+  'send: o mesmo clientMessageId na sessão devolve a mesma mensagem (idempotência)': ['send', 'contacts'],
+  'markRead (quando suportado): aceita os ids do chat sem erro': ['markRead'],
+  'send: sendGroup com JID que não é de grupo rejeita com VALIDATION_ERROR 400': ['sendGroup'],
+  'cancel: mensagem na fila vira cancelled': ['cancel', 'send', 'contacts'],
+  'cancel: mensagem inexistente rejeita': ['cancel'],
+  'fetchGroups: devolve a lista de grupos da sessão': ['groups'],
+  'downloadMedia: devolve os bytes da mídia da mensagem': ['media'],
+  'event: assinante recebe message.inbound válido (WaEvent v1)': ['events'],
+  'event: depois do unsubscribe o assinante não recebe mais eventos': ['events'],
+}
+
+/** O teste que usa `groups` roda com estas opções? */
+export function isContractTestEnabled(groups: readonly WaGatewayContractGroup[], options: WaGatewayContractOptions = {}): boolean {
+  const { only, skip } = options
+  if (only && !groups.every((g) => only.includes(g))) return false
+  if (skip && groups.some((g) => skip.includes(g))) return false
+  return true
+}
+
+/** `it` da suíte filtrado por `only`/`skip`: o teste fora do filtro é registrado como `skip` (aparece no relatório). */
+function gatedIt(options: WaGatewayContractOptions) {
+  return (title: string, fn: () => unknown) => {
+    const groups = WA_GATEWAY_CONTRACT_TESTS[title]
+    if (!groups) throw new Error(`WaGateway contract: o teste "${title}" não está em WA_GATEWAY_CONTRACT_TESTS`)
+    const register = isContractTestEnabled(groups, options) ? it : it.skip
+    register(title, fn)
+  }
+}
+
 /** Controles opcionais do FakeWaGateway que a suíte usa quando a fábrica devolve só o gateway. */
 interface FakeControls {
   connect?(sessionId: string, state?: 'WARMING' | 'STABLE'): Promise<unknown>
@@ -130,12 +185,20 @@ async function waitFor<T>(find: () => T | undefined, timeoutMs: number): Promise
  */
 export function defineWaGatewayContract(factory: WaGatewayContractFactory): void
 export function defineWaGatewayContract(name: string, factory: WaGatewayContractFactory): void
-export function defineWaGatewayContract(nameOrFactory: string | WaGatewayContractFactory, maybeFactory?: WaGatewayContractFactory): void {
+/** T98: `options.only`/`options.skip` por grupo (`WA_GATEWAY_CONTRACT_TESTS`) para backends parciais. */
+export function defineWaGatewayContract(name: string, factory: WaGatewayContractFactory, options: WaGatewayContractOptions): void
+export function defineWaGatewayContract(
+  nameOrFactory: string | WaGatewayContractFactory,
+  maybeFactory?: WaGatewayContractFactory,
+  options: WaGatewayContractOptions = {},
+): void {
   const name = typeof nameOrFactory === 'string' ? nameOrFactory : 'gateway'
   const factory = typeof nameOrFactory === 'string' ? maybeFactory : nameOrFactory
   if (typeof factory !== 'function') throw new TypeError('defineWaGatewayContract: factory is required')
 
   describe(`WaGateway contract (${name})`, () => {
+    // T98: only/skip por grupo; sem opções todos os testes rodam, como antes.
+    const it = gatedIt(options)
     let h: ResolvedHarness
 
     beforeEach(async () => {

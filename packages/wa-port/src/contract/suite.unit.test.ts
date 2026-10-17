@@ -14,3 +14,6 @@ defineWaGatewayContract('fake via harness', async () => {
     teardown: () => gateway.reset(),
   }
 })
+
+// T98: only/skip por grupo — o subconjunto roda e o resto entra como skip.
+defineWaGatewayContract('fake, só sessões e cancel', () => new FakeWaGateway(), { only: ['sessions', 'cancel'] })
