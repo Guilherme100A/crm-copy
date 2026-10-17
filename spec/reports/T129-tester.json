@@ -3,13 +3,10 @@
   "task": "T129",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T05:06:17.075Z",
-  "commit": "170f8ae1f893a5da545f9ff70470630afcd863ac",
-  "base": "170f8ae",
-  "changedFiles": [
-    "tests/acceptance/T129/bundle.test.ts",
-    "tests/acceptance/T129/setup.ts"
-  ],
+  "at": "2026-10-17T05:13:46.175Z",
+  "commit": "6d8349bc000c34e43081d2e39bc3ed327bbd0c74",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -69,7 +66,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

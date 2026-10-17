@@ -3,55 +3,60 @@
   "task": "BATCH",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T04:56:09.188Z",
-  "commit": "989b517361ed831e52b182192acaf76dbf8a88da",
-  "base": "a645055",
+  "at": "2026-10-17T05:12:35.456Z",
+  "commit": "6d8349bc000c34e43081d2e39bc3ed327bbd0c74",
+  "base": "8b664e3",
   "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 16.7s"
+      "detail": "ok em 13.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.7s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 132.3s"
+      "detail": "ok em 115.6s"
     },
     {
-      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 13.4s"
+      "detail": "ok em 12.2s"
     },
     {
-      "name": "cmd: pnpm --filter @crm/web lint",
+      "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 7.5s"
+      "detail": "ok em 2.3s"
     },
     {
-      "name": "cmd: pnpm --filter @crm/web test",
+      "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 17.4s"
+      "detail": "ok em 62.7s"
     },
     {
-      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 0.5s"
+      "detail": "ok em 11.6s"
     },
     {
-      "name": "cmd: pnpm --filter @crm/web build",
+      "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 5.6s"
     },
     {
-      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 61.8s"
+      "detail": "ok em 120.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/worker}\" --filter \"...{./packages/core}\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "ok em 0.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",

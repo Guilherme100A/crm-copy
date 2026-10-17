@@ -3,59 +3,60 @@
   "task": "T129",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T04:52:46.764Z",
-  "commit": "170f8ae1f893a5da545f9ff70470630afcd863ac",
-  "base": "170f8ae",
-  "changedFiles": [
-    "packages/core/src/meta-ads/structure/service.db.unit.test.ts",
-    "packages/core/src/meta-ads/structure/service.ts",
-    "apps/worker/src/jobs/meta-ads/production-bundle-error.db.unit.test.ts"
-  ],
+  "at": "2026-10-17T05:13:46.204Z",
+  "commit": "6d8349bc000c34e43081d2e39bc3ed327bbd0c74",
+  "base": "8b664e3",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.2s"
+      "detail": "ok em 13.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.5s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 115.8s (afetados desde a base)"
+      "detail": "ok em 115.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 13.8s"
+      "detail": "ok em 12.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 66.8s (afetados desde a base)"
+      "detail": "ok em 62.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 13.3s"
+      "detail": "ok em 11.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 7.6s"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 15.2s (afetados desde a base)"
+      "detail": "ok em 120.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/worker}\" --filter \"...{./packages/core}\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "ok em 0.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -113,9 +114,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "3 arquivo(s) alterado(s)"
+      "detail": "T129"
     }
   ]
 }
