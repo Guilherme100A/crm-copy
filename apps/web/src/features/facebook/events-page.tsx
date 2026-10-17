@@ -89,7 +89,7 @@ export function EventsPage({ search, onSearch }: { search: EventsSearch; onSearc
       cell: (e) => (
         <span className="flex max-w-64 flex-wrap gap-1">
           {e.identifiers.map((f) => (
-            <code key={f} className="rounded bg-muted px-1.5 py-0.5 text-[11px]">
+            <code key={f} className="rounded bg-muted px-1.5 py-0.5 text-[11px] break-all">
               {f}
             </code>
           ))}
