@@ -253,6 +253,13 @@
       "when": 1792215291531,
       "tag": "0035_t93_flow_copilot",
       "breakpoints": true
+    },
+    {
+      "idx": 36,
+      "version": "7",
+      "when": 1792229072121,
+      "tag": "0036_ai_manager_import",
+      "breakpoints": true
     }
   ]
 }

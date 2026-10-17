@@ -10,6 +10,13 @@ import { createdAt, crm, updatedAt } from './schema.js'
 export const EPHEMERAL_DURATIONS = ['off', '1d', '7d', '90d'] as const
 export type EphemeralDuration = (typeof EPHEMERAL_DURATIONS)[number]
 
+/**
+ * Origem da conexão: `crm` (o CRM criou a sessão no gateway) ou `ai-manager` (chip que já existia no ai-manager,
+ * importado sem QR; o ciclo de vida da sessão fica no painel do ai-manager e o CRM só vincula/desvincula).
+ */
+export const CONNECTION_ORIGINS = ['crm', 'ai-manager'] as const
+export type ConnectionOrigin = (typeof CONNECTION_ORIGINS)[number]
+
 export const PROXY_PROTOCOLS = ['http', 'https', 'socks5'] as const
 export type ConnectionProxyProtocol = (typeof PROXY_PROTOCOLS)[number]
 
@@ -44,6 +51,13 @@ export const connections = crm.table(
     proxyUsername: text('proxy_username'),
     /** `serializeEncrypted` (AES-256-GCM, AAD `connection/<id>/proxy`). */
     proxyPasswordEnc: text('proxy_password_enc'),
+    origin: text('origin').notNull().default('crm'),
+    /**
+     * Conexão importada e desvinculada: o `session_id` vira `unlinked:<id>` (nada mais roteia nem envia por ela, e a
+     * sessão pode ser importada de novo) e o id original fica em `unlinked_session_id`. Os chats ficam no histórico.
+     */
+    unlinkedAt: timestamp('unlinked_at', { withTimezone: true }),
+    unlinkedSessionId: text('unlinked_session_id'),
     createdByUserId: uuid('created_by_user_id').references(() => users.id, { onDelete: 'set null' }),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
@@ -54,6 +68,7 @@ export const connections = crm.table(
     check('connections_name_len', sql`char_length(${t.name}) between 2 and 100`),
     check('connections_ephemeral_check', sql`${t.ephemeralDuration} in ('off', '1d', '7d', '90d')`),
     check('connections_state_check', sql`${t.connectionState} is null or ${t.connectionState} in ('open', 'close')`),
+    check('connections_origin_check', sql`${t.origin} in ('crm', 'ai-manager')`),
     check('connections_proxy_protocol_check', sql`${t.proxyProtocol} is null or ${t.proxyProtocol} in ('http', 'https', 'socks5')`),
     check('connections_proxy_port_check', sql`${t.proxyPort} is null or ${t.proxyPort} between 1 and 65535`),
   ],
