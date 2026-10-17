@@ -5,6 +5,7 @@ import { companies, connections, EPHEMERAL_DURATIONS, PROXY_PROTOCOLS, type Data
 import { getCredentialsCipher, serializeEncrypted, type CredentialCipher } from '@crm/node-kit'
 import { isSendRejectedError, type DisconnectKind, type SessionState, type SessionView, type WaEvent, type WaGateway } from '@crm/wa-port'
 import { and, asc, eq, ilike, or, sql } from 'drizzle-orm'
+import { pausedFlowCountsByConnection } from '../connections-status/paused-flows'
 import { ConnectionsError } from './errors'
 import { CONNECTION_UI_STATUSES, deriveConnectionStatus, type ConnectionBadge, type ConnectionUiStatus } from './status'
 
@@ -40,6 +41,17 @@ export interface ConnectionView {
   proxy: ConnectionProxyView | null
   created_at: string
   updated_at: string
+}
+
+/** Item da lista: a conexão e quantos runs a queda dela deixou pausados (modal Retomar/Cancelar, T71). */
+export interface ConnectionListItem extends ConnectionView {
+  paused_flows_count: number
+}
+
+/** Limite de conexões da empresa (T95; `connections: null` = sem limite) e o uso (sem as agendadas para exclusão). */
+export interface ConnectionLimits {
+  connections: number | null
+  used: number
 }
 
 export interface ListConnectionsQuery {
@@ -109,11 +121,26 @@ export class ConnectionsService {
     const limit = Math.min(Math.max(q.limit ?? 20, 1), 100)
     const page = Math.max(q.page ?? 1, 1)
     const total = filtered.length
+    const paused = await pausedFlowCountsByConnection(this.db, companyId)
+    const items: ConnectionListItem[] = filtered.slice((page - 1) * limit, page * limit).map((v) => ({ ...v, paused_flows_count: paused.get(v.id) ?? 0 }))
     return {
-      items: filtered.slice((page - 1) * limit, page * limit),
+      items,
       page: { page, limit, total_count: total, total_pages: Math.ceil(total / limit), has_more: page * limit < total },
       status_counts,
+      limits: await this.limits(companyId),
     }
+  }
+
+  /** Limite definido pelo admin da plataforma (`companies.settings.limits.connections`) e o uso atual. */
+  async limits(companyId: string): Promise<ConnectionLimits> {
+    const [c] = await this.db.select({ settings: companies.settings }).from(companies).where(eq(companies.id, companyId))
+    const raw = ((c?.settings as { limits?: { connections?: unknown } } | undefined)?.limits ?? {}).connections
+    const max = raw === undefined || raw === null || !Number.isFinite(Number(raw)) ? null : Number(raw)
+    const [{ n } = { n: 0 }] = await this.db
+      .select({ n: sql<number>`count(*)::int` })
+      .from(connections)
+      .where(and(eq(connections.companyId, companyId), sql`${connections.scheduledForDeletionAt} is null`))
+    return { connections: max, used: n }
   }
 
   async get(companyId: string, id: string): Promise<ConnectionView> {
@@ -215,15 +242,19 @@ export class ConnectionsService {
     if (!Number.isInteger(port) || port < 1 || port > 65535) throw validation('port', 'Porta entre 1 e 65535')
     const username = input.username === undefined || input.username === null || input.username === '' ? null : String(input.username)
     const password = input.password === undefined || input.password === null || input.password === '' ? null : String(input.password)
+    // Senha vazia/ausente mantém a salva (regra dos segredos do CRM); apagar só com `remove_password: true` (T71).
+    const removePassword = input.remove_password === undefined ? false : this.bool(input.remove_password, 'remove_password')
+    if (removePassword && password) throw validation('remove_password', 'Envie a nova senha ou remove_password, não os dois')
     const set: Partial<typeof connections.$inferInsert> = {
       proxyProtocol: protocol as string,
       proxyHost: host,
       proxyPort: port,
       proxyUsername: username,
-      proxyPasswordEnc: password ? serializeEncrypted(this.cipher().encrypt(password, `connection/${id}/proxy`)) : null,
       requiresRestart: true,
       updatedAt: this.now(),
     }
+    if (password) set.proxyPasswordEnc = serializeEncrypted(this.cipher().encrypt(password, `connection/${id}/proxy`))
+    else if (removePassword) set.proxyPasswordEnc = null
     return this.patch(companyId, id, set)
   }
 
@@ -295,16 +326,8 @@ export class ConnectionsService {
   }
 
   private async assertBelowLimit(companyId: string): Promise<void> {
-    const [c] = await this.db.select({ settings: companies.settings }).from(companies).where(eq(companies.id, companyId))
-    const raw = ((c?.settings as { limits?: { connections?: unknown } } | undefined)?.limits ?? {}).connections
-    if (raw === undefined || raw === null) return
-    const limit = Number(raw)
-    if (!Number.isFinite(limit)) return
-    const [{ n } = { n: 0 }] = await this.db
-      .select({ n: sql<number>`count(*)::int` })
-      .from(connections)
-      .where(and(eq(connections.companyId, companyId), sql`${connections.scheduledForDeletionAt} is null`))
-    if (n >= limit) throw new ConnectionsError('limit_reached', 'Limite de conexões da empresa atingido', { limit, used: n })
+    const { connections: limit, used } = await this.limits(companyId)
+    if (limit !== null && used >= limit) throw new ConnectionsError('limit_reached', 'Limite de conexões da empresa atingido', { limit, used })
   }
 
   private validName(v: unknown): string {

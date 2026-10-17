@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "task": "T71",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T02:29:18.118Z",
+  "commit": "d0ed1aac26b53cfc22b1834199ca0ca591594848",
+  "base": "d0ed1aa",
+  "changedFiles": [
+    "apps/api/src/e2e/index.ts",
+    "apps/api/src/routes/connections/index.ts",
+    "apps/web/src/routes/connections/index.tsx",
+    "packages/core/src/connections-status/index.ts",
+    "packages/core/src/connections/service.ts",
+    "apps/api/src/routes/connections/connections-t71.db.unit.test.ts",
+    "apps/web/src/features/connections/api.ts",
+    "apps/web/src/features/connections/connections.unit.test.ts",
+    "apps/web/src/features/connections/dialogs.tsx",
+    "apps/web/src/features/connections/logic.ts",
+    "apps/web/src/features/connections/page.tsx",
+    "apps/web/src/features/connections/realtime.ts",
+    "apps/web/src/i18n/en/connections.json",
+    "apps/web/src/i18n/es/connections.json",
+    "apps/web/src/i18n/pt-BR/connections.json",
+    "packages/core/src/connections-status/paused-flows.db.unit.test.ts",
+    "packages/core/src/connections-status/paused-flows.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 13.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 10.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 143.5s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 12.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 5.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 4.4s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 9.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 5.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 9.8s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 5.1s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "17 arquivo(s) alterado(s)"
+    }
+  ]
+}

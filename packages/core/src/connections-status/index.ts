@@ -2,3 +2,4 @@
 export * from './dedupe'
 export * from './email'
 export * from './projector'
+export * from './paused-flows'

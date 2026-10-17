@@ -1,0 +1,172 @@
+{
+  "title": "Conexiones",
+  "subtitle": "Números de WhatsApp vinculados a la empresa.",
+  "new": "Nueva conexión",
+  "search": "Buscar por nombre o número",
+  "filter": "Filtrar por estado",
+  "allStatuses": "Todos los estados",
+  "empty": "Aún no hay conexiones. Crea la primera y conéctala con el código QR o el código en el teléfono.",
+  "noResults": "Ninguna conexión coincide con estos filtros.",
+  "createFirst": "Crear la primera conexión",
+  "limit": {
+    "unlimited": "{used} conexiones",
+    "usage": "{used} de {limit} conexiones",
+    "reached": "Se alcanzó el límite de {limit} conexiones ({used} en uso). Para crear otra, elimina una conexión o pide al soporte que aumente el límite.",
+    "reachedShort": "Se alcanzó el límite de conexiones de la empresa."
+  },
+  "counts": {
+    "total": "Total"
+  },
+  "status": {
+    "pending": "Pendiente",
+    "connecting": "Conectando",
+    "connected": "Conectada",
+    "paused": "Pausada",
+    "disconnected": "Desconectada",
+    "banned": "Bloqueada"
+  },
+  "badges": {
+    "warming": "En calentamiento",
+    "degraded": "Salud degradada",
+    "requires_restart": "Requiere reinicio",
+    "scheduled_deletion": "Eliminación programada",
+    "proxy": "Proxy configurado"
+  },
+  "cols": {
+    "connection": "Conexión",
+    "status": "Estado",
+    "createdAt": "Creada el",
+    "disconnectedAt": "Desconectada el",
+    "actions": "Acciones"
+  },
+  "actions": {
+    "menu": "Acciones de {name}",
+    "connect": "Conectar",
+    "resume": "Reanudar sesión",
+    "disconnect": "Desconectar",
+    "restart": "Reiniciar",
+    "rename": "Renombrar",
+    "proxy": "Proxy personalizado",
+    "instance": "Configuración de la instancia",
+    "paused-flows": "Flujos pausados por la caída",
+    "stop-flows": "Detener todos los flujos",
+    "delete": "Eliminar"
+  },
+  "toast": {
+    "created": "Conexión creada. Ahora conecta WhatsApp.",
+    "renamed": "Conexión renombrada.",
+    "resume": "Sesión de {name} reanudada.",
+    "disconnect": "{name} desconectada.",
+    "restart": "{name} reiniciada.",
+    "proxySaved": "Proxy guardado. Reinicia la conexión para aplicarlo.",
+    "proxyRemoved": "Proxy eliminado. Reinicia la conexión para aplicarlo.",
+    "instanceSaved": "Configuración de la instancia guardada.",
+    "flowsStopped": "{n} ejecuciones de flujo detenidas.",
+    "flowsResumed": "{n} flujos reanudados.",
+    "flowsCancelled": "{n} flujos cancelados.",
+    "deletionScheduled": "Eliminación programada."
+  },
+  "common": {
+    "error": "No se pudo cargar. Inténtalo de nuevo.",
+    "retry": "Reintentar",
+    "loading": "Cargando…",
+    "close": "Cerrar",
+    "cancel": "Cancelar"
+  },
+  "create": {
+    "title": "Nueva conexión",
+    "renameTitle": "Renombrar conexión",
+    "name": "Nombre de la conexión",
+    "hint": "La conexión se crea desconectada. Después, escanea el código QR o usa el código en el teléfono.",
+    "errors": {
+      "required": "Indica el nombre.",
+      "length": "Usa de {min} a {max} caracteres."
+    }
+  },
+  "connect": {
+    "title": "Conectar WhatsApp: {name}",
+    "tabs": {
+      "qr": "Código QR",
+      "phone": "Código en el teléfono"
+    },
+    "qrSteps": {
+      "1": "Abre WhatsApp en el teléfono.",
+      "2": "Toca Dispositivos vinculados y luego Vincular un dispositivo.",
+      "3": "Apunta la cámara al código QR de abajo."
+    },
+    "qrAlt": "Código QR para conectar WhatsApp",
+    "qrLoading": "Generando código QR…",
+    "qrRefresh": "Actualizar código QR",
+    "phone": "Número con código de país",
+    "phoneHint": "Código de país + área + número, solo dígitos (ej.: 5511999999999).",
+    "phoneInvalid": "Número inválido: usa código de país + número, de 7 a 15 dígitos.",
+    "getCode": "Generar código",
+    "codeLabel": "Código de vinculación",
+    "codeHint": "En WhatsApp, en Dispositivos vinculados, elige Vincular con el número de teléfono e introduce este código.",
+    "connected": "{name} conectada."
+  },
+  "proxy": {
+    "title": "Proxy personalizado",
+    "restartWarning": "El proxy solo se aplica después de reiniciar la conexión.",
+    "protocol": "Protocolo",
+    "host": "Host",
+    "port": "Puerto",
+    "username": "Usuario",
+    "password": "Contraseña",
+    "passwordSaved": "Hay una contraseña guardada (no se muestra). Déjala en blanco para mantenerla o escribe una nueva para cambiarla.",
+    "removePassword": "Borrar la contraseña guardada",
+    "remove": "Eliminar proxy",
+    "errors": {
+      "protocol": {
+        "invalid": "Usa http, https o socks5."
+      },
+      "host": {
+        "required": "Indica el host.",
+        "invalid": "Host inválido."
+      },
+      "port": {
+        "required": "Indica el puerto.",
+        "invalid": "Puerto entre 1 y 65535."
+      }
+    }
+  },
+  "instance": {
+    "title": "Configuración de la instancia",
+    "ephemeral": "Mensajes temporales",
+    "ephemeralHint": "Duración predeterminada de los mensajes temporales en los chats nuevos.",
+    "durations": {
+      "off": "Desactivados",
+      "1d": "24 horas",
+      "7d": "7 días",
+      "90d": "90 días"
+    },
+    "saveContacts": "Guardar contactos",
+    "saveContactsHint": "Guarda en la agenda de WhatsApp los contactos que hablen con esta conexión.",
+    "notifyMine": "Notificar mensajes enviados por mí",
+    "notifyMineHint": "También avisa de los mensajes enviados desde el teléfono."
+  },
+  "stopFlows": {
+    "title": "Detener todos los flujos",
+    "body": "Se cancelarán todas las ejecuciones de flujo activas de esta conexión. Esta acción no se puede deshacer.",
+    "typeName": "Escribe el nombre de la conexión ({name}) para confirmar",
+    "confirm": "Detener flujos"
+  },
+  "pausedFlows": {
+    "title": "{name} volvió: flujos pausados",
+    "body": "Durante la caída, los flujos de esta conexión se pausaron. Elige si quieres reanudarlos donde se detuvieron o cancelarlos.",
+    "later": "Decidir después",
+    "cancel": "Cancelar flujos",
+    "resume": "Reanudar flujos",
+    "counts": {
+      "paused_count": "Pausados",
+      "waiting_count": "En espera",
+      "failed_count": "Con error",
+      "received_count": "Mensajes recibidos",
+      "total_leads": "Leads afectados"
+    }
+  },
+  "delete": {
+    "title": "¿Eliminar {name}?",
+    "body": "La conexión se desconectará y eliminará. Sus flujos se detienen y esta acción no se puede deshacer."
+  }
+}

@@ -5,8 +5,8 @@ import { z } from 'zod'
 import { FakeLlm, type FakeLlmStep } from '@crm/ai/testing'
 import { resetAndSeed, SEED_BASE, type RunSeedsOptions } from '@crm/db'
 import { MemoryMailer } from '@crm/node-kit'
-import { safeParseWaEvent, type WaEvent } from '@crm/wa-port'
-import { FakeWaGateway } from '@crm/wa-port/testing'
+import { DISCONNECT_KINDS, safeParseWaEvent, WA_EVENT_VERSION, type WaEvent } from '@crm/wa-port'
+import { FAKE_PAIRING_CODE, FakeWaGateway } from '@crm/wa-port/testing'
 import { ApiError } from '../lib/errors'
 import type { AppEnv, RedisClient, ResolvedDeps } from '../lib/types'
 
@@ -96,6 +96,61 @@ function compareIds(a: string, b: string): number {
   return am === bm ? (as === bs ? 0 : as < bs ? -1 : 1) : am < bm ? -1 : 1
 }
 
+/**
+ * Corpo do `POST /__e2e/wa/sessions/:sessionId/state` (T71):
+ * - `qr`: gera o QR (`startQr`); com `qr`, o evento leva esse valor (o `GET /:id/qr` segue com o do fake);
+ * - `connecting`: sessão de volta a `NEW` aguardando pareamento + `session.pairing_code` (`code` ou o do fake);
+ * - `open`: sessão em `session_state` (padrão `STABLE`) + `session.connection open`;
+ * - `close`: sessão `DISCONNECTED` + `session.connection close` com `reason`/`status_code`.
+ */
+export const sessionStateSchema = z.object({
+  to: z.enum(['qr', 'connecting', 'open', 'close']),
+  qr: z.string().min(1).optional(),
+  code: z.string().min(1).max(32).optional(),
+  session_state: z.enum(['WARMING', 'STABLE', 'DEGRADED']).optional(),
+  reason: z.enum(DISCONNECT_KINDS).optional(),
+  status_code: z.number().int().optional(),
+})
+export type SessionStateInput = z.infer<typeof sessionStateSchema>
+
+/** Aplica a transição no fake e devolve, em ordem, os eventos que ela gerou (os que irão para o stream). */
+export async function driveFakeSession(fake: FakeWaGateway, sessionId: string, input: SessionStateInput): Promise<WaEvent[]> {
+  const captured: WaEvent[] = []
+  const off = fake.subscribe((e) => {
+    if (e.session_id === sessionId) captured.push(e)
+  })
+  const at = () => new Date().toISOString()
+  const connection = (state: 'open' | 'close') => captured.find((e) => e.type === 'session.connection' && e.state === state)
+  try {
+    switch (input.to) {
+      case 'qr':
+        await fake.sessions.startQr(sessionId)
+        if (input.qr) await fake.emit({ v: WA_EVENT_VERSION, type: 'session.qr', session_id: sessionId, at: at(), qr: input.qr })
+        break
+      case 'connecting':
+        await fake.setSessionState(sessionId, 'NEW')
+        await fake.emit({ v: WA_EVENT_VERSION, type: 'session.pairing_code', session_id: sessionId, at: at(), code: input.code ?? FAKE_PAIRING_CODE })
+        break
+      case 'open':
+        await fake.setSessionState(sessionId, input.session_state ?? 'STABLE')
+        if (!connection('open')) await fake.emit({ v: WA_EVENT_VERSION, type: 'session.connection', session_id: sessionId, at: at(), state: 'open' })
+        break
+      case 'close':
+        await fake.setSessionState(sessionId, 'DISCONNECTED')
+        if (!connection('close')) await fake.emit({ v: WA_EVENT_VERSION, type: 'session.connection', session_id: sessionId, at: at(), state: 'close' })
+        break
+    }
+  } finally {
+    off()
+  }
+  // O fake fecha sem motivo: o motivo pedido vai no evento publicado.
+  return captured.map((e) =>
+    e.type === 'session.connection' && e.state === 'close'
+      ? { ...e, ...(input.reason ? { reason: input.reason } : {}), ...(input.status_code !== undefined ? { status_code: input.status_code } : {}) }
+      : e,
+  )
+}
+
 /** Timeout do `POST /__e2e/reset` (T124): `E2E_RESET_TIMEOUT_MS`, padrão 60000 (lido a cada reset). */
 export const DEFAULT_E2E_RESET_TIMEOUT_MS = 60_000
 export function resetTimeoutMs(env: Record<string, string | undefined> = process.env): number {
@@ -164,6 +219,28 @@ export function e2eRoutes(rawDeps: ResolvedDeps) {
     if (deps.waGateway instanceof FakeWaGateway) await deps.waGateway.emit(event)
     const id = await deps.redis.xadd(stream, '*', WA_EVENT_FIELD, JSON.stringify(event))
     return c.json({ stream_id: id, stream }, 202)
+  })
+
+  // T71: leva a sessão do FakeWaGateway a um estado de pareamento/conexão E publica no stream os eventos que o fake
+  // gerou (`session.qr|pairing_code|state|connection`), para a projeção da T47 e o SSE refletirem de verdade.
+  app.post(`${E2E_PREFIX}/wa/sessions/:sessionId/state`, async (c) => {
+    const parsed = sessionStateSchema.safeParse(await json(c))
+    if (!parsed.success)
+      throw new ApiError('VALIDATION_ERROR', 'Estado inválido', {
+        fields: parsed.error.issues.map((i) => ({ path: i.path.map(String).join('.'), message: i.message })),
+      })
+    const fake = deps.waGateway
+    if (!(fake instanceof FakeWaGateway)) throw new ApiError('CONFLICT', 'Só com o FakeWaGateway')
+    const sessionId = c.req.param('sessionId')
+    try {
+      await fake.sessions.get(sessionId)
+    } catch {
+      throw new ApiError('NOT_FOUND', 'Sessão não encontrada no FakeWaGateway')
+    }
+    const events = await driveFakeSession(fake, sessionId, parsed.data)
+    const out: Array<{ type: string; stream_id: string | null }> = []
+    for (const event of events) out.push({ type: event.type, stream_id: await deps.redis.xadd(stream, '*', WA_EVENT_FIELD, JSON.stringify(event)) })
+    return c.json({ session: await fake.sessions.get(sessionId), events: out, stream }, 202)
   })
 
   // Estado de entrega no consumer group `crm` (e, com o worker in-process, os handlers que receberam).

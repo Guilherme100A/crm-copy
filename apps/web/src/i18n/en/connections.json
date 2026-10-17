@@ -1,0 +1,172 @@
+{
+  "title": "Connections",
+  "subtitle": "WhatsApp numbers linked to the company.",
+  "new": "New connection",
+  "search": "Search by name or number",
+  "filter": "Filter by status",
+  "allStatuses": "All statuses",
+  "empty": "No connections yet. Create the first one and connect it with the QR code or the phone code.",
+  "noResults": "No connections match these filters.",
+  "createFirst": "Create the first connection",
+  "limit": {
+    "unlimited": "{used} connections",
+    "usage": "{used} of {limit} connections",
+    "reached": "Limit of {limit} connections reached ({used} in use). To create another one, delete a connection or ask support to raise the limit.",
+    "reachedShort": "The company's connection limit has been reached."
+  },
+  "counts": {
+    "total": "Total"
+  },
+  "status": {
+    "pending": "Pending",
+    "connecting": "Connecting",
+    "connected": "Connected",
+    "paused": "Paused",
+    "disconnected": "Disconnected",
+    "banned": "Banned"
+  },
+  "badges": {
+    "warming": "Warming up",
+    "degraded": "Degraded health",
+    "requires_restart": "Restart required",
+    "scheduled_deletion": "Deletion scheduled",
+    "proxy": "Proxy configured"
+  },
+  "cols": {
+    "connection": "Connection",
+    "status": "Status",
+    "createdAt": "Created at",
+    "disconnectedAt": "Disconnected at",
+    "actions": "Actions"
+  },
+  "actions": {
+    "menu": "Actions for {name}",
+    "connect": "Connect",
+    "resume": "Resume session",
+    "disconnect": "Disconnect",
+    "restart": "Restart",
+    "rename": "Rename",
+    "proxy": "Custom proxy",
+    "instance": "Instance settings",
+    "paused-flows": "Flows paused by the drop",
+    "stop-flows": "Stop all flows",
+    "delete": "Delete"
+  },
+  "toast": {
+    "created": "Connection created. Now connect WhatsApp.",
+    "renamed": "Connection renamed.",
+    "resume": "{name} session resumed.",
+    "disconnect": "{name} disconnected.",
+    "restart": "{name} restarted.",
+    "proxySaved": "Proxy saved. Restart the connection to apply it.",
+    "proxyRemoved": "Proxy removed. Restart the connection to apply it.",
+    "instanceSaved": "Instance settings saved.",
+    "flowsStopped": "{n} flow runs stopped.",
+    "flowsResumed": "{n} flows resumed.",
+    "flowsCancelled": "{n} flows cancelled.",
+    "deletionScheduled": "Deletion scheduled."
+  },
+  "common": {
+    "error": "Could not load. Please try again.",
+    "retry": "Try again",
+    "loading": "Loading…",
+    "close": "Close",
+    "cancel": "Cancel"
+  },
+  "create": {
+    "title": "New connection",
+    "renameTitle": "Rename connection",
+    "name": "Connection name",
+    "hint": "The connection is created disconnected. Then scan the QR code or use the phone code.",
+    "errors": {
+      "required": "Enter the name.",
+      "length": "Use {min} to {max} characters."
+    }
+  },
+  "connect": {
+    "title": "Connect WhatsApp: {name}",
+    "tabs": {
+      "qr": "QR code",
+      "phone": "Phone code"
+    },
+    "qrSteps": {
+      "1": "Open WhatsApp on your phone.",
+      "2": "Tap Linked devices, then Link a device.",
+      "3": "Point the camera at the QR code below."
+    },
+    "qrAlt": "QR code to connect WhatsApp",
+    "qrLoading": "Generating QR code…",
+    "qrRefresh": "Refresh QR code",
+    "phone": "Number with country code",
+    "phoneHint": "Country code + area code + number, digits only (e.g. 5511999999999).",
+    "phoneInvalid": "Invalid number: use country code + number, 7 to 15 digits.",
+    "getCode": "Get code",
+    "codeLabel": "Pairing code",
+    "codeHint": "In WhatsApp, under Linked devices, choose Link with phone number and enter this code.",
+    "connected": "{name} connected."
+  },
+  "proxy": {
+    "title": "Custom proxy",
+    "restartWarning": "The proxy only takes effect after the connection is restarted.",
+    "protocol": "Protocol",
+    "host": "Host",
+    "port": "Port",
+    "username": "Username",
+    "password": "Password",
+    "passwordSaved": "A password is saved (not shown). Leave blank to keep it or type a new one to replace it.",
+    "removePassword": "Delete the saved password",
+    "remove": "Remove proxy",
+    "errors": {
+      "protocol": {
+        "invalid": "Use http, https or socks5."
+      },
+      "host": {
+        "required": "Enter the host.",
+        "invalid": "Invalid host."
+      },
+      "port": {
+        "required": "Enter the port.",
+        "invalid": "Port between 1 and 65535."
+      }
+    }
+  },
+  "instance": {
+    "title": "Instance settings",
+    "ephemeral": "Disappearing messages",
+    "ephemeralHint": "Default duration of disappearing messages in new chats.",
+    "durations": {
+      "off": "Off",
+      "1d": "24 hours",
+      "7d": "7 days",
+      "90d": "90 days"
+    },
+    "saveContacts": "Save contacts",
+    "saveContactsHint": "Saves contacts who talk to this connection in the WhatsApp address book.",
+    "notifyMine": "Notify messages sent by me",
+    "notifyMineHint": "Also notifies about messages sent from the phone."
+  },
+  "stopFlows": {
+    "title": "Stop all flows",
+    "body": "All active flow runs of this connection will be cancelled. This cannot be undone.",
+    "typeName": "Type the connection name ({name}) to confirm",
+    "confirm": "Stop flows"
+  },
+  "pausedFlows": {
+    "title": "{name} is back: paused flows",
+    "body": "While the connection was down, its flows were paused. Choose whether to resume them where they stopped or cancel them.",
+    "later": "Decide later",
+    "cancel": "Cancel flows",
+    "resume": "Resume flows",
+    "counts": {
+      "paused_count": "Paused",
+      "waiting_count": "Waiting",
+      "failed_count": "Failed",
+      "received_count": "Messages received",
+      "total_leads": "Leads affected"
+    }
+  },
+  "delete": {
+    "title": "Delete {name}?",
+    "body": "The connection will be disconnected and deleted. Its flows stop and this cannot be undone."
+  }
+}
