@@ -3,18 +3,14 @@
   "task": "T59",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T00:35:11.601Z",
-  "commit": "168e105ebd8b7c34eeb7e3dbf627908ed682bfab",
-  "base": "168e105",
+  "at": "2026-10-17T00:43:07.227Z",
+  "commit": "9a72b21acbd830d801fbe9d1d6e0cea716f4a6aa",
+  "base": "63570cb",
   "changedFiles": [
+    "apps/api/src/routes/ai-usage/ai-usage.db.unit.test.ts",
     "apps/api/src/routes/ai-usage/index.ts",
     "apps/api/src/routes/ai-usage/queries.ts",
-    "apps/api/src/routes/contacts/contacts.db.unit.test.ts",
     "apps/web/src/app/shell/app-shell.tsx",
-    "apps/web/src/features/settings/tabs.ts",
-    "apps/web/src/routes/settings/index.tsx",
-    "scripts/e2e/api.ts",
-    "apps/api/src/routes/ai-usage/ai-usage.db.unit.test.ts",
     "apps/web/src/features/integrations/ai-key-dialog.tsx",
     "apps/web/src/features/integrations/api.ts",
     "apps/web/src/features/integrations/catalog.ts",
@@ -26,43 +22,46 @@
     "apps/web/src/features/settings-ai-usage/settings-ai-usage.unit.test.ts",
     "apps/web/src/features/settings-ai-usage/usage-tab.tsx",
     "apps/web/src/features/settings-ai-usage/wallet-chip.tsx",
+    "apps/web/src/features/settings/tabs.ts",
     "apps/web/src/i18n/en/integrations.json",
     "apps/web/src/i18n/en/settings-ai-usage.json",
     "apps/web/src/i18n/es/integrations.json",
     "apps/web/src/i18n/es/settings-ai-usage.json",
     "apps/web/src/i18n/pt-BR/integrations.json",
-    "apps/web/src/i18n/pt-BR/settings-ai-usage.json"
+    "apps/web/src/i18n/pt-BR/settings-ai-usage.json",
+    "apps/web/src/routes/settings/index.tsx",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.7s"
+      "detail": "ok em 13.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 85.3s (afetados desde a base)"
+      "detail": "ok em 97.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 10.7s"
+      "detail": "ok em 9.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 4.2s"
+      "detail": "ok em 4.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 8.5s (afetados desde a base)"
+      "detail": "ok em 8.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -73,6 +72,11 @@
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
       "detail": "ok em 2.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...[63570cb]\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -132,7 +136,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "25 arquivo(s) alterado(s)"
+      "detail": "24 arquivo(s) alterado(s)"
     }
   ]
 }
