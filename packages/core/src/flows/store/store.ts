@@ -13,7 +13,8 @@ import {
   type FlowStatus,
 } from '@crm/db'
 import { FlowDefinitionSchema, FLOW_SCHEMA_VERSION, type FlowDefinition } from '@crm/shared/flows'
-import { and, asc, desc, eq, inArray, isNull, max, sql } from 'drizzle-orm'
+import { and, asc, count, desc, eq, inArray, isNull, max, sql } from 'drizzle-orm'
+import { companyLimit } from '../../admin/limits'
 import { FlowStoreError, uniqueViolation } from './errors'
 
 export interface FlowCtx {
@@ -146,6 +147,7 @@ export class FlowStore {
     if (input.folderId) await this.requireFolder(this.db, ctx, input.folderId)
     const name = input.name?.trim() || DEFAULT_FLOW_NAME
     return this.db.transaction(async (tx) => {
+      await this.assertFlowSlot(tx, ctx.companyId)
       const [flow] = await tx
         .insert(flows)
         .values({
@@ -297,6 +299,16 @@ export class FlowStore {
     if (input.color !== undefined && !(FLOW_FOLDER_COLORS as readonly string[]).includes(input.color)) {
       throw new FlowStoreError('VALIDATION_ERROR', `cor inválida: ${input.color}`, { field: 'color' })
     }
+  }
+
+  /** Limite de fluxos da empresa (`settings.limits.flows`, T95): com limite, serializa as criações; sem limite não faz nada. */
+  private async assertFlowSlot(tx: Tx, companyId: string): Promise<void> {
+    const limit = await companyLimit(tx, companyId, 'flows')
+    if (limit === null) return
+    await tx.execute(sql`select pg_advisory_xact_lock(hashtext(${`flows:${companyId}`}))`)
+    const [c] = await tx.select({ n: count() }).from(flows).where(eq(flows.companyId, companyId))
+    const used = c?.n ?? 0
+    if (used >= limit) throw new FlowStoreError('LIMIT_REACHED', 'Limite de fluxos da empresa atingido', { limit, used })
   }
 
   private async requireFolder(exec: Exec, ctx: FlowCtx, id: string, lock = false): Promise<FlowFolderRow> {

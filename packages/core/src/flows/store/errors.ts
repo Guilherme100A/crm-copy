@@ -1,7 +1,7 @@
 // Erros do repositório de fluxos; a API converte o código para o HTTP da SPEC 3.5 (NOT_FOUND 404, CONFLICT 409,
 // VALIDATION_ERROR 422). Recurso de outra empresa é sempre NOT_FOUND (SPEC 1.4 nº 7).
 
-export type FlowStoreErrorCode = 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION_ERROR'
+export type FlowStoreErrorCode = 'NOT_FOUND' | 'CONFLICT' | 'VALIDATION_ERROR' | 'LIMIT_REACHED'
 
 export class FlowStoreError extends Error {
   constructor(

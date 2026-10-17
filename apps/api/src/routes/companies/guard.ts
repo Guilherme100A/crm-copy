@@ -21,10 +21,18 @@ export function isCompanyInactiveExempt(method: string, path: string): boolean {
   return EXEMPT.some(([m, re]) => (m === '*' || m === method) && re.test(path))
 }
 
+/** Admin da plataforma em `/api/admin/*` e `/api/platform/*` não depende da própria empresa ativa (T95). */
+const PLATFORM_PATH = /^\/api\/(admin|platform)(\/|$)/
+
+export function isPlatformAdminExempt(systemRole: string | undefined, path: string): boolean {
+  return systemRole === 'platform_admin' && PLATFORM_PATH.test(path)
+}
+
 export function companyActiveGuard(deps: Pick<ResolvedDeps, 'db'>): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     const ctx = c.get('ctx')
     if (!ctx?.companyId || isCompanyInactiveExempt(c.req.method, c.req.path)) return next()
+    if (isPlatformAdminExempt(ctx.user?.systemRole, c.req.path)) return next()
     const [row] = await deps.db.select({ active: companies.active }).from(companies).where(eq(companies.id, ctx.companyId)).limit(1)
     if (row && !row.active) throw new ApiError('FORBIDDEN', 'Empresa desativada', { error_code: 'company_inactive' })
     return next()

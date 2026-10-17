@@ -14,6 +14,7 @@ import {
 } from '@crm/db'
 import { hashPassword, type Logger, type Mailer } from '@crm/node-kit'
 import { buildPageMeta, pageOffset, type PageMeta } from '@crm/shared'
+import { companyLimit } from '../admin/limits'
 import { isUniqueViolation } from '../auth/errors'
 import type { AuditService } from '../platform/audit-service'
 import type { SessionService } from '../platform/session-service'
@@ -142,6 +143,7 @@ export class InvitationService {
       .where(and(eq(companyMembers.companyId, companyId), sql`lower(${users.email}) = ${email}`))
       .limit(1)
     if (member) throw new TeamError('conflict', 'Este e-mail já é membro da empresa', 'already_member')
+    await this.assertMemberSlot(this.db, companyId)
 
     await this.expirePending(companyId, input.kind, email)
     const token = generateSessionToken()
@@ -309,6 +311,7 @@ export class InvitationService {
     } else {
       const [existing] = await this.db.select({ id: users.id }).from(users).where(sql`lower(${users.email}) = ${row.email}`).limit(1)
       if (existing || !who) throw new TeamError('unauthorized', 'Entre na sua conta para aceitar o convite', 'login_required')
+      await this.assertMemberSlot(this.db, row.companyId)
       const passwordHash = await hashPassword(who.signup.password)
       try {
         const [u] = await this.db.insert(users).values({ email: row.email, name: who.signup.name.trim(), passwordHash }).returning({ id: users.id })
@@ -330,6 +333,7 @@ export class InvitationService {
         .from(companyMembers)
         .where(and(eq(companyMembers.companyId, row.companyId), eq(companyMembers.userId, userId)))
         .limit(1)
+      if (!member) await this.assertMemberSlot(tx, row.companyId, true)
       if (!member) await tx.insert(companyMembers).values({ companyId: row.companyId, userId, role: row.role })
       await tx
         .update(invitations)
@@ -398,6 +402,19 @@ export class InvitationService {
           sql`${invitations.expiresAt} <= ${now.toISOString()}::timestamptz`,
         ),
       )
+  }
+
+  /**
+   * Limite de membros da empresa (`settings.limits.members`, T95); sem limite não faz nada. `lock` serializa
+   * aceites simultâneos da mesma empresa (dentro da transação do aceite).
+   */
+  private async assertMemberSlot(exec: Pick<Database, 'select' | 'execute'>, companyId: string, lock = false) {
+    const limit = await companyLimit(exec, companyId, 'members')
+    if (limit === null) return
+    if (lock) await exec.execute(sql`select pg_advisory_xact_lock(hashtext(${`company_members:${companyId}`}))`)
+    const [c] = await exec.select({ n: count() }).from(companyMembers).where(eq(companyMembers.companyId, companyId))
+    const used = c?.n ?? 0
+    if (used >= limit) throw new TeamError('limit_reached', 'Limite de membros da empresa atingido', undefined, { limit, used })
   }
 
   private assertOpen(row: Row) {

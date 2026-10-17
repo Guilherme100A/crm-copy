@@ -117,7 +117,7 @@ const foldersQuery = z.object({ parent_id: z.union([uuid, z.literal('root')]).op
 
 // ---------------------------------------------------------------- apoio
 
-const STORE_CODES = { NOT_FOUND: 'NOT_FOUND', CONFLICT: 'CONFLICT', VALIDATION_ERROR: 'VALIDATION_ERROR' } as const
+const STORE_CODES = { NOT_FOUND: 'NOT_FOUND', CONFLICT: 'CONFLICT', VALIDATION_ERROR: 'VALIDATION_ERROR', LIMIT_REACHED: 'LIMIT_REACHED' } as const
 
 async function run<T>(fn: () => Promise<T>): Promise<T> {
   try {

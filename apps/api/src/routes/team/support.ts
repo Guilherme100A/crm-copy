@@ -89,6 +89,7 @@ const KIND_CODES: Record<TeamErrorKind, ErrorCode> = {
   gone: 'GONE',
   rate_limit: 'RATE_LIMIT',
   unauthorized: 'UNAUTHORIZED',
+  limit_reached: 'LIMIT_REACHED',
 }
 
 /** `TeamError` → `ApiError` (SPEC 3.5), com `error_code` e detalhes em `error.details`. */

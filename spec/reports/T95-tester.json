@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "task": "T95",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-17T01:28:40.236Z",
+  "commit": "130d3909aea771fb8a6be03a804bf0c1efd6ff26",
+  "base": "130d390",
+  "changedFiles": [
+    "tests/acceptance/T95/admin.test.ts",
+    "tests/acceptance/T95/setup.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T95-01, AC-T95-02, AC-T95-03, AC-T95-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "1 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "12 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T95-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T95-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T95-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T95-04",
+      "status": "pass",
+      "detail": "1 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "2 arquivo(s) alterado(s)"
+    }
+  ]
+}

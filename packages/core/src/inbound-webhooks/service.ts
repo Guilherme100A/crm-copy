@@ -6,6 +6,7 @@ import { and, asc, count, desc, eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
 import { connections, inboundWebhookRequests, inboundWebhooks, type Database, type InboundWebhookRequestStatus, type InboundWebhookStep } from '@crm/db'
 import { buildPageMeta, pageOffset, type PageResponse } from '@crm/shared'
+import { companyLimit } from '../admin/limits'
 import { inboundWebhookConfigSchema } from './config'
 
 type Env = Record<string, string | undefined>
@@ -157,7 +158,11 @@ export class InboundWebhooksService {
     if (data.connection_id) await this.assertConnection(companyId, data.connection_id)
     const max = this.opts.maxPerCompany ?? DEFAULT_INBOUND_WEBHOOKS_MAX_PER_COMPANY
     const [{ n } = { n: 0 }] = await this.db.select({ n: count() }).from(inboundWebhooks).where(eq(inboundWebhooks.companyId, companyId))
-    if (n >= max) throw new InboundWebhooksError('limit', `Limite de ${max} webhooks por empresa atingido`, { limit: max })
+    // Limite da empresa (`settings.limits.webhooks`, T95) substitui o teto fixo quando definido.
+    const companyMax = await companyLimit(this.db, companyId, 'webhooks')
+    if (companyMax !== null && n >= companyMax)
+      throw new InboundWebhooksError('limit', 'Limite de webhooks da empresa atingido', { limit: companyMax, used: n })
+    if (companyMax === null && n >= max) throw new InboundWebhooksError('limit', `Limite de ${max} webhooks por empresa atingido`, { limit: max })
     const id = randomUUID()
     const now = this.now()
     await this.db.insert(inboundWebhooks).values({
