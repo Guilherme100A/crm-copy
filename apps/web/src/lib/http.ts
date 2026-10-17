@@ -10,6 +10,8 @@ export const COMPANY_HEADER = 'X-Company-Id'
 /** T54: 403 do suporte com a concessão expirada/revogada na empresa do `X-Company-Id` (decisão da T32). */
 export const SUPPORT_ACCESS_EXPIRED = 'support_access_expired'
 export const SUPPORT_HOME = '/support/access'
+/** T102 (pendência da T53): 403 do `companyActiveGuard` quando a empresa ativa está desativada (T22). */
+export const COMPANY_INACTIVE = 'company_inactive'
 
 export interface ApiErrorBody {
   error?: { code?: string; message?: string; details?: unknown }
@@ -46,6 +48,7 @@ interface HttpState {
   fetch: FetchLike
   onUnauthorized: () => void
   onSupportAccessExpired: () => void
+  onCompanyInactive: () => void
   probe: Promise<boolean> | null
   inflight: Map<string, Promise<unknown>>
 }
@@ -58,6 +61,7 @@ const state: HttpState = {
   onSupportAccessExpired: () => {
     if (typeof window !== 'undefined') window.location.assign(SUPPORT_HOME)
   },
+  onCompanyInactive: () => undefined,
   probe: null,
   inflight: new Map(),
 }
@@ -74,15 +78,24 @@ export function setUnauthorizedHandler(fn: () => void): void {
   state.onUnauthorized = fn
 }
 
+/** Aviso de empresa desativada (o main liga ao toast); chamado uma vez por rodada de chamadas. */
+export function setCompanyInactiveHandler(fn: () => void): void {
+  state.onCompanyInactive = fn
+}
+
 /** Testes: troca o fetch e zera o estado. */
 export function configureHttp(opts: {
   fetch?: FetchLike
   companyId?: string | null
   onUnauthorized?: () => void
   onSupportAccessExpired?: () => void
+  onCompanyInactive?: () => void
 }): void {
   if (opts.fetch) state.fetch = opts.fetch
   if (opts.onSupportAccessExpired) state.onSupportAccessExpired = opts.onSupportAccessExpired
+  if (opts.onCompanyInactive) state.onCompanyInactive = opts.onCompanyInactive
+  companyInactiveAt = 0
+  sessionDead = false
   if (opts.companyId !== undefined) state.companyId = opts.companyId
   if (opts.onUnauthorized) state.onUnauthorized = opts.onUnauthorized
   state.probe = null
@@ -150,8 +163,30 @@ function handleSupportAccessExpired(): void {
   }
 }
 
+/** O erro é o 403 `company_inactive`? */
+export function isCompanyInactive(err: unknown): boolean {
+  return err instanceof HttpError && err.status === 403 && (err.details as { error_code?: string } | undefined)?.error_code === COMPANY_INACTIVE
+}
+
+let companyInactiveAt = 0
+
+/** Várias telas falham juntas com a empresa desativada: um aviso só a cada 5 s. */
+function handleCompanyInactive(now = Date.now()): void {
+  if (now - companyInactiveAt < 5000) return
+  companyInactiveAt = now
+  state.onCompanyInactive()
+}
+
+/**
+ * A sonda já disse que a sessão acabou: os 401 seguintes (ex.: queries da tela que está saindo, disparadas depois do
+ * redirect) não sondam de novo até uma resposta OK (o login). Uma só sonda por 401 (AC-T23-06; T102).
+ */
+let sessionDead = false
+
 async function handle401(err: HttpError): Promise<never> {
+  if (sessionDead) throw err
   const alive = await probeSession()
+  if (!alive) sessionDead = true
   if (!alive && !redirecting) {
     redirecting = true
     try {
@@ -177,6 +212,7 @@ async function send<T>(path: string, opts: RequestOptions): Promise<T> {
   }
   const res = await state.fetch(buildUrl(path, opts.query), { method, headers, body, credentials: 'same-origin', signal: opts.signal })
   if (res.ok) {
+    sessionDead = false
     if (res.status === 204) return undefined as T
     const type = res.headers.get('content-type') ?? ''
     return (type.includes('application/json') ? await res.json() : await res.text()) as T
@@ -185,6 +221,7 @@ async function send<T>(path: string, opts: RequestOptions): Promise<T> {
   // O próprio perfil (GET) é a sonda: o guard decide; nas demais chamadas, sonda única e login se a sessão acabou.
   if (res.status === 401 && !(method === 'GET' && path === PROFILE_PATH)) return handle401(err)
   if (isSupportAccessExpired(err)) handleSupportAccessExpired()
+  if (isCompanyInactive(err)) handleCompanyInactive()
   throw err
 }
 

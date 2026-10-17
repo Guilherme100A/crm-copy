@@ -64,7 +64,8 @@
     "none": "No company"
   },
   "guards": {
-    "permissionDenied": "You don't have permission to access this page."
+    "permissionDenied": "You don't have permission to access this page.",
+    "companyInactive": "This company is deactivated. The owner can reactivate it in Settings › Company, or switch to another company."
   },
   "notFound": {
     "title": "Page not found",

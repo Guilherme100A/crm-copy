@@ -30,6 +30,11 @@ export const COMPANY_TIME_ZONES = [
   'UTC',
 ] as const
 
+/** O fuso está na lista aceita (ou é o nome curto de Buenos Aires)? A API responde 422 quando não está (T102). */
+export function isSupportedTimeZone(tz: string): boolean {
+  return tz === 'America/Buenos_Aires' || (COMPANY_TIME_ZONES as readonly string[]).includes(tz)
+}
+
 export function normalizeTimeZone(tz: string | null | undefined): string {
   if (!tz) return DEFAULT_TIME_ZONE
   // Aceita o nome curto da referência (Buenos_Aires) para o IANA canônico.

@@ -69,7 +69,7 @@ test.describe('T23 — sidebar e permissões', () => {
   test('AC-T23-02 owner vê todos os itens permitidos (sem o admin da plataforma)', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     const items = await visibleItems(page)
     expect(items).toEqual(['dashboard', 'chats', 'kanban', 'contacts', 'flows', 'agents', 'connections', 'inbound-webhooks', 'mass-dispatch', 'facebook', 'settings'])
   })
@@ -77,7 +77,7 @@ test.describe('T23 — sidebar e permissões', () => {
   test('AC-T23-02 member vê só os itens da matriz do papel', async ({ page }) => {
     await loginAs(page, 'member')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     expect(await visibleItems(page)).toEqual(['chats', 'kanban', 'contacts', 'flows', 'agents', 'mass-dispatch', 'settings'])
   })
 
@@ -85,7 +85,7 @@ test.describe('T23 — sidebar e permissões', () => {
     await loginAs(page, 'member')
     await page.goto('/connections')
     await expect(page).toHaveURL(/\/chats$/)
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     const toast = page.getByTestId('shell-permission-denied')
     await expect(toast).toHaveCount(1)
     await expect(toast).toContainText('Você não tem permissão para acessar esta página.')
@@ -101,7 +101,7 @@ test.describe('T23 — tema', () => {
   test('AC-T23-03 Ctrl/Cmd+M alterna o tema fora de campos de texto, não dentro de um input, e persiste ao recarregar', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     const initial = await theme(page)
 
     await page.evaluate(() => (document.activeElement as HTMLElement | null)?.blur?.())
@@ -122,7 +122,7 @@ test.describe('T23 — tema', () => {
     expect(await theme(page)).toBe(toggled)
 
     await page.reload()
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     expect(await theme(page)).toBe(toggled)
   })
 })
@@ -131,7 +131,7 @@ test.describe('T23 — mobile e layout', () => {
   test('AC-T23-04 barra inferior no mobile, sidebar vira drawer; no desktop a sidebar colapsa (240/64 px) e persiste', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     if (isMobile(page)) {
       const bottom = page.getByTestId('shell-bottom-nav')
       await expect(bottom).toBeVisible()
@@ -197,7 +197,7 @@ test.describe('T23 — 404 e home por papel', () => {
     })
     await page.goto('/welcome')
     await expect(page).toHaveURL(/\/chats$/)
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     await page.waitForTimeout(1500)
     expect(pathOf(page)).toBe('/chats')
     expect(welcomeNavs).toBeLessThanOrEqual(1)
@@ -211,7 +211,7 @@ test.describe('T23 — 401 e APP_NAME', () => {
   test('AC-T23-06 um 401 gera uma única sonda de perfil e redireciona ao login', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     await page.waitForLoadState('networkidle')
 
     const probes: string[] = []
@@ -230,7 +230,7 @@ test.describe('T23 — 401 e APP_NAME', () => {
   test('AC-T23-06 o título da aba e o shell usam APP_NAME', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     await expect(page).toHaveTitle(/· CRM$/)
     if (isMobile(page)) await page.getByTestId('shell-drawer-open').click()
     await expect(page.getByTestId('shell-app-name').first()).toHaveText('CRM')
@@ -256,7 +256,7 @@ test.describe('T23 — idioma', () => {
   test('AC-T23-07 trocar para en e es muda os textos do shell e o <html lang> sem recarregar, e a escolha persiste', async ({ page }) => {
     await loginAs(page, 'owner')
     await page.goto('/chats')
-    await expect(page.getByTestId('page-chats')).toBeVisible()
+    await expect(page.getByTestId('chat-page')).toBeVisible()
     await expect(page.locator('html')).toHaveAttribute('lang', 'pt-BR')
     expect(await navLabel(page, 'chats')).toBe('Chats ao vivo')
     await page.evaluate(() => ((window as any).__t23NoReload = true))

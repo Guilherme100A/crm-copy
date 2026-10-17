@@ -1,0 +1,105 @@
+{
+  "version": 1,
+  "task": "T102",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T06:17:15.398Z",
+  "commit": "13a9d14af667006029da587de8566ee2e83a2960",
+  "base": "be546d6",
+  "changedFiles": [
+    "apps/api/src/routes/companies/index.ts",
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/i18n/en/shell.json",
+    "apps/web/src/i18n/es/shell.json",
+    "apps/web/src/i18n/pt-BR/shell.json",
+    "apps/web/src/lib/http.ts",
+    "apps/web/src/main.tsx",
+    "packages/core/src/companies/service.ts",
+    "packages/core/src/team/team.unit.test.ts",
+    "apps/api/src/routes/companies/companies.db.unit.test.ts",
+    "apps/web/src/features/settings-company/company-inactive.unit.test.ts",
+    "apps/web/src/features/settings-company/realtime.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm -r typecheck",
+      "status": "pass",
+      "detail": "ok em 75.4s"
+    },
+    {
+      "name": "cmd: pnpm -r lint",
+      "status": "pass",
+      "detail": "ok em 30.4s"
+    },
+    {
+      "name": "cmd: pnpm -r test",
+      "status": "pass",
+      "detail": "ok em 475.6s"
+    },
+    {
+      "name": "cmd: pnpm -r build",
+      "status": "pass",
+      "detail": "ok em 15.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "12 arquivo(s) alterado(s)"
+    }
+  ]
+}

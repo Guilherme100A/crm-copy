@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { normalizeTimeZone } from '../companies/service'
+import { isSupportedTimeZone, normalizeTimeZone } from '../companies/service'
 import { slugCandidate, slugify } from '../companies/slug'
 import { dayInTimeZone } from '../invitations/service'
 import { TeamError } from './errors'
@@ -26,6 +26,13 @@ describe('fuso da empresa', () => {
     expect(normalizeTimeZone('Europe/Paris')).toBe('America/Sao_Paulo')
     expect(normalizeTimeZone(undefined)).toBe('America/Sao_Paulo')
     expect(normalizeTimeZone('America/Buenos_Aires')).toBe('America/Argentina/Buenos_Aires')
+  })
+
+  it('isSupportedTimeZone: a API recusa (422) o que estiver fora da lista', () => {
+    expect(isSupportedTimeZone('America/Manaus')).toBe(true)
+    expect(isSupportedTimeZone('America/Buenos_Aires')).toBe(true)
+    expect(isSupportedTimeZone('Europe/Paris')).toBe(false)
+    expect(isSupportedTimeZone('Mars/Olympus')).toBe(false)
   })
 })
 

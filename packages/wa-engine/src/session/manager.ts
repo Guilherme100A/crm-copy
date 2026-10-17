@@ -167,7 +167,11 @@ export class SessionManager extends EventEmitter<SessionManagerEvents> {
     this.log.info({ sessions: rows.length }, 'session manager iniciado')
   }
 
-  /** Fecha todos os transportes sem alterar o estado no banco (shutdown / restart do processo). */
+  /**
+   * Fecha todos os transportes sem alterar o estado no banco (shutdown / restart do processo). Não emite `disconnected`
+   * (nem `session.connection close`): o reinício planejado não é queda da conexão, como no crash (T102: o CRM pausava
+   * os runs em espera da conexão e eles não voltavam). O hook `onDisconnected` ainda roda (para os timers do monitor).
+   */
   async stop(): Promise<void> {
     this.stopped = true
     for (const [timer, wake] of this.timers) {
@@ -175,7 +179,7 @@ export class SessionManager extends EventEmitter<SessionManagerEvents> {
       wake()
     }
     this.timers.clear()
-    await Promise.allSettled([...this.runtimes.values()].map((rt) => this.dispose(rt, 'local')))
+    await Promise.allSettled([...this.runtimes.values()].map((rt) => this.dispose(rt, 'local', { silent: true })))
     await this.whenIdle()
   }
 
@@ -673,11 +677,11 @@ export class SessionManager extends EventEmitter<SessionManagerEvents> {
     })
   }
 
-  private async stopMonitoring(rt: Runtime, reason: DisconnectedContext['reason'], statusCode?: number): Promise<void> {
+  private async stopMonitoring(rt: Runtime, reason: DisconnectedContext['reason'], statusCode?: number, opts: { silent?: boolean } = {}): Promise<void> {
     if (!rt.monitoring) return
     rt.monitoring = false
     const ctx: DisconnectedContext = statusCode === undefined ? { sessionId: rt.sessionId, reason } : { sessionId: rt.sessionId, reason, statusCode }
-    this.emit('disconnected', ctx)
+    if (!opts.silent) this.emit('disconnected', ctx)
     if (this.opts.onDisconnected) {
       try {
         await this.opts.onDisconnected(rt.sessionId, ctx)
@@ -687,10 +691,11 @@ export class SessionManager extends EventEmitter<SessionManagerEvents> {
     }
   }
 
-  private async dispose(rt: Runtime, reason: DisconnectedContext['reason']): Promise<void> {
+  /** `silent`: shutdown do processo (sem o evento `disconnected`; ver `stop`). */
+  private async dispose(rt: Runtime, reason: DisconnectedContext['reason'], opts: { silent?: boolean } = {}): Promise<void> {
     if (rt.disposed) return
     rt.closing = true
-    await this.stopMonitoring(rt, reason)
+    await this.stopMonitoring(rt, reason, undefined, opts)
     rt.disposed = true
     rt.connected = false
     if (this.runtimes.get(rt.sessionId) === rt) this.runtimes.delete(rt.sessionId)

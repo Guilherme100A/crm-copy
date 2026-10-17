@@ -66,6 +66,18 @@ describe('SessionManager', () => {
     await m.manager.stop()
   })
 
+  it('stop() do processo não emite disconnected (reinício não é queda; T102), mas o hook onDisconnected roda', async () => {
+    const hook = vi.fn()
+    const m = setup({ onDisconnected: hook })
+    const id = await openSession(m)
+    const disconnected = vi.fn()
+    m.manager.on('disconnected', disconnected)
+    await m.manager.stop()
+    expect(disconnected).not.toHaveBeenCalled()
+    expect(hook).toHaveBeenCalledWith(id, expect.objectContaining({ reason: 'local' }))
+    expect((await m.manager.get(id)).status).toBe('WARMING')
+  })
+
   it('loggedOut, forbidden e transient com backoff (AC-T13-02)', async () => {
     const a = setup()
     const out = await openSession(a)

@@ -64,7 +64,8 @@
     "none": "Sin empresa"
   },
   "guards": {
-    "permissionDenied": "No tienes permiso para acceder a esta página."
+    "permissionDenied": "No tienes permiso para acceder a esta página.",
+    "companyInactive": "Esta empresa está desactivada. El propietario puede reactivarla en Configuración › Empresa, o cambia de empresa."
   },
   "notFound": {
     "title": "Página no encontrada",

@@ -2,6 +2,7 @@
 // Não-membro → 404. O guard `companyActiveGuard` bloqueia o resto da API quando a empresa ativa está desativada.
 import { Hono } from 'hono'
 import { z } from 'zod'
+import { isSupportedTimeZone } from '@crm/core'
 import { companySlugSchema, pageQuerySchema } from '@crm/shared'
 import { setAudit } from '../../middleware/audit'
 import { validate } from '../../lib/validate'
@@ -21,7 +22,8 @@ const unwrap = (v: unknown) => {
 
 const name = z.string().trim().min(1).max(120)
 const description = z.string().max(2000).nullish()
-const timeZone = z.string().trim().min(1).max(64)
+/** Fuso fora da lista aceita → 422 (antes virava America/Sao_Paulo em silêncio; T102). */
+const timeZone = z.string().trim().min(1).max(64).refine(isSupportedTimeZone, { message: 'Fuso horário não suportado' })
 
 const createSchema = z.preprocess(unwrap, z.object({ name, slug: companySlugSchema.optional(), description, time_zone: timeZone.optional() }))
 const updateSchema = z.preprocess(

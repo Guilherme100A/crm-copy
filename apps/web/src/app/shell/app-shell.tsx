@@ -16,6 +16,8 @@ import { SupportApprovalModal } from '@/features/settings-support/approval-modal
 import { AffiliateEntry } from '@/features/affiliate/affiliate-entry'
 // T107: import ESTÁTICO (registra os handlers connection.* do indicador de queda antes do SSE abrir).
 import '@/features/shell-disconnect/realtime'
+// T102: import ESTÁTICO (registra `company.updated` antes do SSE abrir; o hub de Configurações é lazy).
+import '@/features/settings-company/realtime'
 // T108: botão "Suporte" e widget de suporte plugável (import estático; config via GET /api/app-config).
 import { SupportButton, SupportWidget } from '@/features/support-widget/support-widget'
 import { useT } from '@/i18n'

@@ -5,10 +5,11 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { decide, deferDeniedNotice } from './app/guard'
 import { ToastProvider } from './components/toaster'
-import { I18nProvider } from './i18n'
-import { setUnauthorizedHandler } from './lib/http'
+import { I18nProvider, initialLocale, translate } from './i18n'
+import { setCompanyInactiveHandler, setUnauthorizedHandler } from './lib/http'
 import { loginPath } from './lib/redirect'
-import { loadSession, profileQueryKey } from './lib/session'
+import { loadSession, profileQueryKey, type Profile } from './lib/session'
+import { notify } from './lib/toast'
 import { applyTheme, currentTheme } from './lib/theme'
 import { routeTree } from './routeTree.gen'
 import './styles.css'
@@ -59,6 +60,12 @@ setUnauthorizedHandler(() => {
   queryClient.clear()
   queryClient.setQueryData(profileQueryKey, null)
   void router.navigate({ href: loginPath(`${pathname}${searchStr}`), replace: true })
+})
+
+// T102: empresa ativa desativada (403 `company_inactive`): um aviso só, em vez de cada tela só mostrar erro.
+setCompanyInactiveHandler(() => {
+  const profile = queryClient.getQueryData<Profile | null>(profileQueryKey)
+  notify('shell-company-inactive', translate(initialLocale(profile?.user.locale), 'guards.companyInactive'))
 })
 
 createRoot(document.getElementById('root')!).render(
