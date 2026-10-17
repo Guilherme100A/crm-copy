@@ -17,6 +17,25 @@ export function readSsoHash(hash: string): SsoHash {
   return { token, redirect: isSafeRedirect(redirect) ? redirect : null }
 }
 
+// Último hash com token lido nesta carga. O StrictMode monta a página duas vezes: a 1ª montagem já apagou o hash da
+// URL, então a 2ª precisa reaproveitar o que foi lido (senão mostra "sem token" e descarta a troca em andamento).
+let lastRead: SsoHash | null = null
+
+/** Como `readSsoHash`, mas lembra o token lido até `forgetSsoHash` (2ª montagem do StrictMode). */
+export function takeSsoHash(hash: string): SsoHash {
+  const read = readSsoHash(hash)
+  if (read.token) {
+    lastRead = read
+    return read
+  }
+  return lastRead ?? read
+}
+
+/** Esquece o token lembrado (quando a troca termina). */
+export function forgetSsoHash(token: string): void {
+  if (lastRead?.token === token) lastRead = null
+}
+
 const exchanges = new Map<string, Promise<unknown>>()
 
 /**

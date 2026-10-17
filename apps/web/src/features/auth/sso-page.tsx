@@ -8,7 +8,7 @@ import { isLocale, useI18n, useT } from '@/i18n'
 import { safeRedirect } from '@/lib/redirect'
 import { profileQueryKey, sessionFrom } from '@/lib/session'
 import { authApi } from './api'
-import { exchangeOnce, readSsoHash, ssoErrorKey } from './sso'
+import { exchangeOnce, forgetSsoHash, ssoErrorKey, takeSsoHash } from './sso'
 import { Alert, AuthLayout } from './ui'
 
 type State = { kind: 'pending' } | { kind: 'error'; message: string }
@@ -21,7 +21,8 @@ export function SsoPage() {
   const [state, setState] = useState<State>({ kind: 'pending' })
 
   useEffect(() => {
-    const { token, redirect } = readSsoHash(window.location.hash)
+    // takeSsoHash: na 2ª montagem do StrictMode o hash já foi apagado; reaproveita o token lido na 1ª.
+    const { token, redirect } = takeSsoHash(window.location.hash)
     // O token não fica na URL (nem no histórico) depois de lido.
     if (window.location.hash) window.history.replaceState(window.history.state, '', `${window.location.pathname}${window.location.search}`)
     if (!token) {
@@ -35,9 +36,13 @@ export function SsoPage() {
         queryClient.clear()
         queryClient.setQueryData(profileQueryKey, profile)
         if (isLocale(profile.user.locale)) setLocale(profile.user.locale)
+        // Ao gravar o perfil o shell troca e esta página remonta; o token continua lembrado até a navegação terminar
+        // (a nova montagem recebe a mesma troca já resolvida, sem piscar "sem token").
         await navigate({ href: safeRedirect(redirect, homeOf(sessionFrom(profile))), replace: true })
+        forgetSsoHash(token)
       })
       .catch((err: unknown) => {
+        forgetSsoHash(token)
         if (!alive) return
         setState({ kind: 'error', message: t(ssoErrorKey(err)) })
       })

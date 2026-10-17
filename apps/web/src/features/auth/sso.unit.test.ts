@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 import { HttpError } from '@/lib/http'
 import { authApi } from './api'
-import { exchangeOnce, readSsoHash, ssoErrorKey } from './sso'
+import { exchangeOnce, forgetSsoHash, readSsoHash, ssoErrorKey, takeSsoHash } from './sso'
 
 const json = (status: number, body: unknown) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
 
@@ -59,5 +59,15 @@ describe('authApi.sso', () => {
     } finally {
       vi.unstubAllGlobals()
     }
+  })
+})
+
+describe('takeSsoHash (StrictMode: 2ª montagem sem hash)', () => {
+  it('reaproveita o token lido até forgetSsoHash', () => {
+    expect(takeSsoHash('#token=tok-strict').token).toBe('tok-strict')
+    // A 1ª montagem apagou o hash da URL; a 2ª lê vazio e recebe o mesmo token.
+    expect(takeSsoHash('').token).toBe('tok-strict')
+    forgetSsoHash('tok-strict')
+    expect(takeSsoHash('').token).toBeNull()
   })
 })
