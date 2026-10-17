@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda): T54 (Esquadro) e T113 (Lastro) operários; vaga de tester livre. Vaga dupla de verify. Gate roda os dependentes. main publicada em origin a cada gate.
+- Em andamento (só agentes sob demanda): T113 no gate; T95 (Prisma2) operário; T96 em preparo. Vaga dupla de verify. Gate roda os dependentes. main publicada em origin a cada gate.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -72,7 +72,7 @@
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
 | 6 | T52 | Agentes de IA: base de conhecimento | MERGED | Cinzel | Radar | 0 | 6a89eb9 |
 | 6 | T53 | UI: empresa, departamentos e horários | MERGED | Prumo | Sentinela | 0 | aaaed12 (piloto: operário ~15 min, tester ~8 min; 1 ajuste de teste por corrida sob carga) |
-| 6 | T54 | UI: equipe, permissões, convites e suporte | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T54.md; libera tela de suporte, app-shell, http.ts, hub e MemberDto (aditivo) |
+| 6 | T54 | UI: equipe, permissões, convites e suporte | MERGED | Esquadro | Vigia | 0 | 8fc5f28 (op ~24 min, tester ~8 min) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
@@ -90,7 +90,7 @@
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | MERGED | Lastro | Vigia | 0 | 08cc19c (op ~34 min, tester ~6 min; migration regenerada como 0031) |
-| 6 | T113 | UTMify: integração e envio de vendas aprovadas | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T113.md; libera boot de produção e transição refunded em sales/service (aditivo) |
+| 6 | T113 | UTMify: integração e envio de vendas aprovadas | VERIFYING | Lastro | Sentinela | 0 | op ~29 min, tester ~5 min (12/12); no gate |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
 | 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |
@@ -205,6 +205,12 @@
 | T114 | Consumir GET /api/sales/:id/invoice, /api/sale-invoices, sale.updated e /usage + ?force=1 da T112; card do catálogo | T112 |
 | integrações | Webhook de saída da Notasy (nota autorizada/cancelada, HMAC) documentado e não consumido; fontes de venda (T73) não gravam note_issuer_id; validar com token real o JSON inferido (docs/integrations/notasy.md) | T112 |
 | harness E2E | `scripts/e2e/api.ts` ainda usa o fetch global em aiVoicesFetch (ElevenLabs, T80/T92), paymentsFetch (T109/T114) e metaFetch (T106): E2E que acione esses caminhos sai para a rede. Injetar fakes na tarefa dona (T92, T114, T106) | T59 |
+| T54/T95 | POST /api/companies/:id/switch exige vínculo: suporte com 2+ concessões não escolhe a empresa ativa; /flows do suporte sem empresa ativa não tratado | T54 |
+| web (sem AC) | Rota /settings/invitations (página própria), remoção em lote, "Convidar membro" na aba Empresa (T53) | T54 |
+| vendas | Vendas de fontes de venda (T73) não carregam note_issuer_id nem utmify_integration_id: aprovação/reembolso vindos de fonte de venda não disparam NF/UTMify | T112/T113 |
+| T114 | Consumir rotas/DTO/SSE do UTMify e ?configured=1 no seletor do bloco Venda aprovada | T113 |
+| integrações | UTMify: validar com credencial real (códigos HTTP, e-mail vazio, paymentMethod=pix, src/sck) | T113 |
+| harness E2E | Um 2º usuário support no seed facilitaria E2E (hoje criado por SQL no teste da T54) | T54 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
