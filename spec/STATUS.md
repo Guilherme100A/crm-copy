@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda): T71 (Esquadro, ajuste do proxy) e T56 (Prumo) operários; vaga de tester livre. Vaga dupla de verify. main publicada em origin a cada gate.
+- Em andamento (força total, pedido do usuário 2026-10-16 23:30): até 3 operários sob demanda (4 se o commit livre ficar ≥ 12,7 GB), 1 tester, 2 verifies; harness-orphans -Kill entre gates. Agora: T56 (Prumo), T57; T71 em teste; T84 e T90 em preparo.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -75,7 +75,7 @@
 | 6 | T54 | UI: equipe, permissões, convites e suporte | MERGED | Esquadro | Vigia | 0 | 8fc5f28 (op ~24 min, tester ~8 min) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | IN_PROGRESS | Prumo | (vaga) | 0 | brief spec/briefs/T56.md; registry.ts em SHARED_PATHS com import.meta.glob |
-| 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
+| 6 | T57 | UI editores de nó: lógica, CRM e externos | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T57.md; usa o registry da T56 (glob); editor do nó pixel incluído |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | MERGED | Esquadro | Vigia | 0 | b8cc9f8 (piloto: op ~25 min, tester ~6 min; 1 ajuste de teste pelo select mobile da T53) |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | MERGED | Prumo | Sentinela | 0 | 9a72b21 (op ~22 min + probe fake; tester ~4 min) |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
@@ -99,7 +99,7 @@
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
 | 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 | 9867959 |
-| 7 | T71 | UI conexões | IN_PROGRESS | Esquadro | (vaga) | 0 | op DONE ~22 min (verify 0, base d0ed1aa); ajuste: senha de proxy vazia mantém a salva |
+| 7 | T71 | UI conexões | VERIFYING | Esquadro | Sentinela | 0 | op ~22 min + ajuste do proxy (senha vazia mantém); entrega em spec/reports/T71-entrega.md; tester em andamento |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
