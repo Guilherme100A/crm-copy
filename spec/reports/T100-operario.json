@@ -1,0 +1,152 @@
+{
+  "version": 1,
+  "task": "T100",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T03:21:54.360Z",
+  "commit": "5e34a735f71b5dd024f4cff6c0eaad18aa9dc1e5",
+  "base": "5e34a73",
+  "changedFiles": [
+    "apps/api/src/middleware/public-routes.ts",
+    "apps/api/src/routes/admin-ops/index.ts",
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/routes/admin/index.tsx",
+    "packages/core/src/admin-ops/index.ts",
+    "apps/api/src/routes/admin-ops/admin-uploads.db.unit.test.ts",
+    "apps/web/src/features/admin/accounts-tab.tsx",
+    "apps/web/src/features/admin/admin-page.tsx",
+    "apps/web/src/features/admin/admin.unit.test.ts",
+    "apps/web/src/features/admin/ai-tab.tsx",
+    "apps/web/src/features/admin/announcement-popup.tsx",
+    "apps/web/src/features/admin/announcements-tab.tsx",
+    "apps/web/src/features/admin/api.ts",
+    "apps/web/src/features/admin/credits-dialog.tsx",
+    "apps/web/src/features/admin/infra-tabs.tsx",
+    "apps/web/src/features/admin/overview-tab.tsx",
+    "apps/web/src/features/admin/rules.ts",
+    "apps/web/src/features/admin/ui.tsx",
+    "apps/web/src/features/admin/users-tab.tsx",
+    "apps/web/src/i18n/en/admin.json",
+    "apps/web/src/i18n/es/admin.json",
+    "apps/web/src/i18n/pt-BR/admin.json",
+    "packages/core/src/admin-ops/admin-media.ts",
+    "packages/core/src/admin-ops/admin-media.unit.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 17.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 121.8s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 15.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 9.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 4.8s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 12.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 8.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 18.5s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 1.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.5s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "24 arquivo(s) alterado(s)"
+    }
+  ]
+}

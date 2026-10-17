@@ -19,6 +19,8 @@ export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'POST', path: '/api/hooks/*' },
   // T94: servidor MCP — autenticado pelo token Bearer da credencial MCP na própria rota (não pela sessão).
   { method: '*', path: '/api/mcp' },
+  // T100: imagens globais de avisos/banners do admin (id assinado; qualquer empresa, sem sessão).
+  { method: 'GET', path: '/api/public/admin-media/*' },
 ]
 
 function matches(route: PublicRoute, method: string, path: string): boolean {

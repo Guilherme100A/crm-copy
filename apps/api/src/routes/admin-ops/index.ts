@@ -4,7 +4,11 @@
 // `/api/admin/*` só para `platform_admin` (o guard é registrado aqui também: idempotente com o da T95). Avisos, banners
 // e segredos são globais: a auditoria vai para `crm.audit_logs` com `company_id` nulo e ação `admin.*`.
 import { Hono, type Context } from 'hono'
+import { bodyLimit } from 'hono/body-limit'
 import {
+  ADMIN_MEDIA_MAX_BYTES,
+  ADMIN_MEDIA_PUBLIC_PATH,
+  AdminMediaService,
   AdminOpsError,
   aiUsageByCompanyModel,
   activeAnnouncements,
@@ -16,6 +20,7 @@ import {
   PlatformSecretsService,
   waRpcProfile,
 } from '@crm/core'
+import { FsBlobStore } from '@crm/node-kit'
 import { getCompanyCtx, getCtx, clientIp } from '../../lib/context'
 import { ApiError } from '../../lib/errors'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
@@ -35,6 +40,10 @@ export interface AdminOpsOptions {
   healthTimeoutMs?: number
   /** Ambiente das chaves de plataforma (fallback do segredo salvo). Default `process.env`. */
   env?: Record<string, string | undefined>
+  /** T100: chave do HMAC dos ids das imagens globais (default: derivada de `CREDENTIALS_KEY`). */
+  mediaSigningKey?: Buffer
+  /** T100: teto do upload de imagem em bytes (default `ADMIN_MEDIA_MAX_BYTES`, 2 MB). */
+  mediaMaxBytes?: number
 }
 
 declare module '../../lib/types' {
@@ -88,6 +97,17 @@ export function adminOpsRoutes(deps: ResolvedDeps) {
     })
   const app = new Hono<AppEnv>()
   app.use('/api/admin/*', requirePlatformRole('platform_admin'))
+  // T100: o harness E2E injeta o blobStore nas deps em tempo de requisição, então o serviço nasce sob demanda.
+  let media: AdminMediaService | undefined
+  const mediaService = () =>
+    (media ??= new AdminMediaService({
+      blobStore: deps.blobStore ?? new FsBlobStore(),
+      ...(opts.mediaSigningKey ? { signingKey: opts.mediaSigningKey } : {}),
+      ...(opts.mediaMaxBytes !== undefined ? { maxBytes: opts.mediaMaxBytes } : {}),
+    }))
+  const mediaMaxBytes = opts.mediaMaxBytes ?? ADMIN_MEDIA_MAX_BYTES
+  const tooLarge = () =>
+    new ApiError('VALIDATION_ERROR', 'Imagem acima de 2 MB', { fields: [{ path: 'file', message: 'Imagem acima de 2 MB' }] })
 
   /** Auditoria global (sem empresa): grava direto e desliga a automática, que usaria a empresa ativa do admin. */
   async function audit(
@@ -249,6 +269,46 @@ export function adminOpsRoutes(deps: ResolvedDeps) {
     if (r.removed) await audit(c, 'admin.platform_secret.delete', 'platform_secret', key, { provider: key })
     else setAudit(c, { skip: true })
     return c.json({ removed: r.removed, secret: r.secret }, 200)
+  })
+
+  // ---------------------------------------------------------------- imagens globais (T100, AC-T100-03)
+
+  // Upload da imagem de aviso/banner: multipart, campo `file`, só imagem raster, ≤ 2 MB → 201 `{ url }` pública
+  // (http/s, o formato que `image_url` aceita). Base da URL: `API_PUBLIC_URL`; sem ela, a origem da requisição.
+  app.post(
+    '/api/admin/uploads',
+    bodyLimit({
+      // folga para o envelope multipart; o tamanho do arquivo é conferido depois
+      maxSize: mediaMaxBytes + 256 * 1024,
+      onError: () => {
+        throw tooLarge()
+      },
+    }),
+    async (c) => {
+      const body = await c.req.parseBody().catch((): Record<string, unknown> => ({}))
+      const file = body.file
+      if (!(file instanceof File))
+        throw new ApiError('VALIDATION_ERROR', 'Envie a imagem no campo "file"', { fields: [{ path: 'file', message: 'Obrigatório' }] })
+      if (file.size > mediaMaxBytes) throw tooLarge()
+      const info = await domain(async () => mediaService().upload(new Uint8Array(await file.arrayBuffer()), file.type))
+      const base = ((opts.env ?? process.env).API_PUBLIC_URL?.trim() || new URL(c.req.url).origin).replace(/\/+$/, '')
+      await audit(c, 'admin.upload.create', 'admin_media', info.id, { mime: info.mime, size: info.size })
+      return c.json({ url: `${base}${ADMIN_MEDIA_PUBLIC_PATH}/${info.id}`, id: info.id, mime: info.mime, size: info.size }, 201)
+    },
+  )
+
+  // Pública (sem sessão): o cliente de qualquer empresa vê a imagem. Conteúdo endereçado por hash: cache imutável.
+  app.get(`${ADMIN_MEDIA_PUBLIC_PATH}/:id`, async (c) => {
+    setAudit(c, { skip: true })
+    const img = await mediaService().get(c.req.param('id'))
+    if (!img) throw new ApiError('NOT_FOUND', 'Imagem não encontrada')
+    return c.body(new Uint8Array(img.data), 200, {
+      'content-type': img.mime,
+      'content-length': String(img.size),
+      'cache-control': 'public, max-age=31536000, immutable',
+      'x-content-type-options': 'nosniff',
+      'cross-origin-resource-policy': 'cross-origin',
+    })
   })
 
   // ---------------------------------------------------------------- uso de IA (AC-T96-04)

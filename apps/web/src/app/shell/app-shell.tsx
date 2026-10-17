@@ -3,6 +3,8 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 import { Menu as MenuIcon, MoreHorizontal, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
+// T100: pop-up do aviso ativo da plataforma (fechar só oculta localmente).
+import { AnnouncementPopup } from '@/features/admin/announcement-popup'
 import { CompanySwitcher } from '@/features/company-switcher/company-switcher'
 // T84: sino/central de notificações; import ESTÁTICO (registra message.created/notification.created antes do SSE abrir).
 import { NotificationBell } from '@/features/notifications/bell'
@@ -182,6 +184,8 @@ export function AppShell({ session, children }: { session: Session; children: Re
 
       {/* T54: modal global de aprovação de acesso de suporte (owner/admin; 16 §5). */}
       <SupportApprovalModal session={session} />
+      {/* T100: aviso da plataforma em pop-up (14 §12–§14). */}
+      <AnnouncementPopup session={session} />
 
       {/* Barra inferior mobile (spec 18 §2.6). */}
       {isDesktop ? null : (

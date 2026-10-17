@@ -1,7 +1,15 @@
-// Rota provisória do shell (T23); a tarefa do módulo substitui este arquivo.
+// Admin interno da plataforma (T100; 20-admin-interno.md §2): `/admin?tab=`, só para platform_admin (guard em
+// `app/access.ts`). `tab` é string livre (o nome já existe com outros tipos em outras rotas): validado no componente.
 import { createFileRoute } from '@tanstack/react-router'
-import { PlaceholderPage } from '@/components/placeholder-page'
+import { z } from 'zod'
+import { AdminPage } from '@/features/admin/admin-page'
 
 export const Route = createFileRoute('/admin/')({
-  component: () => <PlaceholderPage id="admin" titleKey="pages.admin" />,
+  validateSearch: z.object({ tab: z.string().optional().catch(undefined) }),
+  component: AdminRoute,
 })
+
+function AdminRoute() {
+  const { tab } = Route.useSearch()
+  return <AdminPage tab={tab} />
+}
