@@ -48,6 +48,7 @@ const config = () => ({
 /** Empresa com um perfil conectado (OAuth da T99) e as contas dadas incluídas no dashboard. */
 async function world(accounts: { id: string; currency: string; name: string }[], opts: { fx?: Record<string, number>; enqueue?: boolean } = {}) {
   const tag = randomBytes(4).toString('hex')
+  const prefix = `crm:meta:test:${tag}`
   const [c] = await db.insert(companies).values({ name: `M${tag}`, slug: `m-t101-${tag}`, timeZone: 'America/Sao_Paulo' }).returning()
   const companyId = c!.id
   const fbUser = `fb-${tag}`
@@ -60,17 +61,27 @@ async function world(accounts: { id: string; currency: string; name: string }[],
   await db.update(metaAdAccounts).set({ includedInDashboard: true }).where(eq(metaAdAccounts.companyId, companyId))
   const events: { type: string; data: Record<string, unknown> }[] = []
   const jobs: MetaSyncJobData[] = []
+  // Como o BullMQ: um `add` com jobId já visto (em voo ou concluído e retido) é ignorado (T129).
+  const jobIds: string[] = []
   const service = new MetaBundleService({
     db,
     redis,
     profiles,
-    prefix: `crm:meta:test:${tag}`,
+    prefix,
     publisher: { publish: async (_c, type, data) => void events.push({ type, data }) },
     fx: fixedFxRates(opts.fx ?? {}),
-    ...(opts.enqueue ? { enqueue: async (d: MetaSyncJobData) => void jobs.push(d) } : {}),
+    ...(opts.enqueue
+      ? {
+          enqueue: async (d: MetaSyncJobData, o: { jobId: string }) => {
+            if (jobIds.includes(o.jobId)) return
+            jobIds.push(o.jobId)
+            jobs.push(d)
+          },
+        }
+      : {}),
   })
   const local = Object.fromEntries((await db.select().from(metaAdAccounts).where(eq(metaAdAccounts.companyId, companyId))).map((a) => [a.fbAccountId, a.id]))
-  return { companyId, service, events, jobs, local }
+  return { companyId, service, events, jobs, jobIds, local, prefix }
 }
 
 async function realUser(companyId: string): Promise<string> {
@@ -264,3 +275,124 @@ async function paramsOf(w: { companyId: string }, b: { since: string; until: str
   void w
   return { level: 'campaign', statusFilter: b.status_filter, datePreset: 'custom', since: b.since, until: b.until, adAccountIds: [], displayCurrency: b.display_currency }
 }
+
+describe('MetaBundleService — T129 (async não fica preso em loading)', () => {
+  it('AC-T129-01: pronto com erro de conta → o GET async seguinte sai de loading; expirado, enfileira job NOVO', async () => {
+    seed('act_1291')
+    fake.failAccount('act_1291', 400, { message: 'Permissions error', type: 'OAuthException', code: 200 })
+    const w = await world([{ id: 'act_1291', currency: 'BRL', name: 'Ruim' }], { enqueue: true })
+    const q = { status_filter: 'all', async: true }
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'loading' })
+    expect(w.jobs).toHaveLength(1)
+    const done = await w.service.runJob(w.jobs[0]!)
+    expect(done).toMatchObject({ status: 'ready', errors: [expect.objectContaining({ fb_ad_account_id: 'act_1291' })] })
+
+    // Logo depois (SSE `ready` → cliente relê): o pronto com erro, sem job novo e sem `loading`.
+    const again = await w.service.getBundle(w.companyId, q)
+    expect(again).toMatchObject({ status: 'ready', cached: false, errors: [expect.objectContaining({ fb_ad_account_id: 'act_1291' })] })
+    expect(w.jobs).toHaveLength(1)
+    const stateKey = `${w.prefix}:state:${done.bundle_key}`
+    const ttl = await redis.ttl(stateKey)
+    expect(ttl).toBeGreaterThan(0)
+    expect(ttl).toBeLessThanOrEqual(60)
+
+    // Expirado o pronto com erro (TTL curto): job novo com outro jobId — antes, `bundle-<key>` colidia com o concluído.
+    await redis.del(stateKey)
+    fake.clearAccountFailure('act_1291')
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'loading' })
+    expect(w.jobs).toHaveLength(2)
+    expect(new Set(w.jobIds).size).toBe(2)
+    expect(w.jobIds.every((id) => !id.includes(':'))).toBe(true)
+    expect(await w.service.runJob(w.jobs[1]!)).toMatchObject({ status: 'ready', errors: [] })
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'ready', cached: true, errors: [] })
+  })
+
+  it('AC-T129-02: pronto sem erro vem do cache sem job; force_refresh cria job novo', async () => {
+    seed('act_1292')
+    const w = await world([{ id: 'act_1292', currency: 'BRL', name: 'Boa' }], { enqueue: true })
+    const q = { status_filter: 'all', async: true }
+    await w.service.getBundle(w.companyId, q)
+    await w.service.runJob(w.jobs[0]!)
+    for (let i = 0; i < 3; i++) expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'ready', cached: true })
+    expect(w.jobs).toHaveLength(1)
+    expect(await w.service.getBundle(w.companyId, { ...q, force_refresh: true })).toMatchObject({ status: 'refreshing' })
+    expect(w.jobs).toHaveLength(2)
+    expect(w.jobs[1]!.force).toBe(true)
+    expect(await w.service.getBundle(w.companyId, { ...q, force_refresh: true })).toMatchObject({ status: 'refreshing' })
+    expect(w.jobs).toHaveLength(3)
+    expect(new Set(w.jobIds).size).toBe(3)
+  })
+
+  it('AC-T129-03: GETs simultâneos com a mesma chave sem cache enfileiram 1 job', async () => {
+    seed('act_1293')
+    const w = await world([{ id: 'act_1293', currency: 'BRL', name: 'Par' }], { enqueue: true })
+    const q = { status_filter: 'all', async: true }
+    const all = await Promise.all(Array.from({ length: 5 }, () => w.service.getBundle(w.companyId, q)))
+    expect(all.map((b) => b.status)).toEqual(Array(5).fill('loading'))
+    expect(w.jobIds).toHaveLength(1)
+    expect(w.jobs).toHaveLength(1)
+    // Também depois de um pronto com erro expirado: a corrida de GETs gera 1 job só.
+    fake.failAccount('act_1293', 400, { message: 'Permissions error', type: 'OAuthException', code: 200 })
+    const done = await w.service.runJob(w.jobs[0]!)
+    await redis.del(`${w.prefix}:state:${done.bundle_key}`)
+    await Promise.all(Array.from({ length: 5 }, () => w.service.getBundle(w.companyId, q)))
+    expect(w.jobIds).toHaveLength(2)
+    fake.clearAccountFailure('act_1293')
+  })
+
+  it('limite de uso: GETs async na mesma janela de limite reaproveitam o job adiado', async () => {
+    seed('act_1294')
+    const w = await world([{ id: 'act_1294', currency: 'BRL', name: 'Limite' }], { enqueue: true })
+    await redis.set(`${w.prefix}:ratelimit:act_1294`, String(Date.now() + 120_000), 'PX', 120_000)
+    const q = { status_filter: 'all', async: true }
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ warnings: ['rate_limited'] })
+    await w.service.getBundle(w.companyId, q)
+    expect(w.jobIds).toHaveLength(1)
+    expect(w.jobIds[0]).toMatch(/-rl-\d+$/)
+  })
+
+  it('retrabalho (T106 Bug 2): com cache, refresh async que cai no limite → o envelope async leva rate_limited', async () => {
+    seed('act_1295')
+    const w = await world([{ id: 'act_1295', currency: 'BRL', name: 'Cache' }], { enqueue: true })
+    const q = { status_filter: 'all', async: true }
+    await w.service.getBundle(w.companyId, q)
+    await w.service.runJob(w.jobs[0]!)
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'ready', cached: true, warnings: [] })
+
+    fake.setUsage('act_1295', 95, 2)
+    expect(await w.service.getBundle(w.companyId, { ...q, force_refresh: true })).toMatchObject({ status: 'refreshing' })
+    w.events.length = 0
+    const err = await w.service.runJob(w.jobs[1]!).catch((e: unknown) => e)
+    expect(err).toBeInstanceOf(MetaRateLimitedError)
+    fake.setUsage('act_1295', null)
+    // O SSE sai de `refreshing` com o aviso; o GET async seguinte (cliente relendo) traz o cache com rate_limited.
+    expect(w.events.at(-1)?.data).toMatchObject({ status: 'ready', warnings: ['rate_limited'] })
+    const after = await w.service.getBundle(w.companyId, q)
+    expect(after).toMatchObject({ status: 'ready', cached: true, warnings: ['rate_limited'] })
+    expect(after.campaign).toHaveLength(1)
+    // Igual ao sync com force_refresh.
+    expect(await w.service.getBundle(w.companyId, { status_filter: 'all', force_refresh: true })).toMatchObject({ status: 'ready', cached: true, warnings: ['rate_limited'] })
+    expect(w.jobs).toHaveLength(2)
+  })
+
+  it('retrabalho: sem cache, a carga inicial async que cai no limite sai de loading (ready vazio + rate_limited, como o sync)', async () => {
+    seed('act_1296')
+    const w = await world([{ id: 'act_1296', currency: 'BRL', name: 'Novo' }], { enqueue: true })
+    const q = { status_filter: 'all', async: true }
+    fake.setUsage('act_1296', 95, 2)
+    expect(await w.service.getBundle(w.companyId, q)).toMatchObject({ status: 'loading' })
+    const err = await w.service.runJob(w.jobs[0]!).catch((e: unknown) => e)
+    expect(err).toBeInstanceOf(MetaRateLimitedError)
+    fake.setUsage('act_1296', null)
+    expect(w.events.at(-1)?.data).toMatchObject({ status: 'ready', warnings: ['rate_limited'] })
+    const after = await w.service.getBundle(w.companyId, q)
+    expect(after).toMatchObject({ status: 'ready', warnings: ['rate_limited'], campaign: [] })
+    // O estado vale até o fim da espera (não os 15 min fixos); o job adiado continua o único.
+    const ttl = await redis.ttl(`${w.prefix}:state:${after.bundle_key}`)
+    expect(ttl).toBeGreaterThan(0)
+    expect(ttl).toBeLessThanOrEqual(15 * 60)
+    expect(w.jobs).toHaveLength(1)
+    // Sync no mesmo limite: mesmo status/aviso.
+    expect(await w.service.getBundle(w.companyId, { status_filter: 'all' })).toMatchObject({ status: 'ready', warnings: ['rate_limited'] })
+  })
+})

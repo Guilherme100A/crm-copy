@@ -18,6 +18,8 @@ export const BUNDLE_CACHE_TTL_S = 5 * 60
 export const BUNDLE_GEN_TTL_S = 24 * 3600
 export const BUNDLE_LAST_TTL_S = 24 * 3600
 export const BUNDLE_STATE_TTL_S = 15 * 60
+/** T129: bundle pronto com erro de conta (fora do cache de 5 min) fica no estado por este tempo; depois, job novo. */
+export const BUNDLE_ERROR_TTL_S = 60
 export const DEFAULT_DISPLAY_CURRENCY = 'BRL'
 
 export type BundleStatus = 'loading' | 'partial' | 'refreshing' | 'ready'
@@ -86,6 +88,10 @@ export class MetaBundleError extends Error {
   }
 }
 
+function withRateLimited(env: BundleEnvelope): BundleEnvelope {
+  return { ...env, cached: true, warnings: [...new Set([...env.warnings, 'rate_limited'])] }
+}
+
 interface AccountRow extends BundleAccount {
   profileId: string
 }
@@ -142,6 +148,8 @@ export class MetaBundleService {
 
     if (!req.force_refresh) {
       const cached = await this.read(await this.bundleCacheKey(companyId, key))
+      // T129 retrabalho: no async, cache com conta em limite (ex.: o refresh forçado caiu no limite) leva o aviso.
+      if (cached && req.async && (await this.blockedUntil(accounts)) > this.now().getTime()) return withRateLimited(cached)
       if (cached) return { ...cached, cached: true }
       if (req.async) {
         const state = await this.read(this.k('state', key))
@@ -152,13 +160,19 @@ export class MetaBundleService {
     // Limite de uso ativo numa das contas: não chama a Meta agora; agenda (async) e devolve o último pronto.
     const blockedUntil = await this.blockedUntil(accounts)
     if (blockedUntil > this.now().getTime()) {
-      if (req.async && this.opts.enqueue) await this.enqueue(companyId, key, params, accounts, req.force_refresh ?? false)
+      // Mesma janela de limite = mesmo job (dedupe); force_refresh gera um novo.
+      if (req.async && this.opts.enqueue) {
+        const force = req.force_refresh ?? false
+        await this.enqueue(companyId, key, params, accounts, force, force ? undefined : `bundle-${key}-rl-${blockedUntil}`)
+      }
       return this.rateLimitedFallback(key, params, accounts.length)
     }
 
     if (req.async && this.opts.enqueue) {
       const state = this.empty(key, params, req.force_refresh ? 'refreshing' : 'loading', accounts.length)
-      await this.save('state', key, state, BUNDLE_STATE_TTL_S)
+      if (req.force_refresh) await this.save('state', key, state, BUNDLE_STATE_TTL_S)
+      // T129: o estado é a trava de concorrência (SET NX): quem não grava não enfileira e devolve o estado do outro.
+      else if (!(await this.claimState(key, state))) return (await this.read(this.k('state', key))) ?? state
       await this.publish(companyId, state)
       await this.enqueue(companyId, key, params, accounts, req.force_refresh ?? false)
       return state
@@ -171,12 +185,26 @@ export class MetaBundleService {
     }
   }
 
-  /** Job `meta-sync`: monta e publica. Limite de uso → `MetaRateLimitedError` (o worker adia o job até `retryAt`). */
+  /**
+   * Job `meta-sync`: monta e publica. Limite de uso → `MetaRateLimitedError` (o worker adia o job até `retryAt`).
+   * T129 retrabalho: antes de lançar, grava no estado (até `retryAt`) e publica o mesmo fallback do sync (último pronto
+   * com `rate_limited`, ou `ready` vazio com o aviso), para o GET async e o SSE saírem de `loading`/`refreshing`.
+   */
   async runJob(data: MetaSyncJobData): Promise<BundleEnvelope> {
     const accounts = await this.accounts(data.companyId, data.accountIds)
-    const blockedUntil = await this.blockedUntil(accounts)
-    if (blockedUntil > this.now().getTime()) throw new MetaRateLimitedError(blockedUntil, 'conta em espera de limite de uso')
-    return this.build(data.companyId, data.bundleKey, data.params, accounts)
+    try {
+      const blockedUntil = await this.blockedUntil(accounts)
+      if (blockedUntil > this.now().getTime()) throw new MetaRateLimitedError(blockedUntil, 'conta em espera de limite de uso')
+      return await this.build(data.companyId, data.bundleKey, data.params, accounts)
+    } catch (err) {
+      if (err instanceof MetaRateLimitedError) {
+        const env = await this.rateLimitedFallback(data.bundleKey, data.params, accounts.length)
+        const ttl = Math.min(BUNDLE_STATE_TTL_S, Math.max(1, Math.ceil((err.retryAt - this.now().getTime()) / 1000)))
+        await this.save('state', data.bundleKey, env, ttl)
+        await this.publish(data.companyId, env)
+      }
+      throw err
+    }
   }
 
   // ---------------------------------------------------------------- gasto (dashboard)
@@ -273,21 +301,32 @@ export class MetaBundleService {
     // Só bundle sem erro vai para o cache de 5 min; o "último pronto" guarda sempre (fallback de limite).
     if (env.errors.length === 0) await this.redis.set(cacheKey, JSON.stringify({ ...env, cached: false }), 'EX', BUNDLE_CACHE_TTL_S)
     await this.save('last', key, env, BUNDLE_LAST_TTL_S)
-    await this.redis.del(this.k('state', key))
+    // T129: com erro, o pronto fica no estado por pouco tempo (o GET async seguinte sai de `loading` sem novo job e
+    // sem reler em laço); ao expirar, o próximo GET enfileira um job novo.
+    if (env.errors.length === 0) await this.redis.del(this.k('state', key))
+    else await this.save('state', key, env, BUNDLE_ERROR_TTL_S)
     await this.publish(companyId, env)
     return env
   }
 
   private async rateLimitedFallback(key: string, params: BundleParams, total: number): Promise<BundleEnvelope> {
     const last = await this.read(this.k('last', key))
-    if (last) return { ...last, cached: true, warnings: [...new Set([...last.warnings, 'rate_limited'])] }
-    return { ...this.empty(key, params, 'loading', total), warnings: ['rate_limited'] }
+    if (last) return withRateLimited(last)
+    // T129 retrabalho: sem último pronto, `ready` vazio com o aviso (não `loading`): nada está sendo montado agora.
+    return { ...this.empty(key, params, 'ready', total), warnings: ['rate_limited'] }
   }
 
-  private async enqueue(companyId: string, key: string, params: BundleParams, accounts: AccountRow[], force: boolean): Promise<void> {
-    // Mesmo bundle em voo = mesmo job (dedupe); force_refresh gera um novo.
-    const jobId = force ? `bundle-${key}-${this.now().getTime()}` : `bundle-${key}`
-    await this.opts.enqueue!({ companyId, bundleKey: key, params, accountIds: accounts.map((a) => a.id), force }, { jobId })
+  /**
+   * T129: jobId único por geração. O fixo `bundle-<key>` colidia com o job concluído que o BullMQ retém (24 h): o
+   * `add` era ignorado e o estado ficava em `loading`. A dedupe de concorrência é a trava do estado (`claimState`).
+   */
+  private async enqueue(companyId: string, key: string, params: BundleParams, accounts: AccountRow[], force: boolean, jobId?: string): Promise<void> {
+    const id = jobId ?? `bundle-${key}-${this.now().getTime().toString(36)}${randomBytes(3).toString('hex')}`
+    await this.opts.enqueue!({ companyId, bundleKey: key, params, accountIds: accounts.map((a) => a.id), force }, { jobId: id })
+  }
+
+  private async claimState(key: string, state: BundleEnvelope): Promise<boolean> {
+    return (await this.redis.set(this.k('state', key), JSON.stringify({ ...state, cached: false }), 'EX', BUNDLE_STATE_TTL_S, 'NX')) === 'OK'
   }
 
   private async blockedUntil(accounts: AccountRow[]): Promise<number> {
