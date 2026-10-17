@@ -3,14 +3,14 @@
   "task": "T115",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T05:18:24.329Z",
-  "commit": "bea292dd3a3df324c7ed82bb1f5994bd06d8bb14",
-  "base": "bea292d",
+  "at": "2026-10-17T05:34:08.992Z",
+  "commit": "c8907aebf988fc724aea4f81770953bd84a02b8b",
+  "base": "50c299a",
   "changedFiles": [
-    "tests/acceptance/T94/mcp.test.ts",
     "tests/acceptance/T115/mcp-oauth.e2e.ts",
     "tests/acceptance/T115/mcp-oauth.test.ts",
-    "tests/acceptance/T115/oauth.ts"
+    "tests/acceptance/T115/oauth.ts",
+    "tests/acceptance/T94/mcp.test.ts"
   ],
   "checks": [
     {
