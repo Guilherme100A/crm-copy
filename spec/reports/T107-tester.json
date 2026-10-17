@@ -3,13 +3,10 @@
   "task": "T107",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T04:29:49.337Z",
-  "commit": "51bf479293ba90ae91ffd62cfa723be26d05f166",
-  "base": "51bf479",
-  "changedFiles": [
-    "tests/acceptance/T107/disconnect-alert.test.ts",
-    "tests/acceptance/T107/indicator.e2e.ts"
-  ],
+  "at": "2026-10-17T04:56:47.929Z",
+  "commit": "989b517361ed831e52b182192acaf76dbf8a88da",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -89,7 +86,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "2 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

@@ -3,63 +3,55 @@
   "task": "T107",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:39:51.751Z",
-  "commit": "51bf479293ba90ae91ffd62cfa723be26d05f166",
-  "base": "51bf479",
-  "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "apps/web/src/app/shell/app-shell.tsx",
-    "apps/web/src/app/shell/nav-list.tsx",
-    "apps/api/src/routes/connections-alert/connections-alert.db.unit.test.ts",
-    "apps/api/src/routes/connections-alert/index.ts",
-    "apps/web/src/features/shell-disconnect/api.ts",
-    "apps/web/src/features/shell-disconnect/indicator.tsx",
-    "apps/web/src/features/shell-disconnect/realtime.ts",
-    "apps/web/src/features/shell-disconnect/shell-disconnect.unit.test.ts",
-    "apps/web/src/i18n/en/shell-disconnect.json",
-    "apps/web/src/i18n/es/shell-disconnect.json",
-    "apps/web/src/i18n/pt-BR/shell-disconnect.json"
-  ],
+  "at": "2026-10-17T04:56:47.958Z",
+  "commit": "989b517361ed831e52b182192acaf76dbf8a88da",
+  "base": "a645055",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 18.5s"
+      "detail": "ok em 16.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 5.6s"
+      "detail": "ok em 4.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 161.3s (afetados desde a base)"
+      "detail": "ok em 132.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 19.7s"
+      "detail": "ok em 13.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 10.2s"
+      "detail": "ok em 7.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 28.3s (afetados desde a base)"
+      "detail": "ok em 17.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.9s"
+      "detail": "ok em 0.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 6.5s"
+      "detail": "ok em 2.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 61.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -117,9 +109,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "12 arquivo(s) alterado(s)"
+      "detail": "T107"
     }
   ]
 }

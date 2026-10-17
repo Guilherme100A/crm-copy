@@ -3,85 +3,55 @@
   "task": "BATCH",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T04:31:40.281Z",
-  "commit": "e76a98e2c5c9964d7fc4515d564cce55d8cd940c",
-  "base": "e72438e",
+  "at": "2026-10-17T04:56:09.188Z",
+  "commit": "989b517361ed831e52b182192acaf76dbf8a88da",
+  "base": "a645055",
   "changedFiles": [],
   "checks": [
     {
-      "name": "cmd: pnpm --filter @crm/wa-port typecheck",
-      "status": "pass",
-      "detail": "ok em 2.0s"
-    },
-    {
-      "name": "cmd: pnpm --filter @crm/wa-port lint",
-      "status": "pass",
-      "detail": "ok em 11.1s"
-    },
-    {
-      "name": "cmd: pnpm --filter @crm/wa-port test",
-      "status": "pass",
-      "detail": "ok em 6.5s"
-    },
-    {
-      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
-      "status": "pass",
-      "detail": "ok em 7.1s"
-    },
-    {
-      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
-      "status": "pass",
-      "detail": "ok em 2.3s"
-    },
-    {
-      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
-      "status": "pass",
-      "detail": "ok em 14.0s"
-    },
-    {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.9s"
+      "detail": "ok em 16.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.8s"
+      "detail": "ok em 4.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 135.3s"
+      "detail": "ok em 132.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 13.6s"
+      "detail": "ok em 13.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 7.3s"
+      "detail": "ok em 7.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 19.1s"
+      "detail": "ok em 17.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.7s"
+      "detail": "ok em 0.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.1s"
+      "detail": "ok em 2.9s"
     },
     {
-      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/wa-gateway-rpc}\" --filter \"...{./packages/wa-port}\" --filter \"!@crm/wa-port\" --filter \"!@crm/wa-gateway-rpc\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
       "status": "pass",
-      "detail": "ok em 233.9s"
+      "detail": "ok em 61.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
