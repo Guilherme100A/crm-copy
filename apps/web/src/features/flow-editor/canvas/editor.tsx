@@ -29,6 +29,7 @@ import { cn } from '@/lib/utils'
 import { DND_MIME } from '../palette/catalog'
 import { Palette } from '../palette/palette'
 import { PropertiesPanel } from '../properties/properties-panel'
+import { FlowSimulator } from '../../flow-simulator'
 import { bundleKey, bundleQuery, flowApi, type EditorBundle, type FlowDto, type FlowStatus } from './api'
 import { Autosaver, type AutosaveStatus } from './autosave'
 import { FlowNodeComponent, NodeActionsContext, type NodeActions } from './flow-node'
@@ -430,6 +431,7 @@ function EditorBody({ bundle, readOnly, canEditFlows, me, mode }: { bundle: Edit
               </Button>
             )
           ) : null}
+          <FlowSimulator flowId={flowId} beforeRun={() => saver.flush()} nodeName={(id) => nodesRef.current.find((n) => n.id === id)?.data.name} />
           <Button size="sm" variant="outline" className="lg:hidden" data-testid="flow-properties-toggle" aria-expanded={propsOpen} onClick={() => setPropsOpen(!propsOpen)}>
             <SlidersHorizontal aria-hidden /> <span className="sr-only">{t('properties.title')}</span>
           </Button>

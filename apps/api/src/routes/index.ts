@@ -22,6 +22,7 @@ import { departmentsRoutes } from './departments/index'
 import { businessHoursRoutes } from './business-hours/index'
 import { chatsRoutes } from './chats/index'
 import { flowRunsRoutes } from './flow-runs/index'
+import { flowSimulateRoutes } from './flow-simulate/index'
 import { flowShareRoutes } from './flow-share/index'
 import { kanbanRoutes } from './kanban/index'
 import { productsRoutes } from './products/index'
@@ -87,6 +88,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', businessHoursRoutes(deps))
   app.route('/', chatsRoutes(deps))
   app.route('/', flowRunsRoutes(deps))
+  app.route('/', flowSimulateRoutes(deps)) // T82
   app.route('/', flowShareRoutes(deps))
   app.route('/', kanbanRoutes(deps))
   app.route('/', productsRoutes(deps))

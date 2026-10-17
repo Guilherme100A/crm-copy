@@ -1,0 +1,59 @@
+{
+  "button": "Simulate",
+  "title": "Simulator",
+  "subtitle": "Local test: nothing is sent or saved.",
+  "restart": "Restart",
+  "close": "Close simulator",
+  "running": "Simulating…",
+  "error": "Could not simulate the flow.",
+  "retry": "Try again",
+  "empty": "The flow has not sent any messages yet.",
+  "you": "You",
+  "internal": "Notification to another number",
+  "inputPlaceholder": "Type the contact's reply…",
+  "send": "Send reply",
+  "notConnected": "not connected: the flow ends here",
+  "steps": "{n} step(s)",
+  "wait": {
+    "wait_response": "Waiting for the contact's reply",
+    "menu": "Waiting for a menu choice",
+    "carousel": "Waiting for a carousel choice",
+    "smart_interval": "Smart interval: waiting",
+    "condition_choice": "Choose the condition result",
+    "distributor": "Choose the distributor output",
+    "ai_choice": "Choose the AI output",
+    "integration_choice": "Choose the request result"
+  },
+  "choices": {
+    "reply": "Reply",
+    "skipWait": "Skip wait",
+    "timeout": "Simulate timeout",
+    "other": "Other reply",
+    "success": "Success",
+    "failure": "Failure",
+    "output": "Output"
+  },
+  "notice": {
+    "not_simulated": "{name} is not simulated yet. Continuing.",
+    "jump_flow": "{name}: would start another flow ({target})."
+  },
+  "end": {
+    "completed": "Flow finished.",
+    "no_start": "The flow has no Start block.",
+    "no_next": "No next step: the flow ends at {name}.",
+    "failed": "Error at {name}: {error}",
+    "loop_guard": "Stopped for safety: loop or path over 50 steps (at {name}).",
+    "jump_flow": "End of this flow's simulation."
+  },
+  "media": {
+    "image": "Image",
+    "video": "Video",
+    "audio": "Audio",
+    "sticker": "Sticker",
+    "document": "File",
+    "contact": "Contact",
+    "location": "Location",
+    "react": "Reaction",
+    "delete": "Deleted message"
+  }
+}

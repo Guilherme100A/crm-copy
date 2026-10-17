@@ -1,0 +1,59 @@
+{
+  "button": "Simular",
+  "title": "Simulador",
+  "subtitle": "Teste local: nada é enviado nem salvo.",
+  "restart": "Reiniciar",
+  "close": "Fechar simulador",
+  "running": "Simulando…",
+  "error": "Não foi possível simular o fluxo.",
+  "retry": "Tentar novamente",
+  "empty": "O fluxo ainda não enviou mensagens.",
+  "you": "Você",
+  "internal": "Notificação para outro número",
+  "inputPlaceholder": "Digite a resposta do contato…",
+  "send": "Enviar resposta",
+  "notConnected": "sem conexão: o fluxo termina aqui",
+  "steps": "{n} passo(s)",
+  "wait": {
+    "wait_response": "Aguardando a resposta do contato",
+    "menu": "Aguardando a escolha no menu",
+    "carousel": "Aguardando a escolha no carrossel",
+    "smart_interval": "Intervalo inteligente: aguardando",
+    "condition_choice": "Escolha o resultado da condição",
+    "distributor": "Escolha a saída do distribuidor",
+    "ai_choice": "Escolha a saída da IA",
+    "integration_choice": "Escolha o resultado da requisição"
+  },
+  "choices": {
+    "reply": "Responder",
+    "skipWait": "Pular espera",
+    "timeout": "Simular timeout",
+    "other": "Outra resposta",
+    "success": "Sucesso",
+    "failure": "Falha",
+    "output": "Saída"
+  },
+  "notice": {
+    "not_simulated": "{name} ainda não é simulado. Seguindo.",
+    "jump_flow": "{name}: iniciaria outro fluxo ({target})."
+  },
+  "end": {
+    "completed": "Fluxo finalizado.",
+    "no_start": "O fluxo não tem bloco de Início.",
+    "no_next": "Sem próximo passo: o fluxo termina em {name}.",
+    "failed": "Erro em {name}: {error}",
+    "loop_guard": "Parado por segurança: loop ou caminho acima de 50 passos (em {name}).",
+    "jump_flow": "Fim da simulação deste fluxo."
+  },
+  "media": {
+    "image": "Imagem",
+    "video": "Vídeo",
+    "audio": "Áudio",
+    "sticker": "Figurinha",
+    "document": "Arquivo",
+    "contact": "Contato",
+    "location": "Localização",
+    "react": "Reação",
+    "delete": "Mensagem apagada"
+  }
+}

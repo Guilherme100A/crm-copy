@@ -1,0 +1,59 @@
+{
+  "button": "Simular",
+  "title": "Simulador",
+  "subtitle": "Prueba local: no se envía ni se guarda nada.",
+  "restart": "Reiniciar",
+  "close": "Cerrar simulador",
+  "running": "Simulando…",
+  "error": "No se pudo simular el flujo.",
+  "retry": "Intentar de nuevo",
+  "empty": "El flujo todavía no envió mensajes.",
+  "you": "Tú",
+  "internal": "Notificación a otro número",
+  "inputPlaceholder": "Escribe la respuesta del contacto…",
+  "send": "Enviar respuesta",
+  "notConnected": "sin conexión: el flujo termina aquí",
+  "steps": "{n} paso(s)",
+  "wait": {
+    "wait_response": "Esperando la respuesta del contacto",
+    "menu": "Esperando la elección en el menú",
+    "carousel": "Esperando la elección en el carrusel",
+    "smart_interval": "Intervalo inteligente: esperando",
+    "condition_choice": "Elige el resultado de la condición",
+    "distributor": "Elige la salida del distribuidor",
+    "ai_choice": "Elige la salida de la IA",
+    "integration_choice": "Elige el resultado de la solicitud"
+  },
+  "choices": {
+    "reply": "Responder",
+    "skipWait": "Saltar espera",
+    "timeout": "Simular tiempo agotado",
+    "other": "Otra respuesta",
+    "success": "Éxito",
+    "failure": "Falla",
+    "output": "Salida"
+  },
+  "notice": {
+    "not_simulated": "{name} todavía no se simula. Continuando.",
+    "jump_flow": "{name}: iniciaría otro flujo ({target})."
+  },
+  "end": {
+    "completed": "Flujo finalizado.",
+    "no_start": "El flujo no tiene bloque de Inicio.",
+    "no_next": "Sin próximo paso: el flujo termina en {name}.",
+    "failed": "Error en {name}: {error}",
+    "loop_guard": "Detenido por seguridad: bucle o camino de más de 50 pasos (en {name}).",
+    "jump_flow": "Fin de la simulación de este flujo."
+  },
+  "media": {
+    "image": "Imagen",
+    "video": "Video",
+    "audio": "Audio",
+    "sticker": "Sticker",
+    "document": "Archivo",
+    "contact": "Contacto",
+    "location": "Ubicación",
+    "react": "Reacción",
+    "delete": "Mensaje eliminado"
+  }
+}
