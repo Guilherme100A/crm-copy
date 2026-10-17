@@ -39,6 +39,7 @@ export const SHARED_PATHS = [
   'apps/web/src/routeTree.gen.ts',
   'apps/web/src/app/nav.ts',
   'apps/web/src/features/settings/tabs.ts',
+  'apps/web/src/features/flow-editor/node-editors/registry.ts', // registro dos editores de nó (T56/T57): só acréscimo
   'apps/web/src/features/integrations/catalog.ts',
   'packages/db/src/schema/crm/index.ts',
   'packages/db/drizzle/crm/**',

@@ -57,3 +57,5 @@
 - O filtro `[ref]` do pnpm (`--filter "...[base]"`) não acha nada dentro de worktree no Windows: use filtro de diretório (`--filter "...{./apps/x}"`). O gate testa os dependentes assim. (orquestração)
 - Mudar o seed (ex.: usuário novo) muda o que o reset do harness devolve: atualize `apps/api/src/e2e/e2e.db.unit.test.ts`. (T54)
 - E2E: capture a URL só depois de ela estabilizar (redirect de home, replace de aba/filtro). Use `await expect(page).toHaveURL(...)` antes de guardar/recarregar; um `start` capturado cedo quebra sob carga. (T53)
+- Search params do TanStack Router são um tipo unido entre todas as rotas: não reuse um nome com outro tipo (`?status=` já é do `/chats`; a lista de fluxos usa `?flow_status=`). (T44)
+- dnd-kit marca item desabilitado com `aria-disabled` + `role="button"` e o Playwright passa a ver o menu interno como desabilitado: não registre no dnd o que o usuário não pode arrastar. (T44)
