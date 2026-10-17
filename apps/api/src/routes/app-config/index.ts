@@ -1,7 +1,7 @@
 // GET /api/app-config (T97; T108 acrescenta campos): configuração do app em tempo de execução para a SPA, lida do
 // ambiente a cada request (o build da web não muda com o env do servidor). Autenticada (não está em PUBLIC_API_ROUTES).
 import { Hono } from 'hono'
-import { affiliateConfig, type AppConfigDto } from '@crm/core'
+import { affiliateConfig, supportConfig, type AppConfigDto } from '@crm/core'
 import type { AppDeps, AppEnv } from '../../lib/types'
 
 declare module '../../lib/types' {
@@ -12,7 +12,7 @@ declare module '../../lib/types' {
 }
 
 export function appConfig(env: Record<string, string | undefined>): AppConfigDto {
-  return { ...affiliateConfig(env) }
+  return { ...affiliateConfig(env), ...supportConfig(env) }
 }
 
 export function appConfigRoutes(deps: Pick<AppDeps, 'appConfigEnv'>) {

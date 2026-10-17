@@ -4,6 +4,16 @@ import { api } from '@/lib/http'
 
 export interface AppConfigDto {
   affiliate_portal_url: string | null
+  /** T108: URL dos tutoriais (null = item escondido). */
+  tutorials_url?: string | null
+  /** T108: provedor de suporte plugável (ausente = `none`). */
+  support?: {
+    provider: 'none' | 'script' | 'whatsapp-link'
+    script_url: string | null
+    phone: string | null
+    script_global?: string
+    storage_prefix?: string
+  }
 }
 
 export const appConfigKey = ['app-config'] as const

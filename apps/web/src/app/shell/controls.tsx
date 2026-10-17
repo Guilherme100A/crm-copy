@@ -4,6 +4,10 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
 import { LogOut, Moon, Sun, User as UserIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
+// T108: item "Suporte" no menu do usuário e encerramento do widget no logout.
+import { appConfigKey, type AppConfigDto } from '@/features/affiliate/api'
+import { teardownSupportWidget } from '@/features/support-widget/runtime'
+import { SupportMenuItem } from '@/features/support-widget/support-widget'
 import { isLocale, LOCALES, useI18n, useT } from '@/i18n'
 import { api } from '@/lib/http'
 import type { Session } from '@/lib/session'
@@ -93,6 +97,7 @@ export function UserMenu({ session, compact = false }: { session: Session; compa
   const [theme, toggle] = useTheme()
 
   const logout = async () => {
+    teardownSupportWidget(queryClient.getQueryData<AppConfigDto>(appConfigKey))
     await api.post('/api/auth/logout').catch(() => undefined)
     queryClient.clear()
     await navigate({ to: '/login' as never, replace: true })
@@ -141,6 +146,7 @@ export function UserMenu({ session, compact = false }: { session: Session; compa
             <div className="px-2 py-1.5" onKeyDown={(e) => e.stopPropagation()}>
               <LanguageSelect session={session} />
             </div>
+            {compact ? <SupportMenuItem session={session} /> : null}
             <Menu.Separator className="my-1 h-px bg-border" />
             <Menu.Item
               data-testid="shell-user-menu-logout"

@@ -16,6 +16,8 @@ import { SupportApprovalModal } from '@/features/settings-support/approval-modal
 import { AffiliateEntry } from '@/features/affiliate/affiliate-entry'
 // T107: import ESTÁTICO (registra os handlers connection.* do indicador de queda antes do SSE abrir).
 import '@/features/shell-disconnect/realtime'
+// T108: botão "Suporte" e widget de suporte plugável (import estático; config via GET /api/app-config).
+import { SupportButton, SupportWidget } from '@/features/support-widget/support-widget'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
@@ -39,6 +41,7 @@ function AppName({ collapsed = false }: { collapsed?: boolean }) {
 function ShellFooter({ session, collapsed = false }: { session: Session; collapsed?: boolean }) {
   return (
     <div className="flex flex-col gap-2 border-t pt-3">
+      <SupportButton session={session} collapsed={collapsed} />
       <AffiliateEntry collapsed={collapsed} />
       <ThemeToggle collapsed={collapsed} />
       {collapsed ? null : <LanguageSelect session={session} className="px-1" />}
@@ -188,6 +191,9 @@ export function AppShell({ session, children }: { session: Session; children: Re
       <SupportApprovalModal session={session} />
       {/* T100: aviso da plataforma em pop-up (14 §12–§14). */}
       <AnnouncementPopup session={session} />
+
+      {/* T108: widget de chat de suporte (script de terceiros; nada no DOM do shell). */}
+      <SupportWidget session={session} />
 
       {/* Barra inferior mobile (spec 18 §2.6). */}
       {isDesktop ? null : (

@@ -2,11 +2,13 @@
 import { Link, useRouterState } from '@tanstack/react-router'
 // T107: indicador de queda no item Conexões.
 import { DisconnectIndicator } from '@/features/shell-disconnect/indicator'
+// T108: item "Tutoriais" com a URL de runtime (GET /api/app-config); sem URL ou para `support`, some.
+import { TUTORIALS_LINK_REL, useTutorialsUrl, withTutorials } from '@/features/tutorials/tutorials'
 import { useT } from '@/i18n'
 import type { Session } from '@/lib/session'
 import { cn } from '@/lib/utils'
 import { visibleSections } from '../access'
-import type { NavItem } from '../nav'
+import { NAV_SECTIONS, type NavItem } from '../nav'
 
 const isActive = (pathname: string, to: string) => {
   const path = to.split('?')[0]!
@@ -16,7 +18,8 @@ const isActive = (pathname: string, to: string) => {
 export function NavList({ session, collapsed = false, onNavigate }: { session: Session; collapsed?: boolean; onNavigate?: () => void }) {
   const t = useT()
   const pathname = useRouterState({ select: (s) => s.location.pathname })
-  const sections = visibleSections(session)
+  const tutorialsUrl = useTutorialsUrl()
+  const sections = withTutorials(visibleSections(session), NAV_SECTIONS, tutorialsUrl, session.isSupport)
 
   const itemClass = (active: boolean) =>
     cn(
@@ -55,7 +58,7 @@ export function NavList({ session, collapsed = false, onNavigate }: { session: S
                   key={item.id}
                   href={item.href}
                   target="_blank"
-                  rel="noreferrer"
+                  rel={TUTORIALS_LINK_REL}
                   data-testid={`nav-item-${item.id}`}
                   title={collapsed ? label(item) : undefined}
                   className={itemClass(false)}

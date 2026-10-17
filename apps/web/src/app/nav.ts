@@ -41,8 +41,8 @@ export interface NavSection {
   items: NavItem[]
 }
 
-/** URL externa dos tutoriais (configurável; T108). */
-export const TUTORIALS_URL: string = (import.meta.env.VITE_TUTORIALS_URL as string | undefined) || 'https://www.youtube.com/'
+/** URL externa dos tutoriais (configurável; T108). Em runtime vale `tutorials_url` de `GET /api/app-config`; sem URL o item some. */
+export const TUTORIALS_URL: string = (import.meta.env.VITE_TUTORIALS_URL as string | undefined) || ''
 
 export const NAV_SECTIONS: NavSection[] = [
   {
