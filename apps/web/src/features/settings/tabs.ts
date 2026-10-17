@@ -38,4 +38,7 @@ export const SETTINGS_TABS: SettingsTab[] = [
   { id: 'global_variables', labelKey: 'settings-variables:tab', group: 'automation', load: () => import('@/features/settings-variables/tab') },
   { id: 'custom_fields', labelKey: 'settings-fields:tab', group: 'automation', permissions: ['settings.fields.view'], load: () => import('@/features/settings-fields/tab') },
   { id: 'tags', labelKey: 'settings-labels:tab', group: 'automation', permissions: ['settings.labels.view'], load: () => import('@/features/settings-labels/tab') },
+  // T59: consumo de IA (12 §3.10) e hub de integrações (19 §2.2; `?cat=ai|sales|tracking`).
+  { id: 'ai_usage', labelKey: 'settings-ai-usage:tab', group: 'account', permissions: ['ai_usage.view'], load: () => import('@/features/settings-ai-usage/usage-tab') },
+  { id: 'integrations', labelKey: 'integrations:tab', group: 'integrations', permissions: ['settings.integrations.view'], load: () => import('@/features/integrations/hub-tab') },
 ]

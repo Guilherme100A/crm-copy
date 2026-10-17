@@ -1,0 +1,70 @@
+{
+  "tab": "Integrations",
+  "title": "Integrations",
+  "subtitle": "Connect AI providers, payments, invoice issuers and sales tracking to your account.",
+  "search": "Search integration…",
+  "categoriesLabel": "Integration categories",
+  "categories": { "ai": "AI", "sales": "Sales", "tracking": "Tracking" },
+  "loading": "Loading...",
+  "error": "Could not complete the action.",
+  "sections": {
+    "records": "Your integrations",
+    "recordsHint": "Connected to your account",
+    "catalog": "Available",
+    "catalogHint": "Ready to connect"
+  },
+  "empty": {
+    "category": "No integrations in \"{category}\"",
+    "search": "No results for \"{term}\"",
+    "records": "No active integration in {category}"
+  },
+  "status": { "active": "Active", "inactive": "Inactive" },
+  "inUse": "Key in use for this provider (latest active)",
+  "edit": "Edit",
+  "delete": "Delete",
+  "configure": "Configure",
+  "comingSoon": "Coming soon",
+  "cancel": "Cancel",
+  "save": "Save",
+  "toast": { "created": "Integration created", "updated": "Integration updated", "deleted": "Integration removed" },
+  "aiKey": {
+    "newTitle": "New integration: AI",
+    "editTitle": "Update integration",
+    "provider": "Provider",
+    "name": "Key name",
+    "namePlaceholder": "E.g.: Production, Sales flow",
+    "secret": "API key",
+    "secretPlaceholder": "Paste the API key",
+    "secretKeep": "Leave blank to keep the current key ({hint}).",
+    "howTo": "How to get the key",
+    "active": "Active",
+    "test": "Test",
+    "testHint": "Tests the saved key with the provider.",
+    "testOk": "Connection OK in {ms} ms",
+    "testFail": "Test failed: {error}",
+    "errors": {
+      "nameLength": "The name must have 2 to 80 characters.",
+      "secretRequired": "Enter the API key.",
+      "secretTooLong": "The key can have at most 500 characters."
+    },
+    "delete": {
+      "title": "Remove the key \"{name}\"?",
+      "bullet1": "AI blocks and agents using this key will fail.",
+      "bullet2": "Running flows may stop.",
+      "bullet3": "You will need to register another key to use the provider again.",
+      "inUse": "This key is in use:",
+      "agents": "Agents",
+      "flows": "Flows",
+      "force": "Delete anyway",
+      "confirm": "Delete"
+    }
+  },
+  "catalog": {
+    "anthropic": { "title": "Anthropic Claude", "description": "Claude models for AI agents and blocks." },
+    "openai": { "title": "OpenAI GPT", "description": "Generative AI for chatbots and flows." },
+    "google": { "title": "Google Gemini", "description": "Multimodal models from Google." },
+    "openrouter": { "title": "OpenRouter", "description": "One key for many models." },
+    "elevenlabs": { "title": "ElevenLabs", "description": "Voice synthesis for audio in flows." },
+    "groq": { "title": "Groq", "description": "Fast inference of open models." }
+  }
+}

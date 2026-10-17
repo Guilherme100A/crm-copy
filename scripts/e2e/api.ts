@@ -12,6 +12,18 @@ import { RealtimePublisher } from '../../packages/core/src/index'
 import { createDb, resetAndSeed, runMigrations } from '../../packages/db/src/index'
 import { createLogger, initCredentialsCrypto, redisConnection } from '../../packages/node-kit/src/index'
 import { WA_EVENT_TYPES } from '../../packages/wa-port/src/index'
+import type { AiKeyProbe } from '../../packages/core/src/ai-keys/http'
+
+// T59: o "Testar" das chaves de IA nunca chama o provedor real no harness. Segredo terminando em `fail` → falha
+// `HTTP 401` (~5 ms); qualquer outro → ok (~87 ms; a latência medida pelo serviço fica ≥ esse valor).
+const e2eAiKeyProbe: AiKeyProbe = async ({ secret }) => {
+  const fail = secret.trim().endsWith('fail')
+  await new Promise((r) => setTimeout(r, fail ? 5 : 87))
+  if (fail) throw new Error('HTTP 401')
+}
+// Listagens de modelos/vozes da chave (OpenRouter/ElevenLabs) também ficam locais: listas vazias, sem rede.
+const e2eAiKeysFetch: typeof globalThis.fetch = async () =>
+  new Response(JSON.stringify({ data: [], voices: [] }), { status: 200, headers: { 'content-type': 'application/json' } })
 
 async function main() {
   if (process.env.E2E !== '1') throw new Error('scripts/e2e/api.ts exige E2E=1')
@@ -26,7 +38,7 @@ async function main() {
   const stream = process.env.WA_EVENTS_STREAM || 'wsm:events'
 
   const deliveries: HandledEvent[] = []
-  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries } })
+  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch })
 
   // Mesmo registry do worker real + espião em todos os tipos.
   const reg = createRegistry()

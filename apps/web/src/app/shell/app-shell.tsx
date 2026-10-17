@@ -4,6 +4,8 @@ import { Link, useRouterState } from '@tanstack/react-router'
 import { Menu as MenuIcon, MoreHorizontal, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { CompanySwitcher } from '@/features/company-switcher/company-switcher'
+// T59: chip de saldo de IA; o import eager registra o handler `ai_wallet.updated` antes de o SSE abrir.
+import { WalletChip } from '@/features/settings-ai-usage/wallet-chip'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
@@ -94,6 +96,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
             </button>
           </div>
           <CompanySwitcher session={session} collapsed={collapsed} />
+          <WalletChip session={session} collapsed={collapsed} />
           <div className="-mx-1 min-h-0 flex-1 overflow-y-auto px-1">
             <NavList session={session} collapsed={collapsed} />
           </div>
@@ -159,6 +162,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
               </button>
             </div>
             <CompanySwitcher session={session} />
+            <WalletChip session={session} />
             <div className="flex-1">
               <NavList session={session} onNavigate={() => setDrawerOpen(false)} />
             </div>

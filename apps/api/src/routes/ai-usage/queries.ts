@@ -55,6 +55,17 @@ export const usageDto = (r: UsageRow) => ({
 })
 
 /** No fio, a recarga (`credit` no ledger) aparece como `topup`. */
+/** Última recarga da empresa (`credit` no ledger; T59, card "Última recarga"): valor e data, ou `null`. */
+export async function lastTopup(db: Database, companyId: string): Promise<{ amount_credits: number; created_at: string } | null> {
+  const [row] = await db
+    .select({ amount: aiWalletEntries.amountCredits, at: aiWalletEntries.createdAt })
+    .from(aiWalletEntries)
+    .where(and(eq(aiWalletEntries.companyId, companyId), eq(aiWalletEntries.kind, 'credit')))
+    .orderBy(desc(aiWalletEntries.createdAt), desc(aiWalletEntries.id))
+    .limit(1)
+  return row ? { amount_credits: Number(row.amount), created_at: row.at.toISOString() } : null
+}
+
 export const entryDto = (r: EntryRow) => ({
   id: r.id,
   company_id: r.companyId,

@@ -1,0 +1,51 @@
+{
+  "tab": "AI usage",
+  "title": "AI usage",
+  "subtitle": "Credit balance, usage per day and per feature, statement and quotas for the company.",
+  "loading": "Loading...",
+  "error": "Could not load the data.",
+  "empty": "No AI usage in this company",
+  "period": { "label": "Period", "7d": "Last 7 days", "30d": "Last 30 days", "90d": "Last 90 days" },
+  "cards": {
+    "balance": "Balance",
+    "balanceHint": "Available credits",
+    "period": "Usage in period ({period})",
+    "periodDetail": "{count} calls · cost {cost}",
+    "lastTopup": "Last top-up",
+    "noTopup": "No top-up yet"
+  },
+  "chip": { "label": "AI credits", "status": { "low": "Low balance", "exhausted": "Exhausted" } },
+  "chart": { "title": "Credits consumed", "groupBy": "Group by", "day": "By day", "feature": "By feature", "credits": "Credits", "empty": "No usage in the period." },
+  "statement": {
+    "title": "Statement",
+    "feature": "Feature",
+    "provider": "Provider",
+    "status": "Status",
+    "allFeatures": "All features",
+    "allProviders": "All providers",
+    "allStatuses": "All statuses",
+    "empty": "No entries with these filters.",
+    "tokens": "{n} tokens",
+    "more": "Load more"
+  },
+  "status": { "charged": "Charged", "refunded": "Refunded", "error": "Error" },
+  "features": {
+    "none": "Other",
+    "ai_agent": "AI agent",
+    "ai_agent_create": "Agent creation",
+    "ai_agent_test": "Agent test",
+    "flow": "Flows",
+    "flow_ai": "Flow AI block",
+    "tts": "Voice (TTS)",
+    "flow_copilot": "Flow assistant"
+  },
+  "quotas": {
+    "title": "Quotas",
+    "empty": "No quota set for this company.",
+    "hard": "Blocks when reached",
+    "soft": "Warns only",
+    "noLimits": "No limits set.",
+    "period": { "day": "Daily quota", "month": "Monthly quota" },
+    "metric": { "credits": "Credits", "cost": "Cost", "tokens": "Tokens" }
+  }
+}

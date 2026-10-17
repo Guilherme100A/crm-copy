@@ -1,0 +1,70 @@
+{
+  "tab": "Integraciones",
+  "title": "Integraciones",
+  "subtitle": "Conecta proveedores de IA, pagos, emisores de factura y rastreo de ventas a tu cuenta.",
+  "search": "Buscar integración…",
+  "categoriesLabel": "Categorías de integración",
+  "categories": { "ai": "IA", "sales": "Ventas", "tracking": "Rastreo" },
+  "loading": "Cargando...",
+  "error": "No se pudo completar la acción.",
+  "sections": {
+    "records": "Tus integraciones",
+    "recordsHint": "Conectadas a tu cuenta",
+    "catalog": "Disponibles",
+    "catalogHint": "Listas para conectar"
+  },
+  "empty": {
+    "category": "Ninguna integración en \"{category}\"",
+    "search": "Ningún resultado para \"{term}\"",
+    "records": "Ninguna integración activa en {category}"
+  },
+  "status": { "active": "Activo", "inactive": "Inactivo" },
+  "inUse": "Clave en uso para el proveedor (la activa más reciente)",
+  "edit": "Editar",
+  "delete": "Eliminar",
+  "configure": "Configurar",
+  "comingSoon": "Próximamente",
+  "cancel": "Cancelar",
+  "save": "Guardar",
+  "toast": { "created": "Integración creada", "updated": "Integración actualizada", "deleted": "Integración eliminada" },
+  "aiKey": {
+    "newTitle": "Nueva integración: IA",
+    "editTitle": "Actualizar integración",
+    "provider": "Proveedor",
+    "name": "Nombre de la clave",
+    "namePlaceholder": "Ej.: Producción, Flujo ventas",
+    "secret": "Clave de la API",
+    "secretPlaceholder": "Pega la clave de la API",
+    "secretKeep": "Déjalo en blanco para mantener la clave actual ({hint}).",
+    "howTo": "Cómo obtener la clave",
+    "active": "Activa",
+    "test": "Probar",
+    "testHint": "Prueba la clave guardada en el proveedor.",
+    "testOk": "Conexión OK en {ms} ms",
+    "testFail": "Falló la prueba: {error}",
+    "errors": {
+      "nameLength": "El nombre debe tener de 2 a 80 caracteres.",
+      "secretRequired": "Ingresa la clave de la API.",
+      "secretTooLong": "La clave puede tener como máximo 500 caracteres."
+    },
+    "delete": {
+      "title": "¿Eliminar la clave \"{name}\"?",
+      "bullet1": "Los bloques y agentes de IA que usan esta clave van a fallar.",
+      "bullet2": "Los flujos en curso pueden detenerse.",
+      "bullet3": "Será necesario registrar otra clave para volver a usar el proveedor.",
+      "inUse": "Esta clave está en uso:",
+      "agents": "Agentes",
+      "flows": "Flujos",
+      "force": "Eliminar de todos modos",
+      "confirm": "Eliminar"
+    }
+  },
+  "catalog": {
+    "anthropic": { "title": "Anthropic Claude", "description": "Modelos Claude para agentes y bloques de IA." },
+    "openai": { "title": "OpenAI GPT", "description": "IA generativa para chatbots y flujos." },
+    "google": { "title": "Google Gemini", "description": "Modelos multimodales de Google." },
+    "openrouter": { "title": "OpenRouter", "description": "Una clave para varios modelos." },
+    "elevenlabs": { "title": "ElevenLabs", "description": "Síntesis de voz para audios en los flujos." },
+    "groq": { "title": "Groq", "description": "Inferencia rápida de modelos abiertos." }
+  }
+}

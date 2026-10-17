@@ -1,0 +1,51 @@
+{
+  "tab": "Consumo de IA",
+  "title": "Consumo de IA",
+  "subtitle": "Saldo de créditos, uso por dia e por recurso, extrato e cotas da empresa.",
+  "loading": "Carregando...",
+  "error": "Não foi possível carregar os dados.",
+  "empty": "Nenhum uso de IA nesta empresa",
+  "period": { "label": "Período", "7d": "Últimos 7 dias", "30d": "Últimos 30 dias", "90d": "Últimos 90 dias" },
+  "cards": {
+    "balance": "Saldo",
+    "balanceHint": "Créditos disponíveis",
+    "period": "Uso no período ({period})",
+    "periodDetail": "{count} chamadas · custo {cost}",
+    "lastTopup": "Última recarga",
+    "noTopup": "Nenhuma recarga ainda"
+  },
+  "chip": { "label": "Créditos de IA", "status": { "low": "Saldo baixo", "exhausted": "Esgotado" } },
+  "chart": { "title": "Créditos consumidos", "groupBy": "Agrupar por", "day": "Por dia", "feature": "Por recurso", "credits": "Créditos", "empty": "Sem consumo no período." },
+  "statement": {
+    "title": "Extrato",
+    "feature": "Recurso",
+    "provider": "Provedor",
+    "status": "Status",
+    "allFeatures": "Todos os recursos",
+    "allProviders": "Todos os provedores",
+    "allStatuses": "Todos os status",
+    "empty": "Nenhum lançamento com esses filtros.",
+    "tokens": "{n} tokens",
+    "more": "Carregar mais"
+  },
+  "status": { "charged": "Cobrado", "refunded": "Estornado", "error": "Erro" },
+  "features": {
+    "none": "Outros",
+    "ai_agent": "Agente de IA",
+    "ai_agent_create": "Criação de agente",
+    "ai_agent_test": "Teste de agente",
+    "flow": "Fluxos",
+    "flow_ai": "Bloco de IA do fluxo",
+    "tts": "Voz (TTS)",
+    "flow_copilot": "Assistente de fluxo"
+  },
+  "quotas": {
+    "title": "Cotas",
+    "empty": "Nenhuma cota definida para esta empresa.",
+    "hard": "Bloqueia ao atingir",
+    "soft": "Só avisa",
+    "noLimits": "Sem limites definidos.",
+    "period": { "day": "Cota diária", "month": "Cota mensal" },
+    "metric": { "credits": "Créditos", "cost": "Custo", "tokens": "Tokens" }
+  }
+}

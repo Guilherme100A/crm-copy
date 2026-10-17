@@ -7,7 +7,7 @@ import { getCompanyCtx } from '../../lib/context'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { validate } from '../../lib/validate'
 import { requirePerm } from '../../middleware/authorize'
-import { listUsage, quotaDto, summaryQuery, usageListQuery, usageSummary, walletDto } from './queries'
+import { lastTopup, listUsage, quotaDto, summaryQuery, usageListQuery, usageSummary, walletDto } from './queries'
 
 export function aiUsageRoutes(deps: ResolvedDeps) {
   const wallets = new WalletService({ db: deps.db })
@@ -16,7 +16,9 @@ export function aiUsageRoutes(deps: ResolvedDeps) {
 
   app.get('/api/ai/wallet', view, async (c) => {
     const { companyId } = getCompanyCtx(c)
-    return c.json({ wallet: walletDto(await wallets.getWallet(companyId)) }, 200)
+    const [wallet, last] = await Promise.all([wallets.getWallet(companyId), lastTopup(deps.db, companyId)])
+    // T59: `last_topup` alimenta o card "Última recarga" da aba de consumo (AC-T59-02).
+    return c.json({ wallet: { ...walletDto(wallet), last_topup: last } }, 200)
   })
 
   app.get('/api/ai/usage', view, validate('query', usageListQuery), async (c) => {

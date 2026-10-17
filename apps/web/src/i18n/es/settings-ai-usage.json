@@ -1,0 +1,51 @@
+{
+  "tab": "Consumo de IA",
+  "title": "Consumo de IA",
+  "subtitle": "Saldo de créditos, uso por día y por recurso, extracto y cuotas de la empresa.",
+  "loading": "Cargando...",
+  "error": "No se pudieron cargar los datos.",
+  "empty": "Ningún uso de IA en esta empresa",
+  "period": { "label": "Período", "7d": "Últimos 7 días", "30d": "Últimos 30 días", "90d": "Últimos 90 días" },
+  "cards": {
+    "balance": "Saldo",
+    "balanceHint": "Créditos disponibles",
+    "period": "Uso en el período ({period})",
+    "periodDetail": "{count} llamadas · costo {cost}",
+    "lastTopup": "Última recarga",
+    "noTopup": "Aún no hay recargas"
+  },
+  "chip": { "label": "Créditos de IA", "status": { "low": "Saldo bajo", "exhausted": "Agotado" } },
+  "chart": { "title": "Créditos consumidos", "groupBy": "Agrupar por", "day": "Por día", "feature": "Por recurso", "credits": "Créditos", "empty": "Sin consumo en el período." },
+  "statement": {
+    "title": "Extracto",
+    "feature": "Recurso",
+    "provider": "Proveedor",
+    "status": "Estado",
+    "allFeatures": "Todos los recursos",
+    "allProviders": "Todos los proveedores",
+    "allStatuses": "Todos los estados",
+    "empty": "Ningún movimiento con estos filtros.",
+    "tokens": "{n} tokens",
+    "more": "Cargar más"
+  },
+  "status": { "charged": "Cobrado", "refunded": "Reembolsado", "error": "Error" },
+  "features": {
+    "none": "Otros",
+    "ai_agent": "Agente de IA",
+    "ai_agent_create": "Creación de agente",
+    "ai_agent_test": "Prueba de agente",
+    "flow": "Flujos",
+    "flow_ai": "Bloque de IA del flujo",
+    "tts": "Voz (TTS)",
+    "flow_copilot": "Asistente de flujo"
+  },
+  "quotas": {
+    "title": "Cuotas",
+    "empty": "No hay cuotas definidas para esta empresa.",
+    "hard": "Bloquea al alcanzarla",
+    "soft": "Solo avisa",
+    "noLimits": "Sin límites definidos.",
+    "period": { "day": "Cuota diaria", "month": "Cuota mensual" },
+    "metric": { "credits": "Créditos", "cost": "Costo", "tokens": "Tokens" }
+  }
+}

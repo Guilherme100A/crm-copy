@@ -12,7 +12,7 @@ import { useIsDesktop } from '@/lib/use-media-query'
 import { cn } from '@/lib/utils'
 
 export const Route = createFileRoute('/settings/')({
-  validateSearch: z.object({ tab: z.string().optional().catch(undefined), company_tab: z.string().optional().catch(undefined) }),
+  validateSearch: z.object({ tab: z.string().optional().catch(undefined), company_tab: z.string().optional().catch(undefined), cat: z.string().optional().catch(undefined) /* T59: categoria do hub de integrações */ }),
   component: SettingsHub,
 })
 
