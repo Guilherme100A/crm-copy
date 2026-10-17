@@ -128,7 +128,7 @@
 | 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
-| 12 | T100 | UI admin interno | TODO | | | 0 | |
+| 12 | T100 | UI admin interno | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |

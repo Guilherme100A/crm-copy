@@ -296,7 +296,7 @@ const RAW = [
   T('T96', 'Admin: avisos, banners, saúde, sessões WhatsApp e IA', ['T22', 'T46', 'T37'], [core('admin-ops'), route('admin-ops'), schema('admin'), 'packages/core/src/dashboard/bootstrap/index.ts' /* aditivo: avisos e banners ativos no bootstrap (AC-T96-01) */, 'packages/core/src/ai-keys/service.ts', 'packages/core/src/ai-agents/provider-keys.ts' /* aditivo: segredo de plataforma do banco tem precedência sobre o env (AC-T96-04) */], ['api', 'core'], { minWave: 11 }),
   T('T97', 'Afiliação: captura de indicação e link externo', ['T36'], ['packages/core/src/affiliate/**', 'apps/web/src/features/affiliate/**', i18n('affiliate')], ['core', 'web'], { e2e: true, minWave: 11 }),
   T('T98', 'Extensão: perfil ai-manager do gateway e documentação', ['T46'], ['packages/wa-gateway-rpc/src/profiles/ai-manager/**', 'docs/extension/**'], ['wa-gateway-rpc'], { minWave: 11 }),
-  T('T100', 'UI admin interno', ['T95', 'T96', 'T23'], [...ui('admin')], ['web'], { e2e: true }),
+  T('T100', 'UI admin interno', ['T95', 'T96', 'T23'], [...ui('admin'), 'apps/web/src/app/shell/app-shell.tsx' /* aditivo: pop-up de aviso no app do cliente (AC-T100-03) */, 'apps/api/src/routes/admin-ops/**', 'packages/core/src/admin-ops/**' /* aditivo: upload global de imagem do admin + rota pública que a serve (AC-T100-03) */], ['api', 'core', 'web'], { e2e: true }),
 
   // ---------------- Facebook / Meta Ads (spec 11) ----------------
   T('T99', 'Meta: cliente Graph, OAuth, perfis e contas de anúncio', ['T22'],
