@@ -1,4 +1,4 @@
-| undefined | T106 | undefined| VERIFYING | Prumo | Sentinela | 0 | op ~35 min (verify 0, base 9bd202b); tester em andamento || undefined | T107 | undefined| VERIFYING | Forja | Vigia | 0 | tester APROVADO (6 + 8 E2E); aguarda lote com a T106 || undefined | T129 | undefined| VERIFYING | Prumo | (vaga) | 0 | op ~12 min (verify 0, base 170f8ae; jobId único por geração); tester na fila || undefined | T93 | undefined| VERIFYING | Lastro | (vaga) | 0 | op ~38 min (verify 0, base bea292d); tester na fila || undefined | T82 | undefined| MERGED | Lastro | Sentinela | 0 | e76a98e (lote com T98) || undefined | T98 | undefined| MERGED | Esquadro | Vigia | 0 | 2b21bdc (lote com T82) |# STATUS — execução da SPEC (fonte da verdade do andamento)
+# STATUS — execução da SPEC (fonte da verdade do andamento)
 
 > Mantido pelo Orquestrador ("Claude Code"). Estados: `TODO`, `IN_PROGRESS`, `VERIFYING`, `REJECTED (n)`, `BLOCKED`, `ACCEPTED`, `MERGED`.
 > Gerado em 2026-10-15 a partir de `spec/verify/tasks.mjs`. Ondas e dependências: SPEC §4. Comando útil: `node spec/verify/verify.mjs list`.
@@ -83,7 +83,7 @@
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | MERGED | Esquadro | Sentinela | 0 | 65f5a20 (1º gate em LOTE com a T90; op 13 min, tester ~4 min) |
-| 6 | T93 | Assistente (copiloto) de fluxo | IN_PROGRESS | Lastro | (vaga) | 0 | libera cabeçalho do editor e edit.tsx (aditivo) |
+| 6 | T93 | Assistente (copiloto) de fluxo | VERIFYING | Lastro | (vaga) | 0 | op ~38 min (verify 0, base bea292d); tester na fila |
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
@@ -106,18 +106,18 @@
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | MERGED | Forja | Sentinela | 0 | f879ad6 (4º lote com a T100; montagem de produção incluída) |
-| 7 | T107 | Indicador de conexões desconectadas no menu | VERIFYING | Forja | (vaga) | 0 | op ~12 min (verify 0, base 51bf479); tester na fila |
+| 7 | T107 | Indicador de conexões desconectadas no menu | VERIFYING | Forja | Vigia | 0 | tester APROVADO (6 + 8 E2E); aguarda lote com a T106 |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | IN_PROGRESS | (sob demanda) | (vaga) | 0 | sem Zenith; libera node-editors/sales e harness (aditivo) |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | VERIFYING | Forja | (vaga) | 0 | op ~32 min (verify 0, base bea292d); tester na fila |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
-| 8 | T82 | Simulador de fluxos | VERIFYING | Lastro | (vaga) | 0 | op ~20 min (verify 0, base 903ba1c); tester na fila |
+| 8 | T82 | Simulador de fluxos | MERGED | Lastro | Sentinela | 0 | e76a98e (lote com T98) |
 | 8 | T83 | UI disparos em massa | MERGED | Forja | Vigia | 0 | 89c58f2 (gate individual após conflito manual no scripts/e2e/api.ts com a T90) |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | MERGED | Esquadro | Sentinela | 0 | 09cd6a8 (2º lote com a T86; op ~16 min, tester ~4 min) |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
-| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | (vaga) | 0 | op ~35 min (verify 0, base 9bd202b); tester na fila |
+| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | Sentinela | 0 | op ~35 min (verify 0, base 9bd202b); tester em andamento |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
@@ -126,7 +126,7 @@
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | MERGED | Prumo | Sentinela | 0 | 96113e7 (lote; op ~11 min, tester ~5 min) |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | Vigia | 0 | tester APROVADO (56 + 12 skip por desenho); aguarda lote com a T82 |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | MERGED | Esquadro | Vigia | 0 | 2b21bdc (lote com T82) |
 | 11 | T108 | Tutoriais e widget de suporte plugável | VERIFYING | Prumo | (vaga) | 0 | op ~13 min (verify 0, base dec9225); tester na fila |
 | 12 | T100 | UI admin interno | MERGED | Lastro | Vigia | 0 | 29b5725 (4º lote com a T105) |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
@@ -141,7 +141,7 @@
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | MERGED | Forja | Sentinela | 0 | b9a9cb7 (piloto: op ~42 min, tester ~8 min) |
-| 8 | T129 | Meta: bundle assíncrono não fica preso em loading após erro de conta | IN_PROGRESS | (sob demanda) | (vaga) | 0 | criada do bug achado na T106 |
+| 8 | T129 | Meta: bundle assíncrono não fica preso em loading após erro de conta | VERIFYING | Prumo | (vaga) | 0 | op ~12 min (verify 0, base 170f8ae; jobId único por geração); tester na fila |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
