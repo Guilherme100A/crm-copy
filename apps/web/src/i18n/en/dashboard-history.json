@@ -43,5 +43,10 @@
     "amountInvalid": "Enter a valid amount (zero or more, up to 2 decimal places).",
     "dateInvalid": "Enter the sale date and time.",
     "error": "We couldn't save the sale."
+  },
+  "attribution": {
+    "confirmed_native": "Source indicated by the ad",
+    "confirmed_link": "Source confirmed by link",
+    "probable": "Probable source (time proximity only)"
   }
 }
