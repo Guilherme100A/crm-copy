@@ -14,6 +14,8 @@ import { WalletChip } from '@/features/settings-ai-usage/wallet-chip'
 import { SupportApprovalModal } from '@/features/settings-support/approval-modal'
 // T97: item "Programa de afiliados" (só com AFFILIATE_PORTAL_URL, via GET /api/app-config).
 import { AffiliateEntry } from '@/features/affiliate/affiliate-entry'
+// T107: import ESTÁTICO (registra os handlers connection.* do indicador de queda antes do SSE abrir).
+import '@/features/shell-disconnect/realtime'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'

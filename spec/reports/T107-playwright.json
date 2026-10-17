@@ -1,0 +1,397 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T107\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/acceptance/T107",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "--project=desktop"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T107\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T107/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T107/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T107/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T107/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T107/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T107\\",
+      "url": "http://127.0.0.1:23130",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "23130",
+        "E2E_API_PORT": "23131",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T107\\indicator.e2e.ts",
+      "file": "T107/indicator.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T107 — indicador de conexões desconectadas no menu",
+          "file": "T107/indicator.e2e.ts",
+          "line": 84,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T107-01 queda nas últimas 24 h: a API devolve true e o item Conexões mostra o indicador ao abrir",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1061,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:25.374Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-582d21bf4955cae5cf05",
+              "file": "T107/indicator.e2e.ts",
+              "line": 85,
+              "column": 3
+            },
+            {
+              "title": "AC-T107-01 sem queda (conexão só conectada): sem indicador",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1834,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:26.533Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-58944a1682593688a3e5",
+              "file": "T107/indicator.e2e.ts",
+              "line": 105,
+              "column": 3
+            },
+            {
+              "title": "AC-T107-02 em /welcome: connection.disconnected via SSE liga o indicador sem nova consulta; connection.connected consulta de novo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3715,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:28.383Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-adea5986d260cddefc40",
+              "file": "T107/indicator.e2e.ts",
+              "line": 115,
+              "column": 5
+            },
+            {
+              "title": "AC-T107-02 em /connections: connection.disconnected via SSE liga o indicador sem nova consulta; connection.connected consulta de novo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3826,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:32.117Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-c5a2a60ba8115934d0e3",
+              "file": "T107/indicator.e2e.ts",
+              "line": 115,
+              "column": 5
+            },
+            {
+              "title": "AC-T107-03 member (sem connections.view) não vê nem consulta; API → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3324,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:35.954Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-832892f586aac7898339",
+              "file": "T107/indicator.e2e.ts",
+              "line": 140,
+              "column": 3
+            },
+            {
+              "title": "AC-T107-03 support (mesmo membro com connections.view) não vê nem consulta; API → 403",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 5510,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:39.288Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-6f6ab8dae62f426405ac",
+              "file": "T107/indicator.e2e.ts",
+              "line": 157,
+              "column": 3
+            },
+            {
+              "title": "AC-T107-03 admin (com connections.view) e owner veem o indicador",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1737,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:44.809Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-5749c0c9b0b4cfb389ce",
+              "file": "T107/indicator.e2e.ts",
+              "line": 183,
+              "column": 3
+            },
+            {
+              "title": "AC-T107-04 trocar de empresa refaz a consulta com o X-Company-Id da nova empresa (e volta)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2083,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T04:29:46.555Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "a8136c98eca717994446-cca034f03cbbb253ad0f",
+              "file": "T107/indicator.e2e.ts",
+              "line": 199,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T04:29:18.149Z",
+    "duration": 30965.797000000002,
+    "expected": 8,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

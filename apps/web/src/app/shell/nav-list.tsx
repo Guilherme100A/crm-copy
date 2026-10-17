@@ -1,5 +1,7 @@
 // Itens de navegação (sidebar desktop e drawer mobile), filtrados pela sessão (spec 18 §2.5).
 import { Link, useRouterState } from '@tanstack/react-router'
+// T107: indicador de queda no item Conexões.
+import { DisconnectIndicator } from '@/features/shell-disconnect/indicator'
 import { useT } from '@/i18n'
 import type { Session } from '@/lib/session'
 import { cn } from '@/lib/utils'
@@ -44,6 +46,7 @@ export function NavList({ session, collapsed = false, onNavigate }: { session: S
                 {!collapsed && item.badgeKey ? (
                   <span className="ml-auto rounded bg-primary/15 px-1.5 text-[10px] font-semibold text-primary uppercase">{t(item.badgeKey)}</span>
                 ) : null}
+                {item.id === 'connections' ? <DisconnectIndicator session={session} collapsed={collapsed} /> : null}
               </>
             )
             if (item.href) {

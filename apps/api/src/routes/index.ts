@@ -29,6 +29,7 @@ import { productsRoutes } from './products/index'
 import { salesRoutes } from './sales/index'
 import { invoiceIntegrationsRoutes } from './invoice-integrations/index'
 import { utmifyRoutes } from './utmify/index'
+import { connectionsAlertRoutes } from './connections-alert/index'
 import { connectionsRoutes } from './connections/index'
 import { contentRoutes } from './content/index'
 import { massDispatchRoutes } from './mass-dispatch/index'
@@ -95,6 +96,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', invoiceIntegrationsRoutes(deps)) // T112: antes de salesRoutes (/api/sales/:id/invoice, reemit-invoice)
   app.route('/', utmifyRoutes(deps)) // T113: antes de salesRoutes (/api/sales/:id/utmify)
   app.route('/', salesRoutes(deps))
+  app.route('/', connectionsAlertRoutes(deps)) // T107: antes de connectionsRoutes (/api/connections/:id)
   app.route('/', connectionsRoutes(deps))
   app.route('/', contentRoutes(deps))
   app.route('/', massDispatchRoutes(deps))
