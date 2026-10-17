@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: T102 (integração E2E final): operário Baluarte, tester Sextante. É a última tarefa. Zenith fora de escopo (T110 CANCELLED).
+- OBRA CONCLUÍDA em 2026-10-17: todas as tarefas MERGED (T110 CANCELLED: Zenith fora de escopo). Restam só as pendências abaixo, para evolução futura.
 - Bloqueios: nenhum (T110 cancelada: Zenith fora de escopo)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
@@ -142,7 +142,7 @@
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | MERGED | Forja | Sentinela | 0 | b9a9cb7 (piloto: op ~42 min, tester ~8 min) |
 | 8 | T129 | Meta: bundle assíncrono não fica preso em loading após erro de conta | MERGED | Prumo | Atalaia | 0 | 6d8349b (com retrabalho: rate_limited no envelope async) |
-| 13 | T102 | Integração E2E final | IN_PROGRESS | Baluarte | Sextante | 0 | despachada sobre d714bd1 (todas as 31 deps MERGED) |
+| 13 | T102 | Integração E2E final | MERGED | Baluarte | Sextante | 0 | 778d7ff (7 jornadas; 2 bugs corrigidos: shutdown do wa-worker pausava runs (T13), sonda dupla de perfil (T23); gate: tester repetiu 1 vez) |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
 
@@ -260,3 +260,6 @@
 | T114 (pendência) | Rótulos traduzidos das saídas no canvas (hoje ids crus charge_created/payment_approved; flow-editor/canvas, T45); sale.updated em SSE já aberto (repoll de 4 s; solução geral em lib/realtime.ts); configureInvoices/configureUtmify no worker do harness; UI exige token na criação de Notasy/UTMify, API aceita sem | T114 |
 | harness | scripts/e2e/serve.mjs só faz build da web se apps/web/dist não existir, e o verify do tester não faz build: o E2E pode rodar código velho. Reconstruir quando o dist for mais velho que apps/web/src | T106 (Cunha) |
 | Meta (servidor) | GET sync SEM force com cache + conta em espera não marca rate_limited (o async marca, T129): inconsistência entre os modos | T106 (Vela) |
+| fixture wa | FakeTransport numera recebidas FAKE-IN-n por transporte; com 2 conexões na mesma empresa ou após reiniciar o wa-worker os ids colidem em messages_company_wa_id_uq e a mensagem é descartada em silêncio (só fixture; no WhatsApp real os ids são aleatórios) | T102 (Sextante) |
+| motor de fluxos | Sessão nova tem RATE_LIMIT de 5 envios/min (warmup); envio de fluxo rejeitado deixa o run failed ('rate limit reached') em vez de reenfileirar | T102 (Sextante) |
+| gate T102 | O verify do tester da T102 falhou 1 vez no gate e passou na repetição (instabilidade sob carga da suíte inteira) | T102 |
