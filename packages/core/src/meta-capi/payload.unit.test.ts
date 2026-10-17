@@ -6,7 +6,7 @@
 import { createHash } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
 import { buildUserData, matchScore, normalizeCity, normalizePhone, normalizeState, normalizeText, normalizeZip, resolveCountry } from './hashing'
-import { CapiService } from './service'
+import { CapiService, classifyGraphError } from './service'
 import { extractTrackingCode, fbcFromFbclid, trackingSuffix } from './tracked-links'
 
 const h = (v: string) => createHash('sha256').update(v).digest('hex')
@@ -133,5 +133,23 @@ describe('link rastreável: código e fbc (fbp-and-fbc)', () => {
     expect(extractTrackingCode('(ref: abc234) oi')).toEqual({ code: 'ABC234', cleaned: 'oi' })
     expect(extractTrackingCode('sem código')).toBeNull()
     expect(extractTrackingCode('(ref ABC10O)')).toBeNull()
+  })
+})
+
+describe('classificação dos erros da Graph (graph-api/guides/error-handling)', () => {
+  it('só parâmetro/permissão é rejeição que permite fallback; 5xx/serviço é incerto; limite é retentável', () => {
+    expect(classifyGraphError(400, 100, true)).toBe('bm_rejected')
+    expect(classifyGraphError(403, 10, true)).toBe('bm_rejected')
+    expect(classifyGraphError(403, 200, true)).toBe('bm_rejected')
+    expect(classifyGraphError(400, 3, true)).toBe('bm_rejected')
+    expect(classifyGraphError(400, 190, true)).toBe('rejected')
+    expect(classifyGraphError(400, 102, true)).toBe('rejected')
+    expect(classifyGraphError(500, 2, true)).toBe('uncertain')
+    expect(classifyGraphError(400, 1, true)).toBe('uncertain')
+    expect(classifyGraphError(502, undefined, false)).toBe('uncertain')
+    expect(classifyGraphError(429, undefined, true)).toBe('rate_limited')
+    expect(classifyGraphError(400, 4, true)).toBe('rate_limited')
+    expect(classifyGraphError(400, 17, true)).toBe('rate_limited')
+    expect(classifyGraphError(400, 613, true)).toBe('rate_limited')
   })
 })

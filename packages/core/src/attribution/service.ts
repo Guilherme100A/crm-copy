@@ -1,7 +1,7 @@
 // Atribuição do contato (T73; 11 §3.7): primeiro e último toque (UTM, CTWA, `source_id`/`source_url`). O primeiro é
 // gravado uma única vez e NUNCA sobrescrito; o último é atualizado a cada toque (AC-T73-04).
 import { and, eq, sql } from 'drizzle-orm'
-import { contactAttribution, contacts, type Database } from '@crm/db'
+import { attributionRank, contactAttribution, contacts, type AttributionConfidence, type AttributionHistoryEntry, type Database } from '@crm/db'
 
 export const TOUCH_FIELDS = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term', 'ctwa_clid', 'source_id', 'source_url'] as const
 export type TouchField = (typeof TOUCH_FIELDS)[number]
@@ -15,6 +15,8 @@ export interface TouchDto extends Record<TouchField, string | null> {
 export interface AttributionDto {
   first_touch: TouchDto
   last_touch: TouchDto
+  /** Revisão 3: melhor evidência de origem de anúncio (nível de confiança + método + histórico). */
+  origin: AttributionConfidenceDto
 }
 
 const COLS = {
@@ -82,4 +84,61 @@ function touchOf(r: Row, prefix: 'first' | 'last'): TouchDto {
   }
 }
 
-export const toAttributionDto = (r: Row): AttributionDto => ({ first_touch: touchOf(r, 'first'), last_touch: touchOf(r, 'last') })
+export const toAttributionDto = (r: Row): AttributionDto => ({ first_touch: touchOf(r, 'first'), last_touch: touchOf(r, 'last'), origin: toConfidenceDto(r) })
+
+// ---- Revisão 3: níveis de confiança da atribuição ----------------------------------------------------------------
+// Ordem: confirmed_native (metadados do anúncio na mensagem: "origem indicada pelo anúncio", não "causa da venda") >
+// confirmed_link (código do link rastreável na 1ª mensagem) > probable (só proximidade de tempo) > none. Uma evidência
+// melhor ou igual substitui a atual; uma pior só entra no histórico.
+
+export interface AttributionEvidence {
+  confidence: Exclude<AttributionConfidence, 'none'>
+  method: 'ctwa_referral' | 'tracked_link_code' | 'tracked_link_window'
+  /** Id do anúncio ligado à evidência (cartão do anúncio ou `ad_id` do clique). */
+  sourceId?: string | null
+  clickId?: string | null
+  at?: Date
+}
+
+export interface AttributionConfidenceDto {
+  confidence: AttributionConfidence
+  method: string | null
+  at: string | null
+  source_id: string | null
+  history: AttributionHistoryEntry[]
+}
+
+export const toConfidenceDto = (r: Pick<Row, 'confidence' | 'method' | 'confidenceAt' | 'confidenceSourceId' | 'confidenceHistory'> | null | undefined): AttributionConfidenceDto => ({
+  confidence: r?.confidence ?? 'none',
+  method: r?.method ?? null,
+  at: r?.confidenceAt?.toISOString() ?? null,
+  source_id: r?.confidenceSourceId ?? null,
+  history: r?.confidenceHistory ?? [],
+})
+
+const HISTORY_MAX = 50
+
+/** Grava uma evidência de origem; devolve se ela virou a atual. */
+export async function recordAttributionEvidence(db: Database, companyId: string, contactId: string, ev: AttributionEvidence): Promise<boolean> {
+  const at = ev.at ?? new Date()
+  return db.transaction(async (tx) => {
+    await tx
+      .insert(contactAttribution)
+      .values({ contactId, companyId, firstAt: at, lastAt: at } as typeof contactAttribution.$inferInsert)
+      .onConflictDoNothing({ target: contactAttribution.contactId })
+    const [cur] = await tx.select().from(contactAttribution).where(eq(contactAttribution.contactId, contactId)).for('update')
+    if (!cur) return false
+    const applied = attributionRank(ev.confidence) <= attributionRank(cur.confidence)
+    const entry: AttributionHistoryEntry = { confidence: ev.confidence, method: ev.method, at: at.toISOString(), source_id: ev.sourceId ?? null, click_id: ev.clickId ?? null, outcome: applied ? 'applied' : 'kept_previous' }
+    const history = [...(cur.confidenceHistory ?? []), entry].slice(-HISTORY_MAX)
+    await tx
+      .update(contactAttribution)
+      .set({
+        confidenceHistory: history,
+        ...(applied ? { confidence: ev.confidence, method: ev.method, confidenceAt: at, confidenceSourceId: ev.sourceId ?? null, confidenceClickId: ev.clickId ?? null } : {}),
+        updatedAt: sql`now()`,
+      })
+      .where(eq(contactAttribution.contactId, contactId))
+    return applied
+  })
+}

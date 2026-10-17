@@ -8,7 +8,7 @@ import { and, asc, eq, sql } from 'drizzle-orm'
 import { auditLogs, chatEvents, chats, companies, messages, type CrmMessageStatus, type Database } from '@crm/db'
 import type { RealtimeEventData, RealtimeEventType } from '@crm/shared'
 import type { IncomingMessage, WaEvent, WaEventOf, WaGateway } from '@crm/wa-port'
-import { AttributionService } from '../../attribution/service'
+import { AttributionService, recordAttributionEvidence } from '../../attribution/service'
 import { ContactsError } from '../../contacts/errors'
 import { TrackedLinksService } from '../../meta-capi/tracked-links'
 import { ContactsService, type ContactDto } from '../../contacts/service'
@@ -151,6 +151,8 @@ export class ChatIngest {
     }
     if (live && m.ad && (m.ad.ctwa_clid || m.ad.source_id)) {
       await new AttributionService(this.db).recordTouch(companyId, contact.id, { ctwa_clid: m.ad.ctwa_clid ?? null, source_id: m.ad.source_id ?? null, source_url: m.ad.source_url ?? null }, { at: Number.isFinite(at.getTime()) ? at : this.now() })
+      // Metadados do anúncio na própria mensagem: evidência mais forte ("origem indicada pelo anúncio").
+      await recordAttributionEvidence(this.db, companyId, contact.id, { confidence: 'confirmed_native', method: 'ctwa_referral', sourceId: m.ad.source_id ?? null, at: Number.isFinite(at.getTime()) ? at : this.now() })
       if (m.ad.ctwa_clid) adSource = 'ctwa'
     }
     const r = await this.db.transaction(async (tx) => {
@@ -227,6 +229,12 @@ export class ChatIngest {
     if (r.duplicate) {
       const dup = await this.findByWaId(companyId, m.id)
       return { status: 'duplicate', chatId: r.chatId, messageId: dup?.id ?? '' }
+    }
+
+    // Link rastreável sem código (opcional): 1º contato novo da conexão logo depois de um clique → ligação "provável".
+    if (live && r.chatCreated && !adSource) {
+      const probable = await new TrackedLinksService({ db: this.db, now: this.now }).matchProbable(companyId, conn.connectionId, contact.id, this.now())
+      if (probable) adSource = 'link'
     }
 
     await this.publishMessage(companyId, r.chat, r.message, r.chatCreated, !historical)

@@ -9,12 +9,16 @@
 //   `event_id = ctx.idempotencyKey('pixel')` — o retry do passo não reenvia.
 // `registerPixelNodes` troca o stub do grupo `pixel` em `nodes/index.ts`; `configurePixelNodes` define as deps do processo.
 import type { Database } from '@crm/db'
+import { eventJobId, type CapiEventEnqueue } from '../../../meta-capi/ad-lead'
 import { CAPI_EVENT_NAMES, CapiService, type CapiEventName, type CapiSendResult, type CapiServiceOptions } from '../../../meta-capi/service'
 import type { NodeContext, NodeHandler, NodeOutcome } from '../../engine/context'
 import type { NodeRegistry } from '../../engine/registry'
 
 /** Opções do CapiService do nó (o `db` é sempre o do passo). */
-export type PixelNodeDeps = Partial<Omit<CapiServiceOptions, 'db'>>
+export type PixelNodeDeps = Partial<Omit<CapiServiceOptions, 'db'>> & {
+  /** Fila da retentativa de evento incerto (job `meta-capi` `event`). */
+  enqueueRetry?: CapiEventEnqueue
+}
 
 export class PixelNodeError extends Error {
   constructor(
@@ -62,7 +66,8 @@ export function pixelHandler(deps: PixelNodeDeps = {}): NodeHandler {
         const digits = (v: unknown) => (typeof v === 'string' ? ctx.render(v).replace(/\D/g, '') : '') || null
         const pageId = digits(c.page_id)
         const wabaId = digits(c.whatsapp_business_account_id)
-        const capi = new CapiService({ ...deps, db })
+        const { enqueueRetry, ...capiOpts } = deps
+        const capi = new CapiService({ ...capiOpts, db })
         const result = await ctx.once<CapiSendResult>('pixel', async () =>
           capi.send({
             companyId: ctx.companyId,
@@ -81,6 +86,15 @@ export function pixelHandler(deps: PixelNodeDeps = {}): NodeHandler {
           }),
         )
         if (result.status === 'failed') throw new PixelNodeError('capi_failed', result.error)
+        // Timeout/rede/5xx: a Meta pode ter recebido. Retenta o MESMO evento pela fila (mesmo event_id e modo); sem fila,
+        // vira falha do nó.
+        if (result.status === 'uncertain') {
+          if (!enqueueRetry) throw new PixelNodeError('capi_uncertain', result.error)
+          await enqueueRetry(
+            { kind: 'event', companyId: ctx.companyId, pixelConfigId, eventName, eventId: result.eventId, value, currency, contactId: ctx.contactId ?? null, actionSource: 'chat', source: 'flow', sourceId: ctx.runId, pageId, wabaId },
+            { jobId: eventJobId(pixelConfigId, result.eventId) },
+          )
+        }
         ctx.setVar('pixel', { event_id: result.eventId, status: result.status, event: eventName, ...(result.status === 'sent' ? { mode: result.mode } : {}) })
         return ok
       } catch (err) {

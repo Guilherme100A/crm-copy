@@ -183,3 +183,22 @@ export function applyInternalMetrics(rows: JoinRows, result: JoinResult): void {
   put(rows.adset, result.adset)
   put(rows.campaign, result.campaign)
 }
+
+/**
+ * Revisão 3: vendas com atribuição só `probable` (proximidade de tempo), separadas das confirmadas. Nunca somadas em
+ * `purchases_leona`: a UI só as junta ao total com o filtro explícito ligado, e com legenda.
+ */
+export function applyProbableMetrics(rows: JoinRows, result: JoinResult): void {
+  const put = (list: readonly BundleRow[], map: Map<string, InternalMetrics>) => {
+    for (const row of list) {
+      const m = map.get(row.id)
+      if (!m) continue
+      row.metrics.purchases_leona_probable = m.purchases_internal
+      row.metrics.purchase_value_leona_probable = m.purchase_value_internal_account
+      row.metrics.purchase_value_leona_probable_display = m.purchase_value_internal
+    }
+  }
+  put(rows.ad, result.ad)
+  put(rows.adset, result.adset)
+  put(rows.campaign, result.campaign)
+}

@@ -2,7 +2,7 @@
 // (empresa, origem, external_id): repetir atualiza o status sem criar outra venda nem outro `sale.recorded`.
 import { and, desc, eq, inArray, sql, type SQL } from 'drizzle-orm'
 import { buildPageMeta, pageOffset, type PageResponse } from '@crm/shared'
-import { companies, contacts, products, SALE_SOURCES, SALE_STATUSES, sales, type Database, type SaleSource, type SaleStatus } from '@crm/db'
+import { companies, contactAttribution, contacts, products, SALE_SOURCES, SALE_STATUSES, sales, type AttributionConfidence, type Database, type SaleSource, type SaleStatus } from '@crm/db'
 import type { ChatPublisher } from '../chats/ingest/chat-ingest'
 import { normalizeCurrency, salesInvalid, salesNotFound, UUID_RE } from './errors'
 
@@ -20,6 +20,8 @@ export interface RecordSaleInput {
   /** Ausente → herda `contacts.source_id` (AC-T34-05); explícito (inclusive null) vence. */
   sourceId?: string | null
   ctwaClid?: string | null
+  /** Revisão 3: confiança de um `sourceId` explícito (default `confirmed_native`, método `informed`). */
+  attributionConfidence?: AttributionConfidence
   instanceName?: string | null
   instanceNumber?: string | null
   leadNumber?: string | null
@@ -40,6 +42,9 @@ export interface SaleDto {
   external_id: string | null
   source_id: string | null
   ctwa_clid: string | null
+  /** Revisão 3: `confirmed_native` | `confirmed_link` | `probable` | `none`. */
+  attribution_confidence: AttributionConfidence
+  attribution_method: string | null
   contact_id: string | null
   connection_id: string | null
   product_id: string | null
@@ -93,6 +98,8 @@ function toDto(r: { sale: typeof sales.$inferSelect; productName: string | null 
     external_id: s.externalId,
     source_id: s.sourceId,
     ctwa_clid: s.ctwaClid,
+    attribution_confidence: s.attributionConfidence,
+    attribution_method: s.attributionMethod,
     contact_id: s.contactId,
     connection_id: s.connectionId,
     product_id: s.productId,
@@ -281,14 +288,22 @@ export class SalesService {
         else out.productId = p.id
       }
     }
-    let contact: { sourceId: string | null; ctwaClid: string | null } | null = null
+    let contact: { sourceId: string | null; ctwaClid: string | null; confidence: AttributionConfidence | null; method: string | null; confidenceSourceId: string | null } | null = null
     if (input.contactId !== undefined) {
       if (input.contactId === null) out.contactId = null
       else {
         const [ct] = UUID_RE.test(input.contactId)
           ? await this.db
-              .select({ id: contacts.id, sourceId: contacts.sourceId, ctwaClid: contacts.ctwaClid })
+              .select({
+                id: contacts.id,
+                sourceId: contacts.sourceId,
+                ctwaClid: contacts.ctwaClid,
+                confidence: contactAttribution.confidence,
+                method: contactAttribution.method,
+                confidenceSourceId: contactAttribution.confidenceSourceId,
+              })
               .from(contacts)
+              .leftJoin(contactAttribution, eq(contactAttribution.contactId, contacts.id))
               .where(and(eq(contacts.companyId, companyId), eq(contacts.id, input.contactId)))
               .limit(1)
           : []
@@ -300,8 +315,18 @@ export class SalesService {
       }
     }
     // AC-T34-05: o explícito vence (campo a campo); ausente herda do contato.
-    if (input.sourceId !== undefined) out.sourceId = text(input.sourceId, 200)
-    else if (contact) out.sourceId = contact.sourceId
+    // Revisão 3: a venda guarda o nível de confiança da atribuição. Explícito (manual/webhook) = `informed`; herdado =
+    // a melhor evidência do contato (nativo > link > provável); sem evidência = `none` (nenhum anúncio inventado).
+    if (input.sourceId !== undefined) {
+      out.sourceId = text(input.sourceId, 200)
+      out.attributionConfidence = out.sourceId ? (input.attributionConfidence ?? 'confirmed_native') : 'none'
+      out.attributionMethod = out.sourceId ? 'informed' : null
+    } else if (contact) {
+      const inherited = inheritAttribution(contact)
+      out.sourceId = inherited.sourceId
+      out.attributionConfidence = inherited.confidence
+      out.attributionMethod = inherited.method
+    }
     if (input.ctwaClid !== undefined) out.ctwaClid = text(input.ctwaClid, 500)
     else if (contact) out.ctwaClid = contact.ctwaClid
     for (const [k, col] of [
@@ -314,4 +339,21 @@ export class SalesService {
     if (errors.length) throw salesInvalid(errors)
     return out as typeof out & { amountCents: number; currency: string; status: SaleStatus }
   }
+}
+
+/**
+ * Atribuição herdada do contato (revisão 3): `confirmed_native` usa o `source_id` do cartão do anúncio; link/provável
+ * usam o `ad_id` do clique (pode não haver); contato sem evidência registrada mas com `source_id` (anterior aos
+ * níveis) conta como nativo (`legacy`); nada → `none`.
+ */
+export function inheritAttribution(c: { sourceId: string | null; confidence: AttributionConfidence | null; method: string | null; confidenceSourceId: string | null }): {
+  sourceId: string | null
+  confidence: AttributionConfidence
+  method: string | null
+} {
+  const conf = c.confidence ?? 'none'
+  if (conf === 'confirmed_native') return { sourceId: c.sourceId ?? c.confidenceSourceId, confidence: conf, method: c.method }
+  if (conf === 'confirmed_link' || conf === 'probable') return { sourceId: c.confidenceSourceId, confidence: conf, method: c.method }
+  if (c.sourceId) return { sourceId: c.sourceId, confidence: 'confirmed_native', method: 'legacy' }
+  return { sourceId: null, confidence: 'none', method: null }
 }

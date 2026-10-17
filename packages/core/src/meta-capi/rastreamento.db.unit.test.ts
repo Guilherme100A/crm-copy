@@ -14,6 +14,8 @@ import { adLeadEventId, sendAdLeadToPixels } from './ad-lead'
 import { CapiEventLogService } from './events-log'
 import { PixelConfigService, type PixelConfigInput } from './pixels'
 import { CapiService, type CapiServiceOptions } from './service'
+import { InternalSalesService } from '../meta-ads/sales-join/service'
+import { SalesService } from '../sales/service'
 import { TrackedLinksService } from './tracked-links'
 
 let tmp: TempDatabase
@@ -264,7 +266,7 @@ describe('ponta a ponta: ingest → contato → payload', () => {
     const s = await ingestWorld()
     const links = new TrackedLinksService({ db })
     const link = await links.create(s.companyId, { name: 'Campanha Black Friday', connection_id: s.conn.id, message: 'Olá! Quero saber da promoção', utm_source: 'facebook' })
-    expect(link).toMatchObject({ slug: 'campanha-black-friday', path: '/w/campanha-black-friday', connection_name: 'Loja', stats: { clicks: 0, conversations: 0, sales: 0 } })
+    expect(link).toMatchObject({ slug: 'campanha-black-friday', path: '/api/w/campanha-black-friday', connection_name: 'Loja', code_mode: 'visible', match_window_minutes: 10, stats: { clicks: 0, conversations: 0, probable: 0, sales: 0 } })
     const before = Date.now()
     const click = await links.click(link.slug, {
       query: { fbclid: 'IwAR2F4-dbP0l7Mn1Iaw_QQ', fbp: 'fb.1.1596403881668.1116446470', utm_campaign: 'bf2026', utm_content: '120200000099' },
@@ -311,5 +313,182 @@ describe('ponta a ponta: ingest → contato → payload', () => {
     await s.ingest.handle(s.msg({ text: 'oi (ref ABCDEF)' }))
     expect(s.inbound[0]).toMatchObject({ text: 'oi (ref ABCDEF)' })
     expect(s.inbound[0]!.ad_source).toBeUndefined()
+  })
+})
+
+// ---- Revisão do usuário: fallback sem duplicar e níveis de confiança -------------------------------------------------
+
+describe('fallback sem duplicar (rejeição explícita × incerto)', () => {
+  const bodyOf = (init?: RequestInit) => JSON.parse(String(init?.body ?? '{}')) as { data: Record<string, unknown>[] }
+
+  it('timeout no business_messaging: incerto, NÃO cai para chat; a retentativa usa o mesmo modo, event_id e event_time', async () => {
+    const w = await world({ whatsapp_business_account_id: '104996122399160' })
+    const user = await capi().userFromContact(w.companyId, w.contact.id)
+    const sent: Record<string, unknown>[] = []
+    let failOnce = true
+    const flaky: typeof fetch = async (url, init) => {
+      sent.push(bodyOf(init).data[0]!)
+      if (failOnce) {
+        failOnce = false
+        throw new DOMException('The operation was aborted due to timeout', 'TimeoutError')
+      }
+      return fetch(url, init)
+    }
+    const input = { companyId: w.companyId, pixelConfigId: w.pixel.id, eventName: 'Lead' as const, eventId: 'to-1', user, source: 'flow' as const }
+    const r1 = await capi({ fetch: flaky }).send(input)
+    expect(r1).toMatchObject({ status: 'uncertain', mode: 'business_messaging' })
+    expect(sent).toHaveLength(1)
+    const log1 = await logOf(w.pixel.id, 'to-1')
+    expect(log1).toMatchObject({ status: 'uncertain', actionSource: 'business_messaging', response: expect.objectContaining({ kind: 'uncertain', pinned_mode: 'business_messaging' }) })
+    // Retentativa um pouco depois (o job): mesmo modo e mesmo event_time.
+    const r2 = await capi({ fetch: flaky, now: () => new Date(Date.now() + 60_000) }).send({ ...input, eventTime: new Date(Date.now() + 60_000) })
+    expect(r2).toMatchObject({ status: 'sent', mode: 'business_messaging', fallback: false })
+    expect(sent).toHaveLength(2)
+    expect(sent[1]).toMatchObject({ event_id: 'to-1', action_source: 'business_messaging', event_time: sent[0]!.event_time })
+    expect(fake.capiEventsFor(w.pixelId)).toHaveLength(1)
+    // Terceira chamada (resposta duplicada do job): nada.
+    expect((await capi().send(input)).status).toBe('duplicate')
+    expect(fake.capiEventsFor(w.pixelId)).toHaveLength(1)
+  })
+
+  it('5xx no modo chat: incerto e retentado no mesmo modo; 429: rejeitado retentável sem trocar de modo', async () => {
+    const w = await world()
+    fake.failNext(503, { message: 'Service temporarily unavailable', code: 2 })
+    const input = { companyId: w.companyId, pixelConfigId: w.pixel.id, eventName: 'Contact' as const, eventId: '5x-1', source: 'flow' as const }
+    expect(await capi().send(input)).toMatchObject({ status: 'uncertain', mode: 'chat' })
+    expect(await capi().send(input)).toMatchObject({ status: 'sent', mode: 'chat' })
+    expect(fake.capiEventsFor(w.pixelId).filter((e) => e.event.event_id === '5x-1')).toHaveLength(1)
+
+    fake.failNext(429, { message: 'Application request limit reached', code: 4 })
+    const r = await capi().send({ ...input, eventId: 'rl-1' })
+    expect(r).toMatchObject({ status: 'failed', retryable: true })
+    expect(await logOf(w.pixel.id, 'rl-1')).toMatchObject({ status: 'failed', response: expect.objectContaining({ kind: 'rate_limited', pinned_mode: 'chat' }) })
+  })
+
+  it('rejeição explícita (código 100) do business_messaging: fallback para chat UMA vez, mesmo event_id', async () => {
+    const w = await world({ page_id: '555000111' })
+    const user = await capi().userFromContact(w.companyId, w.contact.id)
+    const r = await capi().send({ companyId: w.companyId, pixelConfigId: w.pixel.id, eventName: 'Lead', eventId: 'rx-1', user, source: 'flow' })
+    expect(r).toMatchObject({ status: 'sent', mode: 'chat', fallback: true })
+    const reqs = fake.requestsTo(`/${w.pixelId}/events`).map((q) => (q.json as { data: Record<string, unknown>[] }).data[0]!)
+    expect(reqs.map((e) => [e.event_id, e.action_source])).toEqual([
+      ['rx-1', 'business_messaging'],
+      ['rx-1', 'chat'],
+    ])
+    expect(fake.capiEventsFor(w.pixelId)).toHaveLength(1)
+  })
+})
+
+describe('níveis de confiança da atribuição', () => {
+  async function ingestWorld(pixel: Partial<PixelConfigInput> = {}) {
+    const w = await world(pixel)
+    const sessionId = `sess-${randomBytes(4).toString('hex')}`
+    const [conn] = await db.insert(connections).values({ companyId: w.companyId, sessionId, name: 'Loja', phoneNumber: '5511988887777' }).returning()
+    const inbound: CrmInboundEvent[] = []
+    const ingest = new ChatIngest({ db, resolveConnection: async (sid) => (sid === sessionId ? { companyId: w.companyId, connectionId: conn!.id } : null), onInbound: (e) => void inbound.push(e) })
+    let n = 0
+    const msg = (over: Partial<IncomingMessage>, from = '5521977776666'): WaEvent =>
+      ({
+        v: 1,
+        type: 'message.inbound',
+        session_id: sessionId,
+        at: new Date().toISOString(),
+        message: { id: `WA-${++n}-${randomBytes(3).toString('hex')}`, from: `${from}@s.whatsapp.net`, from_me: false, timestamp: Date.now(), type: 'conversation', text: 'oi', ...over },
+      }) as WaEvent
+    const attribution = async (contactId: string) => (await db.select().from(contactAttribution).where(eq(contactAttribution.contactId, contactId)))[0]
+    return { ...w, conn: conn!, ingest, inbound, msg, attribution, links: new TrackedLinksService({ db }) }
+  }
+  const textOf = (location: string) => new URL(location).searchParams.get('text')!
+
+  it('nativo: confirmed_native/ctwa_referral; a venda herda source_id e a confiança; sem evidência = none', async () => {
+    const s = await ingestWorld()
+    await s.ingest.handle(s.msg({ ad: { ctwa_clid: 'C-N', source_id: '120201', source_url: 'https://fb.me/n' } }))
+    const contactId = s.inbound[0]!.contact_id
+    expect(await s.attribution(contactId)).toMatchObject({ confidence: 'confirmed_native', method: 'ctwa_referral', confidenceSourceId: '120201' })
+    const { sale } = await new SalesService({ db }).record({ companyId: s.companyId, source: 'manual', amountCents: 5000, contactId })
+    expect(sale).toMatchObject({ source_id: '120201', attribution_confidence: 'confirmed_native', attribution_method: 'ctwa_referral' })
+    const [plain] = await db.insert(contacts).values({ companyId: s.companyId, name: 'Sem anúncio', phoneE164: '+5511900001111' }).returning()
+    const { sale: none } = await new SalesService({ db }).record({ companyId: s.companyId, source: 'manual', amountCents: 100, contactId: plain!.id })
+    expect(none).toMatchObject({ source_id: null, attribution_confidence: 'none' })
+  })
+
+  it('link com código e depois nativo: sobe para nativo e guarda o histórico; o inverso mantém o nativo', async () => {
+    const s = await ingestWorld()
+    const link = await s.links.create(s.companyId, { name: 'Landing', connection_id: s.conn.id, message: 'Oi' })
+    const click = await s.links.click(link.slug, { query: { ad_id: '777001', fbclid: 'IwAR-link-xyz12' } })
+    await s.ingest.handle(s.msg({ text: textOf(click!.location) }))
+    const contactId = s.inbound[0]!.contact_id
+    expect(await s.attribution(contactId)).toMatchObject({ confidence: 'confirmed_link', method: 'tracked_link_code', confidenceSourceId: '777001' })
+    const { sale } = await new SalesService({ db }).record({ companyId: s.companyId, source: 'manual', amountCents: 1000, contactId })
+    expect(sale).toMatchObject({ source_id: '777001', attribution_confidence: 'confirmed_link' })
+    await s.ingest.handle(s.msg({ ad: { ctwa_clid: 'C-UP', source_id: '120999' } }))
+    const up = await s.attribution(contactId)
+    expect(up).toMatchObject({ confidence: 'confirmed_native', confidenceSourceId: '120999' })
+    expect(up!.confidenceHistory.map((h) => [h.confidence, h.outcome])).toEqual([
+      ['confirmed_link', 'applied'],
+      ['confirmed_native', 'applied'],
+    ])
+
+    const other = await ingestWorld()
+    await other.ingest.handle(other.msg({ ad: { ctwa_clid: 'C-1', source_id: '5001' } }, '5531955554444'))
+    const l2 = await other.links.create(other.companyId, { name: 'Landing 2', connection_id: other.conn.id })
+    const c2 = await other.links.click(l2.slug, { query: {} })
+    await other.ingest.handle(other.msg({ text: textOf(c2!.location) }, '5531955554444'))
+    const kept = await other.attribution(other.inbound[0]!.contact_id)
+    expect(kept).toMatchObject({ confidence: 'confirmed_native', confidenceSourceId: '5001' })
+    expect(kept!.confidenceHistory.at(-1)).toMatchObject({ confidence: 'confirmed_link', outcome: 'kept_previous' })
+  })
+
+  it('código discreto (invisível) também liga como confirmed_link e sai do texto', async () => {
+    const s = await ingestWorld()
+    const link = await s.links.create(s.companyId, { name: 'Discreto', connection_id: s.conn.id, message: 'Quero info', code_mode: 'discreet' })
+    const click = await s.links.click(link.slug, { query: {} })
+    const text = textOf(click!.location)
+    expect(text.startsWith('Quero info')).toBe(true)
+    expect(text).not.toContain('ref')
+    await s.ingest.handle(s.msg({ text }))
+    expect(s.inbound[0]).toMatchObject({ ad_source: 'link', text: 'Quero info' })
+    expect(await s.attribution(s.inbound[0]!.contact_id)).toMatchObject({ confidence: 'confirmed_link' })
+  })
+
+  it('provável: só com a opção ligada e um único clique na janela; nunca libera fbc/ctwa na CAPI; ROAS separa', async () => {
+    const s = await ingestWorld()
+    const off = await s.links.create(s.companyId, { name: 'Sem código', connection_id: s.conn.id, code_mode: 'off' })
+    expect(off).toMatchObject({ code_mode: 'off', probable_match: false })
+    await s.links.click(off.slug, { query: { fbclid: 'IwAR-off-123456' } })
+    await s.ingest.handle(s.msg({ text: 'oi' }, '5541911112222'))
+    expect(await s.attribution(s.inbound[0]!.contact_id)).toBeUndefined()
+
+    const on = await s.links.update(s.companyId, off.id, { probable_match: true, match_window_minutes: 15 })
+    expect(on).toMatchObject({ probable_match: true, match_window_minutes: 15 })
+    // O clique anterior (já fora do teste) foi consumido? Não: continua livre e entraria como 2º candidato.
+    await db.update(trackedLinkClicks).set({ createdAt: new Date(Date.now() - 3600_000) }).where(eq(trackedLinkClicks.linkId, off.id))
+    const c = await s.links.click(on.slug, { query: { fbclid: 'IwAR-prob-123456', ad_id: '888001' }, ip: '1.2.3.4', userAgent: 'UA' })
+    expect(new URL(c!.location).searchParams.get('text')).toBeNull()
+    await s.ingest.handle(s.msg({ text: 'quero comprar' }, '5541933334444'))
+    const contactId = s.inbound[1]!.contact_id
+    expect(s.inbound[1]).toMatchObject({ ad_source: 'link' })
+    expect(await s.attribution(contactId)).toMatchObject({ confidence: 'probable', method: 'tracked_link_window', confidenceSourceId: '888001' })
+    const [clk] = await db.select().from(trackedLinkClicks).where(eq(trackedLinkClicks.code, c!.code))
+    expect(clk).toMatchObject({ contactId, matchConfidence: 'probable' })
+    const user = await capi().userFromContact(s.companyId, contactId)
+    expect(user.fbc ?? null).toBeNull()
+    expect(user.clientIpAddress ?? null).toBeNull()
+    expect(user.ctwaClid ?? null).toBeNull()
+    const { sale } = await new SalesService({ db }).record({ companyId: s.companyId, source: 'manual', amountCents: 9900, contactId })
+    expect(sale).toMatchObject({ source_id: '888001', attribution_confidence: 'probable' })
+    const today = new Date().toISOString().slice(0, 10)
+    const svc = new InternalSalesService({ db })
+    expect(await svc.aggregates({ companyId: s.companyId, since: today, until: today, adIds: ['888001'], timeZone: 'UTC' })).toEqual([])
+    expect(await svc.aggregates({ companyId: s.companyId, since: today, until: today, adIds: ['888001'], timeZone: 'UTC', confidence: 'probable' })).toEqual([
+      { sourceId: '888001', currency: 'BRL', count: 1, amountCents: 9900 },
+    ])
+
+    // Dois cliques candidatos na janela: não atribui.
+    await s.links.click(on.slug, { query: {} })
+    await s.links.click(on.slug, { query: {} })
+    await s.ingest.handle(s.msg({ text: 'oi' }, '5541955556666'))
+    expect(await s.attribution(s.inbound[2]!.contact_id)).toBeUndefined()
+    expect(s.inbound[2]!.ad_source).toBeUndefined()
   })
 })

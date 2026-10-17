@@ -24,7 +24,7 @@
 //   só fora de produção. Vai no nível do corpo, ao lado de `data`.
 // - `fetch` próprio (não o GraphClient): o token CAPI do pixel não usa `appsecret_proof`.
 // Escreve só no executor recebido (`db`): dentro de um passo de fluxo é a transação do passo (`ctx.repo.db`).
-import { and, desc, eq, isNotNull, sql } from 'drizzle-orm'
+import { and, desc, eq, inArray, isNotNull, sql } from 'drizzle-orm'
 import { capiEventLog, contactAttribution, contacts, pixelConfigs, trackedLinkClicks, type Database } from '@crm/db'
 import { META_GRAPH_VERSION, parseGraphUrl } from '../meta-ads/client/graph'
 import { buildUserData, matchScore, normalizeCapiCurrency, parseMoney, type CapiUserInput } from './hashing'
@@ -83,7 +83,9 @@ export type CapiSendResult =
   | { status: 'sent'; eventId: string; eventsReceived: number; fbtraceId: string | null; mode: CapiMode; fallback: boolean }
   | { status: 'duplicate'; eventId: string }
   | { status: 'discarded'; eventId: string; reason: string }
-  | { status: 'failed'; eventId: string; error: string }
+  | { status: 'failed'; eventId: string; error: string; retryable?: boolean }
+  /** Timeout/rede/5xx: a Meta pode ter recebido; retentar o MESMO evento (mesmo modo, mesmo event_id). */
+  | { status: 'uncertain'; eventId: string; error: string; mode: CapiMode }
 
 export class CapiError extends Error {
   constructor(
@@ -124,7 +126,7 @@ export interface PayloadOptions {
 }
 
 type PixelRow = typeof pixelConfigs.$inferSelect
-type Attempt = { ok: true; eventsReceived: number; fbtraceId: string | null; messages: unknown } | { ok: false; status: number | null; code: unknown; fbtraceId: unknown; message: string; graph: boolean }
+type Attempt = { ok: true; eventsReceived: number; fbtraceId: string | null; messages: unknown } | Failure
 
 const DAY_MS = 24 * 60 * 60 * 1000
 
@@ -198,7 +200,8 @@ export class CapiService {
 
   /**
    * Dados do contato para o `user_data`: telefone, e-mail, nome, cidade, UF, CEP, `external_id` (id do contato),
-   * `ctwa_clid` (último toque de anúncio, senão o do contato) e, do último clique de link rastreável ligado a ele,
+   * `ctwa_clid` (só com atribuição confirmed_native) e, do último clique de link rastreável ligado com CÓDIGO (confirmed_link;
+   * nunca de ligação provável),
    * `fbc`/`fbp`/IP/user agent.
    */
   async userFromContact(companyId: string, contactId: string | null | undefined, db: Database = this.opts.db): Promise<CapiUserInput> {
@@ -214,6 +217,7 @@ export class CapiService {
         zip: contacts.zip,
         ctwaClid: contacts.ctwaClid,
         lastCtwaClid: contactAttribution.lastCtwaClid,
+        confidence: contactAttribution.confidence,
       })
       .from(contacts)
       .leftJoin(contactAttribution, eq(contactAttribution.contactId, contacts.id))
@@ -223,7 +227,7 @@ export class CapiService {
     const [click] = await db
       .select({ fbc: trackedLinkClicks.fbc, fbp: trackedLinkClicks.fbp, ip: trackedLinkClicks.clientIp, ua: trackedLinkClicks.userAgent })
       .from(trackedLinkClicks)
-      .where(and(eq(trackedLinkClicks.companyId, companyId), eq(trackedLinkClicks.contactId, contactId), isNotNull(trackedLinkClicks.matchedAt)))
+      .where(and(eq(trackedLinkClicks.companyId, companyId), eq(trackedLinkClicks.contactId, contactId), isNotNull(trackedLinkClicks.matchedAt), eq(trackedLinkClicks.matchConfidence, 'exact')))
       .orderBy(desc(trackedLinkClicks.matchedAt))
       .limit(1)
     const [first, ...rest] = (c.name ?? '').trim().split(/\s+/)
@@ -236,7 +240,9 @@ export class CapiService {
       city: c.city,
       state: c.state,
       zip: c.zip,
-      ctwaClid: c.lastCtwaClid ?? c.ctwaClid ?? null,
+      // ctwa_clid (business_messaging) só com atribuição confirmed_native; contato sem evidência registrada mas com
+      // ctwa_clid (anterior à revisão) conta como nativo. Provável/link nunca liberam o ctwa_clid.
+      ctwaClid: c.confidence === 'confirmed_native' ? (c.lastCtwaClid ?? c.ctwaClid ?? null) : !c.confidence || c.confidence === 'none' ? (c.ctwaClid ?? null) : null,
       ...(click ? { fbc: click.fbc, fbp: click.fbp, clientIpAddress: click.ip, clientUserAgent: click.ua } : {}),
     }
   }
@@ -250,97 +256,84 @@ export class CapiService {
       .limit(1)
     if (!pixel) throw new CapiError('not_found', 'Pixel não encontrado')
     const actionSource = input.actionSource ?? 'chat'
+    const logKey = and(eq(capiEventLog.pixelConfigId, pixel.id), eq(capiEventLog.eventId, input.eventId))
+
+    // Reenvio do mesmo event_id: aceito/pendente = duplicado; descartado = nunca reenvia; falha/incerto = retenta o
+    // MESMO payload (mesmo event_time e, se ficou fixado, o mesmo modo).
+    const [existing] = await db.select().from(capiEventLog).where(logKey).limit(1)
+    if (existing?.status === 'sent' || existing?.status === 'pending') return { status: 'duplicate', eventId: input.eventId }
+    if (existing?.status === 'discarded') return { status: 'discarded', eventId: input.eventId, reason: existing.error ?? 'descartado' }
+    const pinned = ((existing?.response ?? {}) as { pinned_mode?: CapiMode }).pinned_mode ?? null
+    const eventTimeIn = existing?.eventTime ?? input.eventTime
+    const sendInput = { ...input, ...(eventTimeIn ? { eventTime: eventTimeIn } : {}) }
+
     const user: CapiUserInput = { ...(input.user ?? {}), defaultCountry: input.user?.defaultCountry ?? pixel.defaultCountry }
     const testCode = this.testEventCodeFor(pixel)
-    const standard = this.buildPayload({ ...input, user }, { testEventCode: testCode })
+    const standard = this.buildPayload({ ...sendInput, user }, { testEventCode: testCode })
     const ids = { pageId: input.pageId?.trim() || pixel.pageId, whatsappBusinessAccountId: input.wabaId?.trim() || pixel.whatsappBusinessAccountId }
-    const bmTarget = this.bmTargetFor({ ...pixel, ...ids }, input.eventName, user.ctwaClid)
-    const bmPayload = bmTarget ? this.buildPayload({ ...input, user }, { businessMessaging: bmTarget, testEventCode: testCode }) : null
-    const first = (bmPayload ?? standard).data as Record<string, unknown>[]
-    const ev = first[0]!
-    const fieldsOf = (p: Record<string, unknown>) => Object.keys(((p.data as Record<string, unknown>[])[0]!.user_data ?? {}) as Record<string, unknown>).sort()
-    const scoreOf = (p: Record<string, unknown>) => matchScore(((p.data as Record<string, unknown>[])[0]!.user_data ?? {}) as Record<string, unknown>)
+    // Modo fixado em business_messaging (retentativa depois de timeout/5xx/limite): sem o gate das 24 h.
+    const bmTarget =
+      pinned === 'business_messaging'
+        ? this.bmTargetFor({ ...pixel, ...ids, bmStatus: null, bmCheckedAt: null }, input.eventName, user.ctwaClid)
+        : pinned
+          ? null
+          : this.bmTargetFor({ ...pixel, ...ids }, input.eventName, user.ctwaClid)
+    const bmPayload = bmTarget ? this.buildPayload({ ...sendInput, user }, { businessMessaging: bmTarget, testEventCode: testCode }) : null
+    const ev = ((bmPayload ?? standard).data as Record<string, unknown>[])[0]!
+    const userDataOf = (p: Record<string, unknown>) => ((p.data as Record<string, unknown>[])[0]!.user_data ?? {}) as Record<string, unknown>
+    const fieldsOf = (p: Record<string, unknown>) => Object.keys(userDataOf(p)).sort()
     const eventTime = new Date((ev.event_time as number) * 1000)
-    const tooOld = this.now().getTime() - eventTime.getTime() > MAX_EVENT_AGE_MS
-
+    const firstMode: CapiMode = bmPayload ? 'business_messaging' : actionSource
     const logBase = {
       eventName: input.eventName,
       eventTime,
+      actionSource: firstMode,
       identifiers: fieldsOf(bmPayload ?? standard),
-      matchScore: scoreOf(bmPayload ?? standard),
+      matchScore: matchScore(userDataOf(bmPayload ?? standard)),
       testEvent: Boolean(testCode),
       customData: ev.custom_data as Record<string, unknown>,
     }
 
-    if (tooOld) {
+    if (this.now().getTime() - eventTime.getTime() > MAX_EVENT_AGE_MS) {
       const reason = 'event_time com mais de 7 dias: a Meta recusa o lote inteiro (server-event), evento não enviado'
-      const inserted = await db
-        .insert(capiEventLog)
-        .values({
-          companyId: input.companyId,
-          pixelConfigId: pixel.id,
-          eventId: input.eventId,
-          actionSource: bmPayload ? 'business_messaging' : actionSource,
-          status: 'discarded',
-          source: input.source,
-          sourceId: input.sourceId ?? null,
-          error: reason,
-          ...logBase,
-        })
-        .onConflictDoNothing({ target: [capiEventLog.pixelConfigId, capiEventLog.eventId] })
-        .returning({ id: capiEventLog.id })
-      if (!inserted[0]) {
-        const [cur] = await db
-          .select({ status: capiEventLog.status })
-          .from(capiEventLog)
-          .where(and(eq(capiEventLog.pixelConfigId, pixel.id), eq(capiEventLog.eventId, input.eventId)))
-        if (cur?.status === 'sent' || cur?.status === 'pending') return { status: 'duplicate', eventId: input.eventId }
-        await db
-          .update(capiEventLog)
-          .set({ status: 'discarded', error: reason, updatedAt: sql`now()` })
-          .where(and(eq(capiEventLog.pixelConfigId, pixel.id), eq(capiEventLog.eventId, input.eventId)))
+      const row = { status: 'discarded' as const, error: reason, ...logBase }
+      if (existing) await db.update(capiEventLog).set({ ...row, updatedAt: sql`now()` }).where(logKey)
+      else {
+        const ins = await db
+          .insert(capiEventLog)
+          .values({ companyId: input.companyId, pixelConfigId: pixel.id, eventId: input.eventId, source: input.source, sourceId: input.sourceId ?? null, ...row })
+          .onConflictDoNothing({ target: [capiEventLog.pixelConfigId, capiEventLog.eventId] })
+          .returning({ id: capiEventLog.id })
+        if (!ins[0]) return { status: 'duplicate', eventId: input.eventId }
       }
       return { status: 'discarded', eventId: input.eventId, reason }
     }
 
-    // Dedupe: a primeira gravação do (pixel, event_id) ganha; um anterior `failed` pode reenviar.
-    const inserted = await db
-      .insert(capiEventLog)
-      .values({
-        companyId: input.companyId,
-        pixelConfigId: pixel.id,
-        eventId: input.eventId,
-        actionSource: bmPayload ? 'business_messaging' : actionSource,
-        status: 'pending',
-        source: input.source,
-        sourceId: input.sourceId ?? null,
-        ...logBase,
-      })
-      .onConflictDoNothing({ target: [capiEventLog.pixelConfigId, capiEventLog.eventId] })
-      .returning({ id: capiEventLog.id })
-    let logId = inserted[0]?.id
-    if (!logId) {
-      const retried = await db
+    // Reserva o (pixel, event_id): a primeira gravação ganha; retentativa só a partir de failed/uncertain.
+    let logId: string | undefined
+    if (existing) {
+      const upd = await db
         .update(capiEventLog)
-        .set({ status: 'pending', error: null, actionSource: bmPayload ? 'business_messaging' : actionSource, ...logBase, updatedAt: sql`now()` })
-        .where(and(eq(capiEventLog.pixelConfigId, pixel.id), eq(capiEventLog.eventId, input.eventId), eq(capiEventLog.status, 'failed')))
+        .set({ status: 'pending', error: null, ...logBase, updatedAt: sql`now()` })
+        .where(and(logKey, inArray(capiEventLog.status, ['failed', 'uncertain'])))
         .returning({ id: capiEventLog.id })
-      logId = retried[0]?.id
-      if (!logId) {
-        const [cur] = await db
-          .select({ status: capiEventLog.status, error: capiEventLog.error })
-          .from(capiEventLog)
-          .where(and(eq(capiEventLog.pixelConfigId, pixel.id), eq(capiEventLog.eventId, input.eventId)))
-        if (cur?.status === 'discarded') return { status: 'discarded', eventId: input.eventId, reason: cur.error ?? 'descartado' }
-        return { status: 'duplicate', eventId: input.eventId }
-      }
+      logId = upd[0]?.id
+    } else {
+      const ins = await db
+        .insert(capiEventLog)
+        .values({ companyId: input.companyId, pixelConfigId: pixel.id, eventId: input.eventId, status: 'pending', source: input.source, sourceId: input.sourceId ?? null, ...logBase })
+        .onConflictDoNothing({ target: [capiEventLog.pixelConfigId, capiEventLog.eventId] })
+        .returning({ id: capiEventLog.id })
+      logId = ins[0]?.id
     }
+    if (!logId) return { status: 'duplicate', eventId: input.eventId }
+    const id = logId
 
     const finish = async (set: Partial<typeof capiEventLog.$inferInsert>) => {
       await db
         .update(capiEventLog)
         .set({ ...set, updatedAt: sql`now()` })
-        .where(eq(capiEventLog.id, logId))
+        .where(eq(capiEventLog.id, id))
     }
     const markBm = async (status: 'accepted' | 'rejected', error: string | null) => {
       await db.update(pixelConfigs).set({ bmStatus: status, bmCheckedAt: this.now(), bmError: error }).where(eq(pixelConfigs.id, pixel.id))
@@ -355,7 +348,22 @@ export class CapiService {
       return { status: 'failed', eventId: input.eventId, error: message }
     }
 
-    let bmRejected: Extract<Attempt, { ok: false }> | null = null
+    /** Resultado não aceito: grava e devolve; `incerto` e limite de taxa fixam o modo para a retentativa. */
+    const notAccepted = async (r: Failure, mode: CapiMode, payload: Record<string, unknown>, extra: Record<string, unknown> = {}, pinMode = false): Promise<CapiSendResult> => {
+      const uncertain = r.kind === 'uncertain'
+      const pin = uncertain || r.kind === 'rate_limited' || pinMode
+      await finish({
+        status: uncertain ? 'uncertain' : 'failed',
+        actionSource: mode,
+        identifiers: fieldsOf(payload),
+        matchScore: matchScore(userDataOf(payload)),
+        response: { status: r.status, code: r.code ?? null, fbtrace_id: r.fbtraceId ?? null, mode, kind: r.kind, ...(pin ? { pinned_mode: mode } : {}), ...extra },
+        error: r.message,
+      })
+      return uncertain ? { status: 'uncertain', eventId: input.eventId, error: r.message, mode } : { status: 'failed', eventId: input.eventId, error: r.message, retryable: r.kind === 'rate_limited' }
+    }
+
+    let bmRejected: Failure | null = null
     if (bmPayload) {
       const r = await this.post(pixel.pixelId, token, bmPayload)
       if (r.ok) {
@@ -363,11 +371,9 @@ export class CapiService {
         await finish({ status: 'sent', actionSource: 'business_messaging', response: { events_received: r.eventsReceived, fbtrace_id: r.fbtraceId, messages: r.messages, mode: 'business_messaging' }, error: null })
         return { status: 'sent', eventId: input.eventId, eventsReceived: r.eventsReceived, fbtraceId: r.fbtraceId, mode: 'business_messaging', fallback: false }
       }
-      // Recusa da Graph (4xx com erro): fallback no modo padrão. Rede/5xx: falha retentável, sem fallback.
-      if (!r.graph || r.status === null || r.status >= 500) {
-        await finish({ status: 'failed', response: { status: r.status, code: r.code ?? null, fbtrace_id: r.fbtraceId ?? null, mode: 'business_messaging' }, error: r.message })
-        return { status: 'failed', eventId: input.eventId, error: r.message }
-      }
+      // Só uma REJEIÇÃO EXPLÍCITA de parâmetro/permissão cai para o modo padrão. Timeout/rede/5xx/limite: o mesmo
+      // payload no mesmo modo depois (a Meta pode ter recebido).
+      if (r.kind !== 'bm_rejected') return notAccepted(r, 'business_messaging', bmPayload)
       bmRejected = r
     }
 
@@ -379,21 +385,14 @@ export class CapiService {
         status: 'sent',
         actionSource,
         identifiers: fieldsOf(standard),
-        matchScore: scoreOf(standard),
+        matchScore: matchScore(userDataOf(standard)),
         response: { events_received: r.eventsReceived, fbtrace_id: r.fbtraceId, messages: r.messages, mode: actionSource, ...bmInfo },
         error: null,
       })
       return { status: 'sent', eventId: input.eventId, eventsReceived: r.eventsReceived, fbtraceId: r.fbtraceId, mode: actionSource, fallback: Boolean(bmRejected) }
     }
-    await finish({
-      status: 'failed',
-      actionSource,
-      identifiers: fieldsOf(standard),
-      matchScore: scoreOf(standard),
-      response: { status: r.status, code: r.code ?? null, fbtrace_id: r.fbtraceId ?? null, mode: actionSource, ...bmInfo },
-      error: r.message,
-    })
-    return { status: 'failed', eventId: input.eventId, error: r.message }
+    // Depois de um fallback, o modo padrão fica fixado: o business_messaging não é tentado de novo neste evento.
+    return notAccepted(r, actionSource, standard, bmInfo, Boolean(bmRejected))
   }
 
   private async post(pixelId: string, token: string, payload: Record<string, unknown>): Promise<Attempt> {
@@ -408,14 +407,35 @@ export class CapiService {
       if (!res.ok || json.error) {
         const err = (json.error ?? {}) as Record<string, unknown>
         const message = `${String(err.error_user_msg ?? err.message ?? `HTTP ${res.status}`)}${err.code !== undefined ? ` (code ${String(err.code)})` : ''}`
-        return { ok: false, status: res.status, code: err.code, fbtraceId: err.fbtrace_id, message, graph: Boolean(json.error) }
+        return { ok: false, kind: classifyGraphError(res.status, err.code, Boolean(json.error)), status: res.status, code: err.code, fbtraceId: err.fbtrace_id, message }
       }
       return { ok: true, eventsReceived: Number(json.events_received ?? 0), fbtraceId: typeof json.fbtrace_id === 'string' ? json.fbtrace_id : null, messages: json.messages ?? [] }
     } catch (err) {
-      return { ok: false, status: null, code: null, fbtraceId: null, message: err instanceof Error ? err.message : String(err), graph: false }
+      // Timeout/rede: não sabemos se a Meta recebeu.
+      return { ok: false, kind: 'uncertain', status: null, code: null, fbtraceId: null, message: err instanceof Error ? err.message : String(err) }
     }
   }
 }
+
+/**
+ * Classificação da resposta de erro da Graph (doc "Graph API error handling":
+ * https://developers.facebook.com/docs/graph-api/guides/error-handling):
+ * - `uncertain`: 5xx, sem corpo de erro da Graph, ou códigos de serviço 1/2 (temporários) — a Meta pode ter recebido;
+ * - `rate_limited`: HTTP 429 ou códigos 4, 17, 32, 341, 613, 80004 — retenta o mesmo modo depois;
+ * - `bm_rejected`: 4xx com código de parâmetro (100) ou permissão (3, 10, 200–299) — rejeição explícita; no modo
+ *   business_messaging dispara o fallback para o modo padrão;
+ * - `rejected`: demais rejeições (ex.: 102/190 token inválido) — sem fallback (o outro modo falharia igual).
+ */
+export function classifyGraphError(httpStatus: number, code: unknown, graphError: boolean): FailureKind {
+  const c = typeof code === 'number' ? code : Number(code)
+  if (httpStatus >= 500 || !graphError || c === 1 || c === 2) return 'uncertain'
+  if (httpStatus === 429 || [4, 17, 32, 341, 613, 80004].includes(c)) return 'rate_limited'
+  if (c === 100 || c === 3 || c === 10 || (c >= 200 && c <= 299)) return 'bm_rejected'
+  return 'rejected'
+}
+
+export type FailureKind = 'uncertain' | 'rate_limited' | 'bm_rejected' | 'rejected'
+type Failure = { ok: false; kind: FailureKind; status: number | null; code: unknown; fbtraceId: unknown; message: string }
 
 /** Aviso usado pela UI/doc: dias do limite de `event_time`. */
 export const MAX_EVENT_AGE_DAYS = MAX_EVENT_AGE_MS / DAY_MS
