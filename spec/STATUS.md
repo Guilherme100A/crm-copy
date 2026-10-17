@@ -1,11 +1,11 @@
-# STATUS — execução da SPEC (fonte da verdade do andamento)
+| undefined | T106 | undefined| VERIFYING | Prumo | Sentinela | 0 | op ~35 min (verify 0, base 9bd202b); tester em andamento || undefined | T107 | undefined| VERIFYING | Forja | Vigia | 0 | tester APROVADO (6 + 8 E2E); aguarda lote com a T106 || undefined | T129 | undefined| VERIFYING | Prumo | (vaga) | 0 | op ~12 min (verify 0, base 170f8ae; jobId único por geração); tester na fila || undefined | T93 | undefined| VERIFYING | Lastro | (vaga) | 0 | op ~38 min (verify 0, base bea292d); tester na fila || undefined | T82 | undefined| MERGED | Lastro | Sentinela | 0 | e76a98e (lote com T98) || undefined | T98 | undefined| MERGED | Esquadro | Vigia | 0 | 2b21bdc (lote com T82) |# STATUS — execução da SPEC (fonte da verdade do andamento)
 
 > Mantido pelo Orquestrador ("Claude Code"). Estados: `TODO`, `IN_PROGRESS`, `VERIFYING`, `REJECTED (n)`, `BLOCKED`, `ACCEPTED`, `MERGED`.
 > Gerado em 2026-10-15 a partir de `spec/verify/tasks.mjs`. Ondas e dependências: SPEC §4. Comando útil: `node spec/verify/verify.mjs list`.
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE): operários T93 (Lastro), T129 (Prumo), T114; tester T82 (Sentinela); aprovada esperando lote: T98; fila de tester: T107 → T106 → T92 → T108 → T115. Zenith fora de escopo (T110 CANCELLED). Por último: T102.
+- Em andamento (força total; gate em LOTE): operário T114 (Lastro); tester T106 (Sentinela); aprovada esperando lote: T107; fila de tester: T92 → T108 → T115 → T93 → T129. Zenith fora de escopo (T110 CANCELLED). Por último: T102.
 - Bloqueios: nenhum (T110 cancelada: Zenith fora de escopo)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
@@ -252,3 +252,8 @@
 | harness E2E | Não há rota `/__e2e` para levar uma sessão a STABLE (o `session_state` vem do FakeWaGateway); o E2E da T77 intercepta `GET /api/connections`. Avaliar rota no harness quando a T71/T107 precisarem | T77 |
 | motor de fluxos (endurecimento) | Publicar efeitos dos nós (realtime e enfileiramentos como o `sale.recorded` → meta-capi) só DEPOIS do commit da transação do passo (gancho pós-commit no runner). A T126 contornou o Purchase com retry no job (opção A); esta é a correção estrutural (opção B da Bigorna, mesma causa do achado da T123) | T126 |
 | API (production.ts) | `META_CAPI_JOB_OPTS` em `apps/api/src/production.ts` ainda usa backoff exponencial de 30 s: alinhar com a fila meta-capi da T126 (`{ attempts: 5, backoff: { type: 'meta-capi' } }`) para que uma venda ainda não visível também tente em 2 s | T126 |
+| T115 (pendência) | Breadcrumb 'Oauth / Consent' (shell T23); sem rate limit no register; sem limpeza de pedidos expirados | T115 |
+| T93 (pendência) | chat_only do resume (opcional); histórico de uso por sessão; anexos/voz; painéis do assistente e do simulador na mesma posição à direita | T93 |
+| T129 (pendência) | Job do bundle que quebra com erro inesperado ainda deixa 'loading' até 15 min (o job deveria limpar o estado ao falhar) | T129 |
+| harness | isOwnServerRunning confia só no pid de test-results/e2e-server.json; o Windows reaproveita pids → conferir porta/linha de comando | T107 (Vigia) |
+| doc extensão | downloadMedia depende de A2+A3 mas missingChanges lista só A3 (a sonda vê só o alvo RPC) | T98 (Vigia) |
