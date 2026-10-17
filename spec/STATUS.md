@@ -5,10 +5,10 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE — 4 lotes integrados): operários T115 (Forja), T93 (Lastro), T129; tester T98 (Vigia); fila de tester: T82 → T107 → T106 → T92 → T108. Bloqueadas pelo usuário: T110 e T114 (Zenith). Por último: T102 (integração final).
+- Em andamento (força total; gate em LOTE): operários T93 (Lastro), T129 (Prumo), T114; tester T82 (Sentinela); aprovada esperando lote: T98; fila de tester: T107 → T106 → T92 → T108 → T115. Zenith fora de escopo (T110 CANCELLED). Por último: T102.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
-- **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
+- Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
 
 ## Tarefas
 
@@ -87,7 +87,7 @@
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
-| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
+| 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | CANCELLED | | | 0 | fora de escopo por decisão do usuário (2026-10-17, SPEC 10.1 nº 13): só XPag |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | MERGED | Lastro | Vigia | 0 | 08cc19c (op ~34 min, tester ~6 min; migration regenerada como 0031) |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | MERGED | Lastro | Sentinela | 0 | d4011a9 (op ~29 min, tester ~5 min) |
@@ -107,8 +107,8 @@
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | MERGED | Forja | Sentinela | 0 | f879ad6 (4º lote com a T100; montagem de produção incluída) |
 | 7 | T107 | Indicador de conexões desconectadas no menu | VERIFYING | Forja | (vaga) | 0 | op ~12 min (verify 0, base 51bf479); tester na fila |
-| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
-| 7 | T115 | MCP: OAuth para conectores (Claude) | IN_PROGRESS | Forja | (vaga) | 0 | libera núcleo MCP da T94, settings-mcp e routes/oauth (aditivo) |
+| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | IN_PROGRESS | (sob demanda) | (vaga) | 0 | sem Zenith; libera node-editors/sales e harness (aditivo) |
+| 7 | T115 | MCP: OAuth para conectores (Claude) | VERIFYING | Forja | (vaga) | 0 | op ~32 min (verify 0, base bea292d); tester na fila |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
@@ -126,7 +126,7 @@
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | MERGED | Prumo | Sentinela | 0 | 96113e7 (lote; op ~11 min, tester ~5 min) |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | Vigia | 0 | op + montagem do perfil; tester em andamento |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | Vigia | 0 | tester APROVADO (56 + 12 skip por desenho); aguarda lote com a T82 |
 | 11 | T108 | Tutoriais e widget de suporte plugável | VERIFYING | Prumo | (vaga) | 0 | op ~13 min (verify 0, base dec9225); tester na fila |
 | 12 | T100 | UI admin interno | MERGED | Lastro | Vigia | 0 | 29b5725 (4º lote com a T105) |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |

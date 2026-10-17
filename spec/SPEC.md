@@ -1937,6 +1937,8 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 ---
 
 ### T110 — Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook)
+> **FORA DE ESCOPO (decisão do usuário, 2026-10-17):** sem documentação pública da Zenith; fica só a XPag (SPEC 10.1 nº 13). A tarefa não é despachada (`todo` no tasks.mjs).
+
 **Paths:** `packages/core/src/payments/zenith/**`, `apps/api/src/routes/zenith-oauth/**`
 **Depende de:** T109
 **Ref:** `19-integracoes.md#46-…` (linhas Zenith), `#47-estados-de-callback-oauth`, `#52-xpag--zenith-modal-de-chave`.
@@ -1994,8 +1996,8 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Depende de:** T110, T111, T112, T113, T45, T59
 **Ref:** `19-integracoes.md#2-telas-e-rotas`, `#25-modais`, `#51-hub`, `#52-xpag--zenith-modal-de-chave`, `#38-bloco-pagamento-…`, `#39-bloco-venda-aprovada-…`.
 **Critérios de aceitação**
-- **AC-T114-01** O hub de integrações ganha os cards de Pagamentos (XPag, Zenith), NF (Notasy) e UTMify (registrados no catálogo compartilhado), com status Ativo/Inativo e busca.
-- **AC-T114-02** Modal de chave XPag/Zenith: validações do servidor, segredo mascarado, "Testar conexão" na edição; "Conectar com Zenith" leva ao OAuth (fake) e volta com toast de sucesso ou erro.
+- **AC-T114-01** O hub de integrações ganha os cards de Pagamentos (XPag; Zenith fora de escopo, SPEC 10.1 nº 13), NF (Notasy) e UTMify (registrados no catálogo compartilhado), com status Ativo/Inativo e busca.
+- **AC-T114-02** Modal de chave XPag: validações do servidor, segredo mascarado, "Testar conexão" na edição.
 - **AC-T114-03** Editor do bloco Pagamento mostra só moedas e métodos válidos para o gateway escolhido (matriz 19#4.6), campos condicionais por método e as saídas `charge_created`/`payment_approved`/`error` no canvas.
 - **AC-T114-04** Editor do bloco Venda aprovada: produto (com "+ Criar novo produto…"), valor/moeda/cliente com variáveis, emissor de NF ("Não emitir nota automaticamente") e UTMify ("Não enviar para UTMify"), título e corpo do push.
 - **AC-T114-05** No histórico de vendas, a venda mostra o status da nota e o botão "Reemitir nota", que reenfileira e mostra "Emissão reenfileirada"; textos em pt-BR, en e es; layout `mobile` sem rolagem horizontal.
@@ -2330,6 +2332,8 @@ Regra geral: em dúvida de escopo, fazer como o produto de referência faz.
 
 12. **Revisão 2 (2026-10-16, custo do verify):** E2E `mobile` só nos ACs de layout/responsivo; verify em dois níveis (testes afetados durante a tarefa, suíte completa uma vez no gate); `VITEST_MAX_WORKERS=2`; Postgres de **teste** sem durabilidade (`fsync`, `synchronous_commit`, `full_page_writes` desligados) e banco-modelo migrado uma vez por hash das migrações. (3.10, 6.)
 
+13. **Zenith fora de escopo (2026-10-17):** não há documentação pública da Zenith; o gateway de pagamento ao lead fica só com a **XPag**. A T110 sai da obra e a T114 não tem card nem OAuth da Zenith. (T110, T114.)
+
 ### 10.2 Decisões assumidas (revisáveis; o Orquestrador pode seguir com elas)
 1. Cadastro cria automaticamente a empresa "Minha empresa" com o usuário como `owner` (T15).
 2. Sessão por cookie httpOnly com TTL de 30 dias deslizante; empresa ativa por header `X-Company-Id` (permite abas com empresas diferentes).
@@ -2349,4 +2353,4 @@ Regra geral: em dúvida de escopo, fazer como o produto de referência faz.
 16. "Push" do bloco Venda aprovada = notificação no app (`notification.created`, T63/T84); não há app móvel nativo.
 
 ### 10.3 Dúvidas abertas para o usuário
-1. **T110 (Zenith):** não há documentação pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com). Opções: (a) o usuário fornece a documentação do parceiro; (b) contrato provisório marcado `[NÃO VERIFICADO]`, validado depois com chave real; (c) tirar a Zenith do escopo (fica só XPag). Em aberto desde 2026-10-16 12:21.
+Nenhuma no momento (T110/Zenith fechada em 10.1 nº 13).
