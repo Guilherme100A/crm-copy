@@ -16,12 +16,28 @@
   },
   "empty": { "title": "Ninguna credencial MCP", "body": "Crea una credencial para conectar un cliente MCP." },
   "columns": { "name": "Nombre", "status": "Estado", "expires": "Vence", "lastUsed": "Último uso" },
-  "status": { "active": "Activa", "expired": "Vencida" },
+  "status": { "active": "Activa", "expired": "Vencida", "pending": "Pendiente", "connected": "Conectada", "connectedWith": "Conectada · {client}" },
   "expiration": { "0": "Nunca", "30": "30 días", "90": "90 días", "365": "1 año" },
+  "authType": { "static": "Token (Bearer)", "oauth": "OAuth (conector de Claude)" },
+  "authTypeHint": {
+    "static": "Genera un token para clientes como Cursor y n8n. Se muestra una sola vez.",
+    "oauth": "Para conectores que inician sesión, como el de Claude. No hay token para copiar."
+  },
+  "connector": {
+    "title": "Conector OAuth creado",
+    "url": "URL del conector",
+    "copy": "Copiar URL del conector",
+    "stepsTitle": "Cómo conectar en Claude",
+    "step1": "En Claude, abre Configuración > Conectores y elige Añadir conector personalizado.",
+    "step2": "Ponle un nombre al conector y pega la URL de arriba.",
+    "step3": "Haz clic en Conectar, inicia sesión en {app} y autoriza el acceso a la empresa.",
+    "step4": "Vuelve aquí y recarga la página: el estado cambia a \"Conectada · <cliente>\"."
+  },
   "form": {
     "title": "Nueva credencial MCP",
     "name": "Nombre",
     "namePlaceholder": "Ej.: Cursor del equipo de ventas",
+    "type": "Tipo",
     "expiration": "Vencimiento",
     "submit": "Crear",
     "nameRequired": "Indica el nombre de la credencial.",

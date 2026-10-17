@@ -3,7 +3,9 @@
 //   (token mostrado só aqui); DELETE /api/mcp_credentials/:id revoga na hora.
 // Endpoint MCP `/api/mcp` (rota pública para a sessão e fora do CSRF): `Authorization: Bearer <token>` da credencial;
 // inválido/expirado/revogado → 401. Streamable HTTP sem sessão, ferramentas somente leitura da empresa do token.
-import { handleMcpRequest, McpCredentialsError, McpCredentialsService } from '@crm/core'
+// T115: `/api/mcp/<credencial>` é a URL do conector OAuth (aceita só tokens dessa credencial) e o 401 traz
+// `WWW-Authenticate: Bearer realm="mcp", resource_metadata="<API>/.well-known/oauth-protected-resource/api/mcp[/<id>]"`.
+import { handleMcpRequest, McpCredentialsError, McpCredentialsService, McpOAuthService } from '@crm/core'
 import { companies } from '@crm/db'
 import { eq } from 'drizzle-orm'
 import { Hono, type Context } from 'hono'
@@ -66,15 +68,23 @@ export function mcpRoutes(deps: ResolvedDeps) {
     return c.json({ ok: true }, 200)
   })
 
-  app.all('/api/mcp', async (c) => {
+  const oauth = new McpOAuthService({ db: deps.db, ...(deps.mcpEnv ? { env: deps.mcpEnv } : {}) })
+  const serveMcp = async (c: Context<AppEnv>, credentialId: string | null) => {
     const auth = await svc.authenticate(parseBearer(c.req.header('authorization')))
-    if (!auth) {
-      c.header('WWW-Authenticate', 'Bearer realm="mcp"')
+    if (!auth || (credentialId !== null && auth.credentialId !== credentialId)) {
+      c.header('WWW-Authenticate', `Bearer realm="mcp", resource_metadata="${oauth.resourceMetadataUrl(credentialId)}"`)
       throw new ApiError('UNAUTHORIZED', 'Token MCP inválido, expirado ou revogado')
     }
     const [company] = await deps.db.select({ active: companies.active }).from(companies).where(eq(companies.id, auth.companyId)).limit(1)
     if (company && !company.active) throw new ApiError('FORBIDDEN', 'Empresa desativada', { error_code: 'company_inactive' })
     return handleMcpRequest(c.req.raw, { db: deps.db, companyId: auth.companyId })
+  }
+
+  app.all('/api/mcp', (c) => serveMcp(c, null))
+  // T115: URL do conector OAuth; id fora do formato UUID cai no 401 com os metadados genéricos.
+  app.all('/api/mcp/:credentialId', (c) => {
+    const id = c.req.param('credentialId')
+    return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id) ? serveMcp(c, id) : serveMcp(c, '')
   })
 
   return app

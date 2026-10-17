@@ -6,6 +6,9 @@ export interface PublicRoute {
   path: string
 }
 
+/** T115: rotas OAuth chamadas pelo cliente MCP (sem sessão, fora do CSRF). */
+const MCP_OAUTH_CLIENT_PATHS: readonly string[] = ['/api/mcp-oauth/register', '/api/mcp-oauth/authorize', '/api/mcp-oauth/token', '/api/mcp-oauth/revoke']
+
 export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'POST', path: '/api/auth/login' },
   { method: 'POST', path: '/api/auth/register' },
@@ -21,6 +24,10 @@ export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: '*', path: '/api/mcp' },
   // T100: imagens globais de avisos/banners do admin (id assinado; qualquer empresa, sem sessão).
   { method: 'GET', path: '/api/public/admin-media/*' },
+  // T115: URL do conector OAuth (`/api/mcp/<credencial>`) e o servidor de autorização chamado pelo cliente MCP.
+  // A tela de consentimento (`/api/mcp-oauth/consent`) continua exigindo sessão.
+  { method: '*', path: '/api/mcp/*' },
+  ...MCP_OAUTH_CLIENT_PATHS.map((path) => ({ method: '*', path })),
 ]
 
 function matches(route: PublicRoute, method: string, path: string): boolean {
@@ -39,5 +46,5 @@ export function isPublicApiRoute(method: string, path: string, extra: readonly P
 
 /** Webhooks de entrada (`/api/hooks/**`) e o servidor MCP (T94, Bearer) chegam de sistemas externos: fora do CSRF guard. */
 export function isInboundHook(path: string): boolean {
-  return path.startsWith('/api/hooks/') || path === '/api/mcp'
+  return path.startsWith('/api/hooks/') || path === '/api/mcp' || path.startsWith('/api/mcp/') || MCP_OAUTH_CLIENT_PATHS.includes(path)
 }

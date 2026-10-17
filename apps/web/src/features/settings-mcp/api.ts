@@ -1,20 +1,29 @@
 // API das credenciais MCP (T94; 09 §6): listar, criar (o token vem só na resposta) e revogar.
+// T115: credencial `oauth` (conector do Claude) sem token: a resposta traz a `connector_url`; status `pending` até o
+// cliente concluir o OAuth e `connected` (com `connected_client_hint`) depois — sem realtime, atualiza ao recarregar.
 import { queryOptions } from '@tanstack/react-query'
 import { api } from '@/lib/http'
+
+export type McpAuthType = 'static' | 'oauth'
+export const MCP_AUTH_TYPES: readonly McpAuthType[] = ['static', 'oauth']
 
 export interface McpCredentialDto {
   id: string
   name: string
-  auth_type: 'static' | 'oauth'
-  status: 'active' | 'expired'
+  auth_type: McpAuthType
+  status: 'active' | 'expired' | 'pending' | 'connected'
   expires_at: string | null
   last_used_at: string | null
   created_at: string
+  /** T115: nome do cliente OAuth conectado. */
+  connected_client_hint?: string | null
+  /** T115: URL do conector (`<API>/api/mcp/<id>`) das credenciais `oauth`. */
+  connector_url?: string | null
 }
 
 export interface McpCreateInput {
   name: string
-  auth_type: 'static'
+  auth_type: McpAuthType
   expires_in_days?: number
 }
 
@@ -30,13 +39,18 @@ export const mcpCredentialsQuery = () =>
     queryFn: () => api.get<{ mcp_credentials: McpCredentialDto[]; mcp_endpoint_url: string }>('/api/mcp_credentials'),
   })
 
-/** Corpo do POST a partir do formulário (nome aparado; `0` dias = sem expiração). */
-export function createBody(name: string, days: ExpirationOption): { mcp_credential: McpCreateInput } {
-  return { mcp_credential: { name: name.trim(), auth_type: 'static', ...(days > 0 ? { expires_in_days: days } : {}) } }
+/** Corpo do POST a partir do formulário (nome aparado; `0` dias = sem expiração; OAuth não expira). */
+export function createBody(name: string, days: ExpirationOption, authType: McpAuthType = 'static'): { mcp_credential: McpCreateInput } {
+  return { mcp_credential: { name: name.trim(), auth_type: authType, ...(authType === 'static' && days > 0 ? { expires_in_days: days } : {}) } }
+}
+
+/** Rótulo do status: "Conectada · <cliente>" quando há cliente OAuth conectado. */
+export function statusLabel(c: Pick<McpCredentialDto, 'status' | 'connected_client_hint'>, t: (key: string, vars?: Record<string, string>) => string): string {
+  return c.status === 'connected' && c.connected_client_hint ? t('status.connectedWith', { client: c.connected_client_hint }) : t(`status.${c.status}`)
 }
 
 export const mcpApi = {
-  create: (name: string, days: ExpirationOption) =>
-    api.post<{ mcp_credential: McpCredentialDto; token: string; mcp_endpoint_url: string }>('/api/mcp_credentials', createBody(name, days)),
+  create: (name: string, days: ExpirationOption, authType: McpAuthType = 'static') =>
+    api.post<{ mcp_credential: McpCredentialDto; token: string | null; mcp_endpoint_url: string }>('/api/mcp_credentials', createBody(name, days, authType)),
   revoke: (id: string) => api.delete(`/api/mcp_credentials/${encodeURIComponent(id)}`),
 }

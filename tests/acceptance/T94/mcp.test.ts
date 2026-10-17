@@ -18,7 +18,7 @@ afterAll(async () => {
   await env?.close()
 })
 
-const DTO_KEYS = ['auth_type', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status']
+const DTO_KEYS = ['auth_type', 'connected_client_hint', 'connector_url', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status']
 
 async function list(u: User) {
   const res = await u.c.get('/api/mcp_credentials')
@@ -93,8 +93,8 @@ describe('T94 credenciais', () => {
     expect(items.find((i) => i.id === expired.credential.id)).toMatchObject({ status: 'expired', last_used_at: null })
   })
 
-  it('AC-T94-01 validação: nome vazio, auth_type oauth e expiração no passado → 422', async () => {
-    for (const body of [{ name: '' }, { name: 'x'.repeat(101) }, { name: 'OAuth', auth_type: 'oauth' }, { name: 'Passado', expires_at: new Date(Date.now() - 3_600_000).toISOString() }]) {
+  it('AC-T94-01 validação: nome vazio, auth_type inválido e expiração no passado → 422', async () => {
+    for (const body of [{ name: '' }, { name: 'x'.repeat(101) }, { name: 'Inválido', auth_type: 'saml' }, { name: 'Passado', expires_at: new Date(Date.now() - 3_600_000).toISOString() }]) {
       const res = await owner.c.post('/api/mcp_credentials', { mcp_credential: { auth_type: 'static', ...body } })
       expect(res.status, `${JSON.stringify(body)} → ${res.text}`).toBe(422)
       expect(res.body.error.code).toBe('VALIDATION_ERROR')

@@ -16,12 +16,28 @@
   },
   "empty": { "title": "No MCP credentials", "body": "Create a credential to connect an MCP client." },
   "columns": { "name": "Name", "status": "Status", "expires": "Expires", "lastUsed": "Last used" },
-  "status": { "active": "Active", "expired": "Expired" },
+  "status": { "active": "Active", "expired": "Expired", "pending": "Pending", "connected": "Connected", "connectedWith": "Connected · {client}" },
   "expiration": { "0": "Never", "30": "30 days", "90": "90 days", "365": "1 year" },
+  "authType": { "static": "Token (Bearer)", "oauth": "OAuth (Claude connector)" },
+  "authTypeHint": {
+    "static": "Generates a token for clients such as Cursor and n8n. It is shown only once.",
+    "oauth": "For connectors that sign in, such as Claude. There is no token to copy."
+  },
+  "connector": {
+    "title": "OAuth connector created",
+    "url": "Connector URL",
+    "copy": "Copy connector URL",
+    "stepsTitle": "How to connect in Claude",
+    "step1": "In Claude, open Settings > Connectors and choose Add custom connector.",
+    "step2": "Name the connector and paste the URL above.",
+    "step3": "Click Connect, sign in to {app} and authorize access to the company.",
+    "step4": "Come back and reload this page: the status changes to \"Connected · <client>\"."
+  },
   "form": {
     "title": "New MCP credential",
     "name": "Name",
     "namePlaceholder": "E.g.: Sales team Cursor",
+    "type": "Type",
     "expiration": "Expiration",
     "submit": "Create",
     "nameRequired": "Enter the credential name.",

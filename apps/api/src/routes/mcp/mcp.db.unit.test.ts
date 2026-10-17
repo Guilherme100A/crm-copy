@@ -71,13 +71,13 @@ describe('/api/mcp_credentials', () => {
     expect(created.status).toBe(201)
     expect(created.body).toMatchObject({ token: expect.stringMatching(/^crm_mcp_[\w-]{43}$/), mcp_endpoint_url: 'https://api.crm.test/api/mcp', mcp_credential: { name: 'Cursor', auth_type: 'static', status: 'active', last_used_at: null } })
     const list = await call(s, 'GET', '/api/mcp_credentials')
-    expect(Object.keys(list.body.mcp_credentials[0]).sort()).toEqual(['auth_type', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status'])
+    expect(Object.keys(list.body.mcp_credentials[0]).sort()).toEqual(['auth_type', 'connected_client_hint', 'connector_url', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status'])
     expect(JSON.stringify(list.body)).not.toContain(created.body.token)
     const [row] = await db.select().from(mcpCredentials).where(eq(mcpCredentials.id, created.body.mcp_credential.id))
     expect(row!.tokenHash).not.toContain(created.body.token)
 
     expect((await call(s, 'POST', '/api/mcp_credentials', { name: '' })).status).toBe(422)
-    expect((await call(s, 'POST', '/api/mcp_credentials', { name: 'Claude', auth_type: 'oauth' })).status).toBe(422)
+    expect((await call(s, 'POST', '/api/mcp_credentials', { name: 'Claude', auth_type: 'basic' })).status).toBe(422)
     expect((await call(s, 'POST', '/api/mcp_credentials', { name: 'X', expires_at: '2000-01-01T00:00:00Z' })).status).toBe(422)
   })
 
@@ -101,7 +101,7 @@ describe('/api/mcp', () => {
     const { token, mcp_credential } = (await call(s, 'POST', '/api/mcp_credentials', { name: 'Cursor' })).body
     const no = await rpc(null, 'tools/list')
     expect(no.status).toBe(401)
-    expect(no.headers.get('www-authenticate')).toBe('Bearer realm="mcp"')
+    expect(no.headers.get('www-authenticate')).toMatch(/^Bearer realm="mcp"/)
     expect(no.body.error.code).toBe('UNAUTHORIZED')
     expect((await rpc('crm_mcp_naoexiste', 'tools/list')).status).toBe(401)
     expect((await rpc(`${token}x`, 'tools/list')).status).toBe(401)

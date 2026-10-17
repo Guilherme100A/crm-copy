@@ -31,6 +31,7 @@ import { Route as FlowsIndexRouteImport } from './routes/flows/index'
 import { Route as InvitationTokenRouteImport } from './routes/invitation/$token'
 import { Route as InvitationsTokenRouteImport } from './routes/invitations/$token'
 import { Route as MassDispatchesIndexRouteImport } from './routes/mass-dispatches/index'
+import { Route as OauthConsentRouteImport } from './routes/oauth/consent'
 import { Route as ProfileIndexRouteImport } from './routes/profile/index'
 import { Route as SettingsIndexRouteImport } from './routes/settings/index'
 import { Route as SettingsInboundWebhooksRouteImport } from './routes/settings/inbound-webhooks'
@@ -152,6 +153,11 @@ const MassDispatchesIndexRoute = MassDispatchesIndexRouteImport.update({
   path: '/mass-dispatches/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OauthConsentRoute = OauthConsentRouteImport.update({
+  id: '/oauth/consent',
+  path: '/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileIndexRoute = ProfileIndexRouteImport.update({
   id: '/profile/',
   path: '/profile/',
@@ -220,6 +226,7 @@ export interface FileRoutesByFullPath {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRouteWithChildren
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
@@ -253,6 +260,7 @@ export interface FileRoutesByTo {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/support/access': typeof SupportAccessRoute
   '/admin': typeof AdminIndexRoute
   '/agentes': typeof AgentesIndexRoute
@@ -287,6 +295,7 @@ export interface FileRoutesById {
   '/crms/$crmId': typeof CrmsCrmIdRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
+  '/oauth/consent': typeof OauthConsentRoute
   '/settings/inbound-webhooks': typeof SettingsInboundWebhooksRouteWithChildren
   '/support/access': typeof SupportAccessRoute
   '/admin/': typeof AdminIndexRoute
@@ -323,6 +332,7 @@ export interface FileRouteTypes {
     | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
+    | '/oauth/consent'
     | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin/'
@@ -356,6 +366,7 @@ export interface FileRouteTypes {
     | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
+    | '/oauth/consent'
     | '/support/access'
     | '/admin'
     | '/agentes'
@@ -389,6 +400,7 @@ export interface FileRouteTypes {
     | '/crms/$crmId'
     | '/invitation/$token'
     | '/invitations/$token'
+    | '/oauth/consent'
     | '/settings/inbound-webhooks'
     | '/support/access'
     | '/admin/'
@@ -423,6 +435,7 @@ export interface RootRouteChildren {
   CrmsCrmIdRoute: typeof CrmsCrmIdRoute
   InvitationTokenRoute: typeof InvitationTokenRoute
   InvitationsTokenRoute: typeof InvitationsTokenRoute
+  OauthConsentRoute: typeof OauthConsentRoute
   SettingsInboundWebhooksRoute: typeof SettingsInboundWebhooksRouteWithChildren
   SupportAccessRoute: typeof SupportAccessRoute
   AdminIndexRoute: typeof AdminIndexRoute
@@ -596,6 +609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MassDispatchesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/oauth/consent': {
+      id: '/oauth/consent'
+      path: '/oauth/consent'
+      fullPath: '/oauth/consent'
+      preLoaderRoute: typeof OauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/profile/': {
       id: '/profile/'
       path: '/profile'
@@ -715,6 +735,7 @@ const rootRouteChildren: RootRouteChildren = {
   CrmsCrmIdRoute: CrmsCrmIdRoute,
   InvitationTokenRoute: InvitationTokenRoute,
   InvitationsTokenRoute: InvitationsTokenRoute,
+  OauthConsentRoute: OauthConsentRoute,
   SettingsInboundWebhooksRoute: SettingsInboundWebhooksRouteWithChildren,
   SupportAccessRoute: SupportAccessRoute,
   AdminIndexRoute: AdminIndexRoute,

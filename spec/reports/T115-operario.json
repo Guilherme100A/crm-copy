@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "task": "T115",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T04:14:53.097Z",
+  "commit": "bea292dd3a3df324c7ed82bb1f5994bd06d8bb14",
+  "base": "bea292d",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/package.json",
+    "apps/api/src/middleware/public-routes.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/mcp/index.ts",
+    "apps/api/src/routes/mcp/mcp.db.unit.test.ts",
+    "apps/web/src/features/settings-mcp/api.ts",
+    "apps/web/src/features/settings-mcp/mcp-tab.tsx",
+    "apps/web/src/features/settings-mcp/settings-mcp.unit.test.ts",
+    "apps/web/src/i18n/en/settings-mcp.json",
+    "apps/web/src/i18n/es/settings-mcp.json",
+    "apps/web/src/i18n/pt-BR/settings-mcp.json",
+    "apps/web/src/routeTree.gen.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/mcp/credentials.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "pnpm-lock.yaml",
+    "apps/api/src/routes/mcp-oauth/index.ts",
+    "apps/api/src/routes/mcp-oauth/mcp-oauth.db.unit.test.ts",
+    "apps/web/src/features/mcp-oauth/api.ts",
+    "apps/web/src/features/mcp-oauth/consent-page.tsx",
+    "apps/web/src/features/mcp-oauth/mcp-oauth.unit.test.ts",
+    "apps/web/src/i18n/en/mcp-oauth.json",
+    "apps/web/src/i18n/es/mcp-oauth.json",
+    "apps/web/src/i18n/pt-BR/mcp-oauth.json",
+    "apps/web/src/routes/oauth/consent.tsx",
+    "docs/mcp-oauth.md",
+    "packages/core/src/mcp-oauth/index.ts",
+    "packages/core/src/mcp-oauth/mcp-oauth.unit.test.ts",
+    "packages/core/src/mcp-oauth/service.ts",
+    "packages/core/src/mcp-oauth/tokens.ts",
+    "packages/db/drizzle/crm/0034_t115_mcp_oauth.sql",
+    "packages/db/drizzle/crm/meta/0034_snapshot.json",
+    "packages/db/src/schema/crm/mcp-oauth.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 16.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 204.1s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 208.3s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 15.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 7.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 21.5s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "35 arquivo(s) alterado(s)"
+    }
+  ]
+}

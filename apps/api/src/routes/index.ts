@@ -55,6 +55,7 @@ import { dashboardRoutes } from './dashboard/index'
 import { dashboardAttendanceRoutes } from './dashboard-attendance/index'
 import { aiAgentLabRoutes } from './ai-agent-lab/index'
 import { mcpRoutes } from './mcp/index'
+import { mcpOAuthRoutes } from './mcp-oauth/index'
 import { supportAccessRoutes } from './support-access/index'
 import { adminRoutes } from './admin/index'
 import { adminOpsRoutes } from './admin-ops/index'
@@ -125,4 +126,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', adminRoutes(deps))
   app.route('/', adminOpsRoutes(deps))
   app.route('/', appConfigRoutes(deps)) // T97: config do app em tempo de execução (T108 acrescenta campos)
+  app.route('/', mcpOAuthRoutes(deps))
 }

@@ -1,0 +1,24 @@
+{
+  "title": "Authorize MCP access",
+  "asks": "wants to read the company data in {app} through the Model Context Protocol.",
+  "scope": {
+    "read": "Read the company's contacts, connections, flows and chats.",
+    "noWrite": "Read-only: the client cannot create, change or send anything."
+  },
+  "company": {
+    "label": "Company",
+    "hint": "Access is bound to this company, the one of the MCP credential used in the connector."
+  },
+  "credential": "Credential",
+  "redirect": "Returns to",
+  "approve": "Authorize",
+  "approving": "Authorizing...",
+  "deny": "Deny",
+  "retry": "Try again",
+  "errors": {
+    "invalid": "Invalid authorization link. Start again from the MCP client.",
+    "expired": "This authorization request has expired or was already used. Start again from the MCP client.",
+    "forbidden": "You are not allowed to connect MCP clients in this company.",
+    "generic": "Could not load the authorization request."
+  }
+}

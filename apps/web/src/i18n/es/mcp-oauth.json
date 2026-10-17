@@ -1,0 +1,24 @@
+{
+  "title": "Autorizar acceso por MCP",
+  "asks": "quiere leer los datos de la empresa en {app} mediante el Model Context Protocol.",
+  "scope": {
+    "read": "Leer contactos, conexiones, flujos y conversaciones de la empresa.",
+    "noWrite": "Solo lectura: el cliente no crea, modifica ni envía nada."
+  },
+  "company": {
+    "label": "Empresa",
+    "hint": "El acceso queda vinculado a esta empresa, la de la credencial MCP usada en el conector."
+  },
+  "credential": "Credencial",
+  "redirect": "Vuelve a",
+  "approve": "Autorizar",
+  "approving": "Autorizando...",
+  "deny": "Denegar",
+  "retry": "Reintentar",
+  "errors": {
+    "invalid": "Enlace de autorización inválido. Empieza de nuevo desde el cliente MCP.",
+    "expired": "Esta solicitud de autorización venció o ya se usó. Empieza de nuevo desde el cliente MCP.",
+    "forbidden": "No tienes permiso para conectar clientes MCP en esta empresa.",
+    "generic": "No se pudo cargar la solicitud de autorización."
+  }
+}
