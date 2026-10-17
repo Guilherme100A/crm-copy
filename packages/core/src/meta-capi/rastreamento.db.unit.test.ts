@@ -492,3 +492,13 @@ describe('níveis de confiança da atribuição', () => {
     expect(s.inbound[2]!.ad_source).toBeUndefined()
   })
 })
+
+describe('pixel: resultado do business_messaging', () => {
+  it('salvar com a mesma Página mantém o resultado; trocar a Página zera (volta a testar)', async () => {
+    const w = await world({ page_id: '555000111' })
+    await db.update(pixelConfigs).set({ bmStatus: 'rejected', bmCheckedAt: new Date(), bmError: 'x' }).where(eq(pixelConfigs.id, w.pixel.id))
+    const svc = new PixelConfigService({ db })
+    expect((await svc.update(w.companyId, w.pixel.id, { page_id: '555000111', name: 'Pixel 2' })).business_messaging).toMatchObject({ status: 'rejected' })
+    expect((await svc.update(w.companyId, w.pixel.id, { page_id: '555000222' })).business_messaging).toBeNull()
+  })
+})

@@ -136,7 +136,7 @@ export class PixelConfigService {
         ...(v.pageId !== undefined ? { pageId: v.pageId } : {}),
         ...(v.wabaId !== undefined ? { whatsappBusinessAccountId: v.wabaId } : {}),
         // Trocar Página/WABA: o modo business_messaging volta a ser testado.
-        ...(v.pageId !== undefined || v.wabaId !== undefined ? { bmStatus: null, bmCheckedAt: null, bmError: null } : {}),
+        ...((v.pageId !== undefined && v.pageId !== cur.pageId) || (v.wabaId !== undefined && v.wabaId !== cur.whatsappBusinessAccountId) ? { bmStatus: null, bmCheckedAt: null, bmError: null } : {}),
         ...(v.testEventCode !== undefined ? { testEventCode: v.testEventCode } : {}),
         ...(v.defaultCountry !== undefined ? { defaultCountry: v.defaultCountry } : {}),
         ...(input.auto_lead_on_ad !== undefined ? { autoLeadOnAd: input.auto_lead_on_ad } : {}),
