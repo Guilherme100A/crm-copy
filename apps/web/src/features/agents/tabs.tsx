@@ -3,6 +3,8 @@ import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { Lock, Plus, Sparkles, Trash2, Undo2, Upload } from 'lucide-react'
 import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
+import { DictationButton } from '@/features/agent-lab/dictation'
+import { appendDictation } from '@/features/agent-lab/lab'
 import { useT } from '@/i18n'
 import { notify } from '@/lib/toast'
 import { cn } from '@/lib/utils'
@@ -166,6 +168,20 @@ export function InstructionsTab({ draft, set, errors, agent, canEdit, saveFirst 
       )}
     </Field>
   )
+  // T92: o mesmo campo com o ditado por voz (a transcrição entra no fim do texto).
+  const dictated = (key: TextKey, rows = 3) => (
+    <div className="flex min-w-0 flex-col gap-1">
+      {text(key, rows)}
+      {canEdit ? (
+        <div className="flex justify-end">
+          <DictationButton
+            testId={`agent-lab-dictate-${key.replace(/_/g, '-')}`}
+            onText={(said) => set((d) => ({ ...d, [key]: appendDictation(d[key], said) }))}
+          />
+        </div>
+      ) : null}
+    </div>
+  )
 
   return (
     <div className="flex min-w-0 flex-col gap-4">
@@ -208,11 +224,11 @@ export function InstructionsTab({ draft, set, errors, agent, canEdit, saveFirst 
             )}
           </Field>
         </div>
-        {text('purpose')}
-        {text('audience')}
-        {text('example_messages', 4)}
-        {text('business_rules', 4)}
-        {text('never_talk_about')}
+        {dictated('purpose')}
+        {dictated('audience')}
+        {dictated('example_messages', 4)}
+        {dictated('business_rules', 4)}
+        {dictated('never_talk_about')}
         <Toggle
           checked={draft.use_emojis}
           disabled={!canEdit}

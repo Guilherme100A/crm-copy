@@ -50,12 +50,23 @@ declare module '../../lib/types' {
 
 export const TRANSCRIPTION_MAX_BYTES = 25 * 1024 * 1024
 
+/**
+ * LLM do laboratório (T92): `aiLabLlm` > o FakeLlm do E2E > o LLM da empresa. O do E2E é lido A CADA chamada: o
+ * `POST /__e2e/reset` e o `/__e2e/llm/script` com `replace` trocam a instância de `deps.e2e.llm`.
+ */
+export function labLlm(deps: ResolvedDeps, fallback: () => LlmProvider): LlmProvider {
+  if (deps.aiLabLlm) return deps.aiLabLlm
+  const e2e = () => (deps as { e2e?: { llm?: LlmProvider } }).e2e?.llm
+  if (!e2e()) return fallback()
+  const current = () => e2e() ?? fallback()
+  return { generate: (req) => current().generate(req) }
+}
+
 /** Serviço do processo da API (um por app). */
 export function aiAgentLabService(deps: ResolvedDeps): AgentLabService {
   if (deps.aiAgentLab) return deps.aiAgentLab
   const keys = () => (deps.aiKeys as AiKeysService | undefined) ?? new AiKeysService({ db: deps.db, ...(deps.credentialsCipher ? { cipher: deps.credentialsCipher } : {}) })
-  const e2eLlm = (deps as { e2e?: { llm?: LlmProvider } }).e2e?.llm
-  const llm = deps.aiLabLlm ?? e2eLlm ?? createCompanyLlmProvider({ keys: keys() })
+  const llm = labLlm(deps, () => createCompanyLlmProvider({ keys: keys() }))
   const capEnv = Number(process.env.AI_AGENT_EVAL_CAP)
   let queue: ReturnType<typeof defineQueue<AgentLabJobData>> | undefined
   deps.aiAgentLab = new AgentLabService({

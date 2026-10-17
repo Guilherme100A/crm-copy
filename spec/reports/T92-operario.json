@@ -1,0 +1,138 @@
+{
+  "version": 1,
+  "task": "T92",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T03:58:06.655Z",
+  "commit": "bea292dd3a3df324c7ed82bb1f5994bd06d8bb14",
+  "base": "bea292d",
+  "changedFiles": [
+    "apps/api/src/routes/ai-agent-lab/index.ts",
+    "apps/web/src/features/agents/editor-page.tsx",
+    "apps/web/src/features/agents/list-page.tsx",
+    "apps/web/src/features/agents/tabs.tsx",
+    "apps/web/src/routes/agentes/$agentId.tsx",
+    "apps/web/src/routes/agentes/index.tsx",
+    "apps/web/src/routes/agentes/novo.tsx",
+    "scripts/e2e/api.ts",
+    "apps/api/src/routes/ai-agent-lab/ai-agent-lab.unit.test.ts",
+    "apps/web/src/features/agent-lab/agent-lab.unit.test.ts",
+    "apps/web/src/features/agent-lab/api.ts",
+    "apps/web/src/features/agent-lab/assisted-create.tsx",
+    "apps/web/src/features/agent-lab/dictation.tsx",
+    "apps/web/src/features/agent-lab/lab.ts",
+    "apps/web/src/features/agent-lab/live-test-panel.tsx",
+    "apps/web/src/features/agent-lab/realtime.ts",
+    "apps/web/src/features/agent-lab/recorder.ts",
+    "apps/web/src/features/agent-lab/review-banner.tsx",
+    "apps/web/src/features/agent-voices/agent-voices.unit.test.ts",
+    "apps/web/src/features/agent-voices/api.ts",
+    "apps/web/src/features/agent-voices/form.ts",
+    "apps/web/src/features/agent-voices/voices.tsx",
+    "apps/web/src/i18n/en/agent-lab.json",
+    "apps/web/src/i18n/es/agent-lab.json",
+    "apps/web/src/i18n/pt-BR/agent-lab.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 22.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 10.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 202.0s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 16.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 9.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 25.2s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "25 arquivo(s) alterado(s)"
+    }
+  ]
+}

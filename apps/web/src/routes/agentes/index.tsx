@@ -2,10 +2,12 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useCallback } from 'react'
 import { AgentsListPage, agentsSearchSchema, type AgentsSearch } from '@/features/agents/list-page'
+import { registerAgentLabRealtime } from '@/features/agent-lab/realtime'
 import { registerAgentsRealtime } from '@/features/agents/realtime'
 
 // Handlers do SSE registrados junto com a árvore de rotas (antes de o shell abrir a conexão).
 registerAgentsRealtime()
+registerAgentLabRealtime()
 
 export const Route = createFileRoute('/agentes/')({
   validateSearch: agentsSearchSchema,

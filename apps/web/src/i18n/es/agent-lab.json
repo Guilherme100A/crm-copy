@@ -1,0 +1,130 @@
+{
+  "test": {
+    "open": "Prueba en vivo",
+    "title": "Prueba en vivo",
+    "saveFirst": "Guarda el agente para probarlo",
+    "clear": "Limpiar conversación",
+    "close": "Cerrar",
+    "empty": "Envía un mensaje como si fueras un cliente. La prueba usa lo que está en el editor, aunque no esté guardado.",
+    "placeholder": "Escribe como un cliente…",
+    "send": "Enviar",
+    "typing": "El agente está respondiendo…",
+    "noText": "Sin texto (solo acciones)",
+    "credits": "Créditos en esta conversación: {n}",
+    "eval": "Pruebas hoy: {used} de {limit}",
+    "fields": "Campos completados",
+    "filled": "{key}: {value}",
+    "handoff": "Transfirió a un humano",
+    "charged": "−{n} créditos · {tokens} tokens"
+  },
+  "skills": {
+    "trigger_flow": "Disparó flujo",
+    "transfer_human": "Transfirió a humano",
+    "apply_label": "Aplicó etiqueta",
+    "fill_field": "Completó campo",
+    "close_conversation": "Cerró la conversación",
+    "move_card": "Movió la tarjeta",
+    "compose_message": "Armó mensaje",
+    "other": "Habilidad"
+  },
+  "errors": {
+    "notConfigured": "El agente no tiene modelo de IA configurado. Elige un modelo en Configuración o registra una clave de IA.",
+    "noBalance": "Sin créditos de IA. Recarga el saldo para continuar.",
+    "evalCap": "Límite diario de pruebas alcanzado. Inténtalo mañana.",
+    "validation": "Revisa los datos",
+    "notFound": "No encontrado",
+    "inProgress": "Ya hay una creación en curso",
+    "invalidAudio": "No fue posible transcribir el audio",
+    "generic": "Algo salió mal. Inténtalo de nuevo."
+  },
+  "dictation": {
+    "start": "Dictar",
+    "stop": "Detener y transcribir",
+    "upload": "Enviar audio para transcribir",
+    "transcribing": "Transcribiendo…",
+    "empty": "No entendí nada en el audio",
+    "micDenied": "No fue posible usar el micrófono"
+  },
+  "assisted": {
+    "open": "Crear con IA",
+    "title": "Crear agente con IA",
+    "hint": "Cuenta qué vendes y/o indica el sitio. La IA arma un primer borrador del agente para que lo revises.",
+    "pitch": "Qué vendes",
+    "pitchPlaceholder": "Productos, precios, público, cómo atender…",
+    "site": "Enlace del sitio (opcional)",
+    "estimateBtn": "Estimar costo",
+    "estimate": "Costo estimado: {credits} créditos · saldo: {available}",
+    "estimateUnknown": "Costo estimado no disponible · saldo: {available}",
+    "insufficient": "Saldo insuficiente para crear con IA",
+    "start": "Crear",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "stages": {
+      "extract": "Leyendo el material",
+      "compose": "Armando el agente",
+      "persist": "Guardando"
+    },
+    "warnings": {
+      "site_unread": "No pude leer el sitio. Usé solo el texto.",
+      "empty_knowledge": "Poco material: el agente quedó genérico. Completa las instrucciones.",
+      "other": "Aviso de la creación"
+    },
+    "runErrors": {
+      "not_configured": "Ningún modelo de IA disponible para la creación. Registra una clave de IA.",
+      "compose_failed": "La IA no pudo armar el agente. Inténtalo de nuevo con más detalles.",
+      "no_balance": "Sin créditos de IA para crear el agente.",
+      "limit_reached": "Límite de agentes alcanzado.",
+      "request_failed": "La creación falló. Inténtalo de nuevo.",
+      "enqueue_failed": "No fue posible iniciar la creación. Inténtalo de nuevo."
+    }
+  },
+  "review": {
+    "title": "Dejé un comienzo. Revisa antes de publicar.",
+    "body": "Revisa las instrucciones, las habilidades y el conocimiento; luego usa la Prueba en vivo.",
+    "dismiss": "Entendido"
+  },
+  "voices": {
+    "new": "Nueva voz",
+    "name": "Nombre de la voz",
+    "language": "Idioma",
+    "languages": {
+      "pt": "Portugués",
+      "en": "Inglés",
+      "es": "Español",
+      "hi": "Hindi"
+    },
+    "samples": "Muestras (1 a {max})",
+    "samplesHint": "MP3, WAV, OGG, M4A, AAC, WEBM o FLAC, hasta 10 MB cada una. Habla de forma natural, sin ruido.",
+    "attach": "Adjuntar audio",
+    "record": "Grabar",
+    "stopRecording": "Detener grabación",
+    "recordingName": "grabacion",
+    "removeSample": "Quitar muestra",
+    "micDenied": "No fue posible usar el micrófono",
+    "submit": "Crear voz",
+    "cancel": "Cancelar",
+    "created": "Voz creada. Escucha la vista previa y decide si la mantienes.",
+    "preview": "Escuchar",
+    "keep": "Mantener",
+    "keptToast": "Voz mantenida: disponible en los agentes",
+    "discard": "Descartar",
+    "delete": "Eliminar",
+    "deleteTitle": "¿Eliminar la voz \"{name}\"?",
+    "deleteWarning": "La voz sale de todos los agentes que la usan, y vuelven a la voz predeterminada.",
+    "deleted": "Voz eliminada",
+    "removedFromAgents": "Voz eliminada y quitada de {n} agente(s)",
+    "errors": {
+      "notConfigured": "Registra una clave de ElevenLabs en Integraciones de IA para crear voces.",
+      "quota": "Sin saldo para escuchar esta voz",
+      "count": "Envía de 1 a 3 muestras",
+      "tooLarge": "Cada muestra puede tener hasta 10 MB",
+      "unsupported": "Formato no soportado (usa MP3, WAV, OGG, M4A, AAC, WEBM o FLAC)",
+      "empty": "Muestra vacía",
+      "name": "Da un nombre de 1 a 100 caracteres",
+      "language": "Elige un idioma válido",
+      "upstream": "El proveedor de voz falló. Inténtalo de nuevo.",
+      "notFound": "Voz no encontrada",
+      "generic": "Algo salió mal. Inténtalo de nuevo."
+    }
+  }
+}

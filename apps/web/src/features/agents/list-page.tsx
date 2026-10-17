@@ -7,6 +7,8 @@ import { Bot, Copy, Mic, Plus, Search, Trash2 } from 'lucide-react'
 import { useMemo, useState } from 'react'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
+import { AssistedCreateButton } from '@/features/agent-lab/assisted-create'
+import { VoiceActions, VoiceCreate } from '@/features/agent-voices/voices'
 import { useT } from '@/i18n'
 import { HttpError } from '@/lib/http'
 import { hasAny, profileQuery, sessionFrom } from '@/lib/session'
@@ -130,6 +132,8 @@ function AgentsTab({ search, onSearch }: { search: AgentsSearch; onSearch: (s: A
                 : t('list.quota', { used: quota.used, limit: quota.limit })}
             </span>
           ) : null}
+          {/* T92: criação assistida. */}
+          {canEdit ? <AssistedCreateButton /> : null}
           {canEdit ? (
             <Button data-testid="agents-new" onClick={onNew}>
               <Plus aria-hidden /> {t('list.new')}
@@ -281,9 +285,12 @@ function VoicesPanel() {
   const t = useT('agents')
   const q = useQuery(voicesQuery())
   const voices = q.data ?? []
+  const { canEdit } = useAgentPerms()
   return (
     <div data-testid="agents-voices-panel" className="flex min-w-0 flex-col gap-3">
       <p className="text-sm text-muted-foreground">{t('voices.hint')}</p>
+      {/* T92: enviar amostras; prévia, manter e excluir em cada voz. */}
+      {canEdit ? <VoiceCreate /> : null}
       {q.isPending ? (
         <div className="h-24 animate-pulse rounded-xl border bg-muted/40" aria-busy />
       ) : voices.length === 0 ? (
@@ -308,6 +315,7 @@ function VoicesPanel() {
               <span className="rounded-full bg-muted px-2 py-0.5 text-xs">
                 {t(v.status === 'kept' ? 'voices.kept' : 'voices.pending')}
               </span>
+              {canEdit ? <VoiceActions voice={v} /> : null}
             </li>
           ))}
         </ul>

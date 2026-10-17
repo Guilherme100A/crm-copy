@@ -1,0 +1,130 @@
+{
+  "test": {
+    "open": "Live test",
+    "title": "Live test",
+    "saveFirst": "Save the agent to test it",
+    "clear": "Clear conversation",
+    "close": "Close",
+    "empty": "Send a message as if you were a customer. The test uses what is in the editor, even unsaved.",
+    "placeholder": "Write like a customer…",
+    "send": "Send",
+    "typing": "The agent is replying…",
+    "noText": "No text (actions only)",
+    "credits": "Credits in this conversation: {n}",
+    "eval": "Tests today: {used} of {limit}",
+    "fields": "Filled fields",
+    "filled": "{key}: {value}",
+    "handoff": "Transferred to a human",
+    "charged": "−{n} credits · {tokens} tokens"
+  },
+  "skills": {
+    "trigger_flow": "Triggered flow",
+    "transfer_human": "Transferred to human",
+    "apply_label": "Applied label",
+    "fill_field": "Filled field",
+    "close_conversation": "Closed the conversation",
+    "move_card": "Moved the card",
+    "compose_message": "Composed message",
+    "other": "Skill"
+  },
+  "errors": {
+    "notConfigured": "The agent has no AI model configured. Pick a model in Settings or add an AI key.",
+    "noBalance": "No AI credits. Top up your balance to continue.",
+    "evalCap": "Daily test limit reached. Try again tomorrow.",
+    "validation": "Check the data",
+    "notFound": "Not found",
+    "inProgress": "A creation is already in progress",
+    "invalidAudio": "Could not transcribe the audio",
+    "generic": "Something went wrong. Try again."
+  },
+  "dictation": {
+    "start": "Dictate",
+    "stop": "Stop and transcribe",
+    "upload": "Upload audio to transcribe",
+    "transcribing": "Transcribing…",
+    "empty": "Nothing understood in the audio",
+    "micDenied": "Could not use the microphone"
+  },
+  "assisted": {
+    "open": "Create with AI",
+    "title": "Create agent with AI",
+    "hint": "Tell what you sell and/or give your website. AI builds a first draft of the agent for you to review.",
+    "pitch": "What you sell",
+    "pitchPlaceholder": "Products, prices, audience, how to serve…",
+    "site": "Website link (optional)",
+    "estimateBtn": "Estimate cost",
+    "estimate": "Estimated cost: {credits} credits · balance: {available}",
+    "estimateUnknown": "Estimated cost unavailable · balance: {available}",
+    "insufficient": "Not enough balance to create with AI",
+    "start": "Create",
+    "cancel": "Cancel",
+    "close": "Close",
+    "stages": {
+      "extract": "Reading the material",
+      "compose": "Building the agent",
+      "persist": "Saving"
+    },
+    "warnings": {
+      "site_unread": "Couldn't read the website. Used only the text.",
+      "empty_knowledge": "Little material: the agent is generic. Complete the instructions.",
+      "other": "Creation notice"
+    },
+    "runErrors": {
+      "not_configured": "No AI model available for creation. Add an AI key.",
+      "compose_failed": "AI couldn't build the agent. Try again with more details.",
+      "no_balance": "No AI credits to create the agent.",
+      "limit_reached": "Agent limit reached.",
+      "request_failed": "Creation failed. Try again.",
+      "enqueue_failed": "Couldn't start the creation. Try again."
+    }
+  },
+  "review": {
+    "title": "Here's a start. Review before publishing.",
+    "body": "Check the instructions, skills and knowledge; then use the Live test.",
+    "dismiss": "Got it"
+  },
+  "voices": {
+    "new": "New voice",
+    "name": "Voice name",
+    "language": "Language",
+    "languages": {
+      "pt": "Portuguese",
+      "en": "English",
+      "es": "Spanish",
+      "hi": "Hindi"
+    },
+    "samples": "Samples (1 to {max})",
+    "samplesHint": "MP3, WAV, OGG, M4A, AAC, WEBM or FLAC, up to 10 MB each. Speak naturally, without noise.",
+    "attach": "Attach audio",
+    "record": "Record",
+    "stopRecording": "Stop recording",
+    "recordingName": "recording",
+    "removeSample": "Remove sample",
+    "micDenied": "Could not use the microphone",
+    "submit": "Create voice",
+    "cancel": "Cancel",
+    "created": "Voice created. Listen to the preview and decide whether to keep it.",
+    "preview": "Listen",
+    "keep": "Keep",
+    "keptToast": "Voice kept: available in agents",
+    "discard": "Discard",
+    "delete": "Delete",
+    "deleteTitle": "Delete the voice \"{name}\"?",
+    "deleteWarning": "The voice is removed from every agent using it, and they go back to the default voice.",
+    "deleted": "Voice deleted",
+    "removedFromAgents": "Voice deleted and removed from {n} agent(s)",
+    "errors": {
+      "notConfigured": "Add an ElevenLabs key in AI Integrations to create voices.",
+      "quota": "No balance to listen to this voice",
+      "count": "Send 1 to 3 samples",
+      "tooLarge": "Each sample can be up to 10 MB",
+      "unsupported": "Unsupported format (use MP3, WAV, OGG, M4A, AAC, WEBM or FLAC)",
+      "empty": "Empty sample",
+      "name": "Give a name of 1 to 100 characters",
+      "language": "Pick a valid language",
+      "upstream": "The voice provider failed. Try again.",
+      "notFound": "Voice not found",
+      "generic": "Something went wrong. Try again."
+    }
+  }
+}

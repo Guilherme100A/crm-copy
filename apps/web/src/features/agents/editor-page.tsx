@@ -9,6 +9,8 @@ import { useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 import { Button } from '@/components/ui/button'
 import { useT } from '@/i18n'
+import { LiveTestButton } from '@/features/agent-lab/live-test-panel'
+import { ReviewBanner } from '@/features/agent-lab/review-banner'
 import { HttpError } from '@/lib/http'
 import { notify } from '@/lib/toast'
 import { cn } from '@/lib/utils'
@@ -231,6 +233,8 @@ function Editor({
           )}
           {canEdit ? (
             <>
+              {/* T92: painel "Teste ao vivo" com o rascunho atual (não salvo). */}
+              <LiveTestButton agentId={agent?.id ?? null} getDraft={() => (dirty ? payloadOf(draft) : null)} />
               {agent && agent.status === 'active' ? (
                 <Button
                   variant="outline"
@@ -275,6 +279,8 @@ function Editor({
         </p>
       ) : null}
       {!agent ? <p className="text-xs text-muted-foreground">{t('editor.unsavedHint')}</p> : null}
+      {/* T92: banner "revise antes de publicar" da criação assistida (history.state). */}
+      {agent ? <ReviewBanner /> : null}
 
       <div role="tablist" className="-mx-4 flex gap-1 overflow-x-auto border-b px-4 sm:mx-0 sm:px-0">
         {EDITOR_TABS.map((id) => (

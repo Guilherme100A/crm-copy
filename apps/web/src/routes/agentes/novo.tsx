@@ -2,9 +2,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useCallback } from 'react'
 import { AgentEditorPage, editorSearchSchema, type EditorSearch } from '@/features/agents/editor-page'
+import { registerAgentLabRealtime } from '@/features/agent-lab/realtime'
 import { registerAgentsRealtime } from '@/features/agents/realtime'
 
 registerAgentsRealtime()
+registerAgentLabRealtime()
 
 export const Route = createFileRoute('/agentes/novo')({
   validateSearch: editorSearchSchema,
