@@ -32,6 +32,7 @@
   "vars": {
     "insert": "Variable",
     "contact": "Contacto",
+    "ad": "Anuncio de origen",
     "fields": "Campos personalizados",
     "system": "Sistema",
     "globals": "Variables globales"

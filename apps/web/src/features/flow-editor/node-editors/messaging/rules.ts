@@ -173,6 +173,8 @@ export function errorsUnder(errors: FieldErrors | undefined, prefix: string): Fi
 
 /** Variáveis de 06 §3.9 oferecidas no seletor (contato e sistema); globais e campos vêm da API. */
 export const CONTACT_VARIABLES = ['full_name', 'first_name', 'phone_number', 'email', 'created_at'] as const
+/** Dados do anúncio de origem do contato (CTWA; 11 §3.7 — as mesmas variáveis do Leona). Vazias quando ausentes. */
+export const AD_VARIABLES = ['ctwa_clid', 'source_url', 'source_id', 'media_url', 'thumbnail_url'] as const
 export const SYSTEM_VARIABLES = ['attendant_name', 'user_email', 'instance_number', 'instance_name', 'hora', 'data', 'dia', 'saudacao', 'last_user_message'] as const
 
 /** Grupos do seletor sem repetir nome (os campos do sistema também vêm de `/api/custom-fields`); grupo vazio sai. */

@@ -26,6 +26,7 @@
   "vars": {
     "insert": "Variable",
     "contact": "Contact",
+    "ad": "Source ad",
     "fields": "Custom fields",
     "system": "System",
     "globals": "Global variables"

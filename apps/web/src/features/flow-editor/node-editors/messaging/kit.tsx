@@ -12,7 +12,7 @@ import { cn } from '@/lib/utils'
 import { customFieldsQuery, globalVariablesQuery, nodeEditorsApi, stickersQuery, type UploadedMedia } from './api'
 import {
   blobRef,
-  CONTACT_VARIABLES,
+  AD_VARIABLES, CONTACT_VARIABLES,
   hasErrors,
   insertVariable,
   intOf,
@@ -228,6 +228,7 @@ function useVariableGroups() {
   const fields = useQuery(customFieldsQuery()).data ?? []
   return variableGroups([
     { id: 'contact', label: t('vars.contact'), names: [...CONTACT_VARIABLES] as string[] },
+    { id: 'ad', label: t('vars.ad'), names: [...AD_VARIABLES] as string[] },
     { id: 'system', label: t('vars.system'), names: [...SYSTEM_VARIABLES] as string[] },
     { id: 'fields', label: t('vars.fields'), names: fields },
     { id: 'globals', label: t('vars.globals'), names: globals },
