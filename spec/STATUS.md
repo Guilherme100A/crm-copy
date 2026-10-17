@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda): T96 tester (Sentinela); T44 em preparo; vaga de operário livre. Regressão completa da main verde (12 pacotes, 1588 testes) após corrigir as regressões da T58 e T54. Gate testa dependentes por diretório desde 7a22d40.
+- Em andamento (só agentes sob demanda): T44 (Prumo) e T71 operários; vaga de tester livre. Vaga dupla de verify. Gate testa dependentes por diretório. main publicada em origin a cada gate.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -99,7 +99,7 @@
 | 7 | T68 | Runtime do agente de IA | MERGED | Torno | Sonda | 0 | 2c0684c |
 | 7 | T69 | UI chats: lista e filtros | MERGED | Torno | Sonda | 0 | 10fa4d0 |
 | 7 | T70 | UI kanban: lista e quadro | MERGED | Torno | Sonda | 1 | 9867959 |
-| 7 | T71 | UI conexões | TODO | | | 0 | |
+| 7 | T71 | UI conexões | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T71.md; UI + backend: limite na lista, retomar/cancelar pausados, rota /__e2e de estado da sessão (aditivo) |
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
@@ -124,7 +124,7 @@
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
-| 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | VERIFYING | Esquadro | Sentinela | 0 | op ~20 min (verify 0, base de98947); tester em andamento |
+| 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |

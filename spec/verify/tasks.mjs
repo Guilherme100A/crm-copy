@@ -257,7 +257,7 @@ const RAW = [
   T('T40', 'Conexões: API, QR, pareamento, proxy e perfil', ['T22', 'T03'], [core('connections'), route('connections'), schema('connections'), 'packages/db/src/schema/crm/chats.ts' /* aditivo: FK chats.connection_id */, 'packages/db/src/schema/crm/departments.ts' /* aditivo: FKs connection_id (T31) */], ['api', 'core'],
     { requiredFiles: ['packages/core/src/connections/index.ts'], testerPaths: ['tests/acceptance/T31/**', 'tests/acceptance/T33/**', 'tests/acceptance/T39/**', 'tests/acceptance/T43/**', 'tests/acceptance/T48/**', 'tests/acceptance/T49/**', 'tests/acceptance/T50/**', 'tests/acceptance/T119/**'] /* FK chats.connection_id */ }),
   T('T47', 'Conexões: projeção de status, eventos e alertas', ['T40', 'T09', 'T16'], ['packages/core/src/connections-status/**', consumer('connections')], ['worker', 'core']),
-  T('T71', 'UI conexões', ['T40', 'T47', 'T23'], [...ui('connections')], ['web'], { e2e: true }),
+  T('T71', 'UI conexões', ['T40', 'T47', 'T23'], [...ui('connections'), 'apps/api/src/routes/connections/**', 'packages/core/src/connections/**' /* aditivo: limite de conexões na lista (AC-T71-05) e rotas de retomar/cancelar fluxos pausados (AC-T71-04) */, 'packages/core/src/connections-status/**' /* aditivo: resume/cancel dos runs pausados por queda + flow.resumed */, 'apps/api/src/e2e/index.ts' /* aditivo: rota /__e2e que muda o estado da sessão no FakeWaGateway (AC-T71-02) */], ['api', 'core', 'web'], { e2e: true }),
 
   // ---------------- IA ----------------
   T('T12', 'Adapters de IA: AI SDK 7, ElevenLabs, Groq e áudio', ['T04', 'T05'], ['packages/ai/src/aisdk/**', 'packages/ai/src/elevenlabs/**', 'packages/ai/src/groq/**', 'packages/ai/src/audio/**'], ['ai'],
