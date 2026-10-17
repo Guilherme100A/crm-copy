@@ -3,9 +3,9 @@
   "task": "T96",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T01:53:07.376Z",
-  "commit": "de9894733756fd8d3abb1196f398cf21fcefcc78",
-  "base": "de98947",
+  "at": "2026-10-17T02:00:42.817Z",
+  "commit": "adf7145b17efdf5dda1a889f6be2ecfed36c2796",
+  "base": "5789462",
   "changedFiles": [
     "tests/acceptance/T96/announcements.test.ts",
     "tests/acceptance/T96/health.test.ts",

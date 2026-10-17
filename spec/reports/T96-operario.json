@@ -3,19 +3,13 @@
   "task": "T96",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T01:46:36.786Z",
-  "commit": "de9894733756fd8d3abb1196f398cf21fcefcc78",
-  "base": "de98947",
+  "at": "2026-10-17T02:00:26.254Z",
+  "commit": "adf7145b17efdf5dda1a889f6be2ecfed36c2796",
+  "base": "5789462",
   "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "packages/core/src/ai-agents/provider-keys.ts",
-    "packages/core/src/ai-keys/service.ts",
-    "packages/core/src/dashboard/bootstrap/index.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
     "apps/api/src/routes/admin-ops/admin-ops.db.unit.test.ts",
     "apps/api/src/routes/admin-ops/index.ts",
+    "apps/api/src/routes/index.ts",
     "packages/core/src/admin-ops/ai-usage.ts",
     "packages/core/src/admin-ops/announcements.db.unit.test.ts",
     "packages/core/src/admin-ops/announcements.ts",
@@ -28,40 +22,51 @@
     "packages/core/src/admin-ops/secret-store.ts",
     "packages/core/src/admin-ops/wa-sessions-usage.db.unit.test.ts",
     "packages/core/src/admin-ops/wa-sessions.ts",
-    "packages/db/drizzle/crm/0032_t96_admin_ops.sql",
-    "packages/db/drizzle/crm/meta/0032_snapshot.json",
-    "packages/db/src/schema/crm/admin.ts"
+    "packages/core/src/ai-agents/provider-keys.ts",
+    "packages/core/src/ai-keys/service.ts",
+    "packages/core/src/dashboard/bootstrap/index.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/0033_t96_admin_ops.sql",
+    "packages/db/drizzle/crm/meta/0033_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/admin.ts",
+    "packages/db/src/schema/crm/index.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.3s"
+      "detail": "ok em 13.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.9s"
+      "detail": "ok em 4.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 133.5s (afetados desde a base)"
+      "detail": "ok em 122.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 14.9s"
+      "detail": "ok em 10.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 6.9s"
+      "detail": "ok em 5.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 136.2s (afetados desde a base)"
+      "detail": "ok em 106.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./packages/core}\" --filter \"...{./packages/db}\" --filter \"!@crm/api\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "ok em 142.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
