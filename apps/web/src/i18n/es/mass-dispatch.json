@@ -1,0 +1,198 @@
+{
+  "title": "Envíos masivos",
+  "subtitle": "Inicia un flujo para muchos contactos a la vez, dentro de la cuota del ciclo de la suscripción.",
+  "new": "Nuevo envío masivo",
+  "search": "Buscar por nombre, flujo o número",
+  "empty": "Todavía no hay envíos masivos.",
+  "noResults": "Ningún envío coincide con esta búsqueda.",
+  "unnamed": "Envío masivo #{id}",
+  "cards": {
+    "remaining": "Restantes",
+    "used": "Usados en el ciclo",
+    "running": "En curso",
+    "completed": "Completados"
+  },
+  "quota": {
+    "title": "Cuota del ciclo",
+    "help": "La cuota del ciclo es el número de conexiones facturables por el límite por número, más el bono de la cuenta. Cancelar un envío devuelve los envíos pendientes.",
+    "text": "{used} de {limit} usados ({remaining} restantes) · {slots} número(s) × {rate}/número",
+    "exhausted": "La cuota del ciclo se agotó. Nuevos envíos solo en el próximo ciclo o con bono de cuota."
+  },
+  "cols": {
+    "name": "Nombre",
+    "flow": "Flujo",
+    "status": "Estado",
+    "progress": "Progreso",
+    "schedule": "Agenda",
+    "actions": "Acciones"
+  },
+  "status": {
+    "preparing": "Preparando",
+    "scheduled": "Programado",
+    "running": "En curso",
+    "paused": "Pausado",
+    "completed": "Completado",
+    "cancelled": "Cancelado",
+    "failed": "Falló"
+  },
+  "schedule": {
+    "everyDay": "Todos los días"
+  },
+  "progress": {
+    "short": "{sent} / {total} · {failed} fallos",
+    "long": "{sent} / {total} flujos iniciados · {failed} fallos · {pending} pendientes · {skipped} omitidos",
+    "startedHint": "\"Iniciado\" significa que el flujo comenzó para el contacto; no es confirmación de entrega en WhatsApp."
+  },
+  "actions": {
+    "details": "Ver detalles",
+    "cancel": "Cancelar"
+  },
+  "wizard": {
+    "title": "Nuevo envío masivo",
+    "steps": "Pasos",
+    "step": {
+      "data": "Datos",
+      "settings": "Configuración",
+      "audience": "Público"
+    },
+    "back": "Volver",
+    "next": "Continuar",
+    "submit": "Crear envío"
+  },
+  "fields": {
+    "name": "Nombre (opcional)",
+    "namePlaceholder": "Ej.: Reactivación de clientes",
+    "targets": "Números de envío",
+    "targetsHint": "Cada número envía su propio flujo; con varios números, los envíos se alternan entre ellos. Solo aparecen conexiones conectadas y flujos activos y publicados.",
+    "connection": "Conexión",
+    "flow": "Flujo",
+    "select": "Selecciona…",
+    "addTarget": "Agregar número",
+    "removeTarget": "Quitar número",
+    "noConnections": "Ninguna conexión conectada.",
+    "goConnections": "Ir a Conexiones",
+    "noFlows": "Ningún flujo activo y publicado. Publica un flujo para enviarlo.",
+    "businessHours": "Enviar solo en horario comercial",
+    "fullDay": "Los envíos pueden ocurrir todos los días, de 00:00 a 23:59.",
+    "weekdays": "Días de la semana",
+    "windowStart": "Inicio",
+    "windowEnd": "Fin",
+    "speed": "Velocidad",
+    "randomize": "Aleatorizar el intervalo entre envíos",
+    "intervalMin": "Intervalo mínimo: {s} s",
+    "intervalMax": "Intervalo máximo: {s} s",
+    "intervalFixed": "Intervalo fijo de {s} s entre envíos.",
+    "intervalRange": "Intervalo aleatorio entre {min} y {max} s entre envíos.",
+    "dailyLimit": "Límite diario (opcional)",
+    "dailyLimitPlaceholder": "Sin límite",
+    "dailyLimitHint": "Al alcanzarlo, pausa y continúa el siguiente día permitido. Quedan {remaining} en la cuota.",
+    "dailyLimitHintNoQuota": "Al alcanzarlo, pausa y continúa el siguiente día permitido.",
+    "startsAt": "Empezar a programar el",
+    "startsAtHint": "Vacío = ahora.",
+    "audience": "Público"
+  },
+  "presets": {
+    "slow": "Lento",
+    "slowHint": "30–120 s",
+    "normal": "Normal",
+    "normalHint": "5–30 s",
+    "fast": "Rápido",
+    "fastHint": "0–5 s",
+    "custom": "Personalizado",
+    "customHint": "0–120 s"
+  },
+  "pace": {
+    "notice": "El ritmo real puede ser más lento que el configurado: cada conexión tiene límites de seguridad (calentamiento de números nuevos, pausas y límites por hora/día) que posponen envíos para reducir el riesgo de bloqueo.",
+    "warming": "Hay una conexión en calentamiento: el primer día envía unos 20 mensajes y el límite crece poco a poco en los días siguientes. Los envíos que excedan se posponen."
+  },
+  "audience": {
+    "draft": "Selección hecha en Contactos",
+    "draftCount": "{n} contacto(s) seleccionado(s), con los filtros aplicados",
+    "all": "Todos los contactos",
+    "allCount": "{n} contacto(s) en la base",
+    "allHint": "Todos los contactos de la base",
+    "selected": "Público: {n} contacto(s). Se omiten los contactos sin teléfono o que pidieron no recibir.",
+    "unknown": "Calculando el público…",
+    "fromContacts": "Para elegir contactos o filtros específicos, selecciónalos en la pantalla de Contactos y usa \"Nuevo envío masivo\".",
+    "goContacts": "Abrir Contactos"
+  },
+  "confirm": {
+    "title": "Confirmar envío masivo",
+    "summary": "El flujo se iniciará para {n} contacto(s) usando {targets} número(s) de envío.",
+    "flowNotice": "Enviar cancela cualquier flujo en curso del mismo contacto.",
+    "ok": "Confirmar y crear"
+  },
+  "preparing": {
+    "title": "Preparando envío masivo",
+    "body": "Estamos resolviendo el público y programando los envíos. Puedes cerrar: el progreso continúa en la lista.",
+    "count": "{scheduled} / {target} programados",
+    "done": "Preparación completada: {total} envío(s) programado(s).",
+    "failed": "La preparación falló."
+  },
+  "phases": {
+    "queued": "En cola",
+    "resolving_recipients": "Resolviendo destinatarios",
+    "counting": "Contando",
+    "scheduling": "Programando envíos",
+    "completed": "Completada"
+  },
+  "details": {
+    "title": "Detalles del envío",
+    "createdAt": "Creado el {date}",
+    "progress": "Progreso",
+    "preparation": "Preparación",
+    "ab": "Distribución A/B",
+    "flowA": "Flujo A",
+    "flowB": "Flujo B",
+    "noAb": "Sin prueba A/B",
+    "abHint": "Los contactos se dividen entre el flujo A y el flujo B.",
+    "targets": "Números de envío",
+    "targetCounts": "{assigned} programados · {sent} iniciados · {failed} fallos",
+    "config": "Configuración",
+    "days": "Días",
+    "window": "Ventana",
+    "interval": "Intervalo",
+    "intervalFixed": "{s} s (fijo)",
+    "intervalRange": "{min}–{max} s (aleatorio)",
+    "dailyLimit": "Límite diario",
+    "noDailyLimit": "Sin límite",
+    "startsAt": "Inicio de la programación",
+    "firstSent": "Primer envío",
+    "lastSent": "Último envío",
+    "finished": "Finalizado el"
+  },
+  "cancel": {
+    "title": "¿Cancelar \"{name}\"?",
+    "body": "Los envíos pendientes se cancelan y vuelven a la cuota. Los flujos ya iniciados no se revierten.",
+    "back": "Volver",
+    "ok": "Cancelar envío"
+  },
+  "toast": {
+    "created": "Envío masivo creado",
+    "cancelled": "Envío cancelado",
+    "released": "{n} envío(s) devuelto(s) a la cuota"
+  },
+  "errors": {
+    "targetsRequired": "Agrega al menos un número de envío.",
+    "connectionRequired": "Selecciona la conexión.",
+    "flowRequired": "Selecciona el flujo.",
+    "weekdaysRequired": "Selecciona al menos un día de la semana.",
+    "timeInvalid": "Hora inválida (HH:MM).",
+    "windowEmpty": "La ventana de envío está vacía: el fin debe ser posterior al inicio.",
+    "intervalRange": "Usa de 0 a 120 segundos.",
+    "intervalOrder": "El intervalo máximo debe ser mayor o igual al mínimo.",
+    "dailyLimitInvalid": "El límite diario debe ser un número entero mayor que cero.",
+    "dailyLimitExceedsQuota": "El límite diario supera la cuota restante del ciclo.",
+    "dateInvalid": "Fecha inválida.",
+    "selectionRequired": "Selecciona al menos un contacto.",
+    "noQuota": "La cuota del ciclo se agotó.",
+    "sessionNotConnected": "La conexión elegida no está conectada.",
+    "targetsLoad": "No se pudieron cargar las conexiones o los flujos. Verifica que tienes acceso a ellos."
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "retry": "Intentar de nuevo"
+  }
+}

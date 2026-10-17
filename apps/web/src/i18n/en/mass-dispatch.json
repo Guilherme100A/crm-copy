@@ -1,0 +1,198 @@
+{
+  "title": "Mass dispatches",
+  "subtitle": "Start a flow for many contacts at once, within your subscription cycle quota.",
+  "new": "New mass dispatch",
+  "search": "Search by name, flow or number",
+  "empty": "No mass dispatches yet.",
+  "noResults": "No dispatch matches this search.",
+  "unnamed": "Mass dispatch #{id}",
+  "cards": {
+    "remaining": "Remaining",
+    "used": "Used this cycle",
+    "running": "In progress",
+    "completed": "Completed"
+  },
+  "quota": {
+    "title": "Cycle quota",
+    "help": "The cycle quota is the number of billable connections times the per-number limit, plus the account bonus. Cancelling a dispatch gives back its pending sends.",
+    "text": "{used} of {limit} used ({remaining} remaining) · {slots} number(s) × {rate}/number",
+    "exhausted": "The cycle quota is used up. New dispatches only in the next cycle or with a quota bonus."
+  },
+  "cols": {
+    "name": "Name",
+    "flow": "Flow",
+    "status": "Status",
+    "progress": "Progress",
+    "schedule": "Schedule",
+    "actions": "Actions"
+  },
+  "status": {
+    "preparing": "Preparing",
+    "scheduled": "Scheduled",
+    "running": "Running",
+    "paused": "Paused",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "failed": "Failed"
+  },
+  "schedule": {
+    "everyDay": "Every day"
+  },
+  "progress": {
+    "short": "{sent} / {total} · {failed} failed",
+    "long": "{sent} / {total} flows started · {failed} failed · {pending} pending · {skipped} skipped",
+    "startedHint": "\"Started\" means the flow began for the contact; it is not a WhatsApp delivery confirmation."
+  },
+  "actions": {
+    "details": "View details",
+    "cancel": "Cancel"
+  },
+  "wizard": {
+    "title": "New mass dispatch",
+    "steps": "Steps",
+    "step": {
+      "data": "Details",
+      "settings": "Settings",
+      "audience": "Audience"
+    },
+    "back": "Back",
+    "next": "Continue",
+    "submit": "Create dispatch"
+  },
+  "fields": {
+    "name": "Name (optional)",
+    "namePlaceholder": "E.g.: Customer reactivation",
+    "targets": "Sending numbers",
+    "targetsHint": "Each number sends its own flow; with several numbers, sends alternate between them. Only connected connections and active, published flows are listed.",
+    "connection": "Connection",
+    "flow": "Flow",
+    "select": "Select…",
+    "addTarget": "Add number",
+    "removeTarget": "Remove number",
+    "noConnections": "No connected connection.",
+    "goConnections": "Go to Connections",
+    "noFlows": "No active, published flow. Publish a flow to dispatch it.",
+    "businessHours": "Send only during business hours",
+    "fullDay": "Sends may happen every day, from 00:00 to 23:59.",
+    "weekdays": "Weekdays",
+    "windowStart": "Start",
+    "windowEnd": "End",
+    "speed": "Speed",
+    "randomize": "Randomize the interval between sends",
+    "intervalMin": "Minimum interval: {s} s",
+    "intervalMax": "Maximum interval: {s} s",
+    "intervalFixed": "Fixed interval of {s} s between sends.",
+    "intervalRange": "Random interval between {min} and {max} s between sends.",
+    "dailyLimit": "Daily limit (optional)",
+    "dailyLimitPlaceholder": "No limit",
+    "dailyLimitHint": "When reached, pauses and resumes on the next allowed day. {remaining} left in the quota.",
+    "dailyLimitHintNoQuota": "When reached, pauses and resumes on the next allowed day.",
+    "startsAt": "Start scheduling at",
+    "startsAtHint": "Empty = now.",
+    "audience": "Audience"
+  },
+  "presets": {
+    "slow": "Slow",
+    "slowHint": "30–120 s",
+    "normal": "Normal",
+    "normalHint": "5–30 s",
+    "fast": "Fast",
+    "fastHint": "0–5 s",
+    "custom": "Custom",
+    "customHint": "0–120 s"
+  },
+  "pace": {
+    "notice": "The real pace may be slower than configured: each connection has safety limits (warm-up of new numbers, pauses and hourly/daily limits) that postpone sends to reduce the risk of being blocked.",
+    "warming": "A connection is warming up: on the first day it sends about 20 messages, and the limit grows gradually over the next days. Sends beyond that are postponed."
+  },
+  "audience": {
+    "draft": "Selection made in Contacts",
+    "draftCount": "{n} contact(s) selected, with the applied filters",
+    "all": "All contacts",
+    "allCount": "{n} contact(s) in the base",
+    "allHint": "Every contact in the base",
+    "selected": "Audience: {n} contact(s). Contacts without a phone or who opted out are skipped.",
+    "unknown": "Calculating the audience…",
+    "fromContacts": "To pick specific contacts or filters, select them on the Contacts page and use \"New mass dispatch\".",
+    "goContacts": "Open Contacts"
+  },
+  "confirm": {
+    "title": "Confirm mass dispatch",
+    "summary": "The flow will start for {n} contact(s) using {targets} sending number(s).",
+    "flowNotice": "Dispatching cancels any flow in progress for the same contact.",
+    "ok": "Confirm and create"
+  },
+  "preparing": {
+    "title": "Preparing mass dispatch",
+    "body": "We are resolving the audience and scheduling the sends. You can close this: progress continues in the list.",
+    "count": "{scheduled} / {target} scheduled",
+    "done": "Preparation finished: {total} send(s) scheduled.",
+    "failed": "Preparation failed."
+  },
+  "phases": {
+    "queued": "Queued",
+    "resolving_recipients": "Resolving recipients",
+    "counting": "Counting",
+    "scheduling": "Scheduling sends",
+    "completed": "Done"
+  },
+  "details": {
+    "title": "Dispatch details",
+    "createdAt": "Created on {date}",
+    "progress": "Progress",
+    "preparation": "Preparation",
+    "ab": "A/B distribution",
+    "flowA": "Flow A",
+    "flowB": "Flow B",
+    "noAb": "No A/B test",
+    "abHint": "Contacts are split between flow A and flow B.",
+    "targets": "Sending numbers",
+    "targetCounts": "{assigned} scheduled · {sent} started · {failed} failed",
+    "config": "Settings",
+    "days": "Days",
+    "window": "Window",
+    "interval": "Interval",
+    "intervalFixed": "{s} s (fixed)",
+    "intervalRange": "{min}–{max} s (random)",
+    "dailyLimit": "Daily limit",
+    "noDailyLimit": "No limit",
+    "startsAt": "Scheduling start",
+    "firstSent": "First send",
+    "lastSent": "Last send",
+    "finished": "Finished at"
+  },
+  "cancel": {
+    "title": "Cancel \"{name}\"?",
+    "body": "Pending sends are cancelled and returned to the quota. Flows already started are not reverted.",
+    "back": "Back",
+    "ok": "Cancel dispatch"
+  },
+  "toast": {
+    "created": "Mass dispatch created",
+    "cancelled": "Dispatch cancelled",
+    "released": "{n} send(s) returned to the quota"
+  },
+  "errors": {
+    "targetsRequired": "Add at least one sending number.",
+    "connectionRequired": "Select the connection.",
+    "flowRequired": "Select the flow.",
+    "weekdaysRequired": "Select at least one weekday.",
+    "timeInvalid": "Invalid time (HH:MM).",
+    "windowEmpty": "The sending window is empty: the end must be after the start.",
+    "intervalRange": "Use 0 to 120 seconds.",
+    "intervalOrder": "The maximum interval must be greater than or equal to the minimum.",
+    "dailyLimitInvalid": "The daily limit must be a whole number greater than zero.",
+    "dailyLimitExceedsQuota": "The daily limit exceeds the remaining cycle quota.",
+    "dateInvalid": "Invalid date.",
+    "selectionRequired": "Select at least one contact.",
+    "noQuota": "The cycle quota is used up.",
+    "sessionNotConnected": "The selected connection is not connected.",
+    "targetsLoad": "Could not load connections or flows. Check that you have access to them."
+  },
+  "common": {
+    "cancel": "Cancel",
+    "close": "Close",
+    "error": "Something went wrong. Try again.",
+    "retry": "Try again"
+  }
+}

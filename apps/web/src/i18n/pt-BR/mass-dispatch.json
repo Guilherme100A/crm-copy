@@ -1,0 +1,198 @@
+{
+  "title": "Disparos em massa",
+  "subtitle": "Inicie um fluxo para muitos contatos de uma vez, dentro da cota do ciclo da assinatura.",
+  "new": "Novo disparo em massa",
+  "search": "Buscar por nome, fluxo ou número",
+  "empty": "Nenhum disparo em massa ainda.",
+  "noResults": "Nenhum disparo encontrado com essa busca.",
+  "unnamed": "Disparo em massa #{id}",
+  "cards": {
+    "remaining": "Restantes",
+    "used": "Usados no ciclo",
+    "running": "Em andamento",
+    "completed": "Concluídos"
+  },
+  "quota": {
+    "title": "Cota do ciclo",
+    "help": "A cota do ciclo é o número de conexões faturáveis vezes o limite por número, mais o bônus da conta. Cancelar um disparo devolve os envios pendentes.",
+    "text": "{used} de {limit} usados ({remaining} restantes) · {slots} número(s) × {rate}/número",
+    "exhausted": "A cota do ciclo acabou. Novos disparos só no próximo ciclo ou com bônus de cota."
+  },
+  "cols": {
+    "name": "Nome",
+    "flow": "Fluxo",
+    "status": "Status",
+    "progress": "Progresso",
+    "schedule": "Agenda",
+    "actions": "Ações"
+  },
+  "status": {
+    "preparing": "Preparando",
+    "scheduled": "Agendado",
+    "running": "Em andamento",
+    "paused": "Pausado",
+    "completed": "Concluído",
+    "cancelled": "Cancelado",
+    "failed": "Falhou"
+  },
+  "schedule": {
+    "everyDay": "Todos os dias"
+  },
+  "progress": {
+    "short": "{sent} / {total} · {failed} falhas",
+    "long": "{sent} / {total} fluxos disparados · {failed} falhas · {pending} pendentes · {skipped} ignorados",
+    "startedHint": "\"Disparado\" significa que o fluxo começou para o contato; não é confirmação de entrega no WhatsApp."
+  },
+  "actions": {
+    "details": "Ver detalhes",
+    "cancel": "Cancelar"
+  },
+  "wizard": {
+    "title": "Novo disparo em massa",
+    "steps": "Etapas",
+    "step": {
+      "data": "Dados",
+      "settings": "Configurações",
+      "audience": "Público"
+    },
+    "back": "Voltar",
+    "next": "Continuar",
+    "submit": "Criar disparo"
+  },
+  "fields": {
+    "name": "Nome (opcional)",
+    "namePlaceholder": "Ex.: Reativação de clientes",
+    "targets": "Números de envio",
+    "targetsHint": "Cada número envia o seu fluxo; com vários números, os envios se alternam entre eles. Só aparecem conexões conectadas e fluxos ativos e publicados.",
+    "connection": "Conexão",
+    "flow": "Fluxo",
+    "select": "Selecione…",
+    "addTarget": "Adicionar número",
+    "removeTarget": "Remover número",
+    "noConnections": "Nenhuma conexão conectada.",
+    "goConnections": "Ir para Conexões",
+    "noFlows": "Nenhum fluxo ativo e publicado. Publique um fluxo para dispará-lo.",
+    "businessHours": "Enviar apenas em horário comercial",
+    "fullDay": "Os envios podem acontecer em todos os dias, de 00:00 a 23:59.",
+    "weekdays": "Dias da semana",
+    "windowStart": "Início",
+    "windowEnd": "Fim",
+    "speed": "Velocidade",
+    "randomize": "Randomizar o intervalo entre envios",
+    "intervalMin": "Intervalo mínimo: {s} s",
+    "intervalMax": "Intervalo máximo: {s} s",
+    "intervalFixed": "Intervalo fixo de {s} s entre envios.",
+    "intervalRange": "Intervalo aleatório entre {min} e {max} s entre envios.",
+    "dailyLimit": "Limite diário (opcional)",
+    "dailyLimitPlaceholder": "Sem limite",
+    "dailyLimitHint": "Ao atingir, pausa e retoma no próximo dia permitido. Restam {remaining} na cota.",
+    "dailyLimitHintNoQuota": "Ao atingir, pausa e retoma no próximo dia permitido.",
+    "startsAt": "Começar a agendar em",
+    "startsAtHint": "Vazio = agora.",
+    "audience": "Público"
+  },
+  "presets": {
+    "slow": "Lento",
+    "slowHint": "30–120 s",
+    "normal": "Normal",
+    "normalHint": "5–30 s",
+    "fast": "Rápido",
+    "fastHint": "0–5 s",
+    "custom": "Personalizado",
+    "customHint": "0–120 s"
+  },
+  "pace": {
+    "notice": "O ritmo real pode ser mais lento que o configurado: cada conexão tem limites de segurança (aquecimento de números novos, pausas e limites por hora/dia) que adiam envios para reduzir o risco de bloqueio.",
+    "warming": "Há conexão em aquecimento: no primeiro dia ela envia cerca de 20 mensagens, e o limite cresce aos poucos nos dias seguintes. Os envios além disso ficam para depois."
+  },
+  "audience": {
+    "draft": "Seleção feita em Contatos",
+    "draftCount": "{n} contato(s) selecionado(s), com os filtros aplicados",
+    "all": "Todos os contatos",
+    "allCount": "{n} contato(s) na base",
+    "allHint": "Todos os contatos da base",
+    "selected": "Público: {n} contato(s). Contatos sem telefone ou que pediram para não receber são ignorados.",
+    "unknown": "Calculando o público…",
+    "fromContacts": "Para escolher contatos ou filtros específicos, selecione-os na tela de Contatos e use \"Novo disparo em massa\".",
+    "goContacts": "Abrir Contatos"
+  },
+  "confirm": {
+    "title": "Confirmar disparo em massa",
+    "summary": "O fluxo será iniciado para {n} contato(s) usando {targets} número(s) de envio.",
+    "flowNotice": "Disparar cancela qualquer fluxo em andamento do mesmo contato.",
+    "ok": "Confirmar e criar"
+  },
+  "preparing": {
+    "title": "Preparando disparo em massa",
+    "body": "Estamos resolvendo o público e agendando os envios. Você pode fechar: o progresso continua na lista.",
+    "count": "{scheduled} / {target} agendados",
+    "done": "Preparação concluída: {total} envio(s) agendado(s).",
+    "failed": "A preparação falhou."
+  },
+  "phases": {
+    "queued": "Na fila",
+    "resolving_recipients": "Resolvendo destinatários",
+    "counting": "Contando",
+    "scheduling": "Agendando envios",
+    "completed": "Concluída"
+  },
+  "details": {
+    "title": "Detalhes do disparo",
+    "createdAt": "Criado em {date}",
+    "progress": "Progresso",
+    "preparation": "Preparação",
+    "ab": "Distribuição A/B",
+    "flowA": "Fluxo A",
+    "flowB": "Fluxo B",
+    "noAb": "Sem teste A/B",
+    "abHint": "Os contatos são divididos entre o fluxo A e o fluxo B.",
+    "targets": "Números de envio",
+    "targetCounts": "{assigned} agendados · {sent} disparados · {failed} falhas",
+    "config": "Configuração",
+    "days": "Dias",
+    "window": "Janela",
+    "interval": "Intervalo",
+    "intervalFixed": "{s} s (fixo)",
+    "intervalRange": "{min}–{max} s (aleatório)",
+    "dailyLimit": "Limite diário",
+    "noDailyLimit": "Sem limite",
+    "startsAt": "Início do agendamento",
+    "firstSent": "Primeiro envio",
+    "lastSent": "Último envio",
+    "finished": "Finalizado em"
+  },
+  "cancel": {
+    "title": "Cancelar \"{name}\"?",
+    "body": "Os envios pendentes são cancelados e devolvidos à cota. Os fluxos já disparados não são revertidos.",
+    "back": "Voltar",
+    "ok": "Cancelar disparo"
+  },
+  "toast": {
+    "created": "Disparo em massa criado",
+    "cancelled": "Disparo cancelado",
+    "released": "{n} envio(s) devolvido(s) à cota"
+  },
+  "errors": {
+    "targetsRequired": "Adicione ao menos um número de envio.",
+    "connectionRequired": "Selecione a conexão.",
+    "flowRequired": "Selecione o fluxo.",
+    "weekdaysRequired": "Selecione ao menos um dia da semana.",
+    "timeInvalid": "Horário inválido (HH:MM).",
+    "windowEmpty": "A janela de envio está vazia: o fim deve ser depois do início.",
+    "intervalRange": "Use de 0 a 120 segundos.",
+    "intervalOrder": "O intervalo máximo deve ser maior ou igual ao mínimo.",
+    "dailyLimitInvalid": "O limite diário deve ser um número inteiro maior que zero.",
+    "dailyLimitExceedsQuota": "O limite diário passa da cota restante do ciclo.",
+    "dateInvalid": "Data inválida.",
+    "selectionRequired": "Selecione ao menos um contato.",
+    "noQuota": "A cota do ciclo acabou.",
+    "sessionNotConnected": "A conexão escolhida não está conectada.",
+    "targetsLoad": "Não foi possível carregar as conexões ou os fluxos. Verifique se você tem acesso a eles."
+  },
+  "common": {
+    "cancel": "Cancelar",
+    "close": "Fechar",
+    "error": "Algo deu errado. Tente de novo.",
+    "retry": "Tentar de novo"
+  }
+}

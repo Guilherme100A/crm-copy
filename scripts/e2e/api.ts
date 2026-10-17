@@ -14,6 +14,8 @@ import { createDb, resetAndSeed, runMigrations } from '../../packages/db/src/ind
 import { createLogger, initCredentialsCrypto, redisConnection } from '../../packages/node-kit/src/index'
 import { WA_EVENT_TYPES } from '../../packages/wa-port/src/index'
 import type { AiKeyProbe } from '../../packages/core/src/ai-keys/http'
+import { configureMassDispatch } from '../../apps/worker/src/jobs/mass-dispatch/index'
+import { FakeWaGateway } from '../../packages/wa-port/src/testing/index'
 
 // T59: o "Testar" das chaves de IA nunca chama o provedor real no harness. Segredo terminando em `fail` → falha
 // `HTTP 401` (~5 ms); qualquer outro → ok (~87 ms; a latência medida pelo serviço fica ≥ esse valor).
@@ -42,7 +44,9 @@ async function main() {
   // T54: intervalo mínimo entre reenvios de convite (produção: 60 s). Padrão 0 no E2E, para chegar ao
   // "Limite de 3 reenvios por dia" sem esperar; E2E_RESEND_COOLDOWN_MS=<ms> testa o "Aguarde…".
   const resendCooldownMs = Math.max(0, Number(process.env.E2E_RESEND_COOLDOWN_MS ?? 0) || 0)
-  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, invitations: { resendCooldownMs }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch })
+  // T83: o mesmo FakeWaGateway na API e na preparação dos disparos em massa (sessão levada a open pela rota da T71).
+  const waGateway = new FakeWaGateway()
+  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, invitations: { resendCooldownMs }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch, waGateway })
 
   // Mesmo registry do worker real + espião em todos os tipos.
   const reg = createRegistry()
@@ -63,6 +67,8 @@ async function main() {
   // Fontes de venda (T73/T90) no worker in-process, como no boot de produção: processa os eventos de
   // `POST /api/hooks/sales/:token` (processed/failed) e o replay. Sem `capiEnqueue`: nada sai para a Meta no harness.
   configureInboundSales({ db, publisher: new RealtimePublisher({ redis }), logger })
+  // Disparos em massa (T74/T83) no worker in-process: a preparação roda e publica mass_dispatch.updated (fases).
+  configureMassDispatch({ db, wa: waGateway, redis })
   const worker = await startWorker({
     registry: reg,
     db,
