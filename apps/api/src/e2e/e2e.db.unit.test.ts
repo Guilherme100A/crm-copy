@@ -114,7 +114,8 @@ describe('AC-T17-03 reset', () => {
     expect(body.applied).toEqual(['base', ...listSeedModules().map((m) => m.name)])
 
     const rows = await db.select({ id: users.id, email: users.email, name: users.name }).from(users)
-    expect(rows.map((r) => r.email).sort()).toEqual(Object.values(SEED_BASE.users).map((u) => u.email).sort())
+    // T54: o módulo de seed support-user acrescenta support@demo.test (system_role support, sem empresa)
+    expect(rows.map((r) => r.email).sort()).toEqual([...Object.values(SEED_BASE.users).map((u) => u.email), 'support@demo.test'].sort())
     expect(rows.find((r) => r.id === SEED_BASE.users.owner.id)?.name).toBe(SEED_BASE.users.owner.name)
     expect(await redis.exists('crm:rt:t17', 'crm:rl:t17')).toBe(0)
     expect(await redis.xlen(stream)).toBe(0)

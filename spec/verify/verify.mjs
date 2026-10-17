@@ -377,8 +377,15 @@ function verifyOperario(task, opts) {
   else {
     // no gate (--full) também os testes dos pacotes que DEPENDEM do que a tarefa mudou (pnpm "...[base]"),
     // fora os que a tarefa já roda: uma mudança no core não pode quebrar a api sem ninguém ver (T58 → contacts)
+    // O filtro "[ref]" do pnpm não acha nada dentro de worktree no Windows: os pacotes mudados saem do git diff
+    // e entram como filtros de diretório "...{./apps/x}" (o pacote e todos os seus dependentes).
     const own = [...new Set(task.commands.map((c) => /^pnpm --filter (\S+) test$/.exec(c)?.[1]).filter(Boolean))]
-    const dependents = opts.full && opts.base ? [`pnpm --filter "...[${opts.base}]" ${own.map((w) => `--filter "!${w}"`).join(' ')} test`] : []
+    const changedDirs = opts.full && opts.base
+      ? [...new Set((changedFiles(opts.base) ?? []).map((f) => /^((?:apps|packages)\/[^/]+)\//.exec(f)?.[1]).filter(Boolean))]
+      : []
+    const dependents = changedDirs.length
+      ? [`pnpm ${changedDirs.map((d) => `--filter "...{./${d}}"`).join(' ')} ${own.map((w) => `--filter "!${w}"`).join(' ')} test`]
+      : []
     checkCommands(report, [...task.commands, ...dependents], { full: opts.full, base: opts.base, skip: opts.retryFailed ? previouslyPassed(task.id, 'operario') : undefined })
   }
   checkForbidden(report, FORBIDDEN)
