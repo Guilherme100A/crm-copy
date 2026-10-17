@@ -3,6 +3,7 @@
 // `meta.bundle.progress` e relê a mesma URL (pronto em cache → 200). Sem `async`, monta na hora (200).
 import { Hono } from 'hono'
 import { defineQueue, META_SYNC_QUEUE, MetaBundleError, MetaBundleService, RealtimePublisher, type MetaSyncJobData } from '@crm/core'
+import { InternalSalesService } from '@crm/core'
 import { getCompanyCtx } from '../../lib/context'
 import { ApiError } from '../../lib/errors'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
@@ -37,6 +38,8 @@ export function metaStructureRoutes(deps: ResolvedDeps) {
         }),
       ...(deps.metaFx ? { fx: deps.metaFx } : {}),
       ...(deps.logger ? { logger: deps.logger } : {}),
+      // T105: vendas internas × anúncios (mesma cotação do bundle).
+      internalSales: new InternalSalesService({ db: deps.db, ...(deps.metaFx ? { fx: deps.metaFx } : {}) }),
     }))
   const app = new Hono<AppEnv>()
 

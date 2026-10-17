@@ -9,6 +9,7 @@ import {
   MetaRateLimitedError,
   RealtimePublisher,
   defineQueue,
+  InternalSalesService,
   type BundleEnvelope,
   type MetaBundleServiceOptions,
   type MetaSyncJobData,
@@ -61,6 +62,8 @@ export function metaBundleService(): MetaBundleService | undefined {
     profiles: configured.profiles ?? new MetaProfilesService({ db, config: metaConfigFromEnv() }),
     publisher: configured.publisher ?? new RealtimePublisher({ redis }),
     enqueue: configured.enqueue ?? metaSyncEnqueuer(),
+    // T105: vendas internas × anúncios (mesma cotação do bundle).
+    internalSales: configured.internalSales ?? new InternalSalesService({ db, ...(configured.fx ? { fx: configured.fx } : {}) }),
   })
   return processService
 }

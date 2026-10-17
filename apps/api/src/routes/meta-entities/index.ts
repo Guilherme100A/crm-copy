@@ -3,6 +3,7 @@
 // Permissão `facebook.campaigns`. Erro da Meta → 502 "Não foi possível atualizar na Meta."; limite de uso → 429.
 // Depois de editar, o cache de 5 min dos bundles da empresa é invalidado.
 import { MetaBundleService, MetaMutationError, MetaMutationsService } from '@crm/core'
+import { InternalSalesService } from '@crm/core'
 import { Hono } from 'hono'
 import { z } from 'zod'
 import { getCompanyCtx } from '../../lib/context'
@@ -31,7 +32,8 @@ export function metaEntitiesRoutes(deps: ResolvedDeps) {
       db: deps.db,
       redis: deps.redis,
       profiles: metaProfilesServiceFor(deps),
-      bundles: new MetaBundleService({ db: deps.db, redis: deps.redis, profiles: metaProfilesServiceFor(deps) }),
+      // T105: `internalSales` com a mesma cotação deste bundle (default `META_FX_RATES`).
+      bundles: new MetaBundleService({ db: deps.db, redis: deps.redis, profiles: metaProfilesServiceFor(deps), internalSales: new InternalSalesService({ db: deps.db }) }),
     }))
   const app = new Hono<AppEnv>()
 

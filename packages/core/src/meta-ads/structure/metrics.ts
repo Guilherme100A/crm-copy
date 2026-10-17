@@ -30,6 +30,8 @@ export interface MetaRowMetrics {
   /** Vendas internas com `source_id` = id do anúncio (T105); null enquanto não houver. */
   purchase_value_leona: number | null
   purchases_leona: number | null
+  /** T105: ROAS das vendas internas (`purchase_value_leona_display ÷ meta_spend_display`); só com `internalSales`. */
+  roas_internal?: number | null
 }
 
 /** Compras: a primeira presente, nesta ordem (os tipos se sobrepõem; somar contaria duas vezes). */

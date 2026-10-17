@@ -7,6 +7,7 @@ import { and, asc, eq, inArray } from 'drizzle-orm'
 import { companies, metaAdAccounts, type Database } from '@crm/db'
 import type { Redis } from 'ioredis'
 import type { MetaProfilesService } from '../profiles/service'
+import type { SalesJoin } from '../sales-join/service'
 import { fetchAccountRows, MetaRateLimitedError, type BundleAccount, type BundleRow } from './account'
 import { fxRatesFromEnv, type FxRate } from './metrics'
 import { bundleKey, normalizeBundleParams, type BundleParams, type RawBundleQuery } from './params'
@@ -65,6 +66,8 @@ export interface MetaBundleServiceOptions {
   prefix?: string
   now?: () => Date
   logger?: { warn(obj: object, msg?: string): void }
+  /** T105: vendas internas × anúncios; preenche `purchases_leona`/`purchase_value_leona` das linhas (sem ela, null). */
+  internalSales?: SalesJoin
 }
 
 export interface BundleRequest extends RawBundleQuery {
@@ -252,6 +255,16 @@ export class MetaBundleService {
         env.status = 'partial'
         await this.save('state', key, env, BUNDLE_STATE_TTL_S)
         await this.publish(companyId, env)
+      }
+    }
+    // T105: vendas internas por `source_id`; falha no cruzamento não derruba o bundle (aviso `internal_sales_failed`).
+    if (this.opts.internalSales) {
+      try {
+        const joined = await this.opts.internalSales.apply(companyId, { since: params.since, until: params.until, displayCurrency: params.displayCurrency }, env)
+        for (const w of joined.warnings) fxMissing.add(w)
+      } catch (err) {
+        fxMissing.add('internal_sales_failed')
+        this.opts.logger?.warn({ err, company_id: companyId }, 'falha ao cruzar vendas internas com anúncios')
       }
     }
     env.status = 'ready'
