@@ -1,0 +1,184 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "loading": "Cargando...",
+    "error": "No se pudo completar la acción.",
+    "show": "Mostrar",
+    "hide": "Ocultar"
+  },
+  "toast": {
+    "created": "Integración creada",
+    "updated": "Integración actualizada",
+    "deleted": "Integración eliminada"
+  },
+  "errors": {
+    "labelMin": "Ingresa un nombre con al menos 2 caracteres.",
+    "labelMax": "El nombre puede tener hasta 120 caracteres",
+    "clientIdRequired": "Ingresa el Client ID",
+    "clientIdMax": "Client ID demasiado largo",
+    "secretRequired": "Ingresa el Client Secret",
+    "secretMax": "Client Secret demasiado largo",
+    "companyMin": "Ingresa el nombre de la empresa con al menos 2 caracteres.",
+    "companyMax": "El nombre de la empresa puede tener hasta 120 caracteres",
+    "tokenRequired": "Ingresa el token de la integración",
+    "tokenMax": "Token demasiado largo"
+  },
+  "delete": {
+    "inUse": "Este registro está en uso por flujos activos.",
+    "force": "Eliminar de todos modos",
+    "confirm": "Eliminar"
+  },
+  "catalog": {
+    "xpag": {
+      "title": "XPag",
+      "description": "Cobros PIX (BRL), SPEI/OXXO (MXN), Nequi/Bre-B (COP) y transferencia (ARS) en el bloque Pago."
+    },
+    "notasy": {
+      "title": "Notasy NF-e",
+      "description": "Emisión automatizada de NF-e (factura) de las ventas aprobadas."
+    },
+    "utmify": {
+      "title": "UTMify",
+      "description": "Seguimiento y atribución de las ventas aprobadas (UTMs y anuncios)."
+    }
+  },
+  "payment": {
+    "newTitle": "Nueva clave de pago",
+    "editTitle": "Actualizar clave",
+    "gateway": "Pasarela",
+    "gatewayHint": "La pasarela no se puede cambiar después de creada.",
+    "label": "Nombre descriptivo",
+    "labelPlaceholder": "Ej.: XPag producción",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretHint": "Guardado cifrado. Nunca se muestra completo después de guardar.",
+    "secretKeep": "En blanco mantiene el secreto actual ({hint}).",
+    "webhookUrl": "URL del webhook",
+    "webhookHint": "Registra esta URL en XPag para confirmar los pagos aprobados.",
+    "test": "Probar conexión",
+    "testHint": "Valida la clave guardada en la pasarela.",
+    "testOk": "Conexión validada con éxito.",
+    "testFail": "Falló la conexión: {error}",
+    "lastTestOk": "Última prueba: conexión validada.",
+    "lastTestFail": "Última prueba: falló.",
+    "deleteTitle": "¿Eliminar la clave \"{name}\"?",
+    "deleteBody": "¿Eliminar esta clave? Los bloques de Pago que la usan dejarán de funcionar.",
+    "deleteInUse": "La clave está en uso por bloques de Pago de estos flujos activos. Cambia la clave en esos bloques antes de eliminarla."
+  },
+  "token": {
+    "companyName": "Nombre de la empresa",
+    "companyPlaceholder": "Ej.: Mi Empresa S.A.",
+    "token": "Token de la integración",
+    "keep": "En blanco mantiene el token actual ({hint})."
+  },
+  "invoice": {
+    "newTitle": "Nuevo emisor",
+    "editTitle": "Editar emisor",
+    "tokenHint": "El token aparece en el panel de Notasy al crear la integración con la API.",
+    "deleteTitle": "¿Eliminar el emisor \"{name}\"?",
+    "deleteBody": "¿Eliminar este emisor? El flujo «Venta aprobada» ya no podrá usarlo.",
+    "status": {
+      "pending": "Enviando emisión…",
+      "succeeded": "Enviada al emisor",
+      "failed": "Falló la emisión",
+      "none": "Sin emisor"
+    },
+    "note": "El estado solo confirma que el emisor aceptó el envío, no que la factura fue autorizada.",
+    "number": "N.º {number}",
+    "reemit": "Reemitir factura",
+    "retry": "Reintentar emisión",
+    "reemitted": "Emisión reencolada",
+    "reemittedHint": "Espera unos segundos y actualiza la lista.",
+    "chooseTitle": "Elige el emisor",
+    "issuer": "Emisor de factura"
+  },
+  "utmify": {
+    "newTitle": "Nueva integración UTMify",
+    "editTitle": "Editar integración UTMify",
+    "tokenHint": "El token de API aparece en el panel de UTMify.",
+    "deleteTitle": "¿Eliminar la integración \"{name}\"?",
+    "deleteBody": "¿Eliminar esta integración? El flujo «Venta aprobada» dejará de enviar ventas a UTMify."
+  },
+  "utmifyStatus": {
+    "pending": "Enviando…",
+    "succeeded": "Enviada",
+    "failed": "Falló el envío",
+    "none": "No enviada"
+  },
+  "history": { "invoice": "Factura", "utmify": "UTMify" },
+  "block": {
+    "common": {
+      "choose": "Elige…",
+      "inactive": "inactiva",
+      "optional": "Opcional",
+      "none": "Ninguno",
+      "listDenied": "Sin permiso para ver las integraciones. El valor guardado sigue en el bloque."
+    },
+    "payment": {
+      "sections": {
+        "gateway": "Pasarela y clave",
+        "charge": "Cobro",
+        "payer": "Datos del pagador",
+        "listener": "Escuchar el pago durante"
+      },
+      "gateway": "Pasarela",
+      "key": "Clave de pago",
+      "keysDenied": "Sin permiso para ver las claves de pago. La clave guardada sigue en el bloque.",
+      "keysEmpty": "No hay claves {gateway} registradas. Regístrala en Configuración → Integraciones → Ventas.",
+      "currency": "Moneda",
+      "method": "Método",
+      "methods": {
+        "PIX": "PIX",
+        "SPEI": "SPEI",
+        "OXXO": "OXXO",
+        "NEQUI": "Nequi",
+        "BREB": "Bre-B (QR)",
+        "BANK_TRANSFER": "Transferencia bancaria"
+      },
+      "openAmount": "Clave sin monto (el lead paga lo que quiera)",
+      "openSoon": "Clave sin monto en ARS: próximamente en XPag.",
+      "openRequired": "Este método exige un monto fijo.",
+      "openNotice": "El monto pagado queda disponible después en {gateway.value}.",
+      "amount": "Monto",
+      "hints": {
+        "amount": "Acepta coma o punto (ej.: 100,00) o una variable.",
+        "oxxo": "OXXO acepta de MX$10 a MX$10.000.",
+        "cop": "Monto mínimo en COP: COP$10.000.",
+        "copPhone": "Celular colombiano: 10 dígitos que empiezan con 3."
+      },
+      "name": "Nombre del pagador",
+      "email": "Correo del pagador",
+      "phone": "Celular del pagador",
+      "document": "Documento (CPF/CNPJ, CUIT…)",
+      "documentType": "Tipo de documento",
+      "listenerHint": "Durante cuánto tiempo la confirmación del pago sigue el flujo de este contacto.",
+      "ttlValue": "Tiempo",
+      "ttlUnit": "Unidad",
+      "units": { "seconds": "segundos", "minutes": "minutos", "hours": "horas", "days": "días" },
+      "outputs": { "charge_created": "Cobro generado", "payment_approved": "Pago aprobado", "failure": "Error" }
+    },
+    "sale": {
+      "sections": { "product": "Venta", "integrations": "Factura y seguimiento", "push": "Notificación push" },
+      "product": "Producto",
+      "newProduct": "+ Crear nuevo producto…",
+      "productsDenied": "Sin permiso para ver los productos. El producto guardado sigue en el bloque.",
+      "productsEmpty": "Aún no hay productos.",
+      "amount_template": "Monto",
+      "currency_template": "Moneda",
+      "customer_name_template": "Cliente",
+      "amountHint": "Fuera del rango del producto, se usa el precio predeterminado del producto.",
+      "currencyHint": "Vacío usa la moneda del producto.",
+      "customerHint": "Vacío usa el nombre completo del contacto.",
+      "issuer": "Emisor de factura",
+      "issuerHint": "La emisión se dispara en cuanto este bloque registra la venta.",
+      "noIssuer": "No emitir factura automáticamente",
+      "utmify": "UTMify",
+      "noUtmify": "No enviar a UTMify",
+      "push_title_template": "Título del push",
+      "push_body_template": "Cuerpo del push",
+      "pushVars": "Variables de la venta:",
+      "outputs": { "source": "Siguiente" }
+    }
+  }
+}

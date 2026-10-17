@@ -315,7 +315,7 @@ async function createKey(page: Page, body: { provider: string; name: string; sec
 }
 
 test.describe('T59 — hub de integrações', () => {
-  test('AC-T59-03 abas IA/Vendas/Rastreamento (?cat=) com catálogo de IA e vazios das outras categorias', async ({ page }) => {
+  test('AC-T59-03 abas IA/Vendas/Rastreamento (?cat=) com catálogo de IA só na aba IA (Vendas/Rastreamento com os cards da T114)', async ({ page }) => {
     await loginAs(page, 'owner')
     await openTab(page, 'integrations', 'integrations-hub')
     const hub = page.getByTestId('integrations-hub')
@@ -333,12 +333,17 @@ test.describe('T59 — hub de integrações', () => {
     await expect(hub).toHaveAttribute('data-cat', 'sales')
     await expect(page.getByTestId('integrations-cat-sales')).toHaveAttribute('aria-selected', 'true')
     await expect(page.getByTestId('integrations-cat-ai')).toHaveAttribute('aria-selected', 'false')
-    await expect(page.getByTestId('integrations-empty-category')).toContainText('Vendas')
+    // T114: Vendas e Rastreamento ganharam cards (XPag/Notasy e UTMify), então não há mais o vazio da categoria
+    await expect(page.getByTestId('integrations-catalog-xpag')).toBeVisible()
+    await expect(page.getByTestId('integrations-empty-category')).toHaveCount(0)
     await expect(page.getByTestId('integrations-catalog-openai')).toHaveCount(0)
 
     await page.getByTestId('integrations-cat-tracking').click()
     await expect(page).toHaveURL(/[?&]cat=tracking(&|$)/)
-    await expect(page.getByTestId('integrations-empty-category')).toContainText('Rastreamento')
+    await expect(hub).toHaveAttribute('data-cat', 'tracking')
+    await expect(page.getByTestId('integrations-catalog-utmify')).toBeVisible()
+    await expect(page.getByTestId('integrations-empty-category')).toHaveCount(0)
+    await expect(page.getByTestId('integrations-catalog-xpag')).toHaveCount(0)
 
     // a categoria vem da URL (link direto/recarga) e o tab continua sendo integrations
     await page.goto('/settings?tab=integrations&cat=sales')

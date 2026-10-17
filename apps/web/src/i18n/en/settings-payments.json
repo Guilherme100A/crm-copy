@@ -1,0 +1,174 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "loading": "Loading...",
+    "error": "Could not complete the action.",
+    "show": "Show",
+    "hide": "Hide"
+  },
+  "toast": { "created": "Integration created", "updated": "Integration updated", "deleted": "Integration removed" },
+  "errors": {
+    "labelMin": "Enter a name with at least 2 characters.",
+    "labelMax": "The name can have up to 120 characters",
+    "clientIdRequired": "Enter the Client ID",
+    "clientIdMax": "Client ID is too long",
+    "secretRequired": "Enter the Client Secret",
+    "secretMax": "Client Secret is too long",
+    "companyMin": "Enter the company name with at least 2 characters.",
+    "companyMax": "The company name can have up to 120 characters",
+    "tokenRequired": "Enter the integration token",
+    "tokenMax": "Token is too long"
+  },
+  "delete": {
+    "inUse": "This record is in use by active flows.",
+    "force": "Delete anyway",
+    "confirm": "Delete"
+  },
+  "catalog": {
+    "xpag": {
+      "title": "XPag",
+      "description": "PIX (BRL), SPEI/OXXO (MXN), Nequi/Bre-B (COP) and transfer (ARS) charges in the Payment block."
+    },
+    "notasy": { "title": "Notasy NF-e", "description": "Automated NF-e (invoice) issuing for approved sales." },
+    "utmify": { "title": "UTMify", "description": "Tracking and attribution of approved sales (UTMs and ads)." }
+  },
+  "payment": {
+    "newTitle": "New payment key",
+    "editTitle": "Update key",
+    "gateway": "Gateway",
+    "gatewayHint": "The gateway cannot be changed after creation.",
+    "label": "Friendly name",
+    "labelPlaceholder": "E.g.: XPag production",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretHint": "Stored encrypted. Never shown in full after saving.",
+    "secretKeep": "Leave blank to keep the current secret ({hint}).",
+    "webhookUrl": "Webhook URL",
+    "webhookHint": "Register this URL at XPag to confirm approved payments.",
+    "test": "Test connection",
+    "testHint": "Validates the saved key with the gateway.",
+    "testOk": "Connection validated successfully.",
+    "testFail": "Connection failed: {error}",
+    "lastTestOk": "Last test: connection validated.",
+    "lastTestFail": "Last test: failed.",
+    "deleteTitle": "Remove the key \"{name}\"?",
+    "deleteBody": "Remove this key? Payment blocks using it will stop working.",
+    "deleteInUse": "The key is used by Payment blocks of these active flows. Change the key in those blocks before removing it."
+  },
+  "token": {
+    "companyName": "Company name",
+    "companyPlaceholder": "E.g.: My Company Ltd",
+    "token": "Integration token",
+    "keep": "Leave blank to keep the current token ({hint})."
+  },
+  "invoice": {
+    "newTitle": "New issuer",
+    "editTitle": "Edit issuer",
+    "tokenHint": "The token appears in the Notasy panel when you create the API integration.",
+    "deleteTitle": "Remove the issuer \"{name}\"?",
+    "deleteBody": "Remove this issuer? The «Approved sale» flow will no longer be able to use it.",
+    "status": {
+      "pending": "Sending issuance…",
+      "succeeded": "Sent to issuer",
+      "failed": "Issuance failed",
+      "none": "No issuer"
+    },
+    "note": "The status only confirms the issuer accepted the request, not that the invoice was authorized.",
+    "number": "No. {number}",
+    "reemit": "Reissue invoice",
+    "retry": "Retry issuance",
+    "reemitted": "Issuance requeued",
+    "reemittedHint": "Wait a few seconds and refresh the list.",
+    "chooseTitle": "Choose the issuer",
+    "issuer": "Invoice issuer"
+  },
+  "utmify": {
+    "newTitle": "New UTMify integration",
+    "editTitle": "Edit UTMify integration",
+    "tokenHint": "The API token appears in the UTMify panel.",
+    "deleteTitle": "Remove the integration \"{name}\"?",
+    "deleteBody": "Remove this integration? The «Approved sale» flow will stop sending sales to UTMify."
+  },
+  "utmifyStatus": {
+    "pending": "Sending…",
+    "succeeded": "Sent",
+    "failed": "Sending failed",
+    "none": "Not sent"
+  },
+  "history": { "invoice": "Invoice", "utmify": "UTMify" },
+  "block": {
+    "common": {
+      "choose": "Choose…",
+      "inactive": "inactive",
+      "optional": "Optional",
+      "none": "None",
+      "listDenied": "No permission to see the integrations. The saved value stays in the block."
+    },
+    "payment": {
+      "sections": {
+        "gateway": "Gateway and key",
+        "charge": "Charge",
+        "payer": "Payer details",
+        "listener": "Listen for payment for"
+      },
+      "gateway": "Gateway",
+      "key": "Payment key",
+      "keysDenied": "No permission to see the payment keys. The saved key stays in the block.",
+      "keysEmpty": "No {gateway} key registered. Add one in Settings → Integrations → Sales.",
+      "currency": "Currency",
+      "method": "Method",
+      "methods": {
+        "PIX": "PIX",
+        "SPEI": "SPEI",
+        "OXXO": "OXXO",
+        "NEQUI": "Nequi",
+        "BREB": "Bre-B (QR)",
+        "BANK_TRANSFER": "Bank transfer"
+      },
+      "openAmount": "Open amount key (the lead pays any amount)",
+      "openSoon": "Open amount key in ARS: coming soon at XPag.",
+      "openRequired": "This method requires a fixed amount.",
+      "openNotice": "The paid amount is available later in {gateway.value}.",
+      "amount": "Amount",
+      "hints": {
+        "amount": "Accepts comma or dot (e.g.: 100,00) or a variable.",
+        "oxxo": "OXXO accepts MX$10 to MX$10,000.",
+        "cop": "Minimum amount in COP: COP$10,000.",
+        "copPhone": "Colombian mobile: 10 digits starting with 3."
+      },
+      "name": "Payer name",
+      "email": "Payer email",
+      "phone": "Payer mobile",
+      "document": "Document (CPF/CNPJ, CUIT…)",
+      "documentType": "Document type",
+      "listenerHint": "How long the payment confirmation still drives this contact's flow.",
+      "ttlValue": "Time",
+      "ttlUnit": "Unit",
+      "units": { "seconds": "seconds", "minutes": "minutes", "hours": "hours", "days": "days" },
+      "outputs": { "charge_created": "Charge created", "payment_approved": "Payment approved", "failure": "Error" }
+    },
+    "sale": {
+      "sections": { "product": "Sale", "integrations": "Invoice and tracking", "push": "Push notification" },
+      "product": "Product",
+      "newProduct": "+ Create new product…",
+      "productsDenied": "No permission to see products. The saved product stays in the block.",
+      "productsEmpty": "No products yet.",
+      "amount_template": "Amount",
+      "currency_template": "Currency",
+      "customer_name_template": "Customer",
+      "amountHint": "Outside the product's range, the product's default price is used.",
+      "currencyHint": "Empty uses the product's currency.",
+      "customerHint": "Empty uses the contact's full name.",
+      "issuer": "Invoice issuer",
+      "issuerHint": "Issuance starts as soon as this block records the sale.",
+      "noIssuer": "Don't issue an invoice automatically",
+      "utmify": "UTMify",
+      "noUtmify": "Don't send to UTMify",
+      "push_title_template": "Push title",
+      "push_body_template": "Push body",
+      "pushVars": "Sale variables:",
+      "outputs": { "source": "Next" }
+    }
+  }
+}

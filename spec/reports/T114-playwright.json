@@ -1,0 +1,958 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T114\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/acceptance/T114",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "--project=desktop",
+      "--project=mobile"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T114\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T114/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T114/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T114/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T114/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T114/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T114\\",
+      "url": "http://127.0.0.1:35612",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": true,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "35612",
+        "E2E_API_PORT": "35613",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T114\\blocks.e2e.ts",
+      "file": "T114/blocks.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T114 — bloco Pagamento",
+          "file": "T114/blocks.e2e.ts",
+          "line": 46,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T114-03 só gateways, moedas e métodos da matriz XPag; trocar a moeda leva a um método válido",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3551,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:33.863Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-3d7929db45b270f8cf8c",
+              "file": "T114/blocks.e2e.ts",
+              "line": 47,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-03 campos do pagador e \"chave sem valor\" mudam com o método",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4354,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:37.508Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-68dbecc9149711be9e14",
+              "file": "T114/blocks.e2e.ts",
+              "line": 71,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-03 limites da XPag bloqueiam o autosave (OXXO abaixo de MX$10)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4509,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:41.871Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-b69ec45d4746826c1333",
+              "file": "T114/blocks.e2e.ts",
+              "line": 116,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-03 chaves do gateway: única vem escolhida; sem chave, aviso",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2391,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:46.388Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-ea25ad39601201d85e16",
+              "file": "T114/blocks.e2e.ts",
+              "line": 133,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-03 o canvas mostra as saídas charge_created, payment_approved e erro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 958,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:48.787Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-e12da4c41b3a82bb0d42",
+              "file": "T114/blocks.e2e.ts",
+              "line": 147,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T114 — bloco Venda aprovada",
+          "file": "T114/blocks.e2e.ts",
+          "line": 177,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T114-04 produto da lista e \"+ Criar novo produto…\" cria e já seleciona",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2976,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:49.754Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-d7fc6b0c1a8ab86fdacf",
+              "file": "T114/blocks.e2e.ts",
+              "line": 178,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-04 valor, moeda e cliente por template com variáveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2298,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:52.738Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-9b48290fb1226dadc723",
+              "file": "T114/blocks.e2e.ts",
+              "line": 205,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-04 emissor de NF e UTMify opcionais (\"Não emitir…\"/\"Não enviar…\" gravam null)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2626,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:55.045Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-7e8e80a0ab23e48c527a",
+              "file": "T114/blocks.e2e.ts",
+              "line": 228,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-04 título e corpo do push com os botões de variável",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2041,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:57.681Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cbe9652c7eed65419dfe-036553d805bbfdadb328",
+              "file": "T114/blocks.e2e.ts",
+              "line": 256,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T114\\history.e2e.ts",
+      "file": "T114/history.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T114 — status da nota no histórico de vendas",
+          "file": "T114/history.e2e.ts",
+          "line": 28,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T114-05 venda mostra o status da nota e \"Reemitir nota\" reenfileira com \"Emissão reenfileirada\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1867,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:43:59.756Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-0baf06693eed62263fd9",
+              "file": "T114/history.e2e.ts",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-05 com vários emissores, \"Reemitir nota\" pede o emissor e envia o escolhido",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1255,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:01.631Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-31a4831740705cd46dd2",
+              "file": "T114/history.e2e.ts",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-05 textos em en e es (coluna, status, botão e toast) sem rolagem horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1471,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:02.895Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-33523c887a6e3d87d301",
+              "file": "T114/history.e2e.ts",
+              "line": 89,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-05 venda mostra o status da nota e \"Reemitir nota\" reenfileira com \"Emissão reenfileirada\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1248,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:19.865Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-4ad09a5e8e1a09cf8def",
+              "file": "T114/history.e2e.ts",
+              "line": 29,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-05 com vários emissores, \"Reemitir nota\" pede o emissor e envia o escolhido",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1100,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:21.204Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-458861f038e433828dfd",
+              "file": "T114/history.e2e.ts",
+              "line": 67,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-05 textos em en e es (coluna, status, botão e toast) sem rolagem horizontal",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2314,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:22.312Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "cd9fae38126e292ff9b1-aeee684456e19909e904",
+              "file": "T114/history.e2e.ts",
+              "line": 89,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "T114\\hub.e2e.ts",
+      "file": "T114/hub.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T114 — cards do hub (Vendas e Rastreamento)",
+          "file": "T114/hub.e2e.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T114-01 Vendas tem XPag e Notasy, Rastreamento tem UTMify; nada de Zenith",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1003,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:04.390Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-3d3b3bb5f277d312f99d",
+              "file": "T114/hub.e2e.ts",
+              "line": 17,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-01 registros com status Ativo/Inativo (segredo/token configurado) e só a dica do segredo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1348,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:05.404Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-44cfeae7f86e795d5e7a",
+              "file": "T114/hub.e2e.ts",
+              "line": 37,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-01 busca acha os cards e registros de Vendas/Rastreamento",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1413,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:06.761Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-38e0331e5dcb38a4dcd3",
+              "file": "T114/hub.e2e.ts",
+              "line": 68,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-01 Notasy e UTMify configurados pelo card viram registros ativos (token mascarado)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2028,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:08.183Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-01604ab94c41eaa8f630",
+              "file": "T114/hub.e2e.ts",
+              "line": 97,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T114 — modal da chave XPag",
+          "file": "T114/hub.e2e.ts",
+          "line": 155,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T114-02 criação: validações com as mensagens do servidor, gateway fixo, sem \"Testar conexão\"",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1572,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:10.219Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-960bd0029931e9fd7013",
+              "file": "T114/hub.e2e.ts",
+              "line": 156,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-02 erro 422 do servidor aparece no campo indicado em details.fields",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1522,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:11.800Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-f7ba7c91f413345134cc",
+              "file": "T114/hub.e2e.ts",
+              "line": 180,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-02 segredo mascarado (mostrar/ocultar), salvo só como dica; Testar conexão na edição pelo FakeXPag",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 3844,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:13.329Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-1edab9d81fb6b139c02b",
+              "file": "T114/hub.e2e.ts",
+              "line": 198,
+              "column": 3
+            },
+            {
+              "title": "AC-T114-02 na edição, segredo em branco mantém o atual (PATCH sem client_secret)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1874,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:44:17.180Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "72316520b96d4ffce1c2-492e286b4c4e87481e19",
+              "file": "T114/hub.e2e.ts",
+              "line": 253,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T05:43:33.403Z",
+    "duration": 51769.462999999996,
+    "expected": 23,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

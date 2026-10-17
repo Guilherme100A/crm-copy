@@ -21,6 +21,7 @@ import { FakeElevenLabsVoices } from '../../packages/core/src/ai-voices/testing/
 
 // T59: o "Testar" das chaves de IA nunca chama o provedor real no harness. Segredo terminando em `fail` → falha
 // `HTTP 401` (~5 ms); qualquer outro → ok (~87 ms; a latência medida pelo serviço fica ≥ esse valor).
+import { FakeNotasy, FakeUtmify, FakeXPag } from '../../packages/core/src/index'
 const e2eAiKeyProbe: AiKeyProbe = async ({ secret }) => {
   const fail = secret.trim().endsWith('fail')
   await new Promise((r) => setTimeout(r, fail ? 5 : 87))
@@ -61,6 +62,12 @@ async function main() {
   const resendCooldownMs = Math.max(0, Number(process.env.E2E_RESEND_COOLDOWN_MS ?? 0) || 0)
   // T83: o mesmo FakeWaGateway na API e na preparação dos disparos em massa (sessão levada a open pela rota da T71).
   const waGateway = new FakeWaGateway()
+  // T114: pagamentos, NF e UTMify nunca saem para a rede no harness: XPAG/NOTASY/UTMIFY_API_URL apontam para fakes locais
+  // (lidos a cada chamada). XPag aceita só Client ID `xpag-e2e` + Client Secret `xpag-e2e-secret` (outra credencial: o
+  // "Testar conexão" falha com 401); Notasy aceita o token `notasy-e2e`; UTMify, `utmify-e2e`.
+  process.env.XPAG_API_URL = await new FakeXPag({ clientId: 'xpag-e2e', clientSecret: 'xpag-e2e-secret' }).start()
+  process.env.NOTASY_API_URL = await new FakeNotasy(['notasy-e2e']).start()
+  process.env.UTMIFY_API_URL = await new FakeUtmify(['utmify-e2e']).start()
   // T92: vozes da conta contra o FakeElevenLabsVoices (qualquer `xi-api-key`), nunca a ElevenLabs real.
   const fakeVoices = new FakeElevenLabsVoices()
   await fakeVoices.start()

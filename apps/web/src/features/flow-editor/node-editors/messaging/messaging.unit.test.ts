@@ -32,8 +32,8 @@ const act = (id: string, type: string, config: Record<string, unknown>, order = 
 describe('registro dos editores (glob dos grupos)', () => {
   it('mensagem, Pix, notificação, menus, carrossel e Aguardar resposta têm editor', () => {
     for (const type of ['message', 'pix', 'notification', 'interactive_menu', 'menu', 'carousel', 'wait_response']) expect(getNodeEditor(type), type).not.toBeNull()
-    // tipo ainda sem editor (payment fica com a T114); 'condition' passou a ter editor na T57
-    expect(getNodeEditor('payment')).toBeNull()
+    // tipo sem editor fica null; 'condition' passou a ter editor na T57 e 'payment' na T114
+    expect(getNodeEditor('tipo_inexistente')).toBeNull()
   })
 
   it('collectNodeEditors junta os `nodeEditors` dos módulos (o último caminho vence) e ignora o resto', () => {

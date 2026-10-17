@@ -6,6 +6,7 @@
 // rótulos i18n do seu módulo e `loadModal` (o modal é da tarefa dona; `modalKind: 'ai'` é atendido pelo próprio hub).
 import type { ComponentType } from 'react'
 import { AI_KEY_PROVIDERS, AI_KEYS_KEY, fetchAiKeys, type AiKeyDto, type AiKeyProvider } from './api'
+import { SALES_CATALOG, SALES_RECORD_SOURCES } from '@/features/settings-payments/catalog'
 
 export const INTEGRATION_CATEGORIES = ['ai', 'sales', 'tracking'] as const
 export type IntegrationCategory = (typeof INTEGRATION_CATEGORIES)[number]
@@ -134,6 +135,7 @@ export const CATALOG: CatalogItem[] = [
     }),
   ),
   // T114: Vendas (pagamentos, NF) e Rastreamento (UTMify) entram aqui.
+  ...SALES_CATALOG,
 ]
 
 /** Fontes de registros da conta. */
@@ -148,4 +150,6 @@ export const RECORD_SOURCES: RecordSource[] = [
     // Chave própria (outra forma de dado que `aiKeysQuery`); invalidar `AI_KEYS_KEY` recarrega as duas.
     query: () => ({ queryKey: [...AI_KEYS_KEY, 'records'], queryFn: async () => (await fetchAiKeys()).map(aiKeyRecord) }),
   },
+  // T114: chaves de pagamento (XPag), emissores de NF e UTMify.
+  ...SALES_RECORD_SOURCES,
 ]

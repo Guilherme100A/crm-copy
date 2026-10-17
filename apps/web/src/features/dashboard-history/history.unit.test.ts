@@ -132,16 +132,19 @@ describe('formulário da venda', () => {
 
 describe('slots por linha para a T114 e montagem', () => {
   it('colunas e ações registradas em ordem; o desregistro remove', () => {
+    // T114: o slot real (sale-invoice) já entra pelo glob do histórico.
+    const baseCols = saleColumns().map((c) => c.id)
+    const baseActs = saleActions().map((a) => a.id)
     const offB = registerSaleColumn({ id: 't-b', header: () => 'B', cell: () => 'b', order: 2 })
     const offA = registerSaleColumn({ id: 't-a', header: () => 'A', cell: () => 'a', order: 1 })
     const offAct = registerSaleAction({ id: 't-act', render: (s) => s.id })
-    expect(saleColumns().map((c) => c.id)).toEqual(['t-a', 't-b'])
-    expect(saleActions().map((a) => a.render(sale('z')))).toEqual(['z'])
+    expect(saleColumns().map((c) => c.id).filter((id) => !baseCols.includes(id))).toEqual(['t-a', 't-b'])
+    expect(saleActions().filter((a) => a.id === 't-act').map((a) => a.render(sale('z')))).toEqual(['z'])
     offA()
     offB()
     offAct()
-    expect(saleColumns()).toEqual([])
-    expect(saleActions()).toEqual([])
+    expect(saleColumns().map((c) => c.id)).toEqual(baseCols)
+    expect(saleActions().map((a) => a.id)).toEqual(baseActs)
   })
 
   it('descobre `sale-history-slot.tsx` de outros módulos (ignora formatos inválidos)', () => {
@@ -153,8 +156,8 @@ describe('slots por linha para a T114 e montagem', () => {
       '../y/sale-history-slot.tsx': {},
     })
     expect(n).toBe(2)
-    expect(saleColumns().map((c) => c.id)).toEqual(['nf'])
-    expect(saleActions().map((a) => a.id)).toEqual(['reissue'])
+    expect(saleColumns().map((c) => c.id)).toContain('nf')
+    expect(saleActions().map((a) => a.id)).toContain('reissue')
   })
 
   it('o histórico ocupa o slot `history` da T78', () => {

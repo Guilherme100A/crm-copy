@@ -1,0 +1,174 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "loading": "Carregando...",
+    "error": "Não foi possível concluir a ação.",
+    "show": "Mostrar",
+    "hide": "Ocultar"
+  },
+  "toast": { "created": "Integração criada", "updated": "Integração atualizada", "deleted": "Integração removida" },
+  "errors": {
+    "labelMin": "Informe um nome com pelo menos 2 caracteres.",
+    "labelMax": "O nome pode ter até 120 caracteres",
+    "clientIdRequired": "Informe o Client ID",
+    "clientIdMax": "Client ID longo demais",
+    "secretRequired": "Informe o Client Secret",
+    "secretMax": "Client Secret longo demais",
+    "companyMin": "Informe o nome da empresa com pelo menos 2 caracteres.",
+    "companyMax": "O nome da empresa pode ter até 120 caracteres",
+    "tokenRequired": "Informe o token da integração",
+    "tokenMax": "Token longo demais"
+  },
+  "delete": {
+    "inUse": "Este registro está em uso por fluxos ativos.",
+    "force": "Excluir mesmo assim",
+    "confirm": "Excluir"
+  },
+  "catalog": {
+    "xpag": {
+      "title": "XPag",
+      "description": "Cobranças PIX (BRL), SPEI/OXXO (MXN), Nequi/Bre-B (COP) e transferência (ARS) no bloco Pagamento."
+    },
+    "notasy": { "title": "Notasy NF-e", "description": "Emissão automatizada de NF-e das vendas aprovadas." },
+    "utmify": { "title": "UTMify", "description": "Rastreamento e atribuição das vendas aprovadas (UTMs e anúncios)." }
+  },
+  "payment": {
+    "newTitle": "Nova chave de pagamento",
+    "editTitle": "Atualizar chave",
+    "gateway": "Gateway",
+    "gatewayHint": "O gateway não pode ser alterado depois de criado.",
+    "label": "Nome amigável",
+    "labelPlaceholder": "Ex.: XPag produção",
+    "clientId": "Client ID",
+    "clientSecret": "Client Secret",
+    "secretHint": "Gravado cifrado. Nunca é exibido por completo após salvar.",
+    "secretKeep": "Em branco mantém o segredo atual ({hint}).",
+    "webhookUrl": "URL do webhook",
+    "webhookHint": "Cadastre esta URL na XPag para confirmar pagamentos aprovados.",
+    "test": "Testar conexão",
+    "testHint": "Valida a chave salva no gateway.",
+    "testOk": "Conexão validada com sucesso.",
+    "testFail": "Falha na conexão: {error}",
+    "lastTestOk": "Último teste: conexão validada.",
+    "lastTestFail": "Último teste: falhou.",
+    "deleteTitle": "Remover a chave \"{name}\"?",
+    "deleteBody": "Remover esta chave? Blocos de Pagamento que a usam deixarão de funcionar.",
+    "deleteInUse": "A chave está em uso por blocos de Pagamento destes fluxos ativos. Troque a chave nos blocos antes de remover."
+  },
+  "token": {
+    "companyName": "Nome da empresa",
+    "companyPlaceholder": "Ex.: Minha Empresa Ltda",
+    "token": "Token da integração",
+    "keep": "Em branco mantém o token atual ({hint})."
+  },
+  "invoice": {
+    "newTitle": "Novo emissor",
+    "editTitle": "Editar emissor",
+    "tokenHint": "O token aparece no painel Notasy ao criar a integração com a API.",
+    "deleteTitle": "Remover o emissor \"{name}\"?",
+    "deleteBody": "Remover este emissor? O fluxo «Venda aprovada» não poderá mais usá-lo.",
+    "status": {
+      "pending": "Enviando emissão…",
+      "succeeded": "Enviada ao emissor",
+      "failed": "Falha na emissão",
+      "none": "Sem emissor"
+    },
+    "note": "O status só confirma que o emissor aceitou o envio, não que a NF foi autorizada.",
+    "number": "Nº {number}",
+    "reemit": "Reemitir nota",
+    "retry": "Tentar reemitir",
+    "reemitted": "Emissão reenfileirada",
+    "reemittedHint": "Aguarde alguns segundos e atualize a lista.",
+    "chooseTitle": "Escolha o emissor",
+    "issuer": "Emissor de NF"
+  },
+  "utmify": {
+    "newTitle": "Nova integração UTMify",
+    "editTitle": "Editar integração UTMify",
+    "tokenHint": "O token de API aparece no painel da UTMify.",
+    "deleteTitle": "Remover a integração \"{name}\"?",
+    "deleteBody": "Remover esta integração? O fluxo «Venda aprovada» deixará de enviar vendas para a UTMify."
+  },
+  "utmifyStatus": {
+    "pending": "Enviando…",
+    "succeeded": "Enviada",
+    "failed": "Falha no envio",
+    "none": "Não enviada"
+  },
+  "history": { "invoice": "Nota fiscal", "utmify": "UTMify" },
+  "block": {
+    "common": {
+      "choose": "Escolha…",
+      "inactive": "inativa",
+      "optional": "Opcional",
+      "none": "Nenhum",
+      "listDenied": "Sem permissão para ver as integrações. O valor salvo continua no bloco."
+    },
+    "payment": {
+      "sections": {
+        "gateway": "Gateway e chave",
+        "charge": "Cobrança",
+        "payer": "Dados do pagador",
+        "listener": "Escutar pagamento por"
+      },
+      "gateway": "Gateway",
+      "key": "Chave de pagamento",
+      "keysDenied": "Sem permissão para ver as chaves de pagamento. A chave salva continua no bloco.",
+      "keysEmpty": "Nenhuma chave {gateway} cadastrada. Cadastre em Configurações → Integrações → Vendas.",
+      "currency": "Moeda",
+      "method": "Método",
+      "methods": {
+        "PIX": "PIX",
+        "SPEI": "SPEI",
+        "OXXO": "OXXO",
+        "NEQUI": "Nequi",
+        "BREB": "Bre-B (QR)",
+        "BANK_TRANSFER": "Transferência bancária"
+      },
+      "openAmount": "Chave sem valor (o lead paga o que quiser)",
+      "openSoon": "Chave sem valor em ARS: em breve na XPag.",
+      "openRequired": "Este método exige um valor fixo.",
+      "openNotice": "O valor pago fica disponível depois em {gateway.value}.",
+      "amount": "Valor",
+      "hints": {
+        "amount": "Aceita vírgula ou ponto (ex.: 100,00) ou uma variável.",
+        "oxxo": "OXXO aceita de MX$10 a MX$10.000.",
+        "cop": "Valor mínimo em COP: COP$10.000.",
+        "copPhone": "Celular colombiano: 10 dígitos começando com 3."
+      },
+      "name": "Nome do pagador",
+      "email": "E-mail do pagador",
+      "phone": "Celular do pagador",
+      "document": "Documento (CPF/CNPJ, CUIT…)",
+      "documentType": "Tipo de documento",
+      "listenerHint": "Por quanto tempo a confirmação do pagamento ainda segue o fluxo deste contato.",
+      "ttlValue": "Tempo",
+      "ttlUnit": "Unidade",
+      "units": { "seconds": "segundos", "minutes": "minutos", "hours": "horas", "days": "dias" },
+      "outputs": { "charge_created": "Cobrança gerada", "payment_approved": "Pagamento aprovado", "failure": "Erro" }
+    },
+    "sale": {
+      "sections": { "product": "Venda", "integrations": "Nota fiscal e rastreamento", "push": "Notificação push" },
+      "product": "Produto",
+      "newProduct": "+ Criar novo produto…",
+      "productsDenied": "Sem permissão para ver os produtos. O produto salvo continua no bloco.",
+      "productsEmpty": "Nenhum produto cadastrado ainda.",
+      "amount_template": "Valor",
+      "currency_template": "Moeda",
+      "customer_name_template": "Cliente",
+      "amountHint": "Fora da faixa do produto, usa o valor padrão do produto.",
+      "currencyHint": "Vazio usa a moeda do produto.",
+      "customerHint": "Vazio usa o nome completo do contato.",
+      "issuer": "Emissor de NF",
+      "issuerHint": "O sistema dispara a emissão assim que este bloco registrar a venda.",
+      "noIssuer": "Não emitir nota automaticamente",
+      "utmify": "UTMify",
+      "noUtmify": "Não enviar para UTMify",
+      "push_title_template": "Título do push",
+      "push_body_template": "Corpo do push",
+      "pushVars": "Variáveis da venda:",
+      "outputs": { "source": "Próximo" }
+    }
+  }
+}

@@ -55,16 +55,16 @@ describe('AC-T59-03 hub de integrações', () => {
     const ai = CATALOG.filter((i) => i.category === 'ai')
     expect(ai.map((i) => i.provider)).toEqual([...AI_KEY_PROVIDERS])
     expect(new Set(CATALOG.map((i) => i.id)).size).toBe(CATALOG.length)
-    for (const i of CATALOG) {
+    for (const i of ai) {
       expect(i.modalKind).toBe('ai')
       for (const locale of ['pt-BR', 'en', 'es'] as const) {
         expect(translate(locale, i.titleKey)).not.toBe(i.titleKey)
         expect(translate(locale, i.descriptionKey)).not.toBe(i.descriptionKey)
       }
     }
-    // Vendas e Rastreamento ficam vazias até a T114.
-    expect(CATALOG.some((i) => i.category !== 'ai')).toBe(false)
-    expect(RECORD_SOURCES.map((s) => [s.id, s.category])).toEqual([['ai-keys', 'ai']])
+    // T114: Vendas (XPag, Notasy) e Rastreamento (UTMify).
+    expect(CATALOG.filter((i) => i.category !== 'ai').map((i) => [i.id, i.category])).toEqual([['xpag', 'sales'], ['notasy', 'sales'], ['utmify', 'tracking']])
+    expect(RECORD_SOURCES.map((s) => [s.id, s.category])[0]).toEqual(['ai-keys', 'ai'])
   })
 
   it('status Ativo/Inativo vem de `active` (configured é sempre true); contador só conta ativas por categoria', () => {
