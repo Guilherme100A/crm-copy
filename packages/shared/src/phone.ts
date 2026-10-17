@@ -1,6 +1,6 @@
 // Telefones em E.164 (SPEC 3.8: contato identificado por `phone_e164`). Padrão Brasil: número nacional
 // com DDD tem 10 (fixo) ou 11 (celular) dígitos.
-import { parsePhoneNumberWithError, ParseError, type CountryCode } from 'libphonenumber-js'
+import { parsePhoneNumberFromString, parsePhoneNumberWithError, ParseError, type CountryCode } from 'libphonenumber-js'
 import * as z from 'zod'
 
 export const DEFAULT_PHONE_COUNTRY: CountryCode = 'BR'
@@ -96,3 +96,60 @@ export const phoneInputSchema = z.string().transform((value, ctx) => {
   }
   return e164
 })
+
+/**
+ * DDI → país principal (ISO 3166-1 alfa-2, minúsculo), para quando o `libphonenumber-js` não define o país do número
+ * (faixas não geográficas ou numeração nova). Cobre os DDIs mais comuns de quem anuncia daqui; o resto cai no padrão.
+ */
+export const CALLING_CODE_COUNTRY: Readonly<Record<string, string>> = {
+  '1': 'us',
+  '7': 'ru',
+  '20': 'eg',
+  '27': 'za',
+  '30': 'gr',
+  '31': 'nl',
+  '32': 'be',
+  '33': 'fr',
+  '34': 'es',
+  '39': 'it',
+  '41': 'ch',
+  '44': 'gb',
+  '49': 'de',
+  '51': 'pe',
+  '52': 'mx',
+  '53': 'cu',
+  '54': 'ar',
+  '55': 'br',
+  '56': 'cl',
+  '57': 'co',
+  '58': 've',
+  '61': 'au',
+  '81': 'jp',
+  '86': 'cn',
+  '91': 'in',
+  '244': 'ao',
+  '258': 'mz',
+  '351': 'pt',
+  '353': 'ie',
+  '591': 'bo',
+  '593': 'ec',
+  '595': 'py',
+  '598': 'uy',
+}
+
+/**
+ * País (ISO alfa-2 minúsculo) de um telefone com DDI ("+5511999998888" ou "5511999998888"). Usa o `libphonenumber-js`
+ * (resolve +1 entre EUA/Canadá etc. pelo número) e, se ele não souber, a tabela `CALLING_CODE_COUNTRY`. Sem DDI
+ * reconhecível → null.
+ */
+export function phoneCountry(phone: string | null | undefined): string | null {
+  const digits = digitsOf(String(phone ?? '')).replace(/^0+/, '')
+  if (digits.length < MIN_PHONE_DIGITS) return null
+  const parsed = parsePhoneNumberFromString(`+${digits}`)
+  if (parsed?.country) return parsed.country.toLowerCase()
+  for (const len of [3, 2, 1]) {
+    const cc = CALLING_CODE_COUNTRY[digits.slice(0, len)]
+    if (cc) return cc
+  }
+  return null
+}
