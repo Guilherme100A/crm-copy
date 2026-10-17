@@ -59,3 +59,5 @@
 - E2E: capture a URL só depois de ela estabilizar (redirect de home, replace de aba/filtro). Use `await expect(page).toHaveURL(...)` antes de guardar/recarregar; um `start` capturado cedo quebra sob carga. (T53)
 - Search params do TanStack Router são um tipo unido entre todas as rotas: não reuse um nome com outro tipo (`?status=` já é do `/chats`; a lista de fluxos usa `?flow_status=`). (T44)
 - dnd-kit marca item desabilitado com `aria-disabled` + `role="button"` e o Playwright passa a ver o menu interno como desabilitado: não registre no dnd o que o usuário não pode arrastar. (T44)
+- Migrations: gere normalmente no worktree (os testes precisam); se o número colidir com outra tarefa, o gate regenera a sua sobre a main com o mesmo nome e confere que o SQL é o mesmo. Não edite à mão o `_journal.json` de outra tarefa nem renumere. Migration com SQL manual (que o drizzle-kit não gera) faz o gate PARAR: avise no relatório. (orquestração)
+- Registry de editores de nó com `import.meta.glob`: os grupos não podem importar VALORES do registry (só `import type`) nem chamar `registerNodeEditor` no topo — o ciclo de import dá TDZ. (T56)

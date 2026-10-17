@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 # uso: integrate.sh Txx "Título" — commit no worktree, rebase em main, ff-merge, verify em main (SPEC 2.5)
+# Modo lote (integrate-batch.sh): ORQ_TARGET=<branch do lote> rebaseia sobre ele em vez da main, e ORQ_NO_VERIFY=1
+# para depois da regeração de migration: só avança o branch do lote até a tarefa (sem verify, merge, push nem limpeza).
 # Conflitos resolvidos sozinhos: pontos de registro (union.mjs), pnpm-lock (regenera) e migrations crm
 # (journal/snapshot de main + regeração com o mesmo nome; para se o SQL regenerado diferir do original).
 # Caminhos relativos ao próprio script (scripts/orq/ no checkout da main); temporários em .orq-tmp/ (gitignored).
@@ -8,6 +10,7 @@ ROOT=$(cd "$(dirname "$0")/../.." && pwd); SP="$ROOT/.orq-tmp"; mkdir -p "$SP"
 if [ "${ORQ_INTEGRATE_COPY:-}" != 1 ]; then cp "$0" "$SP/integrate.run.sh"; ORQ_INTEGRATE_COPY=1 ORQ_DIR="$(cd "$(dirname "$0")" && pwd)" exec bash "$SP/integrate.run.sh" "$@"; fi
 ORQ=${ORQ_DIR}; ROOT=$(cd "$ORQ/../.." && pwd); SP="$ROOT/.orq-tmp"
 set -uo pipefail
+TGT=${ORQ_TARGET:-main}
 T=$1; TITLE=$2; WT=$(cd "$ROOT/.." && pwd)/leonas-crm-wt/$T
 MIG=packages/db/drizzle/crm
 cd "$WT" || exit 1
@@ -19,14 +22,14 @@ git diff --cached --quiet || git commit -q -m "$T: $TITLE
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>"
 # um único commit da tarefa sobre a base dela: o rebase vê todas as migrations da tarefa de uma vez
-BASE=$(git merge-base HEAD main)
+BASE=$(git merge-base HEAD "$TGT")
 if [ "$(git rev-list --count "$BASE"..HEAD)" -gt 1 ]; then
   git reset -q --soft "$BASE" && git commit -q -m "$T: $TITLE
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>" && echo "commits da tarefa unidos em 1"
 fi
 REGEN=()
-if ! git rebase -q main >/dev/null 2>&1; then
+if ! git rebase -q "$TGT" >/dev/null 2>&1; then
   while true; do
     C=$(git diff --name-only --diff-filter=U)
     [ -z "$C" ] && break
@@ -66,6 +69,11 @@ if [ ${#REGEN[@]} -gt 0 ]; then
     echo "PARE: $(basename "$N") difere do original (SQL manual?) — compare com ${ORIG[*]}"; exit 5
   fi
   git add -A "$MIG" && git commit -q -m "$T: regenera migration sobre main"
+fi
+# Modo lote: só avança o branch do lote até esta tarefa; o integrate-batch.sh verifica o lote inteiro de uma vez.
+if [ "${ORQ_NO_VERIFY:-}" = 1 ]; then
+  git merge-base --is-ancestor "$TGT" HEAD || { echo "FALHA: task/$T não descende de $TGT"; exit 7; }
+  git -C "$ROOT" branch -f "$TGT" "task/$T" && echo "lote $TGT ← $T"; exit 0
 fi
 # Gate: o worktree rebaseado é exatamente o próximo main — verificar AQUI, antes do merge.
 pnpm install >/dev/null 2>&1

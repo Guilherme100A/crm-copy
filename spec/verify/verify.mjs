@@ -6,6 +6,7 @@
 //   node spec/verify/verify.mjs lint-spec                    # SPEC.md × tasks.mjs (headings, ACs, ondas)
 //   node spec/verify/verify.mjs <Txx> --role operario|tester [--base <git-ref>] [--strict-scope] [--skip-commands] [--full] [--retry-failed]
 //   node spec/verify/verify.mjs wave <n>                     # regressão de todas as tarefas até a onda n
+//   node spec/verify/verify.mjs batch T1,T2 --base <ref> [--retry-failed]  # gate em lote (scripts/orq/integrate-batch.sh)
 //
 // Dois níveis (revisão 2): durante a tarefa, `pnpm --filter X test` roda só os testes afetados desde --base
 // (vitest --changed); a suíte completa (--full) roda uma vez, no gate (scripts/orq/integrate.sh).
@@ -367,6 +368,43 @@ function depsUnmet(task) {
   )
 }
 
+// testes dos pacotes que dependem do que mudou desde a base, fora os que os comandos já rodam (filtro de diretório)
+function dependentsCommand(commands, base) {
+  const own = [...new Set(commands.map((c) => /^pnpm --filter (\S+) test$/.exec(c)?.[1]).filter(Boolean))]
+  const changedDirs = [...new Set((changedFiles(base) ?? []).map((f) => /^((?:apps|packages)\/[^/]+)\//.exec(f)?.[1]).filter(Boolean))]
+  return changedDirs.length ? [`pnpm ${changedDirs.map((d) => `--filter "...{./${d}}"`).join(' ')} ${own.map((w) => `--filter "!${w}"`).join(' ')} test`] : []
+}
+
+// Gate em lote (scripts/orq/integrate-batch.sh): a união dos comandos das tarefas roda UMA vez (suíte completa) com os
+// dependentes; depois os testes de aceitação de cada tarefa. Grava Txx-operario.json/Txx-tester.json de cada uma.
+function verifyBatch(ids, opts) {
+  const tasks = ids.map((id) => TASKS.find((t) => t.id === id.toUpperCase())).filter(Boolean)
+  if (tasks.length !== ids.length) usage()
+  console.log(`\n${C.b}LOTE ${tasks.map((t) => t.id).join(', ')}${C.r}`)
+  const op = new Report('BATCH', 'operario', opts)
+  const commands = [...new Set(tasks.flatMap((t) => t.commands))]
+  const skip = opts.retryFailed ? previouslyPassed('BATCH', 'operario') : undefined
+  checkCommands(op, [...commands, ...(opts.base ? dependentsCommand(commands, opts.base) : [])], { full: true, base: opts.base, skip })
+  checkForbidden(op, FORBIDDEN)
+  op.save()
+  // escopo de cada tarefa já foi conferido no verify dela; aqui só os testes de aceitação
+  const testers = tasks.map((t) => {
+    const r = verifyTester(t, { ...opts, base: undefined })
+    r.save()
+    return r
+  })
+  for (const t of tasks) {
+    const copy = new Report(t.id, 'operario', opts)
+    copy.checks = op.checks.map((c) => ({ ...c }))
+    copy.add('gate em lote', op.ok ? 'pass' : 'fail', tasks.map((x) => x.id).join(', '))
+    copy.save()
+  }
+  const ok = op.ok && testers.every((r) => r.ok)
+  const why = [...(op.ok ? [] : ['suíte']), ...testers.filter((r) => !r.ok).map((r) => `${r.task} tester`)]
+  console.log(`\n${ok ? C.ok + 'APROVADO' : C.fail + 'REPROVADO'}${C.r} — lote ${tasks.map((t) => t.id).join(', ')}${why.length ? ` · ✘ ${why.join(', ')}` : ''}`)
+  return ok
+}
+
 function verifyOperario(task, opts) {
   const report = new Report(task.id, 'operario', opts)
   console.log(`\n${C.b}${task.id} — ${task.title} · OPERÁRIO${C.r}`)
@@ -379,13 +417,7 @@ function verifyOperario(task, opts) {
     // fora os que a tarefa já roda: uma mudança no core não pode quebrar a api sem ninguém ver (T58 → contacts)
     // O filtro "[ref]" do pnpm não acha nada dentro de worktree no Windows: os pacotes mudados saem do git diff
     // e entram como filtros de diretório "...{./apps/x}" (o pacote e todos os seus dependentes).
-    const own = [...new Set(task.commands.map((c) => /^pnpm --filter (\S+) test$/.exec(c)?.[1]).filter(Boolean))]
-    const changedDirs = opts.full && opts.base
-      ? [...new Set((changedFiles(opts.base) ?? []).map((f) => /^((?:apps|packages)\/[^/]+)\//.exec(f)?.[1]).filter(Boolean))]
-      : []
-    const dependents = changedDirs.length
-      ? [`pnpm ${changedDirs.map((d) => `--filter "...{./${d}}"`).join(' ')} ${own.map((w) => `--filter "!${w}"`).join(' ')} test`]
-      : []
+    const dependents = opts.full && opts.base ? dependentsCommand(task.commands, opts.base) : []
     checkCommands(report, [...task.commands, ...dependents], { full: opts.full, base: opts.base, skip: opts.retryFailed ? previouslyPassed(task.id, 'operario') : undefined })
   }
   checkForbidden(report, FORBIDDEN)
@@ -524,6 +556,11 @@ if (cmd === 'plan') {
   process.exit(0)
 }
 if (cmd === 'lint-spec') process.exit(lintSpec() ? 0 : 1)
+
+if (cmd === 'batch') {
+  if (!arg) usage()
+  process.exit(verifyBatch(arg.split(','), opts) ? 0 : 1)
+}
 
 if (cmd === 'wave') {
   const n = Number(arg)
