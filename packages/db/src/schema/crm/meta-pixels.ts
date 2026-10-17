@@ -70,8 +70,13 @@ export const pixelConfigs = crm.table(
   ],
 )
 
-/** `discarded`: não enviado de propósito (ex.: `event_time` com mais de 7 dias) — nunca é reenviado. */
-export const CAPI_EVENT_STATUSES = ['pending', 'sent', 'failed', 'discarded'] as const
+/**
+ * `sent`: aceito pela CAPI (`events_received`) — não quer dizer que a Meta atribuiu a conversão a um anúncio.
+ * `failed`: rejeitado pela Meta (motivo + `fbtrace_id`). `uncertain`: timeout/rede/5xx — a Meta pode ter recebido; é
+ * retentado no MESMO modo e com o MESMO `event_id`. `discarded`: não enviado de propósito (ex.: `event_time` com mais
+ * de 7 dias) — nunca é reenviado.
+ */
+export const CAPI_EVENT_STATUSES = ['pending', 'sent', 'failed', 'uncertain', 'discarded'] as const
 export type CapiEventStatus = (typeof CAPI_EVENT_STATUSES)[number]
 
 /** Um evento por (pixel, event_id): o mesmo `event_id` de novo não gera outro POST (AC-T104-02). */
@@ -119,6 +124,9 @@ export const capiEventLog = crm.table(
 // `wa.me` da conexão com a mensagem pronta e um código curto no fim. A 1ª mensagem com o código liga o clique ao
 // contato (atribuição) e os eventos daquele contato passam a levar fbc/fbp/IP/user agent.
 
+export const TRACKED_LINK_CODE_MODES = ['visible', 'discreet', 'off'] as const
+export type TrackedLinkCodeMode = (typeof TRACKED_LINK_CODE_MODES)[number]
+
 export const trackedLinks = crm.table(
   'tracked_links',
   {
@@ -139,11 +147,22 @@ export const trackedLinks = crm.table(
     utmContent: text('utm_content'),
     utmTerm: text('utm_term'),
     active: boolean('active').notNull().default(true),
+    /**
+     * Código na mensagem pronta: `visible` ("(ref ABC234)"), `discreet` (o mesmo código em caracteres invisíveis) ou
+     * `off` (sem código: liga o clique ao 1º contato novo da conexão dentro de `match_window_minutes`, como "provável").
+     */
+    codeMode: text('code_mode').$type<TrackedLinkCodeMode>().notNull().default('visible'),
+    /** Janela da ligação "provável" (sem código), em minutos. */
+    matchWindowMinutes: integer('match_window_minutes').notNull().default(10),
+    /** Ligação "provável" sem código (só proximidade de tempo). Desligada por padrão. */
+    probableMatch: boolean('probable_match').notNull().default(false),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (t) => [
     uniqueIndex('tracked_links_slug_uq').on(t.slug),
+    check('tracked_links_code_mode_ck', sql`${t.codeMode} in ('visible', 'discreet', 'off')`),
+    check('tracked_links_window_ck', sql`${t.matchWindowMinutes} between 1 and 1440`),
     index('tracked_links_company_idx').on(t.companyId, t.createdAt),
     check('tracked_links_slug_ck', sql`${t.slug} ~ '^[a-z0-9][a-z0-9-]{2,62}$'`),
     check('tracked_links_phone_ck', sql`${t.phone} is null or ${t.phone} ~ '^[0-9]{8,15}$'`),
@@ -162,6 +181,8 @@ export const trackedLinkClicks = crm.table(
     /** Código curto do fim da mensagem (`ref XXXXXX`). Único por empresa. */
     code: text('code').notNull(),
     fbclid: text('fbclid'),
+    /** Id do anúncio informado na URL do clique (`ad_id={{ad.id}}` nos parâmetros de URL do anúncio). */
+    adId: text('ad_id'),
     /** `fb.1.<ms do clique>.<fbclid>` (subdomainIndex 1 quando gerado no servidor, sem cookie). */
     fbc: text('fbc'),
     fbp: text('fbp'),
@@ -174,6 +195,8 @@ export const trackedLinkClicks = crm.table(
     userAgent: text('user_agent'),
     contactId: uuid('contact_id').references(() => contacts.id, { onDelete: 'set null' }),
     matchedAt: timestamp('matched_at', { withTimezone: true }),
+    /** `exact` (código na mensagem) ou `probable` (sem código: 1º contato novo da conexão dentro da janela). */
+    matchConfidence: text('match_confidence').$type<'exact' | 'probable'>(),
     createdAt: createdAt(),
   },
   (t) => [
