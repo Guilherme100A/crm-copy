@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE): operários T100 (Lastro), T98 (Esquadro), T105 (Forja), T106 (Prumo); tester T86 (Vigia); fila de tester: T87 → T83 → T97. T108 espera a T97 na main.
+- Em andamento (força total; gate em LOTE — 2 lotes integrados: T84+T90, T86+T87): operários T98/T105 (ajustes de montagem), T106 (Prumo), T82 (Lastro); tester T83 (Vigia); fila de tester: T97 → T100. T108 espera a T97.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -105,7 +105,7 @@
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
-| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | Forja | (vaga) | 0 | libera service.ts/metrics.ts do meta-ads (aditivo) |
+| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | Forja | (vaga) | 0 | op DONE ~7 min; ajuste: ligar internalSales nos 3 pontos de montagem do MetaBundleService |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
@@ -113,20 +113,20 @@
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
-| 8 | T82 | Simulador de fluxos | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera editor.tsx (aditivo); simulador sem rede |
-| 8 | T83 | UI disparos em massa | VERIFYING | Forja | (vaga) | 0 | op ~20 min (verify 0, base 0bb9d1a); tester na fila |
-| 8 | T87 | UI dashboard: histórico, atendimento e marcos | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min (verify 0, base 0bb9d1a); tester na fila |
+| 8 | T82 | Simulador de fluxos | IN_PROGRESS | Lastro | (vaga) | 0 | libera editor.tsx (aditivo); simulador sem rede |
+| 8 | T83 | UI disparos em massa | VERIFYING | Forja | Vigia | 0 | op ~20 min; tester em andamento |
+| 8 | T87 | UI dashboard: histórico, atendimento e marcos | MERGED | Esquadro | Sentinela | 0 | 09cd6a8 (2º lote com a T86; op ~16 min, tester ~4 min) |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | IN_PROGRESS | Prumo | (vaga) | 0 | libera harness (FakeMetaGraph + configureMetaAds, aditivo) |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
-| 9 | T86 | UI contatos: formulário, importação e jobs | VERIFYING | Prumo | (vaga) | 0 | op ~16 min (verify 0, base f3d19ba); tester na fila |
+| 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | VERIFYING | Prumo | (vaga) | 0 | op ~11 min (verify 0, base 5e34a73); tester na fila |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | Esquadro | (vaga) | 0 | libera suite.ts do wa-port (only/skip, aditivo) |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | Esquadro | (vaga) | 0 | op DONE ~16 min; ajuste: perfil ai-manager no createWaGatewayFromEnv (config.ts liberado) |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | VERIFYING | Lastro | (vaga) | 0 | op ~25 min (verify 0, base 5e34a73); tester na fila |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
@@ -220,6 +220,9 @@
 | web | Afiliados: link no UserMenu e banner do dashboard para o portal (fora do AC) | T97 |
 | T60 | status_counts na lista de disparos e contagem por variante A/B | T83 |
 | vendas | Exportação de vendas (core/worker); editar/excluir venda no histórico | T87 |
+| extensão | Alvos sem equivalente no ai-manager: markRead, profile, react, deleteForEveryone; sessions.setProxy (T40, as duas pontas); meta.capabilities (T29) | T98 |
+| teste instável | packages/wa-gateway-rpc contract.db.unit.test.ts "subscribe recebe os eventos que o próprio worker publica" (prazo 10 s) falha sob carga | T98 |
+| admin | URLs de imagem do admin assinadas com chave derivada de CREDENTIALS_KEY: trocar a chave invalida as já gravadas; API_PUBLIC_URL precisa ser a URL pública; GC de blobs não usados | T100 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
