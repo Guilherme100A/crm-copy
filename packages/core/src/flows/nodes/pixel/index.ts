@@ -1,13 +1,15 @@
-// Nó Pixel (T104; 06 §3.5; 11 §5.4): `send_pixel_event` manda `Compra` (Purchase) ou `Lead` pela Conversions API.
+// Nó Pixel (T104; 06 §3.5; 11 §5.4): `send_pixel_event` manda `Compra` (Purchase), `Lead` e (revisão 3) os eventos
+// padrão InitiateCheckout, AddToCart, CompleteRegistration, Contact, Schedule e Subscribe pela Conversions API. O modo
+// (chat ou business_messaging, com fallback) é decidido pelo CapiService a partir do pixel e do contato.
 // - Saídas: `success` (ou `source`, em fluxos antigos sem aresta `success`) e `failure`. Sem aresta `failure`, a falha
 //   do tracking só é logada e o fluxo segue — tracking não derruba o atendimento.
-// - `item_value` e `currency` aceitam variáveis (`{preco}`); moeda vazia/inválida → BRL; `page_id` é ignorado (campo
-//   de WABA, fora da CAPI de site/servidor).
+// - `item_value` e `currency` aceitam variáveis (`{preco}`); moeda vazia/inválida → BRL; `page_id`/`whatsapp_business_account_id` do nó (opcionais,
+//   aceitam variável) sobrepõem os do pixel no modo business_messaging (revisão 3; paridade Leona 11 §5.4).
 // - Escreve só na transação do passo (`ctx.repo.db`); o POST acontece uma vez por passo (`ctx.once`) com
 //   `event_id = ctx.idempotencyKey('pixel')` — o retry do passo não reenvia.
 // `registerPixelNodes` troca o stub do grupo `pixel` em `nodes/index.ts`; `configurePixelNodes` define as deps do processo.
 import type { Database } from '@crm/db'
-import { CapiService, type CapiSendResult, type CapiServiceOptions } from '../../../meta-capi/service'
+import { CAPI_EVENT_NAMES, CapiService, type CapiEventName, type CapiSendResult, type CapiServiceOptions } from '../../../meta-capi/service'
 import type { NodeContext, NodeHandler, NodeOutcome } from '../../engine/context'
 import type { NodeRegistry } from '../../engine/registry'
 
@@ -37,6 +39,12 @@ const configOf = (ctx: NodeContext): Config =>
 
 const hasEdge = (ctx: NodeContext, handle: string) => ctx.definition.edges.some((e) => e.from === ctx.node.id && e.handle === handle)
 
+/** `event_type` do nó → nome do evento da Meta (`Compra` = Purchase; desconhecido → Purchase, como antes). */
+export function pixelEventName(type: unknown): CapiEventName {
+  if (type === 'Compra') return 'Purchase'
+  return (CAPI_EVENT_NAMES as readonly unknown[]).includes(type) ? (type as CapiEventName) : 'Purchase'
+}
+
 export function pixelHandler(deps: PixelNodeDeps = {}): NodeHandler {
   return {
     async execute(ctx): Promise<NodeOutcome> {
@@ -47,10 +55,13 @@ export function pixelHandler(deps: PixelNodeDeps = {}): NodeHandler {
         const c = configOf(ctx)
         const pixelConfigId = String(c.pixel_config_id ?? '').trim()
         if (!pixelConfigId) throw new PixelNodeError('pixel_not_configured', 'selecione o pixel')
-        const eventName = c.event_type === 'Lead' ? 'Lead' : 'Purchase'
+        const eventName = pixelEventName(c.event_type)
         const rawValue = c.item_value
         const value = typeof rawValue === 'number' ? rawValue : typeof rawValue === 'string' ? ctx.render(rawValue) : null
         const currency = typeof c.currency === 'string' ? ctx.render(c.currency) : null
+        const digits = (v: unknown) => (typeof v === 'string' ? ctx.render(v).replace(/\D/g, '') : '') || null
+        const pageId = digits(c.page_id)
+        const wabaId = digits(c.whatsapp_business_account_id)
         const capi = new CapiService({ ...deps, db })
         const result = await ctx.once<CapiSendResult>('pixel', async () =>
           capi.send({
@@ -64,11 +75,13 @@ export function pixelHandler(deps: PixelNodeDeps = {}): NodeHandler {
             actionSource: 'chat',
             source: 'flow',
             sourceId: ctx.runId,
+            pageId,
+            wabaId,
             db,
           }),
         )
         if (result.status === 'failed') throw new PixelNodeError('capi_failed', result.error)
-        ctx.setVar('pixel', { event_id: result.eventId, status: result.status, event: eventName })
+        ctx.setVar('pixel', { event_id: result.eventId, status: result.status, event: eventName, ...(result.status === 'sent' ? { mode: result.mode } : {}) })
         return ok
       } catch (err) {
         if (hasEdge(ctx, 'failure')) throw err

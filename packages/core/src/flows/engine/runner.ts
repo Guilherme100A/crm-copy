@@ -374,12 +374,35 @@ export class FlowEngine {
 
   private async loadContact(tx: Tx, companyId: string, contactId: string): Promise<TemplateContact | null> {
     const [c] = await tx
-      .select({ name: contacts.name, phone: contacts.phoneE164, email: contacts.email, createdAt: contacts.createdAt, customFields: contacts.customFields })
+      .select({
+        name: contacts.name,
+        phone: contacts.phoneE164,
+        email: contacts.email,
+        createdAt: contacts.createdAt,
+        customFields: contacts.customFields,
+        ctwaClid: contacts.ctwaClid,
+        sourceId: contacts.sourceId,
+        sourceUrl: contacts.sourceUrl,
+        adMediaUrl: contacts.adMediaUrl,
+      })
       .from(contacts)
       .where(and(eq(contacts.id, contactId), eq(contacts.companyId, companyId)))
       .limit(1)
     if (!c) return null
-    return { full_name: c.name, phone_number: c.phone ? c.phone.replace(/^\+/, '') : null, email: c.email, created_at: c.createdAt, custom_fields: c.customFields }
+    // Variáveis do anúncio de origem (11 §3.7, como no Leona): ctwa_clid, source_url, source_id, media_url e
+    // thumbnail_url (o Baileys entrega a miniatura no mesmo campo de mídia do `externalAdReply`).
+    return {
+      full_name: c.name,
+      phone_number: c.phone ? c.phone.replace(/^\+/, '') : null,
+      email: c.email,
+      created_at: c.createdAt,
+      custom_fields: c.customFields,
+      ctwa_clid: c.ctwaClid,
+      source_id: c.sourceId,
+      source_url: c.sourceUrl,
+      media_url: c.adMediaUrl,
+      thumbnail_url: c.adMediaUrl,
+    }
   }
 
   private async companyTimeZone(tx: Tx, companyId: string): Promise<string | undefined> {
