@@ -278,7 +278,7 @@ const RAW = [
   T('T80', 'Vozes (ElevenLabs)', ['T38', 'T12'], [core('ai-voices'), route('ai-voices'), schema('ai-voices')], ['api', 'core']),
   T('T88', 'UI agentes: lista e editor', ['T79', 'T80', 'T52', 'T23'], [...ui('agents'), 'apps/api/src/routes/ai-agents/index.ts', 'apps/api/src/routes/ai-agents/*.db.unit.test.ts' /* GET /api/ai-agents/model-options */, 'apps/worker/src/index.ts', 'scripts/e2e/api.ts' /* liga o job ai-knowledge no harness */], ['web', 'api', 'worker'], { e2e: true }),
   T('T92', 'UI agentes: teste ao vivo, criação assistida e vozes', ['T88'], ['apps/web/src/features/agent-lab/**', 'apps/web/src/features/agent-voices/**', i18n('agent-lab'), 'apps/web/src/features/agents/editor-page.tsx', 'apps/web/src/features/agents/tabs.tsx', 'apps/web/src/features/agents/list-page.tsx', 'apps/web/src/routes/agentes/**' /* aditivo: pontos de montagem da T88 + handler ai_agent.run.updated */, 'apps/api/src/routes/ai-agent-lab/index.ts' /* aditivo: LLM do harness lido de forma preguiçosa (sobrevive ao reset) */, 'scripts/e2e/api.ts' /* aditivo: lab com FakeLlm, FakeStt no ditado e FakeElevenLabsVoices (nunca rede) */], ['api', 'web'], { e2e: true }),
-  T('T93', 'Assistente (copiloto) de fluxo', ['T28', 'T24', 'T12', 'T16', 'T45'], [core('flow-copilot'), route('flow-copilot'), schema('flow-copilot'), 'apps/web/src/features/flow-copilot/**', i18n('flow-copilot')], ['api', 'core', 'web'],
+  T('T93', 'Assistente (copiloto) de fluxo', ['T28', 'T24', 'T12', 'T16', 'T45'], [core('flow-copilot'), route('flow-copilot'), schema('flow-copilot'), 'apps/web/src/features/flow-copilot/**', i18n('flow-copilot'), 'apps/web/src/features/flow-editor/canvas/editor.tsx' /* aditivo: botão + painel do assistente (a T82 também acrescenta no cabeçalho) */, 'apps/web/src/routes/flows/$flowId/edit.tsx' /* aditivo: registrar copilot.* junto do registerFlowEditorRealtime */], ['api', 'core', 'web'],
     { e2e: true }),
 
   // ---------------- Webhooks, vendas externas, disparos, MCP ----------------
@@ -313,7 +313,7 @@ const RAW = [
 
   // ---------------- Shell: extras da spec 18 ----------------
   T('T107', 'Indicador de conexões desconectadas no menu', ['T47', 'T23'], ['apps/web/src/features/shell-disconnect/**', route('connections-alert'), i18n('shell-disconnect'), 'apps/web/src/app/shell/nav-list.tsx' /* aditivo: slot no item connections */, 'apps/web/src/app/shell/app-shell.tsx' /* aditivo: import estático do handler */], ['api', 'web'], { e2e: true }),
-  T('T108', 'Tutoriais e widget de suporte plugável', ['T23'], ['apps/web/src/features/support-widget/**', 'apps/web/src/features/tutorials/**', i18n('support-widget')], ['web'], { e2e: true, minWave: 11 }),
+  T('T108', 'Tutoriais e widget de suporte plugável', ['T23'], ['apps/web/src/features/support-widget/**', 'apps/web/src/features/tutorials/**', i18n('support-widget'), 'apps/api/src/routes/app-config/**', 'packages/core/src/affiliate/**', 'apps/web/src/features/affiliate/api.ts' /* aditivo: tutorials_url e support no GET /api/app-config da T97 */, 'apps/web/src/app/shell/nav-list.tsx', 'apps/web/src/app/shell/app-shell.tsx', 'apps/web/src/app/shell/controls.tsx' /* aditivo: link de tutoriais, botões Suporte, gancho de logout */], ['api', 'core', 'web'], { e2e: true, minWave: 11 }),
 
   // ---------------- Integrações de venda (revisão 1: iguais à referência) ----------------
   T('T109', 'Pagamentos ao lead: porta, chaves e adapter XPag', ['T22'],
@@ -330,7 +330,7 @@ const RAW = [
   T('T114', 'UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada', ['T110', 'T111', 'T112', 'T113', 'T45', 'T59'],
     [...ui('settings-payments'), 'apps/web/src/features/flow-editor/node-editors/payment/**', 'apps/web/src/features/sale-invoice/**'], ['web'], { e2e: true }),
   T('T115', 'MCP: OAuth para conectores (Claude)', ['T94'],
-    ['packages/core/src/mcp-oauth/**', route('mcp-oauth'), schema('mcp-oauth'), 'apps/web/src/features/mcp-oauth/**', i18n('mcp-oauth')], ['api', 'core', 'web'],
+    ['packages/core/src/mcp-oauth/**', route('mcp-oauth'), schema('mcp-oauth'), 'apps/web/src/features/mcp-oauth/**', i18n('mcp-oauth'), 'packages/core/src/mcp/credentials.ts', 'apps/api/src/routes/mcp/index.ts', 'apps/web/src/features/settings-mcp/**', i18n('settings-mcp') /* aditivo: oauth no núcleo da T94 (status pending/connected, 401 com resource_metadata, UI) */, 'apps/web/src/routes/oauth/**' /* tela de consentimento */], ['api', 'core', 'web'],
     { e2e: true }),
 
   T('T117', 'Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único', ['T13', 'T15', 'T16'],

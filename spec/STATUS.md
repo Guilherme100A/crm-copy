@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE — 2 lotes integrados: T84+T90, T86+T87): operários T98/T105 (ajustes de montagem), T106 (Prumo), T82 (Lastro); tester T83 (Vigia); fila de tester: T97 → T100. T108 espera a T97.
+- Em andamento (força total; gate em LOTE): operários T92 (Esquadro), T115 (Forja), T93 (Lastro), T108 (Prumo); tester T105 (Sentinela); aprovada esperando lote: T100; fila de tester: T98 → T82 → T107 → T106. Faltam despachar: T114 (depende da T110/Zenith — decisão do usuário) e T102 (integração final).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -83,7 +83,7 @@
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | MERGED | Esquadro | Sentinela | 0 | 65f5a20 (1º gate em LOTE com a T90; op 13 min, tester ~4 min) |
-| 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
+| 6 | T93 | Assistente (copiloto) de fluxo | IN_PROGRESS | Lastro | (vaga) | 0 | libera cabeçalho do editor e edit.tsx (aditivo) |
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
@@ -106,29 +106,29 @@
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | VERIFYING | Forja | (vaga) | 0 | op ~7 min + montagem ~9 min (verify 0, base 9bd202b); tester na fila |
-| 7 | T107 | Indicador de conexões desconectadas no menu | IN_PROGRESS | Forja | (vaga) | 0 | libera nav-list e app-shell (aditivo) |
+| 7 | T107 | Indicador de conexões desconectadas no menu | VERIFYING | Forja | (vaga) | 0 | op ~12 min (verify 0, base 51bf479); tester na fila |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
-| 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
+| 7 | T115 | MCP: OAuth para conectores (Claude) | IN_PROGRESS | Forja | (vaga) | 0 | libera núcleo MCP da T94, settings-mcp e routes/oauth (aditivo) |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
-| 8 | T82 | Simulador de fluxos | IN_PROGRESS | Lastro | (vaga) | 0 | libera editor.tsx (aditivo); simulador sem rede |
-| 8 | T83 | UI disparos em massa | VERIFYING | Forja | Vigia | 0 | op ~20 min; tester em andamento |
+| 8 | T82 | Simulador de fluxos | VERIFYING | Lastro | (vaga) | 0 | op ~20 min (verify 0, base 903ba1c); tester na fila |
+| 8 | T83 | UI disparos em massa | MERGED | Forja | Vigia | 0 | 89c58f2 (gate individual após conflito manual no scripts/e2e/api.ts com a T90) |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | MERGED | Esquadro | Sentinela | 0 | 09cd6a8 (2º lote com a T86; op ~16 min, tester ~4 min) |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
-| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | IN_PROGRESS | Prumo | (vaga) | 0 | libera harness (FakeMetaGraph + configureMetaAds, aditivo) |
+| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | (vaga) | 0 | op ~35 min (verify 0, base 9bd202b); tester na fila |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
-| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera pontos da T88, lab preguiçoso e harness sem rede (aditivo) |
+| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | IN_PROGRESS | Esquadro | (vaga) | 0 | libera pontos da T88, lab preguiçoso e harness sem rede (aditivo) |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
-| 11 | T97 | Afiliação: captura de indicação e link externo | VERIFYING | Prumo | (vaga) | 0 | op ~11 min (verify 0, base 5e34a73); tester na fila |
+| 11 | T97 | Afiliação: captura de indicação e link externo | MERGED | Prumo | Sentinela | 0 | 96113e7 (lote; op ~11 min, tester ~5 min) |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min + montagem do perfil (verify 0, base 965cd9b); tester na fila |
-| 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
-| 12 | T100 | UI admin interno | VERIFYING | Lastro | (vaga) | 0 | op ~25 min (verify 0, base 5e34a73); tester na fila |
+| 11 | T108 | Tutoriais e widget de suporte plugável | IN_PROGRESS | Prumo | (vaga) | 0 | usa /api/app-config da T97; libera shell (aditivo) |
+| 12 | T100 | UI admin interno | VERIFYING | Lastro | Vigia | 0 | tester APROVADO (18/18); aguarda lote com a T105 |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
@@ -221,6 +221,10 @@
 | T60 | status_counts na lista de disparos e contagem por variante A/B | T83 |
 | vendas | Exportação de vendas (core/worker); editar/excluir venda no histórico | T87 |
 | extensão | Alvos sem equivalente no ai-manager: markRead, profile, react, deleteForEveryone; sessions.setProxy (T40, as duas pontas); meta.capabilities (T29) | T98 |
+| T101 (bug) | Bundle Meta pronto com erro de conta não vai ao cache e o GET async reenfileira com o mesmo jobId bundle-<key>, deduplicado pelo BullMQ contra o job concluído (24 h) → "loading" preso até 15 min (a UI da T106 contorna relendo sem async após ~12 s). Corrigir depois da T105 (mesmo arquivo service.ts) | T106 |
+| admin (web) | Busca nova com lista na página 2 dispara 1 GET page=2 antes do page=1 (resultado final certo) | T100 |
+| simulador | globais vazias (T25); payment_choice/"Simular webhook"; detecção de loop curto; delete_on_label | T82 |
+| shell | Modal de desconexão (spec 08/14) | T107 |
 | teste instável | packages/wa-gateway-rpc contract.db.unit.test.ts "subscribe recebe os eventos que o próprio worker publica" (prazo 10 s) falha sob carga | T98 |
 | admin | URLs de imagem do admin assinadas com chave derivada de CREDENTIALS_KEY: trocar a chave invalida as já gravadas; API_PUBLIC_URL precisa ser a URL pública; GC de blobs não usados | T100 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
