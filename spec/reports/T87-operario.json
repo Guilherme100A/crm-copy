@@ -3,56 +3,40 @@
   "task": "T87",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:06:34.937Z",
-  "commit": "0bb9d1a3415816f6648c477892497f9bcbcb9c5c",
-  "base": "0bb9d1a",
-  "changedFiles": [
-    "apps/web/src/features/dashboard/dashboard-page.tsx",
-    "apps/web/src/features/dashboard/tabs.ts",
-    "apps/web/src/features/dashboard-attendance/api.ts",
-    "apps/web/src/features/dashboard-attendance/attendance-panel.tsx",
-    "apps/web/src/features/dashboard-attendance/attendance.unit.test.ts",
-    "apps/web/src/features/dashboard-attendance/logic.ts",
-    "apps/web/src/features/dashboard-attendance/register.ts",
-    "apps/web/src/features/dashboard-history/api.ts",
-    "apps/web/src/features/dashboard-history/history-panel.tsx",
-    "apps/web/src/features/dashboard-history/history.unit.test.ts",
-    "apps/web/src/features/dashboard-history/logic.ts",
-    "apps/web/src/features/dashboard-history/register.ts",
-    "apps/web/src/features/dashboard-history/sale-modal.tsx",
-    "apps/web/src/features/dashboard-history/slots.ts",
-    "apps/web/src/i18n/en/dashboard-attendance.json",
-    "apps/web/src/i18n/en/dashboard-history.json",
-    "apps/web/src/i18n/es/dashboard-attendance.json",
-    "apps/web/src/i18n/es/dashboard-history.json",
-    "apps/web/src/i18n/pt-BR/dashboard-attendance.json",
-    "apps/web/src/i18n/pt-BR/dashboard-history.json"
-  ],
+  "at": "2026-10-17T03:26:20.012Z",
+  "commit": "09cd6a88c602f8418035ade28fa3e463fe7ff1e9",
+  "base": "903ba1c",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 18.6s"
+      "detail": "ok em 26.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 8.9s"
+      "detail": "ok em 10.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 15.6s (afetados desde a base)"
+      "detail": "ok em 26.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 1.0s"
+      "detail": "ok em 0.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -110,9 +94,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "20 arquivo(s) alterado(s)"
+      "detail": "T86, T87"
     }
   ]
 }

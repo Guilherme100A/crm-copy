@@ -3,35 +3,35 @@
   "task": "BATCH",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:59:15.288Z",
-  "commit": "8e88be34457f808b70d6599176285896aa300902",
-  "base": "5e34a73",
+  "at": "2026-10-17T03:24:36.330Z",
+  "commit": "09cd6a88c602f8418035ade28fa3e463fe7ff1e9",
+  "base": "903ba1c",
   "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 14.5s"
+      "detail": "ok em 26.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 6.3s"
+      "detail": "ok em 10.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 15.8s"
+      "detail": "ok em 26.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.6s"
+      "detail": "ok em 0.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.2s"
+      "detail": "ok em 4.3s"
     },
     {
       "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",

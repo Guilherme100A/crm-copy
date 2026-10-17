@@ -3,58 +3,40 @@
   "task": "T86",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:58:38.385Z",
-  "commit": "f3d19ba42b6b5bc177ae41383fa37bf797026334",
-  "base": "f3d19ba",
-  "changedFiles": [
-    "apps/web/src/features/contacts/contact-list.tsx",
-    "apps/web/src/features/contacts/contacts-page.tsx",
-    "apps/web/src/features/contact-form/actions.tsx",
-    "apps/web/src/features/contact-form/api.ts",
-    "apps/web/src/features/contact-form/contact-dialog.tsx",
-    "apps/web/src/features/contact-form/contact-form.tsx",
-    "apps/web/src/features/contact-form/form.ts",
-    "apps/web/src/features/contact-form/form.unit.test.ts",
-    "apps/web/src/features/contact-form/open-chat.tsx",
-    "apps/web/src/features/contact-jobs/actions.tsx",
-    "apps/web/src/features/contact-jobs/api.ts",
-    "apps/web/src/features/contact-jobs/import-dialog.tsx",
-    "apps/web/src/features/contact-jobs/jobs.ts",
-    "apps/web/src/features/contact-jobs/jobs.unit.test.ts",
-    "apps/web/src/features/contact-jobs/realtime.ts",
-    "apps/web/src/features/contact-jobs/recent-exports.tsx",
-    "apps/web/src/i18n/en/contact-form.json",
-    "apps/web/src/i18n/en/contact-jobs.json",
-    "apps/web/src/i18n/es/contact-form.json",
-    "apps/web/src/i18n/es/contact-jobs.json",
-    "apps/web/src/i18n/pt-BR/contact-form.json",
-    "apps/web/src/i18n/pt-BR/contact-jobs.json"
-  ],
+  "at": "2026-10-17T03:26:19.969Z",
+  "commit": "09cd6a88c602f8418035ade28fa3e463fe7ff1e9",
+  "base": "903ba1c",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 14.0s"
+      "detail": "ok em 26.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 6.1s"
+      "detail": "ok em 10.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 27.7s (afetados desde a base)"
+      "detail": "ok em 26.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 1.1s"
+      "detail": "ok em 0.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 4.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -112,9 +94,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "22 arquivo(s) alterado(s)"
+      "detail": "T86, T87"
     }
   ]
 }
