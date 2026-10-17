@@ -3,16 +3,13 @@
   "task": "T71",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:29:18.118Z",
-  "commit": "d0ed1aac26b53cfc22b1834199ca0ca591594848",
-  "base": "d0ed1aa",
+  "at": "2026-10-17T02:48:04.186Z",
+  "commit": "391cb46b85167fc66e02dac8d82e5915a6ce620c",
+  "base": "f3d19ba",
   "changedFiles": [
     "apps/api/src/e2e/index.ts",
-    "apps/api/src/routes/connections/index.ts",
-    "apps/web/src/routes/connections/index.tsx",
-    "packages/core/src/connections-status/index.ts",
-    "packages/core/src/connections/service.ts",
     "apps/api/src/routes/connections/connections-t71.db.unit.test.ts",
+    "apps/api/src/routes/connections/index.ts",
     "apps/web/src/features/connections/api.ts",
     "apps/web/src/features/connections/connections.unit.test.ts",
     "apps/web/src/features/connections/dialogs.tsx",
@@ -22,54 +19,57 @@
     "apps/web/src/i18n/en/connections.json",
     "apps/web/src/i18n/es/connections.json",
     "apps/web/src/i18n/pt-BR/connections.json",
+    "apps/web/src/routes/connections/index.tsx",
+    "packages/core/src/connections-status/index.ts",
     "packages/core/src/connections-status/paused-flows.db.unit.test.ts",
-    "packages/core/src/connections-status/paused-flows.ts"
+    "packages/core/src/connections-status/paused-flows.ts",
+    "packages/core/src/connections/service.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 13.8s"
+      "detail": "ok em 17.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 10.9s"
+      "detail": "ok em 6.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 143.5s (afetados desde a base)"
+      "detail": "ok em 152.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 12.0s"
+      "detail": "ok em 22.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.9s"
+      "detail": "ok em 7.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 4.4s (afetados desde a base)"
+      "detail": "ok em 175.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 9.8s"
+      "detail": "ok em 10.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 5.0s"
+      "detail": "ok em 5.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 9.8s (afetados desde a base)"
+      "detail": "ok em 17.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -79,7 +79,12 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 5.1s"
+      "detail": "ok em 3.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/core}\" --filter \"!@crm/api\" --filter \"!@crm/core\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 73.3s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
