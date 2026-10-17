@@ -6,7 +6,7 @@
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
 - Em andamento (força total; gate em LOTE): operários T93 (Lastro), T129 (Prumo), T114; tester T82 (Sentinela); aprovada esperando lote: T98; fila de tester: T107 → T106 → T92 → T108 → T115. Zenith fora de escopo (T110 CANCELLED). Por último: T102.
-- Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
+- Bloqueios: nenhum (T110 cancelada: Zenith fora de escopo)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
 
