@@ -106,7 +106,7 @@
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | VERIFYING | Forja | (vaga) | 0 | op ~7 min + montagem ~9 min (verify 0, base 9bd202b); tester na fila |
-| 7 | T107 | Indicador de conexões desconectadas no menu | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera nav-list e app-shell (aditivo) |
+| 7 | T107 | Indicador de conexões desconectadas no menu | IN_PROGRESS | Forja | (vaga) | 0 | libera nav-list e app-shell (aditivo) |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
@@ -122,11 +122,11 @@
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
-| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
+| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera pontos da T88, lab preguiçoso e harness sem rede (aditivo) |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | VERIFYING | Prumo | (vaga) | 0 | op ~11 min (verify 0, base 5e34a73); tester na fila |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | Esquadro | (vaga) | 0 | op DONE ~16 min; ajuste: perfil ai-manager no createWaGatewayFromEnv (config.ts liberado) |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min + montagem do perfil (verify 0, base 965cd9b); tester na fila |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | VERIFYING | Lastro | (vaga) | 0 | op ~25 min (verify 0, base 5e34a73); tester na fila |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
