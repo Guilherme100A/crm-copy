@@ -3,25 +3,22 @@
   "task": "T112",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T00:05:48.074Z",
-  "commit": "94ab27fe7ecdad24f9523431f91fbab03a54250a",
-  "base": "94ab27f",
+  "at": "2026-10-17T00:27:14.431Z",
+  "commit": "356ac4c974746d2a1113d241caadea5e813661fc",
+  "base": "87d9ee4",
   "changedFiles": [
     ".env.example",
     "apps/api/src/production.ts",
     "apps/api/src/routes/index.ts",
-    "apps/worker/src/boot/production.ts",
-    "apps/worker/src/registry.ts",
-    "packages/core/src/index.ts",
-    "packages/db/drizzle/crm/meta/_journal.json",
-    "packages/db/src/schema/crm/index.ts",
-    "packages/shared/src/realtime/events.ts",
     "apps/api/src/routes/invoice-integrations/index.ts",
     "apps/api/src/routes/invoice-integrations/invoice-integrations.db.unit.test.ts",
+    "apps/worker/src/boot/production.ts",
     "apps/worker/src/jobs/invoices/index.ts",
     "apps/worker/src/jobs/invoices/invoices.db.unit.test.ts",
     "apps/worker/src/jobs/invoices/production.db.unit.test.ts",
+    "apps/worker/src/registry.ts",
     "docs/integrations/notasy.md",
+    "packages/core/src/index.ts",
     "packages/core/src/invoicing/emission.ts",
     "packages/core/src/invoicing/index.ts",
     "packages/core/src/invoicing/integrations.ts",
@@ -31,55 +28,63 @@
     "packages/core/src/invoicing/notasy/fake.ts",
     "packages/core/src/invoicing/notasy/index.ts",
     "packages/core/src/invoicing/port.ts",
-    "packages/db/drizzle/crm/0030_t112_invoicing.sql",
-    "packages/db/drizzle/crm/meta/0030_snapshot.json",
-    "packages/db/src/schema/crm/invoicing.ts"
+    "packages/db/drizzle/crm/0031_t112_invoicing.sql",
+    "packages/db/drizzle/crm/meta/0031_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/invoicing.ts",
+    "packages/shared/src/realtime/events.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 16.4s"
+      "detail": "ok em 15.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 4.1s"
+      "detail": "ok em 3.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 112.6s (afetados desde a base)"
+      "detail": "ok em 119.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "ok em 18.3s"
+      "detail": "ok em 16.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "ok em 4.6s"
+      "detail": "ok em 2.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "ok em 73.9s (afetados desde a base)"
+      "detail": "ok em 67.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 16.3s"
+      "detail": "ok em 16.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 8.0s"
+      "detail": "ok em 7.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 104.1s (afetados desde a base)"
+      "detail": "ok em 121.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...[87d9ee4]\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
