@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total: até 4 operários, 1 tester, 2 verifies; gate em LOTE com scripts/orq/integrate-batch.sh; briefs de TODAS as tarefas restantes em spec/briefs): operários T57 (Lastro), T86 (Prumo), T83 (Forja), T87 (Esquadro); tester T84 (Sentinela); fila de tester: T90.
+- Em andamento (força total; gate em LOTE ativo — 1º lote T84+T90 integrado em 2bbe55f): operários T83 (Forja), T87 (Esquadro), T100 (Lastro), T97 (Prumo); tester T57 (Sentinela); fila de tester: T86.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -75,14 +75,14 @@
 | 6 | T54 | UI: equipe, permissões, convites e suporte | MERGED | Esquadro | Vigia | 0 | 8fc5f28 (op ~24 min, tester ~8 min) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | MERGED | Prumo | Vigia | 0 | 5083c1e (op ~20 min, tester ~9 min) |
-| 6 | T57 | UI editores de nó: lógica, CRM e externos | IN_PROGRESS | Lastro | (vaga) | 0 | brief spec/briefs/T57.md; usa o registry da T56 (glob); editor do nó pixel incluído |
+| 6 | T57 | UI editores de nó: lógica, CRM e externos | VERIFYING | Lastro | Sentinela | 0 | op ~24 min (verify 0, base 1a208a4); tester em andamento |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | MERGED | Esquadro | Vigia | 0 | b8cc9f8 (piloto: op ~25 min, tester ~6 min; 1 ajuste de teste pelo select mobile da T53) |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | MERGED | Prumo | Sentinela | 0 | 9a72b21 (op ~22 min + probe fake; tester ~4 min) |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
-| 6 | T84 | UI: central de notificações | VERIFYING | Esquadro | Sentinela | 0 | op 13 min (verify 0, base 1bb962d); tester em andamento |
+| 6 | T84 | UI: central de notificações | MERGED | Esquadro | Sentinela | 0 | 65f5a20 (1º gate em LOTE com a T90; op 13 min, tester ~4 min) |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
@@ -103,7 +103,7 @@
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
-| 7 | T90 | UI fontes de venda e produtos | VERIFYING | Forja | (vaga) | 0 | op ~16 min (verify 0, base f3d19ba; entrega em spec/reports/T90-entrega.md); tester na fila |
+| 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
@@ -119,16 +119,16 @@
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
-| 9 | T86 | UI contatos: formulário, importação e jobs | IN_PROGRESS | Prumo | (vaga) | 0 | brief spec/briefs/T86.md; libera pontos de entrada da T77 (aditivo) |
+| 9 | T86 | UI contatos: formulário, importação e jobs | VERIFYING | Prumo | (vaga) | 0 | op ~16 min (verify 0, base f3d19ba); tester na fila |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
-| 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |
+| 11 | T97 | Afiliação: captura de indicação e link externo | IN_PROGRESS | Prumo | (vaga) | 0 | libera register-route, rota nova /api/app-config e app-shell (aditivo) |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
-| 12 | T100 | UI admin interno | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
+| 12 | T100 | UI admin interno | IN_PROGRESS | Lastro | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
