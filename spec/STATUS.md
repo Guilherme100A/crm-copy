@@ -115,7 +115,7 @@
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
 | 8 | T83 | UI disparos em massa | IN_PROGRESS | Forja | (vaga) | 0 | libera harness (configureMassDispatch, aditivo) |
-| 8 | T87 | UI dashboard: histórico, atendimento e marcos | IN_PROGRESS | Esquadro | (vaga) | 0 | libera dashboard/tabs.ts e dashboard-page.tsx (aditivo); slot de linha para a T114 |
+| 8 | T87 | UI dashboard: histórico, atendimento e marcos | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
@@ -126,7 +126,7 @@
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | IN_PROGRESS | Prumo | (vaga) | 0 | libera register-route, rota nova /api/app-config e app-shell (aditivo) |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera suite.ts do wa-port (only/skip, aditivo) |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | IN_PROGRESS | Lastro | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
