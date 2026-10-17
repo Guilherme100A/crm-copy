@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total: até 4 operários, 1 tester, 2 verifies; gate em LOTE com scripts/orq/integrate-batch.sh quando houver 2+ aprovadas; migrations regeneradas no gate; briefs adiantados): operários T57 (Lastro), T90 (Forja), T86 (Prumo); tester T84 (Sentinela); T56 no gate.
+- Em andamento (força total: até 4 operários, 1 tester, 2 verifies; gate em LOTE com scripts/orq/integrate-batch.sh; briefs de TODAS as tarefas restantes em spec/briefs): operários T57 (Lastro), T86 (Prumo), T83 (Forja), T87 (Esquadro); tester T84 (Sentinela); fila de tester: T90.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -74,7 +74,7 @@
 | 6 | T53 | UI: empresa, departamentos e horários | MERGED | Prumo | Sentinela | 0 | aaaed12 (piloto: operário ~15 min, tester ~8 min; 1 ajuste de teste por corrida sob carga) |
 | 6 | T54 | UI: equipe, permissões, convites e suporte | MERGED | Esquadro | Vigia | 0 | 8fc5f28 (op ~24 min, tester ~8 min) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
-| 6 | T56 | UI editores de nó: mensagem e interativos | VERIFYING | Prumo | Vigia | 0 | op ~20 min, tester ~9 min (10/10); no gate |
+| 6 | T56 | UI editores de nó: mensagem e interativos | MERGED | Prumo | Vigia | 0 | 5083c1e (op ~20 min, tester ~9 min) |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | IN_PROGRESS | Lastro | (vaga) | 0 | brief spec/briefs/T57.md; usa o registry da T56 (glob); editor do nó pixel incluído |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | MERGED | Esquadro | Vigia | 0 | b8cc9f8 (piloto: op ~25 min, tester ~6 min; 1 ajuste de teste pelo select mobile da T53) |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | MERGED | Prumo | Sentinela | 0 | 9a72b21 (op ~22 min + probe fake; tester ~4 min) |
@@ -103,7 +103,7 @@
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
-| 7 | T90 | UI fontes de venda e produtos | IN_PROGRESS | Forja | (vaga) | 0 | brief spec/briefs/T90.md; libera harness (configureInboundSales, aditivo) |
+| 7 | T90 | UI fontes de venda e produtos | VERIFYING | Forja | (vaga) | 0 | op ~16 min (verify 0, base f3d19ba; entrega em spec/reports/T90-entrega.md); tester na fila |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
@@ -114,8 +114,8 @@
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
 | 8 | T79 | Agentes: teste ao vivo, geração de prompt e criação assistida | MERGED | Bigorna | Lupa | 1 | d0bd44b |
 | 8 | T82 | Simulador de fluxos | TODO | | | 0 | |
-| 8 | T83 | UI disparos em massa | TODO | | | 0 | |
-| 8 | T87 | UI dashboard: histórico, atendimento e marcos | TODO | | | 0 | |
+| 8 | T83 | UI disparos em massa | IN_PROGRESS | Forja | (vaga) | 0 | libera harness (configureMassDispatch, aditivo) |
+| 8 | T87 | UI dashboard: histórico, atendimento e marcos | IN_PROGRESS | Esquadro | (vaga) | 0 | libera dashboard/tabs.ts e dashboard-page.tsx (aditivo); slot de linha para a T114 |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
 | 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |

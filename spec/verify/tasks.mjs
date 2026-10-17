@@ -226,7 +226,7 @@ const RAW = [
   T('T70', 'UI kanban: lista e quadro', ['T50', 'T23'], [...ui('crms')], ['web'], { e2e: true }),
   T('T76', 'UI kanban: modais, filtros, estatísticas e exportação', ['T70', 'T27'], ['apps/web/src/features/kanban-tools/**', 'apps/web/src/features/crms/**', 'apps/web/src/routes/crms/$crmId.tsx', 'packages/core/src/kanban/export*', 'scripts/e2e/api.ts', i18n('kanban-tools')], ['web', 'core'], { e2e: true }),
   T('T78', 'UI dashboard: filtros e vendas', ['T55', 'T23'], [...ui('dashboard'), 'apps/web/src/routes/welcome/index.tsx'], ['web'], { e2e: true }),
-  T('T87', 'UI dashboard: histórico, atendimento e marcos', ['T78', 'T65'], ['apps/web/src/features/dashboard-attendance/**', 'apps/web/src/features/dashboard-history/**', i18n('dashboard-attendance')], ['web'], { e2e: true }),
+  T('T87', 'UI dashboard: histórico, atendimento e marcos', ['T78', 'T65'], ['apps/web/src/features/dashboard-attendance/**', 'apps/web/src/features/dashboard-history/**', i18n('dashboard-attendance'), i18n('dashboard-history'), 'apps/web/src/features/dashboard/tabs.ts', 'apps/web/src/features/dashboard/dashboard-page.tsx' /* aditivo: montagem do histórico e do atendimento (props de período/fuso, slot history) */], ['web'], { e2e: true }),
 
   // ---------------- Fluxos ----------------
   T('T10', 'Fluxos: FlowDefinition, handles, validate e configs de ação', ['T02'], ['packages/shared/src/flows/**'], ['shared'],
@@ -288,7 +288,7 @@ const RAW = [
   T('T90', 'UI fontes de venda e produtos', ['T73', 'T23'], [...ui('settings-sale-sources'), ...ui('settings-products'), 'scripts/e2e/api.ts' /* aditivo: configureInboundSales no harness para processar eventos de venda no E2E (AC-T90-03) */], ['web'], { e2e: true }),
   T('T60', 'Disparos em massa: API e cota', ['T26', 'T43'], [core('mass-dispatch'), route('mass-dispatch'), schema('mass-dispatch')], ['api', 'core']),
   T('T74', 'Disparos em massa: preparação e agendador', ['T60', 'T30'], ['packages/core/src/mass-dispatch-runner/**', job('mass-dispatch')], ['worker', 'core']),
-  T('T83', 'UI disparos em massa', ['T60', 'T74', 'T23'], [...ui('mass-dispatch')], ['web'], { e2e: true }),
+  T('T83', 'UI disparos em massa', ['T60', 'T74', 'T23'], [...ui('mass-dispatch'), 'scripts/e2e/api.ts' /* aditivo: configureMassDispatch no harness com o mesmo FakeWaGateway da API (AC-T83-04) */], ['web'], { e2e: true }),
   T('T94', 'Servidor MCP (token estático)', ['T26', 'T28', 'T40'], [core('mcp'), route('mcp'), schema('mcp'), ...ui('settings-mcp')], ['api', 'core', 'web'], { e2e: true }),
 
   // ---------------- Admin interno, afiliação, extensão, Meta, E2E ----------------
