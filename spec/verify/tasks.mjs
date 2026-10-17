@@ -312,7 +312,7 @@ const RAW = [
   T('T106', 'UI Facebook: gerenciador, pixel e perfis', ['T101', 'T103', 'T104', 'T23'], [...ui('facebook'), 'scripts/e2e/api.ts' /* aditivo: FakeMetaGraph + metaConfig/metaFetch + configureMetaAds no harness (nunca a Graph real) */], ['web'], { e2e: true }),
 
   // ---------------- Shell: extras da spec 18 ----------------
-  T('T107', 'Indicador de conexões desconectadas no menu', ['T47', 'T23'], ['apps/web/src/features/shell-disconnect/**', route('connections-alert'), i18n('shell-disconnect')], ['api', 'web'], { e2e: true }),
+  T('T107', 'Indicador de conexões desconectadas no menu', ['T47', 'T23'], ['apps/web/src/features/shell-disconnect/**', route('connections-alert'), i18n('shell-disconnect'), 'apps/web/src/app/shell/nav-list.tsx' /* aditivo: slot no item connections */, 'apps/web/src/app/shell/app-shell.tsx' /* aditivo: import estático do handler */], ['api', 'web'], { e2e: true }),
   T('T108', 'Tutoriais e widget de suporte plugável', ['T23'], ['apps/web/src/features/support-widget/**', 'apps/web/src/features/tutorials/**', i18n('support-widget')], ['web'], { e2e: true, minWave: 11 }),
 
   // ---------------- Integrações de venda (revisão 1: iguais à referência) ----------------

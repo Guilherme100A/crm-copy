@@ -105,8 +105,8 @@
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
-| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | Forja | (vaga) | 0 | op DONE ~7 min; ajuste: ligar internalSales nos 3 pontos de montagem do MetaBundleService |
-| 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
+| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | VERIFYING | Forja | (vaga) | 0 | op ~7 min + montagem ~9 min (verify 0, base 9bd202b); tester na fila |
+| 7 | T107 | Indicador de conexões desconectadas no menu | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera nav-list e app-shell (aditivo) |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
