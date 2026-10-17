@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento: re-tester T106 (Prisma). Depois dela, só a T102 (integração E2E final). Zenith fora de escopo (T110 CANCELLED).
+- Em andamento: T102 (integração E2E final): operário Baluarte, tester Sextante. É a última tarefa. Zenith fora de escopo (T110 CANCELLED).
 - Bloqueios: nenhum (T110 cancelada: Zenith fora de escopo)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
@@ -117,7 +117,7 @@
 | 8 | T83 | UI disparos em massa | MERGED | Forja | Vigia | 0 | 89c58f2 (gate individual após conflito manual no scripts/e2e/api.ts com a T90) |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | MERGED | Esquadro | Sentinela | 0 | 09cd6a8 (2º lote com a T86; op ~16 min, tester ~4 min) |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
-| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | Prisma | 2 | 3ª correção (SSE ready relê em async); re-tester em andamento |
+| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | MERGED | Prumo | Prisma | 2 | 104ba26 (3 retrabalhos de UI + servidor na T129) |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
@@ -142,7 +142,7 @@
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | MERGED | Forja | Sentinela | 0 | b9a9cb7 (piloto: op ~42 min, tester ~8 min) |
 | 8 | T129 | Meta: bundle assíncrono não fica preso em loading após erro de conta | MERGED | Prumo | Atalaia | 0 | 6d8349b (com retrabalho: rate_limited no envelope async) |
-| 13 | T102 | Integração E2E final | TODO | | | 0 | |
+| 13 | T102 | Integração E2E final | IN_PROGRESS | Baluarte | Sextante | 0 | despachada sobre d714bd1 (todas as 31 deps MERGED) |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)
 
