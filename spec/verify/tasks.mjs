@@ -328,10 +328,10 @@ const RAW = [
   T('T113', 'UTMify: integração e envio de vendas aprovadas', ['T34', 'T22'],
     [core('utmify'), route('utmify'), job('utmify'), schema('utmify'), 'apps/worker/src/boot/production.ts', 'apps/api/src/production.ts' /* aditivo: encadear o envio UTMify no salesPublisher */, 'packages/core/src/sales/service.ts' /* aditivo: transição para refunded passa pelo publisher (AC-T113-02) */], ['api', 'worker', 'core']),
   T('T114', 'UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada', ['T111', 'T112', 'T113', 'T45', 'T59'],
-    [...ui('settings-payments'), 'apps/web/src/features/flow-editor/node-editors/payment/**', 'apps/web/src/features/sale-invoice/**', 'apps/web/src/features/flow-editor/node-editors/sales/**' /* editor do bloco Venda aprovada (approved_sale), grupo próprio no glob */, 'scripts/e2e/api.ts' /* aditivo: fetches fakes de pagamentos, NF e UTMify no harness (nunca rede) */], ['web'], { e2e: true }),
+    [...ui('settings-payments'), 'apps/web/src/features/flow-editor/node-editors/payment/**', 'apps/web/src/features/sale-invoice/**', 'apps/web/src/features/flow-editor/node-editors/sales/**' /* editor do bloco Venda aprovada (approved_sale), grupo próprio no glob */, 'scripts/e2e/api.ts' /* aditivo: fetches fakes de pagamentos, NF e UTMify no harness (nunca rede) */], ['web'], { e2e: true, testerPaths: ['tests/acceptance/T59/**'] /* categorias Vendas/Rastreamento agora têm cards */ }),
   T('T115', 'MCP: OAuth para conectores (Claude)', ['T94'],
     ['packages/core/src/mcp-oauth/**', route('mcp-oauth'), schema('mcp-oauth'), 'apps/web/src/features/mcp-oauth/**', i18n('mcp-oauth'), 'packages/core/src/mcp/credentials.ts', 'apps/api/src/routes/mcp/index.ts', 'apps/web/src/features/settings-mcp/**', i18n('settings-mcp') /* aditivo: oauth no núcleo da T94 (status pending/connected, 401 com resource_metadata, UI) */, 'apps/web/src/routes/oauth/**' /* tela de consentimento */], ['api', 'core', 'web'],
-    { e2e: true }),
+    { e2e: true, testerPaths: ['tests/acceptance/T94/**'] /* DTO do MCP ganhou connected_client_hint/connector_url; auth_type oauth agora é 201 */ }),
 
   T('T117', 'Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único', ['T13', 'T15', 'T16'],
     ['apps/api/src/routes/auth/**', 'apps/api/src/server.ts', 'packages/wa-engine/src/transport/baileys.ts', 'packages/wa-engine/src/auth-state/index.ts'], ['api', 'wa-engine'],
