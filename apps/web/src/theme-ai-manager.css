@@ -1,0 +1,199 @@
+/* ==========================================================================
+   Skin "ai-manager": o CRM com o visual do painel do ai-manager (apps/dashboard/src/styles.css).
+   Ativa com <html data-skin="ai-manager"> — embutido no painel (iframe/?embed=1) ou CRM_UI_SKIN=ai-manager no build.
+   Só troca tokens e estilos base (camada base: utilitários das telas continuam valendo); sem a skin nada muda.
+   ========================================================================== */
+
+/* ---- Tokens: claro (paleta do painel: zinc + índigo) ------------------- */
+:root[data-skin='ai-manager'] {
+  --am-bg: #fafafa;
+  --am-surface: #ffffff;
+  --am-surface-2: #f4f4f5;
+  --am-surface-3: #ececef;
+  --am-text: #0b0b0f;
+  --am-text-muted: #5b5b66;
+  --am-border: #e4e4e7;
+  --am-border-strong: #d4d4d8;
+  --am-accent: #4f46e5;
+  --am-accent-fg: #ffffff;
+  --am-accent-soft: rgb(79 70 229 / 0.1);
+  --am-success: #15803d;
+  --am-warning: #d4a008;
+  --am-danger: #b91c1c;
+  --am-shadow: 0 1px 2px rgb(16 16 24 / 0.04), 0 4px 16px -6px rgb(16 16 24 / 0.08);
+  --am-shadow-lg: 0 12px 40px -12px rgb(16 16 24 / 0.18);
+  --am-ring: 0 0 0 3px rgb(79 70 229 / 0.22);
+  --am-button-shadow: 0 1px 0 rgb(255 255 255 / 0.12) inset, 0 1px 2px rgb(0 0 0 / 0.12);
+  --am-font-sans:
+    'Inter', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI Variable Text', 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --am-font-mono: ui-monospace, 'SF Mono', 'JetBrains Mono', 'Cascadia Code', Menlo, Consolas, monospace;
+  --am-ease: cubic-bezier(0.2, 0, 0, 1);
+
+  /* Tokens do CRM (nomes shadcn) → valores do painel. */
+  --background: var(--am-bg);
+  --foreground: var(--am-text);
+  --muted: var(--am-surface-2);
+  --muted-foreground: var(--am-text-muted);
+  --card: var(--am-surface);
+  --card-foreground: var(--am-text);
+  --popover: var(--am-surface);
+  --popover-foreground: var(--am-text);
+  --primary: var(--am-accent);
+  --primary-foreground: var(--am-accent-fg);
+  --accent: var(--am-surface-3);
+  --accent-foreground: var(--am-text);
+  --border: var(--am-border);
+  --ring: var(--am-accent);
+  --destructive: var(--am-danger);
+  --warning: var(--am-warning);
+  --sidebar: var(--am-surface);
+  --sidebar-foreground: var(--am-text);
+
+  /* Raios do painel: 12 px em painéis/cartões, 8 px em botões e campos. */
+  --radius: 12px;
+  --radius-md-skin: 8px;
+  --radius-sm-skin: 6px;
+
+  /* Sombras do painel (suaves no claro). */
+  --shadow-xs-skin: 0 1px 2px rgb(0 0 0 / 0.05);
+  --shadow-sm-skin: var(--am-shadow);
+  --shadow-lg-skin: var(--am-shadow-lg);
+  --shadow-xl-skin: var(--am-shadow-lg);
+
+  font-family: var(--am-font-sans);
+}
+
+/* ---- Tokens: escuro ---------------------------------------------------- */
+:root[data-skin='ai-manager'].dark {
+  --am-bg: #09090b;
+  --am-surface: #111114;
+  --am-surface-2: #18181c;
+  --am-surface-3: #212126;
+  --am-text: #ededf0;
+  --am-text-muted: #a0a0ab;
+  --am-border: #232329;
+  --am-border-strong: #303038;
+  --am-accent: #8b8dff;
+  --am-accent-fg: #0b0b14;
+  --am-accent-soft: rgb(139 141 255 / 0.12);
+  --am-success: #4ade80;
+  --am-warning: #fbbf24;
+  --am-danger: #f87171;
+  --am-shadow: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --am-shadow-lg: 0 24px 60px -20px rgb(0 0 0 / 0.8);
+  --am-ring: 0 0 0 3px rgb(139 141 255 / 0.3);
+}
+
+/* ---- Base: só onde a tela não definiu utilitário (camada base perde para utilities) ---- */
+@layer base {
+  :root[data-skin='ai-manager'] body {
+    font-family: var(--am-font-sans);
+    font-size: 14px;
+    line-height: 1.5;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+
+  :root[data-skin='ai-manager'] ::selection {
+    background: var(--am-accent-soft);
+  }
+
+  :root[data-skin='ai-manager'] :where(h1, h2) {
+    letter-spacing: -0.02em;
+  }
+
+  :root[data-skin='ai-manager'] :where(code, kbd, pre, samp) {
+    font-family: var(--am-font-mono);
+  }
+
+  /* Superfícies: cartões e painéis com a sombra do painel. */
+  :root[data-skin='ai-manager'] .bg-card {
+    box-shadow: var(--am-shadow);
+  }
+
+  /* Campos: borda mais forte, foco índigo com halo (como o painel). */
+  :root[data-skin='ai-manager'] :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file']), select, textarea) {
+    border-color: var(--am-border-strong);
+    transition:
+      border-color 160ms var(--am-ease),
+      box-shadow 160ms var(--am-ease);
+  }
+
+  :root[data-skin='ai-manager'] :where(input:not([type='checkbox'], [type='radio'], [type='range'], [type='file']), select, textarea):focus-visible {
+    border-color: var(--am-accent);
+    box-shadow: var(--am-ring);
+  }
+
+  :root[data-skin='ai-manager'] :where(input[type='checkbox'], input[type='radio']) {
+    accent-color: var(--am-accent);
+  }
+
+  /* Botões do design system (components/ui/button.tsx). */
+  :root[data-skin='ai-manager'] [data-slot='button'] {
+    font-weight: 550;
+    transition:
+      background-color 160ms var(--am-ease),
+      border-color 160ms var(--am-ease),
+      filter 160ms var(--am-ease),
+      transform 160ms var(--am-ease);
+  }
+
+  :root[data-skin='ai-manager'] [data-slot='button'][data-variant='default'] {
+    box-shadow: var(--am-button-shadow);
+  }
+
+  :root[data-skin='ai-manager'] [data-slot='button'][data-variant='outline'] {
+    border-color: var(--am-border-strong);
+    background-color: var(--am-surface);
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+
+  :root[data-skin='ai-manager'] [data-slot='button']:active:not(:disabled) {
+    transform: translateY(0.5px);
+  }
+
+  /* Tabelas: cabeçalho em caixa alta sobre surface-2, linhas com hover. */
+  :root[data-skin='ai-manager'] th {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--am-text-muted);
+  }
+
+  :root[data-skin='ai-manager'] thead {
+    background-color: var(--am-surface-2);
+  }
+
+  :root[data-skin='ai-manager'] tbody tr {
+    transition: background-color 160ms var(--am-ease);
+  }
+
+  :root[data-skin='ai-manager'] tbody tr:hover {
+    background-color: color-mix(in srgb, var(--am-surface-2) 70%, transparent);
+  }
+
+  /* Menu lateral: item ativo em surface-3 com ícone índigo (como o .nav do painel). */
+  :root[data-skin='ai-manager'] [data-testid='shell-sidebar'],
+  :root[data-skin='ai-manager'] [data-testid='shell-drawer'] {
+    border-color: var(--am-border);
+  }
+
+  :root[data-skin='ai-manager'] nav a[aria-current='page'] > svg:first-child {
+    color: var(--am-accent);
+  }
+
+  :root[data-skin='ai-manager'] nav a:not([aria-current='page']) {
+    color: var(--am-text-muted);
+  }
+
+  :root[data-skin='ai-manager'] nav a:not([aria-current='page']):hover {
+    color: var(--am-text);
+  }
+}
+
+/* Embutido no painel: o fundo é o do painel e a página não ganha rolagem dupla. */
+:root[data-embed='true'] body {
+  background: var(--background);
+}

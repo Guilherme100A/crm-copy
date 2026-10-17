@@ -3,6 +3,7 @@
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { activeCompany, api, HttpError } from '@/lib/http'
 import type { ApiFilters } from './filters'
+import { apiUrl } from '@/lib/base'
 
 export const PAGE_SIZE = 20
 
@@ -150,7 +151,7 @@ export const contactsApi = {
   importFromWhatsApp: (connectionId: string) => api.post<WhatsAppImportResult>('/api/contacts/import-from-whatsapp', { connection_id: connectionId }),
 }
 
-export const jobFileUrl = (job: JobDto) => job.download_url ?? `/api/jobs/${enc(job.id)}/file`
+export const jobFileUrl = (job: JobDto) => apiUrl(job.download_url ?? `/api/jobs/${enc(job.id)}/file`)
 
 export const jobDone = (j: JobDto | undefined) => j?.status === 'completed' || j?.status === 'failed'
 

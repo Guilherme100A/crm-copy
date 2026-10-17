@@ -3,10 +3,11 @@
 import { queryOptions } from '@tanstack/react-query'
 import { api } from '@/lib/http'
 import { CONTACTS_KEY, type JobDto } from '@/features/contacts/api'
+import { apiUrl } from '@/lib/base'
 
 const enc = encodeURIComponent
 
-export const IMPORT_TEMPLATE_URL = '/api/contacts/import-template.csv'
+export const IMPORT_TEMPLATE_URL = apiUrl('/api/contacts/import-template.csv')
 export const IMPORT_TEMPLATE_FILE_NAME = 'modelo_importacao_contatos.csv'
 
 export interface ExportJobDto extends JobDto {

@@ -21,6 +21,7 @@ import '@/features/settings-company/realtime'
 // T108: botão "Suporte" e widget de suporte plugável (import estático; config via GET /api/app-config).
 import { SupportButton, SupportWidget } from '@/features/support-widget/support-widget'
 import { useT } from '@/i18n'
+import { isEmbedded } from '@/lib/embed'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
 import { readStorage, STORAGE_KEYS, writeStorage } from '@/lib/storage'
@@ -31,7 +32,18 @@ import { Breadcrumbs, usePageTitle } from './breadcrumbs'
 import { LanguageSelect, ThemeToggle, UserMenu } from './controls'
 import { NavList } from './nav-list'
 
+/**
+ * Nome do produto. Embutido no painel do ai-manager (que já mostra a marca e o menu global), fica só para leitores de
+ * tela: a navegação do CRM continua inteira.
+ */
 function AppName({ collapsed = false }: { collapsed?: boolean }) {
+  if (isEmbedded()) {
+    return (
+      <span data-testid="shell-app-name" className="sr-only">
+        {APP_NAME}
+      </span>
+    )
+  }
   return (
     <span data-testid="shell-app-name" className={cn('truncate text-base font-semibold', collapsed && 'sr-only')}>
       {APP_NAME}
@@ -39,14 +51,15 @@ function AppName({ collapsed = false }: { collapsed?: boolean }) {
   )
 }
 
-/** Rodapé comum (sidebar e drawer): tema, idioma e cartão do usuário. */
+/** Rodapé comum (sidebar e drawer): tema, idioma e cartão do usuário. Embutido: tema e idioma vêm do painel. */
 function ShellFooter({ session, collapsed = false }: { session: Session; collapsed?: boolean }) {
+  const embedded = isEmbedded()
   return (
     <div className="flex flex-col gap-2 border-t pt-3">
       <SupportButton session={session} collapsed={collapsed} />
       <AffiliateEntry collapsed={collapsed} />
-      <ThemeToggle collapsed={collapsed} />
-      {collapsed ? null : <LanguageSelect session={session} className="px-1" />}
+      {embedded ? null : <ThemeToggle collapsed={collapsed} />}
+      {collapsed || embedded ? null : <LanguageSelect session={session} className="px-1" />}
       <UserMenu session={session} compact={collapsed} />
     </div>
   )
@@ -85,7 +98,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
   const isDesktop = useIsDesktop()
 
   return (
-    <div className="flex min-h-dvh w-full">
+    <div className="flex min-h-dvh w-full" data-embedded={isEmbedded() ? 'true' : undefined}>
       {/* Sidebar desktop (a partir de lg). */}
       {isDesktop ? (
         <aside

@@ -4,12 +4,14 @@ import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { decide, deferDeniedNotice } from './app/guard'
+import { appBase, appPath, stripAppBase } from './lib/base'
 import { ToastProvider } from './components/toaster'
 import { I18nProvider, initialLocale, translate } from './i18n'
 import { setCompanyInactiveHandler, setUnauthorizedHandler } from './lib/http'
 import { loginPath } from './lib/redirect'
 import { loadSession, profileQueryKey, type Profile } from './lib/session'
 import { notify } from './lib/toast'
+import { AI_MANAGER_THEME_KEY, initEmbed } from './lib/embed'
 import { applyTheme, currentTheme } from './lib/theme'
 import { routeTree } from './routeTree.gen'
 import './styles.css'
@@ -21,6 +23,8 @@ const queryClient = new QueryClient({
 function makeRouter() {
   return createRouter({
     routeTree,
+    // Servida num subcaminho (VITE_BASE_PATH, ex.: `/crm/` dentro do painel do ai-manager): rotas e links ganham o prefixo.
+    basepath: appBase() || '/',
     context: { queryClient },
     // Sem isto o cache de preload do Router (30 s) passa por cima do frescor do Query (STACK D §2).
     defaultPreloadStaleTime: 0,
@@ -34,6 +38,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
+// Embutido no painel do ai-manager: marca o <html> (skin) e acompanha o tema do painel (mesma origem, 'wsm.theme').
+if (initEmbed()) {
+  window.addEventListener('storage', (e) => {
+    if (e.key !== AI_MANAGER_THEME_KEY) return
+    applyTheme(currentTheme())
+    window.dispatchEvent(new Event('crm:theme'))
+  })
+}
 applyTheme(currentTheme())
 
 // Carga inicial: decide o redirecionamento ANTES de criar o router (que grava o estado do histórico ao nascer).
@@ -41,10 +53,11 @@ applyTheme(currentTheme())
 // navegação para ele (AC-T23-05). Navegações seguintes passam pelo guarda da rota raiz.
 try {
   const session = await loadSession(queryClient)
-  const { pathname, search } = window.location
+  const pathname = stripAppBase(window.location.pathname)
+  const { search } = window.location
   const decision = decide(session, pathname, `${pathname}${search}`)
   if (decision.kind === 'redirect') {
-    window.history.replaceState(null, '', decision.href)
+    window.history.replaceState(null, '', appPath(decision.href))
     if (decision.denied) deferDeniedNotice()
   }
 } catch {

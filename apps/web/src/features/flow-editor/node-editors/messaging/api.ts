@@ -2,6 +2,7 @@
 // e as variáveis do seletor (globais `GET /api/global-variables`, T26; campos `GET /api/custom-fields`).
 import { queryOptions } from '@tanstack/react-query'
 import { api, HttpError } from '@/lib/http'
+import { apiUrl } from '@/lib/base'
 
 export interface UploadedMedia {
   id: string
@@ -40,7 +41,7 @@ export const nodeEditorsApi = {
    * e reenviados ao `/api/media`, que é endereçado por conteúdo e devolve o mesmo `sha256` sem duplicar o arquivo.
    */
   stickerMedia: async (sticker: StickerItem): Promise<UploadedMedia> => {
-    const res = await fetch(sticker.url, { credentials: 'same-origin' })
+    const res = await fetch(apiUrl(sticker.url), { credentials: 'same-origin' })
     if (!res.ok) throw new HttpError(res.status, 'STICKER_FETCH', res.statusText)
     const blob = await res.blob()
     return nodeEditorsApi.upload(blob, sticker.name || 'sticker.webp')

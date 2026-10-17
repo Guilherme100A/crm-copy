@@ -3,6 +3,7 @@
 // sozinho com `Last-Event-ID`. Cada evento é despachado para o cache do TanStack Query pelos handlers registrados
 // por tipo (`onRealtime('chat.updated', …)`); módulos registram os seus.
 import { useEffect } from 'react'
+import { apiUrl } from './base'
 import { useQueryClient, type QueryClient } from '@tanstack/react-query'
 
 export interface RealtimeEnvelope<D = unknown> {
@@ -65,7 +66,7 @@ export class RealtimeConnection {
   constructor(private readonly opts: RealtimeConnectionOptions) {}
 
   get url(): string {
-    return `/api/events?company_id=${encodeURIComponent(this.opts.companyId)}`
+    return apiUrl(`/api/events?company_id=${encodeURIComponent(this.opts.companyId)}`)
   }
 
   open(): void {

@@ -3,6 +3,7 @@
 // `packages/core/src/flows/nodes/messaging/pix.ts`, que a web não importa).
 import { getActionSchema, NODE_ACTIONS, type FlowAction } from '@crm/shared/flows'
 import { newId } from '../../canvas/model'
+import { apiUrl } from '@/lib/base'
 
 type Config = Record<string, unknown>
 
@@ -206,7 +207,7 @@ export function mediaTypeOf(mime: string): MultiMediaType | null {
 
 /** URL exibível na prévia: http(s), ou a mídia enviada (`media_id`) servida por `GET /api/media/:id`. */
 export function previewUrl(url: unknown, mediaId: unknown): string | null {
-  if (typeof mediaId === 'string' && mediaId) return `/api/media/${encodeURIComponent(mediaId)}`
+  if (typeof mediaId === 'string' && mediaId) return apiUrl(`/api/media/${encodeURIComponent(mediaId)}`)
   if (typeof url === 'string' && /^https?:\/\//i.test(url.trim())) return url.trim()
   return null
 }

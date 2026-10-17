@@ -5,6 +5,7 @@ import { useId, type ReactNode } from 'react'
 import { useT } from '@/i18n'
 import { cn } from '@/lib/utils'
 import type { AgentStatus } from './api'
+import { apiUrl } from '@/lib/base'
 
 export const inputClass =
   'h-9 w-full min-w-0 rounded-md border bg-background px-3 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring aria-invalid:border-destructive disabled:opacity-50'
@@ -151,7 +152,7 @@ export function AgentAvatar({
 }) {
   const n = Number(/^leo-(\d+)$/.exec(avatarKey)?.[1] ?? 1)
   const dim = size === 'lg' ? 'size-20 text-2xl' : size === 'sm' ? 'size-8 text-xs' : 'size-11 text-base'
-  if (avatarUrl) return <img src={avatarUrl} alt="" className={cn('shrink-0 rounded-full object-cover', dim)} />
+  if (avatarUrl) return <img src={apiUrl(avatarUrl)} alt="" className={cn('shrink-0 rounded-full object-cover', dim)} />
   return (
     <span
       className={cn('flex shrink-0 items-center justify-center rounded-full font-semibold text-white', dim)}

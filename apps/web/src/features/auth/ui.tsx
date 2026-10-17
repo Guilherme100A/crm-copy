@@ -2,6 +2,7 @@
 import { useEffect, type ComponentProps, type ReactNode } from 'react'
 import { LanguageSelect, ThemeToggle } from '@/app/shell/controls'
 import { useT } from '@/i18n'
+import { isEmbedded } from '@/lib/embed'
 import { APP_NAME, cn } from '@/lib/utils'
 import { passwordStrength } from './password'
 
@@ -15,9 +16,11 @@ export function useDocumentTitle(title: string): void {
 /** Tela pública: cartão centrado, largura total no celular (sem rolagem horizontal), idioma e tema no rodapé. */
 export function AuthLayout({ testId, title, subtitle, children, footer }: { testId: string; title: string; subtitle?: ReactNode; children: ReactNode; footer?: ReactNode }) {
   useDocumentTitle(title)
+  // Embutido no painel do ai-manager: marca, idioma e tema são os do painel.
+  const embedded = isEmbedded()
   return (
     <main data-testid={testId} className="flex min-h-dvh w-full flex-col items-center justify-center gap-4 px-4 py-8">
-      <div className="text-center text-lg font-semibold" data-testid="auth-app-name">
+      <div className={cn('text-center text-lg font-semibold', embedded && 'sr-only')} data-testid="auth-app-name">
         {APP_NAME}
       </div>
       <div className="w-full max-w-sm rounded-xl border bg-card p-5 shadow-sm sm:p-6">
@@ -28,12 +31,14 @@ export function AuthLayout({ testId, title, subtitle, children, footer }: { test
         {children}
       </div>
       {footer ? <div className="w-full max-w-sm text-center text-sm">{footer}</div> : null}
-      <div className="flex w-full max-w-sm items-end justify-between gap-3">
-        <LanguageSelect session={null} className="min-w-0 flex-1" />
-        <div className="w-auto">
-          <ThemeToggle collapsed testId="auth-theme-toggle" />
+      {embedded ? null : (
+        <div className="flex w-full max-w-sm items-end justify-between gap-3">
+          <LanguageSelect session={null} className="min-w-0 flex-1" />
+          <div className="w-auto">
+            <ThemeToggle collapsed testId="auth-theme-toggle" />
+          </div>
         </div>
-      </div>
+      )}
     </main>
   )
 }

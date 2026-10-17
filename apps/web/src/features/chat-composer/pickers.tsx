@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useT } from '@/i18n'
 import { cn } from '@/lib/utils'
 import { stickersQuery, type StickerDto } from './api'
+import { apiUrl } from '@/lib/base'
 
 export const EMOJIS = [
   '😀', '😂', '😊', '😍', '😘', '😉', '😎', '🤩', '🙂', '🤔', '😅', '😢', '😭', '😡', '🙏', '👍',
@@ -88,7 +89,7 @@ export function StickerPicker({ onPick, disabled }: { onPick: (s: StickerDto) =>
                     }}
                     className={cn('aspect-square rounded-md p-1 hover:bg-accent', s.favorite && 'ring-1 ring-amber-400')}
                   >
-                    <img src={s.url} alt="" loading="lazy" className="size-full object-contain" />
+                    <img src={apiUrl(s.url)} alt="" loading="lazy" className="size-full object-contain" />
                   </button>
                 ))}
               </div>

@@ -3,6 +3,7 @@
 // voz das Configurações): toda mudança invalida essa chave.
 import { AGENTS_KEY, type VoiceDto } from '@/features/agents/api'
 import { activeCompany, api, buildUrl, COMPANY_HEADER, CSRF_HEADER, CSRF_VALUE, HttpError, type ApiErrorBody } from '@/lib/http'
+import { apiUrl } from '@/lib/base'
 
 export const VOICES_KEY = [...AGENTS_KEY, 'voices'] as const
 export const VOICE_LANGS = ['pt', 'en', 'es', 'hi'] as const
@@ -34,7 +35,7 @@ export const voicesApi = {
     const headers: Record<string, string> = { Accept: 'audio/*, application/json', [CSRF_HEADER]: CSRF_VALUE }
     const company = activeCompany()
     if (company) headers[COMPANY_HEADER] = company
-    const res = await fetchFn(buildUrl(`/api/ai-voices/${enc(id)}/preview`), { method: 'POST', headers, credentials: 'same-origin' })
+    const res = await fetchFn(apiUrl(buildUrl(`/api/ai-voices/${enc(id)}/preview`)), { method: 'POST', headers, credentials: 'same-origin' })
     if (!res.ok) {
       const body = (await res.json().catch(() => ({}))) as ApiErrorBody
       throw new HttpError(res.status, body.error?.code ?? 'HTTP_ERROR', body.error?.message ?? res.statusText, body.error?.details)

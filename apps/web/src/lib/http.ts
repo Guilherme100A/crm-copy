@@ -3,6 +3,8 @@
 // uma chamada qualquer com 401 dispara UMA sonda em `GET /api/auth/profile` (compartilhada entre chamadas
 // simultâneas); se a sonda também der 401, o handler leva ao `/login?redirect=` (AC-T23-06).
 
+import { apiUrl, appPath } from './base'
+
 export const PROFILE_PATH = '/api/auth/profile'
 export const CSRF_HEADER = 'X-Requested-With'
 export const CSRF_VALUE = 'crm'
@@ -59,7 +61,7 @@ const state: HttpState = {
   onUnauthorized: () => undefined,
   // Recarrega a SPA na tela do suporte: o perfil é relido sem o `X-Company-Id` antigo e o cache some junto.
   onSupportAccessExpired: () => {
-    if (typeof window !== 'undefined') window.location.assign(SUPPORT_HOME)
+    if (typeof window !== 'undefined') window.location.assign(appPath(SUPPORT_HOME))
   },
   onCompanyInactive: () => undefined,
   probe: null,
@@ -128,7 +130,7 @@ async function parseError(res: Response): Promise<HttpError> {
 /** Uma única sonda de sessão por vez; `true` se a sessão ainda vale. */
 function probeSession(): Promise<boolean> {
   state.probe ??= state
-    .fetch(PROFILE_PATH, { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json', [CSRF_HEADER]: CSRF_VALUE } })
+    .fetch(apiUrl(PROFILE_PATH), { method: 'GET', credentials: 'same-origin', headers: { Accept: 'application/json', [CSRF_HEADER]: CSRF_VALUE } })
     .then((r) => r.ok)
     .catch(() => false)
     .finally(() => {
@@ -210,7 +212,7 @@ async function send<T>(path: string, opts: RequestOptions): Promise<T> {
       body = JSON.stringify(opts.body)
     }
   }
-  const res = await state.fetch(buildUrl(path, opts.query), { method, headers, body, credentials: 'same-origin', signal: opts.signal })
+  const res = await state.fetch(apiUrl(buildUrl(path, opts.query)), { method, headers, body, credentials: 'same-origin', signal: opts.signal })
   if (res.ok) {
     sessionDead = false
     if (res.status === 204) return undefined as T

@@ -4,6 +4,7 @@ import { queryOptions } from '@tanstack/react-query'
 import { api } from '@/lib/http'
 import type { BoardDto, CardDto, ColumnDto } from '@/features/crms/api'
 import { toQuery, type ApiFilters } from './filters'
+import { apiUrl } from '@/lib/base'
 
 const enc = encodeURIComponent
 
@@ -96,7 +97,7 @@ export const exportApi = {
   get: async (id: string) => (await api.get<{ job: JobDto }>(`/api/jobs/${enc(id)}`)).job,
 }
 
-export const fileUrl = (jobId: string) => `/api/jobs/${enc(jobId)}/file`
+export const fileUrl = (jobId: string) => apiUrl(`/api/jobs/${enc(jobId)}/file`)
 
 /** Junta um `job.progress` do SSE ao job conhecido (o evento pode chegar fora de ordem: estado final não regride). */
 export function mergeJobProgress(job: JobDto, ev: Partial<JobDto> & { job_id?: string }): JobDto {

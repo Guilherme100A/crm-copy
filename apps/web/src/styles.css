@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+/* Skin do painel do ai-manager (opt-in por <html data-skin="ai-manager">; ver o arquivo). */
+@import './theme-ai-manager.css';
 
 /* Dark mode por classe no <html> (tema segue o sistema e alterna com Ctrl/Cmd+M; SPEC 3.11). */
 @custom-variant dark (&:where(.dark, .dark *));
@@ -68,8 +70,13 @@
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --radius-lg: var(--radius);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: var(--radius-md-skin, calc(var(--radius) - 2px));
+  --radius-sm: var(--radius-sm-skin, calc(var(--radius) - 4px));
+  /* Sombras: as do Tailwind, trocadas pela skin quando ela define --shadow-*-skin. */
+  --shadow-xs: var(--shadow-xs-skin, 0 1px 2px 0 rgb(0 0 0 / 0.05));
+  --shadow-sm: var(--shadow-sm-skin, 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1));
+  --shadow-lg: var(--shadow-lg-skin, 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1));
+  --shadow-xl: var(--shadow-xl-skin, 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1));
 }
 
 @layer base {

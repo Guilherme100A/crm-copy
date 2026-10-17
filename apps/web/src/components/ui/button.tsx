@@ -24,5 +24,6 @@ export const buttonVariants = cva(
 )
 
 export function Button({ className, variant, size, type = 'button', ...props }: ComponentProps<'button'> & VariantProps<typeof buttonVariants>) {
-  return <button type={type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  // data-slot/data-variant: ganchos da skin do ai-manager (theme-ai-manager.css); não mudam o visual padrão.
+  return <button type={type} data-slot="button" data-variant={variant ?? 'default'} className={cn(buttonVariants({ variant, size }), className)} {...props} />
 }

@@ -29,6 +29,7 @@ import { cn } from '@/lib/utils'
 import { QR_ACTION_TYPES, QR_MEDIA_TYPES, quickRepliesApi, stickersQuery, type QrActionType } from './api'
 import { inputClass, serverMessage, textareaClass } from './kit'
 import { draftKey, emptyConfig, MAX_ACTIONS, mediaTypeOf, moveItem, type DraftAction } from './rules'
+import { apiUrl } from '@/lib/base'
 
 const NS = 'settings-quick-replies'
 const P = 'quick-replies'
@@ -372,7 +373,7 @@ function StickerPicker({
             s.id === value ? 'border-primary ring-2 ring-primary/40' : 'hover:bg-accent',
           )}
         >
-          <img src={s.url} alt="" className="size-full object-contain" />
+          <img src={apiUrl(s.url)} alt="" className="size-full object-contain" />
         </button>
       ))}
     </div>

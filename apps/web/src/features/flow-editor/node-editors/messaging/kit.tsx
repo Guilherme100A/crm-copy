@@ -24,6 +24,7 @@ import {
   type FieldError,
   type FieldErrors,
 } from './rules'
+import { apiUrl } from '@/lib/base'
 
 export const NS = 'node-editors-messaging'
 
@@ -601,7 +602,7 @@ export function StickerLibrary({ testId, disabled, onPicked }: { testId: (part: 
             }}
             className="relative size-12 rounded-md border p-0.5 hover:bg-accent disabled:opacity-60"
           >
-            <img src={s.url} alt="" className="size-full object-contain" />
+            <img src={apiUrl(s.url)} alt="" className="size-full object-contain" />
             {busy === s.id ? <Loader2 className="absolute inset-0 m-auto size-4 animate-spin" aria-hidden /> : null}
           </button>
         ))}

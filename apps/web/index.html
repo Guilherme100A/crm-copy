@@ -5,13 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>%APP_NAME%</title>
     <script>
-      // Aplica o tema antes do primeiro paint (evita piscar): localStorage 'theme' ou o do sistema.
+      // Antes do primeiro paint (evita piscar): modo embutido, skin e tema. Espelha src/lib/embed.ts e src/lib/theme.ts.
+      // Embutido = num iframe (painel do ai-manager) ou `?embed=1` (lembrado na aba; `?embed=0` desliga).
       try {
-        var t = localStorage.getItem('theme')
+        var d = document.documentElement
+        var embed = false
+        try {
+          embed = window.top !== window.self
+        } catch (e) {
+          embed = true
+        }
+        var q = new URLSearchParams(location.search).get('embed')
+        try {
+          if (q === '1' || q === 'true') sessionStorage.setItem('crm.embed', '1')
+          else if (q === '0' || q === 'false') sessionStorage.removeItem('crm.embed')
+          if (q === '1' || q === 'true') embed = true
+          else if (q === '0' || q === 'false') embed = false
+          else if (!embed) embed = sessionStorage.getItem('crm.embed') === '1'
+        } catch (e) {}
+        if (embed) d.dataset.embed = 'true'
+        // Skin do build (CRM_UI_SKIN) ou a do ai-manager quando embutido.
+        var skin = '%CRM_UI_SKIN%'
+        if (!skin || skin === 'default' || skin.charAt(0) === '%') skin = embed ? 'ai-manager' : ''
+        if (skin) d.dataset.skin = skin
+        // Tema: embutido segue o do painel ('wsm.theme'); senão 'theme'; sem escolha, o do sistema.
+        var t = localStorage.getItem(embed ? 'wsm.theme' : 'theme')
         if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        document.documentElement.classList.add(t)
-        document.documentElement.dataset.theme = t
-        document.documentElement.style.colorScheme = t
+        d.classList.add(t)
+        d.dataset.theme = t
+        d.style.colorScheme = t
       } catch (e) {}
     </script>
   </head>

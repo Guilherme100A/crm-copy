@@ -2,6 +2,7 @@
 // ações por mensagem (T49/T119; o escopo é aplicado no servidor).
 import { infiniteQueryOptions, queryOptions } from '@tanstack/react-query'
 import { api } from '@/lib/http'
+import { apiUrl } from '@/lib/base'
 
 export type MessageDirection = 'inbound' | 'outbound'
 export type SenderType = 'contact' | 'user' | 'ai' | 'flow' | 'system'
@@ -75,7 +76,7 @@ export const notesQuery = (chatId: string) =>
 
 /** Mídia da mensagem (entrada: baixada do WhatsApp sob demanda; saída: o arquivo enviado). */
 export const mediaUrl = (chatId: string, messageId: string, download = false) =>
-  `/api/chats/${enc(chatId)}/messages/${enc(messageId)}/media${download ? '?download=1' : ''}`
+  apiUrl(`/api/chats/${enc(chatId)}/messages/${enc(messageId)}/media${download ? '?download=1' : ''}`)
 
 export const threadApi = {
   markRead: (chatId: string) => api.post<{ chat: { id: string } & Record<string, unknown> }>(`/api/chats/${enc(chatId)}/read`),

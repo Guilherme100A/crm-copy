@@ -1,6 +1,11 @@
 // Tema claro/escuro (spec 18 §4, §5.1; SPEC 3.11): segue o sistema até o usuário escolher; persiste em
 // localStorage 'theme'; aplica classe + data-theme + color-scheme no <html>; Ctrl/Cmd+M alterna.
+// Embutido no painel do ai-manager, a preferência é a do painel ('wsm.theme', mesma origem): os dois andam juntos.
+import { AI_MANAGER_THEME_KEY, isEmbedded } from './embed'
 import { readStorage, STORAGE_KEYS, writeStorage } from './storage'
+
+/** Chave do tema no localStorage: a do CRM, ou a do painel do ai-manager quando embutido. */
+export const themeStorageKey = (): string => (isEmbedded() ? AI_MANAGER_THEME_KEY : STORAGE_KEYS.theme)
 
 export type Theme = 'light' | 'dark'
 
@@ -13,7 +18,7 @@ export function systemTheme(): Theme {
 }
 
 export function storedTheme(): Theme | null {
-  const v = readStorage(STORAGE_KEYS.theme)
+  const v = readStorage(themeStorageKey())
   return v === 'light' || v === 'dark' ? v : null
 }
 
@@ -28,7 +33,7 @@ export function applyTheme(theme: Theme, root: HTMLElement | undefined = globalT
 }
 
 export function setTheme(theme: Theme): void {
-  writeStorage(STORAGE_KEYS.theme, theme)
+  writeStorage(themeStorageKey(), theme)
   applyTheme(theme)
 }
 
