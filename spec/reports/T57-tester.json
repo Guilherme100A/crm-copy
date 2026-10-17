@@ -3,9 +3,9 @@
   "task": "T57",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T03:10:43.153Z",
-  "commit": "1a208a48bb74cc9705f8dd35f43e14257400b05e",
-  "base": "1a208a4",
+  "at": "2026-10-17T03:13:43.529Z",
+  "commit": "84cda3a5c8775c8a79d3cc99cfef7e3a9ee63bf1",
+  "base": "9bd202b",
   "changedFiles": [
     "tests/acceptance/T57/crm-external.e2e.ts",
     "tests/acceptance/T57/logic.e2e.ts",

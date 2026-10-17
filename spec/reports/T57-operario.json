@@ -3,11 +3,10 @@
   "task": "T57",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:56:11.779Z",
-  "commit": "1a208a48bb74cc9705f8dd35f43e14257400b05e",
-  "base": "1a208a4",
+  "at": "2026-10-17T03:12:22.264Z",
+  "commit": "84cda3a5c8775c8a79d3cc99cfef7e3a9ee63bf1",
+  "base": "9bd202b",
   "changedFiles": [
-    "apps/web/src/features/flow-editor/node-editors/registry.ts",
     "apps/web/src/features/flow-editor/node-editors/crm/crm-rules.ts",
     "apps/web/src/features/flow-editor/node-editors/crm/crm.unit.test.ts",
     "apps/web/src/features/flow-editor/node-editors/crm/index.ts",
@@ -39,17 +38,17 @@
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 12.4s"
+      "detail": "ok em 24.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 6.2s"
+      "detail": "ok em 7.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 12.5s (afetados desde a base)"
+      "detail": "ok em 20.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
@@ -59,7 +58,12 @@
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 5.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -119,7 +123,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "27 arquivo(s) alterado(s)"
+      "detail": "26 arquivo(s) alterado(s)"
     }
   ]
 }
