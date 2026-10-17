@@ -3,14 +3,10 @@
   "task": "T82",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T04:23:09.797Z",
-  "commit": "903ba1c2e79f41415af2c5d3474794b41f81e4fa",
-  "base": "903ba1c",
-  "changedFiles": [
-    "tests/acceptance/T82/setup.ts",
-    "tests/acceptance/T82/simulate-api.test.ts",
-    "tests/acceptance/T82/simulator.e2e.ts"
-  ],
+  "at": "2026-10-17T04:32:22.059Z",
+  "commit": "e76a98e2c5c9964d7fc4515d564cce55d8cd940c",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -90,7 +86,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "3 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

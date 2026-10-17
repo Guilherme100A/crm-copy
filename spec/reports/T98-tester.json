@@ -3,16 +3,10 @@
   "task": "T98",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T04:14:58.968Z",
-  "commit": "965cd9b06b6f880beeb05919cba5c7539dec91b7",
-  "base": "965cd9b",
-  "changedFiles": [
-    "tests/acceptance/T98/additive.test.ts",
-    "tests/acceptance/T98/docs.test.ts",
-    "tests/acceptance/T98/migrations.test.ts",
-    "tests/acceptance/T98/support.ts",
-    "tests/acceptance/T98/today.test.ts"
-  ],
+  "at": "2026-10-17T04:31:51.023Z",
+  "commit": "e76a98e2c5c9964d7fc4515d564cce55d8cd940c",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -77,7 +71,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "5 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

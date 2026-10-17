@@ -3,65 +3,85 @@
   "task": "T98",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:29:39.131Z",
-  "commit": "965cd9b06b6f880beeb05919cba5c7539dec91b7",
-  "base": "965cd9b",
-  "changedFiles": [
-    ".env.example",
-    "packages/wa-gateway-rpc/src/config.ts",
-    "packages/wa-gateway-rpc/src/index.ts",
-    "packages/wa-port/src/contract/suite.ts",
-    "packages/wa-port/src/contract/suite.unit.test.ts",
-    "docs/extension/ai-manager.md",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/contract.unit.test.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/detect.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/docs.unit.test.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/env.unit.test.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0000_init.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0001_session_limits.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0002_suggestions.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0003_ai_settings.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0004_session_router.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0005_session_phone_optional.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0006_proxy_settings.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/0007_session_browser.sql",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/fixtures/public/meta/_journal.json",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/index.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/migrations.db.unit.test.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/profile.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/profile.unit.test.ts",
-    "packages/wa-gateway-rpc/src/profiles/ai-manager/testing/simulator.ts"
-  ],
+  "at": "2026-10-17T04:32:22.090Z",
+  "commit": "e76a98e2c5c9964d7fc4515d564cce55d8cd940c",
+  "base": "e72438e",
+  "changedFiles": [],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/wa-port typecheck",
       "status": "pass",
-      "detail": "ok em 2.2s"
+      "detail": "ok em 2.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-port lint",
       "status": "pass",
-      "detail": "ok em 2.3s"
+      "detail": "ok em 11.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-port test",
       "status": "pass",
-      "detail": "ok em 2.0s (afetados desde a base)"
+      "detail": "ok em 6.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
       "status": "pass",
-      "detail": "ok em 7.9s"
+      "detail": "ok em 7.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
       "status": "pass",
-      "detail": "ok em 2.8s"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
       "status": "pass",
-      "detail": "ok em 14.0s (afetados desde a base)"
+      "detail": "ok em 14.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 12.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 3.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 135.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 13.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 7.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 19.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/wa-gateway-rpc}\" --filter \"...{./packages/wa-port}\" --filter \"!@crm/wa-port\" --filter \"!@crm/wa-gateway-rpc\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 233.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -119,9 +139,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "24 arquivo(s) alterado(s)"
+      "detail": "T98, T82"
     }
   ]
 }

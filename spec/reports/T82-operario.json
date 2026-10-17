@@ -3,65 +3,85 @@
   "task": "T82",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:43:37.494Z",
-  "commit": "903ba1c2e79f41415af2c5d3474794b41f81e4fa",
-  "base": "903ba1c",
-  "changedFiles": [
-    "apps/api/src/routes/index.ts",
-    "apps/web/src/features/flow-editor/canvas/editor.tsx",
-    "apps/api/src/routes/flow-simulate/flow-simulate.db.unit.test.ts",
-    "apps/api/src/routes/flow-simulate/index.ts",
-    "apps/api/src/routes/flow-simulate/simulator.ts",
-    "apps/api/src/routes/flow-simulate/simulator.unit.test.ts",
-    "apps/web/src/features/flow-simulator/api.ts",
-    "apps/web/src/features/flow-simulator/flow-simulator.unit.test.ts",
-    "apps/web/src/features/flow-simulator/index.ts",
-    "apps/web/src/features/flow-simulator/session.ts",
-    "apps/web/src/features/flow-simulator/simulator.tsx",
-    "apps/web/src/i18n/en/flow-simulator.json",
-    "apps/web/src/i18n/es/flow-simulator.json",
-    "apps/web/src/i18n/pt-BR/flow-simulator.json"
-  ],
+  "at": "2026-10-17T04:32:22.122Z",
+  "commit": "e76a98e2c5c9964d7fc4515d564cce55d8cd940c",
+  "base": "e72438e",
+  "changedFiles": [],
   "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port typecheck",
+      "status": "pass",
+      "detail": "ok em 2.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port lint",
+      "status": "pass",
+      "detail": "ok em 11.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-port test",
+      "status": "pass",
+      "detail": "ok em 6.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc typecheck",
+      "status": "pass",
+      "detail": "ok em 7.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc lint",
+      "status": "pass",
+      "detail": "ok em 2.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/wa-gateway-rpc test",
+      "status": "pass",
+      "detail": "ok em 14.0s"
+    },
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 21.9s"
+      "detail": "ok em 12.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 5.4s"
+      "detail": "ok em 3.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 190.1s (afetados desde a base)"
+      "detail": "ok em 135.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 21.2s"
+      "detail": "ok em 13.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 16.7s"
+      "detail": "ok em 7.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 21.6s (afetados desde a base)"
+      "detail": "ok em 19.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.8s"
+      "detail": "ok em 0.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 8.2s"
+      "detail": "ok em 3.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/wa-gateway-rpc}\" --filter \"...{./packages/wa-port}\" --filter \"!@crm/wa-port\" --filter \"!@crm/wa-gateway-rpc\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 233.9s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -119,9 +139,9 @@
       "detail": ""
     },
     {
-      "name": "escopo de arquivos",
+      "name": "gate em lote",
       "status": "pass",
-      "detail": "14 arquivo(s) alterado(s)"
+      "detail": "T98, T82"
     }
   ]
 }
