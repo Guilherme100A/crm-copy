@@ -3,15 +3,15 @@
   "task": "T114",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T05:44:25.368Z",
-  "commit": "e72438e38ecd9a585b4222542fca340b1716e3a7",
-  "base": "e72438e",
+  "at": "2026-10-17T05:47:10.104Z",
+  "commit": "536a6c1263e06787c5bc8a392cf6ecc450e5d0ca",
+  "base": "ab2ac30",
   "changedFiles": [
-    "tests/acceptance/T59/ai-integrations.e2e.ts",
     "tests/acceptance/T114/blocks.e2e.ts",
     "tests/acceptance/T114/history.e2e.ts",
     "tests/acceptance/T114/hub.e2e.ts",
-    "tests/acceptance/T114/support.ts"
+    "tests/acceptance/T114/support.ts",
+    "tests/acceptance/T59/ai-integrations.e2e.ts"
   ],
   "checks": [
     {

@@ -3,15 +3,12 @@
   "task": "T114",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T04:43:23.453Z",
-  "commit": "e72438e38ecd9a585b4222542fca340b1716e3a7",
-  "base": "e72438e",
+  "at": "2026-10-17T05:45:58.989Z",
+  "commit": "536a6c1263e06787c5bc8a392cf6ecc450e5d0ca",
+  "base": "ab2ac30",
   "changedFiles": [
     "apps/web/src/features/dashboard-history/history.unit.test.ts",
     "apps/web/src/features/flow-editor/node-editors/messaging/messaging.unit.test.ts",
-    "apps/web/src/features/integrations/catalog.ts",
-    "apps/web/src/features/integrations/integrations.unit.test.ts",
-    "scripts/e2e/api.ts",
     "apps/web/src/features/flow-editor/node-editors/payment/index.ts",
     "apps/web/src/features/flow-editor/node-editors/payment/payment-editor.tsx",
     "apps/web/src/features/flow-editor/node-editors/payment/payment-rules.ts",
@@ -20,6 +17,8 @@
     "apps/web/src/features/flow-editor/node-editors/sales/index.ts",
     "apps/web/src/features/flow-editor/node-editors/sales/sales-rules.ts",
     "apps/web/src/features/flow-editor/node-editors/sales/sales.unit.test.ts",
+    "apps/web/src/features/integrations/catalog.ts",
+    "apps/web/src/features/integrations/integrations.unit.test.ts",
     "apps/web/src/features/sale-invoice/api.ts",
     "apps/web/src/features/sale-invoice/invoice-cells.tsx",
     "apps/web/src/features/sale-invoice/logic.ts",
@@ -37,33 +36,39 @@
     "apps/web/src/features/settings-payments/utmify-modal.tsx",
     "apps/web/src/i18n/en/settings-payments.json",
     "apps/web/src/i18n/es/settings-payments.json",
-    "apps/web/src/i18n/pt-BR/settings-payments.json"
+    "apps/web/src/i18n/pt-BR/settings-payments.json",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 11.8s"
+      "detail": "ok em 12.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 6.4s"
+      "detail": "ok em 6.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 16.4s (afetados desde a base)"
+      "detail": "ok em 24.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.6s"
+      "detail": "ok em 0.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 2.7s"
+      "detail": "ok em 3.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
