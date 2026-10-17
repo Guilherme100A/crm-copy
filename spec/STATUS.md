@@ -77,7 +77,7 @@
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | MERGED | Esquadro | Vigia | 0 | b8cc9f8 (piloto: op ~25 min, tester ~6 min; 1 ajuste de teste pelo select mobile da T53) |
-| 6 | T59 | UI: consumo de IA, chaves e hub de integrações | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T59.md; libera app-shell, hub ?cat= e last_topup (aditivo) |
+| 6 | T59 | UI: consumo de IA, chaves e hub de integrações | VERIFYING | Prumo | (vaga) | 0 | operário DONE ~22 min (verify 0, base 168e105) + probe fake no harness |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
@@ -204,6 +204,7 @@
 | T54 | Com X-Company-Id de empresa cuja concessão expirou, até /api/support/* responde 403 support_access_expired: a web zera a empresa ativa (decisão no brief da T54) | T32 |
 | T114 | Consumir GET /api/sales/:id/invoice, /api/sale-invoices, sale.updated e /usage + ?force=1 da T112; card do catálogo | T112 |
 | integrações | Webhook de saída da Notasy (nota autorizada/cancelada, HMAC) documentado e não consumido; fontes de venda (T73) não gravam note_issuer_id; validar com token real o JSON inferido (docs/integrations/notasy.md) | T112 |
+| harness E2E | `scripts/e2e/api.ts` ainda usa o fetch global em aiVoicesFetch (ElevenLabs, T80/T92), paymentsFetch (T109/T114) e metaFetch (T106): E2E que acione esses caminhos sai para a rede. Injetar fakes na tarefa dona (T92, T114, T106) | T59 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
