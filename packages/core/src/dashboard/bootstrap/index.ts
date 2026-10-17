@@ -1,7 +1,9 @@
 // Bootstrap do dashboard (T55; 02-dashboard.md §3.4; spec de marcos §3.3): opções de filtro, grupos salvos,
-// avisos/banners (vazios até a spec 20), leads acumulados e faturamento acumulado com o marco (só com `dashboard.sales`).
+// avisos/banners (T96: ativos e não expirados, por prioridade decrescente), leads acumulados e faturamento acumulado com
+// o marco (só com `dashboard.sales`).
 import { asc, count, eq, and, sql } from 'drizzle-orm'
 import { connections, contacts, products, sales, type Database } from '@crm/db'
+import { activeAnnouncements, activeBanners, type AnnouncementDto, type BannerDto } from '../../admin-ops/announcements'
 import { FilterGroupsService, type FilterGroupDto } from '../../sales/expenses'
 import { computeMilestone, type MilestoneResult } from '../milestones/index'
 
@@ -17,8 +19,8 @@ export interface DashboardBootstrap {
   products: { id: string; name: string; currency: string }[]
   connections: { id: string; name: string; phone_number: string | null; status: string; scheduled_for_deletion: boolean }[]
   filter_groups: FilterGroupDto[]
-  announcements: unknown[]
-  banners: unknown[]
+  announcements: AnnouncementDto[]
+  banners: BannerDto[]
   leads_count: number
   lifetime_revenue?: LifetimeRevenue
 }
@@ -36,8 +38,13 @@ export async function lifetimeRevenue(db: Database, companyId: string, locale = 
   return { revenue_cents: revenue, revenue_by_currency: byCurrency, display_currency: 'BRL', milestone: computeMilestone(revenue, locale) }
 }
 
-export async function dashboardBootstrap(db: Database, companyId: string, o: { includeSales: boolean; locale?: string }): Promise<DashboardBootstrap> {
-  const [prods, conns, groups, [leads], lifetime] = await Promise.all([
+export async function dashboardBootstrap(
+  db: Database,
+  companyId: string,
+  o: { includeSales: boolean; locale?: string; /** Relógio dos avisos/banners (T96). */ now?: Date },
+): Promise<DashboardBootstrap> {
+  const now = o.now ?? new Date()
+  const [prods, conns, groups, [leads], lifetime, announcements, banners] = await Promise.all([
     db.select({ id: products.id, name: products.name, currency: products.currency }).from(products).where(eq(products.companyId, companyId)).orderBy(asc(products.name), asc(products.id)),
     db
       .select({ id: connections.id, name: connections.name, phone: connections.phoneNumber, state: connections.connectionState, deletion: connections.scheduledForDeletionAt })
@@ -47,13 +54,15 @@ export async function dashboardBootstrap(db: Database, companyId: string, o: { i
     new FilterGroupsService(db).list(companyId),
     db.select({ n: count() }).from(contacts).where(eq(contacts.companyId, companyId)),
     o.includeSales ? lifetimeRevenue(db, companyId, o.locale) : Promise.resolve(undefined),
+    activeAnnouncements(db, now),
+    activeBanners(db, now),
   ])
   return {
     products: prods,
     connections: conns.map((c) => ({ id: c.id, name: c.name, phone_number: c.phone, status: c.state ?? 'disconnected', scheduled_for_deletion: c.deletion !== null })),
     filter_groups: groups,
-    announcements: [],
-    banners: [],
+    announcements,
+    banners,
     leads_count: leads?.n ?? 0,
     ...(lifetime ? { lifetime_revenue: lifetime } : {}),
   }

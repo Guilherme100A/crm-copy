@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "task": "T96",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-17T01:53:07.376Z",
+  "commit": "de9894733756fd8d3abb1196f398cf21fcefcc78",
+  "base": "de98947",
+  "changedFiles": [
+    "tests/acceptance/T96/announcements.test.ts",
+    "tests/acceptance/T96/health.test.ts",
+    "tests/acceptance/T96/platform-secrets-ai.test.ts",
+    "tests/acceptance/T96/setup.ts",
+    "tests/acceptance/T96/wa-sessions.test.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T96-01, AC-T96-02, AC-T96-03, AC-T96-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "4 vitest, 0 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução vitest",
+      "status": "pass",
+      "detail": "29 passed, 0 failed, 0 skipped/todo"
+    },
+    {
+      "name": "AC-T96-01",
+      "status": "pass",
+      "detail": "11 passed"
+    },
+    {
+      "name": "AC-T96-02",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "AC-T96-03",
+      "status": "pass",
+      "detail": "6 passed"
+    },
+    {
+      "name": "AC-T96-04",
+      "status": "pass",
+      "detail": "7 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "5 arquivo(s) alterado(s)"
+    }
+  ]
+}

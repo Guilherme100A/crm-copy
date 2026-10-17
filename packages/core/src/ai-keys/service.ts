@@ -2,6 +2,7 @@
 // O segredo só sai do banco decifrado para `resolveCredentials`/`test`/listagens no provedor; nunca vai para DTO nem log.
 // Regra da chave efetiva: entre as chaves ATIVAS do provedor na empresa vale a de `updated_at` mais recente
 // (`in_use` no DTO); sem chave da empresa, vale a da plataforma (env `<PROVEDOR>_API_KEY`).
+// T96: o segredo de plataforma salvo pelo admin (`crm.platform_secrets`) tem precedência sobre o env.
 import { randomUUID } from 'node:crypto'
 import { and, desc, eq, sql } from 'drizzle-orm'
 import { z } from 'zod'
@@ -10,6 +11,7 @@ import { getCredentialsCipher, parseEncrypted, serializeEncrypted, type Credenti
 import type { LlmProviderId } from '@crm/ai'
 import { AiAgentsService } from '../ai-agents/service'
 import type { AiProviderKeys } from '../ai-agents/provider-keys'
+import { hasPlatformSecret, readPlatformSecret } from '../admin-ops/secret-store'
 import { AiKeysError, keyInvalid, keyNotFound, ProviderNotConfiguredError } from './errors'
 import { fetchElevenLabsVoices, fetchOpenRouterModels, httpKeyProbe, type AiKeyProbe, type ModelItem, type VoiceItem } from './http'
 
@@ -270,7 +272,7 @@ export class AiKeysService implements AiProviderKeys {
   async resolveCredentials(companyId: string, provider: AiKeyProvider): Promise<ResolvedAiCredentials> {
     const row = await this.effective(companyId, provider)
     if (row) return { apiKey: this.open(row), source: 'company', keyId: row.id }
-    const platform = this.env()[PLATFORM_AI_KEY_ENV[provider]]?.trim()
+    const platform = (await this.platformSecret(provider)) ?? this.env()[PLATFORM_AI_KEY_ENV[provider]]?.trim()
     if (platform) return { apiKey: platform, source: 'platform' }
     throw new ProviderNotConfiguredError(provider)
   }
@@ -284,6 +286,7 @@ export class AiKeysService implements AiProviderKeys {
   /** `AiProviderKeys` da T39: provedor com chave da empresa (ativa) ou da plataforma. */
   async isConfigured(input: { companyId: string; provider: LlmProviderId }): Promise<boolean> {
     if (await this.effective(input.companyId, input.provider)) return true
+    if (await hasPlatformSecret(this.db, input.provider)) return true
     return Boolean(this.env()[PLATFORM_AI_KEY_ENV[input.provider]]?.trim())
   }
 
@@ -308,6 +311,11 @@ export class AiKeysService implements AiProviderKeys {
       .orderBy(desc(aiProviderKeys.updatedAt), desc(aiProviderKeys.createdAt), desc(aiProviderKeys.id))
       .limit(1)
     return row
+  }
+
+  /** Segredo de plataforma salvo pelo admin (T96); sem ele, `undefined` (vale o env). */
+  private platformSecret(provider: AiKeyProvider): Promise<string | undefined> {
+    return readPlatformSecret(this.db, provider, this.opts.cipher)
   }
 
   private async upstream<T>(row: Row, fn: (secret: string) => Promise<T>): Promise<T> {

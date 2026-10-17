@@ -55,6 +55,7 @@ import { aiAgentLabRoutes } from './ai-agent-lab/index'
 import { mcpRoutes } from './mcp/index'
 import { supportAccessRoutes } from './support-access/index'
 import { adminRoutes } from './admin/index'
+import { adminOpsRoutes } from './admin-ops/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
@@ -117,4 +118,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', mcpRoutes(deps))
   app.route('/', supportAccessRoutes(deps))
   app.route('/', adminRoutes(deps))
+  app.route('/', adminOpsRoutes(deps))
 }
