@@ -2,10 +2,10 @@
   "version": 1,
   "task": "T113",
   "role": "operario",
-  "ok": false,
-  "at": "2026-10-17T01:24:36.512Z",
-  "commit": "d47f18dcb8a33a909bf3fd0267fb86ac024490f0",
-  "base": "5780f21",
+  "ok": true,
+  "at": "2026-10-17T01:40:52.431Z",
+  "commit": "d4011a9ff9cf2f3f494d431867a8a584f23a7ca1",
+  "base": "de98947",
   "changedFiles": [
     ".env.example",
     "apps/api/src/production.ts",
@@ -39,53 +39,52 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 12.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
-      "status": "fail",
-      "detail": "exit 1 em 116.2s",
-      "output": " ❯ src/e2e/e2e.db.unit.test.ts (7 tests | 1 failed) 3538ms\n   ❯ AC-T17-03 reset (1)\n     × restaura o seed-base em ≤ 3 s e limpa as chaves de teste 377ms\n\n Test Files  1 failed | 49 passed (50)\n      Tests  1 failed | 256 passed (257)\n   Start at  22:22:36\n   Duration  115.27s (tests 60%, import 21%, setup 11%, transform 8%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T113\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/e2e/e2e.db.unit.test.ts > AC-T17-03 reset > restaura o seed-base em ≤ 3 s e limpa as chaves de teste\nAssertionError: expected [ 'admin@demo.test', …(4) ] to deeply equal [ 'admin@demo.test', …(3) ]\n\n- Expected\n+ Received\n\n  [\n    \"admin@demo.test\",\n    \"member@demo.test\",\n    \"owner@demo.test\",\n    \"platform@demo.test\",\n+   \"support@demo.test\",\n  ]\n\n ❯ src/e2e/e2e.db.unit.test.ts:117:45\n    115|\n    116|     const rows = await db.select({ id: users.id, email: users.email, n…\n    117|     expect(rows.map((r) => r.email).sort()).toEqual(Object.values(SEED…\n       |                                             ^\n    118|     expect(rows.find((r) => r.id === SEED_BASE.users.owner.id)?.name).…\n    119|     expect(await redis.exists('crm:rt:t17', 'crm:rl:t17')).toBe(0)\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+      "status": "pass",
+      "detail": "ok em 115.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker typecheck",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 15.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker lint",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 2.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/worker test",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 58.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 11.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 6.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 103.1s"
     },
     {
-      "name": "cmd: pnpm --filter \"...[5780f21]\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/worker}\" --filter \"...{./packages/core}\" --filter \"...{./packages/db}\" --filter \"...{./packages/shared}\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 100.2s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
