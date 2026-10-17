@@ -1,0 +1,221 @@
+{
+  "title": "Facebook",
+  "subtitle": "Meta Ads, píxel y perfiles conectados",
+  "tabs": {
+    "label": "Secciones de Facebook",
+    "campaigns": "Administrador",
+    "pixel": "Píxel",
+    "profiles": "Perfiles y cuentas"
+  },
+  "common": {
+    "loadError": "No se pudieron cargar los datos.",
+    "retry": "Intentar de nuevo",
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "actions": "Acciones"
+  },
+  "status": {
+    "ACTIVE": "Activo",
+    "PAUSED": "Pausado",
+    "CAMPAIGN_PAUSED": "Pausado (campaña)",
+    "ADSET_PAUSED": "Pausado (conjunto)",
+    "ARCHIVED": "Archivado",
+    "DELETED": "Eliminado",
+    "IN_PROCESS": "En proceso",
+    "WITH_ISSUES": "Con problemas",
+    "PENDING_REVIEW": "En revisión",
+    "DISAPPROVED": "Rechazado",
+    "PENDING_BILLING_INFO": "Pago pendiente",
+    "PREAPPROVED": "Preaprobado",
+    "SCHEDULED": "Programado",
+    "COMPLETED": "Completado",
+    "other": "Estado ({code})"
+  },
+  "manager": {
+    "levels": {
+      "label": "Nivel",
+      "campaign": "Campañas",
+      "adset": "Conjuntos",
+      "ad": "Anuncios"
+    },
+    "period": {
+      "label": "Período",
+      "today": "Hoy",
+      "yesterday": "Ayer",
+      "7d": "Últimos 7 días",
+      "30d": "Últimos 30 días",
+      "month": "Este mes",
+      "custom": "Personalizado",
+      "since": "Desde",
+      "until": "Hasta",
+      "invalid": "Elige las fechas de inicio y fin (la final después de la inicial)."
+    },
+    "currency": "Moneda de visualización",
+    "accounts": {
+      "all": "Todas las cuentas",
+      "some": "{count} cuenta(s)",
+      "search": "Buscar por nombre o ID",
+      "selectAll": "Seleccionar todas",
+      "clear": "Limpiar",
+      "none": "Ninguna cuenta encontrada",
+      "apply": "Aplicar"
+    },
+    "filters": {
+      "title": "Filtros",
+      "status": "Estado",
+      "allStatuses": "Todos",
+      "name": "Buscar por nombre",
+      "done": "Listo"
+    },
+    "refresh": "Actualizar",
+    "refreshIn": "Actualizar ({s}s)",
+    "cooldown": "Espera {s} segundos para actualizar de nuevo.",
+    "ago": {
+      "now": "Actualizado ahora",
+      "min": "Actualizado hace {n} min",
+      "h": "Actualizado hace {n} h",
+      "d": "Actualizado hace {n} d"
+    },
+    "metricsHint": "Las columnas \"{app} / Meta\" y \"{app} / Pixel\" usan las ventas registradas en {app} con el ID de origen igual al ID del anuncio.",
+    "loading": "Cargando campañas…",
+    "loadingProgress": "Cargando cuentas: {done} de {total}",
+    "partial": "Carga parcial: {done} de {total} cuentas listas.",
+    "refreshing": "Actualizando los datos de Meta…",
+    "rateLimited": "Límite de Meta alcanzado. Mostrando los últimos datos guardados; inténtalo de nuevo en unos minutos.",
+    "rateLimitedNoCache": "Límite de Meta alcanzado y todavía no hay datos guardados. Inténtalo de nuevo en unos minutos.",
+    "fxMissing": "Sin cotización para convertir: {pairs}. Esos valores aparecen como —.",
+    "accountErrorsTitle": "{count} cuenta(s) con aviso",
+    "accountErrorsMany": "{count} cuenta(s) con aviso. Mira los detalles arriba de la tabla.",
+    "statusUpdated": "Estado actualizado en Meta.",
+    "updateError": "No se pudo actualizar en Meta.",
+    "pause": "Pausar",
+    "activate": "Activar",
+    "archivedHint": "Al activar, el elemento archivado vuelve como activo.",
+    "contextCampaign": "Campaña: {name}",
+    "contextAdset": "Conjunto: {name}",
+    "totals": "Totales / promedios",
+    "empty": {
+      "noAccounts": "Ningún perfil ni cuenta publicitaria conectados",
+      "noAccountsHint": "Conecta un perfil de Meta y elige las cuentas publicitarias que entran en el panel.",
+      "noneIncluded": "Ninguna cuenta publicitaria incluida",
+      "noneIncludedHint": "Marca al menos una cuenta publicitaria en Perfiles y cuentas para ver las campañas.",
+      "cta": "Perfiles y cuentas",
+      "results": "Nada encontrado para los filtros o Meta no devolvió elementos."
+    },
+    "budget": {
+      "daily": "Diario: {value}",
+      "lifetime": "Total: {value}"
+    },
+    "columns": {
+      "title": "Columnas",
+      "up": "Mover arriba",
+      "down": "Mover abajo",
+      "reset": "Restaurar orden predeterminado",
+      "name_campaign": "Campaña",
+      "name_adset": "Conjunto",
+      "name_ad": "Anuncio",
+      "status": "Estado",
+      "budget": "Presupuesto",
+      "meta_spend": "Importe gastado",
+      "revenue_pair": "Facturación",
+      "profit_pair": "Ganancia",
+      "purchases": "Compras",
+      "roas_pair": "ROAS",
+      "cost_per_purchase_meta": "Costo / compra (Meta)",
+      "conversations_meta": "Conversaciones",
+      "cost_per_lead_meta": "Costo / lead",
+      "meta_link_clicks": "Clics",
+      "meta_impressions": "Impresiones"
+    },
+    "edit": {
+      "open": "Editar",
+      "title": "Editar \"{name}\"",
+      "mode": {
+        "name": "Nombre",
+        "budget": "Presupuesto"
+      },
+      "name": "Nombre",
+      "nameHint": "El nombre se envía directamente a Meta.",
+      "daily": "Presupuesto diario ({currency})",
+      "lifetime": "Presupuesto total ({currency})",
+      "budgetHint": "Valores en la moneda de la cuenta publicitaria. Un campo vacío no se modifica.",
+      "adHint": "Los anuncios no tienen nombre ni presupuesto editables aquí. Usa el interruptor de estado en la tabla.",
+      "saved": "Cambio enviado a Meta.",
+      "errors": {
+        "name_required": "Indica el nombre.",
+        "budget_invalid": "Usa un valor numérico mayor o igual a cero (coma o punto decimal).",
+        "budget_required": "Indica el presupuesto diario o el total.",
+        "not_editable": "Este elemento no se puede editar."
+      }
+    }
+  },
+  "pixel": {
+    "title": "Píxeles",
+    "subtitle": "Configura píxeles para rastrear eventos y conversiones en las plataformas de anuncios.",
+    "new": "Nuevo píxel",
+    "newTitle": "Nuevo píxel",
+    "editTitle": "Editar píxel",
+    "empty": "Ningún píxel encontrado. Crea tu primera configuración para enviar eventos de conversión.",
+    "notImplemented": "Próximamente",
+    "columns": {
+      "name": "Nombre",
+      "platform": "Plataforma",
+      "adAccount": "Cuenta publicitaria",
+      "pixelId": "ID del píxel",
+      "token": "Access Token"
+    },
+    "platforms": {
+      "facebook": "Facebook"
+    },
+    "fields": {
+      "name": "Nombre",
+      "platform": "Plataforma",
+      "pixelId": "ID del píxel",
+      "token": "Access Token (Conversions API)",
+      "autoSend": "Enviar ventas aprobadas automáticamente"
+    },
+    "tokenKeepHint": "Déjalo vacío para mantener el token actual.",
+    "errors": {
+      "required": "Campo obligatorio.",
+      "name_length": "El nombre debe tener entre 2 y 255 caracteres.",
+      "digits": "Usa solo números."
+    },
+    "created": "Píxel creado.",
+    "updated": "Píxel actualizado.",
+    "deleted": "Píxel eliminado.",
+    "deleteTitle": "¿Eliminar píxel?",
+    "deleteBody": "El píxel \"{name}\" se eliminará. Los flujos que lo usan dejarán de enviar eventos."
+  },
+  "profiles": {
+    "title": "Integración con Meta",
+    "subtitle": "Conecta uno o más perfiles de Meta (un inicio de sesión por perfil) y elige qué cuentas publicitarias entran en el panel.",
+    "connect": "Conectar nuevo perfil",
+    "readonly": "Solo propietarios y administradores pueden conectar perfiles y cambiar las cuentas.",
+    "empty": "Ningún perfil de Meta conectado",
+    "emptyHint": "Conecta un perfil para listar las cuentas publicitarias.",
+    "active": "Activo",
+    "inactive": "Inactivo",
+    "count": "{included} de {total} cuentas en el panel",
+    "expires": "El token vence el {date}",
+    "accounts": "Cuentas publicitarias",
+    "refresh": "Actualizar lista",
+    "reconnect": "Reconectar",
+    "remove": "Eliminar",
+    "noAccounts": "No se encontraron cuentas publicitarias en este perfil.",
+    "includeAccount": "Incluir {name} en el panel",
+    "included": "Incluida en el panel",
+    "toggleError": "No se pudo cambiar la cuenta.",
+    "refreshed": "Lista de cuentas actualizada.",
+    "refreshError": "No se pudo actualizar la lista de cuentas.",
+    "removeTitle": "¿Eliminar perfil?",
+    "removeBody": "El perfil \"{name}\" se desconectará y los datos de sus cuentas dejarán de aparecer.",
+    "removed": "Perfil eliminado.",
+    "oauth": {
+      "success": "Perfil de Meta conectado.",
+      "chooseLater": "Ninguna cuenta se activa automáticamente: elige las cuentas que entran en el panel.",
+      "error": "No se pudo conectar el perfil de Meta.",
+      "startError": "No se pudo iniciar la conexión con Meta."
+    }
+  }
+}

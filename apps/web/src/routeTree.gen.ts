@@ -27,6 +27,9 @@ import { Route as CrmsIndexRouteImport } from './routes/crms/index'
 import { Route as CrmsCrmIdRouteImport } from './routes/crms/$crmId'
 import { Route as CustomersIndexRouteImport } from './routes/customers/index'
 import { Route as FacebookIndexRouteImport } from './routes/facebook/index'
+import { Route as FacebookCampaignsRouteImport } from './routes/facebook/campaigns'
+import { Route as FacebookPixelRouteImport } from './routes/facebook/pixel'
+import { Route as FacebookProfilesRouteImport } from './routes/facebook/profiles'
 import { Route as FlowsIndexRouteImport } from './routes/flows/index'
 import { Route as InvitationTokenRouteImport } from './routes/invitation/$token'
 import { Route as InvitationsTokenRouteImport } from './routes/invitations/$token'
@@ -133,6 +136,21 @@ const FacebookIndexRoute = FacebookIndexRouteImport.update({
   path: '/facebook/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FacebookCampaignsRoute = FacebookCampaignsRouteImport.update({
+  id: '/facebook/campaigns',
+  path: '/facebook/campaigns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacebookPixelRoute = FacebookPixelRouteImport.update({
+  id: '/facebook/pixel',
+  path: '/facebook/pixel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FacebookProfilesRoute = FacebookProfilesRouteImport.update({
+  id: '/facebook/profiles',
+  path: '/facebook/profiles',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FlowsIndexRoute = FlowsIndexRouteImport.update({
   id: '/flows/',
   path: '/flows/',
@@ -224,6 +242,9 @@ export interface FileRoutesByFullPath {
   '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
+  '/facebook/campaigns': typeof FacebookCampaignsRoute
+  '/facebook/pixel': typeof FacebookPixelRoute
+  '/facebook/profiles': typeof FacebookProfilesRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/oauth/consent': typeof OauthConsentRoute
@@ -258,6 +279,9 @@ export interface FileRoutesByTo {
   '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
+  '/facebook/campaigns': typeof FacebookCampaignsRoute
+  '/facebook/pixel': typeof FacebookPixelRoute
+  '/facebook/profiles': typeof FacebookProfilesRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/oauth/consent': typeof OauthConsentRoute
@@ -293,6 +317,9 @@ export interface FileRoutesById {
   '/agentes/novo': typeof AgentesNovoRoute
   '/chats/$chatId': typeof ChatsChatIdRoute
   '/crms/$crmId': typeof CrmsCrmIdRoute
+  '/facebook/campaigns': typeof FacebookCampaignsRoute
+  '/facebook/pixel': typeof FacebookPixelRoute
+  '/facebook/profiles': typeof FacebookProfilesRoute
   '/invitation/$token': typeof InvitationTokenRoute
   '/invitations/$token': typeof InvitationsTokenRoute
   '/oauth/consent': typeof OauthConsentRoute
@@ -330,6 +357,9 @@ export interface FileRouteTypes {
     | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
+    | '/facebook/campaigns'
+    | '/facebook/pixel'
+    | '/facebook/profiles'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/oauth/consent'
@@ -364,6 +394,9 @@ export interface FileRouteTypes {
     | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
+    | '/facebook/campaigns'
+    | '/facebook/pixel'
+    | '/facebook/profiles'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/oauth/consent'
@@ -398,6 +431,9 @@ export interface FileRouteTypes {
     | '/agentes/novo'
     | '/chats/$chatId'
     | '/crms/$crmId'
+    | '/facebook/campaigns'
+    | '/facebook/pixel'
+    | '/facebook/profiles'
     | '/invitation/$token'
     | '/invitations/$token'
     | '/oauth/consent'
@@ -433,6 +469,9 @@ export interface RootRouteChildren {
   AgentesAgentIdRoute: typeof AgentesAgentIdRoute
   AgentesNovoRoute: typeof AgentesNovoRoute
   CrmsCrmIdRoute: typeof CrmsCrmIdRoute
+  FacebookCampaignsRoute: typeof FacebookCampaignsRoute
+  FacebookPixelRoute: typeof FacebookPixelRoute
+  FacebookProfilesRoute: typeof FacebookProfilesRoute
   InvitationTokenRoute: typeof InvitationTokenRoute
   InvitationsTokenRoute: typeof InvitationsTokenRoute
   OauthConsentRoute: typeof OauthConsentRoute
@@ -579,6 +618,27 @@ declare module '@tanstack/react-router' {
       path: '/facebook'
       fullPath: '/facebook/'
       preLoaderRoute: typeof FacebookIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/facebook/campaigns': {
+      id: '/facebook/campaigns'
+      path: '/facebook/campaigns'
+      fullPath: '/facebook/campaigns'
+      preLoaderRoute: typeof FacebookCampaignsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/facebook/pixel': {
+      id: '/facebook/pixel'
+      path: '/facebook/pixel'
+      fullPath: '/facebook/pixel'
+      preLoaderRoute: typeof FacebookPixelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/facebook/profiles': {
+      id: '/facebook/profiles'
+      path: '/facebook/profiles'
+      fullPath: '/facebook/profiles'
+      preLoaderRoute: typeof FacebookProfilesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/flows/': {
@@ -733,6 +793,9 @@ const rootRouteChildren: RootRouteChildren = {
   AgentesAgentIdRoute: AgentesAgentIdRoute,
   AgentesNovoRoute: AgentesNovoRoute,
   CrmsCrmIdRoute: CrmsCrmIdRoute,
+  FacebookCampaignsRoute: FacebookCampaignsRoute,
+  FacebookPixelRoute: FacebookPixelRoute,
+  FacebookProfilesRoute: FacebookProfilesRoute,
   InvitationTokenRoute: InvitationTokenRoute,
   InvitationsTokenRoute: InvitationsTokenRoute,
   OauthConsentRoute: OauthConsentRoute,

@@ -1,0 +1,1280 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T106\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/acceptance/T106",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "--project=desktop",
+      "--project=mobile"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T106\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T106/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T106/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T106/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T106/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T106/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T106\\",
+      "url": "http://127.0.0.1:21834",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "21834",
+        "E2E_API_PORT": "21835",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T106\\facebook.e2e.ts",
+      "file": "T106/facebook.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T106 — sub-rotas",
+          "file": "T106/facebook.e2e.ts",
+          "line": 188,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T106-01 /facebook vai para a primeira sub-rota permitida (owner → campaigns)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 689,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:05.419Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-0f28be8b14b68ce62934",
+              "file": "T106/facebook.e2e.ts",
+              "line": 189,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-01 com só facebook.pixel: /facebook e as sub-rotas proibidas vão para /facebook/pixel",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1078,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:06.198Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-62b9981c74478369c948",
+              "file": "T106/facebook.e2e.ts",
+              "line": 197,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-01 com só facebook.profiles: /facebook vai para /facebook/profiles",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 968,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:07.286Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-a2eeb1182a5676a0ac87",
+              "file": "T106/facebook.e2e.ts",
+              "line": 219,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T106 — estados do Gerenciador",
+          "file": "T106/facebook.e2e.ts",
+          "line": 234,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T106-02 sem perfil/contas: estado vazio com CTA para Perfis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 775,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:08.263Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-20b00b647b1218076e23",
+              "file": "T106/facebook.e2e.ts",
+              "line": 235,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 perfil com contas mas nenhuma incluída: estado próprio com CTA",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 757,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:09.047Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-a9b005d87de22233aef7",
+              "file": "T106/facebook.e2e.ts",
+              "line": 245,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 pronto: tabela com as linhas, valores formatados e totais",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 846,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:09.812Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-4627d13dc5fbfb58a598",
+              "file": "T106/facebook.e2e.ts",
+              "line": 254,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 carregando (progresso) → parcial (com dados) → pronto",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 7047,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:10.666Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-dcf9a2738427c4071bab",
+              "file": "T106/facebook.e2e.ts",
+              "line": 271,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 limite da Meta com dados em cache: aviso e dados atuais visíveis",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 850,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:17.722Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-452e9b031a7c74f760e2",
+              "file": "T106/facebook.e2e.ts",
+              "line": 299,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 limite da Meta sem cache: erro próprio, sem tabela",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4138,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:18.581Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-16d5c634af2ecc03f6a9",
+              "file": "T106/facebook.e2e.ts",
+              "line": 311,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 erro de uma conta: banner com a conta, toast \"<conta>: <erro>\" e as outras contas na tabela",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 763,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:22.727Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-358f2b63eec0d5768af2",
+              "file": "T106/facebook.e2e.ts",
+              "line": 319,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-02 erro em várias contas: toast com a contagem",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 4091,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:23.498Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-fdf6f1ec3d218f0716b6",
+              "file": "T106/facebook.e2e.ts",
+              "line": 333,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T106 — atualizar e colunas",
+          "file": "T106/facebook.e2e.ts",
+          "line": 345,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T106-03 \"Atualizar\" manda force_refresh=1 e fica desabilitado por 30 s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 945,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:27.597Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-09cb5388033560296da4",
+              "file": "T106/facebook.e2e.ts",
+              "line": 346,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-03 ordem das colunas persiste por empresa e \"Restaurar\" volta ao padrão",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1557,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:28.550Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-ad47c3ef4331a0e7ca38",
+              "file": "T106/facebook.e2e.ts",
+              "line": 370,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-03 arrastar o cabeçalho reordena as colunas no desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1077,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:30.114Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-4017df384b06a1ff5c27",
+              "file": "T106/facebook.e2e.ts",
+              "line": 413,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-03 métricas pareadas rotuladas \"<APP_NAME> / Meta\" (e \"/ Pixel\" nas compras), sem a marca de referência",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 792,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:31.198Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-25bf0e7829cc22f8cec6",
+              "file": "T106/facebook.e2e.ts",
+              "line": 426,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T106 — status e edição",
+          "file": "T106/facebook.e2e.ts",
+          "line": 444,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T106-04 switch de status é otimista, bloqueia outra edição e confirma na Meta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 879,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:31.997Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-7bb12478fbf30dc38e30",
+              "file": "T106/facebook.e2e.ts",
+              "line": 445,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-04 switch de status desfaz em erro da Meta, com toast",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 856,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:32.884Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-2ff705a121e632a82895",
+              "file": "T106/facebook.e2e.ts",
+              "line": 474,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-04 modal de campanha: nome e orçamento (vírgula decimal) chegam à Meta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 941,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:33.748Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-8ed59a42e43add5118bc",
+              "file": "T106/facebook.e2e.ts",
+              "line": 497,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-04 modal de anúncio não tem campo nome (nem salvar)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 925,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:34.697Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-3544f3150af6ca6eccd0",
+              "file": "T106/facebook.e2e.ts",
+              "line": 518,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T106 — perfis, pixel e mobile",
+          "file": "T106/facebook.e2e.ts",
+          "line": 541,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T106-05 perfis: cartões expansíveis (1 perfil abre expandido; vários fecham)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1043,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:35.629Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-df498d4e03cac7c20d64",
+              "file": "T106/facebook.e2e.ts",
+              "line": 542,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toggle de conta: otimista ao incluir e rollback com toast em erro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 723,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:36.680Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-460bb1caf8c61039e607",
+              "file": "T106/facebook.e2e.ts",
+              "line": 567,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toast do retorno do OAuth (sucesso pelo botão Conectar) e a URL fica limpa",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 898,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:37.410Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-1cb0c58a3c2f184b46f2",
+              "file": "T106/facebook.e2e.ts",
+              "line": 605,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toast do retorno do OAuth com erro mostra a mensagem e limpa a URL",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 971,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:38.316Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-5cdecca9507f48044a34",
+              "file": "T106/facebook.e2e.ts",
+              "line": 616,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 pixel: Pixel ID e token mascarados; excluir pede confirmação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 810,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:39.294Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-8b0ac3dae85168b545ee",
+              "file": "T106/facebook.e2e.ts",
+              "line": 634,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 filtros de status e nome: painel no mobile, inline no desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1207,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:40.111Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-2d01c7350de09f410b71",
+              "file": "T106/facebook.e2e.ts",
+              "line": 669,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 perfis e pixel sem rolagem horizontal (layout responsivo)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 743,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:41.326Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-648f2770952c258f48f9",
+              "file": "T106/facebook.e2e.ts",
+              "line": 705,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 perfis: cartões expansíveis (1 perfil abre expandido; vários fecham)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 998,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:42.620Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-2f5a61254d86ca52f2a1",
+              "file": "T106/facebook.e2e.ts",
+              "line": 542,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toggle de conta: otimista ao incluir e rollback com toast em erro",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 707,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:43.716Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-52b5e54d87b6afb6392b",
+              "file": "T106/facebook.e2e.ts",
+              "line": 567,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toast do retorno do OAuth (sucesso pelo botão Conectar) e a URL fica limpa",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 809,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:44.431Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-72f506317fc54fc71e1c",
+              "file": "T106/facebook.e2e.ts",
+              "line": 605,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 toast do retorno do OAuth com erro mostra a mensagem e limpa a URL",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1435,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:45.249Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-fcb0f6f0032f407ad47a",
+              "file": "T106/facebook.e2e.ts",
+              "line": 616,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 pixel: Pixel ID e token mascarados; excluir pede confirmação",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1396,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:46.693Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-6a4bbbb31d78fff3a9cb",
+              "file": "T106/facebook.e2e.ts",
+              "line": 634,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 filtros de status e nome: painel no mobile, inline no desktop",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1258,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:48.097Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-17a3de56b013741edb94",
+              "file": "T106/facebook.e2e.ts",
+              "line": 669,
+              "column": 3
+            },
+            {
+              "title": "AC-T106-05 perfis e pixel sem rolagem horizontal (layout responsivo)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "mobile",
+                  "projectName": "mobile",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 692,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:52:49.363Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "62ddbaddc23e1e142c0d-d12b2715d9099616985b",
+              "file": "T106/facebook.e2e.ts",
+              "line": 705,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T05:51:57.962Z",
+    "duration": 52434.739,
+    "expected": 33,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "title": "Facebook",
+  "subtitle": "Meta Ads, pixel and connected profiles",
+  "tabs": {
+    "label": "Facebook sections",
+    "campaigns": "Ads manager",
+    "pixel": "Pixel",
+    "profiles": "Profiles and accounts"
+  },
+  "common": {
+    "loadError": "Could not load the data.",
+    "retry": "Try again",
+    "error": "Something went wrong. Please try again.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "actions": "Actions"
+  },
+  "status": {
+    "ACTIVE": "Active",
+    "PAUSED": "Paused",
+    "CAMPAIGN_PAUSED": "Paused (campaign)",
+    "ADSET_PAUSED": "Paused (ad set)",
+    "ARCHIVED": "Archived",
+    "DELETED": "Deleted",
+    "IN_PROCESS": "In process",
+    "WITH_ISSUES": "With issues",
+    "PENDING_REVIEW": "Pending review",
+    "DISAPPROVED": "Disapproved",
+    "PENDING_BILLING_INFO": "Pending billing",
+    "PREAPPROVED": "Pre-approved",
+    "SCHEDULED": "Scheduled",
+    "COMPLETED": "Completed",
+    "other": "Status ({code})"
+  },
+  "manager": {
+    "levels": {
+      "label": "Level",
+      "campaign": "Campaigns",
+      "adset": "Ad sets",
+      "ad": "Ads"
+    },
+    "period": {
+      "label": "Period",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "7d": "Last 7 days",
+      "30d": "Last 30 days",
+      "month": "This month",
+      "custom": "Custom",
+      "since": "From",
+      "until": "To",
+      "invalid": "Choose the start and end dates (end after start)."
+    },
+    "currency": "Display currency",
+    "accounts": {
+      "all": "All accounts",
+      "some": "{count} account(s)",
+      "search": "Search by name or ID",
+      "selectAll": "Select all",
+      "clear": "Clear",
+      "none": "No account found",
+      "apply": "Apply"
+    },
+    "filters": {
+      "title": "Filters",
+      "status": "Status",
+      "allStatuses": "All",
+      "name": "Search by name",
+      "done": "Done"
+    },
+    "refresh": "Refresh",
+    "refreshIn": "Refresh ({s}s)",
+    "cooldown": "Wait {s} seconds to refresh again.",
+    "ago": {
+      "now": "Updated just now",
+      "min": "Updated {n} min ago",
+      "h": "Updated {n} h ago",
+      "d": "Updated {n} d ago"
+    },
+    "metricsHint": "The \"{app} / Meta\" and \"{app} / Pixel\" columns use sales recorded in {app} whose source ID matches the ad ID.",
+    "loading": "Loading campaigns…",
+    "loadingProgress": "Loading accounts: {done} of {total}",
+    "partial": "Partial load: {done} of {total} accounts ready.",
+    "refreshing": "Refreshing Meta data…",
+    "rateLimited": "Meta rate limit reached. Showing the last saved data; try again in a few minutes.",
+    "rateLimitedNoCache": "Meta rate limit reached and there is no saved data yet. Try again in a few minutes.",
+    "fxMissing": "No exchange rate to convert: {pairs}. Those values show as —.",
+    "accountErrorsTitle": "{count} account(s) with warnings",
+    "accountErrorsMany": "{count} account(s) with warnings. See the details above the table.",
+    "statusUpdated": "Status updated on Meta.",
+    "updateError": "Could not update on Meta.",
+    "pause": "Pause",
+    "activate": "Activate",
+    "archivedHint": "Activating brings the archived item back as active.",
+    "contextCampaign": "Campaign: {name}",
+    "contextAdset": "Ad set: {name}",
+    "totals": "Totals / averages",
+    "empty": {
+      "noAccounts": "No profile or ad account connected",
+      "noAccountsHint": "Connect a Meta profile and choose the ad accounts shown on the dashboard.",
+      "noneIncluded": "No ad account included",
+      "noneIncludedHint": "Select at least one ad account in Profiles and accounts to see campaigns.",
+      "cta": "Profiles and accounts",
+      "results": "Nothing found for these filters, or Meta returned no items."
+    },
+    "budget": {
+      "daily": "Daily: {value}",
+      "lifetime": "Lifetime: {value}"
+    },
+    "columns": {
+      "title": "Columns",
+      "up": "Move up",
+      "down": "Move down",
+      "reset": "Restore default order",
+      "name_campaign": "Campaign",
+      "name_adset": "Ad set",
+      "name_ad": "Ad",
+      "status": "Status",
+      "budget": "Budget",
+      "meta_spend": "Amount spent",
+      "revenue_pair": "Revenue",
+      "profit_pair": "Profit",
+      "purchases": "Purchases",
+      "roas_pair": "ROAS",
+      "cost_per_purchase_meta": "Cost / purchase (Meta)",
+      "conversations_meta": "Conversations",
+      "cost_per_lead_meta": "Cost / lead",
+      "meta_link_clicks": "Clicks",
+      "meta_impressions": "Impressions"
+    },
+    "edit": {
+      "open": "Edit",
+      "title": "Edit \"{name}\"",
+      "mode": {
+        "name": "Name",
+        "budget": "Budget"
+      },
+      "name": "Name",
+      "nameHint": "The name is sent straight to Meta.",
+      "daily": "Daily budget ({currency})",
+      "lifetime": "Lifetime budget ({currency})",
+      "budgetHint": "Amounts in the ad account currency. Empty fields are not changed.",
+      "adHint": "Ads have no editable name or budget here. Use the status switch in the table.",
+      "saved": "Change sent to Meta.",
+      "errors": {
+        "name_required": "Enter the name.",
+        "budget_invalid": "Use a number greater than or equal to zero (comma or dot decimal).",
+        "budget_required": "Enter the daily or the lifetime budget.",
+        "not_editable": "This item cannot be edited."
+      }
+    }
+  },
+  "pixel": {
+    "title": "Pixels",
+    "subtitle": "Set up pixels to track events and conversions on ad platforms.",
+    "new": "New Pixel",
+    "newTitle": "New Pixel",
+    "editTitle": "Edit Pixel",
+    "empty": "No pixel found. Create your first configuration to send conversion events.",
+    "notImplemented": "Coming soon",
+    "columns": {
+      "name": "Name",
+      "platform": "Platform",
+      "adAccount": "Ad account",
+      "pixelId": "Pixel ID",
+      "token": "Access Token"
+    },
+    "platforms": {
+      "facebook": "Facebook"
+    },
+    "fields": {
+      "name": "Name",
+      "platform": "Platform",
+      "pixelId": "Pixel ID",
+      "token": "Access Token (Conversions API)",
+      "autoSend": "Send approved sales automatically"
+    },
+    "tokenKeepHint": "Leave empty to keep the current token.",
+    "errors": {
+      "required": "Required field.",
+      "name_length": "The name must have 2 to 255 characters.",
+      "digits": "Use digits only."
+    },
+    "created": "Pixel created.",
+    "updated": "Pixel updated.",
+    "deleted": "Pixel deleted.",
+    "deleteTitle": "Delete pixel?",
+    "deleteBody": "The pixel \"{name}\" will be deleted. Flows using it will stop sending events."
+  },
+  "profiles": {
+    "title": "Meta integration",
+    "subtitle": "Connect one or more Meta profiles (one login per profile) and choose which ad accounts show on the dashboard.",
+    "connect": "Connect new profile",
+    "readonly": "Only owners and admins can connect profiles and change accounts.",
+    "empty": "No Meta profile connected",
+    "emptyHint": "Connect a profile to list its ad accounts.",
+    "active": "Active",
+    "inactive": "Inactive",
+    "count": "{included} of {total} accounts on the dashboard",
+    "expires": "Token expires on {date}",
+    "accounts": "Ad accounts",
+    "refresh": "Refresh list",
+    "reconnect": "Reconnect",
+    "remove": "Remove",
+    "noAccounts": "No ad account found for this profile.",
+    "includeAccount": "Include {name} on the dashboard",
+    "included": "Included on the dashboard",
+    "toggleError": "Could not change the account.",
+    "refreshed": "Account list refreshed.",
+    "refreshError": "Could not refresh the account list.",
+    "removeTitle": "Remove profile?",
+    "removeBody": "The profile \"{name}\" will be disconnected and its accounts' data will no longer show.",
+    "removed": "Profile removed.",
+    "oauth": {
+      "success": "Meta profile connected.",
+      "chooseLater": "No account is enabled automatically: choose the accounts shown on the dashboard.",
+      "error": "Could not connect the Meta profile.",
+      "startError": "Could not start the Meta connection."
+    }
+  }
+}

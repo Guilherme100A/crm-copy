@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "task": "T106",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T05:31:34.776Z",
+  "commit": "1410f76018d10595eaab81d2cdd1fabb39c7faf6",
+  "base": "1410f76",
+  "changedFiles": [
+    "apps/web/src/features/facebook/api.ts",
+    "apps/web/src/features/facebook/campaigns-page.tsx",
+    "apps/web/src/features/facebook/facebook.unit.test.ts",
+    "apps/web/src/features/facebook/layout.tsx",
+    "apps/web/src/features/facebook/pixel-page.tsx",
+    "apps/web/src/features/facebook/profiles-page.tsx",
+    "apps/web/src/features/facebook/realtime.ts",
+    "apps/web/src/features/facebook/rules.ts",
+    "apps/web/src/features/facebook/search.ts",
+    "apps/web/src/i18n/en/facebook.json",
+    "apps/web/src/i18n/es/facebook.json",
+    "apps/web/src/i18n/pt-BR/facebook.json",
+    "apps/web/src/routeTree.gen.ts",
+    "apps/web/src/routes/facebook/campaigns.tsx",
+    "apps/web/src/routes/facebook/index.tsx",
+    "apps/web/src/routes/facebook/pixel.tsx",
+    "apps/web/src/routes/facebook/profiles.tsx",
+    "scripts/e2e/api.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 14.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 8.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 17.7s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "18 arquivo(s) alterado(s)"
+    }
+  ]
+}

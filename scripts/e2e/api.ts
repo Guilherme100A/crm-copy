@@ -18,6 +18,9 @@ import { configureMassDispatch } from '../../apps/worker/src/jobs/mass-dispatch/
 import { FakeWaGateway } from '../../packages/wa-port/src/testing/index'
 import { FakeStt } from '../../packages/ai/src/testing/index'
 import { FakeElevenLabsVoices } from '../../packages/core/src/ai-voices/testing/fake-elevenlabs'
+import { configureMetaAds } from '../../apps/worker/src/index'
+import { META_GRAPH_VERSION, MetaProfilesService, type MetaConfig } from '../../packages/core/src/index'
+import { FakeMetaGraph, type FakeInsightLevel } from '../../packages/core/src/meta-ads/client/testing/fake-graph'
 
 // T59: o "Testar" das chaves de IA nunca chama o provedor real no harness. Segredo terminando em `fail` → falha
 // `HTTP 401` (~5 ms); qualquer outro → ok (~87 ms; a latência medida pelo serviço fica ≥ esse valor).
@@ -41,6 +44,141 @@ function toFakeVoices(fakeUrl: string): typeof globalThis.fetch {
     const u = new URL(raw)
     const target = new URL(`${u.pathname}${u.search}`, fakeUrl)
     return globalThis.fetch(input instanceof Request ? new Request(target, input) : target, init)
+  }
+}
+
+// T106: a Meta do harness é o FakeMetaGraph (nunca a Graph real). O processo da API não sabe a porta da web, então
+// o diálogo OAuth e a volta do callback usam uma origem marcadora que o wrapper `e2eMetaFetch` troca por caminhos
+// relativos (o navegador resolve na origem da web, que faz proxy de `/api` e `/__e2e` para cá).
+const E2E_META_ORIGIN = 'http://e2e-web.invalid'
+
+function e2eMetaConfig(fake: FakeMetaGraph): MetaConfig {
+  return {
+    appId: fake.appId,
+    appSecret: fake.appSecret,
+    graphUrl: fake.url,
+    version: META_GRAPH_VERSION,
+    dialogUrl: `${E2E_META_ORIGIN}/__e2e/meta`,
+    redirectUri: `${E2E_META_ORIGIN}/api/meta/oauth/callback`,
+    webUrl: E2E_META_ORIGIN,
+    scopes: ['ads_read', 'ads_management'],
+  }
+}
+
+/** Zera o fake (usuários, tokens, estrutura, falhas…) junto com o `POST /__e2e/reset`. */
+function resetFakeMeta(fake: FakeMetaGraph): void {
+  const f = fake as unknown as Record<string, unknown>
+  for (const k of ['users', 'codes', 'tokens', 'structures', 'insightsByAccount', 'accountFailures', 'usageByAccount', 'pixels'])
+    (f[k] as Map<unknown, unknown>).clear()
+  f.failures = []
+  for (const k of ['requests', 'mutations', 'capiEvents']) (f[k] as unknown[]).length = 0
+}
+
+/**
+ * Rotas `/__e2e/meta/*` do harness (T106; só E2E=1) para semear e simular a Meta, e o diálogo OAuth fake:
+ * `GET /__e2e/meta/<versão>/dialog/oauth?state=` loga como o usuário escolhido e volta para o callback.
+ */
+function e2eMetaFetch(fake: FakeMetaGraph, inner: (req: Request) => Response | Promise<Response>) {
+  let oauthUser: string | null = null
+  let oauthError: string | null = null
+  const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } })
+  const relative = (url: string) => (url.startsWith(E2E_META_ORIGIN) ? url.slice(E2E_META_ORIGIN.length) || '/' : url)
+  const accounts = (list: unknown) =>
+    (Array.isArray(list) ? (list as Record<string, unknown>[]) : []).map((a) => ({
+      id: String(a.id),
+      ...(a.account_id !== undefined ? { account_id: String(a.account_id) } : {}),
+      ...(a.name !== undefined ? { name: String(a.name) } : {}),
+      ...(a.currency !== undefined ? { currency: String(a.currency) } : {}),
+      ...(a.account_status !== undefined ? { account_status: Number(a.account_status) } : {}),
+    }))
+
+  async function control(req: Request, path: string): Promise<Response> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const body = (req.method === 'GET' || req.method === 'DELETE' ? {} : await req.json().catch(() => ({}))) as Record<string, any>
+    const dialog = /^\/v[\d.]+\/dialog\/oauth$/.exec(path)
+    if (dialog && req.method === 'GET') {
+      const q = new URL(req.url).searchParams
+      const back = new URLSearchParams({ state: q.get('state') ?? '' })
+      if (oauthError || !oauthUser) {
+        back.set('error', 'access_denied')
+        back.set('error_description', oauthError ?? 'Nenhum usuário Meta fake (POST /__e2e/meta/users)')
+      } else back.set('code', fake.issueCode(oauthUser))
+      return new Response(null, { status: 302, headers: { location: `/api/meta/oauth/callback?${back}` } })
+    }
+    if (path === '' && req.method === 'GET') return json({ graph_url: fake.url, oauth_user: oauthUser, oauth_error: oauthError, requests: fake.requests.length })
+    if (path === '/reset' && req.method === 'POST') {
+      resetFakeMeta(fake)
+      oauthUser = oauthError = null
+      return json({ ok: true })
+    }
+    if (path === '/users' && req.method === 'POST') {
+      fake.addUser({ id: String(body.id), name: String(body.name ?? body.id), pictureUrl: body.picture_url ?? null, adAccounts: accounts(body.ad_accounts) })
+      oauthUser = String(body.id)
+      oauthError = null
+      return json({ ok: true, oauth_user: oauthUser }, 201)
+    }
+    const userAccounts = /^\/users\/([^/]+)\/ad-accounts$/.exec(path)
+    if (userAccounts && req.method === 'PUT') {
+      fake.setAdAccounts(decodeURIComponent(userAccounts[1]!), accounts(body.ad_accounts))
+      return json({ ok: true })
+    }
+    if (path === '/oauth' && req.method === 'POST') {
+      if (body.user_id !== undefined) oauthUser = body.user_id === null ? null : String(body.user_id)
+      oauthError = body.error ? String(body.error) : null
+      return json({ ok: true, oauth_user: oauthUser, oauth_error: oauthError })
+    }
+    if (path === '/structure' && req.method === 'POST') {
+      fake.setStructure(String(body.account), { campaigns: body.campaigns ?? [], adsets: body.adsets ?? [], ads: body.ads ?? [] })
+      return json({ ok: true })
+    }
+    if (path === '/insights' && req.method === 'POST') {
+      fake.setInsights(String(body.account), (body.level ?? 'campaign') as FakeInsightLevel, body.rows ?? [])
+      return json({ ok: true })
+    }
+    if (path === '/fail-account' && req.method === 'POST') {
+      fake.failAccount(String(body.account), Number(body.status ?? 400), body.error ?? { message: 'Falha simulada', type: 'OAuthException', code: 100 })
+      return json({ ok: true })
+    }
+    const clearFail = /^\/fail-account\/([^/]+)$/.exec(path)
+    if (clearFail && req.method === 'DELETE') {
+      fake.clearAccountFailure(decodeURIComponent(clearFail[1]!))
+      return json({ ok: true })
+    }
+    if (path === '/usage' && req.method === 'POST') {
+      fake.setUsage(String(body.account ?? '*'), body.usage ?? null, Number(body.regain_minutes ?? 0))
+      return json({ ok: true })
+    }
+    if (path === '/fail-next' && req.method === 'POST') {
+      fake.failNext(Number(body.status ?? 500), body.error ?? { message: 'Falha simulada', type: 'OAuthException', code: 2 })
+      return json({ ok: true })
+    }
+    if (path === '/requests' && req.method === 'GET') return json({ items: fake.requests })
+    if (path === '/mutations' && req.method === 'GET') return json({ items: fake.mutations })
+    return json({ error: { code: 'NOT_FOUND', message: `rota e2e meta inexistente: ${req.method} ${path}` } }, 404)
+  }
+
+  return async (req: Request): Promise<Response> => {
+    const { pathname } = new URL(req.url)
+    if (pathname === '/__e2e/meta' || pathname.startsWith('/__e2e/meta/')) return control(req, pathname.slice('/__e2e/meta'.length))
+    const res = await inner(req)
+    if (pathname === '/__e2e/reset' && req.method === 'POST' && res.ok) {
+      resetFakeMeta(fake)
+      oauthUser = oauthError = null
+    }
+    // Callback OAuth: `Location` na origem marcadora → caminho relativo (volta para a web que fez o proxy).
+    const location = res.headers.get('location')
+    if (location?.startsWith(E2E_META_ORIGIN)) {
+      const headers = new Headers(res.headers)
+      headers.set('location', relative(location))
+      return new Response(res.body, { status: res.status, headers })
+    }
+    // `oauth_url` do start: caminho relativo para o diálogo fake (mesma origem da web).
+    if (pathname === '/api/meta/oauth/start' && res.ok) {
+      const data = (await res.json()) as { oauth_url?: string }
+      if (data.oauth_url) data.oauth_url = relative(data.oauth_url)
+      return json(data, res.status)
+    }
+    return res
   }
 }
 
@@ -71,6 +209,10 @@ async function main() {
   // T92: vozes da conta contra o FakeElevenLabsVoices (qualquer `xi-api-key`), nunca a ElevenLabs real.
   const fakeVoices = new FakeElevenLabsVoices()
   await fakeVoices.start()
+  // T106: Graph fake local (OAuth, contas, estrutura, insights, mutações); semeado por `/__e2e/meta/*`.
+  const fakeMeta = new FakeMetaGraph()
+  await fakeMeta.start()
+  const metaConfig = e2eMetaConfig(fakeMeta)
   const app = createApp({
     db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, invitations: { resendCooldownMs }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch,
     // T92: laboratório dos agentes. O LLM é o FakeLlm do harness (`/__e2e/llm/script`, lido a cada chamada); a criação
@@ -83,6 +225,7 @@ async function main() {
     aiLabSiteHttp: { lookup: async (host: string) => { throw new Error(`rede desligada no harness (${host})`) }, timeoutMs: 2_000 },
     aiVoicesFetch: toFakeVoices(fakeVoices.url),
     waGateway,
+    metaConfig,
   })
 
   // Mesmo registry do worker real + espião em todos os tipos.
@@ -106,6 +249,8 @@ async function main() {
   configureInboundSales({ db, publisher: new RealtimePublisher({ redis }), logger })
   // Disparos em massa (T74/T83) no worker in-process: a preparação roda e publica mass_dispatch.updated (fases).
   configureMassDispatch({ db, wa: waGateway, redis })
+  // Gerenciador Meta (T101/T106) no worker in-process: o job `meta-sync` monta o bundle `async=1` contra o fake.
+  configureMetaAds({ db, redis, publisher: new RealtimePublisher({ redis }), profiles: new MetaProfilesService({ db, config: metaConfig }), logger })
   const worker = await startWorker({
     registry: reg,
     db,
@@ -117,7 +262,7 @@ async function main() {
     logger,
   })
 
-  const server = serve({ fetch: app.fetch, hostname: '127.0.0.1', port: config.PORT }, (info) => {
+  const server = serve({ fetch: e2eMetaFetch(fakeMeta, (req) => app.fetch(req)), hostname: '127.0.0.1', port: config.PORT }, (info) => {
     process.stdout.write(`E2E_CHILD_READY ${info.port}\n`)
   })
   const sockets = server as unknown as { closeAllConnections?: () => void }
@@ -130,6 +275,7 @@ async function main() {
     await stopRealtimeHub(redis).catch(() => undefined)
     await worker.stop().catch(() => undefined)
     await fakeVoices.close().catch(() => undefined)
+    await fakeMeta.close().catch(() => undefined)
     await new Promise<void>((resolve) => {
       server.close(() => resolve())
       sockets.closeAllConnections?.()
