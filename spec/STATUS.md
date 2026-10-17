@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda): T113 no gate; T95 (Prisma2) operário; T96 em preparo. Vaga dupla de verify. Gate roda os dependentes. main publicada em origin a cada gate.
+- Em andamento (só agentes sob demanda): T96 tester (Sentinela); T44 em preparo; vaga de operário livre. Regressão completa da main verde (12 pacotes, 1588 testes) após corrigir as regressões da T58 e T54. Gate testa dependentes por diretório desde 7a22d40.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -90,7 +90,7 @@
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | MERGED | Lastro | Vigia | 0 | 08cc19c (op ~34 min, tester ~6 min; migration regenerada como 0031) |
-| 6 | T113 | UTMify: integração e envio de vendas aprovadas | VERIFYING | Lastro | Sentinela | 0 | op ~29 min, tester ~5 min (12/12); no gate |
+| 6 | T113 | UTMify: integração e envio de vendas aprovadas | MERGED | Lastro | Sentinela | 0 | d4011a9 (op ~29 min, tester ~5 min) |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
 | 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |
@@ -123,8 +123,8 @@
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
-| 11 | T95 | Admin: usuários, empresas, limites e cotas | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T95.md; libera pontos de limite (membros/fluxos/webhooks) e companyActiveGuard (aditivo) |
-| 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | TODO | | | 0 | |
+| 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
+| 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | VERIFYING | Esquadro | Sentinela | 0 | op ~20 min (verify 0, base de98947); tester em andamento |
 | 11 | T97 | Afiliação: captura de indicação e link externo | TODO | | | 0 | |
 | 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | TODO | | | 0 | |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
@@ -211,6 +211,8 @@
 | T114 | Consumir rotas/DTO/SSE do UTMify e ?configured=1 no seletor do bloco Venda aprovada | T113 |
 | integrações | UTMify: validar com credencial real (códigos HTTP, e-mail vazio, paymentMethod=pix, src/sck) | T113 |
 | harness E2E | Um 2º usuário support no seed facilitaria E2E (hoje criado por SQL no teste da T54) | T54 |
+| T100 | UI do admin consome os contratos da T95 (usuários, empresas, limites, cotas, estatísticas, auditoria) e da T96 (avisos, banners, saúde, sessões, segredos, uso de IA) | T95/T96 |
+| admin | inbox_limits gravado e exposto, sem consumidor; upload global de imagem de banner (hoje só URL); desativar pelo admin herda o SSE que não cai (T22) | T95/T96 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |

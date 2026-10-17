@@ -54,3 +54,5 @@
 - O Orquestrador pode avançar o branch da tarefa por fast-forward (main nova); nesse caso use `--base` = o novo HEAD da main no verify (o escopo compara com a base). (T112)
 - Nunca chame a API real de terceiros, nem para "conferir a rota": a pesquisa é só por documentação e bundles públicos. (T112)
 - Mudança de comportamento no core precisa atualizar os testes dos pacotes que dependem dele (api, worker); o gate agora roda os dependentes (`pnpm --filter "...[base]"`). (T58 → regressão em `apps/api` contacts)
+- O filtro `[ref]` do pnpm (`--filter "...[base]"`) não acha nada dentro de worktree no Windows: use filtro de diretório (`--filter "...{./apps/x}"`). O gate testa os dependentes assim. (orquestração)
+- Mudar o seed (ex.: usuário novo) muda o que o reset do harness devolve: atualize `apps/api/src/e2e/e2e.db.unit.test.ts`. (T54)
