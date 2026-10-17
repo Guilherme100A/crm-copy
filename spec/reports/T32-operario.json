@@ -2,10 +2,10 @@
   "version": 1,
   "task": "T32",
   "role": "operario",
-  "ok": false,
-  "at": "2026-10-17T00:14:37.650Z",
-  "commit": "7b4c80467a67d3de2e5e5ad10a05573018daf500",
-  "base": "168e105",
+  "ok": true,
+  "at": "2026-10-17T00:20:08.802Z",
+  "commit": "daefc03d83647b5dc5be8a9aa7a6ec79d8db5a00",
+  "base": "3225067",
   "changedFiles": [
     "apps/api/src/middleware/company.ts",
     "apps/api/src/routes/events/index.ts",
@@ -38,33 +38,37 @@
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 12.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 3.3s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
-      "status": "fail",
-      "detail": "exit 1 em 112.4s",
-      "output": "> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T32/apps/api\n\n ❯ src/routes/contacts/contacts.db.unit.test.ts (3 tests | 1 failed) 2844ms\n   ❯ rotas de contatos (3)\n     × merge-identity, opt-out e catálogo de campos 192ms\n\n Test Files  1 failed | 46 passed (47)\n      Tests  1 failed | 246 passed (247)\n   Start at  21:12:40\n   Duration  111.47s (tests 58%, import 23%, setup 13%, transform 5%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T32\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/routes/contacts/contacts.db.unit.test.ts > rotas de contatos > merge-identity, opt-out e catálogo de campos\nAssertionError: expected 200 to be 422 // Object.is equality\n\n- Expected\n+ Received\n\n- 422\n+ 200\n\n ❯ src/routes/contacts/contacts.db.unit.test.ts:120:99\n    118|     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { descr…\n    119|     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { descr…\n    120|     expect((await call(a, 'PATCH', '/api/custom-fields/full_name', { d…\n       |                                                                                                   ^\n    121|     expect((await call(a, 'POST', '/api/custom-fields', { key: 'a' }))…\n    122|     expect((await call(a, 'POST', '/api/labels', { name: 'Ok', color: …\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+      "status": "pass",
+      "detail": "ok em 100.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 11.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 5.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "aprovado na rodada anterior (--retry-failed)"
+      "detail": "ok em 102.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...[3225067]\" --filter \"!@crm/api\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "ok em 0.5s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
