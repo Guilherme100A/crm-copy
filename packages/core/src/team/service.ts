@@ -1,8 +1,8 @@
 // Equipe da empresa (T22; 16 §3.4, §4, §5 Equipe, §8): listar, mudar papel/permissões, remover e transferir a
 // propriedade. Regras: o owner é intocável por terceiros; papel `owner` só por transferência (atômica, para um
 // admin existente); chaves de permissão validadas no catálogo e normalizadas (edit/delete ⇒ view).
-import { and, asc, eq, sql } from 'drizzle-orm'
-import { companyMembers, users, type Database, type MemberRole } from '@crm/db'
+import { and, asc, eq, inArray, sql } from 'drizzle-orm'
+import { companyMembers, memberDepartments, users, type Database, type MemberRole } from '@crm/db'
 import type { Logger } from '@crm/node-kit'
 import {
   ALWAYS_GRANTED_PERMISSIONS,
@@ -28,6 +28,8 @@ export interface MemberDto {
   permission_keys: string[] | null
   effective_permissions: PermissionKey[]
   user: { id: string; name: string; email: string }
+  /** T54: departamentos do escopo de chat do membro (filtro "Sem departamento"); vazio = nenhum. */
+  department_ids: string[]
   created_at: string
 }
 
@@ -69,7 +71,7 @@ type MemberRow = {
 
 const ROLE_ORDER: Record<MemberRole, number> = { owner: 0, admin: 1, member: 2 }
 
-export function toMemberDto(r: MemberRow): MemberDto {
+export function toMemberDto(r: MemberRow, departmentIds: string[] = []): MemberDto {
   return {
     id: r.id,
     company_id: r.companyId,
@@ -78,6 +80,7 @@ export function toMemberDto(r: MemberRow): MemberDto {
     permission_keys: r.permissionKeys,
     effective_permissions: [...effectivePermissions({ role: r.role, permissionKeys: r.permissionKeys, systemRole: r.systemRole })],
     user: { id: r.userId, name: r.name, email: r.email },
+    department_ids: departmentIds,
     created_at: r.createdAt.toISOString(),
   }
 }
@@ -125,11 +128,12 @@ export class TeamService {
       .innerJoin(users, eq(users.id, companyMembers.userId))
       .where(eq(companyMembers.companyId, companyId))
       .orderBy(asc(users.name))
-    return rows.sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role]).map(toMemberDto)
+    const depts = await this.departmentIds(companyId, rows.map((r) => r.id))
+    return rows.sort((a, b) => ROLE_ORDER[a.role] - ROLE_ORDER[b.role]).map((r) => toMemberDto(r, depts.get(r.id) ?? []))
   }
 
   async get(companyId: string, userId: string): Promise<MemberDto> {
-    return toMemberDto(await this.requireMember(this.db, companyId, userId))
+    return this.dto(await this.requireMember(this.db, companyId, userId))
   }
 
   /**
@@ -159,12 +163,12 @@ export class TeamService {
     const changes: Partial<typeof companyMembers.$inferInsert> = {}
     if (input.role !== undefined && input.role !== target.role) changes.role = input.role
     if (permissionKeys !== undefined && JSON.stringify(permissionKeys) !== JSON.stringify(target.permissionKeys)) changes.permissionKeys = permissionKeys
-    if (Object.keys(changes).length === 0) return toMemberDto(target)
+    if (Object.keys(changes).length === 0) return this.dto(target)
 
     await this.db.update(companyMembers).set({ ...changes, updatedAt: new Date() }).where(eq(companyMembers.id, target.id))
     const updated = await this.requireMember(this.db, companyId, targetUserId)
     await this.notify(updated)
-    return toMemberDto(updated)
+    return this.dto(updated)
   }
 
   /** Remove o membro (`team.delete` na rota). O owner nunca é removido. */
@@ -212,7 +216,27 @@ export class TeamService {
     const previous = await this.requireMember(this.db, companyId, actor.userId)
     await this.notify(owner)
     await this.notify(previous)
-    return { owner: toMemberDto(owner), previous_owner: toMemberDto(previous) }
+    return { owner: await this.dto(owner), previous_owner: await this.dto(previous) }
+  }
+
+  /** `member_id` → ids dos departamentos do escopo de chat (T54). */
+  private async departmentIds(companyId: string, memberIds: string[]): Promise<Map<string, string[]>> {
+    const out = new Map<string, string[]>()
+    if (memberIds.length === 0) return out
+    const rows = await this.db
+      .select({ memberId: memberDepartments.memberId, departmentId: memberDepartments.departmentId })
+      .from(memberDepartments)
+      .where(and(eq(memberDepartments.companyId, companyId), inArray(memberDepartments.memberId, memberIds)))
+    for (const r of rows) {
+      const list = out.get(r.memberId)
+      if (list) list.push(r.departmentId)
+      else out.set(r.memberId, [r.departmentId])
+    }
+    return out
+  }
+
+  private async dto(r: MemberRow): Promise<MemberDto> {
+    return toMemberDto(r, (await this.departmentIds(r.companyId, [r.id])).get(r.id) ?? [])
   }
 
   private async requireMember(db: Database, companyId: string, userId: string): Promise<MemberRow> {

@@ -1,0 +1,72 @@
+{
+  "tab": "Support access",
+  "title": "Support access",
+  "subtitle": "Temporary access approved for the support team.",
+  "pendingCount": "{n} pending request(s)",
+  "denied": {
+    "title": "Access denied",
+    "body": "You do not have permission to view this area."
+  },
+  "common": {
+    "error": "Something went wrong. Try again.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "loading": "Loading…"
+  },
+  "grants": {
+    "empty": "No support with active access.",
+    "support": "Support",
+    "email": "Email",
+    "expiresAt": "Expires at",
+    "expiresIn": "Expires at {at}",
+    "revoke": "Revoke access",
+    "revokeTitle": "Revoke access",
+    "revokeBody": "{name} loses access to this company flows now.",
+    "revoked": "Access revoked"
+  },
+  "approval": {
+    "title": "Support access request",
+    "body": "{name} ({email}) requested temporary 12h access to this account flows.",
+    "count": "{n} pending",
+    "approve": "Approve for 12h",
+    "reject": "Decline",
+    "approved": "Access approved for 12h",
+    "rejected": "Request declined"
+  },
+  "me": {
+    "title": "Support access",
+    "subtitle": "Request temporary (12h) access to a company flows using the owner or administrator email.",
+    "email": "Owner or administrator email",
+    "emailPlaceholder": "person@company.com",
+    "account": "Company",
+    "chooseAccount": "This email has more than one company: pick one.",
+    "invalidEmail": "Enter a valid email.",
+    "submit": "Request access",
+    "sent": "Request sent",
+    "resent": "Request resent",
+    "cancelled": "Request cancelled",
+    "resend": "Resend",
+    "cancel": "Cancel",
+    "grants": "Active access",
+    "noGrants": "No active access.",
+    "requests": "Requests",
+    "noRequests": "No requests.",
+    "expiresAt": "Expires at {at}",
+    "flows": "View flows",
+    "openFlows": "Open flow editor",
+    "noFlows": "No flows in this company.",
+    "status": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Declined",
+      "cancelled": "Cancelled"
+    },
+    "errors": {
+      "account_not_found": "No company found for this email.",
+      "account_required": "Pick the company.",
+      "request_pending": "There is already a pending request for this company.",
+      "grant_active": "You already have active access to this company."
+    }
+  }
+}

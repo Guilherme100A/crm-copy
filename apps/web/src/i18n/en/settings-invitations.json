@@ -1,0 +1,85 @@
+{
+  "tab": "Platform invitations",
+  "title": "Platform invitations",
+  "subtitle": "Invite people to the platform, linked to this company.",
+  "pendingTitle": "Pending invitations",
+  "empty": "No invitations found.",
+  "emptyPending": "No pending invitations",
+  "denied": {
+    "title": "Access denied",
+    "body": "You do not have permission to view this area."
+  },
+  "common": {
+    "error": "Something went wrong. Try again.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "loading": "Loading…"
+  },
+  "roles": {
+    "admin": "Administrator",
+    "member": "Member"
+  },
+  "status": {
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "declined": "Declined",
+    "expired": "Expired"
+  },
+  "counts": {
+    "total": "Total",
+    "pending": "Pending",
+    "accepted": "Accepted",
+    "declined": "Declined",
+    "expired": "Expired"
+  },
+  "filters": {
+    "search": "Search by email, inviter or account",
+    "status": "Filter by status:",
+    "all": "All"
+  },
+  "columns": {
+    "email": "Email",
+    "role": "Role",
+    "status": "Status",
+    "invitedBy": "Invited by",
+    "sentAt": "Sent on",
+    "actions": "Actions"
+  },
+  "actions": {
+    "copy": "Copy link",
+    "resend": "Resend",
+    "cancel": "Cancel invitation",
+    "invite": "Invite to platform"
+  },
+  "link": {
+    "copied": "Link copied",
+    "copyFailed": "Could not copy; copy the link shown."
+  },
+  "resend": {
+    "done": "Invitation resent ({n} resend(s) left today)",
+    "limit": "Limit of {n} resends per day reached",
+    "cooldown": "Wait a few minutes before resending"
+  },
+  "cancel": {
+    "title": "Cancel invitation",
+    "body": "The invitation to {email} will no longer be valid.",
+    "done": "Invitation cancelled"
+  },
+  "invite": {
+    "titleMember": "Invite member",
+    "titlePlatform": "Invite to platform",
+    "email": "Email",
+    "role": "Role",
+    "roleMember": "Member — basic access",
+    "roleAdmin": "Administrator — manage resources",
+    "submit": "Send invitation",
+    "invalidEmail": "Enter a valid email.",
+    "sentNeutral": "If the email is registered in the system, the invitation will be sent.",
+    "linkGenerated": "Invitation link generated!"
+  },
+  "pagination": "Pagination",
+  "prev": "Previous",
+  "next": "Next",
+  "pageOf": "Page {page} of {pages}"
+}

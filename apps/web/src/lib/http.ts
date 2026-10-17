@@ -7,6 +7,9 @@ export const PROFILE_PATH = '/api/auth/profile'
 export const CSRF_HEADER = 'X-Requested-With'
 export const CSRF_VALUE = 'crm'
 export const COMPANY_HEADER = 'X-Company-Id'
+/** T54: 403 do suporte com a concessão expirada/revogada na empresa do `X-Company-Id` (decisão da T32). */
+export const SUPPORT_ACCESS_EXPIRED = 'support_access_expired'
+export const SUPPORT_HOME = '/support/access'
 
 export interface ApiErrorBody {
   error?: { code?: string; message?: string; details?: unknown }
@@ -42,6 +45,7 @@ interface HttpState {
   companyId: string | null
   fetch: FetchLike
   onUnauthorized: () => void
+  onSupportAccessExpired: () => void
   probe: Promise<boolean> | null
   inflight: Map<string, Promise<unknown>>
 }
@@ -50,6 +54,10 @@ const state: HttpState = {
   companyId: null,
   fetch: (input, init) => globalThis.fetch(input, init),
   onUnauthorized: () => undefined,
+  // Recarrega a SPA na tela do suporte: o perfil é relido sem o `X-Company-Id` antigo e o cache some junto.
+  onSupportAccessExpired: () => {
+    if (typeof window !== 'undefined') window.location.assign(SUPPORT_HOME)
+  },
   probe: null,
   inflight: new Map(),
 }
@@ -67,8 +75,14 @@ export function setUnauthorizedHandler(fn: () => void): void {
 }
 
 /** Testes: troca o fetch e zera o estado. */
-export function configureHttp(opts: { fetch?: FetchLike; companyId?: string | null; onUnauthorized?: () => void }): void {
+export function configureHttp(opts: {
+  fetch?: FetchLike
+  companyId?: string | null
+  onUnauthorized?: () => void
+  onSupportAccessExpired?: () => void
+}): void {
   if (opts.fetch) state.fetch = opts.fetch
+  if (opts.onSupportAccessExpired) state.onSupportAccessExpired = opts.onSupportAccessExpired
   if (opts.companyId !== undefined) state.companyId = opts.companyId
   if (opts.onUnauthorized) state.onUnauthorized = opts.onUnauthorized
   state.probe = null
@@ -112,6 +126,29 @@ function probeSession(): Promise<boolean> {
 }
 
 let redirecting = false
+let supportExpired = false
+
+/** O erro é o 403 `support_access_expired`? */
+export function isSupportAccessExpired(err: unknown): boolean {
+  return (
+    err instanceof HttpError &&
+    err.status === 403 &&
+    (err.details as { error_code?: string } | undefined)?.error_code === SUPPORT_ACCESS_EXPIRED
+  )
+}
+
+/** T54: zera a empresa ativa e leva o suporte a `/support/access` (uma vez por rodada de chamadas). */
+function handleSupportAccessExpired(): void {
+  state.companyId = null
+  state.inflight.clear()
+  if (supportExpired) return
+  supportExpired = true
+  try {
+    state.onSupportAccessExpired()
+  } finally {
+    setTimeout(() => (supportExpired = false), 1000)
+  }
+}
 
 async function handle401(err: HttpError): Promise<never> {
   const alive = await probeSession()
@@ -147,6 +184,7 @@ async function send<T>(path: string, opts: RequestOptions): Promise<T> {
   const err = await parseError(res)
   // O próprio perfil (GET) é a sonda: o guard decide; nas demais chamadas, sonda única e login se a sessão acabou.
   if (res.status === 401 && !(method === 'GET' && path === PROFILE_PATH)) return handle401(err)
+  if (isSupportAccessExpired(err)) handleSupportAccessExpired()
   throw err
 }
 

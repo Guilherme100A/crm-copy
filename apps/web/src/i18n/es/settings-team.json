@@ -1,0 +1,157 @@
+{
+  "tab": "Equipo",
+  "title": "Equipo",
+  "count": "{n} miembro(s)",
+  "empty": "No se encontraron miembros.",
+  "denied": {
+    "title": "Acceso denegado",
+    "body": "No tienes permiso para ver esta área."
+  },
+  "roles": {
+    "owner": "Propietario",
+    "admin": "Administrador",
+    "member": "Miembro"
+  },
+  "common": {
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "loading": "Cargando…"
+  },
+  "role": {
+    "label": "Función",
+    "changed": "Función actualizada",
+    "warning": "Cambiar el perfil del miembro puede afectar sus permisos."
+  },
+  "actions": {
+    "permissions": "Permisos",
+    "transfer": "Transferir propiedad",
+    "remove": "Eliminar miembro",
+    "invite": "Invitar miembro"
+  },
+  "departments": {
+    "none": "Sin departamento"
+  },
+  "filters": {
+    "search": "Buscar por nombre, correo o función",
+    "role": "Función",
+    "allRoles": "Todas las funciones",
+    "department": "Departamento",
+    "allDepartments": "Todos los departamentos"
+  },
+  "columns": {
+    "member": "Miembro",
+    "role": "Función",
+    "department": "Depto.",
+    "actions": "Acciones"
+  },
+  "transfer": {
+    "title": "Transferir propiedad",
+    "body": "¿Hacer a {name} propietario de esta empresa?",
+    "confirm": "Transferir",
+    "done": "Propiedad transferida",
+    "consequences": {
+      "newOwner": "{name} pasa a ser el único propietario de la empresa.",
+      "youAdmin": "Pasas a ser Administrador.",
+      "billing": "Solo el nuevo propietario gestiona la suscripción, la facturación y la eliminación de la empresa.",
+      "irreversible": "No puedes deshacerlo tú solo: solo el nuevo propietario puede devolver la propiedad."
+    }
+  },
+  "remove": {
+    "title": "Eliminar miembro",
+    "body": "{name} perderá el acceso a esta empresa.",
+    "done": "Miembro eliminado"
+  },
+  "perm": {
+    "title": "Permisos del miembro",
+    "saved": "Permisos guardados",
+    "reloginHint": "La persona debe iniciar sesión de nuevo para aplicarlo.",
+    "ownerLocked": "El propietario tiene acceso total.",
+    "active": "{n} activa(s)",
+    "reset": "Restaurar valores de la función",
+    "area": "Área",
+    "column": "Marcar la columna {action}",
+    "alwaysGranted": "Todos los miembros tienen acceso a esta área.",
+    "ownerOnly": "Solo el propietario gestiona esta área.",
+    "actions": {
+      "view": "Ver",
+      "edit": "Editar",
+      "delete": "Eliminar"
+    },
+    "groups": {
+      "dashboard": "Panel",
+      "sales": "Ventas",
+      "chat": "Chat en vivo",
+      "kanban": "Kanban",
+      "flows": "Flujos",
+      "contacts": "Contactos",
+      "mass_dispatch": "Envíos masivos",
+      "webhooks": "Webhooks",
+      "connections": "Conexiones",
+      "facebook": "Facebook / Meta",
+      "ai_usage": "Uso de IA",
+      "team": "Equipo",
+      "settings": "Configuración"
+    },
+    "areas": {
+      "labels": "Etiquetas",
+      "departments": "Departamentos",
+      "fields": "Campos",
+      "products": "Productos",
+      "mcp": "Herramientas MCP",
+      "integrations": "Integraciones",
+      "dispatch": "Flujos predeterminados",
+      "business_hours": "Horarios",
+      "quick_replies": "Respuestas rápidas",
+      "accounts": "Cuentas",
+      "platform_invitations": "Invitaciones a la plataforma",
+      "global_variables": "Variables globales",
+      "message_templates": "Plantillas de mensaje"
+    },
+    "keys": {
+      "dashboard_sales": "Ventas",
+      "dashboard_support": "Atención",
+      "sales_edit": "Crear y editar ventas",
+      "chat_view": "Acceder al chat",
+      "chat_block": "Bloquear contacto",
+      "chat_assign_others": "Asignar a otros",
+      "chat_delete": "Eliminar conversaciones",
+      "kanban_view": "Ver",
+      "kanban_edit": "Editar",
+      "kanban_delete": "Eliminar",
+      "flows_view": "Ver",
+      "flows_edit": "Editar",
+      "flows_delete": "Eliminar",
+      "flows_run": "Ejecutar",
+      "contacts_view": "Ver",
+      "contacts_edit": "Editar",
+      "contacts_delete": "Eliminar",
+      "mass_dispatch_create": "Crear y cancelar envíos",
+      "webhooks_view": "Ver",
+      "webhooks_edit": "Editar",
+      "webhooks_delete": "Eliminar",
+      "connections_view": "Ver",
+      "connections_edit": "Editar",
+      "connections_delete": "Eliminar",
+      "facebook_campaigns": "Administrador",
+      "facebook_pixel": "Píxel",
+      "facebook_profiles": "Perfiles y cuentas",
+      "ai_usage_view": "Ver cartera y uso",
+      "team_view": "Ver",
+      "team_edit": "Gestionar miembros",
+      "team_delete": "Eliminar miembros",
+      "settings_view": "Acceder a la configuración"
+    },
+    "scope": {
+      "title": "Alcance del chat",
+      "hint": "Si no se selecciona ninguno, ve todos los chats.",
+      "needsChat": "Disponible solo con \"Acceder al chat\" marcado.",
+      "departments": "Departamentos en el chat",
+      "connections": "Conexiones en el chat",
+      "noDepartments": "No hay departamentos.",
+      "noConnections": "No hay conexiones disponibles.",
+      "search": "Buscar"
+    }
+  }
+}

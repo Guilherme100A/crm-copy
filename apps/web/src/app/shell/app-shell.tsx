@@ -6,6 +6,8 @@ import { useEffect, useState, type ReactNode } from 'react'
 import { CompanySwitcher } from '@/features/company-switcher/company-switcher'
 // T59: chip de saldo de IA; o import eager registra o handler `ai_wallet.updated` antes de o SSE abrir.
 import { WalletChip } from '@/features/settings-ai-usage/wallet-chip'
+// T54: import ESTÁTICO (registra os handlers support_access.* antes do SSE abrir).
+import { SupportApprovalModal } from '@/features/settings-support/approval-modal'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
@@ -170,6 +172,9 @@ export function AppShell({ session, children }: { session: Session; children: Re
           </aside>
         </div>
       ) : null}
+
+      {/* T54: modal global de aprovação de acesso de suporte (owner/admin; 16 §5). */}
+      <SupportApprovalModal session={session} />
 
       {/* Barra inferior mobile (spec 18 §2.6). */}
       {isDesktop ? null : (

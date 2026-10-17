@@ -8,6 +8,8 @@ export const SEED_USERS = {
   owner: 'owner@demo.test',
   admin: 'admin@demo.test',
   member: 'member@demo.test',
+  // T54: usuário `system_role = support` do seed (sem empresa; home /support/access).
+  support: 'support@demo.test',
 } as const
 export type SeedRole = keyof typeof SEED_USERS
 

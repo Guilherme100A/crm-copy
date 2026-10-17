@@ -1,0 +1,85 @@
+{
+  "tab": "Invitaciones a la plataforma",
+  "title": "Invitaciones a la plataforma",
+  "subtitle": "Invita personas a la plataforma, vinculadas a esta empresa.",
+  "pendingTitle": "Invitaciones pendientes",
+  "empty": "No se encontraron invitaciones.",
+  "emptyPending": "No hay invitaciones pendientes",
+  "denied": {
+    "title": "Acceso denegado",
+    "body": "No tienes permiso para ver esta área."
+  },
+  "common": {
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "close": "Cerrar",
+    "loading": "Cargando…"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "member": "Miembro"
+  },
+  "status": {
+    "pending": "Pendiente",
+    "accepted": "Aceptada",
+    "declined": "Rechazada",
+    "expired": "Vencida"
+  },
+  "counts": {
+    "total": "Total",
+    "pending": "Pendientes",
+    "accepted": "Aceptadas",
+    "declined": "Rechazadas",
+    "expired": "Vencidas"
+  },
+  "filters": {
+    "search": "Buscar por correo, invitador o cuenta",
+    "status": "Filtrar por estado:",
+    "all": "Todos"
+  },
+  "columns": {
+    "email": "Correo",
+    "role": "Función",
+    "status": "Estado",
+    "invitedBy": "Invitado por",
+    "sentAt": "Enviado el",
+    "actions": "Acciones"
+  },
+  "actions": {
+    "copy": "Copiar enlace",
+    "resend": "Reenviar",
+    "cancel": "Cancelar invitación",
+    "invite": "Invitar a la plataforma"
+  },
+  "link": {
+    "copied": "Enlace copiado",
+    "copyFailed": "No se pudo copiar; copia el enlace mostrado."
+  },
+  "resend": {
+    "done": "Invitación reenviada ({n} reenvío(s) restante(s) hoy)",
+    "limit": "Límite de {n} reenvíos por día alcanzado",
+    "cooldown": "Espera unos minutos antes de reenviar"
+  },
+  "cancel": {
+    "title": "Cancelar invitación",
+    "body": "La invitación a {email} dejará de ser válida.",
+    "done": "Invitación cancelada"
+  },
+  "invite": {
+    "titleMember": "Invitar miembro",
+    "titlePlatform": "Invitar a la plataforma",
+    "email": "Correo",
+    "role": "Función",
+    "roleMember": "Miembro — acceso básico",
+    "roleAdmin": "Administrador — gestionar recursos",
+    "submit": "Enviar invitación",
+    "invalidEmail": "Ingresa un correo válido.",
+    "sentNeutral": "Si el correo está registrado en el sistema, se enviará la invitación.",
+    "linkGenerated": "¡Enlace de invitación generado!"
+  },
+  "pagination": "Paginación",
+  "prev": "Anterior",
+  "next": "Siguiente",
+  "pageOf": "Página {page} de {pages}"
+}

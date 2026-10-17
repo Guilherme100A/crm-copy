@@ -1,0 +1,157 @@
+{
+  "tab": "Team",
+  "title": "Team",
+  "count": "{n} member(s)",
+  "empty": "No members found.",
+  "denied": {
+    "title": "Access denied",
+    "body": "You do not have permission to view this area."
+  },
+  "roles": {
+    "owner": "Owner",
+    "admin": "Administrator",
+    "member": "Member"
+  },
+  "common": {
+    "error": "Something went wrong. Try again.",
+    "cancel": "Cancel",
+    "save": "Save",
+    "close": "Close",
+    "loading": "Loading…"
+  },
+  "role": {
+    "label": "Role",
+    "changed": "Role updated",
+    "warning": "Changing the member's role may affect their permissions."
+  },
+  "actions": {
+    "permissions": "Permissions",
+    "transfer": "Transfer ownership",
+    "remove": "Remove member",
+    "invite": "Invite member"
+  },
+  "departments": {
+    "none": "No department"
+  },
+  "filters": {
+    "search": "Search by name, email or role",
+    "role": "Role",
+    "allRoles": "All roles",
+    "department": "Department",
+    "allDepartments": "All departments"
+  },
+  "columns": {
+    "member": "Member",
+    "role": "Role",
+    "department": "Dept.",
+    "actions": "Actions"
+  },
+  "transfer": {
+    "title": "Transfer ownership",
+    "body": "Make {name} the owner of this company?",
+    "confirm": "Transfer",
+    "done": "Ownership transferred",
+    "consequences": {
+      "newOwner": "{name} becomes the sole owner of the company.",
+      "youAdmin": "You become an Administrator.",
+      "billing": "Only the new owner manages subscription, billing and company deletion.",
+      "irreversible": "You cannot undo this yourself: only the new owner can give ownership back."
+    }
+  },
+  "remove": {
+    "title": "Remove member",
+    "body": "{name} will lose access to this company.",
+    "done": "Member removed"
+  },
+  "perm": {
+    "title": "Member permissions",
+    "saved": "Permissions saved",
+    "reloginHint": "The person needs to sign in again to apply.",
+    "ownerLocked": "The owner has full access.",
+    "active": "{n} active",
+    "reset": "Restore role defaults",
+    "area": "Area",
+    "column": "Toggle the {action} column",
+    "alwaysGranted": "All members have access to this area.",
+    "ownerOnly": "Only the owner manages this area.",
+    "actions": {
+      "view": "View",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "groups": {
+      "dashboard": "Dashboard",
+      "sales": "Sales",
+      "chat": "Live chat",
+      "kanban": "Kanban",
+      "flows": "Flows",
+      "contacts": "Contacts",
+      "mass_dispatch": "Mass dispatches",
+      "webhooks": "Webhooks",
+      "connections": "Connections",
+      "facebook": "Facebook / Meta",
+      "ai_usage": "AI usage",
+      "team": "Team",
+      "settings": "Settings"
+    },
+    "areas": {
+      "labels": "Labels",
+      "departments": "Departments",
+      "fields": "Fields",
+      "products": "Products",
+      "mcp": "MCP tools",
+      "integrations": "Integrations",
+      "dispatch": "Default flows",
+      "business_hours": "Business hours",
+      "quick_replies": "Quick replies",
+      "accounts": "Accounts",
+      "platform_invitations": "Platform invitations",
+      "global_variables": "Global variables",
+      "message_templates": "Message templates"
+    },
+    "keys": {
+      "dashboard_sales": "Sales",
+      "dashboard_support": "Support",
+      "sales_edit": "Create and edit sales",
+      "chat_view": "Access chat",
+      "chat_block": "Block contact",
+      "chat_assign_others": "Assign to others",
+      "chat_delete": "Delete chats",
+      "kanban_view": "View",
+      "kanban_edit": "Edit",
+      "kanban_delete": "Delete",
+      "flows_view": "View",
+      "flows_edit": "Edit",
+      "flows_delete": "Delete",
+      "flows_run": "Run",
+      "contacts_view": "View",
+      "contacts_edit": "Edit",
+      "contacts_delete": "Delete",
+      "mass_dispatch_create": "Create and cancel dispatches",
+      "webhooks_view": "View",
+      "webhooks_edit": "Edit",
+      "webhooks_delete": "Delete",
+      "connections_view": "View",
+      "connections_edit": "Edit",
+      "connections_delete": "Delete",
+      "facebook_campaigns": "Manager",
+      "facebook_pixel": "Pixel",
+      "facebook_profiles": "Profiles and accounts",
+      "ai_usage_view": "View wallet and usage",
+      "team_view": "View",
+      "team_edit": "Manage members",
+      "team_delete": "Remove members",
+      "settings_view": "Access settings"
+    },
+    "scope": {
+      "title": "Chat scope",
+      "hint": "If none is selected, sees all chats.",
+      "needsChat": "Available only with \"Access chat\" checked.",
+      "departments": "Departments in chat",
+      "connections": "Connections in chat",
+      "noDepartments": "No departments yet.",
+      "noConnections": "No connections available.",
+      "search": "Search"
+    }
+  }
+}

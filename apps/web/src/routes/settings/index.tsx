@@ -30,7 +30,13 @@ function SettingsHub() {
   const navigate = useNavigate()
   const isDesktop = useIsDesktop()
   const tabs = useMemo(
-    () => SETTINGS_TABS.filter((x) => !(session.isSupport && x.hiddenForSupport) && hasAny(session, x.permissions)),
+    () =>
+      SETTINGS_TABS.filter(
+        (x) =>
+          !(session.isSupport && x.hiddenForSupport) &&
+          hasAny(session, x.permissions) &&
+          (!x.roles || (!!session.role && x.roles.includes(session.role))),
+      ),
     [session],
   )
   const active = tabs.find((x) => x.id === tab) ?? tabs[0]

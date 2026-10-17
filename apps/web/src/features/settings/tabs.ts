@@ -14,6 +14,8 @@ export interface SettingsTab {
   permissions?: readonly string[]
   /** Usuário `support` não vê a aba (spec 16 §2.1). */
   hiddenForSupport?: boolean
+  /** T54: só estes papéis na empresa ativa veem a aba (ex.: `support_access` = owner/admin, 16 §8.4). */
+  roles?: readonly ('owner' | 'admin' | 'member')[]
   /** Conteúdo da aba (carregado sob demanda). */
   load: () => Promise<{ default: ComponentType }>
 }
@@ -30,6 +32,10 @@ export const SETTINGS_TABS: SettingsTab[] = [
     permissions: ['settings.accounts.view'],
     load: () => import('@/features/settings-company/company-tab'),
   },
+  // T54: Equipe, Convites para Plataforma e Acesso de suporte (16 §2.1, posições 2–4).
+  { id: 'team', labelKey: 'settings-team:tab', group: 'account', permissions: ['team.view'], load: () => import('@/features/settings-team/tab') },
+  { id: 'platform_invitations', labelKey: 'settings-invitations:tab', group: 'account', permissions: ['settings.platform_invitations.view'], load: () => import('@/features/settings-invitations/tab') },
+  { id: 'support_access', labelKey: 'settings-support:tab', group: 'account', roles: ['owner', 'admin'], hiddenForSupport: true, load: () => import('@/features/settings-support/tab') },
   // T94: credenciais do servidor MCP (09 §2).
   { id: 'mcp_credentials', labelKey: 'settings-mcp:tab', group: 'integrations', permissions: ['settings.mcp.view'], load: () => import('@/features/settings-mcp/mcp-tab') },
   // T58: conteúdo (17 §2.1); modelos internos usam o id `message_templates`.

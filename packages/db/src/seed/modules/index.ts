@@ -3,5 +3,6 @@
 // nunca da posição aqui: `runSeeds` ordena de forma determinística.
 import type { SeedModule } from '../index.js'
 import { aiPricesSeed } from './ai-prices.js'
+import { supportUserSeed } from './support-user.js'
 
-export const SEED_MODULES: SeedModule[] = [aiPricesSeed]
+export const SEED_MODULES: SeedModule[] = [aiPricesSeed, supportUserSeed]

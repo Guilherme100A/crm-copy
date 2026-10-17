@@ -38,7 +38,10 @@ async function main() {
   const stream = process.env.WA_EVENTS_STREAM || 'wsm:events'
 
   const deliveries: HandledEvent[] = []
-  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch })
+  // T54: intervalo mínimo entre reenvios de convite (produção: 60 s). Padrão 0 no E2E, para chegar ao
+  // "Limite de 3 reenvios por dia" sem esperar; E2E_RESEND_COOLDOWN_MS=<ms> testa o "Aguarde…".
+  const resendCooldownMs = Math.max(0, Number(process.env.E2E_RESEND_COOLDOWN_MS ?? 0) || 0)
+  const app = createApp({ db, redis, logger, sessionTtlDays: config.AUTH_SESSION_TTL_DAYS, cookieSecure: false, e2e: { deliveries }, invitations: { resendCooldownMs }, aiKeyProbe: e2eAiKeyProbe, aiKeysFetch: e2eAiKeysFetch })
 
   // Mesmo registry do worker real + espião em todos os tipos.
   const reg = createRegistry()

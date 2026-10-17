@@ -1,0 +1,85 @@
+{
+  "tab": "Convites para Plataforma",
+  "title": "Convites para Plataforma",
+  "subtitle": "Convide pessoas para a plataforma, ligadas a esta empresa.",
+  "pendingTitle": "Convites pendentes",
+  "empty": "Nenhum convite encontrado.",
+  "emptyPending": "Nenhum convite pendente",
+  "denied": {
+    "title": "Acesso negado",
+    "body": "Você não tem permissão para ver esta área."
+  },
+  "common": {
+    "error": "Algo deu errado. Tente novamente.",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "close": "Fechar",
+    "loading": "Carregando…"
+  },
+  "roles": {
+    "admin": "Administrador",
+    "member": "Membro"
+  },
+  "status": {
+    "pending": "Pendente",
+    "accepted": "Aceito",
+    "declined": "Recusado",
+    "expired": "Expirado"
+  },
+  "counts": {
+    "total": "Total",
+    "pending": "Pendentes",
+    "accepted": "Aceitos",
+    "declined": "Recusados",
+    "expired": "Expirados"
+  },
+  "filters": {
+    "search": "Buscar por e-mail, convidante ou conta",
+    "status": "Filtrar por status:",
+    "all": "Todos"
+  },
+  "columns": {
+    "email": "E-mail",
+    "role": "Função",
+    "status": "Status",
+    "invitedBy": "Convidado por",
+    "sentAt": "Enviado em",
+    "actions": "Ações"
+  },
+  "actions": {
+    "copy": "Copiar link",
+    "resend": "Reenviar",
+    "cancel": "Cancelar convite",
+    "invite": "Convidar para Plataforma"
+  },
+  "link": {
+    "copied": "Link copiado",
+    "copyFailed": "Não deu para copiar; copie o link mostrado."
+  },
+  "resend": {
+    "done": "Convite reenviado ({n} reenvio(s) restante(s) hoje)",
+    "limit": "Limite de {n} reenvios por dia atingido",
+    "cooldown": "Aguarde alguns minutos antes de reenviar"
+  },
+  "cancel": {
+    "title": "Cancelar convite",
+    "body": "O convite para {email} deixa de valer.",
+    "done": "Convite cancelado"
+  },
+  "invite": {
+    "titleMember": "Convidar membro",
+    "titlePlatform": "Convidar para Plataforma",
+    "email": "E-mail",
+    "role": "Função",
+    "roleMember": "Membro — acesso básico",
+    "roleAdmin": "Administrador — gerenciar recursos",
+    "submit": "Enviar convite",
+    "invalidEmail": "Informe um e-mail válido.",
+    "sentNeutral": "Se o email estiver cadastrado no sistema, o convite será enviado.",
+    "linkGenerated": "Link de Convite Gerado!"
+  },
+  "pagination": "Paginação",
+  "prev": "Anterior",
+  "next": "Próxima",
+  "pageOf": "Página {page} de {pages}"
+}

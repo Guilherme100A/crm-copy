@@ -1,0 +1,72 @@
+{
+  "tab": "Acesso de suporte",
+  "title": "Acesso de suporte",
+  "subtitle": "Acessos temporários aprovados para a equipe de suporte.",
+  "pendingCount": "{n} solicitação(ões) pendente(s)",
+  "denied": {
+    "title": "Acesso negado",
+    "body": "Você não tem permissão para ver esta área."
+  },
+  "common": {
+    "error": "Algo deu errado. Tente novamente.",
+    "cancel": "Cancelar",
+    "save": "Salvar",
+    "close": "Fechar",
+    "loading": "Carregando…"
+  },
+  "grants": {
+    "empty": "Nenhum suporte com acesso ativo.",
+    "support": "Suporte",
+    "email": "E-mail",
+    "expiresAt": "Expira em",
+    "expiresIn": "Expira em {at}",
+    "revoke": "Revogar acesso",
+    "revokeTitle": "Revogar acesso",
+    "revokeBody": "{name} perde o acesso aos fluxos desta empresa agora.",
+    "revoked": "Acesso revogado"
+  },
+  "approval": {
+    "title": "Solicitação de acesso de suporte",
+    "body": "{name} ({email}) solicitou acesso temporário de 12h aos fluxos desta conta.",
+    "count": "{n} pendentes",
+    "approve": "Aprovar por 12h",
+    "reject": "Recusar",
+    "approved": "Acesso aprovado por 12h",
+    "rejected": "Solicitação recusada"
+  },
+  "me": {
+    "title": "Acesso de suporte",
+    "subtitle": "Peça acesso temporário (12h) aos fluxos de uma empresa pelo e-mail do proprietário ou administrador.",
+    "email": "E-mail do proprietário ou administrador",
+    "emailPlaceholder": "pessoa@empresa.com",
+    "account": "Empresa",
+    "chooseAccount": "Este e-mail tem mais de uma empresa: escolha uma.",
+    "invalidEmail": "Informe um e-mail válido.",
+    "submit": "Solicitar acesso",
+    "sent": "Solicitação enviada",
+    "resent": "Solicitação reenviada",
+    "cancelled": "Solicitação cancelada",
+    "resend": "Reenviar",
+    "cancel": "Cancelar",
+    "grants": "Acessos ativos",
+    "noGrants": "Nenhum acesso ativo.",
+    "requests": "Solicitações",
+    "noRequests": "Nenhuma solicitação.",
+    "expiresAt": "Expira em {at}",
+    "flows": "Ver fluxos",
+    "openFlows": "Abrir editor de fluxos",
+    "noFlows": "Nenhum fluxo nesta empresa.",
+    "status": {
+      "pending": "Pendente",
+      "approved": "Aprovada",
+      "rejected": "Recusada",
+      "cancelled": "Cancelada"
+    },
+    "errors": {
+      "account_not_found": "Nenhuma empresa encontrada para este e-mail.",
+      "account_required": "Escolha a empresa.",
+      "request_pending": "Já existe uma solicitação pendente para esta empresa.",
+      "grant_active": "Você já tem acesso ativo a esta empresa."
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "task": "T54",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T00:57:43.643Z",
+  "commit": "7ad67eed95dcd2fdebcd9560f6e16c2b751731b8",
+  "base": "7ad67ee",
+  "changedFiles": [
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/features/settings/tabs.ts",
+    "apps/web/src/lib/http.ts",
+    "apps/web/src/routes/settings/index.tsx",
+    "apps/web/src/routes/support/access.tsx",
+    "packages/core/src/team/service.ts",
+    "packages/core/src/team/team.db.unit.test.ts",
+    "packages/db/src/seed/modules/index.ts",
+    "scripts/e2e/api.ts",
+    "apps/web/src/features/settings-invitations/api.ts",
+    "apps/web/src/features/settings-invitations/invitations.ts",
+    "apps/web/src/features/settings-invitations/panel.tsx",
+    "apps/web/src/features/settings-invitations/settings-invitations.unit.test.ts",
+    "apps/web/src/features/settings-invitations/tab.tsx",
+    "apps/web/src/features/settings-support/api.ts",
+    "apps/web/src/features/settings-support/approval-modal.tsx",
+    "apps/web/src/features/settings-support/queue.ts",
+    "apps/web/src/features/settings-support/realtime.ts",
+    "apps/web/src/features/settings-support/settings-support.unit.test.ts",
+    "apps/web/src/features/settings-support/support-page.tsx",
+    "apps/web/src/features/settings-support/support.ts",
+    "apps/web/src/features/settings-support/tab.tsx",
+    "apps/web/src/features/settings-team/api.ts",
+    "apps/web/src/features/settings-team/permissions-modal.tsx",
+    "apps/web/src/features/settings-team/settings-team.unit.test.ts",
+    "apps/web/src/features/settings-team/tab.tsx",
+    "apps/web/src/features/settings-team/team.ts",
+    "apps/web/src/features/settings-team/transfer-dialog.tsx",
+    "apps/web/src/i18n/en/settings-invitations.json",
+    "apps/web/src/i18n/en/settings-support.json",
+    "apps/web/src/i18n/en/settings-team.json",
+    "apps/web/src/i18n/es/settings-invitations.json",
+    "apps/web/src/i18n/es/settings-support.json",
+    "apps/web/src/i18n/es/settings-team.json",
+    "apps/web/src/i18n/pt-BR/settings-invitations.json",
+    "apps/web/src/i18n/pt-BR/settings-support.json",
+    "apps/web/src/i18n/pt-BR/settings-team.json",
+    "packages/db/src/seed/modules/support-user.db.unit.test.ts",
+    "packages/db/src/seed/modules/support-user.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/db typecheck",
+      "status": "pass",
+      "detail": "ok em 4.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db lint",
+      "status": "pass",
+      "detail": "ok em 2.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/db test",
+      "status": "pass",
+      "detail": "ok em 16.7s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 12.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 6.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 81.2s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 9.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 4.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 8.4s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 2.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "39 arquivo(s) alterado(s)"
+    }
+  ]
+}

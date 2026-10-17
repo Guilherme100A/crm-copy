@@ -1,6 +1,6 @@
 // Postgres real (SPEC 3.10): transferência atômica, convites (hash, limite de reenvio, aceite) e desativação.
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
-import { companyMembers, createDb, users, type Database } from '@crm/db'
+import { companyMembers, createDb, departments, memberDepartments, users, type Database } from '@crm/db'
 import { createTempDatabase, type TempDatabase } from '@crm/db/testing'
 import { MemoryMailer } from '@crm/node-kit'
 import { FakeWaGateway } from '@crm/wa-port/testing'
@@ -175,5 +175,26 @@ describe('desativação da empresa', () => {
     await svc.update({ userId: o.id, systemRole: 'user' }, c.id, { active: true })
     expect(await svc.isActive(c.id)).toBe(true)
     expect((await gw.sessions.get('a')).status).toBe('PAUSED')
+  })
+})
+
+describe('departamentos do membro (T54, filtro "Sem departamento")', () => {
+  it('GET /team traz department_ids do escopo de chat; sem departamento = []', async () => {
+    const o = await user()
+    const c = await company(o.id)
+    const a = await user()
+    const [m] = await add(c.id, a.id, 'member').returning()
+    const [d1] = await db.insert(departments).values({ companyId: c.id, name: 'Vendas' }).returning()
+    const [d2] = await db.insert(departments).values({ companyId: c.id, name: 'Suporte' }).returning()
+    await db.insert(memberDepartments).values([
+      { companyId: c.id, memberId: m!.id, departmentId: d1!.id },
+      { companyId: c.id, memberId: m!.id, departmentId: d2!.id },
+    ])
+    const team = new TeamService({ db })
+    const list = await team.list(c.id)
+    expect(list.map((x) => x.role)).toEqual(['owner', 'member'])
+    expect(list[0]!.department_ids).toEqual([])
+    expect([...list[1]!.department_ids].sort()).toEqual([d1!.id, d2!.id].sort())
+    expect([...(await team.get(c.id, a.id)).department_ids].sort()).toEqual([d1!.id, d2!.id].sort())
   })
 })
