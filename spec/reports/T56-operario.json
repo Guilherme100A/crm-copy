@@ -3,12 +3,11 @@
   "task": "T56",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:36:15.430Z",
-  "commit": "4e4f506f0eb77487650b9f9bc7ed962055f504e4",
-  "base": "4e4f506",
+  "at": "2026-10-17T02:50:26.348Z",
+  "commit": "5083c1e6dff110d36077fd45e9be145e70ba999d",
+  "base": "0bb9d1a",
   "changedFiles": [
     "apps/web/src/features/flow-editor/canvas/flow-editor.unit.test.ts",
-    "apps/web/src/features/flow-editor/node-editors/registry.ts",
     "apps/web/src/features/flow-editor/node-editors/interactive/carousel-editor.tsx",
     "apps/web/src/features/flow-editor/node-editors/interactive/index.ts",
     "apps/web/src/features/flow-editor/node-editors/interactive/interactive.unit.test.ts",
@@ -25,6 +24,7 @@
     "apps/web/src/features/flow-editor/node-editors/messaging/pix-editor.tsx",
     "apps/web/src/features/flow-editor/node-editors/messaging/rules.ts",
     "apps/web/src/features/flow-editor/node-editors/messaging/single.ts",
+    "apps/web/src/features/flow-editor/node-editors/registry.ts",
     "apps/web/src/i18n/en/node-editors-messaging.json",
     "apps/web/src/i18n/es/node-editors-messaging.json",
     "apps/web/src/i18n/pt-BR/node-editors-messaging.json"
@@ -33,27 +33,32 @@
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 9.8s"
+      "detail": "ok em 12.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 5.1s"
+      "detail": "ok em 5.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 11.8s (afetados desde a base)"
+      "detail": "ok em 14.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.5s"
+      "detail": "ok em 0.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 2.9s"
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/web}\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 0.4s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
