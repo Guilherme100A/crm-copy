@@ -366,6 +366,8 @@ const RAW = [
     ['apps/worker/src/boot/**', 'apps/worker/src/main.ts', 'apps/worker/src/jobs/exports/**', 'packages/core/src/exports/**', 'packages/core/src/inbound-webhooks-processor/**' /* rejeição 1: waGateway no ContactsService (consentimento 'webhook') */], ['api', 'worker', 'core']),
   T('T128', 'Harness de testes: banco-modelo por hash das migrações', ['T124', 'T126'],
     ['packages/db/src/testing.ts', 'packages/db/src/testing/**', 'scripts/e2e/serve.mjs', 'scripts/e2e/orphans.mjs', 'scripts/e2e/*.unit.test.mjs', 'scripts/e2e/template-db.mjs', 'docs/testing.md'], ['db']),
+  T('T129', 'Meta: bundle assíncrono não fica preso em loading após erro de conta', ['T101', 'T105'],
+    ['packages/core/src/meta-ads/structure/**', 'apps/api/src/routes/meta-structure/**', 'apps/worker/src/jobs/meta-ads/**'], ['api', 'worker', 'core']),
   T('T102', 'Integração E2E final', ['T85', 'T86', 'T87', 'T91', 'T92', 'T89', 'T90', 'T83', 'T82', 'T76', 'T71', 'T84', 'T53', 'T54', 'T58', 'T59', 'T44', 'T56', 'T57', 'T93', 'T94', 'T97', 'T98', 'T100', 'T105', 'T106', 'T107', 'T108', 'T114', 'T115', 'T127'],
     ['apps/**', 'packages/**', 'scripts/**'], ['api', 'worker', 'wa-worker', 'web'], {
       commands: ['pnpm -r typecheck', 'pnpm -r lint', 'pnpm -r test', 'pnpm -r build'],

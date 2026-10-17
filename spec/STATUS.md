@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE): operários T92 (Esquadro), T115 (Forja), T93 (Lastro), T108 (Prumo); tester T105 (Sentinela); aprovada esperando lote: T100; fila de tester: T98 → T82 → T107 → T106. Faltam despachar: T114 (depende da T110/Zenith — decisão do usuário) e T102 (integração final).
+- Em andamento (força total; gate em LOTE — 4 lotes integrados): operários T115 (Forja), T93 (Lastro), T129; tester T98 (Vigia); fila de tester: T82 → T107 → T106 → T92 → T108. Bloqueadas pelo usuário: T110 e T114 (Zenith). Por último: T102 (integração final).
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -105,7 +105,7 @@
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
-| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | VERIFYING | Forja | (vaga) | 0 | op ~7 min + montagem ~9 min (verify 0, base 9bd202b); tester na fila |
+| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | MERGED | Forja | Sentinela | 0 | f879ad6 (4º lote com a T100; montagem de produção incluída) |
 | 7 | T107 | Indicador de conexões desconectadas no menu | VERIFYING | Forja | (vaga) | 0 | op ~12 min (verify 0, base 51bf479); tester na fila |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | IN_PROGRESS | Forja | (vaga) | 0 | libera núcleo MCP da T94, settings-mcp e routes/oauth (aditivo) |
@@ -122,13 +122,13 @@
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
 | 9 | T91 | UI chats: painel lateral e agendamentos | MERGED | Torno | Sonda | 1 | 7d49cfa |
-| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | IN_PROGRESS | Esquadro | (vaga) | 0 | libera pontos da T88, lab preguiçoso e harness sem rede (aditivo) |
+| 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | VERIFYING | Esquadro | (vaga) | 0 | op ~27 min (verify 0, base bea292d); tester na fila |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
 | 11 | T97 | Afiliação: captura de indicação e link externo | MERGED | Prumo | Sentinela | 0 | 96113e7 (lote; op ~11 min, tester ~5 min) |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min + montagem do perfil (verify 0, base 965cd9b); tester na fila |
-| 11 | T108 | Tutoriais e widget de suporte plugável | IN_PROGRESS | Prumo | (vaga) | 0 | usa /api/app-config da T97; libera shell (aditivo) |
-| 12 | T100 | UI admin interno | VERIFYING | Lastro | Vigia | 0 | tester APROVADO (18/18); aguarda lote com a T105 |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | VERIFYING | Esquadro | Vigia | 0 | op + montagem do perfil; tester em andamento |
+| 11 | T108 | Tutoriais e widget de suporte plugável | VERIFYING | Prumo | (vaga) | 0 | op ~13 min (verify 0, base dec9225); tester na fila |
+| 12 | T100 | UI admin interno | MERGED | Lastro | Vigia | 0 | 29b5725 (4º lote com a T105) |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
 | 5 | T118 | Harness de testes: E2E sem travar, porta por worktree, timeouts para máquina compartilhada | MERGED | Fole | Prisma | 0 | 95ea5ae |
 | 5 | T119 | Escopo de chat nas rotas de mensagens e mídia (segurança) | MERGED | Torno | Sonda | 0 | 1df6c84 |
@@ -141,6 +141,7 @@
 | 8 | T126 | Estabilidade dos testes sob carga (filas, Redis, teardown e relógio) | MERGED | Bigorna | Lupa | 1 | eec841e |
 | 8 | T127 | Montagem de produção: webhooks, fontes de venda, pagamentos, nós externos e IA | MERGED | Cinzel | Radar | 1 | 60e0037 |
 | 8 | T128 | Harness de testes: banco-modelo por hash das migrações | MERGED | Forja | Sentinela | 0 | b9a9cb7 (piloto: op ~42 min, tester ~8 min) |
+| 8 | T129 | Meta: bundle assíncrono não fica preso em loading após erro de conta | IN_PROGRESS | (sob demanda) | (vaga) | 0 | criada do bug achado na T106 |
 | 13 | T102 | Integração E2E final | TODO | | | 0 | |
 
 ## Pendências para tarefas futuras (incluir no despacho da tarefa indicada)

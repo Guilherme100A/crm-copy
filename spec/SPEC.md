@@ -2148,6 +2148,17 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 
 ---
 
+### T129 — Meta: bundle assíncrono não fica preso em loading após erro de conta
+**Objetivo:** corrigir o defeito achado na T106: um bundle pronto com erro de conta não vai ao cache, e o `GET /api/meta/structure-bundle?async=1` seguinte reenfileira com o mesmo `jobId` `bundle-<key>`, que o BullMQ deduplica contra o job já concluído (mantido 24 h) — a tela fica em "carregando" até 15 min.
+**Paths:** `packages/core/src/meta-ads/structure/**`, `apps/api/src/routes/meta-structure/**`, `apps/worker/src/jobs/meta-ads/**`
+**Depende de:** T101, T105
+**Critérios de aceitação**
+- **AC-T129-01** Bundle concluído com erro de conta (FakeMetaGraph `failAccount`): o próximo `GET …?async=1` com a mesma chave enfileira um job NOVO (ou devolve o resultado com erro já pronto) e a resposta sai de `loading` sem esperar a expiração do job anterior.
+- **AC-T129-02** Bundle concluído sem erro continua vindo do cache (5 min) sem enfileirar job; `force_refresh=1` continua criando job novo.
+- **AC-T129-03** Dois GET simultâneos com a mesma chave sem cache enfileiram no máximo 1 job (a deduplicação de concorrência continua valendo).
+
+---
+
 ### T102 — Integração E2E final
 **Objetivo:** provar o sistema montado. Tarefa principalmente do Tester; o Operário só corrige integrações.
 **Paths (Operário):** `apps/**`, `packages/**`, `scripts/**` (só correções de integração, nada de feature nova)
