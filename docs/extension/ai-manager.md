@@ -192,3 +192,56 @@ pnpm --filter @crm/wa-gateway-rpc test
   `cancel` e `groups` (`only`); com A1/A3/A7/A8 simulados roda inteira.
 - `profiles/ai-manager/profile.unit.test.ts`: registro do perfil, detecção e a recusa sem rede.
 - `profiles/ai-manager/migrations.db.unit.test.ts`: `crm` sobre o schema do ai-manager sem tocar `public`.
+
+## 9. CRM dentro do painel do ai-manager (iframe, `/crm/` e SSO)
+
+Tudo opcional: sem as variáveis abaixo o CRM roda como antes (raiz `/`, API em `/api`, visual próprio, login normal).
+
+### Web servida em `/crm/`
+
+| Variável         | Exemplo     | Efeito                                                                                                   |
+| ---------------- | ----------- | -------------------------------------------------------------------------------------------------------- |
+| `VITE_BASE_PATH` | `/crm/`     | `base` do Vite (assets em `/crm/assets/*`) e `basepath` do TanStack Router (rotas em `/crm/<rota>`).     |
+| `VITE_API_BASE`  | `/crm/api`  | Prefixo que o navegador usa para a API (fetch, SSE `/events`, mídia, downloads). O proxy tira o `/crm`.  |
+| `CRM_WEB_PORT`   | `5274`      | Porta do `vite`/`vite preview` (padrão 5274 quando `VITE_BASE_PATH` está definido).                      |
+| `CRM_UI_SKIN`    | `ai-manager`| Visual do painel também fora do iframe. Embutido, a skin `ai-manager` vale sempre.                        |
+
+No dev/preview, `<VITE_API_BASE>/*` vai por proxy para `/api/*` da API do CRM (`VITE_API_URL`, padrão
+`http://127.0.0.1:3000`). Em produção o proxy do ai-manager faz o mesmo: `/crm/api/x` → `http://<api do crm>/api/x` e
+`/crm/*` → arquivos do `apps/web/dist` (com fallback para `index.html`).
+
+```sh
+VITE_BASE_PATH=/crm/ VITE_API_BASE=/crm/api pnpm --filter @crm/web build   # dist/index.html referencia /crm/assets/…
+VITE_BASE_PATH=/crm/ VITE_API_BASE=/crm/api pnpm --filter @crm/web dev     # http://localhost:5274/crm/
+```
+
+### Modo embutido e skin
+
+- Embutido = a página roda num iframe (`window.top !== window`) ou foi aberta com `?embed=1` (lembrado na aba;
+  `?embed=0` desliga). O `<html>` ganha `data-embed="true"` e `data-skin="ai-manager"`.
+- A skin (`apps/web/src/theme-ai-manager.css`) troca só tokens (cores, raios, sombras, fonte) e estilos de base
+  (campos, botões, tabelas, menu) pela paleta do `apps/dashboard/src/styles.css` do ai-manager, claro e escuro.
+- Embutido, o shell esconde o nome do produto, o seletor de idioma e o botão de tema; a navegação do CRM (sidebar,
+  drawer e barra inferior) continua. O tema segue o do painel: mesma origem, chave `wsm.theme` do localStorage
+  (evento `storage` acompanha a troca feita no painel).
+
+### SSO (`/crm/auth/sso#token=<jwt>`)
+
+1. O ai-manager emite um JWT **HS256** com `CRM_SSO_SECRET`: `iss: 'ai-manager'`, `aud: 'crm'`,
+   `sub: 'ai-manager:<username>'`, `name`, `email: '<username>@ai-manager.local'`, `iat`, `exp` (iat + 120 s), `jti`.
+2. O iframe abre `/crm/auth/sso#token=<token>` (opcional `&redirect=/chats`, só caminho interno). A página lê o token
+   **do hash** (nunca da query), apaga o hash do histórico e chama `POST /api/auth/sso { token }` uma vez.
+3. A API (`apps/api/src/routes/auth/sso.ts`):
+   - sem `CRM_SSO_SECRET` → **404** (rota desligada);
+   - verifica assinatura (só HS256), `iss`, `aud`, `iat`/`exp` com tolerância de 30 s e vida máxima de 300 s
+     (`packages/core/src/auth/sso-token.ts`); erro → 401 com `details.error_code` `sso_<motivo>`
+     (`sso_expired`, `sso_bad_audience`, `sso_bad_signature`, `sso_bad_alg`, `sso_malformed`, …);
+   - `jti` de uso único: Redis `SET crm:sso:jti:<jti> NX EX <até exp + 30 s>`; repetido → 401 `sso_replayed`;
+   - acha ou cria o usuário pelo e-mail (senha aleatória; só entra por SSO até redefinir), garante a empresa
+     `ai-manager` (slug fixo) e cria a sessão como o login normal (cookie `crm_session`, mesmos guards);
+   - o primeiro usuário vira `owner`; como a empresa tem no máximo um owner, os seguintes entram como `admin` com a
+     lista explícita de todas as permissões do owner;
+   - auditoria `auth.sso` (`sub`, `jti`, `user_created`, `role`).
+4. A rota é pública (`PUBLIC_API_ROUTES`) mas continua sob o CSRF (`X-Requested-With: crm`), como o login.
+
+Atrás do proxy do ai-manager, defina `TRUST_PROXY=true` na API do CRM para o IP da auditoria vir do `X-Forwarded-For`.
