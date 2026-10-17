@@ -3,17 +3,14 @@
   "task": "T44",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T02:12:51.821Z",
-  "commit": "5789462d2b1285babe6549656e4b20afd7cc8111",
-  "base": "5789462",
+  "at": "2026-10-17T02:26:34.641Z",
+  "commit": "884d7d242569d0a5191326e4a0cb1170a415d10c",
+  "base": "4e4f506",
   "changedFiles": [
     "apps/api/src/routes/flow-share/flow-share.db.unit.test.ts",
     "apps/api/src/routes/flow-share/index.ts",
     "apps/api/src/routes/flows/flows.db.unit.test.ts",
     "apps/api/src/routes/flows/index.ts",
-    "apps/web/src/routes/flows/index.tsx",
-    "packages/core/src/flows/store/store.db.unit.test.ts",
-    "packages/core/src/flows/store/store.ts",
     "apps/web/src/features/flows/api.ts",
     "apps/web/src/features/flows/dialogs.tsx",
     "apps/web/src/features/flows/dnd.tsx",
@@ -24,63 +21,71 @@
     "apps/web/src/features/flows/view.tsx",
     "apps/web/src/i18n/en/flows.json",
     "apps/web/src/i18n/es/flows.json",
-    "apps/web/src/i18n/pt-BR/flows.json"
+    "apps/web/src/i18n/pt-BR/flows.json",
+    "apps/web/src/routes/flows/index.tsx",
+    "packages/core/src/flows/store/store.db.unit.test.ts",
+    "packages/core/src/flows/store/store.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 12.1s"
+      "detail": "ok em 16.9s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 3.4s"
+      "detail": "ok em 4.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 94.4s (afetados desde a base)"
+      "detail": "ok em 139.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core typecheck",
       "status": "pass",
-      "detail": "ok em 10.4s"
+      "detail": "ok em 13.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core lint",
       "status": "pass",
-      "detail": "ok em 5.3s"
+      "detail": "ok em 6.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/core test",
       "status": "pass",
-      "detail": "ok em 28.1s (afetados desde a base)"
+      "detail": "ok em 113.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 9.2s"
+      "detail": "ok em 10.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 4.4s"
+      "detail": "ok em 5.1s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 9.0s (afetados desde a base)"
+      "detail": "ok em 12.0s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.5s"
+      "detail": "ok em 0.6s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 2.6s"
+      "detail": "ok em 3.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/core}\" --filter \"!@crm/api\" --filter \"!@crm/core\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 79.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
