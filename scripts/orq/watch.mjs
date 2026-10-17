@@ -38,7 +38,7 @@ function classify(text) {
   if (/API Error|rate_limit_error|usage limit reached|limit reached\s*·|Overloaded|exceeded your (current )?quota|credit balance is too low/i.test(tail)) return { state: 'error', why: 'erro de API/limite na tela' }
   const last12 = tail.split('\n').slice(-12).join('\n')
   // verify/testes em background ("1 shell still running") contam como trabalho
-  const working = /shells? still running/.test(last12) || (/…\s*\(\d+[smh]|esc to interrupt|current work\b/.test(tail) && !/· done \d{1,2}:\d{2}/.test(last12))
+  const working = /still running/.test(last12) || (/…\s*\(\d+[smh]|esc to interrupt|current work\b/.test(tail) && !/· done \d{1,2}:\d{2}/.test(last12))
   // só a caixa de entrada (linha ❯ logo antes do último separador ───); mensagens antigas no histórico também começam com ❯
   const lines = tail.split('\n'), sep = lines.findLastIndex((l) => /^─{10,}/.test(l))
   const input = sep > 0 ? (lines[sep - 1].match(/^❯ (.+)$/)?.[1] ?? '').trim() : ''
