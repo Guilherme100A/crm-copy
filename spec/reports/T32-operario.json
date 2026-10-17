@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "task": "T32",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-17T00:14:37.650Z",
+  "commit": "7b4c80467a67d3de2e5e5ad10a05573018daf500",
+  "base": "168e105",
+  "changedFiles": [
+    "apps/api/src/middleware/company.ts",
+    "apps/api/src/routes/events/index.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/support-access/index.ts",
+    "apps/api/src/routes/support-access/support-access.db.unit.test.ts",
+    "packages/core/src/auth/auth-service.ts",
+    "packages/core/src/index.ts",
+    "packages/core/src/platform/company-context.ts",
+    "packages/core/src/realtime/access.ts",
+    "packages/core/src/support-access/errors.ts",
+    "packages/core/src/support-access/grants.ts",
+    "packages/core/src/support-access/index.ts",
+    "packages/core/src/support-access/service.ts",
+    "packages/core/src/support-access/support-access.db.unit.test.ts",
+    "packages/core/src/support-access/support-access.unit.test.ts",
+    "packages/db/drizzle/crm/0030_t32_support_access.sql",
+    "packages/db/drizzle/crm/meta/0030_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/support-access.ts",
+    "packages/shared/src/realtime/events.ts"
+  ],
+  "checks": [
+    {
+      "name": "arquivo: packages/core/src/support-access/index.ts",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "fail",
+      "detail": "exit 1 em 112.4s",
+      "output": "> vitest run --passWithNoTests\n\n\n RUN  v5.0.1 C:/Users/green/Downloads/leonas/leonas-crm-wt/T32/apps/api\n\n ❯ src/routes/contacts/contacts.db.unit.test.ts (3 tests | 1 failed) 2844ms\n   ❯ rotas de contatos (3)\n     × merge-identity, opt-out e catálogo de campos 192ms\n\n Test Files  1 failed | 46 passed (47)\n      Tests  1 failed | 246 passed (247)\n   Start at  21:12:40\n   Duration  111.47s (tests 58%, import 23%, setup 13%, transform 5%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T32\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/routes/contacts/contacts.db.unit.test.ts > rotas de contatos > merge-identity, opt-out e catálogo de campos\nAssertionError: expected 200 to be 422 // Object.is equality\n\n- Expected\n+ Received\n\n- 422\n+ 200\n\n ❯ src/routes/contacts/contacts.db.unit.test.ts:120:99\n    118|     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { descr…\n    119|     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { descr…\n    120|     expect((await call(a, 'PATCH', '/api/custom-fields/full_name', { d…\n       |                                                                                                   ^\n    121|     expect((await call(a, 'POST', '/api/custom-fields', { key: 'a' }))…\n    122|     expect((await call(a, 'POST', '/api/labels', { name: 'Ok', color: …\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "21 arquivo(s) alterado(s)"
+    }
+  ]
+}

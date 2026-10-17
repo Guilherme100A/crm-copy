@@ -1,6 +1,7 @@
 // `GET /api/events?company_id=` (SPEC 3.7, T16): canal SSE único da empresa ativa. Autenticado pelo cookie de
 // sessão (ou token de API); `company_id` validado contra a membership (outra empresa → 404).
 // Replay por `Last-Event-ID` (ou `?last_event_id=`), heartbeat `ping` e fechamento no logout.
+// T32: usuário `support` sem vínculo abre o SSE da empresa com concessão ativa ou com pedido pendente (só `support_access.*`).
 import { Hono } from 'hono'
 import { streamSSE } from 'hono/streaming'
 import {
@@ -10,8 +11,11 @@ import {
   checkConnectionAccess,
   findMembership,
   permissionsOf,
+  supportConnectionAccess,
   type CompanyMember,
+  type SseMessage,
 } from '@crm/core'
+import { isRealtimeEventType } from '@crm/shared'
 import { getCtx } from '../../lib/context'
 import { ApiError } from '../../lib/errors'
 import type { AppEnv, RedisClient, ResolvedDeps } from '../../lib/types'
@@ -52,6 +56,8 @@ export async function stopRealtimeHub(redis: RedisClient): Promise<void> {
 
 const notFound = () => new ApiError('NOT_FOUND', 'Empresa não encontrada')
 
+const isSupportOnlyMessage = (m: SseMessage) => !isRealtimeEventType(m.event) || m.event.startsWith('support_access.')
+
 export function eventsRoutes(deps: ResolvedDeps) {
   const app = new Hono<AppEnv>()
 
@@ -62,6 +68,8 @@ export function eventsRoutes(deps: ResolvedDeps) {
     let companyId: string | null
     let member: CompanyMember | null
     let perms: ReadonlySet<string>
+    // Suporte só com pedido pendente: recebe apenas os eventos `support_access.*` (a decisão) e o ping.
+    let supportOnly = false
     if (ctx.auth.kind === 'api_token') {
       if (requested && requested.toLowerCase() !== ctx.companyId?.toLowerCase()) throw notFound()
       companyId = ctx.companyId
@@ -70,9 +78,16 @@ export function eventsRoutes(deps: ResolvedDeps) {
     } else if (requested) {
       if (!ctx.user) throw new ApiError('UNAUTHORIZED', 'Não autenticado')
       member = await findMembership(deps.db, ctx.user.id, requested)
-      if (!member) throw notFound()
-      companyId = member.companyId
-      perms = permissionsOf(member, ctx.user)
+      if (member) {
+        companyId = member.companyId
+        perms = permissionsOf(member, ctx.user)
+      } else {
+        const support = ctx.user.systemRole === 'support' ? await supportConnectionAccess(deps.db, ctx.user.id, requested) : null
+        if (!support) throw notFound()
+        companyId = requested.toLowerCase()
+        perms = support.perms
+        supportOnly = support.perms.size === 0
+      }
     } else {
       companyId = ctx.companyId
       member = ctx.member
@@ -102,7 +117,7 @@ export function eventsRoutes(deps: ResolvedDeps) {
           lastEventId,
           heartbeatMs: deps.realtime?.heartbeatMs ?? DEFAULT_HEARTBEAT_MS,
           checkAccess: () => checkConnectionAccess(deps.db, { auth: ctx.auth, user, companyId: activeCompany, perms }),
-          send: (m) => stream.writeSSE(m),
+          send: (m) => (supportOnly && !isSupportOnlyMessage(m) ? Promise.resolve() : stream.writeSSE(m)),
           onError: (err) => logger.warn({ err }, 'realtime stream error'),
         })
         stream.onAbort(() => conn.close())

@@ -26,6 +26,14 @@ const flowRunEventData = () =>
     status: z.string(),
   })
 
+/** Pedido de acesso de suporte nos eventos `support_access.*` (T32). */
+const supportAccessRequestEventData = () =>
+  z.looseObject({ id: idSchema, status: z.string(), support_user_id: idSchema, company_id: idSchema })
+
+/** Concessão de acesso de suporte nos eventos `support_access.*` (T32). */
+const supportAccessGrantEventData = () =>
+  z.looseObject({ id: idSchema, support_user_id: idSchema, company_id: idSchema, expires_at: z.string() })
+
 /** Dados dos eventos `kanban.card.*` (T50). */
 const kanbanCardEventData = () =>
   z.looseObject({
@@ -271,6 +279,17 @@ export const REALTIME_EVENTS = {
   ),
   /** Runs pausados na queda retomados (ação "Retomar" do modal). */
   'flow.resumed': defineEvent(connectionEventData().extend({ resumed_count: z.number().int() }), 'flows.view'),
+  // T32: acesso de suporte. Publicados na empresa (owner/admin filtram no cliente) e para o usuário `support`.
+  /** Pedido novo ou reenviado: abre o modal global de aprovação. */
+  'support_access.requested': defineEvent(z.looseObject({ request: supportAccessRequestEventData() })),
+  /** Pedido aprovado: concessão de 12 h criada. */
+  'support_access.granted': defineEvent(z.looseObject({ request: supportAccessRequestEventData(), grant: supportAccessGrantEventData() })),
+  /** Pedido recusado por owner/admin. */
+  'support_access.rejected': defineEvent(z.looseObject({ request: supportAccessRequestEventData() })),
+  /** Concessão revogada por owner/admin. */
+  'support_access.revoked': defineEvent(z.looseObject({ grant: supportAccessGrantEventData() })),
+  /** Pedido cancelado pelo suporte. */
+  'support_access.cancelled': defineEvent(z.looseObject({ request: supportAccessRequestEventData() })),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

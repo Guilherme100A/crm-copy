@@ -3,6 +3,7 @@
 import { asc, and, eq } from 'drizzle-orm'
 import { companyMembers, type Database } from '@crm/db'
 import { DEFAULT_ROLE_PERMISSIONS, effectivePermissions, type PermissionKey } from '@crm/shared'
+import { findActiveSupportGrant, hadSupportGrant, listActiveSupportGrants, supportGrantPermissions, type SupportGrantContext } from '../support-access/grants'
 import type { AuthUser, CompanyMember } from './types'
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -40,25 +41,50 @@ async function firstMembership(db: Database, userId: string): Promise<CompanyMem
 }
 
 export type CompanyResolution =
-  | { ok: true; companyId: string | null; member: CompanyMember | null }
+  | { ok: true; companyId: string | null; member: CompanyMember | null; supportGrant?: SupportGrantContext | null }
   | { ok: false; reason: 'not_found' }
+  /** T32: suporte com concessão expirada/revogada nesta empresa (AC-T32-02 → 403). */
+  | { ok: false; reason: 'support_access_expired' }
 
 /**
  * Resolve a empresa ativa do usuário. Com `requestedCompanyId` (header): precisa ser membro, senão `not_found`.
  * Sem header: `last_company_id` se ainda for membro; senão o vínculo mais antigo; sem vínculo → `companyId: null`.
+ * T32: usuário `support` sem vínculo entra na empresa só com concessão ativa (`supportGrant`, `member: null`).
  */
 export async function resolveCompanyContext(
   db: Database,
-  user: Pick<AuthUser, 'id' | 'lastCompanyId'>,
+  user: Pick<AuthUser, 'id' | 'lastCompanyId'> & Partial<Pick<AuthUser, 'systemRole'>>,
   requestedCompanyId?: string | null,
 ): Promise<CompanyResolution> {
+  const isSupport = user.systemRole === 'support'
   if (requestedCompanyId) {
     const member = await findMembership(db, user.id, requestedCompanyId)
-    return member ? { ok: true, companyId: member.companyId, member } : { ok: false, reason: 'not_found' }
+    if (member) return { ok: true, companyId: member.companyId, member }
+    if (!isSupport || !isUuid(requestedCompanyId)) return { ok: false, reason: 'not_found' }
+    const grant = await findActiveSupportGrant(db, user.id, requestedCompanyId)
+    if (grant) return { ok: true, companyId: grant.companyId, member: null, supportGrant: grant }
+    // Já teve concessão (expirada/revogada) → 403; nunca teve → 404 (não vaza existência).
+    return (await hadSupportGrant(db, user.id, requestedCompanyId)) ? { ok: false, reason: 'support_access_expired' } : { ok: false, reason: 'not_found' }
   }
   const member =
     (user.lastCompanyId ? await findMembership(db, user.id, user.lastCompanyId) : null) ?? (await firstMembership(db, user.id))
+  if (!member && isSupport) {
+    const grant =
+      (user.lastCompanyId ? await findActiveSupportGrant(db, user.id, user.lastCompanyId) : null) ??
+      (await listActiveSupportGrants(db, user.id))[0] ??
+      null
+    if (grant) return { ok: true, companyId: grant.companyId, member: null, supportGrant: grant }
+  }
   return { ok: true, companyId: member?.companyId ?? null, member }
+}
+
+/** Permissões da resolução: as do vínculo ou, por concessão de suporte, só `flows.*` e `settings.mcp.*` (T32). */
+export function resolutionPermissions(
+  resolution: { member: CompanyMember | null; supportGrant?: SupportGrantContext | null },
+  user: Pick<AuthUser, 'systemRole'> | null,
+): ReadonlySet<PermissionKey> {
+  if (!resolution.member && resolution.supportGrant) return supportGrantPermissions()
+  return permissionsOf(resolution.member, user)
 }
 
 /** Permissões efetivas do membro (owner tem tudo; lista explícita substitui a matriz). */

@@ -1,11 +1,12 @@
 // Contas, sessões, perfil e senha (SPEC T15; feature 01 §3, §5, §6).
 import { randomBytes } from 'node:crypto'
-import { and, asc, eq, gt, isNull, sql } from 'drizzle-orm'
+import { and, asc, eq, gt, inArray, isNull, sql } from 'drizzle-orm'
 import { apiTokens, companies, companyMembers, passwordResets, userProfiles, users, type Database, type MemberRole } from '@crm/db'
 import { hashPassword, verifyPassword, type BlobStore, type Mailer } from '@crm/node-kit'
 import { DEFAULT_LOCALE, effectivePermissions, type Locale, type PermissionKey, type User } from '@crm/shared'
 import { apiTokenDisplayPrefix, generateApiToken, generateSessionToken, hashToken } from '../platform/tokens'
 import type { SessionService } from '../platform/session-service'
+import { listActiveSupportGrants, SUPPORT_GRANT_PERMISSIONS } from '../support-access/grants'
 import { AuthError, isUniqueViolation } from './errors'
 import { AVATAR_MAX_BYTES, detectImageMime, isAvatarMime } from './image'
 import { DEFAULT_COMPANY_NAME, normalizeEmail, normalizeLocale, normalizeReferralCode, normalizeWhatsapp } from './normalize'
@@ -23,6 +24,8 @@ export interface CompanySummary {
   role: MemberRole
   /** T91: permissões efetivas do usuário nesta empresa (as que o servidor aplica). */
   effective_permissions: PermissionKey[]
+  /** T32: presente só nas empresas em que o usuário `support` entra por concessão ativa (sem vínculo; `role: 'member'`). */
+  support_access?: { grant_id: string; expires_at: string }
 }
 
 export interface AuthServiceOptions {
@@ -165,10 +168,38 @@ export class AuthService {
       .where(eq(companyMembers.userId, userId))
       .orderBy(asc(companyMembers.createdAt), asc(companies.name))
     // T91: as permissões efetivas (lista explícita do membro ou matriz do papel), o mesmo cálculo do servidor.
-    return rows.map(({ permissionKeys, systemRole, ...c }) => ({
+    const list: CompanySummary[] = rows.map(({ permissionKeys, systemRole, ...c }) => ({
       ...c,
       effective_permissions: [...effectivePermissions({ role: c.role, permissionKeys, systemRole })].sort(),
     }))
+    return [...list, ...(await this.supportGrantCompanies(userId, new Set(list.map((c) => c.id))))]
+  }
+
+  /** T32: empresas em que o usuário `support` tem concessão ativa (sem vínculo), para o perfil e a troca de empresa. */
+  private async supportGrantCompanies(userId: string, memberOf: ReadonlySet<string>): Promise<CompanySummary[]> {
+    const [user] = await this.db.select({ systemRole: users.systemRole }).from(users).where(eq(users.id, userId)).limit(1)
+    if (user?.systemRole !== 'support') return []
+    const grants = (await listActiveSupportGrants(this.db, userId)).filter((g) => !memberOf.has(g.companyId))
+    if (grants.length === 0) return []
+    const names = await this.db
+      .select({ id: companies.id, name: companies.name, slug: companies.slug })
+      .from(companies)
+      .where(inArray(companies.id, [...new Set(grants.map((g) => g.companyId))]))
+    const byId = new Map(names.map((c) => [c.id, c]))
+    const seen = new Set<string>()
+    const out: CompanySummary[] = []
+    for (const g of grants) {
+      const c = byId.get(g.companyId)
+      if (!c || seen.has(c.id)) continue
+      seen.add(c.id)
+      out.push({
+        ...c,
+        role: 'member',
+        effective_permissions: [...SUPPORT_GRANT_PERMISSIONS].sort(),
+        support_access: { grant_id: g.id, expires_at: g.expiresAt.toISOString() },
+      })
+    }
+    return out
   }
 
   // ---------- login ----------
