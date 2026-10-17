@@ -58,7 +58,7 @@
 | 5 | T41 | Nós de lógica (condição, distribuidor, conexão de fluxo, intervalo) | MERGED | Bigorna | Lupa | 0 | 347b8ff |
 | 5 | T42 | Nós externos (HTTP e IA) | MERGED | Bigorna | Sonda | 0 | 5e15536 |
 | 5 | T43 | API de execuções, compartilhar, importar e exportar | MERGED | Bigorna | Lupa | 0 | b59f8d4 |
-| 5 | T44 | UI fluxos: lista e pastas | TODO | | | 0 | |
+| 5 | T44 | UI fluxos: lista e pastas | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T44.md; libera DELETE com configs afetadas/force e import 409 (aditivo) |
 | 5 | T45 | UI fluxos: canvas do editor | MERGED | Torno | Sonda | 0 | 9dab063 |
 | 5 | T67 | Contatos: importação CSV e do WhatsApp | MERGED | Bigorna | Lupa | 0 | 358c67f |
 | 5 | T72 | Webhooks de entrada: CRUD e recepção pública | MERGED | Bigorna | Lupa | 0 | c7c9abb |

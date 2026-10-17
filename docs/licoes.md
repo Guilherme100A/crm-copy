@@ -56,3 +56,4 @@
 - Mudança de comportamento no core precisa atualizar os testes dos pacotes que dependem dele (api, worker); o gate agora roda os dependentes (`pnpm --filter "...[base]"`). (T58 → regressão em `apps/api` contacts)
 - O filtro `[ref]` do pnpm (`--filter "...[base]"`) não acha nada dentro de worktree no Windows: use filtro de diretório (`--filter "...{./apps/x}"`). O gate testa os dependentes assim. (orquestração)
 - Mudar o seed (ex.: usuário novo) muda o que o reset do harness devolve: atualize `apps/api/src/e2e/e2e.db.unit.test.ts`. (T54)
+- E2E: capture a URL só depois de ela estabilizar (redirect de home, replace de aba/filtro). Use `await expect(page).toHaveURL(...)` antes de guardar/recarregar; um `start` capturado cedo quebra sob carga. (T53)
