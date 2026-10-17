@@ -1,0 +1,125 @@
+{
+  "version": 1,
+  "task": "T57",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T02:56:11.779Z",
+  "commit": "1a208a48bb74cc9705f8dd35f43e14257400b05e",
+  "base": "1a208a4",
+  "changedFiles": [
+    "apps/web/src/features/flow-editor/node-editors/registry.ts",
+    "apps/web/src/features/flow-editor/node-editors/crm/crm-rules.ts",
+    "apps/web/src/features/flow-editor/node-editors/crm/crm.unit.test.ts",
+    "apps/web/src/features/flow-editor/node-editors/crm/index.ts",
+    "apps/web/src/features/flow-editor/node-editors/crm/kanban-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/crm/manipulator-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/crm/simple-editors.tsx",
+    "apps/web/src/features/flow-editor/node-editors/crm/tags-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/external/ai-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/external/external-rules.ts",
+    "apps/web/src/features/flow-editor/node-editors/external/external.unit.test.ts",
+    "apps/web/src/features/flow-editor/node-editors/external/http-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/external/index.ts",
+    "apps/web/src/features/flow-editor/node-editors/external/pixel-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/logic/api.ts",
+    "apps/web/src/features/flow-editor/node-editors/logic/condition-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/logic/connection-flow-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/logic/distributor-editor.tsx",
+    "apps/web/src/features/flow-editor/node-editors/logic/index.ts",
+    "apps/web/src/features/flow-editor/node-editors/logic/kit.tsx",
+    "apps/web/src/features/flow-editor/node-editors/logic/logic-rules.ts",
+    "apps/web/src/features/flow-editor/node-editors/logic/logic.unit.test.ts",
+    "apps/web/src/features/flow-editor/node-editors/logic/rules.ts",
+    "apps/web/src/features/flow-editor/node-editors/logic/smart-interval-editor.tsx",
+    "apps/web/src/i18n/en/node-editors-logic.json",
+    "apps/web/src/i18n/es/node-editors-logic.json",
+    "apps/web/src/i18n/pt-BR/node-editors-logic.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 12.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 6.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 12.5s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.4s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "27 arquivo(s) alterado(s)"
+    }
+  ]
+}

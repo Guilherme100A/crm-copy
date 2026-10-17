@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "task": "T57",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-17T03:10:43.153Z",
+  "commit": "1a208a48bb74cc9705f8dd35f43e14257400b05e",
+  "base": "1a208a4",
+  "changedFiles": [
+    "tests/acceptance/T57/crm-external.e2e.ts",
+    "tests/acceptance/T57/logic.e2e.ts",
+    "tests/acceptance/T57/support.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T57-01, AC-T57-02, AC-T57-03, AC-T57-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 2 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "ACs também no mobile (layout)",
+      "status": "pass",
+      "detail": "nenhum: só desktop"
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "15 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projeto E2E desktop",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T57-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T57-02",
+      "status": "pass",
+      "detail": "4 passed"
+    },
+    {
+      "name": "AC-T57-03",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T57-04",
+      "status": "pass",
+      "detail": "5 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "3 arquivo(s) alterado(s)"
+    }
+  ]
+}
