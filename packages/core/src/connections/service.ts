@@ -1,10 +1,10 @@
 // Conexões WhatsApp da empresa (T40) sobre o `WaGateway` (SPEC 3.8). Toda leitura/escrita filtra pela empresa
 // (cross-tenant → not_found). O gateway é a fonte do estado da sessão; `crm.connections` guarda o vínculo, as
 // preferências e o último `session.connection` (projetado pela T47 via `applyConnectionEvent`).
-import { companies, connections, EPHEMERAL_DURATIONS, PROXY_PROTOCOLS, type Database, type EphemeralDuration } from '@crm/db'
+import { companies, connections, EPHEMERAL_DURATIONS, PROXY_PROTOCOLS, type ConnectionOrigin, type Database, type EphemeralDuration } from '@crm/db'
 import { getCredentialsCipher, serializeEncrypted, type CredentialCipher } from '@crm/node-kit'
-import { isSendRejectedError, type DisconnectKind, type SessionState, type SessionView, type WaEvent, type WaGateway } from '@crm/wa-port'
-import { and, asc, eq, ilike, or, sql } from 'drizzle-orm'
+import { CONNECTED_STATES, isSendRejectedError, type DisconnectKind, type SessionState, type SessionView, type WaEvent, type WaGateway } from '@crm/wa-port'
+import { and, asc, eq, ilike, inArray, isNull, or, sql } from 'drizzle-orm'
 import { pausedFlowCountsByConnection } from '../connections-status/paused-flows'
 import { ConnectionsError } from './errors'
 import { CONNECTION_UI_STATUSES, deriveConnectionStatus, type ConnectionBadge, type ConnectionUiStatus } from './status'
@@ -26,6 +26,8 @@ export interface ConnectionView {
   name: string
   session_id: string
   phone_number: string | null
+  /** `crm`: criada pelo CRM; `ai-manager`: chip importado do ai-manager (sessão gerenciada no painel de lá). */
+  origin: ConnectionOrigin
   status: ConnectionUiStatus
   session_state: SessionState | null
   badges: ConnectionBadge[]
@@ -46,6 +48,19 @@ export interface ConnectionView {
 /** Item da lista: a conexão e quantos runs a queda dela deixou pausados (modal Retomar/Cancelar, T71). */
 export interface ConnectionListItem extends ConnectionView {
   paused_flows_count: number
+}
+
+/** Sessão do gateway (chip do ai-manager) que ainda não está vinculada a nenhuma conexão do CRM. */
+export interface ImportableSessionView {
+  session_id: string
+  name: string
+  phone_number: string | null
+  session_state: SessionState
+  /** Conta autenticada no gateway (WARMING, STABLE, DEGRADED ou PAUSED). */
+  connected: boolean
+  warmup_started_at: string | null
+  last_connected_at: string | null
+  created_at: string
 }
 
 /** Limite de conexões da empresa (T95; `connections: null` = sem limite) e o uso (sem as agendadas para exclusão). */
@@ -105,7 +120,7 @@ export class ConnectionsService {
   // ---------------------------------------------------------------- leitura
 
   async list(companyId: string, q: ListConnectionsQuery = {}) {
-    const where = [eq(connections.companyId, companyId)]
+    const where = [eq(connections.companyId, companyId), isNull(connections.unlinkedAt)]
     const search = q.search?.trim()
     if (search) where.push(or(ilike(connections.name, `%${search}%`), ilike(connections.phoneNumber, `%${search}%`))!)
     const rows = await this.db
@@ -190,7 +205,7 @@ export class ConnectionsService {
 
   /** Conectar/reconectar: sessão pausada → resume; senão gera QR. */
   async connect(companyId: string, id: string): Promise<ConnectionView> {
-    const row = await this.require(companyId, id)
+    const row = this.managedByCrm(await this.require(companyId, id))
     const state = await this.sessionState(row.sessionId)
     if (state === 'PAUSED') await viaGateway(() => this.gateway.sessions.resume(row.sessionId))
     else await viaGateway(() => this.gateway.sessions.startQr(row.sessionId))
@@ -199,20 +214,20 @@ export class ConnectionsService {
 
   /** Desconectar = desvincular o aparelho (logout). */
   async disconnect(companyId: string, id: string): Promise<ConnectionView> {
-    const row = await this.require(companyId, id)
+    const row = this.managedByCrm(await this.require(companyId, id))
     await viaGateway(() => this.gateway.sessions.logout(row.sessionId))
     const at = this.now()
     return this.patch(companyId, id, { connectionState: 'close', lastDisconnectReason: 'loggedOut', disconnectedAt: at, updatedAt: at })
   }
 
   async restart(companyId: string, id: string): Promise<ConnectionView> {
-    const row = await this.require(companyId, id)
+    const row = this.managedByCrm(await this.require(companyId, id))
     await viaGateway(() => this.gateway.sessions.restart(row.sessionId))
     return this.patch(companyId, id, { requiresRestart: false, updatedAt: this.now() })
   }
 
   async scheduleDeletion(companyId: string, id: string): Promise<ConnectionView> {
-    await this.require(companyId, id)
+    this.managedByCrm(await this.require(companyId, id))
     return this.patch(companyId, id, { scheduledForDeletionAt: this.now(), updatedAt: this.now() })
   }
 
@@ -225,7 +240,7 @@ export class ConnectionsService {
   /** Código no telefone: DDI + número só com dígitos (`^[1-9]\d{6,14}$`). */
   async pairingCode(companyId: string, id: string, phone: unknown): Promise<{ code: string }> {
     const digits = this.validPhone(phone)
-    const row = await this.require(companyId, id)
+    const row = this.managedByCrm(await this.require(companyId, id))
     const res = await viaGateway(() => this.gateway.sessions.requestPairingCode(row.sessionId, `+${digits}`))
     await this.patch(companyId, id, { qrRequestedAt: this.now(), phoneNumber: row.phoneNumber ?? `+${digits}`, updatedAt: this.now() })
     return { code: res.code }
@@ -233,7 +248,7 @@ export class ConnectionsService {
 
   /** Proxy personalizado: guardado no CRM (senha cifrada); vale depois de reiniciar a sessão. */
   async setProxy(companyId: string, id: string, input: Record<string, unknown>): Promise<ConnectionView> {
-    await this.require(companyId, id)
+    this.managedByCrm(await this.require(companyId, id))
     const protocol = input.protocol
     if (!(PROXY_PROTOCOLS as readonly unknown[]).includes(protocol)) throw validation('protocol', 'Use http, https ou socks5')
     const host = typeof input.host === 'string' ? input.host.trim() : ''
@@ -259,8 +274,98 @@ export class ConnectionsService {
   }
 
   async removeProxy(companyId: string, id: string): Promise<ConnectionView> {
-    await this.require(companyId, id)
+    this.managedByCrm(await this.require(companyId, id))
     return this.patch(companyId, id, { proxyProtocol: null, proxyHost: null, proxyPort: null, proxyUsername: null, proxyPasswordEnc: null, requiresRestart: true, updatedAt: this.now() })
+  }
+
+  // ---------------------------------------------------------------- chips do ai-manager (modo extensão)
+
+  /**
+   * Sessões do gateway que nenhuma conexão do CRM usa (em nenhuma empresa): os chips que já existem no ai-manager e
+   * podem ser importados. A rota só existe com o gateway no perfil `ai-manager`.
+   */
+  async importable(): Promise<ImportableSessionView[]> {
+    const sessions = await viaGateway(() => this.gateway.sessions.list())
+    const linked = new Set((await this.db.select({ sessionId: connections.sessionId }).from(connections)).map((r) => r.sessionId))
+    return sessions
+      .filter((s) => !linked.has(s.id))
+      .sort((a, b) => a.createdAt.localeCompare(b.createdAt))
+      .map((s) => ({
+        session_id: s.id,
+        name: s.name,
+        phone_number: s.phone,
+        session_state: s.status,
+        connected: CONNECTED_STATES.includes(s.status),
+        warmup_started_at: s.warmupStartedAt,
+        last_connected_at: s.lastConnectedAt,
+        created_at: s.createdAt,
+      }))
+  }
+
+  /**
+   * Importa chips existentes: cria a conexão apontando para a MESMA sessão do gateway, sem QR, sem criar sessão, sem
+   * restart nem logout. O estado inicial vem do gateway; depois os eventos `session.*` atualizam como em qualquer
+   * conexão. Uma sessão só pode ter uma conexão (índice único `connections_session_id_uq`) → `conflict`.
+   */
+  async importSessions(companyId: string, sessionIds: unknown, actorUserId: string | null): Promise<ConnectionView[]> {
+    if (
+      !Array.isArray(sessionIds) ||
+      sessionIds.length === 0 ||
+      sessionIds.length > 50 ||
+      !sessionIds.every((v) => typeof v === 'string' && v.trim() !== '' && v.length <= 200)
+    )
+      throw validation('session_ids', 'Escolha de 1 a 50 sessões')
+    const ids = [...new Set((sessionIds as string[]).map((v) => v.trim()))]
+    const { connections: limit, used } = await this.limits(companyId)
+    if (limit !== null && used + ids.length > limit) throw new ConnectionsError('limit_reached', 'Limite de conexões da empresa atingido', { limit, used })
+    const taken = await this.db.select({ sessionId: connections.sessionId }).from(connections).where(inArray(connections.sessionId, ids))
+    if (taken.length) throw new ConnectionsError('conflict', 'Sessão já vinculada a uma conexão do CRM', { session_ids: taken.map((r) => r.sessionId) })
+    const sessions: SessionView[] = []
+    for (const sid of ids) sessions.push(await viaGateway(() => this.gateway.sessions.get(sid)))
+    const at = this.now()
+    try {
+      return await this.db.transaction(async (tx) => {
+        const out: ConnectionView[] = []
+        for (const s of sessions) {
+          const open = CONNECTED_STATES.includes(s.status)
+          const [row] = await tx
+            .insert(connections)
+            .values({
+              companyId,
+              sessionId: s.id,
+              origin: 'ai-manager',
+              name: importName(s),
+              phoneNumber: s.phone,
+              connectionState: open ? 'open' : s.status === 'DISCONNECTED' ? 'close' : null,
+              connectedAt: open ? (s.lastConnectedAt ? new Date(s.lastConnectedAt) : at) : null,
+              createdByUserId: actorUserId,
+              createdAt: at,
+              updatedAt: at,
+            })
+            .returning()
+          out.push(this.toView(row!, s.status))
+        }
+        return out
+      })
+    } catch (err) {
+      if (isUniqueViolation(err)) throw new ConnectionsError('conflict', 'Sessão já vinculada a uma conexão do CRM')
+      throw err
+    }
+  }
+
+  /**
+   * Desvincular uma conexão importada: só o CRM larga o chip. Nenhuma chamada ao gateway (sem logout, remove,
+   * pause ou restart); a sessão segue no ai-manager como estava e pode ser importada de novo. Os chats ficam.
+   */
+  async unlink(companyId: string, id: string): Promise<{ id: string; session_id: string }> {
+    const row = await this.require(companyId, id)
+    if (row.origin !== 'ai-manager') throw new ConnectionsError('invalid_transition', 'Só conexões importadas do ai-manager podem ser desvinculadas')
+    const at = this.now()
+    await this.db
+      .update(connections)
+      .set({ sessionId: `unlinked:${row.id}`, unlinkedSessionId: row.sessionId, unlinkedAt: at, scheduledForDeletionAt: at, connectionState: null, updatedAt: at })
+      .where(and(eq(connections.id, id), eq(connections.companyId, companyId)))
+    return { id: row.id, session_id: row.sessionId }
   }
 
   // ---------------------------------------------------------------- perfil (opcional por capacidade)
@@ -292,7 +397,7 @@ export class ConnectionsService {
 
   /** Sessões das conexões da empresa (fonte do `registerCompanySessionsSource`, T22). */
   async sessionIdsOf(companyId: string): Promise<string[]> {
-    const rows = await this.db.select({ sessionId: connections.sessionId }).from(connections).where(eq(connections.companyId, companyId))
+    const rows = await this.db.select({ sessionId: connections.sessionId }).from(connections).where(crmManagedOf(companyId))
     return rows.map((r) => r.sessionId)
   }
 
@@ -315,6 +420,16 @@ export class ConnectionsService {
   }
 
   // ---------------------------------------------------------------- internos
+
+  /** Ações do ciclo de vida da sessão só valem para conexões criadas pelo CRM; o chip importado é do ai-manager. */
+  private managedByCrm(row: ConnectionRow): ConnectionRow {
+    if (row.origin === 'ai-manager')
+      throw new ConnectionsError(
+        'managed_externally',
+        'Chip importado do ai-manager: conecte, desconecte, reinicie e configure o proxy no painel do ai-manager',
+      )
+    return row
+  }
 
   private profileControl() {
     if (!this.gateway.capabilities.businessProfile || !this.gateway.profile) throw new ConnectionsError('not_found', 'Perfil do WhatsApp indisponível para esta conexão')
@@ -352,7 +467,7 @@ export class ConnectionsService {
     const [row] = await this.db
       .select()
       .from(connections)
-      .where(and(eq(connections.id, id), eq(connections.companyId, companyId)))
+      .where(and(eq(connections.id, id), eq(connections.companyId, companyId), isNull(connections.unlinkedAt)))
     if (!row) throw new ConnectionsError('not_found', 'Conexão não encontrada')
     return row
   }
@@ -398,6 +513,7 @@ export class ConnectionsService {
       name: r.name,
       session_id: r.sessionId,
       phone_number: r.phoneNumber,
+      origin: r.origin as ConnectionOrigin,
       status,
       session_state: sessionState,
       badges,
@@ -417,6 +533,26 @@ export class ConnectionsService {
       updated_at: r.updatedAt.toISOString(),
     }
   }
+}
+
+/**
+ * Conexões da empresa cujas sessões o CRM gerencia (fonte da T22: desativar a empresa pausa essas sessões). Chips
+ * importados do ai-manager ficam de fora: desativar uma empresa do CRM não derruba um chip do ai-manager.
+ */
+export const crmManagedOf = (companyId: string) =>
+  and(eq(connections.companyId, companyId), eq(connections.origin, 'crm'), isNull(connections.unlinkedAt))
+
+/** Nome da conexão importada: o nome do chip no ai-manager (2–100), ou o número/id quando curto demais. */
+export function importName(s: Pick<SessionView, 'id' | 'name' | 'phone'>): string {
+  const name = s.name?.trim() ?? ''
+  if (name.length >= 2) return name.slice(0, 100)
+  return `Chip ${s.phone ?? s.id.slice(0, 12)}`.slice(0, 100)
+}
+
+const isUniqueViolation = (err: unknown) => {
+  for (let e: unknown = err, i = 0; e && i < 4; e = (e as { cause?: unknown }).cause, i++)
+    if ((e as { code?: unknown }).code === '23505') return true
+  return false
 }
 
 /** Sessão → conexão e empresa (resolver da T33/T49). `undefined` se a sessão não é do CRM. */

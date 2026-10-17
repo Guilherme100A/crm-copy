@@ -1,6 +1,14 @@
 // Conexões WhatsApp (SPEC T40; 08-conexoes.md §5–§6) sobre o WaGateway. Leitura com connections.view, escrita e
 // ações com connections.edit, exclusão agendada com connections.delete (08 §8).
-import { CONNECTION_UI_STATUSES, ConnectionPausedFlows, ConnectionsError, ConnectionsService, registerConnectionSessionsSource } from '@crm/core'
+import {
+  CONNECTION_UI_STATUSES,
+  ConnectionPausedFlows,
+  ConnectionsError,
+  ConnectionsService,
+  isWaExtensionMode,
+  registerConnectionSessionsSource,
+  waRpcProfile,
+} from '@crm/core'
 import { flowRuns } from '@crm/db'
 import type { CredentialCipher } from '@crm/node-kit'
 import { inArray } from 'drizzle-orm'
@@ -37,6 +45,8 @@ function toApiError(err: unknown): unknown {
     invalid_transition: 'INVALID_TRANSITION',
     not_supported: 'VALIDATION_ERROR',
     upstream: 'UPSTREAM_ERROR',
+    managed_externally: 'CONFLICT',
+    conflict: 'CONFLICT',
   } as const
   return new ApiError(map[err.code], err.message, err.details)
 }
@@ -80,8 +90,37 @@ export function connectionsRoutes(deps: ResolvedDeps) {
   const company = (c: Context<AppEnv>) => getCompanyCtx(c).companyId
   const id = (c: Context<AppEnv>) => c.req.param('id') ?? ''
 
+  // Modo extensão (gateway no perfil ai-manager): a tela oferece "Importar chips do ai-manager".
+  const extension = () => isWaExtensionMode(deps.waProfile ?? waRpcProfile())
+  const requireExtension = async (_c: Context<AppEnv>, next: () => Promise<void>) => {
+    if (!extension()) throw new ApiError('NOT_FOUND', 'Rota não encontrada')
+    await next()
+  }
+
   app.get('/api/connections', view, validate('query', listQuery), async (c) => {
-    return c.json(await domain(() => svc().list(company(c), c.req.valid('query'))), 200)
+    const page = await domain(() => svc().list(company(c), c.req.valid('query')))
+    return c.json({ ...page, features: { import_ai_manager: extension() } }, 200)
+  })
+
+  // Chips do ai-manager ainda sem conexão no CRM (em qualquer empresa). Mesma permissão de criar conexão.
+  app.get('/api/connections/importable', edit, requireExtension, async (c) => {
+    setAudit(c, { skip: true })
+    return c.json({ items: await domain(() => svc().importable()) }, 200)
+  })
+
+  // Importa chips existentes (mesmo id de sessão; sem QR, sem criar sessão, sem restart/logout).
+  app.post('/api/connections/import', edit, requireExtension, async (c) => {
+    const b = await body(c)
+    const items = await domain(() => svc().importSessions(company(c), b.session_ids, getCompanyCtx(c).user?.id ?? null))
+    setAudit(c, { action: 'connections.import', targetType: 'connection', targetId: items[0]?.id, detail: { session_ids: items.map((i) => i.session_id), connection_ids: items.map((i) => i.id) } })
+    return c.json({ items }, 201)
+  })
+
+  // Desvincular conexão importada: o CRM larga o chip; nada é chamado no gateway (o chip segue no ai-manager).
+  app.post('/api/connections/:id/unlink', del, async (c) => {
+    const res = await domain(() => svc().unlink(company(c), id(c)))
+    setAudit(c, { action: 'connections.unlink', targetType: 'connection', targetId: res.id, detail: { session_id: res.session_id } })
+    return c.json({ unlinked: res }, 200)
   })
 
   app.post('/api/connections', edit, async (c) => {

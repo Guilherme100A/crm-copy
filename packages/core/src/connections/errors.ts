@@ -1,6 +1,7 @@
 // Erros de domínio das conexões; a API converte para o código/HTTP da SPEC 3.5.
 
-export type ConnectionsErrorCode = 'not_found' | 'validation' | 'limit_reached' | 'invalid_transition' | 'not_supported' | 'upstream'
+/** `managed_externally`: ação de sessão numa conexão importada do ai-manager (o chip é gerenciado lá); `conflict`: sessão já vinculada. */
+export type ConnectionsErrorCode = 'not_found' | 'validation' | 'limit_reached' | 'invalid_transition' | 'not_supported' | 'upstream' | 'managed_externally' | 'conflict'
 
 export class ConnectionsError extends Error {
   constructor(
