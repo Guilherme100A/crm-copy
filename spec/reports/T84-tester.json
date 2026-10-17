@@ -3,12 +3,10 @@
   "task": "T84",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T02:53:21.079Z",
-  "commit": "1bb962d9691da99e4a517870e7837ec2c51bdd46",
-  "base": "1bb962d",
-  "changedFiles": [
-    "tests/acceptance/T84/notifications.e2e.ts"
-  ],
+  "at": "2026-10-17T02:59:53.622Z",
+  "commit": "8e88be34457f808b70d6599176285896aa300902",
+  "base": null,
+  "changedFiles": [],
   "checks": [
     {
       "name": "regra F-TEST-NO-REAL-WA",
@@ -88,7 +86,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "1 arquivo(s) alterado(s)"
+      "detail": "0 arquivo(s) alterado(s)"
     }
   ]
 }

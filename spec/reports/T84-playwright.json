@@ -2,7 +2,7 @@
   "config": {
     "argv": [
       "C:\\Program Files\\nodejs\\node.exe",
-      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T84\\node_modules\\@playwright\\test\\cli.js",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T90\\node_modules\\@playwright\\test\\cli.js",
       "test",
       "tests/acceptance/T84",
       "--config",
@@ -10,8 +10,8 @@
       "--reporter=json",
       "--project=desktop"
     ],
-    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T84\\tests\\acceptance\\playwright.config.ts",
-    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T84/tests/acceptance",
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T90\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T90/tests/acceptance",
     "failOnFlakyTests": false,
     "forbidOnly": false,
     "fullyParallel": false,
@@ -27,7 +27,7 @@
     "preserveOutput": "always",
     "projects": [
       {
-        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T84/test-results/playwright",
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T90/test-results/playwright",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -35,7 +35,7 @@
         },
         "id": "desktop",
         "name": "desktop",
-        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T84/tests/acceptance",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T90/tests/acceptance",
         "testIgnore": [],
         "testMatch": [
           "**/*.e2e.ts"
@@ -43,7 +43,7 @@
         "timeout": 90000
       },
       {
-        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T84/test-results/playwright",
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T90/test-results/playwright",
         "repeatEach": 1,
         "retries": 0,
         "metadata": {
@@ -51,7 +51,7 @@
         },
         "id": "mobile",
         "name": "mobile",
-        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T84/tests/acceptance",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T90/tests/acceptance",
         "testIgnore": [],
         "testMatch": [
           "**/*.e2e.ts"
@@ -77,8 +77,8 @@
     "workers": 1,
     "webServer": {
       "command": "node scripts/e2e/serve.mjs",
-      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T84\\",
-      "url": "http://127.0.0.1:21580",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T90\\",
+      "url": "http://127.0.0.1:32252",
       "wait": {
         "stdout": {}
       },
@@ -87,8 +87,8 @@
       "stdout": "pipe",
       "stderr": "pipe",
       "env": {
-        "E2E_WEB_PORT": "21580",
-        "E2E_API_PORT": "21581",
+        "E2E_WEB_PORT": "32252",
+        "E2E_API_PORT": "32253",
         "APP_NAME": "CRM",
         "ANTIBAN_MODE": "passthrough"
       }
@@ -124,12 +124,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7996,
+                      "duration": 4271,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:52:48.607Z",
+                      "startTime": "2026-10-17T02:59:26.318Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -158,12 +158,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 2707,
+                      "duration": 1386,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:52:56.702Z",
+                      "startTime": "2026-10-17T02:59:30.720Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -192,12 +192,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1524,
+                      "duration": 1145,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:52:59.417Z",
+                      "startTime": "2026-10-17T02:59:32.116Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -226,12 +226,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1609,
+                      "duration": 1170,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:53:00.950Z",
+                      "startTime": "2026-10-17T02:59:33.273Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -260,12 +260,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 1924,
+                      "duration": 2507,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:53:02.569Z",
+                      "startTime": "2026-10-17T02:59:34.452Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -294,12 +294,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 7967,
+                      "duration": 7865,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:53:04.503Z",
+                      "startTime": "2026-10-17T02:59:36.970Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -328,12 +328,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3875,
+                      "duration": 4075,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:53:12.481Z",
+                      "startTime": "2026-10-17T02:59:44.850Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -362,12 +362,12 @@
                       "workerIndex": 0,
                       "parallelIndex": 0,
                       "status": "passed",
-                      "duration": 3987,
+                      "duration": 3963,
                       "errors": [],
                       "stdout": [],
                       "stderr": [],
                       "retry": 0,
-                      "startTime": "2026-10-17T02:53:16.367Z",
+                      "startTime": "2026-10-17T02:59:48.941Z",
                       "annotations": [],
                       "attachments": []
                     }
@@ -387,8 +387,8 @@
   ],
   "errors": [],
   "stats": {
-    "startTime": "2026-10-17T02:52:41.167Z",
-    "duration": 39718.623,
+    "startTime": "2026-10-17T02:59:17.054Z",
+    "duration": 36331.546,
     "expected": 8,
     "skipped": 0,
     "unexpected": 0,
