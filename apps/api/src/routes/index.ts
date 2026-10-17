@@ -61,6 +61,7 @@ import { adminRoutes } from './admin/index'
 import { adminOpsRoutes } from './admin-ops/index'
 import { appConfigRoutes } from './app-config/index'
 import { e2eRoutes, isE2eEnabled } from '../e2e/index'
+import { flowCopilotRoutes } from './flow-copilot/index'
 export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   // T17: com E2E=1, primeiro de todos (põe os fakes nas deps antes das outras rotas lerem mailer/waGateway).
   if (isE2eEnabled()) app.route('/', e2eRoutes(deps))
@@ -127,4 +128,5 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', adminOpsRoutes(deps))
   app.route('/', appConfigRoutes(deps)) // T97: config do app em tempo de execução (T108 acrescenta campos)
   app.route('/', mcpOAuthRoutes(deps))
+  app.route('/', flowCopilotRoutes(deps)) // T93
 }

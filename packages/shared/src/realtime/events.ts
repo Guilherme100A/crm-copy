@@ -305,6 +305,35 @@ export const REALTIME_EVENTS = {
   'support_access.revoked': defineEvent(z.looseObject({ grant: supportAccessGrantEventData() })),
   /** Pedido cancelado pelo suporte. */
   'support_access.cancelled': defineEvent(z.looseObject({ request: supportAccessRequestEventData() })),
+  // ---- T93: assistente de fluxo (publicados só para o dono da sessão, `userId`) ----
+  // As edições do assistente saem em `flow.graph_updated` com `actor_id: null`, `source: 'ai'` (opcional; ausente =
+  // edição de usuário/API) e `session_id`; o looseObject do T28 aceita os campos extras.
+  /** Pedaço da resposta do turno: `kind: 'tool'` (resultado de uma ferramenta) ou `kind: 'text'` (`delta` do texto final). */
+  'copilot.delta': defineEvent(
+    z.looseObject({
+      session_id: idSchema,
+      flow_id: idSchema,
+      message_id: idSchema,
+      kind: z.enum(['text', 'tool']),
+      delta: z.string().optional(),
+      tool: z.string().optional(),
+      ok: z.boolean().optional(),
+      error: z.string().optional(),
+    }),
+    'flows.view',
+  ),
+  /** Fim do turno: `completed`, `failed` ou `paused_quota` (cota esgotada pausou a sessão). */
+  'copilot.completed': defineEvent(
+    z.looseObject({
+      session_id: idSchema,
+      flow_id: idSchema,
+      message_id: idSchema,
+      status: z.enum(['completed', 'failed', 'paused_quota']),
+      graph_changed: z.boolean(),
+      error_code: z.string().optional(),
+    }),
+    'flows.view',
+  ),
 } as const satisfies Record<string, RealtimeEventDef>
 
 export type RealtimeEventType = keyof typeof REALTIME_EVENTS

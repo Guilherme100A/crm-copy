@@ -1,0 +1,153 @@
+{
+  "version": 1,
+  "task": "T93",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T04:21:54.428Z",
+  "commit": "bea292dd3a3df324c7ed82bb1f5994bd06d8bb14",
+  "base": "bea292d",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/web/src/features/flow-editor/canvas/editor.tsx",
+    "apps/web/src/routes/flows/$flowId/edit.tsx",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/flow-copilot/flow-copilot.db.unit.test.ts",
+    "apps/api/src/routes/flow-copilot/index.ts",
+    "apps/web/src/features/flow-copilot/api.ts",
+    "apps/web/src/features/flow-copilot/copilot.tsx",
+    "apps/web/src/features/flow-copilot/flow-copilot.unit.test.ts",
+    "apps/web/src/features/flow-copilot/index.ts",
+    "apps/web/src/features/flow-copilot/stream.ts",
+    "apps/web/src/i18n/en/flow-copilot.json",
+    "apps/web/src/i18n/es/flow-copilot.json",
+    "apps/web/src/i18n/pt-BR/flow-copilot.json",
+    "packages/core/src/flow-copilot/edits.ts",
+    "packages/core/src/flow-copilot/edits.unit.test.ts",
+    "packages/core/src/flow-copilot/index.ts",
+    "packages/core/src/flow-copilot/service.db.unit.test.ts",
+    "packages/core/src/flow-copilot/service.ts",
+    "packages/db/drizzle/crm/0034_t93_flow_copilot.sql",
+    "packages/db/drizzle/crm/meta/0034_snapshot.json",
+    "packages/db/src/schema/crm/flow-copilot.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 12.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 5.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 136.0s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 14.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 186.1s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 12.9s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 6.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 15.0s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 3.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "25 arquivo(s) alterado(s)"
+    }
+  ]
+}

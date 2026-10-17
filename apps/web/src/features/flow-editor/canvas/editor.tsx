@@ -53,6 +53,7 @@ import {
   type ValidationIssue,
 } from './model'
 import { isForeign, onGraphUpdated } from './realtime'
+import { FlowCopilot } from '../../flow-copilot'
 
 /** Um componente para todos os tipos (fora do componente: o xyflow remonta os nós se o objeto mudar). */
 const NODE_TYPES: NodeTypes = Object.fromEntries(FLOW_NODE_TYPE_VALUES.map((t) => [t, FlowNodeComponent]))
@@ -410,6 +411,7 @@ function EditorBody({ bundle, readOnly, canEditFlows, me, mode }: { bundle: Edit
           {savedLabel}
         </span>
         <div className="ml-auto flex flex-wrap items-center gap-2">
+          <FlowCopilot flowId={flowId} beforeSend={() => saver.flush()} />
           {mode === 'view' && canEditFlows ? (
             <Link
               to="/flows/$flowId/edit"

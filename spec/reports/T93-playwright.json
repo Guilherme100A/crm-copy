@@ -1,0 +1,565 @@
+{
+  "config": {
+    "argv": [
+      "C:\\Program Files\\nodejs\\node.exe",
+      "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T93\\node_modules\\@playwright\\test\\cli.js",
+      "test",
+      "tests/acceptance/T93",
+      "--config",
+      "tests/acceptance/playwright.config.ts",
+      "--reporter=json",
+      "--project=desktop"
+    ],
+    "configFile": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T93\\tests\\acceptance\\playwright.config.ts",
+    "rootDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T93/tests/acceptance",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T93/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "desktop",
+        "name": "desktop",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T93/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      },
+      {
+        "outputDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T93/test-results/playwright",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "mobile",
+        "name": "mobile",
+        "testDir": "C:/Users/green/Downloads/leonas/leonas-crm-wt/T93/tests/acceptance",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.e2e.ts"
+        ],
+        "timeout": 90000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.63.0",
+    "workers": 1,
+    "webServer": {
+      "command": "node scripts/e2e/serve.mjs",
+      "cwd": "C:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T93\\",
+      "url": "http://127.0.0.1:23570",
+      "wait": {
+        "stdout": {}
+      },
+      "reuseExistingServer": false,
+      "timeout": 600000,
+      "stdout": "pipe",
+      "stderr": "pipe",
+      "env": {
+        "E2E_WEB_PORT": "23570",
+        "E2E_API_PORT": "23571",
+        "APP_NAME": "CRM",
+        "ANTIBAN_MODE": "passthrough"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "T93\\copilot.e2e.ts",
+      "file": "T93/copilot.e2e.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "T93 — sessões e streaming",
+          "file": "T93/copilot.e2e.ts",
+          "line": 144,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T93-01 sessões por fluxo: criar, listar, mensagens, arquivar/reabrir; resposta chega por copilot.delta + copilot.completed",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2309,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:04.775Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-31444aa7a3ac31b61bcd",
+              "file": "T93/copilot.e2e.ts",
+              "line": 145,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-01 painel no editor: conversa nova, resposta do assistente, arquivar e reabrir pela UI",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1637,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:07.190Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-83cdb68450a84fa2a8d3",
+              "file": "T93/copilot.e2e.ts",
+              "line": 203,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T93 — ferramentas validadas",
+          "file": "T93/copilot.e2e.ts",
+          "line": 242,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T93-02 edição inválida (criar nó, editar ação, ligar handle, remover Início) volta como erro ao modelo e não grava; o turno continua",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1185,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:08.841Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-28ffa2be85d9cfeb7c81",
+              "file": "T93/copilot.e2e.ts",
+              "line": 243,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-02 depois de uma recusa o modelo corrige e as edições válidas (criar, editar ação, ligar, remover) gravam",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1193,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:10.037Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-4cfcbbd67a7e18f0e191",
+              "file": "T93/copilot.e2e.ts",
+              "line": 284,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-02 painel mostra a ferramenta recusada (data-ok=false) e o canvas não muda",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1170,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:11.241Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-7425fc859bac164ddca5",
+              "file": "T93/copilot.e2e.ts",
+              "line": 330,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T93 — flow.graph_updated e canvas",
+          "file": "T93/copilot.e2e.ts",
+          "line": 354,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T93-03 cada edição do assistente publica flow.graph_updated com source 'ai' (depois de gravar)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1142,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:12.420Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-99fde598db294109e5e2",
+              "file": "T93/copilot.e2e.ts",
+              "line": 355,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-03 o canvas mostra o bloco criado pelo assistente sem recarregar e avisa 'Canvas atualizado'",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1694,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:13.571Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-a84f7be23cb5cfd23d0e",
+              "file": "T93/copilot.e2e.ts",
+              "line": 382,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T93 — cota",
+          "file": "T93/copilot.e2e.ts",
+          "line": 413,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T93-04 sem saldo o turno pausa a sessão (paused_quota) sem chamar o LLM; resume só com saldo",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1044,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:15.277Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-a04b1235a7c7e9071494",
+              "file": "T93/copilot.e2e.ts",
+              "line": 414,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-04 painel: aviso de pausa, retomar sem saldo mostra erro, com saldo volta a conversar",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1386,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:16.333Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-798c2d532d6bbaa8f811",
+              "file": "T93/copilot.e2e.ts",
+              "line": 449,
+              "column": 3
+            }
+          ]
+        },
+        {
+          "title": "T93 — sem flows.edit",
+          "file": "T93/copilot.e2e.ts",
+          "line": 476,
+          "column": 6,
+          "specs": [
+            {
+              "title": "AC-T93-05 só flows.view: ferramentas de escrita não existem para o modelo, ele responde e nada é gravado",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 962,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:17.727Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-6fbbeb04be65d5ac1b82",
+              "file": "T93/copilot.e2e.ts",
+              "line": 477,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-05 a permissão é lida no momento do turno: perder flows.edit tira as ferramentas de escrita da sessão já aberta",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 522,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:18.698Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-c52e1809540f8fd74adb",
+              "file": "T93/copilot.e2e.ts",
+              "line": 512,
+              "column": 3
+            },
+            {
+              "title": "AC-T93-05 painel em modo leitura: aviso flow-copilot-readonly e o assistente responde perguntas",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 90000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "desktop",
+                  "projectName": "desktop",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1172,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-10-17T05:29:19.231Z",
+                      "annotations": [],
+                      "attachments": []
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "39dad533388e8114052f-30f35188114c2b1472a5",
+              "file": "T93/copilot.e2e.ts",
+              "line": 536,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-17T05:28:57.097Z",
+    "duration": 23869.867,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
