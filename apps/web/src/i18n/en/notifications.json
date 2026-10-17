@@ -1,0 +1,33 @@
+{
+  "title": "Notifications",
+  "empty": "No notifications",
+  "clear": "Clear",
+  "bell": {
+    "label": "Notifications",
+    "labelUnread": "Notifications ({count} unread)"
+  },
+  "item": {
+    "newMessage": "New message",
+    "generic": "Notification"
+  },
+  "media": {
+    "image": "📷 Image",
+    "video": "🎥 Video",
+    "audio": "🎤 Audio",
+    "document": "📄 Document",
+    "sticker": "Sticker",
+    "location": "📍 Location",
+    "contact": "👤 Contact",
+    "other": "Message received"
+  },
+  "prefs": {
+    "browser": "Receive on this device",
+    "browserDenied": "Your browser blocked notifications for this site. Allow them in the browser settings.",
+    "volume": "Volume",
+    "advanced": "Advanced",
+    "enabled": "Notifications on",
+    "toast": "On-screen alerts",
+    "sounds": "Sounds",
+    "reset": "Restore defaults"
+  }
+}

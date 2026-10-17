@@ -4,6 +4,8 @@ import { Link, useRouterState } from '@tanstack/react-router'
 import { Menu as MenuIcon, MoreHorizontal, PanelLeftClose, PanelLeftOpen, X } from 'lucide-react'
 import { useEffect, useState, type ReactNode } from 'react'
 import { CompanySwitcher } from '@/features/company-switcher/company-switcher'
+// T84: sino/central de notificações; import ESTÁTICO (registra message.created/notification.created antes do SSE abrir).
+import { NotificationBell } from '@/features/notifications/bell'
 // T59: chip de saldo de IA; o import eager registra o handler `ai_wallet.updated` antes de o SSE abrir.
 import { WalletChip } from '@/features/settings-ai-usage/wallet-chip'
 // T54: import ESTÁTICO (registra os handlers support_access.* antes do SSE abrir).
@@ -102,6 +104,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
           <div className="-mx-1 min-h-0 flex-1 overflow-y-auto px-1">
             <NavList session={session} collapsed={collapsed} />
           </div>
+          <NotificationBell session={session} collapsed={collapsed} />
           <ShellFooter session={session} collapsed={collapsed} />
         </aside>
       ) : null}
@@ -126,6 +129,7 @@ export function AppShell({ session, children }: { session: Session; children: Re
             <Link to={home as never} className="min-w-0 flex-1">
               <AppName />
             </Link>
+            <NotificationBell session={session} />
             <UserMenu session={session} compact />
           </header>
         )}

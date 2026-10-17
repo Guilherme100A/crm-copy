@@ -1,0 +1,33 @@
+{
+  "title": "Notificações",
+  "empty": "Nenhuma notificação",
+  "clear": "Limpar",
+  "bell": {
+    "label": "Notificações",
+    "labelUnread": "Notificações ({count} não lidas)"
+  },
+  "item": {
+    "newMessage": "Nova mensagem",
+    "generic": "Notificação"
+  },
+  "media": {
+    "image": "📷 Imagem",
+    "video": "🎥 Vídeo",
+    "audio": "🎤 Áudio",
+    "document": "📄 Documento",
+    "sticker": "Figurinha",
+    "location": "📍 Localização",
+    "contact": "👤 Contato",
+    "other": "Mensagem recebida"
+  },
+  "prefs": {
+    "browser": "Receber no dispositivo",
+    "browserDenied": "O navegador bloqueou as notificações deste site. Libere nas configurações do navegador.",
+    "volume": "Volume",
+    "advanced": "Avançado",
+    "enabled": "Notificações ativas",
+    "toast": "Avisos na tela",
+    "sounds": "Sons",
+    "reset": "Restaurar padrão"
+  }
+}

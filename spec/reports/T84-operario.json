@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "task": "T84",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T02:45:57.232Z",
+  "commit": "1bb962d9691da99e4a517870e7837ec2c51bdd46",
+  "base": "1bb962d",
+  "changedFiles": [
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/features/notifications/bell.tsx",
+    "apps/web/src/features/notifications/effects.ts",
+    "apps/web/src/features/notifications/model.ts",
+    "apps/web/src/features/notifications/notifications.unit.test.ts",
+    "apps/web/src/features/notifications/realtime.ts",
+    "apps/web/src/features/notifications/store.ts",
+    "apps/web/src/i18n/en/notifications.json",
+    "apps/web/src/i18n/es/notifications.json",
+    "apps/web/src/i18n/pt-BR/notifications.json"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 17.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 7.5s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 15.1s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 6.3s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "10 arquivo(s) alterado(s)"
+    }
+  ]
+}
