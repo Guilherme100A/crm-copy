@@ -86,7 +86,13 @@
       "global_variable": "Variable global"
     },
     "subtype": "Tipo",
-    "subtypes": { "tag": "Etiqueta", "weekday": "Día de la semana", "time": "Horario", "date": "Fecha", "message_window": "Ventana de mensajes" },
+    "subtypes": {
+      "tag": "Etiqueta",
+      "weekday": "Día de la semana",
+      "time": "Horario",
+      "date": "Fecha",
+      "message_window": "Ventana de mensajes"
+    },
     "operator": "Operador",
     "operators": {
       "equal": "Es igual a",
@@ -194,7 +200,13 @@
     "modes": { "set_contact_custom_field": "Campo personalizado", "set_created_at": "Fecha de creación del contacto" },
     "field": "Campo",
     "operation": "Operación",
-    "operations": { "set_value": "Definir valor", "add": "Sumar", "subtract": "Restar", "multiply": "Multiplicar", "divide": "Dividir" },
+    "operations": {
+      "set_value": "Definir valor",
+      "add": "Sumar",
+      "subtract": "Restar",
+      "multiply": "Multiplicar",
+      "divide": "Dividir"
+    },
     "valueType": "Tipo de valor",
     "valueTypes": { "text": "Texto", "number": "Número" },
     "value": "Valor",
@@ -228,14 +240,23 @@
   "ai": {
     "engine": "Proveedor y modelo",
     "keySource": "Clave usada",
-    "keySources": { "platform": "Claves de la empresa o de la plataforma", "integration": "Una clave de IA registrada", "manual": "Clave manual (antigua)" },
+    "keySources": {
+      "platform": "Claves de la empresa o de la plataforma",
+      "integration": "Una clave de IA registrada",
+      "manual": "Clave manual (antigua)"
+    },
     "key": "Clave de IA",
     "keyProviders": { "openai": "OpenAI", "google": "Google", "openrouter": "OpenRouter", "anthropic": "Anthropic" },
     "manualKey": "Clave manual",
     "manualKeySaved": "Clave guardada (oculta)",
     "manualKeyHint": "La clave guardada nunca se muestra. Escriba para cambiarla.",
     "provider": "Proveedor",
-    "providers": { "gpt": "OpenAI (GPT)", "gemini": "Google (Gemini)", "openrouter": "OpenRouter", "platform": "Créditos de IA de la empresa" },
+    "providers": {
+      "gpt": "OpenAI (GPT)",
+      "gemini": "Google (Gemini)",
+      "openrouter": "OpenRouter",
+      "platform": "Créditos de IA de la empresa"
+    },
     "providerFromKey": "Definido por la clave elegida",
     "noKey": "sin clave",
     "providerUnavailable": "Este proveedor no tiene clave configurada: el bloque fallará hasta que se registre una clave.",
@@ -266,7 +287,20 @@
   "pixel": {
     "label": "Píxel",
     "event": "Evento",
-    "events": { "Compra": "Compra (Purchase)", "Lead": "Lead" },
+    "events": {
+      "Compra": "Compra (Purchase)",
+      "Lead": "Lead",
+      "InitiateCheckout": "Inicio de pago (InitiateCheckout)",
+      "AddToCart": "Agregar al carrito (AddToCart)",
+      "CompleteRegistration": "Registro completado (CompleteRegistration)",
+      "Contact": "Contacto (Contact)",
+      "Schedule": "Cita (Schedule)",
+      "Subscribe": "Suscripción (Subscribe)"
+    },
+    "pageId": "Página de Facebook (opcional)",
+    "pageIdHint": "Reemplaza la Página del píxel en este evento. Acepta variables. Solo se usa cuando el contacto vino de un anuncio de clic a WhatsApp.",
+    "wabaId": "ID de la cuenta de WhatsApp Business (opcional)",
+    "wabaIdHint": "Reemplaza el WABA del píxel en este evento (número oficial).",
     "value": "Valor",
     "valueRequired": "Valor (obligatorio en Compra)",
     "currency": "Moneda",

@@ -5,7 +5,9 @@
     "label": "Facebook sections",
     "campaigns": "Ads manager",
     "pixel": "Pixel",
-    "profiles": "Profiles and accounts"
+    "profiles": "Profiles and accounts",
+    "events": "Sent events",
+    "links": "Tracked links"
   },
   "common": {
     "loadError": "Could not load the data.",
@@ -148,6 +150,11 @@
         "budget_required": "Enter the daily or the lifetime budget.",
         "not_editable": "This item cannot be edited."
       }
+    },
+    "probable": {
+      "toggle": "Include probable-attribution sales",
+      "excluded": "{app} columns count only sales with a confirmed source. {n} sale(s) with only probable attribution (time proximity) are left out.",
+      "included": "Including {n} sale(s) with only probable attribution (time proximity) in the {app} columns. An indicated source does not prove the ad caused the sale."
     }
   },
   "pixel": {
@@ -163,7 +170,9 @@
       "platform": "Platform",
       "adAccount": "Ad account",
       "pixelId": "Pixel ID",
-      "token": "Access Token"
+      "token": "Access Token",
+      "mode": "Mode",
+      "events": "Events"
     },
     "platforms": {
       "facebook": "Facebook"
@@ -173,19 +182,52 @@
       "platform": "Platform",
       "pixelId": "Pixel ID",
       "token": "Access Token (Conversions API)",
-      "autoSend": "Send approved sales automatically"
+      "autoSend": "Send approved sales automatically",
+      "pageId": "Facebook Page ID",
+      "wabaId": "WhatsApp Business account ID (WABA)",
+      "autoLead": "Automatic Lead on the 1st message from an ad",
+      "country": "Default country",
+      "testCode": "Test code (test_event_code)"
     },
     "tokenKeepHint": "Leave empty to keep the current token.",
     "errors": {
       "required": "Required field.",
       "name_length": "The name must have 2 to 255 characters.",
-      "digits": "Use digits only."
+      "digits": "Use digits only.",
+      "test_code": "Invalid code (e.g. TEST12345).",
+      "country": "Choose a country."
     },
     "created": "Pixel created.",
     "updated": "Pixel updated.",
     "deleted": "Pixel deleted.",
     "deleteTitle": "Delete pixel?",
-    "deleteBody": "The pixel \"{name}\" will be deleted. Flows using it will stop sending events."
+    "deleteBody": "The pixel \"{name}\" will be deleted. Flows using it will stop sending events.",
+    "testBadge": "Test mode",
+    "testWarning": "Test mode on for: {names}. Events from these pixels go to \"Test events\" in Meta Events Manager, even in production.",
+    "viewEvents": "View events",
+    "mode": {
+      "chat": "Conversation (chat)",
+      "adMessaging": "Ad message + conversation",
+      "bm_accepted": "Accepted by Meta",
+      "bm_rejected": "Rejected; using conversation"
+    },
+    "sections": {
+      "adMessaging": "Ad message (optional)",
+      "events": "Events and tests"
+    },
+    "help": {
+      "adMessaging": "When the contact came from a click-to-WhatsApp ad, the event can be sent as an \"ad message\" (business_messaging) with the click identifier. If Meta rejects it, the same event is sent as a conversation (chat), without duplicates.",
+      "pageId": "The ad's Page. Not needed for the official API (WhatsApp Cloud), where the WABA is used; unofficial connections may require it for WhatsApp events. This use without a WABA is not confirmed by Meta's current documentation.",
+      "wabaId": "Use it when you have an official number (WhatsApp Business Platform). It is the identifier Meta's documentation requires for WhatsApp messaging events.",
+      "autoLead": "Sends a Lead only once per contact when the 1st message comes from an ad (ad card or tracked link with code).",
+      "country": "Used when the phone's country code does not identify the country.",
+      "testCode": "Copy it from Events Manager → your pixel → Test events. Leave empty to send to production.",
+      "testCodeOn": "With the code filled in, ALL events from this pixel go to \"Test events\" (also in production). Remove the code after validating."
+    },
+    "bmResult": {
+      "accepted": "Ad message accepted by Meta on {date}.",
+      "rejected": "Ad message rejected by Meta on {date} ({error}). Events are being sent as conversation; retrying in 24 h."
+    }
   },
   "profiles": {
     "title": "Meta integration",
@@ -216,6 +258,137 @@
       "chooseLater": "No account is enabled automatically: choose the accounts shown on the dashboard.",
       "error": "Could not connect the Meta profile.",
       "startError": "Could not start the Meta connection."
+    }
+  },
+  "events": {
+    "title": "Sent events",
+    "subtitle": "What the CRM sent to the Conversions API, with the result of each send.",
+    "notice": "\"Accepted\" means the Conversions API received the event (events_received). It does not mean Meta attributed the conversion to an ad. Only identifier NAMES are shown here, never values. The score is a CRM estimate (strong identifiers sent), not Meta's \"Event match quality\".",
+    "columns": {
+      "when": "When",
+      "event": "Event",
+      "status": "Status",
+      "mode": "Mode",
+      "identifiers": "Identifiers sent",
+      "score": "Estimated match",
+      "value": "Value"
+    },
+    "names": {
+      "Purchase": "Purchase",
+      "Lead": "Lead",
+      "InitiateCheckout": "Initiate checkout",
+      "AddToCart": "Add to cart",
+      "CompleteRegistration": "Complete registration",
+      "Contact": "Contact",
+      "Schedule": "Schedule",
+      "Subscribe": "Subscribe"
+    },
+    "status": {
+      "sent": "Accepted by CAPI",
+      "failed": "Rejected",
+      "uncertain": "Uncertain (retrying)",
+      "discarded": "Discarded",
+      "pending": "Sending"
+    },
+    "modes": {
+      "business_messaging": "Ad message",
+      "chat": "Conversation",
+      "system_generated": "System (sale)"
+    },
+    "sources": {
+      "flow": "Flow",
+      "sale": "Sale",
+      "ad_lead": "Ad lead",
+      "manual": "Manual"
+    },
+    "levels": {
+      "low": "low",
+      "medium": "medium",
+      "high": "high"
+    },
+    "filters": {
+      "pixel": "Pixel",
+      "status": "Status",
+      "mode": "Mode",
+      "event": "Event",
+      "source": "Source",
+      "all": "All"
+    },
+    "received": "events_received: {n}",
+    "fallback": "Ad message rejected; accepted as conversation",
+    "test": "Test",
+    "empty": "No events sent with these filters.",
+    "noPixel": "Create a pixel to see sent events."
+  },
+  "links": {
+    "title": "Tracked links",
+    "subtitle": "Optional: for ads with a website or link destination. The click opens WhatsApp right away with the message ready.",
+    "new": "New link",
+    "newTitle": "New tracked link",
+    "editTitle": "Edit tracked link",
+    "empty": "No links yet. The main tracking (click-to-WhatsApp ads) works without links.",
+    "inactive": "Inactive",
+    "copy": "Copy link",
+    "copied": "Link copied.",
+    "created": "Link created.",
+    "updated": "Link updated.",
+    "deleted": "Link deleted.",
+    "deleteTitle": "Delete link?",
+    "deleteBody": "The link \"{name}\" will stop working and its recorded clicks will be deleted.",
+    "notice": {
+      "optional": "Optional feature for ads with a website/link destination: the link records the click (fbclid, UTMs) and redirects straight to WhatsApp. With the code in the message, the 1st message confirms the source and the contact's events start carrying fbc/fbp.",
+      "ctwa": "Click-to-WhatsApp ads do not go through any link: the source comes from the ad card in the message itself and is already used automatically."
+    },
+    "columns": {
+      "name": "Name",
+      "url": "Link",
+      "destination": "Destination",
+      "code": "Code",
+      "stats": "Results"
+    },
+    "codeModes": {
+      "visible": "Visible code",
+      "discreet": "Discreet code (invisible)",
+      "off": "No code"
+    },
+    "stats": {
+      "clicks": "{n} click(s)",
+      "conversations": "{n} confirmed conversation(s)",
+      "probable": "{n} probable",
+      "sales": "{n} sale(s)"
+    },
+    "sections": {
+      "code": "Code in the message",
+      "utm": "Default UTMs"
+    },
+    "fields": {
+      "name": "Name",
+      "slug": "Link address",
+      "connection": "Connection",
+      "noConnection": "No connection (use the number below)",
+      "phone": "Destination number",
+      "message": "Prefilled message",
+      "probable": "Link as \"probable\" without a code",
+      "window": "Window (minutes)",
+      "active": "Link active"
+    },
+    "help": {
+      "slug": "Empty = generated from the name (e.g. {example}).",
+      "phone": "With country code, digits only. Empty = the connection number.",
+      "message": "Text that already appears typed in WhatsApp.",
+      "code_visible": "Adds \"(ref ABC234)\" at the end. Proves the source when the person sends the message (confirmed by link).",
+      "code_discreet": "The same code in invisible characters at the end of the message. Needs testing with a real account: some devices may strip these characters.",
+      "code_off": "No code: the click is counted, but the source is not proven.",
+      "probable": "Off by default. Links the click to the 1st new contact of the connection within the window, marked as \"probable\" (time proximity only). With more than one click in the window, nothing is attributed. Probable ones are not in ROAS by default and never send fbc/fbp to Meta.",
+      "utm": "UTMs in the click URL take precedence. To store the ad, use ad_id={{ad.id}} in the ad's URL parameters."
+    },
+    "errors": {
+      "required": "Required field.",
+      "name_length": "The name must have 2 to 120 characters.",
+      "slug": "3 to 63 lowercase letters, digits or hyphens.",
+      "phone": "Number with country code, 8 to 15 digits.",
+      "message_length": "Up to 500 characters.",
+      "window": "From 1 to 1440 minutes."
     }
   }
 }

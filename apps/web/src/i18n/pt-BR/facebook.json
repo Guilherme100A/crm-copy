@@ -5,7 +5,9 @@
     "label": "Seções do Facebook",
     "campaigns": "Gerenciador",
     "pixel": "Pixel",
-    "profiles": "Perfis e contas"
+    "profiles": "Perfis e contas",
+    "events": "Eventos enviados",
+    "links": "Links rastreáveis"
   },
   "common": {
     "loadError": "Não foi possível carregar os dados.",
@@ -148,6 +150,11 @@
         "budget_required": "Informe o orçamento diário ou o vitalício.",
         "not_editable": "Este item não pode ser editado."
       }
+    },
+    "probable": {
+      "toggle": "Incluir vendas de atribuição provável",
+      "excluded": "As colunas {app} contam só vendas com origem confirmada. {n} venda(s) de atribuição só provável (proximidade de tempo) ficam fora.",
+      "included": "Incluindo {n} venda(s) de atribuição só provável (proximidade de tempo) nas colunas {app}. Origem indicada não prova que o anúncio causou a venda."
     }
   },
   "pixel": {
@@ -163,7 +170,9 @@
       "platform": "Plataforma",
       "adAccount": "Conta de anúncios",
       "pixelId": "Pixel ID",
-      "token": "Access Token"
+      "token": "Access Token",
+      "mode": "Modo",
+      "events": "Eventos"
     },
     "platforms": {
       "facebook": "Facebook"
@@ -173,19 +182,52 @@
       "platform": "Plataforma",
       "pixelId": "Pixel ID",
       "token": "Access Token (Conversions API)",
-      "autoSend": "Enviar vendas aprovadas automaticamente"
+      "autoSend": "Enviar vendas aprovadas automaticamente",
+      "pageId": "ID da Página do Facebook",
+      "wabaId": "ID da conta do WhatsApp Business (WABA)",
+      "autoLead": "Lead automático na 1ª mensagem vinda de anúncio",
+      "country": "País padrão",
+      "testCode": "Código de teste (test_event_code)"
     },
     "tokenKeepHint": "Deixe vazio para manter o token atual.",
     "errors": {
       "required": "Campo obrigatório.",
       "name_length": "O nome deve ter entre 2 e 255 caracteres.",
-      "digits": "Use só números."
+      "digits": "Use só números.",
+      "test_code": "Código inválido (ex.: TEST12345).",
+      "country": "Escolha um país."
     },
     "created": "Pixel criado.",
     "updated": "Pixel atualizado.",
     "deleted": "Pixel excluído.",
     "deleteTitle": "Excluir pixel?",
-    "deleteBody": "O pixel \"{name}\" será excluído. Fluxos que o usam deixarão de enviar eventos."
+    "deleteBody": "O pixel \"{name}\" será excluído. Fluxos que o usam deixarão de enviar eventos.",
+    "testBadge": "Modo teste",
+    "testWarning": "Modo teste ligado em: {names}. Os eventos desses pixels vão para \"Testar eventos\" no Gerenciador de Eventos da Meta, inclusive em produção.",
+    "viewEvents": "Ver eventos",
+    "mode": {
+      "chat": "Conversa (chat)",
+      "adMessaging": "Mensagem de anúncio + conversa",
+      "bm_accepted": "Aceito pela Meta",
+      "bm_rejected": "Recusado; usando conversa"
+    },
+    "sections": {
+      "adMessaging": "Mensagem de anúncio (opcional)",
+      "events": "Eventos e testes"
+    },
+    "help": {
+      "adMessaging": "Quando o contato veio de um anúncio de clique para WhatsApp, o evento pode ir como \"mensagem de anúncio\" (business_messaging) com o identificador do clique. Se a Meta recusar, o mesmo evento vai como conversa (chat), sem duplicar.",
+      "pageId": "Página do anúncio. Não é necessária para a API oficial (WhatsApp Cloud), onde vale o WABA; em conexões não oficiais pode ser exigida para eventos via WhatsApp. Este uso sem WABA não é confirmado pela documentação atual da Meta.",
+      "wabaId": "Use quando houver número oficial (WhatsApp Business Platform). É o identificador que a documentação da Meta pede para eventos de mensagem do WhatsApp.",
+      "autoLead": "Envia um Lead uma única vez por contato quando a 1ª mensagem chega de um anúncio (cartão do anúncio ou link rastreável com código).",
+      "country": "Usado quando o DDI do telefone não identifica o país.",
+      "testCode": "Copie em Gerenciador de Eventos → seu pixel → Testar eventos. Deixe vazio para enviar em produção.",
+      "testCodeOn": "Com o código preenchido, TODOS os eventos deste pixel vão para \"Testar eventos\" (também em produção). Remova o código depois de validar."
+    },
+    "bmResult": {
+      "accepted": "Mensagem de anúncio aceita pela Meta em {date}.",
+      "rejected": "Mensagem de anúncio recusada pela Meta em {date} ({error}). Os eventos estão indo como conversa; nova tentativa em 24 h."
+    }
   },
   "profiles": {
     "title": "Integração Meta",
@@ -216,6 +258,137 @@
       "chooseLater": "Nenhuma conta é ativada automaticamente: escolha as contas que entram no painel.",
       "error": "Não foi possível conectar o perfil Meta.",
       "startError": "Não foi possível iniciar a conexão com a Meta."
+    }
+  },
+  "events": {
+    "title": "Eventos enviados",
+    "subtitle": "O que o CRM mandou para a Conversions API, com o resultado de cada envio.",
+    "notice": "\"Aceito\" quer dizer que a Conversions API recebeu o evento (events_received). Não quer dizer que a Meta atribuiu a conversão a um anúncio. Só os NOMES dos identificadores aparecem aqui, nunca os valores. A pontuação é uma estimativa do CRM (identificadores fortes enviados), não a \"Qualidade da correspondência\" da Meta.",
+    "columns": {
+      "when": "Quando",
+      "event": "Evento",
+      "status": "Status",
+      "mode": "Modo",
+      "identifiers": "Identificadores enviados",
+      "score": "Correspondência estimada",
+      "value": "Valor"
+    },
+    "names": {
+      "Purchase": "Compra",
+      "Lead": "Lead",
+      "InitiateCheckout": "Início de checkout",
+      "AddToCart": "Adicionar ao carrinho",
+      "CompleteRegistration": "Cadastro concluído",
+      "Contact": "Contato",
+      "Schedule": "Agendamento",
+      "Subscribe": "Assinatura"
+    },
+    "status": {
+      "sent": "Aceito pela CAPI",
+      "failed": "Rejeitado",
+      "uncertain": "Incerto (retentando)",
+      "discarded": "Descartado",
+      "pending": "Enviando"
+    },
+    "modes": {
+      "business_messaging": "Mensagem de anúncio",
+      "chat": "Conversa",
+      "system_generated": "Sistema (venda)"
+    },
+    "sources": {
+      "flow": "Fluxo",
+      "sale": "Venda",
+      "ad_lead": "Lead de anúncio",
+      "manual": "Manual"
+    },
+    "levels": {
+      "low": "baixa",
+      "medium": "média",
+      "high": "alta"
+    },
+    "filters": {
+      "pixel": "Pixel",
+      "status": "Status",
+      "mode": "Modo",
+      "event": "Evento",
+      "source": "Origem",
+      "all": "Todos"
+    },
+    "received": "events_received: {n}",
+    "fallback": "Mensagem de anúncio recusada; aceito como conversa",
+    "test": "Teste",
+    "empty": "Nenhum evento enviado com esses filtros.",
+    "noPixel": "Crie um pixel para ver os eventos enviados."
+  },
+  "links": {
+    "title": "Links rastreáveis",
+    "subtitle": "Opcional: para anúncios com destino site ou link. O clique abre o WhatsApp na hora, com a mensagem pronta.",
+    "new": "Novo link",
+    "newTitle": "Novo link rastreável",
+    "editTitle": "Editar link rastreável",
+    "empty": "Nenhum link criado. O rastreamento principal (anúncio de clique para WhatsApp) funciona sem links.",
+    "inactive": "Inativo",
+    "copy": "Copiar link",
+    "copied": "Link copiado.",
+    "created": "Link criado.",
+    "updated": "Link atualizado.",
+    "deleted": "Link excluído.",
+    "deleteTitle": "Excluir link?",
+    "deleteBody": "O link \"{name}\" deixará de funcionar e os cliques registrados serão apagados.",
+    "notice": {
+      "optional": "Recurso opcional para anúncios com destino site/link: o link registra o clique (fbclid, UTMs) e redireciona direto para o WhatsApp. Com o código na mensagem, a 1ª mensagem confirma a origem e os eventos do contato passam a levar fbc/fbp.",
+      "ctwa": "Anúncio de clique para WhatsApp não passa por link nenhum: a origem vem do cartão do anúncio na própria mensagem e já é usada automaticamente."
+    },
+    "columns": {
+      "name": "Nome",
+      "url": "Link",
+      "destination": "Destino",
+      "code": "Código",
+      "stats": "Resultados"
+    },
+    "codeModes": {
+      "visible": "Código visível",
+      "discreet": "Código discreto (invisível)",
+      "off": "Sem código"
+    },
+    "stats": {
+      "clicks": "{n} clique(s)",
+      "conversations": "{n} conversa(s) confirmada(s)",
+      "probable": "{n} provável(is)",
+      "sales": "{n} venda(s)"
+    },
+    "sections": {
+      "code": "Código na mensagem",
+      "utm": "UTMs padrão"
+    },
+    "fields": {
+      "name": "Nome",
+      "slug": "Endereço do link",
+      "connection": "Conexão",
+      "noConnection": "Sem conexão (usar o número abaixo)",
+      "phone": "Número de destino",
+      "message": "Mensagem pronta",
+      "probable": "Ligar como \"provável\" sem código",
+      "window": "Janela (minutos)",
+      "active": "Link ativo"
+    },
+    "help": {
+      "slug": "Vazio = gerado pelo nome (ex.: {example}).",
+      "phone": "Com DDI, só números. Vazio = o número da conexão.",
+      "message": "Texto que já aparece digitado no WhatsApp.",
+      "code_visible": "Adiciona \"(ref ABC234)\" no fim. Comprova a origem quando a pessoa envia a mensagem (confirmado por link).",
+      "code_discreet": "O mesmo código em caracteres invisíveis no fim da mensagem. Precisa de teste com conta real: alguns aparelhos podem remover esses caracteres.",
+      "code_off": "Sem código: o clique é contado, mas a origem não fica comprovada.",
+      "probable": "Desligado por padrão. Liga o clique ao 1º contato novo da conexão dentro da janela, marcado como \"provável\" (só proximidade de tempo). Com mais de um clique na janela, nada é atribuído. Prováveis não entram no ROAS por padrão nem mandam fbc/fbp para a Meta.",
+      "utm": "As UTMs da URL do clique têm precedência. Para guardar o anúncio, use ad_id={{ad.id}} nos parâmetros de URL do anúncio."
+    },
+    "errors": {
+      "required": "Campo obrigatório.",
+      "name_length": "O nome deve ter entre 2 e 120 caracteres.",
+      "slug": "3 a 63 letras minúsculas, números ou hífen.",
+      "phone": "Número com DDI, de 8 a 15 dígitos.",
+      "message_length": "Até 500 caracteres.",
+      "window": "De 1 a 1440 minutos."
     }
   }
 }

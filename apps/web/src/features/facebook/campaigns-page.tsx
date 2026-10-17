@@ -53,6 +53,8 @@ import {
   serverStatusFilter,
   shouldReplace,
   sortRows,
+  applyProbable,
+  probableSales,
   statusKey,
   statusOptions,
   statusTone,
@@ -246,15 +248,20 @@ export function CampaignsPage({ search, onSearch }: { search: CampaignsSearch; o
     writeStorage(columnOrderKey(companyId), JSON.stringify(next))
   }
   const [sort, setSort] = useState<SortState>({ key: 'default', dir: 'asc' })
+  // Revisão 3: vendas de atribuição só provável ficam FORA das colunas <APP>/Meta; entram só com este filtro ligado.
+  const [includeProbable, setIncludeProbable] = useState(false)
 
   const view = bundle ? managerView(bundle, canProfiles ? (profiles.data ?? null) : null, refreshing, query.data ?? null) : null
   const filtered = useMemo(() => {
     if (!bundle) return { campaign: [], adset: [], ad: [] } as Record<BundleLevel, BundleRow[]>
     // Filtra pelo status do servidor e mostra o otimista: a linha alternada não some antes do bundle novo.
     const pick = (rows: BundleRow[]) =>
-      rows.filter((r) => matchesStatus(r, fbStatus) && matchesSearch(r, search.fb_q ?? '')).map((r) => (overrides[r.id] ? { ...r, status: overrides[r.id]! } : r))
+      rows
+        .filter((r) => matchesStatus(r, fbStatus) && matchesSearch(r, search.fb_q ?? ''))
+        .map((r) => applyProbable(overrides[r.id] ? { ...r, status: overrides[r.id]! } : r, includeProbable))
     return { campaign: pick(bundle.campaign), adset: pick(bundle.adset), ad: pick(bundle.ad) }
-  }, [bundle, overrides, fbStatus, search.fb_q])
+  }, [bundle, overrides, fbStatus, search.fb_q, includeProbable])
+  const probableCount = useMemo(() => probableSales(bundle?.campaign ?? []), [bundle])
   const rows = useMemo(() => sortRows(filtered[level], sort), [filtered, level, sort])
   const allRows = bundle ? [...bundle.campaign, ...bundle.adset, ...bundle.ad] : []
 
@@ -381,6 +388,15 @@ export function CampaignsPage({ search, onSearch }: { search: CampaignsSearch; o
           <Info className="mt-0.5 size-3.5 shrink-0" aria-hidden />
           {t('manager.metricsHint', { app: APP_NAME })}
         </p>
+        <div data-testid="facebook-probable" className="flex flex-wrap items-center gap-2 text-xs">
+          <label className="flex items-center gap-1.5 font-medium">
+            <input type="checkbox" data-testid="facebook-probable-toggle" checked={includeProbable} onChange={(e) => setIncludeProbable(e.target.checked)} />
+            {t('manager.probable.toggle')}
+          </label>
+          <span data-testid="facebook-probable-legend" className={includeProbable ? 'text-amber-700 dark:text-amber-300' : 'text-muted-foreground'}>
+            {includeProbable ? t('manager.probable.included', { n: probableCount, app: APP_NAME }) : t('manager.probable.excluded', { n: probableCount, app: APP_NAME })}
+          </span>
+        </div>
 
         {!periodQ ? (
           <Notice testId="facebook-period-invalid" tone="warning">

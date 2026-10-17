@@ -77,6 +77,28 @@ export function PixelEditor({ nodeId, actions, readOnly, onChange }: NodeEditorP
           />
         )}
       </Field>
+      {/* Revisão 3 (paridade Leona 11 §5.4): page_id opcional no nó; sobrepõe o do pixel no modo business_messaging. */}
+      <VarText
+        label={t('pixel.pageId')}
+        path="page_id"
+        errors={errs}
+        testId="ne-pixel-page-id"
+        value={str(c, 'page_id')}
+        disabled={readOnly}
+        placeholder="105222333444555"
+        hint={t('pixel.pageIdHint')}
+        onChange={(v) => set('page_id', optional(v))}
+      />
+      <VarText
+        label={t('pixel.wabaId')}
+        path="whatsapp_business_account_id"
+        errors={errs}
+        testId="ne-pixel-waba-id"
+        value={str(c, 'whatsapp_business_account_id')}
+        disabled={readOnly}
+        hint={t('pixel.wabaIdHint')}
+        onChange={(v) => set('whatsapp_business_account_id', optional(v))}
+      />
       <OutputsSummary type="pixel" actions={draft} label={(h) => t(`outputs.handles.${h}`)} />
       <DraftStatus blocked={blocked} />
     </div>

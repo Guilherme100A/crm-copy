@@ -185,6 +185,7 @@ export const defaultAiCall = (): Config => ({ provider: 'platform', user_message
 
 // ---------------------------------------------------------------- Pixel
 
-export const PIXEL_EVENTS = ['Compra', 'Lead'] as const
+// Revisão 3: além de Compra e Lead (Leona), os eventos padrão da Meta; valor e moeda opcionais fora da Compra.
+export const PIXEL_EVENTS = ['Compra', 'Lead', 'InitiateCheckout', 'AddToCart', 'CompleteRegistration', 'Contact', 'Schedule', 'Subscribe'] as const
 export const CURRENCIES = ['BRL', 'USD', 'EUR'] as const
 export const defaultPixel = (): Config => ({ pixel_config_id: '', event_type: 'Lead' })
