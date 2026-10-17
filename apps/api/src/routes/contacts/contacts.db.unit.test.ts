@@ -117,7 +117,8 @@ describe('rotas de contatos', () => {
     expect(fields.body.items.find((f: Json) => f.key === 'nivel')).toMatchObject({ system: false })
     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { description: 'Nível' })).body.custom_field.description).toBe('Nível')
     expect((await call(a, 'PATCH', '/api/custom-fields/nivel', { description: 'x', key: 'outro' })).status).toBe(422)
-    expect((await call(a, 'PATCH', '/api/custom-fields/full_name', { description: 'x' })).status).toBe(422)
+    // T58 (AC-T58-04): a descrição de campo de sistema é editável, como na referência
+    expect((await call(a, 'PATCH', '/api/custom-fields/full_name', { description: 'x' })).body.custom_field.description).toBe('x')
     expect((await call(a, 'POST', '/api/custom-fields', { key: 'a' })).status).toBe(422)
     expect((await call(a, 'POST', '/api/labels', { name: 'Ok', color: 'red' })).status).toBe(422)
     const label = await call(a, 'POST', '/api/labels', { name: 'Ok', color: '#00AA00' })

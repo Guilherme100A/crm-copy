@@ -374,7 +374,13 @@ function verifyOperario(task, opts) {
   if (unmet.length) report.add('dependências aceitas', 'warn', `sem relatório aprovado: ${unmet.join(', ')}`)
   checkFiles(report, task.requiredFiles, 'arquivo')
   if (opts.skipCommands) report.add('comandos', 'skip', '--skip-commands')
-  else checkCommands(report, task.commands, { full: opts.full, base: opts.base, skip: opts.retryFailed ? previouslyPassed(task.id, 'operario') : undefined })
+  else {
+    // no gate (--full) também os testes dos pacotes que DEPENDEM do que a tarefa mudou (pnpm "...[base]"),
+    // fora os que a tarefa já roda: uma mudança no core não pode quebrar a api sem ninguém ver (T58 → contacts)
+    const own = [...new Set(task.commands.map((c) => /^pnpm --filter (\S+) test$/.exec(c)?.[1]).filter(Boolean))]
+    const dependents = opts.full && opts.base ? [`pnpm --filter "...[${opts.base}]" ${own.map((w) => `--filter "!${w}"`).join(' ')} test`] : []
+    checkCommands(report, [...task.commands, ...dependents], { full: opts.full, base: opts.base, skip: opts.retryFailed ? previouslyPassed(task.id, 'operario') : undefined })
+  }
   checkForbidden(report, FORBIDDEN)
   checkScope(report, [...task.paths, ...SHARED_PATHS], [], opts, (f) => !f.startsWith('tests/'))
   return report
