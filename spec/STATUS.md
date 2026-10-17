@@ -82,7 +82,7 @@
 | 6 | T61 | Gatilhos, fluxos padrão por conexão e ação fora do horário | MERGED | Cinzel | Radar | 0 | 858cc08 |
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
-| 6 | T84 | UI: central de notificações | TODO | | | 0 | |
+| 6 | T84 | UI: central de notificações | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T84.md; libera app-shell (aditivo); sem backend (localStorage, como a ref) |
 | 6 | T93 | Assistente (copiloto) de fluxo | TODO | | | 0 | |
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |

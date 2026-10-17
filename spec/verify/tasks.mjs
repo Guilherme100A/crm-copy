@@ -214,7 +214,7 @@ const RAW = [
   T('T91', 'UI chats: painel lateral e agendamentos', ['T75', 'T64'], ['apps/web/src/features/chat-panel/**', i18n('chat-panel'), 'apps/web/src/features/chat/chat-layout.tsx' /* aditivo: slot panel no mobile */, 'packages/core/src/chats/lifecycle/**' /* aditivo: chat.updated também ao escopo antigo */, 'apps/api/src/routes/auth/**', 'packages/core/src/auth/**', 'apps/web/src/lib/session.ts' /* permissões efetivas no perfil e no cliente */], ['api', 'core', 'web'], { e2e: true }),
   T('T77', 'UI contatos: lista e seleção em massa', ['T66', 'T23'], [...ui('contacts')], ['web'], { e2e: true }),
   T('T86', 'UI contatos: formulário, importação e jobs', ['T77', 'T67'], ['apps/web/src/features/contact-form/**', 'apps/web/src/features/contact-jobs/**', i18n('contact-form')], ['web'], { e2e: true }),
-  T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', i18n('notifications')], ['web'], { e2e: true }),
+  T('T84', 'UI: central de notificações', ['T33', 'T23'], ['apps/web/src/features/notifications/**', i18n('notifications'), 'apps/web/src/app/shell/app-shell.tsx' /* aditivo: sino + handler notification.created importado no shell */], ['web'], { e2e: true }),
 
   // ---------------- Kanban, vendas, dashboard ----------------
   T('T50', 'Kanban: quadros, colunas e cards', ['T33'], [core('kanban'), route('kanban'), schema('kanban'), 'packages/core/src/chats/query/**', 'apps/api/src/routes/chats/**' /* aditivo: filtro crm/kanban e PATCH de coluna (T48) */], ['api', 'core'],
