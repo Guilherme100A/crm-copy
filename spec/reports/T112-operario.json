@@ -1,0 +1,145 @@
+{
+  "version": 1,
+  "task": "T112",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T00:05:48.074Z",
+  "commit": "94ab27fe7ecdad24f9523431f91fbab03a54250a",
+  "base": "94ab27f",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/src/production.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/worker/src/boot/production.ts",
+    "apps/worker/src/registry.ts",
+    "packages/core/src/index.ts",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/shared/src/realtime/events.ts",
+    "apps/api/src/routes/invoice-integrations/index.ts",
+    "apps/api/src/routes/invoice-integrations/invoice-integrations.db.unit.test.ts",
+    "apps/worker/src/jobs/invoices/index.ts",
+    "apps/worker/src/jobs/invoices/invoices.db.unit.test.ts",
+    "apps/worker/src/jobs/invoices/production.db.unit.test.ts",
+    "docs/integrations/notasy.md",
+    "packages/core/src/invoicing/emission.ts",
+    "packages/core/src/invoicing/index.ts",
+    "packages/core/src/invoicing/integrations.ts",
+    "packages/core/src/invoicing/invoicing.db.unit.test.ts",
+    "packages/core/src/invoicing/notasy/adapter.ts",
+    "packages/core/src/invoicing/notasy/adapter.unit.test.ts",
+    "packages/core/src/invoicing/notasy/fake.ts",
+    "packages/core/src/invoicing/notasy/index.ts",
+    "packages/core/src/invoicing/port.ts",
+    "packages/db/drizzle/crm/0030_t112_invoicing.sql",
+    "packages/db/drizzle/crm/meta/0030_snapshot.json",
+    "packages/db/src/schema/crm/invoicing.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 16.4s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 112.6s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "ok em 18.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "ok em 4.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "ok em 73.9s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 16.3s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 8.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 104.1s (afetados desde a base)"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "27 arquivo(s) alterado(s)"
+    }
+  ]
+}

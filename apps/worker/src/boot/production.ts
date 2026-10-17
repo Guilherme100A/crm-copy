@@ -63,6 +63,8 @@ import { configureAiKnowledge } from '../jobs/ai-knowledge'
 import { configureInboundSales } from '../jobs/inbound-sales'
 import { configureInboundWebhooks } from '../jobs/inbound-webhooks'
 import { configurePaymentWebhooks } from '../jobs/payment-webhooks'
+import { configureInvoices, invoicesEnqueuer } from '../jobs/invoices'
+import { invoiceJobId, invoiceSalePublisher, type InvoiceEnqueue } from '@crm/core'
 import { capiSalePublisher, configurePixelNodes, fxRatesFromEnv, metaConfigFromEnv, MetaProfilesService } from '@crm/core'
 
 type Env = Record<string, string | undefined>
@@ -277,6 +279,23 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   configureAiKnowledge({ db, redis, publisher, ...logger })
   const composeModel = composeModelFromEnv(env)
   configureAiAgentLab({ db, redis, llm, guard, publisher: publisher as unknown as RunPublisher, knowledge, ...(composeModel ? { composeModel } : {}), ...logger })
+
+  // T112: emissão de NF (job `invoices`) com o cipher (`CREDENTIALS_KEY`), o env do boot (`NOTASY_API_URL`) e o realtime
+  // do processo (`sale.updated`). O emissor é encadeado no MESMO publisher das vendas (depois do CAPI): a venda aprovada
+  // do nó approved_sale e das fontes de venda enfileira a emissão; a que passa de pendente a aprovada (T73) também,
+  // pelo `capiEnqueue` (o job só emite se a venda tiver `note_issuer_id`). Fila criada no primeiro uso.
+  configureInvoices({ db, env, publisher, ...logger })
+  let invoicesEnqueue: InvoiceEnqueue | undefined
+  const invoiceEnqueue: InvoiceEnqueue = (data, opts) => (invoicesEnqueue ??= invoicesEnqueuer())(data, opts)
+  const invoiceSales = invoiceSalePublisher(salesPublisher, { enqueue: invoiceEnqueue, ...logger })
+  configureCrmNodes({ publisher: invoiceSales })
+  configureInboundSales({
+    publisher: invoiceSales,
+    capiEnqueue: async (data, opts) => {
+      const [capi] = await Promise.allSettled([capiSaleEnqueue(data, opts), invoiceEnqueue({ ...data, generation: 1 }, { jobId: invoiceJobId(data.saleId, 1) })])
+      if (capi.status === 'rejected') throw capi.reason
+    },
+  })
 
   return { publisher, chatSend, keys, llm, fakeLlm, guard, dispose: offAttendance }
 }

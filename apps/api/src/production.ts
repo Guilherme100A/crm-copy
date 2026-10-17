@@ -10,11 +10,16 @@ import {
   FlowEngine,
   FlowTriggers,
   FsExportFileStore,
+  INVOICES_JOB_OPTIONS,
+  INVOICES_QUEUE,
+  invoiceSalePublisher,
   META_CAPI_QUEUE,
   RealtimePublisher,
   registerAttendanceFinishedTrigger,
   type FlowStepJobData,
   type FlowTimerJobData,
+  type InvoiceEnqueue,
+  type InvoiceJobData,
   type MetaCapiSaleJobData,
   type TimerScheduler,
 } from '@crm/core'
@@ -124,6 +129,16 @@ export async function createProductionApiDeps(opts: CreateProductionApiOptions =
     salesPublisher,
   }
 
+  // T112: emissão de NF. O emissor é encadeado no publisher das vendas (depois do CAPI), como no worker: a venda aprovada
+  // com `note_issuer_id` enfileira o job `invoices`; a reemissão (`POST /api/sales/:id/reemit-invoice`) usa a mesma fila.
+  let invoicesQueue: ReturnType<typeof defineQueue<InvoiceJobData>> | undefined
+  const invoicesEnqueue: InvoiceEnqueue = async (data, o) => {
+    invoicesQueue ??= defineQueue<InvoiceJobData>(INVOICES_QUEUE, { connection, defaultJobOptions: INVOICES_JOB_OPTIONS })
+    await invoicesQueue.add(INVOICES_QUEUE, data, { jobId: o.jobId })
+  }
+  deps.salesPublisher = invoiceSalePublisher(salesPublisher, { enqueue: invoicesEnqueue, logger })
+  deps.invoicesEnqueue = invoicesEnqueue
+
   return {
     config,
     logger,
@@ -133,7 +148,7 @@ export async function createProductionApiDeps(opts: CreateProductionApiOptions =
     deps,
     dispose: offAttendance,
     close: async () => {
-      await Promise.allSettled([stepQueue?.close(), timerQueue?.close(), capiQueue?.close(), wa.close()])
+      await Promise.allSettled([stepQueue?.close(), timerQueue?.close(), capiQueue?.close(), invoicesQueue?.close(), wa.close()])
       await Promise.allSettled([ownsDb ? db.$client.end() : undefined, redis.quit()])
     },
   }

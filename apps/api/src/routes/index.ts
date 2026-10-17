@@ -26,6 +26,7 @@ import { flowShareRoutes } from './flow-share/index'
 import { kanbanRoutes } from './kanban/index'
 import { productsRoutes } from './products/index'
 import { salesRoutes } from './sales/index'
+import { invoiceIntegrationsRoutes } from './invoice-integrations/index'
 import { connectionsRoutes } from './connections/index'
 import { contentRoutes } from './content/index'
 import { massDispatchRoutes } from './mass-dispatch/index'
@@ -85,6 +86,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', flowShareRoutes(deps))
   app.route('/', kanbanRoutes(deps))
   app.route('/', productsRoutes(deps))
+  app.route('/', invoiceIntegrationsRoutes(deps)) // T112: antes de salesRoutes (/api/sales/:id/invoice, reemit-invoice)
   app.route('/', salesRoutes(deps))
   app.route('/', connectionsRoutes(deps))
   app.route('/', contentRoutes(deps))

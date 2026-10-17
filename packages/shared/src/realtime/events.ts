@@ -86,6 +86,15 @@ export const REALTIME_EVENTS = {
   'chat.deleted': defineEvent(z.looseObject({ chat_id: idSchema }), 'chat.view'),
   /** Venda nova registrada (T34; manual, fluxo ou webhook): o dashboard atualiza. */
   'sale.recorded': defineEvent(z.looseObject({ sale_id: idSchema, sale: z.looseObject({ id: idSchema }).optional() }), 'dashboard.sales'),
+  /** Venda mudou (T112: status da emissão de NF, `invoice_emit_status` de 19 §4.2): a lista de vendas atualiza. */
+  'sale.updated': defineEvent(
+    z.looseObject({
+      sale_id: idSchema,
+      invoice_emit_status: z.enum(['pending', 'succeeded', 'failed']).nullable().optional(),
+      invoice_last_error: z.string().nullable().optional(),
+    }),
+    'dashboard.sales',
+  ),
   /** Mensagem nova no chat (recebida ou enviada). */
   'message.created': defineEvent(z.looseObject({ chat_id: idSchema, message: z.looseObject({ id: idSchema }) }), 'chat.view'),
   /** Status de entrega/leitura da mensagem (nunca regride). */
