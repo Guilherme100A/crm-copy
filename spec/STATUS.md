@@ -90,7 +90,7 @@
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
 | 6 | T112 | Emissão de NF (Notasy) na venda aprovada | MERGED | Lastro | Vigia | 0 | 08cc19c (op ~34 min, tester ~6 min; migration regenerada como 0031) |
-| 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
+| 6 | T113 | UTMify: integração e envio de vendas aprovadas | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T113.md; libera boot de produção e transição refunded em sales/service (aditivo) |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
 | 7 | T64 | Agendamento de mensagens | MERGED | Torno | Sonda | 0 | 28473c1 |

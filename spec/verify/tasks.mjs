@@ -324,7 +324,7 @@ const RAW = [
   T('T112', 'Emissão de NF (Notasy) na venda aprovada', ['T34', 'T22'],
     [core('invoicing'), route('invoice-integrations'), job('invoices'), schema('invoicing'), 'apps/worker/src/boot/production.ts', 'apps/api/src/production.ts' /* aditivo: encadear o emissor de NF no salesPublisher */], ['api', 'worker', 'core']),
   T('T113', 'UTMify: integração e envio de vendas aprovadas', ['T34', 'T22'],
-    [core('utmify'), route('utmify'), job('utmify'), schema('utmify')], ['api', 'worker', 'core']),
+    [core('utmify'), route('utmify'), job('utmify'), schema('utmify'), 'apps/worker/src/boot/production.ts', 'apps/api/src/production.ts' /* aditivo: encadear o envio UTMify no salesPublisher */, 'packages/core/src/sales/service.ts' /* aditivo: transição para refunded passa pelo publisher (AC-T113-02) */], ['api', 'worker', 'core']),
   T('T114', 'UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada', ['T110', 'T111', 'T112', 'T113', 'T45', 'T59'],
     [...ui('settings-payments'), 'apps/web/src/features/flow-editor/node-editors/payment/**', 'apps/web/src/features/sale-invoice/**'], ['web'], { e2e: true }),
   T('T115', 'MCP: OAuth para conectores (Claude)', ['T94'],
