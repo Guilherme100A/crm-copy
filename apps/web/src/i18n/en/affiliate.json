@@ -1,0 +1,9 @@
+{
+  "entry": "Affiliate program",
+  "modal": {
+    "title": "Affiliate program",
+    "body": "You will be taken to an external website, outside {app}. Do you want to continue?",
+    "continue": "Continue",
+    "cancel": "Cancel"
+  }
+}

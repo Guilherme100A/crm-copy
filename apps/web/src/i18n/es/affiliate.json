@@ -1,0 +1,9 @@
+{
+  "entry": "Programa de afiliados",
+  "modal": {
+    "title": "Programa de afiliados",
+    "body": "Serás llevado a un sitio externo, fuera de {app}. ¿Deseas continuar?",
+    "continue": "Continuar",
+    "cancel": "Cancelar"
+  }
+}

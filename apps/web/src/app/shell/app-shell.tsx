@@ -10,6 +10,8 @@ import { NotificationBell } from '@/features/notifications/bell'
 import { WalletChip } from '@/features/settings-ai-usage/wallet-chip'
 // T54: import ESTÁTICO (registra os handlers support_access.* antes do SSE abrir).
 import { SupportApprovalModal } from '@/features/settings-support/approval-modal'
+// T97: item "Programa de afiliados" (só com AFFILIATE_PORTAL_URL, via GET /api/app-config).
+import { AffiliateEntry } from '@/features/affiliate/affiliate-entry'
 import { useT } from '@/i18n'
 import { useRealtime } from '@/lib/realtime'
 import type { Session } from '@/lib/session'
@@ -33,6 +35,7 @@ function AppName({ collapsed = false }: { collapsed?: boolean }) {
 function ShellFooter({ session, collapsed = false }: { session: Session; collapsed?: boolean }) {
   return (
     <div className="flex flex-col gap-2 border-t pt-3">
+      <AffiliateEntry collapsed={collapsed} />
       <ThemeToggle collapsed={collapsed} />
       {collapsed ? null : <LanguageSelect session={session} className="px-1" />}
       <UserMenu session={session} compact={collapsed} />

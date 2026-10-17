@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "task": "T97",
+  "role": "operario",
+  "ok": true,
+  "at": "2026-10-17T03:09:28.586Z",
+  "commit": "5e34a735f71b5dd024f4cff6c0eaad18aa9dc1e5",
+  "base": "5e34a73",
+  "changedFiles": [
+    "apps/api/src/routes/index.ts",
+    "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/features/auth/register-route.tsx",
+    "packages/core/src/index.ts",
+    "apps/api/src/routes/app-config/app-config.unit.test.ts",
+    "apps/api/src/routes/app-config/index.ts",
+    "apps/web/src/features/affiliate/affiliate-entry.tsx",
+    "apps/web/src/features/affiliate/affiliate.unit.test.ts",
+    "apps/web/src/features/affiliate/api.ts",
+    "apps/web/src/features/affiliate/referral.ts",
+    "apps/web/src/i18n/en/affiliate.json",
+    "apps/web/src/i18n/es/affiliate.json",
+    "apps/web/src/i18n/pt-BR/affiliate.json",
+    "packages/core/src/affiliate/affiliate.unit.test.ts",
+    "packages/core/src/affiliate/index.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "ok em 17.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "ok em 4.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "pass",
+      "detail": "ok em 156.7s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "ok em 13.8s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "ok em 9.2s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "ok em 4.6s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web typecheck",
+      "status": "pass",
+      "detail": "ok em 17.7s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web lint",
+      "status": "pass",
+      "detail": "ok em 12.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web test",
+      "status": "pass",
+      "detail": "ok em 15.3s (afetados desde a base)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web i18n:check",
+      "status": "pass",
+      "detail": "ok em 0.6s"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/web build",
+      "status": "pass",
+      "detail": "ok em 4.1s"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "15 arquivo(s) alterado(s)"
+    }
+  ]
+}
