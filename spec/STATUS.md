@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (só agentes sob demanda): T112 (Lastro) e T32 (Prisma2) operários; vaga de tester livre. Vaga dupla de verify. Banco-modelo de testes (T128) ativo.
+- Em andamento (só agentes sob demanda): T59 (Prumo) e T54 operários. Vaga dupla de verify. Gate roda também os testes dos pacotes dependentes. main publicada em origin (GitHub, privado) a cada gate.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -46,7 +46,7 @@
 | 5 | T29 | App wa-worker e RPC interno | MERGED | Cinzel | Radar | 0 | 57c6669 |
 | 5 | T30 | Motor de fluxos: timers, esperas, cancelamento e pausa | MERGED | Bigorna | Lupa | 0 | edee67b |
 | 5 | T31 | Departamentos e horários de atendimento | MERGED | Torno | Sonda | 0 | 9cd0f6a |
-| 5 | T32 | Acesso de suporte | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T32.md; libera contexto de empresa, SSE e listCompanies (aditivo) |
+| 5 | T32 | Acesso de suporte | MERGED | Prisma2 | Sentinela | 0 | daefc03 (op ~20 min + ajuste 403/404; tester ~6 min) |
 | 5 | T33 | Chats: modelo e ingestão de eventos WhatsApp | MERGED | Fole | Prisma | 0 | c4f303c |
 | 5 | T34 | Vendas, produtos, despesas e grupos de filtro | MERGED | Torno | Sonda | 0 | 4a243c8 |
 | 5 | T35 | Conteúdo: respostas rápidas, modelos, variáveis globais, figurinhas | MERGED | Bigorna | Lupa | 0 | f48c9b5 |
@@ -72,7 +72,7 @@
 | 6 | T51 | Nós de mensagem (mensagem, modelo, notificação, Pix) | MERGED | Bigorna | Lupa | 0 | 8c9bcc3 |
 | 6 | T52 | Agentes de IA: base de conhecimento | MERGED | Cinzel | Radar | 0 | 6a89eb9 |
 | 6 | T53 | UI: empresa, departamentos e horários | MERGED | Prumo | Sentinela | 0 | aaaed12 (piloto: operário ~15 min, tester ~8 min; 1 ajuste de teste por corrida sob carga) |
-| 6 | T54 | UI: equipe, permissões, convites e suporte | TODO | | | 0 | |
+| 6 | T54 | UI: equipe, permissões, convites e suporte | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T54.md; libera tela de suporte, app-shell, http.ts, hub e MemberDto (aditivo) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | TODO | | | 0 | |
 | 6 | T57 | UI editores de nó: lógica, CRM e externos | TODO | | | 0 | |
@@ -89,7 +89,7 @@
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
 | 6 | T110 | Pagamentos ao lead: adapter Zenith (chave, OAuth e webhook) | BLOCKED | Cinzel | Radar | 0 | sem doc pública da Zenith (homônimos: zenithpayments.support AU, zenithpay.in, xenithpay, zen.com); aguarda o usuário: doc do parceiro OU contrato provisório [NÃO VERIFICADO] |
 | 6 | T111 | Bloco Pagamento no fluxo e confirmação por webhook | MERGED | Cinzel | Radar | 0 | 40de8cf |
-| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T112.md; libera boot de produção (aditivo) |
+| 6 | T112 | Emissão de NF (Notasy) na venda aprovada | MERGED | Lastro | Vigia | 0 | 08cc19c (op ~34 min, tester ~6 min; migration regenerada como 0031) |
 | 6 | T113 | UTMify: integração e envio de vendas aprovadas | TODO | | | 0 | |
 | 7 | T62 | Nós interativos (menu, carrossel, espera de resposta) | MERGED | Bigorna | Lupa | 0 | c0ba53e |
 | 7 | T63 | Nós de CRM (etiquetas, chat, departamento, kanban, manipulador, venda, agente) | MERGED | Bigorna | Lupa | 0 | 3f0cb0c |
@@ -201,6 +201,9 @@
 | ingest (T33) | `reactionMessage` recebida é ignorada; localização, contato e view_once de entrada chegam só como texto (WaEvent sem esses campos) | T75 |
 | T102 / web | Sem tratamento global de `company_inactive` (403) na web; `company.updated` não chega ao SSE (handler em módulo lazy: registrar no boot do realtime); hub sem abas permitidas mostra "Nenhuma seção"; "Nova Conta", "Convidar membro", "Sair da empresa" e redirects /departments e /business-hours sem AC | T53 |
 | T54 | Tela do próprio usuário de suporte (`apps/web/src/routes/support/access.tsx`, hoje placeholder) não está em nenhum Path: incluir na T54 | T32 (brief) |
+| T54 | Com X-Company-Id de empresa cuja concessão expirou, até /api/support/* responde 403 support_access_expired: a web zera a empresa ativa (decisão no brief da T54) | T32 |
+| T114 | Consumir GET /api/sales/:id/invoice, /api/sale-invoices, sale.updated e /usage + ?force=1 da T112; card do catálogo | T112 |
+| integrações | Webhook de saída da Notasy (nota autorizada/cancelada, HMAC) documentado e não consumido; fontes de venda (T73) não gravam note_issuer_id; validar com token real o JSON inferido (docs/integrations/notasy.md) | T112 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |

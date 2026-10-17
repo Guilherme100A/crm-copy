@@ -80,6 +80,8 @@ done
 [ $FAIL = 1 ] && { echo "PARE: verify reprovado sobre main — NÃO integrado"; exit 6; }
 git add spec/reports && git commit -qm "reports: $T" >/dev/null 2>&1 || true
 cd "$ROOT" && git merge -q --ff-only "task/$T" || exit 3
+# envia a main ao GitHub (só a main; nunca task/* nem .orq-tmp); falha de rede/credencial não bloqueia o gate
+timeout 120 git push -q origin main >"$SP/push.log" 2>&1 && echo "push origin main ok" || echo "aviso: git push origin main falhou (ver .orq-tmp/push.log)"
 pnpm install --frozen-lockfile >/dev/null 2>&1 || pnpm install >/dev/null 2>&1
 git log --oneline -1
 # limpeza do worktree (caminhos longos do pnpm no Windows)

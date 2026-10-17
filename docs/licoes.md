@@ -51,3 +51,6 @@
 - Decisão que muda comportamento existente: procure o teste que trava o comportamento antigo (ex.: `contacts.db.unit.test.ts`) e ajuste-o de forma mínima (`*.unit.test.ts` é compartilhado, SPEC 2.4). (T58)
 - No mobile (< 1024 px) o hub de Configurações não tem os botões `settings-tab-<id>`: usa `settings-tab-select` → `settings-tab-select-search` → `settings-tab-option-<id>` (`aria-selected`). Testes de abas novas conferem a aba pelo select no mobile. (T53/T58)
 - Tarefas de UI feitas em paralelo podem quebrar os E2E uma da outra só no gate (base nova): o tester ajusta o teste, sem afrouxar o AC. (T58)
+- O Orquestrador pode avançar o branch da tarefa por fast-forward (main nova); nesse caso use `--base` = o novo HEAD da main no verify (o escopo compara com a base). (T112)
+- Nunca chame a API real de terceiros, nem para "conferir a rota": a pesquisa é só por documentação e bundles públicos. (T112)
+- Mudança de comportamento no core precisa atualizar os testes dos pacotes que dependem dele (api, worker); o gate agora roda os dependentes (`pnpm --filter "...[base]"`). (T58 → regressão em `apps/api` contacts)

@@ -13,3 +13,5 @@ Rodar sempre a partir do checkout da main (`leonas-crm/scripts/orq`). Temporári
 | `union.mjs <arquivos>` | resolve conflitos aditivos de registro durante o rebase. |
 | `obra.mjs` + `obra-times.mjs` | atualizam o painel "Obra do Leonas CRM". |
 | `verify-age.ps1`, `rm-worktree.ps1` | auxiliares. |
+
+Remoto: `origin` (GitHub, privado). O `integrate.sh` faz `git push origin main` depois de cada gate aprovado; falha só gera aviso (`.orq-tmp/push.log`). Depois de um commit de STATUS, rode `git push -q origin main` (também sem bloquear). Nunca envie `task/*`.
