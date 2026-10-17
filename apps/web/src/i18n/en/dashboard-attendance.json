@@ -1,0 +1,41 @@
+{
+  "error": "We couldn't load the numbers for this period.",
+  "retry": "Try again",
+  "empty": "No data in this period.",
+  "others": "Others",
+  "noConnection": "No connection",
+  "rangeWarning": "The attendance panel accepts periods of up to {days} days. Pick a shorter range.",
+  "kpis": {
+    "vsPrevious": "Compared with the previous period of the same length",
+    "new_leads": { "label": "New leads", "hint": "Chats opened in the period" },
+    "attended_leads": { "label": "Attended leads", "hint": "Chats opened in the period that had an agent" },
+    "resolved_leads": { "label": "Closed leads", "hint": "Chats opened in the period that were closed" },
+    "response_time_seconds": { "label": "Response time", "hint": "Average time until an agent's first message" },
+    "unanswered_chats": { "label": "Unanswered", "hint": "Open chats with no agent message (bots and AI agents don't count)" }
+  },
+  "charts": {
+    "overTime": "Conversations in the period",
+    "chats": "Chats",
+    "responseTime": "Response time",
+    "responseTimeHint": "Average time of the first message sent by an agent",
+    "average": "Average",
+    "byStatus": "Leads by status"
+  },
+  "status": { "new_leads": "New", "attended_leads": "Attended", "resolved_leads": "Closed" },
+  "heatmap": {
+    "title": "Conversations by hour",
+    "peak": "Peak: {day} {hour} · {n} chats",
+    "ties": "(+{n} tied)",
+    "cell": "{day} {hour}: {n} chats",
+    "less": "Less",
+    "more": "More"
+  },
+  "weekdays": { "0": "Sunday", "1": "Monday", "2": "Tuesday", "3": "Wednesday", "4": "Thursday", "5": "Friday", "6": "Saturday" },
+  "weekdaysShort": { "0": "Sun", "1": "Mon", "2": "Tue", "3": "Wed", "4": "Thu", "5": "Fri", "6": "Sat" },
+  "views": { "table": "Table", "chart": "Chart", "list": "List" },
+  "users": {
+    "title": "Performance by agent",
+    "columns": { "name": "Agent", "answered": "Answered", "attending": "In progress", "resolved": "Resolved", "time": "Response time" }
+  },
+  "departments": { "title": "Conversations by department" }
+}

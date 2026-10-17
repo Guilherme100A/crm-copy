@@ -1,0 +1,41 @@
+{
+  "error": "No fue posible cargar los números de este período.",
+  "retry": "Intentar de nuevo",
+  "empty": "Sin datos en el período.",
+  "others": "Otros",
+  "noConnection": "Sin conexión",
+  "rangeWarning": "El panel de atención acepta períodos de hasta {days} días. Elige un intervalo más corto.",
+  "kpis": {
+    "vsPrevious": "Comparado con el período anterior de la misma duración",
+    "new_leads": { "label": "Leads nuevos", "hint": "Chats abiertos en el período" },
+    "attended_leads": { "label": "Leads atendidos", "hint": "Chats abiertos en el período que tuvieron agente" },
+    "resolved_leads": { "label": "Leads finalizados", "hint": "Chats abiertos en el período que se finalizaron" },
+    "response_time_seconds": { "label": "Tiempo de respuesta", "hint": "Promedio hasta el primer mensaje de un agente" },
+    "unanswered_chats": { "label": "Sin respuesta", "hint": "Chats abiertos sin ningún mensaje de agente (bots y agentes de IA no cuentan)" }
+  },
+  "charts": {
+    "overTime": "Atenciones en el período",
+    "chats": "Chats",
+    "responseTime": "Tiempo de respuesta",
+    "responseTimeHint": "Promedio del primer mensaje enviado por un agente",
+    "average": "Promedio",
+    "byStatus": "Leads por estado"
+  },
+  "status": { "new_leads": "Nuevos", "attended_leads": "Atendidos", "resolved_leads": "Finalizados" },
+  "heatmap": {
+    "title": "Atenciones por hora",
+    "peak": "Pico: {day} {hour} · {n} chats",
+    "ties": "(+{n} empatados)",
+    "cell": "{day} {hour}: {n} chats",
+    "less": "Menos",
+    "more": "Más"
+  },
+  "weekdays": { "0": "domingo", "1": "lunes", "2": "martes", "3": "miércoles", "4": "jueves", "5": "viernes", "6": "sábado" },
+  "weekdaysShort": { "0": "Dom", "1": "Lun", "2": "Mar", "3": "Mié", "4": "Jue", "5": "Vie", "6": "Sáb" },
+  "views": { "table": "Tabla", "chart": "Gráfico", "list": "Lista" },
+  "users": {
+    "title": "Desempeño por agente",
+    "columns": { "name": "Agente", "answered": "Atendidos", "attending": "En atención", "resolved": "Resueltos", "time": "Tiempo de respuesta" }
+  },
+  "departments": { "title": "Atenciones por departamento" }
+}

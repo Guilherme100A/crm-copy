@@ -1,0 +1,47 @@
+{
+  "title": "Sales history",
+  "new": "New sale",
+  "empty": "No sales in this period.",
+  "error": "We couldn't load the sales history.",
+  "retry": "Try again",
+  "more": "Load more",
+  "loadingMore": "Loading more sales...",
+  "end": "End of history",
+  "export": {
+    "label": "Export CSV",
+    "empty": "No sales to export.",
+    "soon": "Sales export coming soon."
+  },
+  "columns": {
+    "instance_name": "Instance",
+    "instance_number": "Instance number",
+    "lead_number": "Lead number",
+    "customer_name": "Customer (name)",
+    "product": "Product",
+    "id": "ID",
+    "amount": "Amount",
+    "currency": "Currency",
+    "source_id": "Source ID",
+    "sold_at": "Date",
+    "actions": "Actions"
+  },
+  "form": {
+    "title": "New sale",
+    "instanceName": "Instance",
+    "instanceNumber": "Instance number",
+    "leadNumber": "Lead number",
+    "customerName": "Customer (name)",
+    "customerNameHint": "Name shown on the invoice",
+    "amount": "Amount",
+    "currency": "Currency",
+    "product": "Product (optional)",
+    "noProduct": "No product",
+    "sourceId": "Source ID",
+    "soldAt": "Sale date",
+    "cancel": "Cancel",
+    "save": "Save sale",
+    "amountInvalid": "Enter a valid amount (zero or more, up to 2 decimal places).",
+    "dateInvalid": "Enter the sale date and time.",
+    "error": "We couldn't save the sale."
+  }
+}

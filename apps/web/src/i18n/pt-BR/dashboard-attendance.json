@@ -1,0 +1,41 @@
+{
+  "error": "Não foi possível carregar os números deste período.",
+  "retry": "Tentar novamente",
+  "empty": "Sem dados no período.",
+  "others": "Outros",
+  "noConnection": "Sem conexão",
+  "rangeWarning": "O painel de atendimento aceita períodos de até {days} dias. Escolha um intervalo menor.",
+  "kpis": {
+    "vsPrevious": "Comparado ao período anterior de mesma duração",
+    "new_leads": { "label": "Leads novos", "hint": "Chats abertos no período" },
+    "attended_leads": { "label": "Leads atendidos", "hint": "Chats abertos no período que tiveram atendente" },
+    "resolved_leads": { "label": "Leads finalizados", "hint": "Chats abertos no período que foram finalizados" },
+    "response_time_seconds": { "label": "Tempo de resposta", "hint": "Média até a primeira mensagem de um atendente" },
+    "unanswered_chats": { "label": "Sem resposta", "hint": "Chats abertos sem nenhuma mensagem de atendente (robô e agente de IA não contam)" }
+  },
+  "charts": {
+    "overTime": "Atendimentos no período",
+    "chats": "Chats",
+    "responseTime": "Tempo de resposta",
+    "responseTimeHint": "Média da primeira mensagem enviada por um atendente",
+    "average": "Média",
+    "byStatus": "Leads por status"
+  },
+  "status": { "new_leads": "Novos", "attended_leads": "Atendidos", "resolved_leads": "Finalizados" },
+  "heatmap": {
+    "title": "Atendimentos por hora",
+    "peak": "Pico: {day} {hour} · {n} chats",
+    "ties": "(+{n} empatados)",
+    "cell": "{day} {hour}: {n} chats",
+    "less": "Menos",
+    "more": "Mais"
+  },
+  "weekdays": { "0": "domingo", "1": "segunda", "2": "terça", "3": "quarta", "4": "quinta", "5": "sexta", "6": "sábado" },
+  "weekdaysShort": { "0": "Dom", "1": "Seg", "2": "Ter", "3": "Qua", "4": "Qui", "5": "Sex", "6": "Sáb" },
+  "views": { "table": "Tabela", "chart": "Gráfico", "list": "Lista" },
+  "users": {
+    "title": "Desempenho por atendente",
+    "columns": { "name": "Atendente", "answered": "Atendidos", "attending": "Em atendimento", "resolved": "Resolvidos", "time": "Tempo de resposta" }
+  },
+  "departments": { "title": "Atendimentos por departamento" }
+}

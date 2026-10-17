@@ -11,8 +11,11 @@ import { FiltersBar } from './filters-bar'
 import { timeIn } from './format'
 import { DashboardHeader } from './header'
 import { SalesPanel } from './sales-panel'
-import { cleanSearch, dashboardQueryOf, tabOf, type DashboardSearch, type DashboardTab } from './search'
-import { dashboardTab } from './tabs'
+import { cleanSearch, dashboardQueryOf, periodOf, tabOf, type DashboardSearch, type DashboardTab } from './search'
+import { dashboardTab, type DashboardFiltersSlot } from './tabs'
+// T87: registros estáticos do Atendimento e do histórico de vendas nos slots acima.
+import '@/features/dashboard-attendance/register'
+import '@/features/dashboard-history/register'
 
 export function DashboardPage({ search, onSearch }: { search: DashboardSearch; onSearch: (next: DashboardSearch) => void }) {
   const t = useT('dashboard')
@@ -28,6 +31,7 @@ export function DashboardPage({ search, onSearch }: { search: DashboardSearch; o
   const tzReady = tzQ.isSuccess || tzQ.isError || !session?.company
   const bootstrap = useQuery(bootstrapQuery(locale))
   const params = useMemo(() => dashboardQueryOf(search, tz), [search, tz])
+  const period = useMemo(() => periodOf(search, tz), [search, tz])
   const data = useQuery({ ...dashboardQuery(params), enabled: canSales && tab === 'sales' && tzReady })
   const [refreshing, setRefreshing] = useState(false)
 
@@ -60,6 +64,21 @@ export function DashboardPage({ search, onSearch }: { search: DashboardSearch; o
   }
 
   const Attendance = dashboardTab('attendance')
+  const History = dashboardTab('history')
+  // T87: a mesma barra de filtros na aba Atendimento, com o "Atualizar" e a hora do próprio painel.
+  const filtersFor = (bar: DashboardFiltersSlot) => (
+    <FiltersBar
+      search={search}
+      onSearch={set}
+      bootstrap={bootstrap.data}
+      computedAt={bar.computedAt}
+      lastUpdated={bar.computedAt ? timeIn(bar.computedAt, tz, locale) : null}
+      refreshing={bar.refreshing}
+      onRefresh={bar.onRefresh}
+      onSaveGroup={saveGroup}
+      onDeleteGroup={deleteGroup}
+    />
+  )
   const tabs: DashboardTab[] = canSales ? ['sales', 'attendance'] : ['attendance']
   const computedAt = data.data?.computed_at ?? null
 
@@ -98,11 +117,12 @@ export function DashboardPage({ search, onSearch }: { search: DashboardSearch; o
               onDeleteGroup={deleteGroup}
             />
             <SalesPanel data={data.data} loading={data.isFetching || data.isPending} />
+            {History ? <History connectionIds={search.connection_ids ?? []} period={period} timeZone={tz} search={search} ready={tzReady} /> : null}
           </div>
         ) : (
           <div data-testid="dashboard-attendance" role="tabpanel" className="flex min-w-0 flex-col gap-4">
             {Attendance ? (
-              <Attendance connectionIds={search.connection_ids ?? []} />
+              <Attendance connectionIds={search.connection_ids ?? []} period={period} timeZone={tz} search={search} ready={tzReady} renderFilters={filtersFor} />
             ) : (
               <p data-testid="dashboard-attendance-placeholder" className="rounded-lg border border-dashed p-6 text-center text-sm text-muted-foreground">
                 {t('attendance.placeholder')}

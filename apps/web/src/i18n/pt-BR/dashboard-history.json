@@ -1,0 +1,47 @@
+{
+  "title": "Histórico de vendas",
+  "new": "Nova venda",
+  "empty": "Nenhuma venda neste período.",
+  "error": "Não foi possível carregar o histórico de vendas.",
+  "retry": "Tentar novamente",
+  "more": "Carregar mais",
+  "loadingMore": "Carregando mais vendas...",
+  "end": "Fim do histórico",
+  "export": {
+    "label": "Exportar CSV",
+    "empty": "Nenhuma venda para exportar.",
+    "soon": "Exportação de vendas em breve."
+  },
+  "columns": {
+    "instance_name": "Instância",
+    "instance_number": "Nº da instância",
+    "lead_number": "Nº do lead",
+    "customer_name": "Cliente (nome)",
+    "product": "Produto",
+    "id": "ID",
+    "amount": "Valor",
+    "currency": "Moeda",
+    "source_id": "Source ID",
+    "sold_at": "Data",
+    "actions": "Ações"
+  },
+  "form": {
+    "title": "Nova venda",
+    "instanceName": "Instância",
+    "instanceNumber": "Número da instância",
+    "leadNumber": "Número do lead",
+    "customerName": "Cliente (nome)",
+    "customerNameHint": "Nome exibido na NF",
+    "amount": "Valor",
+    "currency": "Moeda",
+    "product": "Produto (opcional)",
+    "noProduct": "Sem produto",
+    "sourceId": "Source ID",
+    "soldAt": "Data da venda",
+    "cancel": "Cancelar",
+    "save": "Salvar venda",
+    "amountInvalid": "Informe um valor válido (maior ou igual a zero, até 2 casas decimais).",
+    "dateInvalid": "Informe a data e a hora da venda.",
+    "error": "Não foi possível salvar a venda."
+  }
+}
