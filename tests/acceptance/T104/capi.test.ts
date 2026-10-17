@@ -72,7 +72,8 @@ describe('T104 — dedupe por event_id (AC-T104-02)', () => {
     expect(eventsFor(env, px.pixelId)).toHaveLength(2)
     const eventId = `ev-retry-${randomUUID()}`
     env.fake.failNext(500, { message: 'falha temporária', code: 1 })
-    expect((await send(svc, o.companyId, px.id, { eventId })).status).toBe('failed')
+    // Revisão 3 (AC-T104-08): 5xx é incerto (a Meta pode ter recebido) e é retentado com o mesmo event_id.
+    expect((await send(svc, o.companyId, px.id, { eventId })).status).toBe('uncertain')
     expect((await send(svc, o.companyId, px.id, { eventId })).status).toBe('sent')
     expect(eventsFor(env, px.pixelId).filter((e: any) => e.event.event_id === eventId)).toHaveLength(1)
   })
@@ -181,7 +182,7 @@ describe('T104 — listagem mascarada e nó pixel (AC-T104-04)', () => {
   })
 })
 
-describe('T104 — sem business_messaging nem WABA (AC-T104-05)', () => {
+describe('T104 — business_messaging só no modo mensagem de anúncio (AC-T104-05, revisão 3)', () => {
   const WABA = /business_messaging|whatsapp_business_account|waba|messaging_channel/i
 
   it('AC-T104-05 nenhum payload enviado (fluxo, venda, manual) usa action_source business_messaging nem campos de WABA', async () => {
@@ -210,6 +211,20 @@ describe('T104 — sem business_messaging nem WABA (AC-T104-05)', () => {
     // o corpo bruto dos POSTs também não traz nada de WABA
     const raw = JSON.stringify(env.fake.requests.filter((x: any) => String(x.path).endsWith(`/${px.pixelId}/events`)).map((x: any) => x.body))
     expect(raw).not.toMatch(WABA)
+  })
+
+  // Revisão 3: com WABA no pixel e ctwa_clid nativo no contato, o fluxo manda business_messaging com os campos da doc
+  // (https://developers.facebook.com/docs/marketing-api/conversions-api/business-messaging); Lead vira LeadSubmitted.
+  it('AC-T104-05 (revisão 3) WABA + ctwa_clid nativo → business_messaging só com whatsapp_business_account_id e ctwa_clid', async () => {
+    const o = await owner(env)
+    const px = await newPixel(env, o, { whatsapp_business_account_id: '104996122399160' })
+    const w = await world(env, o.companyId)
+    await env.q(`UPDATE crm.contacts SET ctwa_clid = 'ARA-acc-clid' WHERE id = $1`, [w.contactId])
+    const r = await runFlow(env, w, pixelFlow({ pixel_config_id: px.id, event_type: 'Lead' }))
+    expect(r.error).toBeNull()
+    const [ev] = eventsFor(env, px.pixelId)
+    expect(ev.event).toMatchObject({ event_name: 'LeadSubmitted', action_source: 'business_messaging', messaging_channel: 'whatsapp' })
+    expect(ev.event.user_data).toEqual({ whatsapp_business_account_id: '104996122399160', ctwa_clid: 'ARA-acc-clid' })
   })
 
   it('AC-T104-05 pedir action_source business_messaging é recusado sem POST', async () => {

@@ -5,6 +5,7 @@
 > Todo critério de aceitação tem um ID `AC-Txx-nn` rastreável até um teste que passa (`spec/verify/verify.mjs`).
 > Gerada em 2026-10-15. Método e rigor copiados de `spec/_ref_wsm_SPEC.md` (já validado pelo usuário).
 > **Revisão 1 (2026-10-15):** respostas do usuário à antiga §10.2 incorporadas (consentimento sem gate para importados, integrações de venda iguais à referência, OpenRouter, copiloto e MCP antecipados com OAuth, i18n pt-BR/en/es, marcos com nomes próprios, KPIs fechados, limites ilimitados por padrão, 4 pares em paralelo). Regra geral do usuário: em dúvida de escopo, fazer como o produto de referência faz.
+> **Revisão 3 (2026-10-17, paridade de rastreamento com o Leona):** a CAPI passa a ter o modo "mensagem de anúncio" (`action_source: business_messaging`, `messaging_channel: whatsapp`, `ctwa_clid` + WABA id ou `page_id`) com fallback para `chat` só em rejeição explícita da Meta; `country`/`st`/`zp` e normalização sem pontuação; eventos com mais de 7 dias descartados; eventos extras no nó Pixel; código de teste por pixel; Lead automático de anúncio; diagnóstico "Eventos enviados"; links rastreáveis opcionais; níveis de confiança da atribuição (nativo > link > provável > nenhum). AC-T104-05 revisado; ACs novos AC-T104-06..12, AC-T73-06 e AC-T105-05. Ver `docs/integrations/meta-capi.md`.
 
 ---
 
@@ -1390,6 +1391,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T73-03** `test` devolve o `SaleEvent` resultante de uma amostra colada sem gravar nada.
 - **AC-T73-04** Venda cria ou encontra o contato pelo telefone (contato novo com `consent_source = 'sale'`) e herda a atribuição; first touch nunca é sobrescrito, last touch sim.
 - **AC-T73-05** Rotacionar o token invalida a URL antiga (404).
+- **AC-T73-06** (revisão 3) A atribuição do contato e da venda guarda `confidence` + `method`: `confirmed_native` (metadados do anúncio na mensagem — "origem indicada pelo anúncio", não "causa da venda") > `confirmed_link` (código do link na 1ª mensagem) > `probable` (só proximidade de tempo; opção desligada por padrão, janela configurável; com mais de um clique candidato na janela não atribui) > `none` (venda registrada sem anúncio). Evidência melhor substitui a pior e o histórico fica guardado; a venda herda o nível do contato.
 
 ---
 
@@ -1442,7 +1444,14 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T104-02** O mesmo `event_id` enviado duas vezes resulta em 1 POST ao fake.
 - **AC-T104-03** Moeda vazia ou inválida vira `BRL`; `value` com variável (`{preco}`) é renderizado.
 - **AC-T104-04** A listagem mascara `pixel_id` e token; o nó `pixel` no fluxo envia o evento configurado e segue `success`/`failure`.
-- **AC-T104-05** Nenhum payload enviado usa `action_source: business_messaging` nem campos de WABA.
+- **AC-T104-05** ~~Nenhum payload enviado usa `action_source: business_messaging` nem campos de WABA.~~ **Revisão 3:** `business_messaging` só sai quando o contato tem atribuição `confirmed_native` (ctwa_clid do cartão do anúncio), o pixel (ou o nó) tem WABA id ou `page_id` e o evento está na lista suportada pela doc de Business Messaging (Lead vai como `LeadSubmitted`); o payload leva exatamente `messaging_channel: whatsapp` e `user_data: { whatsapp_business_account_id | page_id, ctwa_clid }`. Fora disso, o modo padrão (`chat`/`system_generated`) não leva nenhum campo de business messaging.
+- **AC-T104-06** (revisão 3) `user_data` com `country` (hash do ISO alfa-2 do DDI; senão o país padrão do pixel; senão `br`), `st` (UF; nome por extenso vira UF no Brasil) e `zp` (sem hífen/espaço), e `fn`/`ln`/`ct` sem pontuação nem acento; `ph` sem zeros à esquerda.
+- **AC-T104-07** (revisão 3) `event_time` com mais de 7 dias não é enviado: o log fica `discarded` com o motivo e o evento nunca é reenviado.
+- **AC-T104-08** (revisão 3) Rejeição explícita do business_messaging (4xx com código de parâmetro 100 ou permissão 3/10/200–299) reenvia o MESMO `event_id` no modo padrão uma única vez e marca o pixel `bm_status = rejected` (reteste depois de 24 h). Timeout/rede/5xx/códigos 1–2 viram `uncertain` e são retentados no MESMO modo e com o mesmo `event_time` pela fila; 429/limite fica `failed` retentável no mesmo modo. Nenhuma retentativa gera evento com outro `event_id`.
+- **AC-T104-09** (revisão 3) `test_event_code` do pixel vale também em produção, só para ele; o do env só fora de produção.
+- **AC-T104-10** (revisão 3) O nó Pixel aceita Compra, Lead, InitiateCheckout, AddToCart, CompleteRegistration, Contact, Schedule e Subscribe, com valor/moeda por variável e `page_id`/WABA opcionais que sobrepõem os do pixel; o pixel com `auto_lead_on_ad` manda um Lead por contato na 1ª mensagem vinda de anúncio.
+- **AC-T104-11** (revisão 3) `GET /api/meta/pixels/:id/events` lista os eventos com status (aceito/rejeitado/incerto/descartado), modo, nomes dos identificadores (nunca valores), pontuação estimada, filtros e paginação; outra empresa → 404.
+- **AC-T104-12** (revisão 3) Link rastreável (opcional): `GET /api/w/:slug` grava o clique (fbc `fb.1.<ms>.<fbclid>`, fbp, UTMs, IP, UA) e responde 302 direto para o wa.me; slug desconhecido/inativo → 404 genérico; rate limit por IP. Com código, a 1ª mensagem liga o contato (`confirmed_link`) e o texto gravado fica sem o código; só então fbc/fbp/IP/UA entram nos eventos do contato.
 
 ---
 
@@ -1631,6 +1640,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T105-02** Agregados por conjunto e campanha batem com a soma dos anúncios.
 - **AC-T105-03** ROAS é nulo quando o gasto é ≤ 0.
 - **AC-T105-04** Vendas sem `source_id` não entram em nenhum anúncio.
+- **AC-T105-05** (revisão 3) `purchases_leona`/`purchase_value_leona`/ROAS contam só vendas com atribuição confirmada (`confirmed_native`/`confirmed_link`); as `probable` saem separadas (`purchases_leona_probable`, `purchase_value_leona_probable(_display)`) e só entram no número exibido com o filtro explícito da tela, com legenda.
 
 ---
 
@@ -2266,7 +2276,7 @@ Assinaturas por instância, planos e preços, faturas, reembolsos, checkout do S
 | `waba_id`, `phone_number_id`, "Reconectar API Oficial", slot oficial | 08 | **Adaptado:** JID + auth state Baileys; reconectar por novo QR |
 | Status `restricted` | 08 | **Adaptado:** `banned` (403/forbidden) ou `disconnected` (loggedOut) |
 | Referral CTWA do webhook oficial | 05, 11 | **Adaptado:** `contextInfo.externalAdReply` da 1ª mensagem (T07, T33, T73) |
-| Conversions API `business_messaging` (exige WABA) | 11 | **Fora.** CAPI com `action_source` `chat`/`system_generated` (T104) |
+| Conversions API `business_messaging` (exige WABA) | 11 | **Revisão 3: adaptado.** Modo "mensagem de anúncio" quando há `ctwa_clid` nativo e WABA id (doc) ou `page_id` (paridade Leona, não confirmado pela doc), com fallback para `chat` em rejeição explícita (T104, AC-T104-05/08) |
 | Template inicial de disparo para alvos oficiais | 10 | **Fora.** Primeira mensagem livre do fluxo |
 
 ### 8.3 Instável no Baileys (`[INSTÁVEL NO BAILEYS]`)
