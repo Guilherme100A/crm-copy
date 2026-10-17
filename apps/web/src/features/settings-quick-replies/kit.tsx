@@ -373,6 +373,7 @@ export function ConfirmDialog({
   body,
   onCancel,
   onConfirm,
+  confirmLabel,
 }: {
   prefix: string
   open: boolean
@@ -380,6 +381,8 @@ export function ConfirmDialog({
   body: string
   onCancel: () => void
   onConfirm: () => Promise<void>
+  /** Rótulo do botão de confirmar (default: Excluir). */
+  confirmLabel?: string
 }) {
   const t = useT(NS)
   const [pending, setPending] = useState(false)
@@ -410,7 +413,7 @@ export function ConfirmDialog({
                 }
               }}
             >
-              {t('common.delete')}
+              {confirmLabel ?? t('common.delete')}
             </Button>
           </div>
         </Dialog.Popup>

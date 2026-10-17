@@ -20,6 +20,12 @@ export const connectionsSearchSchema = z.object({
 })
 export type ConnectionsSearch = z.infer<typeof connectionsSearchSchema>
 
+/** Quantas conexões ainda cabem no limite (`null` = sem limite). */
+export function slotsLeft(limits: ConnectionLimits | undefined): number | null {
+  if (!limits || limits.connections === null) return null
+  return Math.max(0, limits.connections - limits.used)
+}
+
 /** Limite definido e atingido (sem limite, `connections: null`, nunca bloqueia). */
 export function limitReached(limits: ConnectionLimits | undefined): boolean {
   return !!limits && limits.connections !== null && limits.used >= limits.connections
@@ -97,6 +103,7 @@ export type ConnectionAction =
   | 'paused-flows'
   | 'stop-flows'
   | 'delete'
+  | 'unlink'
 
 export interface ConnectionPerms {
   canEdit: boolean
@@ -106,10 +113,25 @@ export interface ConnectionPerms {
 
 const CONNECTABLE: readonly ConnectionStatus[] = ['pending', 'connecting', 'disconnected', 'banned']
 
-/** Ações do menu da linha, na ordem de exibição (08 §4 adaptado ao Baileys). */
+/** Conexão importada do ai-manager: o chip (QR, conexão, reinício, proxy) é gerenciado no painel do ai-manager. */
+export const isImported = (c: Pick<ConnectionDto, 'origin'>) => c.origin === 'ai-manager'
+
+/**
+ * Ações do menu da linha, na ordem de exibição (08 §4 adaptado ao Baileys). Conexão importada: sem ações de sessão
+ * (ficam no ai-manager) e, no lugar de "Excluir", "Desvincular" (o CRM larga o chip; nada muda no ai-manager).
+ */
 export function actionsFor(c: ConnectionDto, perms: ConnectionPerms): ConnectionAction[] {
   const out: ConnectionAction[] = []
   const scheduled = !!c.scheduled_for_deletion_at
+  if (isImported(c)) {
+    if (perms.canEdit) out.push('rename', 'instance')
+    if (perms.canRunFlows) {
+      if ((c.paused_flows_count ?? 0) > 0) out.push('paused-flows')
+      out.push('stop-flows')
+    }
+    if (perms.canDelete) out.push('unlink')
+    return out
+  }
   if (perms.canEdit && !scheduled) {
     if (CONNECTABLE.includes(c.status)) out.push('connect')
     if (c.status === 'paused') out.push('resume')

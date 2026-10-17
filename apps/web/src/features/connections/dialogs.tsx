@@ -1,5 +1,6 @@
 // Modais da tela de conexões (08 §2 "Modais de ação"; AC-T71-02/03/04): Nova/Renomear, Conectar (QR | Código no
-// telefone), Proxy personalizado, Configurações da instância, Parar todos os fluxos e Fluxos pausados na queda.
+// telefone), Proxy personalizado, Configurações da instância, Parar todos os fluxos, Fluxos pausados na queda e
+// Importar chips do ai-manager (modo extensão).
 // Testids `connections-<modal>-<coisa>` (contrato com o Tester).
 import { Dialog } from '@base-ui/react/dialog'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -15,6 +16,8 @@ import {
   CONNECTIONS_KEY,
   connectionsApi,
   EPHEMERAL_DURATIONS,
+  importableKey,
+  importableQuery,
   pairingKey,
   pausedFlowsQuery,
   PROXY_PROTOCOLS,
@@ -684,6 +687,153 @@ export function PausedFlowsDialog({
       {resume.isError || cancel.isError ? (
         <p role="alert" data-testid="connections-paused-flows-error" className="text-sm text-destructive">
           {serverMessage(resume.error ?? cancel.error) ?? t('common.error')}
+        </p>
+      ) : null}
+    </Modal>
+  )
+}
+
+// ------------------------------------------------------------------ Importar chips do ai-manager (modo extensão)
+
+/**
+ * Lista os chips do ai-manager ainda sem conexão no CRM e importa os escolhidos. Importar só cria o vínculo com a
+ * MESMA sessão: sem QR, sem sessão nova, sem reiniciar nem desconectar o chip.
+ */
+export function ImportDialog({
+  open,
+  slotsLeft,
+  onClose,
+}: {
+  open: boolean
+  /** Vagas no limite da empresa (`null` = sem limite). */
+  slotsLeft: number | null
+  onClose: () => void
+}) {
+  const t = useT(NS)
+  const qc = useQueryClient()
+  const q = useQuery(importableQuery(open))
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  useEffect(() => {
+    if (open) {
+      setSelected(new Set())
+      void q.refetch()
+    }
+  }, [open])
+  const items = q.data?.items ?? []
+  const overLimit = slotsLeft !== null && selected.size > slotsLeft
+  const run = useMutation({
+    mutationFn: () => connectionsApi.importSessions([...selected]),
+    onSuccess: async (r) => {
+      notify('connections-imported', t('import.done', { n: r.items.length }))
+      await refreshList(qc)
+      await qc.invalidateQueries({ queryKey: importableKey })
+      onClose()
+    },
+    onError: () => void qc.invalidateQueries({ queryKey: importableKey }),
+  })
+  const toggle = (id: string) =>
+    setSelected((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  const allIds = items.map((i) => i.session_id)
+  const allOn = allIds.length > 0 && allIds.every((id) => selected.has(id))
+  return (
+    <Modal
+      testId="connections-import"
+      open={open}
+      title={t('import.title')}
+      onClose={onClose}
+      footer={
+        <>
+          <Button variant="outline" data-testid="connections-import-cancel" onClick={onClose}>
+            {t('common.cancel')}
+          </Button>
+          <Button
+            data-testid="connections-import-submit"
+            disabled={selected.size === 0 || overLimit || run.isPending}
+            onClick={() => run.mutate()}
+          >
+            {t('import.submit', { n: selected.size })}
+          </Button>
+        </>
+      }
+    >
+      <p className="text-sm text-muted-foreground">{t('import.body')}</p>
+      {q.isPending ? (
+        <p data-testid="connections-import-loading" className="text-sm text-muted-foreground">
+          {t('common.loading')}
+        </p>
+      ) : q.isError ? (
+        <div className="flex flex-wrap items-center gap-2 text-sm" role="alert" data-testid="connections-import-error">
+          <span className="flex-1">{serverMessage(q.error) ?? t('common.error')}</span>
+          <Button variant="outline" size="sm" onClick={() => void q.refetch()}>
+            <RefreshCw aria-hidden /> {t('common.retry')}
+          </Button>
+        </div>
+      ) : items.length === 0 ? (
+        <p data-testid="connections-import-empty" className="rounded-lg border border-dashed p-4 text-center text-sm">
+          {t('import.empty')}
+        </p>
+      ) : (
+        <div className="flex min-w-0 flex-col gap-2">
+          <label className="flex items-center gap-2 text-sm font-medium">
+            <input
+              type="checkbox"
+              data-testid="connections-import-all"
+              checked={allOn}
+              onChange={() => setSelected(allOn ? new Set() : new Set(allIds))}
+              className="size-4"
+            />
+            {t('import.selectAll', { n: items.length })}
+          </label>
+          <ul data-testid="connections-import-list" className="flex min-w-0 flex-col divide-y rounded-lg border">
+            {items.map((s) => (
+              <li key={s.session_id}>
+                <label
+                  data-testid={`connections-import-item-${s.session_id}`}
+                  data-state={s.session_state}
+                  className="flex min-w-0 cursor-pointer items-center gap-3 px-3 py-2 hover:bg-muted/40"
+                >
+                  <input
+                    type="checkbox"
+                    data-testid={`connections-import-check-${s.session_id}`}
+                    checked={selected.has(s.session_id)}
+                    onChange={() => toggle(s.session_id)}
+                    className="size-4 shrink-0"
+                  />
+                  <span className="flex min-w-0 flex-1 flex-col">
+                    <span className="truncate text-sm font-medium">{s.name}</span>
+                    <span className="truncate text-xs text-muted-foreground">{s.phone_number ?? '—'}</span>
+                  </span>
+                  <span
+                    className={cn(
+                      'shrink-0 rounded-full px-2 py-0.5 text-xs font-medium',
+                      s.connected
+                        ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                        : 'bg-muted text-muted-foreground',
+                    )}
+                  >
+                    {t(`import.states.${s.session_state}`)}
+                  </span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {overLimit ? (
+        <p role="alert" data-testid="connections-import-limit" className="text-sm text-destructive">
+          {t('import.overLimit', { n: slotsLeft ?? 0 })}
+        </p>
+      ) : null}
+      {run.isError ? (
+        <p role="alert" data-testid="connections-import-submit-error" className="text-sm text-destructive">
+          {run.error instanceof HttpError && run.error.code === 'LIMIT_REACHED'
+            ? t('limit.reachedShort')
+            : (serverMessage(run.error) ?? t('common.error'))}
         </p>
       ) : null}
     </Modal>

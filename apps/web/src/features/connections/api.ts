@@ -16,6 +16,9 @@ export type ProxyProtocol = (typeof PROXY_PROTOCOLS)[number]
 export const EPHEMERAL_DURATIONS = ['off', '1d', '7d', '90d'] as const
 export type EphemeralDuration = (typeof EPHEMERAL_DURATIONS)[number]
 
+/** `crm`: criada pelo CRM; `ai-manager`: chip importado do ai-manager (sessão gerenciada no painel de lá). */
+export type ConnectionOrigin = 'crm' | 'ai-manager'
+
 export interface ConnectionProxy {
   protocol: ProxyProtocol
   host: string
@@ -29,6 +32,8 @@ export interface ConnectionDto {
   name: string
   session_id: string
   phone_number: string | null
+  /** Ausente em respostas antigas = `crm`. */
+  origin?: ConnectionOrigin
   status: ConnectionStatus
   session_state: string | null
   badges: ConnectionBadge[]
@@ -59,6 +64,20 @@ export interface ConnectionsPage {
   page: { page: number; limit: number; total_count: number | null; total_pages?: number | null; has_more: boolean }
   status_counts: Record<ConnectionStatus, number>
   limits?: ConnectionLimits
+  /** Modo extensão (gateway no perfil ai-manager): mostra "Importar chips do ai-manager". */
+  features?: { import_ai_manager?: boolean }
+}
+
+/** Chip do ai-manager ainda sem conexão no CRM (GET /api/connections/importable). */
+export interface ImportableSession {
+  session_id: string
+  name: string
+  phone_number: string | null
+  session_state: string
+  connected: boolean
+  warmup_started_at: string | null
+  last_connected_at: string | null
+  created_at: string
 }
 
 export interface ListParams {
@@ -99,6 +118,7 @@ export const listKey = (p: ListParams) =>
 export const qrKey = (id: string) => [...CONNECTIONS_KEY, 'qr', id] as const
 export const pairingKey = (id: string) => [...CONNECTIONS_KEY, 'pairing', id] as const
 export const pausedKey = (id: string) => [...CONNECTIONS_KEY, 'paused', id] as const
+export const importableKey = [...CONNECTIONS_KEY, 'importable'] as const
 
 const enc = encodeURIComponent
 const base = (id: string) => `/api/connections/${enc(id)}`
@@ -122,6 +142,13 @@ export const qrQuery = (id: string, enabled: boolean) =>
     refetchInterval: 20_000,
   })
 
+export const importableQuery = (enabled: boolean) =>
+  queryOptions({
+    queryKey: importableKey,
+    queryFn: () => api.get<{ items: ImportableSession[] }>('/api/connections/importable'),
+    enabled,
+  })
+
 export const pausedFlowsQuery = (id: string, enabled: boolean) =>
   queryOptions({
     queryKey: pausedKey(id),
@@ -138,6 +165,10 @@ export const connectionsApi = {
   disconnect: (id: string) => api.post<One>(`${base(id)}/disconnect`),
   restart: (id: string) => api.post<One>(`${base(id)}/restart`),
   scheduleDeletion: (id: string) => api.post<One>(`${base(id)}/schedule-deletion`),
+  importSessions: (sessionIds: string[]) =>
+    api.post<{ items: ConnectionDto[] }>('/api/connections/import', { session_ids: sessionIds }),
+  /** Só conexões importadas: o CRM larga o chip; nada muda no ai-manager. */
+  unlink: (id: string) => api.post<{ unlinked: { id: string; session_id: string } }>(`${base(id)}/unlink`),
   pairingCode: (id: string, phone: string) => api.post<{ code: string }>(`${base(id)}/pairing-code`, { phone }),
   setProxy: (id: string, input: ProxyInput) => api.post<One>(`${base(id)}/proxy`, input),
   removeProxy: (id: string) => api.delete<One>(`${base(id)}/proxy`),

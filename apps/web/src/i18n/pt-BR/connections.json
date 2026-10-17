@@ -30,7 +30,9 @@
     "degraded": "Saúde degradada",
     "requires_restart": "Reinício necessário",
     "scheduled_deletion": "Exclusão agendada",
-    "proxy": "Proxy configurado"
+    "proxy": "Proxy configurado",
+    "ai_manager": "Chip do ai-manager",
+    "aiManagerHint": "Importado do ai-manager: conexão, QR, reinício e proxy são gerenciados no painel do ai-manager."
   },
   "cols": {
     "connection": "Conexão",
@@ -50,7 +52,8 @@
     "instance": "Configurações da instância",
     "paused-flows": "Fluxos pausados na queda",
     "stop-flows": "Parar todos os fluxos",
-    "delete": "Excluir"
+    "delete": "Excluir",
+    "unlink": "Desvincular do CRM"
   },
   "toast": {
     "created": "Conexão criada. Agora conecte o WhatsApp.",
@@ -64,7 +67,8 @@
     "flowsStopped": "{n} execuções de fluxo paradas.",
     "flowsResumed": "{n} fluxos retomados.",
     "flowsCancelled": "{n} fluxos cancelados.",
-    "deletionScheduled": "Exclusão agendada."
+    "deletionScheduled": "Exclusão agendada.",
+    "unlinked": "{name} desvinculada do CRM. O chip continua no ai-manager."
   },
   "common": {
     "error": "Não foi possível carregar. Tente de novo.",
@@ -168,5 +172,28 @@
   "delete": {
     "title": "Excluir {name}?",
     "body": "A conexão será desconectada e excluída. Os fluxos dela param e esta ação não pode ser desfeita."
+  },
+  "import": {
+    "open": "Importar chips do ai-manager",
+    "title": "Importar chips do ai-manager",
+    "body": "Escolha os chips que já existem no ai-manager para usar no CRM. Importar não gera QR Code, não cria sessão nova e não reinicia nem desconecta o chip: ele continua no ai-manager, com o mesmo aquecimento.",
+    "empty": "Nenhum chip disponível: todos os chips do ai-manager já estão vinculados a uma conexão do CRM.",
+    "selectAll": "Selecionar todos ({n})",
+    "submit": "Importar ({n})",
+    "done": "{n} chip(s) importado(s).",
+    "overLimit": "O limite da empresa permite importar mais {n} conexão(ões).",
+    "states": {
+      "NEW": "Não conectado",
+      "WARMING": "Conectado · em aquecimento",
+      "STABLE": "Conectado",
+      "DEGRADED": "Conectado · saúde degradada",
+      "PAUSED": "Pausado",
+      "DISCONNECTED": "Desconectado"
+    }
+  },
+  "unlink": {
+    "title": "Desvincular {name} do CRM?",
+    "body": "O CRM deixa de usar este chip: os fluxos dele param e ele sai da lista de conexões (as conversas ficam no histórico). Nada muda no ai-manager: o chip não é apagado nem desconectado e pode ser importado de novo.",
+    "confirm": "Desvincular"
   }
 }

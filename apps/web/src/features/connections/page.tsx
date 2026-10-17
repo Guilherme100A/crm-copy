@@ -1,9 +1,10 @@
 // `/connections` (08 §2; permissão connections.view): cards de contagem por status, busca, filtro de status, tabela
 // (desktop) × cartões (mobile) com status, selos de aquecimento/saúde, criada em, desconectada em e o menu de ações.
-// "Nova conexão" respeita o limite da empresa (AC-T71-05). Os modais ficam em `dialogs.tsx`.
+// "Nova conexão" respeita o limite da empresa (AC-T71-05). Modo extensão: "Importar chips do ai-manager" e, nas
+// conexões importadas, "Desvincular" no lugar de "Excluir". Os modais ficam em `dialogs.tsx`.
 import { Menu } from '@base-ui/react/menu'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { MoreVertical, Plug, Plus, Search } from 'lucide-react'
+import { Download, MoreVertical, Plug, Plus, Search } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ConfirmDialog, Pager, serverMessage, useDebounced } from '@/features/settings-quick-replies/kit'
@@ -20,8 +21,24 @@ import {
   type ConnectionDto,
   type ConnectionStatus,
 } from './api'
-import { ConnectDialog, InstanceDialog, NameDialog, PausedFlowsDialog, ProxyDialog, StopFlowsDialog } from './dialogs'
-import { actionsFor, limitReached, type ConnectionAction, type ConnectionPerms, type ConnectionsSearch } from './logic'
+import {
+  ConnectDialog,
+  ImportDialog,
+  InstanceDialog,
+  NameDialog,
+  PausedFlowsDialog,
+  ProxyDialog,
+  StopFlowsDialog,
+} from './dialogs'
+import {
+  actionsFor,
+  isImported,
+  limitReached,
+  slotsLeft,
+  type ConnectionAction,
+  type ConnectionPerms,
+  type ConnectionsSearch,
+} from './logic'
 import { connectionsUi, useConnectionsUi } from './realtime'
 
 const NS = 'connections'
@@ -77,6 +94,8 @@ export function ConnectionsPage({
   const [instance, setInstance] = useState<ConnectionDto | null>(null)
   const [stopping, setStopping] = useState<ConnectionDto | null>(null)
   const [deleting, setDeleting] = useState<ConnectionDto | null>(null)
+  const [unlinking, setUnlinking] = useState<ConnectionDto | null>(null)
+  const [importing, setImporting] = useState(false)
   const [pausedFromMenu, setPausedFromMenu] = useState<ConnectionDto | null>(null)
 
   const refresh = () => qc.invalidateQueries({ queryKey: [...CONNECTIONS_KEY, 'list'] })
@@ -101,6 +120,7 @@ export function ConnectionsPage({
     else if (action === 'stop-flows') setStopping(c)
     else if (action === 'paused-flows') setPausedFromMenu(c)
     else if (action === 'delete') setDeleting(c)
+    else if (action === 'unlink') setUnlinking(c)
   }
 
   const data = q.data
@@ -110,6 +130,18 @@ export function ConnectionsPage({
   const total = counts ? Object.values(counts).reduce((a, b) => a + b, 0) : 0
   const rows = data?.items ?? []
   const filtered = !!(search.search || search.filter)
+  const canImport = perms.canEdit && !!data?.features?.import_ai_manager
+  const importButton = canImport ? (
+    <Button
+      variant="outline"
+      data-testid="connections-import-open"
+      disabled={blocked}
+      data-disabled-reason={blocked ? 'limit_reached' : undefined}
+      onClick={() => setImporting(true)}
+    >
+      <Download aria-hidden /> {t('import.open')}
+    </Button>
+  ) : null
 
   const pausedTarget = ui.pausedPrompt
     ? { connection_id: ui.pausedPrompt.connection_id, name: ui.pausedPrompt.name, counts: ui.pausedPrompt }
@@ -126,15 +158,18 @@ export function ConnectionsPage({
         </div>
         {perms.canEdit ? (
           <div className="flex min-w-0 flex-col items-end gap-1">
-            <Button
-              data-testid="connections-new"
-              disabled={blocked}
-              data-disabled-reason={blocked ? 'limit_reached' : undefined}
-              aria-describedby={blocked ? 'connections-limit-reason' : undefined}
-              onClick={() => setNaming('new')}
-            >
-              <Plus aria-hidden /> {t('new')}
-            </Button>
+            <div className="flex flex-wrap justify-end gap-2">
+              {importButton}
+              <Button
+                data-testid="connections-new"
+                disabled={blocked}
+                data-disabled-reason={blocked ? 'limit_reached' : undefined}
+                aria-describedby={blocked ? 'connections-limit-reason' : undefined}
+                onClick={() => setNaming('new')}
+              >
+                <Plus aria-hidden /> {t('new')}
+              </Button>
+            </div>
             {limits ? (
               <span
                 data-testid="connections-usage"
@@ -244,9 +279,21 @@ export function ConnectionsPage({
           <Plug className="size-8" aria-hidden />
           <p>{filtered ? t('noResults') : t('empty')}</p>
           {!filtered && perms.canEdit && !blocked ? (
-            <Button variant="outline" size="sm" data-testid="connections-empty-new" onClick={() => setNaming('new')}>
-              {t('createFirst')}
-            </Button>
+            <div className="flex flex-wrap justify-center gap-2">
+              <Button variant="outline" size="sm" data-testid="connections-empty-new" onClick={() => setNaming('new')}>
+                {t('createFirst')}
+              </Button>
+              {canImport ? (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  data-testid="connections-empty-import"
+                  onClick={() => setImporting(true)}
+                >
+                  <Download aria-hidden /> {t('import.open')}
+                </Button>
+              ) : null}
+            </div>
           ) : null}
         </div>
       ) : desktop ? (
@@ -261,6 +308,7 @@ export function ConnectionsPage({
       />
 
       <NameDialog editing={naming} onClose={() => setNaming(null)} />
+      <ImportDialog open={importing} slotsLeft={slotsLeft(limits)} onClose={() => setImporting(false)} />
       <ConnectDialog connection={connecting} onClose={() => setConnecting(null)} />
       <ProxyDialog connection={proxy} onClose={() => setProxy(null)} />
       <InstanceDialog connection={instance} onClose={() => setInstance(null)} />
@@ -284,6 +332,24 @@ export function ConnectionsPage({
             await connectionsApi.scheduleDeletion(deleting!.id)
             notify('connections-deleted', t('toast.deletionScheduled'))
             setDeleting(null)
+            await refresh()
+          } catch (err) {
+            notify('connections-action-error', t('common.error'), serverMessage(err) ?? undefined)
+          }
+        }}
+      />
+      <ConfirmDialog
+        prefix="connections-unlink"
+        open={unlinking !== null}
+        title={t('unlink.title', { name: unlinking?.name ?? '' })}
+        body={t('unlink.body')}
+        confirmLabel={t('unlink.confirm')}
+        onCancel={() => setUnlinking(null)}
+        onConfirm={async () => {
+          try {
+            await connectionsApi.unlink(unlinking!.id)
+            notify('connections-unlinked', t('toast.unlinked', { name: unlinking!.name }))
+            setUnlinking(null)
             await refresh()
           } catch (err) {
             notify('connections-action-error', t('common.error'), serverMessage(err) ?? undefined)
@@ -351,6 +417,15 @@ function StatusCell({ c }: { c: ConnectionDto }) {
           {t(`badges.${b}`)}
         </span>
       ))}
+      {isImported(c) ? (
+        <span
+          data-testid={`${P}-item-badge-ai-manager-${c.id}`}
+          title={t('badges.aiManagerHint')}
+          className="rounded-full border border-primary/40 px-2 py-0.5 text-xs text-primary"
+        >
+          {t('badges.ai_manager')}
+        </span>
+      ) : null}
       {c.proxy ? (
         <span
           data-testid={`${P}-item-badge-proxy-${c.id}`}
@@ -410,7 +485,10 @@ function ActionsMenu({
                 key={a}
                 data-testid={`${P}-action-${a}-${c.id}`}
                 onClick={() => onAction(a, c)}
-                className={cn(itemClass, (a === 'delete' || a === 'stop-flows') && 'text-destructive')}
+                className={cn(
+                  itemClass,
+                  (a === 'delete' || a === 'stop-flows' || a === 'unlink') && 'text-destructive',
+                )}
               >
                 {t(`actions.${a}`)}
               </Menu.Item>

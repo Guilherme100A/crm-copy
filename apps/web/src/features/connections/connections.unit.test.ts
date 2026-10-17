@@ -15,6 +15,7 @@ import {
   proxyDraftOf,
   proxyInputOf,
   proxyIssues,
+  slotsLeft,
 } from './logic'
 import { connectionsUi, handleConnectionEvent } from './realtime'
 
@@ -259,6 +260,49 @@ describe('AC-T71-04 fluxos pausados e marca neutra', () => {
     for (const lang of ['pt-BR', 'en', 'es']) {
       const raw = readFileSync(join(__dirname, '..', '..', 'i18n', lang, 'connections.json'), 'utf8')
       expect(raw).not.toMatch(/api oficial|official api|api oficial|embedded signup|imune a ban|immune to ban|inmune/i)
+    }
+  })
+})
+
+describe('chips importados do ai-manager', () => {
+  it('sem ações de sessão (ficam no ai-manager); Desvincular no lugar de Excluir', () => {
+    const c = conn({ origin: 'ai-manager', status: 'connected', session_state: 'WARMING', badges: ['warming'] })
+    expect(actionsFor(c, all)).toEqual(['rename', 'instance', 'stop-flows', 'unlink'])
+    for (const a of ['connect', 'resume', 'disconnect', 'restart', 'proxy', 'delete'] as const)
+      expect(actionsFor(c, all)).not.toContain(a)
+    expect(actionsFor(conn({ origin: 'ai-manager', status: 'disconnected' }), all)).not.toContain('connect')
+    expect(actionsFor(c, { canEdit: false, canDelete: false, canRunFlows: false })).toEqual([])
+    expect(actionsFor(c, { canEdit: false, canDelete: true, canRunFlows: false })).toEqual(['unlink'])
+    // Criada pelo CRM: nada muda (sem Desvincular).
+    expect(actionsFor(conn({ status: 'connected' }), all)).not.toContain('unlink')
+    expect(actionsFor(conn({ origin: 'crm', status: 'connected' }), all)).toContain('delete')
+  })
+
+  it('vagas no limite para importar', () => {
+    expect(slotsLeft(undefined)).toBeNull()
+    expect(slotsLeft({ connections: null, used: 9 })).toBeNull()
+    expect(slotsLeft({ connections: 5, used: 3 })).toBe(2)
+    expect(slotsLeft({ connections: 2, used: 3 })).toBe(0)
+  })
+
+  it('os 3 idiomas têm os textos da importação e do desvincular', () => {
+    for (const loc of ['pt-BR', 'en', 'es']) {
+      const j = JSON.parse(readFileSync(join(__dirname, '../../i18n', loc, 'connections.json'), 'utf8'))
+      expect(j.import, loc).toMatchObject({
+        open: expect.any(String),
+        title: expect.any(String),
+        body: expect.any(String),
+        empty: expect.any(String),
+        submit: expect.stringContaining('{n}'),
+      })
+      for (const st of ['NEW', 'WARMING', 'STABLE', 'DEGRADED', 'PAUSED', 'DISCONNECTED'])
+        expect(j.import.states[st], `${loc} ${st}`).toBeTruthy()
+      expect(j.unlink, loc).toMatchObject({
+        title: expect.stringContaining('{name}'),
+        body: expect.any(String),
+        confirm: expect.any(String),
+      })
+      expect(j.actions.unlink && j.badges.ai_manager && j.toast.unlinked, loc).toBeTruthy()
     }
   })
 })
