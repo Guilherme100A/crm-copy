@@ -1,0 +1,129 @@
+{
+  "tab": "Sale sources",
+  "title": "Sale sources",
+  "subtitle": "Receive sales from any platform through a dedicated URL and turn the received JSON into CRM sales.",
+  "new": "New sale source",
+  "empty": "No sale sources yet.",
+  "cols": { "name": "Name", "status": "Status", "hmac": "HMAC signature" },
+  "status": { "active": "Active", "inactive": "Inactive" },
+  "common": { "cancel": "Cancel", "loading": "Loading...", "error": "The action could not be completed." },
+  "copy": { "action": "Copy", "done": "Copied", "error": "Could not copy." },
+  "create": {
+    "title": "New sale source",
+    "namePlaceholder": "E.g. Store checkout",
+    "hmac": "Generate an HMAC secret to sign requests",
+    "hmacHint": "The secret is shown only once after creating. Without a secret, anyone with the URL can send sales."
+  },
+  "delete": {
+    "title": "Delete sale source",
+    "body": "The source \"{name}\" and its event log will be deleted and the URL stops working. This cannot be undone.",
+    "confirm": "Delete"
+  },
+  "detail": { "back": "Back", "save": "Save", "saved": "Sale source saved" },
+  "general": { "title": "General" },
+  "fields": {
+    "name": "Name",
+    "active": "Active",
+    "amountUnit": "Amount received in",
+    "event": {
+      "external_id": "Sale ID",
+      "status": "Status",
+      "amount": "Amount",
+      "phone": "Customer phone",
+      "currency": "Currency",
+      "sold_at": "Sale date",
+      "name": "Customer name",
+      "email": "Customer email",
+      "product_id": "Product internal ID",
+      "utm_source": "UTM source",
+      "utm_medium": "UTM medium",
+      "utm_campaign": "UTM campaign",
+      "utm_content": "UTM content",
+      "utm_term": "UTM term",
+      "ctwa_clid": "Ad click (ctwa_clid)",
+      "source_id": "Ad ID",
+      "source_url": "Ad URL"
+    }
+  },
+  "amountUnit": { "decimal": "Currency units (e.g. 199.90)", "cents": "Cents (e.g. 19990)" },
+  "url": {
+    "title": "Receiving URL",
+    "hint": "Set this URL in the sales platform (POST with a JSON body)."
+  },
+  "rotate": {
+    "action": "Rotate token",
+    "title": "Rotate the URL token?",
+    "body": "A new URL will be generated and the current one stops working immediately. Update the sales platform with the new URL.",
+    "confirm": "Rotate",
+    "withSecret": "Also generate a new HMAC secret",
+    "done": "Token rotated"
+  },
+  "secret": {
+    "title": "HMAC secret",
+    "hint": "With a secret, each request needs the {header} header with the HMAC-SHA256 of the body in hex.",
+    "configured": "Secret configured",
+    "none": "No secret",
+    "once": "Copy it now: the secret will not be shown again.",
+    "signature": "Sample signature ({header}):",
+    "hide": "Hide",
+    "generate": "Generate secret",
+    "replace": "Generate new secret",
+    "remove": "Remove secret",
+    "replaceTitle": "Generate a new secret?",
+    "replaceBody": "The current secret stops working immediately. Requests signed with it will be rejected.",
+    "removeTitle": "Remove secret?",
+    "removeBody": "Requests will no longer be signed: anyone with the URL can send sales."
+  },
+  "mapping": {
+    "title": "Mapping",
+    "hint": "For each sale field, enter the JSONPath in the received body (e.g. $.data.buyer.phone, $.items[0].id). Fields with * are required.",
+    "productHint": "To link the sale to a product, the platform must send the product internal ID in the field mapped to product_id.",
+    "productPick": "Pick a product to see its internal ID",
+    "productNone": "No products yet",
+    "productId": "Product internal ID"
+  },
+  "statusMap": {
+    "title": "Status map",
+    "hint": "Translate the platform statuses. Common values (paid, approved, refunded, chargeback…) are already recognized.",
+    "empty": "No custom statuses.",
+    "raw": "Received value",
+    "status": "Sale status",
+    "add": "Add status",
+    "remove": "Remove"
+  },
+  "saleStatus": { "approved": "Approved", "refunded": "Refunded", "chargeback": "Chargeback", "pending": "Pending" },
+  "sample": {
+    "title": "Test with a sample",
+    "hint": "Paste a JSON sent by the platform to see the resulting sale with the current mapping (nothing is saved).",
+    "invalid": "Invalid JSON",
+    "pickInto": "Click a sample value to fill the field:",
+    "test": "Test mapping",
+    "ok": "Resulting sale",
+    "failed": "The mapping does not produce a valid sale",
+    "missing": "{field}: not found at {path}"
+  },
+  "events": {
+    "title": "Event log",
+    "hint": "Requests received by this source and their processing result.",
+    "filter": "Status",
+    "all": "All",
+    "status": { "pending": "Pending", "processed": "Processed", "failed": "Failed" },
+    "total": "{n} event(s)",
+    "refresh": "Refresh",
+    "empty": "No events received.",
+    "emptyFiltered": "No events with this status.",
+    "replay": "Reprocess",
+    "replayed": "Event sent for reprocessing",
+    "attempts": "Attempts: {n}",
+    "saleEvent": "Resulting sale",
+    "rawBody": "Received body",
+    "prev": "Previous",
+    "next": "Next",
+    "pageOf": "{page} of {pages}"
+  },
+  "errors": {
+    "name": "The name must have 2 to 120 characters",
+    "pathRequired": "Required field",
+    "pathInvalid": "Invalid JSONPath (use $.a.b, $.a[0] or $['a b'])"
+  }
+}

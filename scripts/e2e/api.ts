@@ -8,6 +8,7 @@ import { loadApiConfig } from '../../apps/api/src/config'
 import type { HandledEvent } from '../../apps/api/src/e2e/index'
 import { stopRealtimeHub } from '../../apps/api/src/routes/events/index'
 import { configureAiKnowledge, configureExports, configureInboundWebhooks, createRegistry, registry as processRegistry, startWorker } from '../../apps/worker/src/index'
+import { configureInboundSales } from '../../apps/worker/src/index'
 import { RealtimePublisher } from '../../packages/core/src/index'
 import { createDb, resetAndSeed, runMigrations } from '../../packages/db/src/index'
 import { createLogger, initCredentialsCrypto, redisConnection } from '../../packages/node-kit/src/index'
@@ -59,6 +60,9 @@ async function main() {
   // Base de conhecimento dos agentes (T52) no worker in-process (a fila entra pelo registry do processo): ingere as
   // fontes e publica ai_knowledge_source.updated.
   configureAiKnowledge({ db, redis })
+  // Fontes de venda (T73/T90) no worker in-process, como no boot de produção: processa os eventos de
+  // `POST /api/hooks/sales/:token` (processed/failed) e o replay. Sem `capiEnqueue`: nada sai para a Meta no harness.
+  configureInboundSales({ db, publisher: new RealtimePublisher({ redis }), logger })
   const worker = await startWorker({
     registry: reg,
     db,

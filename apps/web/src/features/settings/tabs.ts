@@ -47,4 +47,7 @@ export const SETTINGS_TABS: SettingsTab[] = [
   // T59: consumo de IA (12 §3.10) e hub de integrações (19 §2.2; `?cat=ai|sales|tracking`).
   { id: 'ai_usage', labelKey: 'settings-ai-usage:tab', group: 'account', permissions: ['ai_usage.view'], load: () => import('@/features/settings-ai-usage/usage-tab') },
   { id: 'integrations', labelKey: 'integrations:tab', group: 'integrations', permissions: ['settings.integrations.view'], load: () => import('@/features/integrations/hub-tab') },
+  // T90: produtos (19 §2.6, grupo Integrações) e fontes de venda (T73; detalhe da fonte em estado local da aba).
+  { id: 'products', labelKey: 'settings-products:tab', group: 'integrations', permissions: ['settings.products.view'], load: () => import('@/features/settings-products/tab') },
+  { id: 'sale_sources', labelKey: 'settings-sale-sources:tab', group: 'integrations', permissions: ['settings.integrations.view'], load: () => import('@/features/settings-sale-sources/tab') },
 ]

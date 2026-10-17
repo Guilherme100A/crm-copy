@@ -1,0 +1,42 @@
+{
+  "tab": "Produtos",
+  "title": "Produtos",
+  "subtitle": "Cadastre os produtos vendidos e a faixa de preço usada para validar o valor das vendas.",
+  "new": "Novo produto",
+  "search": "Buscar por nome",
+  "noResults": "Nenhum produto encontrado.",
+  "empty": "Nenhum produto cadastrado.",
+  "cols": {
+    "name": "Nome",
+    "currency": "Moeda",
+    "min": "Preço mínimo",
+    "max": "Preço máximo",
+    "fallback": "Valor padrão",
+    "id": "ID interno"
+  },
+  "newTitle": "Novo produto",
+  "editTitle": "Editar produto",
+  "fields": {
+    "name": "Nome",
+    "currency": "Moeda",
+    "min": "Preço mínimo",
+    "max": "Preço máximo",
+    "fallback": "Valor padrão"
+  },
+  "help": {
+    "rule": "Valor recebido dentro da faixa [mínimo, máximo] é usado como está; fora da faixa ou ausente, a venda usa o valor padrão.",
+    "simulate": "Simular valor recebido:",
+    "inRange": "Dentro da faixa: a venda usa {value}.",
+    "outOfRange": "Fora da faixa: a venda usa o valor padrão, {value}."
+  },
+  "errors": {
+    "name": "O nome precisa ter de 2 a 255 caracteres",
+    "currency": "Moeda ISO 4217 inválida",
+    "money": "Informe um valor válido (ex.: 12,50)",
+    "range": "O preço máximo deve ser maior ou igual ao mínimo",
+    "fallback": "O valor padrão deve ser maior que zero",
+    "generic": "Não foi possível concluir a ação."
+  },
+  "deleteTitle": "Excluir produto",
+  "deleteBody": "O produto \"{name}\" será excluído e as vendas ligadas a ele ficarão sem produto. Esta ação não pode ser desfeita."
+}

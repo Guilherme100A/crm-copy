@@ -1,0 +1,89 @@
+{
+  "version": 1,
+  "task": "T90",
+  "role": "tester",
+  "ok": true,
+  "at": "2026-10-17T02:57:55.347Z",
+  "commit": "f3d19ba42b6b5bc177ae41383fa37bf797026334",
+  "base": "f3d19ba",
+  "changedFiles": [
+    "tests/acceptance/T90/sale-sources-products.e2e.ts"
+  ],
+  "checks": [
+    {
+      "name": "regra F-TEST-NO-REAL-WA",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-PAID-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-TEST-NO-SKIP",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "critérios na SPEC",
+      "status": "pass",
+      "detail": "AC-T90-01, AC-T90-02, AC-T90-03, AC-T90-04"
+    },
+    {
+      "name": "arquivos de teste",
+      "status": "pass",
+      "detail": "0 vitest, 1 playwright"
+    },
+    {
+      "name": "todo AC referenciado em teste",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "ACs também no mobile (layout)",
+      "status": "pass",
+      "detail": "AC-T90-04"
+    },
+    {
+      "name": "infra: local (postgres:5432/crm, redis:6379/1)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "execução playwright",
+      "status": "pass",
+      "detail": "10 passed, 0 failed, 0 flaky, 0 skipped"
+    },
+    {
+      "name": "projetos E2E desktop e mobile (ACs de layout)",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "AC-T90-01",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T90-02",
+      "status": "pass",
+      "detail": "3 passed"
+    },
+    {
+      "name": "AC-T90-03",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "AC-T90-04",
+      "status": "pass",
+      "detail": "2 passed"
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "1 arquivo(s) alterado(s)"
+    }
+  ]
+}

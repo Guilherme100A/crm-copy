@@ -1,0 +1,134 @@
+{
+  "tab": "Fuentes de venta",
+  "title": "Fuentes de venta",
+  "subtitle": "Recibe ventas de cualquier plataforma por una URL propia y convierte el JSON recibido en ventas del CRM.",
+  "new": "Nueva fuente de venta",
+  "empty": "No hay fuentes de venta registradas.",
+  "cols": { "name": "Nombre", "status": "Estado", "hmac": "Firma HMAC" },
+  "status": { "active": "Activa", "inactive": "Inactiva" },
+  "common": { "cancel": "Cancelar", "loading": "Cargando...", "error": "No se pudo completar la acción." },
+  "copy": { "action": "Copiar", "done": "Copiado", "error": "No se pudo copiar." },
+  "create": {
+    "title": "Nueva fuente de venta",
+    "namePlaceholder": "Ej.: Checkout de la tienda",
+    "hmac": "Generar secreto HMAC para firmar las solicitudes",
+    "hmacHint": "El secreto aparece una sola vez después de crear. Sin secreto, cualquiera con la URL puede enviar ventas."
+  },
+  "delete": {
+    "title": "Eliminar fuente de venta",
+    "body": "La fuente \"{name}\" y su registro de eventos serán eliminados y la URL deja de funcionar. Esta acción no se puede deshacer.",
+    "confirm": "Eliminar"
+  },
+  "detail": { "back": "Volver", "save": "Guardar", "saved": "Fuente de venta guardada" },
+  "general": { "title": "Datos generales" },
+  "fields": {
+    "name": "Nombre",
+    "active": "Activa",
+    "amountUnit": "Valor recibido en",
+    "event": {
+      "external_id": "ID de la venta",
+      "status": "Estado",
+      "amount": "Valor",
+      "phone": "Teléfono del cliente",
+      "currency": "Moneda",
+      "sold_at": "Fecha de la venta",
+      "name": "Nombre del cliente",
+      "email": "Correo del cliente",
+      "product_id": "ID interno del producto",
+      "utm_source": "UTM source",
+      "utm_medium": "UTM medium",
+      "utm_campaign": "UTM campaign",
+      "utm_content": "UTM content",
+      "utm_term": "UTM term",
+      "ctwa_clid": "Clic de anuncio (ctwa_clid)",
+      "source_id": "ID del anuncio",
+      "source_url": "URL del anuncio"
+    }
+  },
+  "amountUnit": { "decimal": "Unidades (ej.: 199,90)", "cents": "Centavos (ej.: 19990)" },
+  "url": {
+    "title": "URL de recepción",
+    "hint": "Configura esta URL en la plataforma de ventas (POST con cuerpo JSON)."
+  },
+  "rotate": {
+    "action": "Rotar token",
+    "title": "¿Rotar el token de la URL?",
+    "body": "Se generará una URL nueva y la actual deja de funcionar al instante. Actualiza la plataforma de ventas con la URL nueva.",
+    "confirm": "Rotar",
+    "withSecret": "Generar también un nuevo secreto HMAC",
+    "done": "Token rotado"
+  },
+  "secret": {
+    "title": "Secreto HMAC",
+    "hint": "Con secreto, cada solicitud necesita el header {header} con el HMAC-SHA256 del cuerpo en hexadecimal.",
+    "configured": "Secreto configurado",
+    "none": "Sin secreto",
+    "once": "Cópialo ahora: el secreto no se mostrará de nuevo.",
+    "signature": "Firma de la muestra ({header}):",
+    "hide": "Ocultar",
+    "generate": "Generar secreto",
+    "replace": "Generar nuevo secreto",
+    "remove": "Quitar secreto",
+    "replaceTitle": "¿Generar un nuevo secreto?",
+    "replaceBody": "El secreto actual deja de valer al instante. Las solicitudes firmadas con él serán rechazadas.",
+    "removeTitle": "¿Quitar secreto?",
+    "removeBody": "Las solicitudes dejan de estar firmadas: cualquiera con la URL podrá enviar ventas."
+  },
+  "mapping": {
+    "title": "Mapeo",
+    "hint": "Para cada campo de la venta, indica la ruta JSONPath en el cuerpo recibido (ej.: $.data.buyer.phone, $.items[0].id). Los campos con * son obligatorios.",
+    "productHint": "Para vincular la venta a un producto, la plataforma debe enviar el ID interno del producto en el campo mapeado en product_id.",
+    "productPick": "Elige un producto para ver su ID interno",
+    "productNone": "No hay productos registrados",
+    "productId": "ID interno del producto"
+  },
+  "statusMap": {
+    "title": "Mapa de estados",
+    "hint": "Traduce los estados de la plataforma. Los valores comunes (paid, pago, aprobado, refunded, chargeback…) ya se reconocen.",
+    "empty": "Ningún estado personalizado.",
+    "raw": "Valor recibido",
+    "status": "Estado de la venta",
+    "add": "Agregar estado",
+    "remove": "Quitar"
+  },
+  "saleStatus": {
+    "approved": "Aprobada",
+    "refunded": "Reembolsada",
+    "chargeback": "Contracargo",
+    "pending": "Pendiente"
+  },
+  "sample": {
+    "title": "Probar con una muestra",
+    "hint": "Pega un JSON enviado por la plataforma para ver la venta resultante con el mapeo actual (no se guarda nada).",
+    "invalid": "JSON inválido",
+    "pickInto": "Haz clic en un valor de la muestra para llenar el campo:",
+    "test": "Probar mapeo",
+    "ok": "Venta resultante",
+    "failed": "El mapeo no genera una venta válida",
+    "missing": "{field}: no encontrado en {path}"
+  },
+  "events": {
+    "title": "Registro de eventos",
+    "hint": "Solicitudes recibidas por esta fuente y el resultado del procesamiento.",
+    "filter": "Estado",
+    "all": "Todos",
+    "status": { "pending": "Pendiente", "processed": "Procesado", "failed": "Falló" },
+    "total": "{n} evento(s)",
+    "refresh": "Actualizar",
+    "empty": "No se recibieron eventos.",
+    "emptyFiltered": "Ningún evento con este estado.",
+    "replay": "Reprocesar",
+    "replayed": "Evento enviado a reprocesar",
+    "attempts": "Intentos: {n}",
+    "saleEvent": "Venta resultante",
+    "rawBody": "Cuerpo recibido",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "pageOf": "{page} de {pages}"
+  },
+  "errors": {
+    "name": "El nombre debe tener de 2 a 120 caracteres",
+    "pathRequired": "Campo obligatorio",
+    "pathInvalid": "JSONPath inválido (usa $.a.b, $.a[0] o $['a b'])"
+  }
+}

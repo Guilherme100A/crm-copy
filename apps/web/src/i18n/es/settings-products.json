@@ -1,0 +1,42 @@
+{
+  "tab": "Productos",
+  "title": "Productos",
+  "subtitle": "Registra los productos vendidos y el rango de precio usado para validar el valor de las ventas.",
+  "new": "Nuevo producto",
+  "search": "Buscar por nombre",
+  "noResults": "No se encontraron productos.",
+  "empty": "No hay productos registrados.",
+  "cols": {
+    "name": "Nombre",
+    "currency": "Moneda",
+    "min": "Precio mínimo",
+    "max": "Precio máximo",
+    "fallback": "Valor predeterminado",
+    "id": "ID interno"
+  },
+  "newTitle": "Nuevo producto",
+  "editTitle": "Editar producto",
+  "fields": {
+    "name": "Nombre",
+    "currency": "Moneda",
+    "min": "Precio mínimo",
+    "max": "Precio máximo",
+    "fallback": "Valor predeterminado"
+  },
+  "help": {
+    "rule": "Un valor dentro del rango [mínimo, máximo] se usa tal cual; fuera del rango o ausente, la venta usa el valor predeterminado.",
+    "simulate": "Simular valor recibido:",
+    "inRange": "Dentro del rango: la venta usa {value}.",
+    "outOfRange": "Fuera del rango: la venta usa el valor predeterminado, {value}."
+  },
+  "errors": {
+    "name": "El nombre debe tener de 2 a 255 caracteres",
+    "currency": "Moneda ISO 4217 inválida",
+    "money": "Ingresa un valor válido (ej.: 12,50)",
+    "range": "El precio máximo debe ser mayor o igual al mínimo",
+    "fallback": "El valor predeterminado debe ser mayor que cero",
+    "generic": "No se pudo completar la acción."
+  },
+  "deleteTitle": "Eliminar producto",
+  "deleteBody": "El producto \"{name}\" será eliminado y sus ventas quedarán sin producto. Esta acción no se puede deshacer."
+}
