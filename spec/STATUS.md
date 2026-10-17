@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE): re-tester T106 (Vela); aprovada esperando lote: T115; fila de tester: T93 → T114. Zenith fora de escopo (T110 CANCELLED). Por último: T102.
+- Em andamento: re-tester T106 (Prisma). Depois dela, só a T102 (integração E2E final). Zenith fora de escopo (T110 CANCELLED).
 - Bloqueios: nenhum (T110 cancelada: Zenith fora de escopo)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - Dúvidas abertas para o usuário: nenhuma (T110/Zenith: fora de escopo, SPEC 10.1 nº 13).
@@ -83,7 +83,7 @@
 | 6 | T73 | Fontes de venda (webhook genérico) e atribuição UTM/CTWA | MERGED | Cinzel | Radar | 0 | 85fc26e |
 | 6 | T80 | Vozes (ElevenLabs) | MERGED | Cinzel | Radar | 0 | 25d436d |
 | 6 | T84 | UI: central de notificações | MERGED | Esquadro | Sentinela | 0 | 65f5a20 (1º gate em LOTE com a T90; op 13 min, tester ~4 min) |
-| 6 | T93 | Assistente (copiloto) de fluxo | VERIFYING | Lastro | (vaga) | 0 | op ~38 min (verify 0, base bea292d); tester na fila |
+| 6 | T93 | Assistente (copiloto) de fluxo | MERGED | Lastro | Lanterna | 0 | 6161c03 (migration regenerada sobre a main) |
 | 6 | T94 | Servidor MCP (token estático) | MERGED | Cinzel | Radar | 0 | 5fc1505 |
 | 6 | T101 | Meta: estrutura, insights e bundle assíncrono | MERGED | Cinzel | Radar | 0 | b661cb0 |
 | 6 | T104 | Meta: Pixel, Conversions API e nó de fluxo pixel | MERGED | Cinzel | Radar | 0 | 34f8dd4 |
@@ -107,8 +107,8 @@
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | MERGED | Forja | Sentinela | 0 | f879ad6 (4º lote com a T100; montagem de produção incluída) |
 | 7 | T107 | Indicador de conexões desconectadas no menu | MERGED | Forja | Vigia | 0 | 989b517 |
-| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | VERIFYING | Lastro | (vaga) | 0 | op ~20 min (verify 0, base e72438e); tester na fila; ajustar E2E da T59 (categorias Vendas/Rastreamento agora têm cards) |
-| 7 | T115 | MCP: OAuth para conectores (Claude) | VERIFYING | Forja | Mirante | 0 | tester APROVADO (17 + 4 E2E) + ajuste mínimo de tests/acceptance/T94 (testerPaths); aguarda gate |
+| 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | MERGED | Lastro | Holofote | 0 | 536a6c1 (ajuste mínimo em tests/acceptance/T59) |
+| 7 | T115 | MCP: OAuth para conectores (Claude) | MERGED | Forja | Mirante | 0 | c8907ae (conflitos de registro com T97/T100/T108 resolvidos por união; ajuste mínimo em tests/acceptance/T94) |
 | 8 | T75 | UI chats: conversa | MERGED | Torno | Sonda | 0 | cdef514 |
 | 8 | T76 | UI kanban: modais, filtros, estatísticas e exportação | MERGED | Torno | Sonda | 0 | 50fc2e0 |
 | 8 | T77 | UI contatos: lista e seleção em massa | MERGED | Torno | Sonda | 0 | 8b8ccba |
@@ -117,7 +117,7 @@
 | 8 | T83 | UI disparos em massa | MERGED | Forja | Vigia | 0 | 89c58f2 (gate individual após conflito manual no scripts/e2e/api.ts com a T90) |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | MERGED | Esquadro | Sentinela | 0 | 09cd6a8 (2º lote com a T86; op ~16 min, tester ~4 min) |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
-| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | Vela | 1 | rebaseada sobre 1410f76 (T129 na main); re-tester em andamento |
+| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | VERIFYING | Prumo | Prisma | 2 | 3ª correção (SSE ready relê em async); re-tester em andamento |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | MERGED | Prumo | Vigia | 0 | bddc2b0 (2º lote com a T87; op ~16 min, tester ~7 min) |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
@@ -258,3 +258,5 @@
 | harness | isOwnServerRunning confia só no pid de test-results/e2e-server.json; o Windows reaproveita pids → conferir porta/linha de comando | T107 (Vigia) |
 | doc extensão | downloadMedia depende de A2+A3 mas missingChanges lista só A3 (a sonda vê só o alvo RPC) | T98 (Vigia) |
 | T114 (pendência) | Rótulos traduzidos das saídas no canvas (hoje ids crus charge_created/payment_approved; flow-editor/canvas, T45); sale.updated em SSE já aberto (repoll de 4 s; solução geral em lib/realtime.ts); configureInvoices/configureUtmify no worker do harness; UI exige token na criação de Notasy/UTMify, API aceita sem | T114 |
+| harness | scripts/e2e/serve.mjs só faz build da web se apps/web/dist não existir, e o verify do tester não faz build: o E2E pode rodar código velho. Reconstruir quando o dist for mais velho que apps/web/src | T106 (Cunha) |
+| Meta (servidor) | GET sync SEM force com cache + conta em espera não marca rate_limited (o async marca, T129): inconsistência entre os modos | T106 (Vela) |
