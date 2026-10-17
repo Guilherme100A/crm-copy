@@ -3,18 +3,18 @@
   "task": "T102",
   "role": "tester",
   "ok": true,
-  "at": "2026-10-17T07:00:30.464Z",
-  "commit": "13a9d14af667006029da587de8566ee2e83a2960",
+  "at": "2026-10-17T07:22:35.752Z",
+  "commit": "778d7ff1ac66876a5afa91a3f238c79415490859",
   "base": "be546d6",
   "changedFiles": [
-    "tests/acceptance/T23/shell.e2e.ts",
     "tests/acceptance/T102/attendance.e2e.ts",
     "tests/acceptance/T102/isolation.e2e.ts",
     "tests/acceptance/T102/isolation.test.ts",
     "tests/acceptance/T102/journeys.test.ts",
     "tests/acceptance/T102/onboarding.e2e.ts",
     "tests/acceptance/T102/restart.test.ts",
-    "tests/acceptance/T102/setup.ts"
+    "tests/acceptance/T102/setup.ts",
+    "tests/acceptance/T23/shell.e2e.ts"
   ],
   "checks": [
     {

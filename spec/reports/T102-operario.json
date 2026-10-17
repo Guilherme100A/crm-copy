@@ -3,43 +3,51 @@
   "task": "T102",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T06:17:15.398Z",
-  "commit": "13a9d14af667006029da587de8566ee2e83a2960",
+  "at": "2026-10-17T07:18:14.453Z",
+  "commit": "778d7ff1ac66876a5afa91a3f238c79415490859",
   "base": "be546d6",
   "changedFiles": [
+    "apps/api/src/routes/companies/companies.db.unit.test.ts",
     "apps/api/src/routes/companies/index.ts",
     "apps/web/src/app/shell/app-shell.tsx",
+    "apps/web/src/features/settings-company/company-inactive.unit.test.ts",
+    "apps/web/src/features/settings-company/realtime.ts",
     "apps/web/src/i18n/en/shell.json",
     "apps/web/src/i18n/es/shell.json",
     "apps/web/src/i18n/pt-BR/shell.json",
     "apps/web/src/lib/http.ts",
+    "apps/web/src/lib/probe-once.unit.test.ts",
     "apps/web/src/main.tsx",
     "packages/core/src/companies/service.ts",
     "packages/core/src/team/team.unit.test.ts",
-    "apps/api/src/routes/companies/companies.db.unit.test.ts",
-    "apps/web/src/features/settings-company/company-inactive.unit.test.ts",
-    "apps/web/src/features/settings-company/realtime.ts"
+    "packages/wa-engine/src/session/manager.db.unit.test.ts",
+    "packages/wa-engine/src/session/manager.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm -r typecheck",
       "status": "pass",
-      "detail": "ok em 75.4s"
+      "detail": "ok em 70.9s"
     },
     {
       "name": "cmd: pnpm -r lint",
       "status": "pass",
-      "detail": "ok em 30.4s"
+      "detail": "ok em 28.8s"
     },
     {
       "name": "cmd: pnpm -r test",
       "status": "pass",
-      "detail": "ok em 475.6s"
+      "detail": "ok em 444.4s"
     },
     {
       "name": "cmd: pnpm -r build",
       "status": "pass",
-      "detail": "ok em 15.4s"
+      "detail": "ok em 10.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"...{./packages/core}\" --filter \"...{./packages/wa-engine}\"  test",
+      "status": "pass",
+      "detail": "ok em 370.8s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
@@ -99,7 +107,7 @@
     {
       "name": "escopo de arquivos",
       "status": "pass",
-      "detail": "12 arquivo(s) alterado(s)"
+      "detail": "15 arquivo(s) alterado(s)"
     }
   ]
 }
