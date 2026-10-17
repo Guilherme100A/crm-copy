@@ -65,6 +65,8 @@ import { configureInboundWebhooks } from '../jobs/inbound-webhooks'
 import { configurePaymentWebhooks } from '../jobs/payment-webhooks'
 import { configureInvoices, invoicesEnqueuer } from '../jobs/invoices'
 import { invoiceJobId, invoiceSalePublisher, type InvoiceEnqueue } from '@crm/core'
+import { configureUtmify, utmifyEnqueuer } from '../jobs/utmify'
+import { enqueueUtmifySale, utmifySalePublisher, type UtmifyEnqueue } from '@crm/core'
 import { capiSalePublisher, configurePixelNodes, fxRatesFromEnv, metaConfigFromEnv, MetaProfilesService } from '@crm/core'
 
 type Env = Record<string, string | undefined>
@@ -293,6 +295,28 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
     publisher: invoiceSales,
     capiEnqueue: async (data, opts) => {
       const [capi] = await Promise.allSettled([capiSaleEnqueue(data, opts), invoiceEnqueue({ ...data, generation: 1 }, { jobId: invoiceJobId(data.saleId, 1) })])
+      if (capi.status === 'rejected') throw capi.reason
+    },
+  })
+
+  // T113: envio de vendas à UTMify (job `utmify`) com o cipher (`CREDENTIALS_KEY`), o env do boot (`UTMIFY_API_URL`,
+  // `APP_NAME`) e o realtime do processo (`sale.updated`). Encadeado no MESMO publisher das vendas (depois da NF): a venda
+  // aprovada do nó approved_sale e das fontes de venda enfileira o envio, e a que passa a reembolsada (`sale.updated` do
+  // SalesService) enfileira o reembolso; a que passa de pendente a aprovada (T73), pelo `capiEnqueue` (o job só envia se
+  // a venda tiver `utmify_integration_id`). Fila criada no primeiro uso.
+  configureUtmify({ db, env, publisher, ...logger })
+  let utmifyQueueEnqueue: UtmifyEnqueue | undefined
+  const utmifyEnqueue: UtmifyEnqueue = (data, opts) => (utmifyQueueEnqueue ??= utmifyEnqueuer())(data, opts)
+  const utmifySales = utmifySalePublisher(invoiceSales, { enqueue: utmifyEnqueue, ...logger })
+  configureCrmNodes({ publisher: utmifySales })
+  configureInboundSales({
+    publisher: utmifySales,
+    capiEnqueue: async (data, opts) => {
+      const [capi] = await Promise.allSettled([
+        capiSaleEnqueue(data, opts),
+        invoiceEnqueue({ ...data, generation: 1 }, { jobId: invoiceJobId(data.saleId, 1) }),
+        enqueueUtmifySale(utmifyEnqueue, data.companyId, data.saleId, 'approved'),
+      ])
       if (capi.status === 'rejected') throw capi.reason
     },
   })

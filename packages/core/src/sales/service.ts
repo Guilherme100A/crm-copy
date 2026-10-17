@@ -126,6 +126,14 @@ export class SalesService {
       ...(input.utmifyIntegrationId !== undefined ? { utmifyIntegrationId: text(input.utmifyIntegrationId, 200) } : {}),
     }
     const values = { companyId: input.companyId, source: input.source, externalId, ...v, ...integrations }
+    // T113: status anterior da venda repetida, para avisar a transição para `refunded`.
+    const [prev] = externalId
+      ? await this.db
+          .select({ status: sales.status })
+          .from(sales)
+          .where(and(eq(sales.companyId, input.companyId), eq(sales.source, input.source), eq(sales.externalId, externalId)))
+          .limit(1)
+      : []
     const [row] = externalId
       ? await this.db
           .insert(sales)
@@ -153,6 +161,7 @@ export class SalesService {
         // Realtime é melhor-esforço: a venda já foi gravada.
       }
     }
+    if (!created) await this.publishRefund(input.companyId, sale, prev?.status)
     return { sale, created }
   }
 
@@ -185,10 +194,12 @@ export class SalesService {
   }
 
   async update(companyId: string, id: string, input: Partial<Omit<RecordSaleInput, 'companyId' | 'source' | 'externalId'>>): Promise<SaleDto> {
-    await this.get(companyId, id)
+    const before = await this.get(companyId, id)
     const v = await this.validate(companyId, input, false)
     await this.db.update(sales).set({ ...v, updatedAt: new Date() }).where(and(eq(sales.companyId, companyId), eq(sales.id, id)))
-    return this.get(companyId, id)
+    const sale = await this.get(companyId, id)
+    await this.publishRefund(companyId, sale, before.status)
+    return sale
   }
 
   async delete(companyId: string, id: string): Promise<void> {
@@ -197,6 +208,16 @@ export class SalesService {
   }
 
   // ---------- internos ----------
+
+  /** T113: venda que passou a `refunded` publica `sale.updated { sale_id, sale, status, previous_status }` (envio à UTMify). */
+  private async publishRefund(companyId: string, sale: SaleDto, previous: SaleStatus | undefined): Promise<void> {
+    if (!this.publisher || !previous || previous === 'refunded' || sale.status !== 'refunded') return
+    try {
+      await this.publisher.publish(companyId, 'sale.updated', { sale_id: sale.id, sale, status: sale.status, previous_status: previous } as never)
+    } catch {
+      // Realtime é melhor-esforço: a venda já foi gravada.
+    }
+  }
 
   private async filters(companyId: string, q: SalesListQuery): Promise<SQL | undefined> {
     const errors: { path: string; message: string }[] = []

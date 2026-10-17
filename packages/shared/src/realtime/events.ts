@@ -92,6 +92,12 @@ export const REALTIME_EVENTS = {
       sale_id: idSchema,
       invoice_emit_status: z.enum(['pending', 'succeeded', 'failed']).nullable().optional(),
       invoice_last_error: z.string().nullable().optional(),
+      /** T113: estado do envio mais recente à UTMify e o último erro (sem credenciais). */
+      utmify_status: z.enum(['pending', 'succeeded', 'failed']).nullable().optional(),
+      utmify_last_error: z.string().nullable().optional(),
+      /** T113: a venda passou a este status (`SalesService`, ex.: `refunded`), com o DTO em `sale`. */
+      status: z.enum(['approved', 'refunded', 'chargeback', 'pending']).optional(),
+      previous_status: z.enum(['approved', 'refunded', 'chargeback', 'pending']).optional(),
     }),
     'dashboard.sales',
   ),

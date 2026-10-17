@@ -22,6 +22,11 @@ import {
   type InvoiceJobData,
   type MetaCapiSaleJobData,
   type TimerScheduler,
+  type UtmifyEnqueue,
+  type UtmifyJobData,
+  UTMIFY_JOB_OPTIONS,
+  UTMIFY_QUEUE,
+  utmifySalePublisher,
 } from '@crm/core'
 import { createDb, ensureDefaultAiPrices, runMigrations, type Database } from '@crm/db'
 import { bullConnection, createLogger, FsBlobStore, initCredentialsCrypto, redisConnection, type Logger } from '@crm/node-kit'
@@ -139,6 +144,15 @@ export async function createProductionApiDeps(opts: CreateProductionApiOptions =
   deps.salesPublisher = invoiceSalePublisher(salesPublisher, { enqueue: invoicesEnqueue, logger })
   deps.invoicesEnqueue = invoicesEnqueue
 
+  // T113: envio à UTMify. Encadeado depois da NF, como no worker: a venda aprovada com `utmify_integration_id` (criada
+  // pela API) e a que passa a reembolsada (PATCH /api/sales/:id, `sale.updated` do SalesService) enfileiram o job `utmify`.
+  let utmifyQueue: ReturnType<typeof defineQueue<UtmifyJobData>> | undefined
+  const utmifyEnqueue: UtmifyEnqueue = async (data, o) => {
+    utmifyQueue ??= defineQueue<UtmifyJobData>(UTMIFY_QUEUE, { connection, defaultJobOptions: UTMIFY_JOB_OPTIONS })
+    await utmifyQueue.add(UTMIFY_QUEUE, data, { jobId: o.jobId })
+  }
+  deps.salesPublisher = utmifySalePublisher(deps.salesPublisher, { enqueue: utmifyEnqueue, logger })
+
   return {
     config,
     logger,
@@ -148,7 +162,7 @@ export async function createProductionApiDeps(opts: CreateProductionApiOptions =
     deps,
     dispose: offAttendance,
     close: async () => {
-      await Promise.allSettled([stepQueue?.close(), timerQueue?.close(), capiQueue?.close(), invoicesQueue?.close(), wa.close()])
+      await Promise.allSettled([stepQueue?.close(), timerQueue?.close(), capiQueue?.close(), invoicesQueue?.close(), utmifyQueue?.close(), wa.close()])
       await Promise.allSettled([ownsDb ? db.$client.end() : undefined, redis.quit()])
     },
   }

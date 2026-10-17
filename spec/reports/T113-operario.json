@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "task": "T113",
+  "role": "operario",
+  "ok": false,
+  "at": "2026-10-17T01:24:36.512Z",
+  "commit": "d47f18dcb8a33a909bf3fd0267fb86ac024490f0",
+  "base": "5780f21",
+  "changedFiles": [
+    ".env.example",
+    "apps/api/src/production.ts",
+    "apps/api/src/routes/index.ts",
+    "apps/api/src/routes/utmify/index.ts",
+    "apps/api/src/routes/utmify/utmify.db.unit.test.ts",
+    "apps/worker/src/boot/production.ts",
+    "apps/worker/src/jobs/utmify/index.ts",
+    "apps/worker/src/jobs/utmify/production.db.unit.test.ts",
+    "apps/worker/src/jobs/utmify/utmify.db.unit.test.ts",
+    "apps/worker/src/registry.ts",
+    "docs/integrations/utmify.md",
+    "packages/core/src/index.ts",
+    "packages/core/src/sales/service.ts",
+    "packages/core/src/utmify/adapter.ts",
+    "packages/core/src/utmify/adapter.unit.test.ts",
+    "packages/core/src/utmify/delivery.ts",
+    "packages/core/src/utmify/fake.ts",
+    "packages/core/src/utmify/index.ts",
+    "packages/core/src/utmify/integrations.ts",
+    "packages/core/src/utmify/port.ts",
+    "packages/core/src/utmify/utmify.db.unit.test.ts",
+    "packages/db/drizzle/crm/0032_t113_utmify.sql",
+    "packages/db/drizzle/crm/meta/0032_snapshot.json",
+    "packages/db/drizzle/crm/meta/_journal.json",
+    "packages/db/src/schema/crm/index.ts",
+    "packages/db/src/schema/crm/utmify.ts",
+    "packages/shared/src/realtime/events.ts"
+  ],
+  "checks": [
+    {
+      "name": "cmd: pnpm --filter @crm/api typecheck",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api lint",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/api test",
+      "status": "fail",
+      "detail": "exit 1 em 116.2s",
+      "output": " ❯ src/e2e/e2e.db.unit.test.ts (7 tests | 1 failed) 3538ms\n   ❯ AC-T17-03 reset (1)\n     × restaura o seed-base em ≤ 3 s e limpa as chaves de teste 377ms\n\n Test Files  1 failed | 49 passed (50)\n      Tests  1 failed | 256 passed (257)\n   Start at  22:22:36\n   Duration  115.27s (tests 60%, import 21%, setup 11%, transform 8%)\n\nC:\\Users\\green\\Downloads\\leonas\\leonas-crm-wt\\T113\\apps\\api:\r\n ERR_PNPM_RECURSIVE_RUN_FIRST_FAIL  @crm/api@0.0.0 test: `vitest run --passWithNoTests`\nExit status 1\n\n⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯\n\n FAIL  src/e2e/e2e.db.unit.test.ts > AC-T17-03 reset > restaura o seed-base em ≤ 3 s e limpa as chaves de teste\nAssertionError: expected [ 'admin@demo.test', …(4) ] to deeply equal [ 'admin@demo.test', …(3) ]\n\n- Expected\n+ Received\n\n  [\n    \"admin@demo.test\",\n    \"member@demo.test\",\n    \"owner@demo.test\",\n    \"platform@demo.test\",\n+   \"support@demo.test\",\n  ]\n\n ❯ src/e2e/e2e.db.unit.test.ts:117:45\n    115|\n    116|     const rows = await db.select({ id: users.id, email: users.email, n…\n    117|     expect(rows.map((r) => r.email).sort()).toEqual(Object.values(SEED…\n       |                                             ^\n    118|     expect(rows.find((r) => r.id === SEED_BASE.users.owner.id)?.name).…\n    119|     expect(await redis.exists('crm:rt:t17', 'crm:rl:t17')).toBe(0)\n\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯\n\n"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker typecheck",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker lint",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/worker test",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core typecheck",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core lint",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter @crm/core test",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...[5780f21]\" --filter \"!@crm/api\" --filter \"!@crm/worker\" --filter \"!@crm/core\" test",
+      "status": "pass",
+      "detail": "aprovado na rodada anterior (--retry-failed)"
+    },
+    {
+      "name": "regra F-SEND-CHOKEPOINT",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-WA-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-ENGINE-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-AI-BOUNDARY",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-GROUP-JOIN",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BAN-CLAIM",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-FILE-AUTH",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-BRAND",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CLOUD-API",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-TOKEN-LOCALSTORAGE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "regra F-NO-CONSOLE",
+      "status": "pass",
+      "detail": ""
+    },
+    {
+      "name": "escopo de arquivos",
+      "status": "pass",
+      "detail": "27 arquivo(s) alterado(s)"
+    }
+  ]
+}
