@@ -5,7 +5,7 @@
 
 ## Resumo
 - Tarefas: 127 · Ondas: 14 (0–13) · ACs: 565 · Paralelismo: 4 pares (revisão 1)
-- Em andamento (força total; gate em LOTE ativo — 1º lote T84+T90 integrado em 2bbe55f): operários T83 (Forja), T87 (Esquadro), T100 (Lastro), T97 (Prumo); tester T57 (Sentinela); fila de tester: T86.
+- Em andamento (força total; gate em LOTE): operários T100 (Lastro), T98 (Esquadro), T105 (Forja), T106 (Prumo); tester T86 (Vigia); fila de tester: T87 → T83 → T97. T108 espera a T97 na main.
 - Bloqueios: T110 (Zenith sem documentação pública; decisão do usuário)
 - Revisão 1 da SPEC aplicada em 2026-10-15 (novas: T109–T115; T93/T94 antecipadas para a onda 6)
 - **Dúvidas abertas para o usuário (bloqueado por você): T110 Zenith — doc do parceiro, contrato provisório [NÃO VERIFICADO] ou tirar do escopo (SPEC §10.3 nº 1)**
@@ -75,7 +75,7 @@
 | 6 | T54 | UI: equipe, permissões, convites e suporte | MERGED | Esquadro | Vigia | 0 | 8fc5f28 (op ~24 min, tester ~8 min) |
 | 6 | T55 | Dashboard: métricas de vendas, bootstrap e marcos | MERGED | Bigorna | Lupa | 0 | f3a73bb |
 | 6 | T56 | UI editores de nó: mensagem e interativos | MERGED | Prumo | Vigia | 0 | 5083c1e (op ~20 min, tester ~9 min) |
-| 6 | T57 | UI editores de nó: lógica, CRM e externos | VERIFYING | Lastro | Sentinela | 0 | op ~24 min (verify 0, base 1a208a4); tester em andamento |
+| 6 | T57 | UI editores de nó: lógica, CRM e externos | MERGED | Lastro | Sentinela | 0 | 84cda3a (op ~24 min, tester ~13 min) |
 | 6 | T58 | UI: respostas rápidas, modelos, variáveis, campos e etiquetas | MERGED | Esquadro | Vigia | 0 | b8cc9f8 (piloto: op ~25 min, tester ~6 min; 1 ajuste de teste pelo select mobile da T53) |
 | 6 | T59 | UI: consumo de IA, chaves e hub de integrações | MERGED | Prumo | Sentinela | 0 | 9a72b21 (op ~22 min + probe fake; tester ~4 min) |
 | 6 | T60 | Disparos em massa: API e cota | MERGED | Bigorna | Lupa | 0 | d56ed8e |
@@ -105,7 +105,7 @@
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
 | 7 | T90 | UI fontes de venda e produtos | MERGED | Forja | Vigia | 0 | 8e88be3 (1º gate em LOTE com a T84; op ~16 min, tester ~5 min) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
-| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera service.ts/metrics.ts do meta-ads (aditivo) |
+| 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | IN_PROGRESS | Forja | (vaga) | 0 | libera service.ts/metrics.ts do meta-ads (aditivo) |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |
 | 7 | T114 | UI: pagamentos, NF, UTMify e editores dos blocos Pagamento e Venda aprovada | TODO | | | 0 | |
 | 7 | T115 | MCP: OAuth para conectores (Claude) | TODO | | | 0 | |
@@ -117,7 +117,7 @@
 | 8 | T83 | UI disparos em massa | VERIFYING | Forja | (vaga) | 0 | op ~20 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T87 | UI dashboard: histórico, atendimento e marcos | VERIFYING | Esquadro | (vaga) | 0 | op ~16 min (verify 0, base 0bb9d1a); tester na fila |
 | 8 | T89 | UI webhooks de entrada | MERGED | Torno | Sonda | 0 | c3a0d8f |
-| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | TODO | | | 0 | |
+| 8 | T106 | UI Facebook: gerenciador, pixel e perfis | IN_PROGRESS | Prumo | (vaga) | 0 | libera harness (FakeMetaGraph + configureMetaAds, aditivo) |
 | 9 | T85 | UI chats: compositor | MERGED | Torno | Sonda | 0 | 6798cec |
 | 9 | T86 | UI contatos: formulário, importação e jobs | VERIFYING | Prumo | (vaga) | 0 | op ~16 min (verify 0, base f3d19ba); tester na fila |
 | 9 | T88 | UI agentes: lista e editor | MERGED | Torno | Sonda | 0 | c719354 |
@@ -125,8 +125,8 @@
 | 10 | T92 | UI agentes: teste ao vivo, criação assistida e vozes | TODO | | | 0 | |
 | 11 | T95 | Admin: usuários, empresas, limites e cotas | MERGED | Prisma2 | Vigia | 0 | edeb8ba (op ~25 min, tester ~4 min) |
 | 11 | T96 | Admin: avisos, banners, saúde, sessões WhatsApp e IA | MERGED | Esquadro | Sentinela | 0 | 6043c6f (op ~20 min, tester ~6 min; migration regenerada como 0033) |
-| 11 | T97 | Afiliação: captura de indicação e link externo | IN_PROGRESS | Prumo | (vaga) | 0 | libera register-route, rota nova /api/app-config e app-shell (aditivo) |
-| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | (sob demanda) | (vaga) | 0 | libera suite.ts do wa-port (only/skip, aditivo) |
+| 11 | T97 | Afiliação: captura de indicação e link externo | VERIFYING | Prumo | (vaga) | 0 | op ~11 min (verify 0, base 5e34a73); tester na fila |
+| 11 | T98 | Extensão: perfil ai-manager do gateway e documentação | IN_PROGRESS | Esquadro | (vaga) | 0 | libera suite.ts do wa-port (only/skip, aditivo) |
 | 11 | T108 | Tutoriais e widget de suporte plugável | TODO | | | 0 | |
 | 12 | T100 | UI admin interno | IN_PROGRESS | Lastro | (vaga) | 0 | libera app-shell (pop-up) e admin-ops (upload global de imagem), aditivo |
 | 4 | T117 | Ajustes de integração: logout encerra SSE, shutdown do hub, cache de chaves único | MERGED | Torno | Sonda | 0 | e6c4bf9 |
@@ -216,6 +216,10 @@
 | harness E2E | scripts/e2e/api.ts não chama configureFlowStep: runs disparados no E2E ficam running ("flow-step: WaGateway não configurado") — ligar o flow-step no worker do harness | T71 |
 | web | Toaster do shell (T23) empilha muitos toasts numa rajada apesar de limit=3 (cosmético) | T84 |
 | editor de fluxos | vary_text_with_ai e delete_on_label do texto; áudio IA/ptv; buffer e reação do Aguardar resposta; readchat do carrossel; "Copiar para bloco Menu" (T45) | T56 |
+| editor de fluxos | Operador órfão ("equal") ao trocar variável global para numérica; testid ne-var-phone_number duplicado no ne-var-list | T57 |
+| web | Afiliados: link no UserMenu e banner do dashboard para o portal (fora do AC) | T97 |
+| T60 | status_counts na lista de disparos e contagem por variante A/B | T83 |
+| vendas | Exportação de vendas (core/worker); editar/excluir venda no histórico | T87 |
 | teste instável | `packages/db/src/migrations.db.unit.test.ts` (timeout 30 s) estoura sob carga: `DROP DATABASE` no PG16/Windows espera checkpoint (10–16 s). Avaliar timeout 60 s ou drop em segundo plano | T128 |
 | produção | OpenRouter sem preço padrão no seed (T37): o admin cadastra pela API `POST /api/platform/ai/prices` | T37 |
 | implantação | envio de áudio PTT exige ffmpeg no servidor (ou `FFMPEG_PATH`); no harness E2E o conversor é passthrough (T85) | T85 |
