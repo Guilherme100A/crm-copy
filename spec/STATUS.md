@@ -103,7 +103,7 @@
 | 7 | T74 | Disparos em massa: preparação e agendador | MERGED | Bigorna | Lupa | 0 | 567330b |
 | 7 | T78 | UI dashboard: filtros e vendas | MERGED | Torno | Sonda | 0 | 5bf4999 |
 | 7 | T81 | Webhooks de entrada: processador e escuta de amostras | MERGED | Cinzel | Radar | 0 | bb6a6b0 |
-| 7 | T90 | UI fontes de venda e produtos | TODO | | | 0 | |
+| 7 | T90 | UI fontes de venda e produtos | IN_PROGRESS | (sob demanda) | (vaga) | 0 | brief spec/briefs/T90.md; libera harness (configureInboundSales, aditivo) |
 | 7 | T103 | Meta: edição de status, nome e orçamento | MERGED | Cinzel | Radar | 0 | 2958a88 |
 | 7 | T105 | Meta: vendas internas × anúncios (CTWA) e ROAS | TODO | | | 0 | |
 | 7 | T107 | Indicador de conexões desconectadas no menu | TODO | | | 0 | |

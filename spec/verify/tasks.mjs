@@ -285,7 +285,7 @@ const RAW = [
   T('T81', 'Webhooks de entrada: processador e escuta de amostras', ['T72', 'T61', 'T50'], ['packages/core/src/inbound-webhooks-processor/**', 'apps/api/src/middleware/request-logger.ts', 'apps/api/src/routes/inbound-webhook-samples/**', job('inbound-webhooks')], ['api', 'worker', 'core']),
   T('T89', 'UI webhooks de entrada', ['T81', 'T23'], [...ui('settings-webhooks'), 'apps/web/src/routes/settings/inbound-webhooks.tsx', 'apps/web/src/routes/settings/inbound-webhooks/**', 'apps/worker/src/index.ts', 'scripts/e2e/api.ts'], ['web', 'worker'], { e2e: true }),
   T('T73', 'Fontes de venda (webhook genérico) e atribuição UTM/CTWA', ['T34', 'T33'], [core('sale-sources'), core('attribution'), route('sale-sources'), 'apps/api/src/routes/hooks-sales/**', job('inbound-sales'), schema('sale-sources')], ['api', 'worker', 'core']),
-  T('T90', 'UI fontes de venda e produtos', ['T73', 'T23'], [...ui('settings-sale-sources'), ...ui('settings-products')], ['web'], { e2e: true }),
+  T('T90', 'UI fontes de venda e produtos', ['T73', 'T23'], [...ui('settings-sale-sources'), ...ui('settings-products'), 'scripts/e2e/api.ts' /* aditivo: configureInboundSales no harness para processar eventos de venda no E2E (AC-T90-03) */], ['web'], { e2e: true }),
   T('T60', 'Disparos em massa: API e cota', ['T26', 'T43'], [core('mass-dispatch'), route('mass-dispatch'), schema('mass-dispatch')], ['api', 'core']),
   T('T74', 'Disparos em massa: preparação e agendador', ['T60', 'T30'], ['packages/core/src/mass-dispatch-runner/**', job('mass-dispatch')], ['worker', 'core']),
   T('T83', 'UI disparos em massa', ['T60', 'T74', 'T23'], [...ui('mass-dispatch')], ['web'], { e2e: true }),
