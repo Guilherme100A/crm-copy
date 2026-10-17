@@ -3,19 +3,12 @@
   "task": "T92",
   "role": "operario",
   "ok": true,
-  "at": "2026-10-17T03:58:06.655Z",
-  "commit": "bea292dd3a3df324c7ed82bb1f5994bd06d8bb14",
-  "base": "bea292d",
+  "at": "2026-10-17T05:02:31.613Z",
+  "commit": "bd7e9085f1312988c8d76db0720c25729acfa5da",
+  "base": "ab3a174",
   "changedFiles": [
-    "apps/api/src/routes/ai-agent-lab/index.ts",
-    "apps/web/src/features/agents/editor-page.tsx",
-    "apps/web/src/features/agents/list-page.tsx",
-    "apps/web/src/features/agents/tabs.tsx",
-    "apps/web/src/routes/agentes/$agentId.tsx",
-    "apps/web/src/routes/agentes/index.tsx",
-    "apps/web/src/routes/agentes/novo.tsx",
-    "scripts/e2e/api.ts",
     "apps/api/src/routes/ai-agent-lab/ai-agent-lab.unit.test.ts",
+    "apps/api/src/routes/ai-agent-lab/index.ts",
     "apps/web/src/features/agent-lab/agent-lab.unit.test.ts",
     "apps/web/src/features/agent-lab/api.ts",
     "apps/web/src/features/agent-lab/assisted-create.tsx",
@@ -29,50 +22,62 @@
     "apps/web/src/features/agent-voices/api.ts",
     "apps/web/src/features/agent-voices/form.ts",
     "apps/web/src/features/agent-voices/voices.tsx",
+    "apps/web/src/features/agents/editor-page.tsx",
+    "apps/web/src/features/agents/list-page.tsx",
+    "apps/web/src/features/agents/tabs.tsx",
     "apps/web/src/i18n/en/agent-lab.json",
     "apps/web/src/i18n/es/agent-lab.json",
-    "apps/web/src/i18n/pt-BR/agent-lab.json"
+    "apps/web/src/i18n/pt-BR/agent-lab.json",
+    "apps/web/src/routes/agentes/$agentId.tsx",
+    "apps/web/src/routes/agentes/index.tsx",
+    "apps/web/src/routes/agentes/novo.tsx",
+    "scripts/e2e/api.ts"
   ],
   "checks": [
     {
       "name": "cmd: pnpm --filter @crm/api typecheck",
       "status": "pass",
-      "detail": "ok em 22.7s"
+      "detail": "ok em 13.7s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api lint",
       "status": "pass",
-      "detail": "ok em 10.6s"
+      "detail": "ok em 3.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/api test",
       "status": "pass",
-      "detail": "ok em 202.0s (afetados desde a base)"
+      "detail": "ok em 125.4s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web typecheck",
       "status": "pass",
-      "detail": "ok em 16.5s"
+      "detail": "ok em 12.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web lint",
       "status": "pass",
-      "detail": "ok em 9.8s"
+      "detail": "ok em 5.8s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web test",
       "status": "pass",
-      "detail": "ok em 25.2s (afetados desde a base)"
+      "detail": "ok em 19.2s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web i18n:check",
       "status": "pass",
-      "detail": "ok em 0.8s"
+      "detail": "ok em 0.5s"
     },
     {
       "name": "cmd: pnpm --filter @crm/web build",
       "status": "pass",
-      "detail": "ok em 4.3s"
+      "detail": "ok em 3.0s"
+    },
+    {
+      "name": "cmd: pnpm --filter \"...{./apps/api}\" --filter \"...{./apps/web}\" --filter \"!@crm/api\" --filter \"!@crm/web\" test",
+      "status": "pass",
+      "detail": "ok em 65.6s"
     },
     {
       "name": "regra F-SEND-CHOKEPOINT",
