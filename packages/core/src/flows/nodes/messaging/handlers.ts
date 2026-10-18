@@ -321,7 +321,13 @@ export function messagingHandlers(deps: MessagingDeps = {}): Record<'message' | 
           if (!text.trim()) throw new MessagingConfigError(action.id, 'mensagem vazia')
           // Mesma conexão (sessão) do run, outro destinatário: o número interno configurado.
           const { sessionId } = await s.to()
-          await s.send({ actionId: action.id, content: { text }, presence: 'composing', typingSeconds: 0 }, { sessionId, phone: `+${cc}${digits}` })
+          const phone = `+${cc}${digits}`
+          // O número da equipe não é contato do CRM: sem consentimento, o gate `contactAllowed` do engine (ai-manager)
+          // barra o envio. Quem configurou o número no fluxo foi a própria empresa → consentimento manual (opt-out vale).
+          await ctx
+            .once(`${action.id}:consent`, async () => (await ctx.wa.recordConsent({ phone, source: 'manual', name: str(c.name)?.trim() || null, actor: 'crm:flow-notification' }), true))
+            .catch((err: unknown) => ctx.log.warn({ run_id: ctx.runId, err }, 'não foi possível registrar o consentimento do número da notificação'))
+          await s.send({ actionId: action.id, content: { text }, presence: 'composing', typingSeconds: 0 }, { sessionId, phone })
         }
         return next
       },

@@ -207,6 +207,8 @@ describe('nós notification e pix', () => {
     await handlers.notification.execute(ctx())
     expect(wa.sent).toHaveLength(1)
     expect(wa.sent[0]).toMatchObject({ sessionId: SESSION, phone: '+5511988887777', content: { text: 'Lead Maria' } })
+    // Número da equipe não é contato: consentimento manual antes do envio (senão o gate contactAllowed barra).
+    expect(wa.consents).toEqual([{ phone: '+5511988887777', source: 'manual', name: 'Equipe', actor: 'crm:flow-notification' }])
     const m = setup(node('notification', [action('n', 'send_notification', { name: 'E', phone: '5512345678', country_code: '351', message: 'x' })]))
     await m.handlers.notification.execute(m.ctx())
     expect(m.wa.sent[0]!.phone).toBe('+3515512345678')
