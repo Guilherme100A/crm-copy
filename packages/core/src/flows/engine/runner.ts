@@ -10,7 +10,7 @@ import type { LlmProvider } from '@crm/ai'
 import { companies, contacts, flowRunSteps, flowRuns, flowVersions, flows, type Database, type FlowRunStatus } from '@crm/db'
 import type { Logger } from '@crm/node-kit'
 import type { FlowDefinition, FlowNode } from '@crm/shared'
-import type { WaGateway } from '@crm/wa-port'
+import { isSendRejectedError, type WaGateway } from '@crm/wa-port'
 import { isUniqueViolation } from '../../auth/errors'
 import type { TemplateContact } from '../../templating/render'
 import { FlowStore } from '../store/store'
@@ -20,6 +20,32 @@ import { NodeNotImplementedError, createNodeRegistry, type NodeRegistry } from '
 
 export const MAX_STEPS_PER_JOB = 50
 export const LOOP_GUARD_ERROR = 'loop_guard'
+
+// Limite de envio do chip (ai-manager: por minuto/hora) não derruba o run: ele espera e refaz o MESMO nó, com a
+// chave de idempotência do passo original (as ações já enviadas não saem de novo). Limite por dia/aquecimento falha.
+export const SEND_RETRY_DELAY_MS = { minute: 30_000, hour: 5 * 60_000 } as const
+export const MAX_SEND_RETRIES = 40
+/** Variável do run com o nó em nova tentativa: `{ node, seq (do passo original), attempts }`. */
+export const SEND_RETRY_VAR = '__send_retry'
+
+interface SendRetry {
+  node: string
+  seq: number
+  attempts: number
+}
+
+/** Janela do limite que rejeitou o envio (`SendRejectedError` RATE_LIMIT, também vindo pelo RPC) ou `null`. */
+export function sendRetryWindow(err: unknown): keyof typeof SEND_RETRY_DELAY_MS | null {
+  for (let e: unknown = err, depth = 0; e && depth < 3; e = (e as { cause?: unknown }).cause, depth++) {
+    if (isSendRejectedError(e)) {
+      if (e.code !== 'RATE_LIMIT') return null
+      const w = e.details?.window
+      return w === 'hour' ? 'hour' : w === 'day' ? null : 'minute'
+    }
+  }
+  const m = /rate limit reached: \d+\/\d+ per (minute|hour)\b/.exec(err instanceof Error ? err.message : String(err))
+  return m ? (m[1] as 'minute' | 'hour') : null
+}
 
 export type FlowEngineErrorCode = 'not_found' | 'flow_not_published' | 'flow_not_active' | 'contact_not_found' | 'run_active'
 
@@ -145,13 +171,15 @@ export async function runLoop(state: LoopState, deps: LoopDeps): Promise<LoopRes
     state.seq += 1
     steps += 1
     const seq = state.seq
+    const retry = state.vars[SEND_RETRY_VAR] as SendRetry | undefined
+    const retrying = retry?.node === node.id ? retry : undefined
     const ctx = buildContext({
       runId: state.runId,
       companyId: state.companyId,
       flowId: state.flowId,
       contactId: state.contactId,
       chatId: state.chatId,
-      seq,
+      seq: retrying?.seq ?? seq,
       node,
       definition,
       contact: state.contact,
@@ -180,7 +208,19 @@ export async function runLoop(state: LoopState, deps: LoopDeps): Promise<LoopRes
     const key = stepKey(state.runId, seq)
     const base = { key, seq, nodeKey: node.id, nodeType: node.type }
     let result: LoopResult | null = null
-    if (error !== null) {
+    if (retry) delete state.vars[SEND_RETRY_VAR]
+    const retryWindow = error !== null && !deps.repo.dryRun ? sendRetryWindow(error) : null
+    const attempts = (retrying?.attempts ?? 0) + 1
+    if (retryWindow && attempts <= MAX_SEND_RETRIES) {
+      state.vars[SEND_RETRY_VAR] = { node: node.id, seq: retrying?.seq ?? seq, attempts } satisfies SendRetry
+      await deps.store.saveStep({ ...base, status: 'done', result: { outcome: 'wait', handle: 'retry' }, error: errorMessage(error) })
+      deps.log.info({ run_id: state.runId, node: node.id, attempts, window: retryWindow }, 'send rate-limited: retrying the node later')
+      // Vira uma espera comum de timer: o hook do controle agenda o prazo e o timer retoma com `stay`.
+      const wait: WaitSpec = { kind: 'timer', handles: { timeout: 'retry' }, deadline_at: null, delay_ms: SEND_RETRY_DELAY_MS[retryWindow], retry: true }
+      outcome = { wait }
+      error = null
+      result = { status: 'waiting', steps, wait }
+    } else if (error !== null) {
       const failure = edgeOf(node.id, 'failure')
       await deps.store.saveStep({ ...base, status: 'failed', result: { outcome: 'error', ...(failure ? { handle: 'failure' } : {}) }, error: errorMessage(error) })
       if (failure) state.currentNodeKey = failure.to

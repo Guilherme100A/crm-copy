@@ -134,7 +134,8 @@ export class FlowControl {
   async fireTimer(data: FlowTimerJobData): Promise<AdvanceResult> {
     return this.advance(
       data.runId,
-      (_run, wait) => ({ handle: wait.handles.timeout ?? 'timeout' }),
+      // `retry` (envio barrado pelo limite do chip): refaz o mesmo nó em vez de seguir aresta.
+      (_run, wait) => ({ handle: wait.handles.timeout ?? 'timeout', stay: wait.retry === true }),
       { seq: data.seq, gen: data.gen ?? 0 },
     )
   }
