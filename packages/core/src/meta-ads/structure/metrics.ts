@@ -32,6 +32,13 @@ export interface MetaRowMetrics {
   purchases_leona: number | null
   /** T105: ROAS das vendas internas (`purchase_value_leona_display ÷ meta_spend_display`); só com `internalSales`. */
   roas_internal?: number | null
+  /**
+   * Revisão 3: vendas com atribuição só provável (proximidade de tempo), SEPARADAS de `purchases_leona` (que conta só as
+   * confirmadas). A tela só as soma com o filtro explícito ligado.
+   */
+  purchases_leona_probable?: number | null
+  purchase_value_leona_probable?: number | null
+  purchase_value_leona_probable_display?: number | null
 }
 
 /** Compras: a primeira presente, nesta ordem (os tipos se sobrepõem; somar contaria duas vezes). */

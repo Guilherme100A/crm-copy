@@ -12,6 +12,8 @@ export interface SaleDto {
   source: string
   external_id: string | null
   source_id: string | null
+  /** Revisão 3: confiança da atribuição ao anúncio (`source_id`). */
+  attribution_confidence?: 'confirmed_native' | 'confirmed_link' | 'probable' | 'none'
   ctwa_clid: string | null
   contact_id: string | null
   connection_id: string | null

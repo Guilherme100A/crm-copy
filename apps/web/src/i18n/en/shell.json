@@ -93,6 +93,8 @@
       "access": "Support access",
       "campaigns": "Campaigns",
       "pixel": "Pixel",
+      "events": "Sent events",
+      "links": "Tracked links",
       "profiles": "Profiles and accounts"
     }
   },

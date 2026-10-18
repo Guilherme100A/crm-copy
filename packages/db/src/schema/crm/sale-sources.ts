@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm'
 import { bigserial, boolean, check, index, integer, jsonb, text, timestamp, uniqueIndex, uuid } from 'drizzle-orm/pg-core'
 import { companies, users } from './base.js'
 import { contacts } from './contacts.js'
-import { sales } from './sales.js'
+import { sales, type AttributionConfidence } from './sales.js'
 import { createdAt, crm, updatedAt } from './schema.js'
 
 // Fontes de venda por webhook genérico e atribuição (T73; 19 §5.5, 11 §3.7): cada fonte tem um token público
@@ -80,6 +80,16 @@ export const inboundSaleEvents = crm.table(
   ],
 )
 
+export interface AttributionHistoryEntry {
+  confidence: AttributionConfidence
+  method: string
+  at: string
+  source_id?: string | null
+  click_id?: string | null
+  /** A evidência virou a atual (`applied`) ou ficou só no histórico por ser mais fraca (`kept_previous`). */
+  outcome: 'applied' | 'kept_previous'
+}
+
 /** Primeiro e último toque de atribuição de cada contato (first nunca é sobrescrito). */
 export const contactAttribution = crm.table(
   'contact_attribution',
@@ -108,6 +118,19 @@ export const contactAttribution = crm.table(
     lastSourceUrl: text('last_source_url'),
     lastAt: timestamp('last_at', { withTimezone: true }).notNull(),
     lastSaleSourceId: uuid('last_sale_source_id').references(() => saleSources.id, { onDelete: 'set null' }),
+    /**
+     * Revisão 3: melhor evidência de origem de anúncio do contato (nativo > link > provável > nenhum). Um nível melhor
+     * que chegue depois substitui o pior; o histórico fica em `confidence_history`.
+     */
+    confidence: text('confidence').$type<AttributionConfidence>().notNull().default('none'),
+    /** `ctwa_referral`, `tracked_link_code`, `tracked_link_window`. */
+    method: text('method'),
+    confidenceAt: timestamp('confidence_at', { withTimezone: true }),
+    /** Id do anúncio ligado à evidência atual (do cartão do anúncio ou do `ad_id` do clique). */
+    confidenceSourceId: text('confidence_source_id'),
+    /** Clique do link rastreável ligado à evidência atual (link/provável). */
+    confidenceClickId: uuid('confidence_click_id'),
+    confidenceHistory: jsonb('confidence_history').$type<AttributionHistoryEntry[]>().notNull().default([]),
     updatedAt: updatedAt(),
   },
   (t) => [index('contact_attribution_company_idx').on(t.companyId)],

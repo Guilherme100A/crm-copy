@@ -8,7 +8,7 @@ import { useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNod
 import { useT } from '@/i18n'
 import { cn } from '@/lib/utils'
 import { customFieldsQuery, globalVariablesQuery } from './api'
-import { CONTACT_VARIABLES, hasErrors, insertVariable, SYSTEM_VARIABLES, validateActions, withOrder, type Config, type FieldError, type FieldErrors } from './rules'
+import { AD_VARIABLES, CONTACT_VARIABLES, hasErrors, insertVariable, SYSTEM_VARIABLES, validateActions, withOrder, type Config, type FieldError, type FieldErrors } from './rules'
 
 export const NS = 'node-editors-logic'
 
@@ -283,6 +283,7 @@ function useVariableGroups() {
   const fields = useQuery(customFieldsQuery()).data?.items ?? []
   return [
     { id: 'contact', label: t('vars.contact'), names: [...CONTACT_VARIABLES] as string[] },
+    { id: 'ad', label: t('vars.ad'), names: [...AD_VARIABLES] as string[] },
     { id: 'fields', label: t('vars.fields'), names: fields },
     { id: 'system', label: t('vars.system'), names: [...SYSTEM_VARIABLES] as string[] },
     { id: 'globals', label: t('vars.globals'), names: globals.map((g) => g.name) },

@@ -172,11 +172,12 @@ describe('Vendas internas no bundle montado como produção', () => {
 
     // Vendas de 1 dia atrás (dentro dos 30 dias): 2 aprovadas no A1, 1 no A2; reembolsada e sem source_id ficam fora.
     const soldAt = new Date(Date.now() - 24 * 3600_000)
+    // Revisão 3 (AC-T105-05): vendas com source_id gravadas pelo SalesService saem confirmed_native.
     await db.insert(sales).values([
-      { companyId: s.companyId, amountCents: 10_000, soldAt, sourceId: a1 },
-      { companyId: s.companyId, amountCents: 5_000, soldAt, sourceId: a1 },
-      { companyId: s.companyId, amountCents: 2_000, soldAt, sourceId: a2 },
-      { companyId: s.companyId, amountCents: 9_900, soldAt, sourceId: a1, status: 'refunded' },
+      { companyId: s.companyId, amountCents: 10_000, soldAt, sourceId: a1, attributionConfidence: 'confirmed_native' as const },
+      { companyId: s.companyId, amountCents: 5_000, soldAt, sourceId: a1, attributionConfidence: 'confirmed_native' as const },
+      { companyId: s.companyId, amountCents: 2_000, soldAt, sourceId: a2, attributionConfidence: 'confirmed_native' as const },
+      { companyId: s.companyId, amountCents: 9_900, soldAt, sourceId: a1, attributionConfidence: 'confirmed_native' as const, status: 'refunded' },
       { companyId: s.companyId, amountCents: 9_900, soldAt, sourceId: null },
     ])
 
@@ -207,7 +208,7 @@ describe('Vendas internas no bundle montado como produção', () => {
     })
 
     // 2) Síncrono com force_refresh: a rota da API monta na hora (mesma ligação) e enxerga a venda nova.
-    await db.insert(sales).values({ companyId: s.companyId, amountCents: 5_000, soldAt, sourceId: a2 })
+    await db.insert(sales).values({ companyId: s.companyId, amountCents: 5_000, soldAt, sourceId: a2, attributionConfidence: 'confirmed_native' })
     const sync = await call(s, 'GET', `${url}&force_refresh=1`)
     expect(sync.status).toBe(200)
     expect(byId(sync.body.ad)[a2]).toMatchObject({

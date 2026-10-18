@@ -46,7 +46,7 @@ import { createAiSdkProvider, FakeLlm, LLM_PROVIDERS, toPttOgg, type LlmProvider
 import { FsBlobStore, type BlobStore, type Logger } from '@crm/node-kit'
 import type { WaGateway } from '@crm/wa-port'
 import type { Redis } from 'ioredis'
-import { configureChatsConsumer } from '../consumers/chats'
+import { configureChatsConsumer, onCrmInbound } from '../consumers/chats'
 import { configureConnectionsConsumer } from '../consumers/connections'
 import { configureFlowTriggers, flowTriggers } from '../consumers/flow-triggers'
 import { configureAiAgent } from '../jobs/ai-agent'
@@ -57,7 +57,7 @@ import { configureFlowTimer } from '../jobs/flow-timer'
 import { configureSchedules } from '../jobs/schedules'
 import { configureMassDispatch } from '../jobs/mass-dispatch'
 import { configureMetaAds } from '../jobs/meta-ads'
-import { configureMetaCapi, metaCapiEnqueuer } from '../jobs/meta-capi'
+import { adLeadInboundListener, configureMetaCapi, metaCapiEnqueuer, type MetaCapiEnqueue } from '../jobs/meta-capi'
 import { configureAiAgentLab } from '../jobs/ai-agent-lab'
 import { configureAiKnowledge } from '../jobs/ai-knowledge'
 import { configureInboundSales } from '../jobs/inbound-sales'
@@ -251,8 +251,12 @@ export function configureWorkerProduction(deps: WorkerProductionDeps): WorkerPro
   configureMetaCapi({ db, ...capiEnv })
   configurePixelNodes(capiEnv)
   let capiEnqueue: ReturnType<typeof metaCapiEnqueuer> | undefined
-  const capiSaleEnqueue = (data: Parameters<ReturnType<typeof metaCapiEnqueuer>>[0], opts: { jobId: string }) => (capiEnqueue ??= metaCapiEnqueuer())(data, opts)
+  const capiSaleEnqueue: MetaCapiEnqueue = (data, opts) => (capiEnqueue ??= metaCapiEnqueuer())(data, opts)
   const salesPublisher = capiSalePublisher(publisher, { enqueue: capiSaleEnqueue, ...logger })
+  // Revisão 3: retentativa do evento incerto do nó Pixel e Lead automático da 1ª mensagem vinda de anúncio (o job só
+  // envia para pixels com `auto_lead_on_ad`; sem pixel assim, nada sai).
+  configurePixelNodes({ enqueueRetry: capiSaleEnqueue })
+  onCrmInbound(adLeadInboundListener(capiSaleEnqueue, deps.logger))
   configureCrmNodes({ publisher: salesPublisher })
 
   // T127. Fontes de venda (T73): a venda criada aprovada sai pelo `sale.recorded` envelopado; a que passa de pendente a

@@ -22,6 +22,8 @@ export const PUBLIC_API_ROUTES: readonly PublicRoute[] = [
   { method: 'GET', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/invitations/*' },
   { method: 'POST', path: '/api/hooks/*' },
+  // Revisão 3: link rastreável público (302 direto para o wa.me; rate limit por IP na rota).
+  { method: 'GET', path: '/api/w/*' },
   // T94: servidor MCP — autenticado pelo token Bearer da credencial MCP na própria rota (não pela sessão).
   { method: '*', path: '/api/mcp' },
   // T100: imagens globais de avisos/banners do admin (id assinado; qualquer empresa, sem sessão).

@@ -43,5 +43,10 @@
     "amountInvalid": "Informe um valor válido (maior ou igual a zero, até 2 casas decimais).",
     "dateInvalid": "Informe a data e a hora da venda.",
     "error": "Não foi possível salvar a venda."
+  },
+  "attribution": {
+    "confirmed_native": "Origem indicada pelo anúncio",
+    "confirmed_link": "Origem confirmada por link",
+    "probable": "Origem provável (só proximidade de tempo)"
   }
 }

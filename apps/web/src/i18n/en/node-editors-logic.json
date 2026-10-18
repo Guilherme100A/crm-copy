@@ -32,6 +32,7 @@
   "vars": {
     "insert": "Variable",
     "contact": "Contact",
+    "ad": "Source ad",
     "fields": "Custom fields",
     "system": "System",
     "globals": "Global variables"
@@ -85,7 +86,13 @@
       "global_variable": "Global variable"
     },
     "subtype": "Type",
-    "subtypes": { "tag": "Label", "weekday": "Weekday", "time": "Time", "date": "Date", "message_window": "Message window" },
+    "subtypes": {
+      "tag": "Label",
+      "weekday": "Weekday",
+      "time": "Time",
+      "date": "Date",
+      "message_window": "Message window"
+    },
     "operator": "Operator",
     "operators": {
       "equal": "Equals",
@@ -193,7 +200,13 @@
     "modes": { "set_contact_custom_field": "Custom field", "set_created_at": "Contact creation date" },
     "field": "Field",
     "operation": "Operation",
-    "operations": { "set_value": "Set value", "add": "Add", "subtract": "Subtract", "multiply": "Multiply", "divide": "Divide" },
+    "operations": {
+      "set_value": "Set value",
+      "add": "Add",
+      "subtract": "Subtract",
+      "multiply": "Multiply",
+      "divide": "Divide"
+    },
     "valueType": "Value type",
     "valueTypes": { "text": "Text", "number": "Number" },
     "value": "Value",
@@ -227,14 +240,23 @@
   "ai": {
     "engine": "Provider and model",
     "keySource": "Key used",
-    "keySources": { "platform": "Company or platform keys", "integration": "A registered AI key", "manual": "Manual key (legacy)" },
+    "keySources": {
+      "platform": "Company or platform keys",
+      "integration": "A registered AI key",
+      "manual": "Manual key (legacy)"
+    },
     "key": "AI key",
     "keyProviders": { "openai": "OpenAI", "google": "Google", "openrouter": "OpenRouter", "anthropic": "Anthropic" },
     "manualKey": "Manual key",
     "manualKeySaved": "Saved key (hidden)",
     "manualKeyHint": "The saved key is never shown. Type to replace it.",
     "provider": "Provider",
-    "providers": { "gpt": "OpenAI (GPT)", "gemini": "Google (Gemini)", "openrouter": "OpenRouter", "platform": "Company AI credits" },
+    "providers": {
+      "gpt": "OpenAI (GPT)",
+      "gemini": "Google (Gemini)",
+      "openrouter": "OpenRouter",
+      "platform": "Company AI credits"
+    },
     "providerFromKey": "Set by the chosen key",
     "noKey": "no key",
     "providerUnavailable": "This provider has no key configured: the block will fail until a key is added.",
@@ -265,7 +287,20 @@
   "pixel": {
     "label": "Pixel",
     "event": "Event",
-    "events": { "Compra": "Purchase", "Lead": "Lead" },
+    "events": {
+      "Compra": "Purchase",
+      "Lead": "Lead",
+      "InitiateCheckout": "Initiate checkout",
+      "AddToCart": "Add to cart",
+      "CompleteRegistration": "Complete registration",
+      "Contact": "Contact",
+      "Schedule": "Schedule",
+      "Subscribe": "Subscribe"
+    },
+    "pageId": "Facebook Page (optional)",
+    "pageIdHint": "Overrides the pixel Page for this event. Accepts variables. Only used when the contact came from a click-to-WhatsApp ad.",
+    "wabaId": "WhatsApp Business account ID (optional)",
+    "wabaIdHint": "Overrides the pixel WABA for this event (official number).",
     "value": "Value",
     "valueRequired": "Value (required for Purchase)",
     "currency": "Currency",

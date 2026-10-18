@@ -43,5 +43,10 @@
     "amountInvalid": "Ingresa un valor válido (cero o más, hasta 2 decimales).",
     "dateInvalid": "Ingresa la fecha y la hora de la venta.",
     "error": "No fue posible guardar la venta."
+  },
+  "attribution": {
+    "confirmed_native": "Origen indicado por el anuncio",
+    "confirmed_link": "Origen confirmado por enlace",
+    "probable": "Origen probable (solo proximidad de tiempo)"
   }
 }

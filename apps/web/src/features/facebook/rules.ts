@@ -6,12 +6,14 @@ import type { BundleEnvelope, BundleMode, BundleRow, MetaProfile } from './api'
 
 // ---------------------------------------------------------------- sub-rotas e permissões (11 §2, §8)
 
-export const FACEBOOK_SUBS = ['campaigns', 'pixel', 'profiles'] as const
+export const FACEBOOK_SUBS = ['campaigns', 'pixel', 'events', 'links', 'profiles'] as const
 export type FacebookSub = (typeof FACEBOOK_SUBS)[number]
 
 export const SUB_PERMISSION: Record<FacebookSub, string> = {
   campaigns: 'facebook.campaigns',
   pixel: 'facebook.pixel',
+  events: 'facebook.pixel',
+  links: 'facebook.pixel',
   profiles: 'facebook.profiles',
 }
 
@@ -560,3 +562,77 @@ export function validatePixel(input: { name: string; pixel_id: string; access_to
   if (!editing && !input.access_token.trim()) errs.access_token = 'required'
   return errs
 }
+
+// ---------------------------------------------------------------- revisão 3: rastreamento Meta
+
+/** Campos opcionais do pixel (revisão 3): Página/WABA só dígitos; código de teste sem espaços; país ISO de 2 letras. */
+export function validatePixelExtras(input: { page_id: string; whatsapp_business_account_id: string; test_event_code: string; default_country: string }): Partial<
+  Record<'page_id' | 'whatsapp_business_account_id' | 'test_event_code' | 'default_country', 'digits' | 'test_code' | 'country'>
+> {
+  const errs: Partial<Record<'page_id' | 'whatsapp_business_account_id' | 'test_event_code' | 'default_country', 'digits' | 'test_code' | 'country'>> = {}
+  if (input.page_id.trim() && !/^\d{3,32}$/.test(input.page_id.trim())) errs.page_id = 'digits'
+  if (input.whatsapp_business_account_id.trim() && !/^\d{3,32}$/.test(input.whatsapp_business_account_id.trim())) errs.whatsapp_business_account_id = 'digits'
+  if (input.test_event_code.trim() && !/^[A-Za-z0-9_-]{2,64}$/.test(input.test_event_code.trim())) errs.test_event_code = 'test_code'
+  if (!/^[a-zA-Z]{2}$/.test(input.default_country.trim())) errs.default_country = 'country'
+  return errs
+}
+
+/** Países mais comuns no seletor do país padrão (ISO alfa-2 minúsculo). */
+export const PIXEL_COUNTRIES = ['br', 'pt', 'us', 'ar', 'mx', 'co', 'cl', 'pe', 'uy', 'py', 'es', 'ao', 'mz'] as const
+
+/** Modo "mensagem de anúncio" (business_messaging) configurado no pixel. */
+export const pixelHasAdMessaging = (p: { page_id?: string | null; whatsapp_business_account_id?: string | null }) => Boolean(p.page_id || p.whatsapp_business_account_id)
+
+/** URL pública do link rastreável (a API responde 302 direto para o wa.me). */
+export const trackedLinkUrl = (origin: string, path: string) => `${origin.replace(/\/+$/, '')}${path}`
+
+/** Slug sugerido a partir do nome (mesma regra do servidor). */
+export const suggestSlug = (name: string) =>
+  name
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, 40)
+
+export function validateTrackedLink(input: { name: string; slug: string; connection_id: string; phone: string; message: string; match_window_minutes: string }): Partial<
+  Record<'name' | 'slug' | 'destination' | 'phone' | 'message' | 'match_window_minutes', 'required' | 'name_length' | 'slug' | 'phone' | 'message_length' | 'window'>
+> {
+  const errs: ReturnType<typeof validateTrackedLink> = {}
+  const name = input.name.trim()
+  if (!name) errs.name = 'required'
+  else if (name.length < 2 || name.length > 120) errs.name = 'name_length'
+  if (input.slug.trim() && !/^[a-z0-9][a-z0-9-]{2,62}$/.test(input.slug.trim())) errs.slug = 'slug'
+  const phone = onlyDigits(input.phone)
+  if (phone && (phone.length < 8 || phone.length > 15)) errs.phone = 'phone'
+  if (!input.connection_id && !phone) errs.destination = 'required'
+  if (input.message.trim().length > 500) errs.message = 'message_length'
+  const w = Number(input.match_window_minutes)
+  if (!Number.isInteger(w) || w < 1 || w > 1440) errs.match_window_minutes = 'window'
+  return errs
+}
+
+/**
+ * Linha com as métricas <APP>/Meta ajustadas: sem o filtro, as confirmadas (como vêm do servidor); com o filtro
+ * explícito, soma as de atribuição provável (`*_probable`). Nunca mistura sem o filtro ligado.
+ */
+export function applyProbable(row: BundleRow, include: boolean): BundleRow {
+  if (!include) return row
+  const m = row.metrics as Record<string, number | null | undefined>
+  const n = m.purchases_leona_probable ?? 0
+  if (!n) return row
+  const add = (a: number | null | undefined, b: number | null | undefined) => Math.round(((a ?? 0) + (b ?? 0)) * 100) / 100
+  return {
+    ...row,
+    metrics: {
+      ...row.metrics,
+      purchases_leona: (m.purchases_leona ?? 0) + n,
+      purchase_value_leona: add(m.purchase_value_leona, m.purchase_value_leona_probable),
+      purchase_value_leona_display: add(m.purchase_value_leona_display, m.purchase_value_leona_probable_display),
+    },
+  }
+}
+
+/** Vendas de atribuição provável no nível campanha (soma dos anúncios), para a legenda. */
+export const probableSales = (campaigns: readonly BundleRow[]) => campaigns.reduce((n, r) => n + ((r.metrics as Record<string, number | null | undefined>).purchases_leona_probable ?? 0), 0)

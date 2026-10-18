@@ -45,7 +45,8 @@ async function company(timeZone = 'America/Sao_Paulo'): Promise<string> {
 
 type SaleIn = Partial<typeof sales.$inferInsert> & { amountCents: number; soldAt: Date }
 const insertSales = (companyId: string, list: SaleIn[]) =>
-  db.insert(sales).values(list.map((s) => ({ companyId, ...s })))
+  // Revisão 3: venda com source_id gravada pelo SalesService sai confirmed_native (cartão do anúncio / informado).
+  db.insert(sales).values(list.map((s) => ({ companyId, ...(s.sourceId ? { attributionConfidence: 'confirmed_native' as const } : {}), ...s })))
 
 describe('InternalSalesService.aggregates', () => {
   it('AC-T105-01: período no fuso da empresa (23:30 de São Paulo = UTC do dia seguinte), só approved', async () => {

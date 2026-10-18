@@ -260,6 +260,13 @@
       "when": 1792229072121,
       "tag": "0036_ai_manager_import",
       "breakpoints": true
+    },
+    {
+      "idx": 37,
+      "version": "7",
+      "when": 1792304237454,
+      "tag": "0037_rastreamento_meta",
+      "breakpoints": true
     }
   ]
 }

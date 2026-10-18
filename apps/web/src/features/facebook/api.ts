@@ -134,6 +134,15 @@ export interface PixelConfig {
   masked_pixel_id: string
   masked_access_token: string
   auto_send_sales: boolean
+  /** Revisão 3: Página do Facebook do anúncio (modo "mensagem de anúncio"). */
+  page_id?: string | null
+  /** Revisão 3: conta do WhatsApp Business (WABA), quando houver número oficial. */
+  whatsapp_business_account_id?: string | null
+  /** Revisão 3: código de teste só deste pixel (vale também em produção). */
+  test_event_code?: string | null
+  default_country?: string
+  auto_lead_on_ad?: boolean
+  business_messaging?: { status: 'accepted' | 'rejected'; checked_at: string; error: string | null } | null
   pixel_id?: string
   access_token?: string
 }
@@ -144,7 +153,92 @@ export interface PixelInput {
   access_token?: string | null
   platform: string
   auto_send_sales: boolean
+  page_id?: string | null
+  whatsapp_business_account_id?: string | null
+  test_event_code?: string | null
+  default_country?: string
+  auto_lead_on_ad?: boolean
 }
+
+// ---------------------------------------------------------------- eventos enviados (revisão 3)
+
+export type CapiEventStatus = 'pending' | 'sent' | 'failed' | 'uncertain' | 'discarded'
+
+export interface CapiEventLogItem {
+  id: string
+  event_id: string
+  event_name: string
+  sent_event_name: string
+  status: CapiEventStatus
+  mode: string
+  source: string
+  source_id: string | null
+  event_time: string | null
+  identifiers: string[]
+  match_score: number | null
+  match_score_max: number
+  match_level: 'low' | 'medium' | 'high' | null
+  test_event: boolean
+  value: number | null
+  currency: string | null
+  events_received: number | null
+  fbtrace_id: string | null
+  error: string | null
+  fallback: { error: string | null; fbtrace_id: string | null } | null
+  created_at: string
+}
+
+export interface CapiEventFilters {
+  page: number
+  status?: string
+  mode?: string
+  event_name?: string
+  source?: string
+}
+
+export interface CapiEventPage {
+  items: CapiEventLogItem[]
+  page: { page: number; limit: number; total_count: number | null; total_pages: number | null; has_more: boolean }
+  summary: Record<CapiEventStatus, number>
+}
+
+export const pixelEventsKey = (pixelId: string, f: CapiEventFilters) => ['facebook', 'pixel-events', pixelId, f] as const
+export const fetchPixelEvents = (pixelId: string, f: CapiEventFilters) =>
+  api.get<CapiEventPage>(buildUrl(`/api/meta/pixels/${encodeURIComponent(pixelId)}/events`, { limit: '20', ...Object.fromEntries(Object.entries(f).filter(([, v]) => v !== undefined && v !== '').map(([k, v]) => [k, String(v)])) }))
+
+// ---------------------------------------------------------------- links rastreáveis (revisão 3, opcional)
+
+export type TrackedLinkCodeMode = 'visible' | 'discreet' | 'off'
+
+export interface TrackedLink {
+  id: string
+  name: string
+  slug: string
+  path: string
+  connection_id: string | null
+  connection_name: string | null
+  phone: string | null
+  message: string
+  utm_source: string | null
+  utm_medium: string | null
+  utm_campaign: string | null
+  utm_content: string | null
+  utm_term: string | null
+  active: boolean
+  code_mode: TrackedLinkCodeMode
+  probable_match: boolean
+  match_window_minutes: number
+  stats: { clicks: number; conversations: number; probable: number; sales: number }
+}
+
+export type TrackedLinkInput = { [K in keyof Omit<TrackedLink, 'id' | 'path' | 'connection_name' | 'stats'>]?: TrackedLink[K] | null }
+
+export const trackedLinksKey = (companyId: string | null | undefined) => ['facebook', 'tracked-links', companyId ?? ''] as const
+export const fetchTrackedLinks = () => api.get<{ items: TrackedLink[] }>('/api/meta/tracked-links').then((r) => r.items)
+export const createTrackedLink = (input: TrackedLinkInput) => api.post<{ link: TrackedLink }>('/api/meta/tracked-links', input).then((r) => r.link)
+export const updateTrackedLink = (id: string, input: TrackedLinkInput) => api.put<{ link: TrackedLink }>(`/api/meta/tracked-links/${encodeURIComponent(id)}`, input).then((r) => r.link)
+export const deleteTrackedLink = (id: string) => api.delete<void>(`/api/meta/tracked-links/${encodeURIComponent(id)}`)
+export const fetchConnectionOptions = () => api.get<{ items: { id: string; name: string }[] }>('/api/connections', { query: { limit: 100 } }).then((r) => r.items)
 
 export const pixelsKey = (companyId: string | null | undefined) => ['facebook', 'pixels', companyId ?? ''] as const
 

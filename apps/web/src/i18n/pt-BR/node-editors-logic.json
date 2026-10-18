@@ -32,6 +32,7 @@
   "vars": {
     "insert": "Variável",
     "contact": "Contato",
+    "ad": "Anúncio de origem",
     "fields": "Campos personalizados",
     "system": "Sistema",
     "globals": "Variáveis globais"
@@ -85,7 +86,13 @@
       "global_variable": "Variável global"
     },
     "subtype": "Tipo",
-    "subtypes": { "tag": "Etiqueta", "weekday": "Dia da semana", "time": "Horário", "date": "Data", "message_window": "Janela de mensagem" },
+    "subtypes": {
+      "tag": "Etiqueta",
+      "weekday": "Dia da semana",
+      "time": "Horário",
+      "date": "Data",
+      "message_window": "Janela de mensagem"
+    },
     "operator": "Operador",
     "operators": {
       "equal": "É igual a",
@@ -193,7 +200,13 @@
     "modes": { "set_contact_custom_field": "Campo personalizado", "set_created_at": "Data de criação do contato" },
     "field": "Campo",
     "operation": "Operação",
-    "operations": { "set_value": "Definir valor", "add": "Somar", "subtract": "Subtrair", "multiply": "Multiplicar", "divide": "Dividir" },
+    "operations": {
+      "set_value": "Definir valor",
+      "add": "Somar",
+      "subtract": "Subtrair",
+      "multiply": "Multiplicar",
+      "divide": "Dividir"
+    },
     "valueType": "Tipo do valor",
     "valueTypes": { "text": "Texto", "number": "Número" },
     "value": "Valor",
@@ -227,14 +240,23 @@
   "ai": {
     "engine": "Provedor e modelo",
     "keySource": "Chave usada",
-    "keySources": { "platform": "Chaves da empresa ou da plataforma", "integration": "Uma chave de IA cadastrada", "manual": "Chave manual (antiga)" },
+    "keySources": {
+      "platform": "Chaves da empresa ou da plataforma",
+      "integration": "Uma chave de IA cadastrada",
+      "manual": "Chave manual (antiga)"
+    },
     "key": "Chave de IA",
     "keyProviders": { "openai": "OpenAI", "google": "Google", "openrouter": "OpenRouter", "anthropic": "Anthropic" },
     "manualKey": "Chave manual",
     "manualKeySaved": "Chave salva (oculta)",
     "manualKeyHint": "A chave salva nunca é mostrada. Digite para trocar.",
     "provider": "Provedor",
-    "providers": { "gpt": "OpenAI (GPT)", "gemini": "Google (Gemini)", "openrouter": "OpenRouter", "platform": "Créditos de IA da empresa" },
+    "providers": {
+      "gpt": "OpenAI (GPT)",
+      "gemini": "Google (Gemini)",
+      "openrouter": "OpenRouter",
+      "platform": "Créditos de IA da empresa"
+    },
     "providerFromKey": "Definido pela chave escolhida",
     "noKey": "sem chave",
     "providerUnavailable": "Este provedor está sem chave configurada: o bloco vai falhar até uma chave ser cadastrada.",
@@ -265,7 +287,20 @@
   "pixel": {
     "label": "Pixel",
     "event": "Evento",
-    "events": { "Compra": "Compra (Purchase)", "Lead": "Lead" },
+    "events": {
+      "Compra": "Compra (Purchase)",
+      "Lead": "Lead",
+      "InitiateCheckout": "Início de checkout (InitiateCheckout)",
+      "AddToCart": "Adicionar ao carrinho (AddToCart)",
+      "CompleteRegistration": "Cadastro concluído (CompleteRegistration)",
+      "Contact": "Contato (Contact)",
+      "Schedule": "Agendamento (Schedule)",
+      "Subscribe": "Assinatura (Subscribe)"
+    },
+    "pageId": "Página do Facebook (opcional)",
+    "pageIdHint": "Sobrepõe a Página do pixel neste evento. Aceita variável. Só é usada quando o contato veio de anúncio de clique para WhatsApp.",
+    "wabaId": "ID da conta do WhatsApp Business (opcional)",
+    "wabaIdHint": "Sobrepõe o WABA do pixel neste evento (número oficial).",
     "value": "Valor",
     "valueRequired": "Valor (obrigatório na Compra)",
     "currency": "Moeda",

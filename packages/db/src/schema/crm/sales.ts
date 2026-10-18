@@ -40,6 +40,17 @@ export type SaleSource = (typeof SALE_SOURCES)[number]
 export const SALE_STATUSES = ['approved', 'refunded', 'chargeback', 'pending'] as const
 export type SaleStatus = (typeof SALE_STATUSES)[number]
 
+/**
+ * Níveis de confiança da atribuição (revisão 3), em ordem de prioridade: `confirmed_native` (a mensagem trouxe os
+ * metadados do anúncio — "origem indicada pelo anúncio", não "causa da venda") > `confirmed_link` (link rastreável com
+ * código comprovado na 1ª mensagem) > `probable` (só proximidade de tempo) > `none` (sem evidência).
+ */
+export const ATTRIBUTION_CONFIDENCES = ['confirmed_native', 'confirmed_link', 'probable', 'none'] as const
+export type AttributionConfidence = (typeof ATTRIBUTION_CONFIDENCES)[number]
+/** Posição na prioridade (menor = mais forte). */
+export const attributionRank = (c: AttributionConfidence | null | undefined): number => (c ? ATTRIBUTION_CONFIDENCES.indexOf(c) : ATTRIBUTION_CONFIDENCES.length - 1)
+export const isConfirmedAttribution = (c: AttributionConfidence | null | undefined) => c === 'confirmed_native' || c === 'confirmed_link'
+
 export const sales = crm.table(
   'sales',
   {
@@ -55,6 +66,13 @@ export const sales = crm.table(
     /** Id do anúncio Meta (cruzamento venda ↔ anúncio); herdado do contato se ausente. */
     sourceId: text('source_id'),
     ctwaClid: text('ctwa_clid'),
+    /**
+     * Revisão 3: confiança da atribuição da venda ao anúncio (`source_id`). Por padrão o ROAS por anúncio conta só
+     * `confirmed_*`; `probable` aparece separado. `none`: venda sem evidência de anúncio (nenhum anúncio inventado).
+     */
+    attributionConfidence: text('attribution_confidence').$type<AttributionConfidence>().notNull().default('none'),
+    /** Como a atribuição foi obtida (`ctwa_referral`, `tracked_link_code`, `tracked_link_window`, `informed`, `legacy`). */
+    attributionMethod: text('attribution_method'),
     /** Id da venda na origem (webhook, gateway); idempotência por (empresa, origem, external_id). */
     externalId: text('external_id'),
     status: text('status').$type<SaleStatus>().notNull().default('approved'),

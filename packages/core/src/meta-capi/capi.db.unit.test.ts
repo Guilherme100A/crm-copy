@@ -85,12 +85,12 @@ describe('CapiService', () => {
     expect(fake.capiEventsFor(w.pixelId)).toHaveLength(1)
   })
 
-  it('falha da Meta fica gravada; o mesmo event_id pode ser reenviado depois', async () => {
+  it('falha 5xx da Meta fica gravada como incerta (revisão 3); o mesmo event_id é reenviado depois', async () => {
     const w = await world()
     const input = { companyId: w.companyId, pixelConfigId: w.pixel.id, eventName: 'Lead' as const, eventId: 'f-1', source: 'manual' as const }
     fake.failNext(500, { message: 'boom', code: 2 })
-    expect(await capi().send(input)).toMatchObject({ status: 'failed' })
-    expect((await db.select().from(capiEventLog).where(eq(capiEventLog.pixelConfigId, w.pixel.id)))[0]).toMatchObject({ status: 'failed', error: expect.stringContaining('boom') })
+    expect(await capi().send(input)).toMatchObject({ status: 'uncertain' })
+    expect((await db.select().from(capiEventLog).where(eq(capiEventLog.pixelConfigId, w.pixel.id)))[0]).toMatchObject({ status: 'uncertain', error: expect.stringContaining('boom') })
     expect((await capi().send(input)).status).toBe('sent')
     expect(fake.capiEventsFor(w.pixelId)).toHaveLength(1)
   })

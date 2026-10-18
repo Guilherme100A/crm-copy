@@ -15,7 +15,7 @@ const calls = vi.hoisted(() => ({
   exports: [] as Record<string, unknown>[],
   imports: [] as Record<string, unknown>[],
 }))
-vi.mock('../consumers/chats', () => ({ configureChatsConsumer: (d: Record<string, unknown>) => calls.chats.push(d) }))
+vi.mock('../consumers/chats', () => ({ configureChatsConsumer: (d: Record<string, unknown>) => calls.chats.push(d), onCrmInbound: () => () => undefined }))
 vi.mock('../jobs/flow-timer', () => ({ configureFlowTimer: (d: Record<string, unknown>) => calls.timer.push(d) }))
 vi.mock('../jobs/flow-step', () => ({ configureFlowStep: (d: Record<string, unknown>) => calls.step.push(d) }))
 vi.mock('../jobs/ai-agent', () => ({ configureAiAgent: (d: Record<string, unknown>) => calls.agent.push(d) }))

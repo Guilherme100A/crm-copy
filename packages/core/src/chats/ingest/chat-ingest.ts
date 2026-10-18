@@ -1,11 +1,16 @@
 // Ingestão dos eventos WhatsApp (WaEvent v1) em contatos, chats e mensagens do CRM (SPEC T33; 03-chats).
 // Idempotente: a mensagem é única por (empresa, wa_message_id), então reentregas não duplicam nem recontam.
 // Mensagens de grupo, status e canais são ignoradas (SPEC 3.8). Opt-out por palavra-chave bloqueia na hora (1.4 nº 3).
+// Revisão 3 (rastreamento Meta): mensagem ao vivo com referral de anúncio (`ctwa_clid`) grava o toque de atribuição;
+// mensagem com código de link rastreável (`(ref XXXXXX)`) liga o clique ao contato e é gravada sem o código. Nos dois
+// casos o `crm.inbound` sai com `ad_source` (o worker usa para o Lead automático de anúncio).
 import { and, asc, eq, sql } from 'drizzle-orm'
 import { auditLogs, chatEvents, chats, companies, messages, type CrmMessageStatus, type Database } from '@crm/db'
 import type { RealtimeEventData, RealtimeEventType } from '@crm/shared'
 import type { IncomingMessage, WaEvent, WaEventOf, WaGateway } from '@crm/wa-port'
+import { AttributionService, recordAttributionEvidence } from '../../attribution/service'
 import { ContactsError } from '../../contacts/errors'
+import { TrackedLinksService } from '../../meta-capi/tracked-links'
 import { ContactsService, type ContactDto } from '../../contacts/service'
 import { chatScope, toChatDto, toMessageDto, type ChatRow, type MessageRow } from '../model/dto'
 import { crmConnectionsResolver, type ConnectionResolver, type ResolvedConnection } from '../model/connections'
@@ -40,6 +45,8 @@ export interface CrmInboundEvent {
   from_me: false
   chat_created: boolean
   chat_reopened: boolean
+  /** A mensagem veio de anúncio: `ctwa` (clique para WhatsApp) ou `link` (link rastreável, 1ª ligação do clique). */
+  ad_source?: 'ctwa' | 'link' | null
 }
 
 export interface ChatIngestLogger {
@@ -132,6 +139,22 @@ export class ChatIngest {
     const live = fromContact && !historical
     const type = crmMessageType(m.type)
     const at = new Date(m.timestamp)
+    // Link rastreável: o código sai do texto gravado (e do que fluxos/agentes leem) e o clique é ligado ao contato.
+    let body = m.text ?? null
+    let adSource: 'ctwa' | 'link' | null = null
+    if (live && body) {
+      const tracked = await new TrackedLinksService({ db: this.db, now: this.now }).matchInbound(companyId, contact.id, body)
+      if (tracked) {
+        body = tracked.cleaned
+        if (tracked.firstMatch) adSource = 'link'
+      }
+    }
+    if (live && m.ad && (m.ad.ctwa_clid || m.ad.source_id)) {
+      await new AttributionService(this.db).recordTouch(companyId, contact.id, { ctwa_clid: m.ad.ctwa_clid ?? null, source_id: m.ad.source_id ?? null, source_url: m.ad.source_url ?? null }, { at: Number.isFinite(at.getTime()) ? at : this.now() })
+      // Metadados do anúncio na própria mensagem: evidência mais forte ("origem indicada pelo anúncio").
+      await recordAttributionEvidence(this.db, companyId, contact.id, { confidence: 'confirmed_native', method: 'ctwa_referral', sourceId: m.ad.source_id ?? null, at: Number.isFinite(at.getTime()) ? at : this.now() })
+      if (m.ad.ctwa_clid) adSource = 'ctwa'
+    }
     const r = await this.db.transaction(async (tx) => {
       let chatCreated = false
       let [chat] = await tx
@@ -166,7 +189,7 @@ export class ChatIngest {
           senderType: fromContact ? 'contact' : 'user',
           type,
           waType: m.type,
-          body: m.text ?? null,
+          body,
           media: (m.media as Record<string, unknown> | undefined) ?? null,
           quotedWaMessageId: m.quoted_id ?? null,
           // Enviada pelo celular/outro aparelho: já saiu do WhatsApp.
@@ -186,7 +209,7 @@ export class ChatIngest {
       if (!historical) {
         const set: Partial<typeof chats.$inferInsert> = { updatedAt: this.now() }
         const newer = !chat!.lastMessageAt || at >= chat!.lastMessageAt
-        if (newer) Object.assign(set, { lastMessageAt: at, lastMessagePreview: previewOf(type, m.text) })
+        if (newer) Object.assign(set, { lastMessageAt: at, lastMessagePreview: previewOf(type, body) })
         if (live) {
           set.unreadCount = sql`${chats.unreadCount} + 1` as unknown as number
           set.lastInboundAt = at
@@ -208,6 +231,12 @@ export class ChatIngest {
       return { status: 'duplicate', chatId: r.chatId, messageId: dup?.id ?? '' }
     }
 
+    // Link rastreável sem código (opcional): 1º contato novo da conexão logo depois de um clique → ligação "provável".
+    if (live && r.chatCreated && !adSource) {
+      const probable = await new TrackedLinksService({ db: this.db, now: this.now }).matchProbable(companyId, conn.connectionId, contact.id, this.now())
+      if (probable) adSource = 'link'
+    }
+
     await this.publishMessage(companyId, r.chat, r.message, r.chatCreated, !historical)
     if (contactCreated) await this.publishContact(companyId, contact)
 
@@ -223,10 +252,11 @@ export class ChatIngest {
           message_id: r.message.id,
           wa_message_id: m.id,
           type,
-          text: m.text ?? null,
+          text: body,
           from_me: false,
           chat_created: r.chatCreated,
           chat_reopened: r.reopened,
+          ...(adSource ? { ad_source: adSource } : {}),
         })
       }
     }

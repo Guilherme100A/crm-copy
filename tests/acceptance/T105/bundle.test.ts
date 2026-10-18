@@ -58,8 +58,9 @@ function seed(env: Env, acc: Account, spend = { a1: '100', a2: '50', a3: '0', s1
   return ids
 }
 
+// Revisão 3 (AC-T105-05): venda com source_id gravada pelo SalesService sai confirmed_native; só confirmadas entram.
 async function sale(u: User, s: { cents: number; at: string; source: string | null; status?: string; currency?: string }) {
-  await env.q(`INSERT INTO crm.sales (company_id, amount_cents, sold_at, source_id, status, currency) VALUES ($1, $2, $3, $4, $5, $6)`, [
+  await env.q(`INSERT INTO crm.sales (company_id, amount_cents, sold_at, source_id, status, currency, attribution_confidence) VALUES ($1, $2, $3, $4, $5, $6, CASE WHEN $4::text IS NOT NULL THEN 'confirmed_native' ELSE 'none' END)`, [
     u.companyId,
     s.cents,
     s.at,

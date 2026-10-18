@@ -1,6 +1,9 @@
 // Consulta das vendas internas por anúncio (T105) e ligação no bundle do Gerenciador (opção `internalSales` do
 // `MetaBundleService`). Período `since..until` em datas locais da empresa: [since 00:00, until+1 00:00) no fuso de
 // `crm.companies.time_zone` (mesmo padrão do dashboard da T55). Só vendas `approved`; `source_id = any(ids)` exato.
+// Revisão 3 (níveis de confiança): as colunas <APP>/Meta contam SÓ vendas com atribuição confirmada
+// (`confirmed_native`/`confirmed_link`); as `probable` vão para métricas separadas (`purchases_leona_probable`,
+// `purchase_value_leona_probable(_display)`) e só entram no total quando a tela liga o filtro explícito.
 import { and, count, eq, gte, inArray, lt, sql } from 'drizzle-orm'
 import { companies, sales, type Database } from '@crm/db'
 import type { BundleRow } from '../structure/account'
@@ -8,6 +11,7 @@ import { fxRatesFromEnv, type FxRate } from '../structure/metrics'
 import { addDays } from '../structure/params'
 import {
   applyInternalMetrics,
+  applyProbableMetrics,
   hasSourceId,
   joinInternalSales,
   type InternalSaleAggregate,
@@ -38,6 +42,8 @@ export interface InternalSalesQuery {
   adIds: readonly string[]
   /** Fuso explícito; sem ele, lê `crm.companies.time_zone`. */
   timeZone?: string
+  /** `confirmed` (padrão): só atribuições confirmadas; `probable`: só as prováveis. */
+  confidence?: 'confirmed' | 'probable'
 }
 
 /** Contrato da opção `internalSales` do `MetaBundleService` (T101): preenche as linhas e devolve avisos. */
@@ -102,6 +108,7 @@ export class InternalSalesService implements SalesJoin {
           gte(sales.soldAt, lo),
           lt(sales.soldAt, hi),
           inArray(sales.sourceId, ids),
+          q.confidence === 'probable' ? eq(sales.attributionConfidence, 'probable') : inArray(sales.attributionConfidence, ['confirmed_native', 'confirmed_link']),
         ),
       )
       .groupBy(sales.sourceId, sales.currency)
@@ -116,11 +123,12 @@ export class InternalSalesService implements SalesJoin {
   /** Consulta + cruzamento (sem gravar nas linhas). */
   async join(
     companyId: string,
-    period: { since: string; until: string; displayCurrency: string; timeZone?: string },
+    period: { since: string; until: string; displayCurrency: string; timeZone?: string; confidence?: 'confirmed' | 'probable' },
     rows: JoinRows,
   ): Promise<JoinResult> {
     const aggregates = await this.aggregates({
       companyId,
+      ...(period.confidence ? { confidence: period.confidence } : {}),
       since: period.since,
       until: period.until,
       adIds: rows.ad.map((r: BundleRow) => r.id),
@@ -129,7 +137,10 @@ export class InternalSalesService implements SalesJoin {
     return joinInternalSales(rows, aggregates, { displayCurrency: period.displayCurrency, fx: this.fx })
   }
 
-  /** Ligação no bundle: cruza e grava `purchases_leona`/`purchase_value_leona(_display)`/`roas_internal` nas linhas. */
+  /**
+   * Ligação no bundle: cruza e grava `purchases_leona`/`purchase_value_leona(_display)`/`roas_internal` (só
+   * confirmadas) e, separadas, as prováveis (`purchases_leona_probable`/`purchase_value_leona_probable(_display)`).
+   */
   async apply(
     companyId: string,
     period: { since: string; until: string; displayCurrency: string },
@@ -137,7 +148,9 @@ export class InternalSalesService implements SalesJoin {
   ): Promise<{ warnings: string[] }> {
     const result = await this.join(companyId, period, rows)
     applyInternalMetrics(rows, result)
-    return { warnings: result.warnings }
+    const probable = await this.join(companyId, { ...period, confidence: 'probable' }, rows)
+    applyProbableMetrics(rows, probable)
+    return { warnings: [...new Set([...result.warnings, ...probable.warnings])] }
   }
 
   private async companyTimeZone(companyId: string): Promise<string> {

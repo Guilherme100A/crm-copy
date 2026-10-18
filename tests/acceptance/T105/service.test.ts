@@ -29,8 +29,9 @@ async function company(timeZone: string): Promise<string> {
   return c.id
 }
 
+// Revisão 3 (AC-T105-05): venda com source_id gravada pelo SalesService sai confirmed_native; só confirmadas entram.
 async function sale(companyId: string, s: { cents: number; at: string; source: string | null; status?: string; currency?: string }) {
-  await q(`INSERT INTO crm.sales (company_id, amount_cents, sold_at, source_id, status, currency) VALUES ($1, $2, $3, $4, $5, $6)`, [
+  await q(`INSERT INTO crm.sales (company_id, amount_cents, sold_at, source_id, status, currency, attribution_confidence) VALUES ($1, $2, $3, $4, $5, $6, CASE WHEN $4::text IS NOT NULL THEN 'confirmed_native' ELSE 'none' END)`, [
     companyId,
     s.cents,
     s.at,

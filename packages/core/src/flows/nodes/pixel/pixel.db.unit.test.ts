@@ -104,4 +104,32 @@ describe('nó pixel', () => {
     // Pixel inexistente (uuid válido de outra coisa) sem aresta failure: o fluxo continua.
     expect(await run(w.co, w.contact, d('00000000-0000-4000-8000-000000000000'))).toMatchObject({ status: 'completed', visited: ['N'] })
   })
+
+  // Revisão 3: eventos extras e page_id do nó (paridade Leona 11 §5.4), aceitando variáveis — inclusive as do anúncio.
+  it('InitiateCheckout com valor de variável; page_id do nó (variável do anúncio) sobrepõe o pixel no business_messaging', async () => {
+    const w = await world()
+    fake.setBusinessMessagingMode(w.pixelId, 'accept')
+    await db.execute(sql`update crm.contacts set ctwa_clid = 'CLID-N', source_id = '987654321' where id = ${w.contact}`)
+    const d = def(
+      [pixelNode({ pixel_config_id: w.pixelConfigId, event_type: 'InitiateCheckout', item_value: '{carrinho}', currency: '{moeda}', page_id: '{source_id}' }), marker('OK')],
+      [edge('start', 'source', 'P'), edge('P', 'success', 'OK')],
+    )
+    expect(await run(w.co, w.contact, d, { carrinho: '59,90', moeda: 'usd' })).toMatchObject({ status: 'completed', visited: ['OK'] })
+    expect(fake.capiEventsFor(w.pixelId)[0]!.event).toMatchObject({
+      event_name: 'InitiateCheckout',
+      action_source: 'business_messaging',
+      messaging_channel: 'whatsapp',
+      user_data: { page_id: '987654321', ctwa_clid: 'CLID-N' },
+      custom_data: { currency: 'USD', value: 59.9 },
+    })
+  })
+
+  it('Schedule/Contact/Subscribe/CompleteRegistration/AddToCart sem valor seguem success', async () => {
+    const w = await world()
+    for (const ev of ['Schedule', 'Contact', 'Subscribe', 'CompleteRegistration', 'AddToCart']) {
+      const d = def([pixelNode({ pixel_config_id: w.pixelConfigId, event_type: ev }), marker('OK')], [edge('start', 'source', 'P'), edge('P', 'success', 'OK')])
+      expect(await run(w.co, w.contact, d)).toMatchObject({ status: 'completed', visited: ['OK'] })
+    }
+    expect(fake.capiEventsFor(w.pixelId).map((e) => e.event.event_name)).toEqual(['Schedule', 'Contact', 'Subscribe', 'CompleteRegistration', 'AddToCart'])
+  })
 })

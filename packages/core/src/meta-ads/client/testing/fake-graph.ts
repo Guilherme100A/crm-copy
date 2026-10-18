@@ -95,6 +95,7 @@ export class FakeMetaGraph {
   // T104: pixels (Conversions API) e os eventos recebidos.
   private readonly pixels = new Map<string, string>()
   readonly capiEvents: FakeCapiEvent[] = []
+  private readonly bmModes = new Map<string, 'doc' | 'accept' | 'reject'>()
   url = ''
 
   constructor(opts: FakeMetaGraphOptions = {}) {
@@ -358,6 +359,16 @@ export class FakeMetaGraph {
     this.pixels.set(pixelId, accessToken)
   }
 
+  /**
+   * Revisão 3: como o fake trata eventos `action_source: business_messaging` deste pixel.
+   * - `doc` (padrão): aceita só o que a doc de Business Messaging descreve para WhatsApp — `messaging_channel: whatsapp`,
+   *   `user_data.whatsapp_business_account_id` + `ctwa_clid` e evento da lista suportada; `page_id` sem WABA é recusado.
+   * - `accept`: aceita qualquer business_messaging com `ctwa_clid`; `reject`: recusa todos (erro de permissão).
+   */
+  setBusinessMessagingMode(pixelId: string, mode: 'doc' | 'accept' | 'reject'): void {
+    this.bmModes.set(pixelId, mode)
+  }
+
   /** Eventos CAPI recebidos (opcionalmente só de um pixel). */
   capiEventsFor(pixelId?: string): FakeCapiEvent[] {
     return pixelId ? this.capiEvents.filter((e) => e.pixelId === pixelId) : [...this.capiEvents]
@@ -385,6 +396,24 @@ export class FakeMetaGraph {
     }
     if (!Array.isArray(data) || data.length === 0) return error(400, 100, '(#100) The parameter data is required')
     const testEventCode = typeof src?.test_event_code === 'string' ? src.test_event_code : (params.test_event_code ?? null)
+    // Como a Meta: um evento inválido recusa o lote inteiro (using-the-api).
+    const nowS = Date.now() / 1000
+    for (const event of data as Record<string, unknown>[]) {
+      if (typeof event.event_time !== 'number' || nowS - event.event_time > 7 * 24 * 3600)
+        return error(400, 100, '(#100) Invalid parameter: event_time must be within the last 7 days')
+      if (event.action_source === 'business_messaging') {
+        const mode = this.bmModes.get(pixelId) ?? 'doc'
+        const ud = (event.user_data ?? {}) as Record<string, unknown>
+        const supported = ['Purchase', 'LeadSubmitted', 'InitiateCheckout', 'AddToCart', 'ViewContent', 'OrderCreated', 'QualifiedLead']
+        if (mode === 'reject') return error(403, 10, '(#10) Application does not have permission for this action (whatsapp_business_manage_events)')
+        if (!ud.ctwa_clid) return error(400, 100, '(#100) ctwa_clid is required for business_messaging events')
+        if (mode === 'doc') {
+          if (event.messaging_channel !== 'whatsapp' || !ud.whatsapp_business_account_id)
+            return error(400, 100, '(#100) Invalid parameter: whatsapp_business_account_id is required for messaging_channel whatsapp')
+          if (!supported.includes(String(event.event_name))) return error(400, 100, `(#100) Unsupported event_name for business_messaging: ${String(event.event_name)}`)
+        }
+      }
+    }
     for (const event of data as Record<string, unknown>[]) this.capiEvents.push({ pixelId, accessToken: token, testEventCode, event })
     return send(200, { events_received: data.length, messages: [], fbtrace_id: `trace-${randomBytes(4).toString('hex')}` })
   }

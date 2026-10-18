@@ -73,6 +73,20 @@ export function HistoryPanel({ connectionIds, period: periodProp, timeZone, sear
         return formatAmount(s.amount_cents, s.currency, locale)
       case 'sold_at':
         return formatSoldAt(s.sold_at, tz, locale)
+      case 'source_id':
+        // Revisão 3: o nível de confiança acompanha o anúncio ("origem indicada pelo anúncio", não "causa da venda").
+        return s.source_id ? (
+          <span className="flex flex-col">
+            <span>{s.source_id}</span>
+            {s.attribution_confidence && s.attribution_confidence !== 'none' ? (
+              <span data-testid={`dashboard-history-confidence-${s.id}`} className={s.attribution_confidence === 'probable' ? 'text-[11px] text-amber-700 dark:text-amber-300' : 'text-[11px] text-muted-foreground'}>
+                {t(`attribution.${s.attribution_confidence}`)}
+              </span>
+            ) : null}
+          </span>
+        ) : (
+          DASH
+        )
       default:
         return s[c] || DASH
     }

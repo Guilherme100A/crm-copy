@@ -43,6 +43,7 @@ import { metaOAuthRoutes } from './meta-oauth/index'
 import { metaProfilesRoutes } from './meta-profiles/index'
 import { metaStructureRoutes } from './meta-structure/index'
 import { metaPixelsRoutes } from './meta-pixels/index'
+import { trackedLinksRoutes } from './tracked-links/index'
 import { metaEntitiesRoutes } from './meta-entities/index'
 import { paymentIntegrationsRoutes } from './payment-integrations/index'
 import { inboundWebhooksRoutes } from './inbound-webhooks/index'
@@ -112,6 +113,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', metaProfilesRoutes(deps))
   app.route('/', metaStructureRoutes(deps))
   app.route('/', metaPixelsRoutes(deps))
+  app.route('/', trackedLinksRoutes(deps))
   app.route('/', metaEntitiesRoutes(deps))
   app.route('/', paymentIntegrationsRoutes(deps))
   app.route('/', inboundWebhooksRoutes(deps))
