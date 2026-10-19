@@ -138,6 +138,8 @@ export interface LoopDeps {
   hooks?: EngineHooks
   maxSteps: number
   now?: () => Date
+  /** Relê o contato depois de cada nó que segue no mesmo passo (ex.: Manipulador grava campo → Mensagem usa `{campo}`). */
+  reloadContact?: () => Promise<TemplateContact | null>
 }
 
 const errorMessage = (err: unknown) => (err instanceof Error ? err.message : String(err))
@@ -248,6 +250,7 @@ export async function runLoop(state: LoopState, deps: LoopDeps): Promise<LoopRes
 
     await deps.hooks?.afterNode?.({ runId: state.runId, seq, node, nodeKey: node.id, outcome, error })
     if (result) return result
+    if (deps.reloadContact) state.contact = await deps.reloadContact()
   }
 }
 
@@ -342,6 +345,7 @@ export class FlowEngine {
         hooks: this.opts.hooks,
         maxSteps: this.opts.maxStepsPerJob ?? MAX_STEPS_PER_JOB,
         now: this.opts.now,
+        reloadContact: () => this.loadContact(tx, run.companyId, run.contactId),
       })
       const finished = loop.status === 'completed' || loop.status === 'failed'
       await tx
