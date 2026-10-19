@@ -51,7 +51,22 @@ export interface XPagGatewayOptions {
   apiUrl?: string
   fetch?: typeof globalThis.fetch
   timeoutMs?: number
+  /** Esperas entre as novas tentativas após falha de rede. Default: `NETWORK_RETRY_DELAYS_MS`. */
+  networkRetryDelaysMs?: readonly number[]
   now?: () => Date
+}
+
+/** Duas novas tentativas (0,5 s e 2 s) quando o fetch falha sem resposta (ex.: `ECONNRESET`). */
+export const NETWORK_RETRY_DELAYS_MS: readonly number[] = [500, 2_000]
+
+const isTimeout = (err: unknown) => err instanceof Error && (err.name === 'TimeoutError' || err.name === 'AbortError')
+
+/** "fetch failed" sozinho não diz nada: acrescenta o código da causa (`ECONNRESET`, `UND_ERR_SOCKET`...). */
+function fetchErrorText(err: unknown): string {
+  const msg = err instanceof Error ? err.message : String(err)
+  const cause = (err as { cause?: { code?: unknown; message?: unknown } } | null)?.cause
+  const detail = typeof cause?.code === 'string' ? cause.code : typeof cause?.message === 'string' ? cause.message : null
+  return detail ? `${msg} (${detail})` : msg
 }
 
 type Json = Record<string, unknown>
@@ -96,21 +111,28 @@ export function createXPagGateway(opts: XPagGatewayOptions): PaymentGateway {
 
   async function call(method: 'GET' | 'POST', path: string, body?: Json): Promise<Json> {
     const fetchFn = opts.fetch ?? globalThis.fetch
+    const delays = opts.networkRetryDelaysMs ?? NETWORK_RETRY_DELAYS_MS
     let res: Response
-    try {
-      res = await fetchFn(`${base()}${path}`, {
-        method,
-        headers: {
-          accept: 'application/json',
-          'x-client-id': opts.clientId,
-          'x-client-secret': opts.clientSecret,
-          ...(body ? { 'content-type': 'application/json' } : {}),
-        },
-        ...(body ? { body: JSON.stringify(body) } : {}),
-        signal: AbortSignal.timeout(opts.timeoutMs ?? 15_000),
-      })
-    } catch (err) {
-      throw new PaymentGatewayError('upstream', redact(`XPag indisponível: ${err instanceof Error ? err.message : String(err)}`))
+    for (let attempt = 0; ; attempt++) {
+      try {
+        res = await fetchFn(`${base()}${path}`, {
+          method,
+          headers: {
+            accept: 'application/json',
+            'x-client-id': opts.clientId,
+            'x-client-secret': opts.clientSecret,
+            ...(body ? { 'content-type': 'application/json' } : {}),
+          },
+          ...(body ? { body: JSON.stringify(body) } : {}),
+          signal: AbortSignal.timeout(opts.timeoutMs ?? 15_000),
+        })
+        break
+      } catch (err) {
+        // Falha de rede (a conexão caiu sem resposta) tenta de novo; timeout não. A XPag não deduplica por
+        // `external_id`, então um POST repetido pode deixar uma cobrança órfã sem pagamento (ela expira sozinha).
+        if (isTimeout(err) || attempt >= delays.length) throw new PaymentGatewayError('upstream', redact(`XPag indisponível: ${fetchErrorText(err)}`))
+        await new Promise((r) => setTimeout(r, delays[attempt]))
+      }
     }
     const text = await res.text()
     let data: Json

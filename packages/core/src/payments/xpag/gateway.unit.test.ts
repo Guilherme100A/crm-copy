@@ -119,6 +119,27 @@ describe('createCharge', () => {
     expect(err.message).not.toContain('UNITSECRET')
   })
 
+  it('falha de rede: tenta de novo e segue; persistente → upstream com a causa; timeout não repete', async () => {
+    const netErr = () => new TypeError('fetch failed', { cause: { code: 'ECONNRESET' } })
+    let calls = 0
+    const flaky: typeof fetch = async (...args) => (++calls === 1 ? Promise.reject(netErr()) : fetch(...args))
+    const ok = await make({ fetch: flaky, networkRetryDelaysMs: [0, 0] }).createCharge({ currency: 'MXN', method: 'OXXO', amount_cents: 5000 })
+    expect(ok.transaction_id).toBeTruthy()
+    expect(calls).toBe(2)
+
+    calls = 0
+    const down: typeof fetch = async () => (calls++, Promise.reject(netErr()))
+    const err = (await caught(make({ fetch: down, networkRetryDelaysMs: [0, 0] }).createCharge({ currency: 'MXN', method: 'OXXO', amount_cents: 5000 })))!
+    expect(err.code).toBe('upstream')
+    expect(err.message).toBe('XPag indisponível: fetch failed (ECONNRESET)')
+    expect(calls).toBe(3)
+
+    calls = 0
+    const slow: typeof fetch = async () => (calls++, Promise.reject(new DOMException('The operation was aborted due to timeout', 'TimeoutError')))
+    expect((await caught(make({ fetch: slow, networkRetryDelaysMs: [0, 0] }).createCharge({ currency: 'MXN', method: 'OXXO', amount_cents: 5000 })))!.code).toBe('upstream')
+    expect(calls).toBe(1)
+  })
+
   it('normaliza e expõe a matriz', () => {
     expect(validateXPagCharge({ currency: ' mxn ', method: 'spei', amount_cents: 100 })).toMatchObject({ currency: 'MXN', method: 'SPEI' })
     expect(gw.supported().map((s) => s.currency)).toEqual(['BRL', 'MXN', 'COP', 'ARS'])
