@@ -12,7 +12,8 @@ const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS'])
 export function csrfGuard(): MiddlewareHandler<AppEnv> {
   return async (c, next) => {
     if (SAFE_METHODS.has(c.req.method) || isInboundHook(c.req.path)) return next()
-    if (c.get('ctx')?.auth.kind === 'api_token') return next()
+    const kind = c.get('ctx')?.auth.kind
+    if (kind === 'api_token' || kind === 'mcp') return next()
     if (c.req.header(CSRF_HEADER)?.trim().toLowerCase() !== CSRF_HEADER_VALUE)
       throw new ApiError('FORBIDDEN', 'Cabeçalho X-Requested-With ausente')
     return next()

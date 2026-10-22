@@ -53,7 +53,7 @@ async function domain<T>(fn: () => Promise<T>): Promise<T> {
 /** Ator do escopo de chat (como na T48/T119): sessão age como o usuário; token de API pela empresa. */
 function actorOf(c: Context<AppEnv>): ChatActor {
   const ctx = getCompanyCtx(c)
-  return { companyId: ctx.companyId, userId: ctx.auth.kind === 'session' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
+  return { companyId: ctx.companyId, userId: ctx.auth.kind !== 'api_token' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
 }
 
 /** Criar exige um usuário: o envio sai em nome de quem agendou. */

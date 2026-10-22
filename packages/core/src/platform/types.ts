@@ -22,7 +22,8 @@ export interface CompanyMember {
   permissionKeys: string[] | null
 }
 
-export type AuthKind = 'session' | 'api_token'
+/** `mcp`: chamada interna de uma ferramenta MCP, em nome do usuário dono da credencial. */
+export type AuthKind = 'session' | 'api_token' | 'mcp'
 
 export interface AuthInfo {
   kind: AuthKind
@@ -30,6 +31,8 @@ export interface AuthInfo {
   sessionId?: string
   /** `crm.api_tokens.id` (kind = api_token). */
   tokenId?: string
+  /** `crm.mcp_credentials.id` (kind = mcp). */
+  mcpCredentialId?: string
 }
 
 export interface RequestContext {

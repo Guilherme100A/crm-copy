@@ -5,10 +5,13 @@ import { createdAt, crm, updatedAt } from './schema.js'
 // Credenciais MCP (T94; 09 §3.4): clientes de IA externos (Cursor, n8n, Claude) leem a empresa pelo servidor MCP com
 // `Authorization: Bearer <token>`. O token (`auth_type = 'static'`) é mostrado uma única vez; no banco só o SHA-256 e
 // os 4 últimos caracteres. Expira por `expires_at`; revogar marca `revoked_at` (some da listagem e invalida na hora).
-// `oauth` (conector do Claude) é da T115.
+// `oauth` (conector do Claude) é da T115. `access = 'write'` libera as ferramentas que gravam, sempre limitadas às
+// permissões do usuário dono do token (criador da credencial estática ou quem autorizou o OAuth).
 
 export const MCP_AUTH_TYPES = ['static', 'oauth'] as const
 export type McpAuthType = (typeof MCP_AUTH_TYPES)[number]
+export const MCP_ACCESS_MODES = ['read', 'write'] as const
+export type McpAccessMode = (typeof MCP_ACCESS_MODES)[number]
 
 export const mcpCredentials = crm.table(
   'mcp_credentials',
@@ -19,6 +22,7 @@ export const mcpCredentials = crm.table(
       .references(() => companies.id, { onDelete: 'cascade' }),
     name: text('name').notNull(),
     authType: text('auth_type').$type<McpAuthType>().notNull().default('static'),
+    access: text('access').$type<McpAccessMode>().notNull().default('read'),
     /** SHA-256 (hex) do token cru; nulo para `oauth`. */
     tokenHash: text('token_hash'),
     /** 4 últimos caracteres do token, para identificar na UI. */

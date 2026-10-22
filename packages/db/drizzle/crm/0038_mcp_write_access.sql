@@ -1,0 +1,1 @@
+ALTER TABLE "crm"."mcp_credentials" ADD COLUMN "access" text DEFAULT 'read' NOT NULL;

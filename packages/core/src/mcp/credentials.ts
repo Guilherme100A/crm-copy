@@ -6,7 +6,7 @@
 import { randomBytes } from 'node:crypto'
 import { and, desc, eq, isNull, lte, or } from 'drizzle-orm'
 import { z } from 'zod'
-import { mcpCredentials, mcpOauthGrants, type Database } from '@crm/db'
+import { MCP_ACCESS_MODES, mcpCredentials, mcpOauthGrants, type Database, type McpAccessMode } from '@crm/db'
 import { authenticateOAuthAccess, connectedClients, MCP_OAUTH_ACCESS_PREFIX } from '../mcp-oauth/tokens'
 import { hashToken } from '../platform/tokens'
 
@@ -22,10 +22,20 @@ const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/
 /** `static`: `active`/`expired`; `oauth` (T115): `pending` (aguardando o cliente) ou `connected`. */
 export type McpCredentialStatus = 'active' | 'expired' | 'pending' | 'connected'
 
+/** Credencial válida: empresa, modo de acesso e usuário dono das ações (`null` → só as ferramentas de leitura antigas). */
+export interface McpAuth {
+  credentialId: string
+  companyId: string
+  access: McpAccessMode
+  userId: string | null
+}
+
 export interface McpCredentialDto {
   id: string
   name: string
   auth_type: 'static' | 'oauth'
+  /** `read` (padrão) ou `write` (libera as ferramentas que gravam, nos limites das permissões do usuário). */
+  access: McpAccessMode
   status: McpCredentialStatus
   expires_at: string | null
   last_used_at: string | null
@@ -58,6 +68,7 @@ const createSchema = z
   .object({
     name: z.string().trim().min(1, 'Informe o nome').max(100),
     auth_type: z.enum(['static', 'oauth']).default('static'),
+    access: z.enum(MCP_ACCESS_MODES).default('read'),
     expires_at: z.iso.datetime({ offset: true }).nullish(),
     expires_in_days: z.number().int().min(1).max(3650).nullish(),
   })
@@ -90,6 +101,7 @@ export class McpCredentialsService {
       id: r.id,
       name: r.name,
       auth_type: r.authType,
+      access: r.access,
       status: oauth ? (connectedClient ? 'connected' : 'pending') : expired ? 'expired' : 'active',
       expires_at: iso(r.expiresAt),
       last_used_at: iso(r.lastUsedAt),
@@ -121,7 +133,7 @@ export class McpCredentialsService {
     if (r.data.auth_type === 'oauth') {
       const [row] = await this.opts.db
         .insert(mcpCredentials)
-        .values({ companyId, name: r.data.name, authType: 'oauth', tokenHash: null, tokenHint: null, expiresAt: null, createdByUserId: actorUserId, createdAt: now, updatedAt: now })
+        .values({ companyId, name: r.data.name, authType: 'oauth', access: r.data.access, tokenHash: null, tokenHint: null, expiresAt: null, createdByUserId: actorUserId, createdAt: now, updatedAt: now })
         .returning()
       return { credential: this.toDto(row!), token: null }
     }
@@ -133,7 +145,7 @@ export class McpCredentialsService {
     const token = `${MCP_TOKEN_PREFIX}${randomBytes(32).toString('base64url')}`
     const [row] = await this.opts.db
       .insert(mcpCredentials)
-      .values({ companyId, name: r.data.name, authType: 'static', tokenHash: hashToken(token), tokenHint: token.slice(-4), expiresAt, createdByUserId: actorUserId, createdAt: now, updatedAt: now })
+      .values({ companyId, name: r.data.name, authType: 'static', access: r.data.access, tokenHash: hashToken(token), tokenHint: token.slice(-4), expiresAt, createdByUserId: actorUserId, createdAt: now, updatedAt: now })
       .returning()
     return { credential: this.toDto(row!), token }
   }
@@ -158,7 +170,7 @@ export class McpCredentialsService {
    * Empresa do token Bearer; `null` se ausente, desconhecido, expirado, revogado ou de outro tipo. Atualiza o último
    * uso (no máximo uma vez por minuto).
    */
-  async authenticate(token: string | undefined | null): Promise<{ credentialId: string; companyId: string } | null> {
+  async authenticate(token: string | undefined | null): Promise<McpAuth | null> {
     if (token?.startsWith(MCP_OAUTH_ACCESS_PREFIX)) return this.authenticateOAuth(token)
     if (!token || !token.startsWith(MCP_TOKEN_PREFIX) || token.length > 200) return null
     const [row] = await this.opts.db.select().from(mcpCredentials).where(eq(mcpCredentials.tokenHash, hashToken(token))).limit(1)
@@ -166,11 +178,11 @@ export class McpCredentialsService {
     if (!row || row.authType !== 'static' || row.revokedAt || (row.expiresAt && row.expiresAt.getTime() <= now.getTime())) return null
     if (!row.lastUsedAt || now.getTime() - row.lastUsedAt.getTime() >= LAST_USED_EVERY_MS)
       await this.opts.db.update(mcpCredentials).set({ lastUsedAt: now }).where(eq(mcpCredentials.id, row.id))
-    return { credentialId: row.id, companyId: row.companyId }
+    return { credentialId: row.id, companyId: row.companyId, access: row.access, userId: row.createdByUserId }
   }
 
   /** T115: access token OAuth (grant e credencial ativos, dentro do TTL); grava o último uso da credencial. */
-  private async authenticateOAuth(token: string): Promise<{ credentialId: string; companyId: string } | null> {
+  private async authenticateOAuth(token: string): Promise<McpAuth | null> {
     const now = this.now()
     const auth = await authenticateOAuthAccess(this.opts.db, token, now)
     if (!auth) return null
@@ -179,6 +191,6 @@ export class McpCredentialsService {
       .update(mcpCredentials)
       .set({ lastUsedAt: now })
       .where(and(eq(mcpCredentials.id, auth.credentialId), or(isNull(mcpCredentials.lastUsedAt), lte(mcpCredentials.lastUsedAt, since))))
-    return { credentialId: auth.credentialId, companyId: auth.companyId }
+    return { credentialId: auth.credentialId, companyId: auth.companyId, access: auth.access, userId: auth.userId }
   }
 }

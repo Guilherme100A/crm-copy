@@ -271,13 +271,10 @@ describe('fluxo do cliente', () => {
 
     const tools = await rpc(`/api/mcp/${cred.id}`, c.tokens.access_token, 'tools/list')
     expect(tools.status).toBe(200)
-    expect(tools.body.result.tools.map((t: any) => t.name).sort()).toEqual([
-      'get_contact',
-      'list_chats',
-      'list_connections',
-      'list_contacts',
-      'list_flows',
-    ])
+    // Credencial `read` (padrão): as da T94 mais as de leitura via API, como quem autorizou; nenhuma grava.
+    const listed = tools.body.result.tools as any[]
+    expect(listed.map((t) => t.name)).toEqual(expect.arrayContaining(['get_contact', 'list_chats', 'list_connections', 'list_contacts', 'list_flows']))
+    for (const t of listed) expect(t.annotations.readOnlyHint).toBe(true)
     expect((await rpc('/api/mcp', c.tokens.access_token, 'tools/list')).status).toBe(200)
 
     const list = (await call(s, 'GET', '/api/mcp_credentials')).body.mcp_credentials

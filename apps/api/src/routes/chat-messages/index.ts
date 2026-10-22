@@ -110,7 +110,7 @@ function senderOf(c: Context<AppEnv>): Sender & { companyId: string } {
 /** Ator do escopo: sessão age como o usuário; token de API pela empresa inteira (como na T48). */
 function actorOf(c: Context<AppEnv>): ChatActor {
   const ctx = getCompanyCtx(c)
-  return { companyId: ctx.companyId, userId: ctx.auth.kind === 'session' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
+  return { companyId: ctx.companyId, userId: ctx.auth.kind !== 'api_token' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
 }
 
 /** Chat fora do escopo (ou de outra empresa) → 404, igual a inexistente (SPEC 3.3). */

@@ -124,7 +124,7 @@ export function registerRoutes(app: Hono<AppEnv>, deps: ResolvedDeps): void {
   app.route('/', hooksPaymentsRoutes(deps))
   app.route('/', dashboardAttendanceRoutes(deps))
   app.route('/', dashboardRoutes(deps))
-  app.route('/', mcpRoutes(deps))
+  app.route('/', mcpRoutes(deps, app))
   app.route('/', supportAccessRoutes(deps))
   app.route('/', adminRoutes(deps))
   app.route('/', adminOpsRoutes(deps))

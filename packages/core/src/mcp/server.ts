@@ -1,14 +1,17 @@
-// Servidor MCP (T94; 09 §3.4): Streamable HTTP SEM sessão (um McpServer + transporte por request) com ferramentas
-// SOMENTE LEITURA — contatos, conexões, fluxos e chats resumidos — sempre filtradas pela empresa do token. Nenhuma
-// ferramenta grava. Respostas em JSON (`enableJsonResponse`), sem SSE.
+// Servidor MCP (T94; 09 §3.4): Streamable HTTP SEM sessão (um McpServer + transporte por request), sempre filtrado
+// pela empresa do token. Respostas em JSON (`enableJsonResponse`), sem SSE. As 5 ferramentas da T94 leem o banco
+// direto. Com `ctx.api` (credencial com usuário dono), entram as ferramentas de `./tools` (pixels, pagamentos, fluxos,
+// funil, vendas, conversas e métricas), que chamam a API como esse usuário; as que gravam só com `access = 'write'`.
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js'
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js'
 import { and, asc, desc, eq, ilike, or, type SQL } from 'drizzle-orm'
 import { z } from 'zod'
 import { CHAT_STATUSES, chats, connections, contacts, FLOW_STATUSES, flows, type Database } from '@crm/db'
+import { registerAllApiTools } from './tools/index'
+import type { McpApiContext } from './tools/shared'
 
 export const MCP_SERVER_INFO = { name: 'leonas-crm', version: '1.0.0' } as const
-/** Ferramentas expostas (todas `readOnlyHint`). */
+/** Ferramentas da T94 (todas `readOnlyHint`), sempre presentes. */
 export const MCP_TOOL_NAMES = ['list_contacts', 'get_contact', 'list_connections', 'list_flows', 'list_chats'] as const
 
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
@@ -21,12 +24,19 @@ const json = (data: unknown) => ({ content: [{ type: 'text' as const, text: JSON
 export interface McpContext {
   db: Database
   companyId: string
+  /** Chamada à API como o usuário dono da credencial; ausente → só as ferramentas da T94. */
+  api?: McpApiContext
 }
 
 /** McpServer com as ferramentas de leitura da empresa. */
 export function createMcpServer(ctx: McpContext): McpServer {
   const { db, companyId } = ctx
-  const server = new McpServer(MCP_SERVER_INFO, { instructions: 'Leitura dos dados da empresa no CRM (contatos, conexões, fluxos e chats). Nenhuma ferramenta altera dados.' })
+  const instructions = !ctx.api
+    ? 'Leitura dos dados da empresa no CRM (contatos, conexões, fluxos e chats). Nenhuma ferramenta altera dados.'
+    : ctx.api.access === 'write'
+      ? 'CRM da empresa: contatos, conversas, fluxos (criar, editar, validar, simular, ativar), funil, vendas, pixels da Meta, integrações de pagamento (XPag) e métricas. Ações rodam com as permissões do usuário dono da credencial. Antes de editar um fluxo, leia-o com get_flow e consulte get_flow_block_catalog; valide antes de ativar.'
+      : 'Leitura do CRM da empresa: contatos, conversas, fluxos, funil, vendas, pixels, integrações de pagamento e métricas, com as permissões do usuário dono da credencial. Credencial só leitura: nada é alterado.'
+  const server = new McpServer(MCP_SERVER_INFO, { instructions })
 
   server.registerTool(
     'list_contacts',
@@ -139,6 +149,7 @@ export function createMcpServer(ctx: McpContext): McpServer {
     },
   )
 
+  if (ctx.api) registerAllApiTools(server, ctx.api)
   return server
 }
 

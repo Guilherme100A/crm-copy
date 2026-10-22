@@ -1843,7 +1843,7 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 **Paths:** `packages/core/src/mcp/**`, `apps/api/src/routes/mcp/**`, `packages/db/src/schema/crm/mcp.ts`, `apps/web/src/{routes,features}/settings-mcp/**`
 **Depende de:** T26, T28, T40
 **Ref:** `09-webhooks-entrada.md#34-mcpcredential`, `#6-endpoints-da-api` (MCP).
-**Entregáveis:** credenciais (`auth_type: static`, hash do token mostrado uma vez, expiração, último uso); endpoint MCP (Streamable HTTP, `@modelcontextprotocol/sdk` — versão a confirmar no context7 antes de usar) com ferramentas **somente leitura** (contatos, conexões, fluxos, chats resumidos) isoladas por empresa; tela `/settings?tab=mcp_credentials`. O tipo `oauth` (conector do Claude) é entregue no T115.
+**Entregáveis:** credenciais (`auth_type: static`, hash do token mostrado uma vez, expiração, último uso); endpoint MCP (Streamable HTTP, `@modelcontextprotocol/sdk` — versão a confirmar no context7 antes de usar) com ferramentas **somente leitura** (contatos, conexões, fluxos, chats resumidos) isoladas por empresa; tela `/settings?tab=mcp_credentials`. O tipo `oauth` (conector do Claude) é entregue no T115. A T130 acrescenta credenciais com escrita e as ferramentas via API.
 **Critérios de aceitação**
 - **AC-T94-01** Criar credencial mostra o token uma única vez; a listagem só mostra nome, status, expiração e último uso.
 - **AC-T94-02** Token inválido, expirado ou revogado → 401 no endpoint MCP.
@@ -2168,6 +2168,21 @@ Fonte única: `packages/shared/src/errors/codes.ts` (compartilhado aditivo). Err
 - **AC-T129-01** Bundle concluído com erro de conta (FakeMetaGraph `failAccount`): o próximo `GET …?async=1` com a mesma chave enfileira um job NOVO (ou devolve o resultado com erro já pronto) e a resposta sai de `loading` sem esperar a expiração do job anterior.
 - **AC-T129-02** Bundle concluído sem erro continua vindo do cache (5 min) sem enfileirar job; `force_refresh=1` continua criando job novo.
 - **AC-T129-03** Dois GET simultâneos com a mesma chave sem cache enfileiram no máximo 1 job (a deduplicação de concorrência continua valendo).
+
+---
+
+### T130 — MCP completo: leitura de tudo e escrita com as permissões do usuário
+**Objetivo:** o cliente MCP (Claude, Cursor, n8n) opera o CRM como o usuário: lê conversas, fluxos, funil, vendas, pixels, integrações de pagamento e métricas, e, com credencial de escrita, cria/edita/valida/simula/ativa fluxos, configura pixels da Meta e integrações de pagamento (XPag) e envia mensagens.
+**Paths:** `packages/core/src/mcp/**`, `packages/core/src/mcp-oauth/tokens.ts`, `packages/core/src/platform/types.ts`, `packages/db/src/schema/crm/mcp.ts` (+ migração `0038_mcp_write_access`), `apps/api/src/routes/mcp/**`, `apps/api/src/lib/mcp-actor.ts`, `apps/api/src/middleware/{auth,company,csrf,audit}.ts`, `apps/api/src/routes/flow-runs/**` (funil do fluxo), `apps/web/src/features/settings-mcp/**`
+**Depende de:** T94, T115
+**Desenho:** `mcp_credentials.access` (`read` padrão | `write`). O usuário dono da credencial é quem a criou (estática) ou quem autorizou o OAuth (`mcp_oauth_grants.user_id`). Se ele ainda é membro da empresa, as ferramentas de `packages/core/src/mcp/tools/*` chamam a própria API em processo (`app.fetch` com o ator sob um Symbol no `env`, que nunca vem da rede), com `auth.kind = 'mcp'`: a rota aplica as mesmas validações, permissões, auditoria (`detail.mcp_credential_id`) e realtime do painel. Sem usuário dono só restam as 5 ferramentas da T94. Uma ferramenta só aparece para quem tem a permissão dela; as que gravam só aparecem em credencial `write`, e a chamada interna recusa gravação de credencial `read` antes de chegar na rota (POST de leitura permitido: `validate` e `simulate` de fluxo). Novo `GET /api/flows/:id/funnel` (`flows.view`): entradas e paradas por bloco no período.
+**Critérios de aceitação**
+- **AC-T130-01** Credencial nasce `read`; `access: write` é aceito na criação (estática ou OAuth) e aparece na listagem; outro valor → 422.
+- **AC-T130-02** Credencial `read`: `tools/list` traz as da T94 e as de leitura via API, todas `readOnlyHint`; nenhuma chamada grava. Credencial `write`: aparecem as ferramentas que gravam.
+- **AC-T130-03** A ação roda como o usuário dono: sem a permissão da rota → erro 403 na ferramenta; com permissão grava na empresa dele e a auditoria registra o usuário e `mcp_credential_id`.
+- **AC-T130-04** Sem usuário dono, ou dono fora da empresa, o servidor volta às 5 ferramentas da T94; o ator interno não pode ser enviado pela rede (sem credencial a API responde 401).
+- **AC-T130-05** O funil do fluxo devolve, por bloco da definição, quantos runs entraram e quantos pararam ali no período, mais os totais e a conversão.
+- **AC-T130-06** A tela de credenciais permite escolher "Somente leitura" ou "Leitura e escrita", com o aviso de que a escrita usa as permissões de quem criou, e mostra o selo nas credenciais com escrita (desktop e mobile).
 
 ---
 

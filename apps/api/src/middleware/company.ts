@@ -17,7 +17,7 @@ export function companyContext(db: Database): MiddlewareHandler<AppEnv> {
     if (!ctx) return next() // rota pública
     const requested = c.req.header(COMPANY_HEADER)?.trim() || null
 
-    if (ctx.auth.kind === 'api_token') {
+    if (ctx.auth.kind === 'api_token' || ctx.auth.kind === 'mcp') {
       if (requested && requested.toLowerCase() !== ctx.companyId?.toLowerCase()) throw notFound()
       return next()
     }

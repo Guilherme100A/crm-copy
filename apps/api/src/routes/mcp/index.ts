@@ -5,12 +5,26 @@
 // inválido/expirado/revogado → 401. Streamable HTTP sem sessão, ferramentas somente leitura da empresa do token.
 // T115: `/api/mcp/<credencial>` é a URL do conector OAuth (aceita só tokens dessa credencial) e o 401 traz
 // `WWW-Authenticate: Bearer realm="mcp", resource_metadata="<API>/.well-known/oauth-protected-resource/api/mcp[/<id>]"`.
-import { handleMcpRequest, McpCredentialsError, McpCredentialsService, McpOAuthService } from '@crm/core'
-import { companies } from '@crm/db'
+// Credencial com usuário dono (criador do token ou quem autorizou o OAuth) e ainda membro da empresa: entram as
+// ferramentas que chamam esta mesma API (`app.fetch` com `MCP_ACTOR`) com as permissões dele; gravar exige
+// `access = 'write'`.
+import {
+  findMembership,
+  handleMcpRequest,
+  McpCredentialsError,
+  McpCredentialsService,
+  McpOAuthService,
+  permissionsOf,
+  type McpApi,
+  type McpApiContext,
+  type McpAuth,
+} from '@crm/core'
+import { companies, users, type Database } from '@crm/db'
 import { eq } from 'drizzle-orm'
 import { Hono, type Context } from 'hono'
 import { getCompanyCtx } from '../../lib/context'
 import { ApiError } from '../../lib/errors'
+import { MCP_ACTOR, type McpActor } from '../../lib/mcp-actor'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { setAudit } from '../../middleware/audit'
 import { parseBearer } from '../../middleware/auth'
@@ -46,7 +60,60 @@ async function body(c: Context<AppEnv>): Promise<unknown> {
   return json && typeof json === 'object' && !Array.isArray(json) && 'mcp_credential' in json ? (json as { mcp_credential: unknown }).mcp_credential : json
 }
 
-export function mcpRoutes(deps: ResolvedDeps) {
+/** Quem atende a chamada interna: o app raiz (todas as rotas e middlewares). */
+export interface McpInternalApp {
+  fetch(req: Request, env?: unknown): Response | Promise<Response>
+}
+
+/** Só leitura, mas por POST: validar e simular fluxo. */
+const READ_ONLY_POST = /^\/api\/flows\/[^/]+\/(validate|simulate)$/
+const INTERNAL_ORIGIN = 'http://mcp.internal'
+
+const refused = (message: string) => ({ status: 403, body: { error: { code: 'FORBIDDEN', message } } })
+
+/** Ator da credencial; `null` sem usuário dono ou se ele saiu da empresa (sobram as ferramentas da T94). */
+async function loadActor(db: Database, auth: McpAuth): Promise<McpActor | null> {
+  if (!auth.userId) return null
+  const member = await findMembership(db, auth.userId, auth.companyId)
+  if (!member) return null
+  const [user] = await db
+    .select({ id: users.id, email: users.email, name: users.name, systemRole: users.systemRole, locale: users.locale, lastCompanyId: users.lastCompanyId })
+    .from(users)
+    .where(eq(users.id, auth.userId))
+    .limit(1)
+  if (!user) return null
+  return { user, companyId: auth.companyId, member, perms: permissionsOf(member, user), credentialId: auth.credentialId }
+}
+
+export function internalApi(app: McpInternalApp, actor: McpActor, access: McpAuth['access']): McpApi {
+  return {
+    async request(method, path, req = {}) {
+      if (!path.startsWith('/api/') || path.startsWith('/api/mcp') || path.startsWith('/api/events')) return refused('Rota fora do MCP')
+      if (req.write && access !== 'write') return refused('Credencial MCP só leitura: crie uma credencial com escrita')
+      if (method !== 'GET' && !req.write && !READ_ONLY_POST.test(path)) return refused('Ferramenta de leitura não grava')
+      const url = new URL(path, INTERNAL_ORIGIN)
+      for (const [k, v] of Object.entries(req.query ?? {})) if (v !== undefined && v !== null) url.searchParams.set(k, String(v))
+      const init: RequestInit = { method, headers: { accept: 'application/json' } }
+      if (req.body !== undefined && method !== 'GET') {
+        init.body = JSON.stringify(req.body)
+        init.headers = { ...init.headers, 'content-type': 'application/json' }
+      }
+      const res = await app.fetch(new Request(url, init), { [MCP_ACTOR]: actor })
+      const raw = await res.text()
+      let body: unknown = null
+      if (raw) {
+        try {
+          body = JSON.parse(raw)
+        } catch {
+          body = raw.slice(0, 2000)
+        }
+      }
+      return { status: res.status, body }
+    },
+  }
+}
+
+export function mcpRoutes(deps: ResolvedDeps, root?: McpInternalApp) {
   const svc = new McpCredentialsService({ db: deps.db, ...(deps.mcpEnv ? { env: deps.mcpEnv } : {}) })
   const app = new Hono<AppEnv>()
 
@@ -77,7 +144,10 @@ export function mcpRoutes(deps: ResolvedDeps) {
     }
     const [company] = await deps.db.select({ active: companies.active }).from(companies).where(eq(companies.id, auth.companyId)).limit(1)
     if (company && !company.active) throw new ApiError('FORBIDDEN', 'Empresa desativada', { error_code: 'company_inactive' })
-    return handleMcpRequest(c.req.raw, { db: deps.db, companyId: auth.companyId })
+    const actor = root ? await loadActor(deps.db, auth) : null
+    const api: McpApiContext | undefined =
+      actor && root ? { api: internalApi(root, actor, auth.access), access: auth.access, perms: actor.perms } : undefined
+    return handleMcpRequest(c.req.raw, { db: deps.db, companyId: auth.companyId, ...(api ? { api } : {}) })
   }
 
   app.all('/api/mcp', (c) => serveMcp(c, null))

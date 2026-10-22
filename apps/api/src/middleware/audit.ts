@@ -55,7 +55,7 @@ export function auditMiddleware(opts: AuditMiddlewareOptions): MiddlewareHandler
       action: info.action ?? `${c.req.method} ${route}`,
       targetType: info.targetType ?? derived.targetType,
       targetId: info.targetId ?? derived.targetId,
-      detail: { request_id: c.get('requestId'), status: c.res.status, ...(ctx.auth.tokenId ? { api_token_id: ctx.auth.tokenId } : {}), ...info.detail },
+      detail: { request_id: c.get('requestId'), status: c.res.status, ...(ctx.auth.tokenId ? { api_token_id: ctx.auth.tokenId } : {}), ...(ctx.auth.mcpCredentialId ? { mcp_credential_id: ctx.auth.mcpCredentialId } : {}), ...info.detail },
       ip: clientIp(c, opts.trustProxy),
     }
     try {

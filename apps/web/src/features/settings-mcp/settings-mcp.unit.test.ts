@@ -19,6 +19,11 @@ describe('credenciais MCP OAuth (T115)', () => {
     expect(createBody(' Claude ', 90, 'oauth')).toEqual({ mcp_credential: { name: 'Claude', auth_type: 'oauth' } })
   })
 
+  it('acesso: `read` fica com o padrão da API; `write` vai no corpo', () => {
+    expect(createBody('Cursor', 0, 'static', 'read')).toEqual({ mcp_credential: { name: 'Cursor', auth_type: 'static' } })
+    expect(createBody('Claude', 0, 'oauth', 'write')).toEqual({ mcp_credential: { name: 'Claude', auth_type: 'oauth', access: 'write' } })
+  })
+
   it('status: "Conectada · <cliente>" quando há cliente OAuth; senão o rótulo do status', () => {
     const t = (key: string, vars?: Record<string, string>) => (vars ? `${key}:${vars.client}` : key)
     expect(statusLabel({ status: 'connected', connected_client_hint: 'Claude' }, t)).toBe('status.connectedWith:Claude')

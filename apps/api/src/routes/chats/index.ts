@@ -97,7 +97,7 @@ export function chatsRoutes(deps: ResolvedDeps) {
   /** Token de API age pela empresa inteira (sem "eu"); sessão age como o usuário. */
   const actorOf = (c: Context<AppEnv>): ChatActor => {
     const ctx = getCompanyCtx(c)
-    return { companyId: ctx.companyId, userId: ctx.auth.kind === 'session' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
+    return { companyId: ctx.companyId, userId: ctx.auth.kind !== 'api_token' ? (ctx.user?.id ?? null) : null, perms: ctx.perms }
   }
   const audit = (c: Context<AppEnv>, action: string, chatId: string, detail?: Record<string, unknown>) =>
     setAudit(c, { action: `chats.${action}`, targetType: 'chat', targetId: chatId, ...(detail ? { detail } : {}) })

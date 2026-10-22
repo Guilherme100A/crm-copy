@@ -6,11 +6,15 @@ import { api } from '@/lib/http'
 
 export type McpAuthType = 'static' | 'oauth'
 export const MCP_AUTH_TYPES: readonly McpAuthType[] = ['static', 'oauth']
+/** `write` libera as ferramentas que gravam, nos limites das permissões de quem criou ou autorizou a credencial. */
+export type McpAccess = 'read' | 'write'
+export const MCP_ACCESS_MODES: readonly McpAccess[] = ['read', 'write']
 
 export interface McpCredentialDto {
   id: string
   name: string
   auth_type: McpAuthType
+  access?: McpAccess
   status: 'active' | 'expired' | 'pending' | 'connected'
   expires_at: string | null
   last_used_at: string | null
@@ -24,6 +28,7 @@ export interface McpCredentialDto {
 export interface McpCreateInput {
   name: string
   auth_type: McpAuthType
+  access?: McpAccess
   expires_in_days?: number
 }
 
@@ -39,9 +44,16 @@ export const mcpCredentialsQuery = () =>
     queryFn: () => api.get<{ mcp_credentials: McpCredentialDto[]; mcp_endpoint_url: string }>('/api/mcp_credentials'),
   })
 
-/** Corpo do POST a partir do formulário (nome aparado; `0` dias = sem expiração; OAuth não expira). */
-export function createBody(name: string, days: ExpirationOption, authType: McpAuthType = 'static'): { mcp_credential: McpCreateInput } {
-  return { mcp_credential: { name: name.trim(), auth_type: authType, ...(authType === 'static' && days > 0 ? { expires_in_days: days } : {}) } }
+/** Corpo do POST a partir do formulário (nome aparado; `0` dias = sem expiração; OAuth não expira; `read` é o padrão da API). */
+export function createBody(name: string, days: ExpirationOption, authType: McpAuthType = 'static', access: McpAccess = 'read'): { mcp_credential: McpCreateInput } {
+  return {
+    mcp_credential: {
+      name: name.trim(),
+      auth_type: authType,
+      ...(access === 'write' ? { access } : {}),
+      ...(authType === 'static' && days > 0 ? { expires_in_days: days } : {}),
+    },
+  }
 }
 
 /** Rótulo do status: "Conectada · <cliente>" quando há cliente OAuth conectado. */
@@ -50,7 +62,7 @@ export function statusLabel(c: Pick<McpCredentialDto, 'status' | 'connected_clie
 }
 
 export const mcpApi = {
-  create: (name: string, days: ExpirationOption, authType: McpAuthType = 'static') =>
-    api.post<{ mcp_credential: McpCredentialDto; token: string | null; mcp_endpoint_url: string }>('/api/mcp_credentials', createBody(name, days, authType)),
+  create: (name: string, days: ExpirationOption, authType: McpAuthType = 'static', access: McpAccess = 'read') =>
+    api.post<{ mcp_credential: McpCredentialDto; token: string | null; mcp_endpoint_url: string }>('/api/mcp_credentials', createBody(name, days, authType, access)),
   revoke: (id: string) => api.delete(`/api/mcp_credentials/${encodeURIComponent(id)}`),
 }

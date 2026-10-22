@@ -71,7 +71,7 @@ describe('/api/mcp_credentials', () => {
     expect(created.status).toBe(201)
     expect(created.body).toMatchObject({ token: expect.stringMatching(/^crm_mcp_[\w-]{43}$/), mcp_endpoint_url: 'https://api.crm.test/api/mcp', mcp_credential: { name: 'Cursor', auth_type: 'static', status: 'active', last_used_at: null } })
     const list = await call(s, 'GET', '/api/mcp_credentials')
-    expect(Object.keys(list.body.mcp_credentials[0]).sort()).toEqual(['auth_type', 'connected_client_hint', 'connector_url', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status'])
+    expect(Object.keys(list.body.mcp_credentials[0]).sort()).toEqual(['access', 'auth_type', 'connected_client_hint', 'connector_url', 'created_at', 'expires_at', 'id', 'last_used_at', 'name', 'status'])
     expect(JSON.stringify(list.body)).not.toContain(created.body.token)
     const [row] = await db.select().from(mcpCredentials).where(eq(mcpCredentials.id, created.body.mcp_credential.id))
     expect(row!.tokenHash).not.toContain(created.body.token)
@@ -138,7 +138,8 @@ describe('/api/mcp', () => {
 
     const list = await rpc(token, 'tools/list')
     const tools = list.body.result.tools as any[]
-    expect(tools.map((t) => t.name).sort()).toEqual(['get_contact', 'list_chats', 'list_connections', 'list_contacts', 'list_flows'])
+    // Credencial só leitura: as 5 da T94 mais as de leitura via API; nenhuma grava.
+    expect(tools.map((t) => t.name)).toEqual(expect.arrayContaining(['get_contact', 'list_chats', 'list_connections', 'list_contacts', 'list_flows']))
     for (const t of tools) expect(t.annotations).toMatchObject({ readOnlyHint: true, destructiveHint: false })
 
     expect((await tool(token, 'list_contacts')).data.contacts.map((c: any) => c.name)).toEqual(['Contato A'])

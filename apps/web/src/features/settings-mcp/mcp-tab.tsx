@@ -15,12 +15,14 @@ import { notify } from '@/lib/toast'
 import { APP_NAME, cn } from '@/lib/utils'
 import {
   EXPIRATION_OPTIONS,
+  MCP_ACCESS_MODES,
   MCP_AUTH_TYPES,
   MCP_KEY,
   mcpApi,
   mcpCredentialsQuery,
   statusLabel,
   type ExpirationOption,
+  type McpAccess,
   type McpAuthType,
   type McpCredentialDto,
 } from './api'
@@ -121,7 +123,14 @@ export default function McpCredentialsTab() {
               className="grid grid-cols-[minmax(0,1fr)_auto] gap-x-3 gap-y-1 rounded-xl border bg-card p-3 sm:grid-cols-[minmax(0,1fr)_10rem_8rem_10rem_2rem] sm:items-center sm:gap-4 sm:rounded-none sm:border-0 sm:bg-transparent"
             >
               <span className="flex min-w-0 flex-col">
-                <span className="truncate font-medium">{c.name}</span>
+                <span className="flex min-w-0 items-center gap-2">
+                  <span className="truncate font-medium">{c.name}</span>
+                  {c.access === 'write' ? (
+                    <span data-testid="mcp-access-write" className="shrink-0 rounded-full bg-sky-500/15 px-2 py-0.5 text-xs font-medium text-sky-800 dark:text-sky-300">
+                      {t('access.write')}
+                    </span>
+                  ) : null}
+                </span>
                 {c.auth_type === 'oauth' && c.connector_url ? (
                   <span className="flex min-w-0 items-center gap-1">
                     <code data-testid="mcp-credential-connector-url" className="min-w-0 truncate text-xs text-muted-foreground">
@@ -186,6 +195,7 @@ function CreateDialog({ open, onClose }: { open: boolean; onClose: () => void })
   const [name, setName] = useState('')
   const [days, setDays] = useState<ExpirationOption>(0)
   const [authType, setAuthType] = useState<McpAuthType>('static')
+  const [access, setAccess] = useState<McpAccess>('read')
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [token, setToken] = useState<string | null>(null)
@@ -199,6 +209,7 @@ function CreateDialog({ open, onClose }: { open: boolean; onClose: () => void })
     setName('')
     setDays(0)
     setAuthType('static')
+    setAccess('read')
     setError(null)
     onClose()
   }
@@ -207,7 +218,7 @@ function CreateDialog({ open, onClose }: { open: boolean; onClose: () => void })
     setPending(true)
     setError(null)
     try {
-      const r = await mcpApi.create(name, days, authType)
+      const r = await mcpApi.create(name, days, authType, access)
       if (r.mcp_credential.auth_type === 'oauth') setConnectorUrl(r.mcp_credential.connector_url ?? null)
       else setToken(r.token)
       await qc.invalidateQueries({ queryKey: MCP_KEY })
@@ -290,6 +301,17 @@ function CreateDialog({ open, onClose }: { open: boolean; onClose: () => void })
                   ))}
                 </select>
                 <span className="text-xs text-muted-foreground">{t(`authTypeHint.${authType}`)}</span>
+              </label>
+              <label className="flex flex-col gap-1 text-sm">
+                {t('form.access')}
+                <select data-testid="mcp-access" className={inputCls} value={access} onChange={(e) => setAccess(e.target.value as McpAccess)}>
+                  {MCP_ACCESS_MODES.map((a) => (
+                    <option key={a} value={a}>
+                      {t(`access.${a}`)}
+                    </option>
+                  ))}
+                </select>
+                <span className={cn('text-xs', access === 'write' ? 'text-amber-800 dark:text-amber-300' : 'text-muted-foreground')}>{t(`accessHint.${access}`)}</span>
               </label>
               {authType === 'static' ? (
                 <label className="flex flex-col gap-1 text-sm">

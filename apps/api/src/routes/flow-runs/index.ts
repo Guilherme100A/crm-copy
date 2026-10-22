@@ -1,5 +1,6 @@
 // Execuções de fluxo (T43; 06 §5.5): disparo manual pelo chat, listagem, detalhe com passos, cancelamento e
-// "cancelar todos" de uma conexão. Disparar/cancelar exige `flows.run`; ler, `flows.view`.
+// "cancelar todos" de uma conexão. Disparar/cancelar exige `flows.run`; ler, `flows.view`. Funil por bloco
+// (`GET /api/flows/:id/funnel?from&to&connection_id`, padrão últimos 30 dias) em `funnel.ts`.
 import { Hono, type Context } from 'hono'
 import { and, asc, count, desc, eq, inArray, sql } from 'drizzle-orm'
 import { z } from 'zod'
@@ -12,6 +13,7 @@ import { validate } from '../../lib/validate'
 import type { AppEnv, ResolvedDeps } from '../../lib/types'
 import { requirePerm } from '../../middleware/authorize'
 import { setAudit } from '../../middleware/audit'
+import { flowFunnel } from './funnel'
 import { flowServices } from './services'
 
 export { flowServices, registerConnectionNameSource, type ConnectionNameSource, type FlowServices } from './services'
@@ -41,6 +43,13 @@ const triggerSchema = z.object({ chat_id: z.uuid() })
 const runsQuery = pageQuerySchema.extend({ status: z.enum(FLOW_RUN_STATUSES).optional() })
 const chatRunsQuery = z.object({ active: z.enum(['1', '0', 'true', 'false']).optional() })
 const cancelAllSchema = z.object({ confirmation_name: z.string().max(200) })
+const funnelQuery = z.object({
+  from: z.iso.datetime({ offset: true }).optional(),
+  to: z.iso.datetime({ offset: true }).optional(),
+  connection_id: z.uuid().optional(),
+})
+const FUNNEL_DEFAULT_DAYS = 30
+const FUNNEL_MAX_DAYS = 366
 
 export function flowRunsRoutes(deps: ResolvedDeps) {
   const app = new Hono<AppEnv>()
@@ -138,6 +147,23 @@ export function flowRunsRoutes(deps: ResolvedDeps) {
     const [total] = await deps.db.select({ n: count() }).from(flowRuns).where(where)
     const rows = await runsWithName(where).orderBy(desc(flowRuns.startedAt)).limit(q.limit).offset(pageOffset(q))
     return c.json({ items: rows.map((r) => toRunDto(r.run, r.flowName)), page: buildPageMeta(q, { total: Number(total?.n ?? 0) }) })
+  })
+
+  app.get('/api/flows/:id/funnel', requirePerm('flows.view'), validate('query', funnelQuery), async (c) => {
+    const ctx = ctxOf(c)
+    const flow = await store.getFlow(ctx, c.req.param('id')).catch((err: unknown) => {
+      if (err instanceof FlowStoreError) throw new ApiError('NOT_FOUND', 'Fluxo não encontrado')
+      throw err
+    })
+    const q = c.req.valid('query')
+    const to = q.to ? new Date(q.to) : new Date()
+    const from = q.from ? new Date(q.from) : new Date(to.getTime() - FUNNEL_DEFAULT_DAYS * 86_400_000)
+    if (from.getTime() > to.getTime())
+      throw new ApiError('VALIDATION_ERROR', 'Período inválido', { fields: [{ path: 'from', message: 'from precisa ser antes de to' }] })
+    if (to.getTime() - from.getTime() > FUNNEL_MAX_DAYS * 86_400_000)
+      throw new ApiError('VALIDATION_ERROR', 'Período inválido', { fields: [{ path: 'from', message: `no máximo ${FUNNEL_MAX_DAYS} dias` }] })
+    const def = await store.toDefinition(ctx, flow.id)
+    return c.json({ funnel: await flowFunnel(deps.db, ctx.companyId, flow.id, def, { from, to, ...(q.connection_id ? { connectionId: q.connection_id } : {}) }) })
   })
 
   app.get('/api/flow-runs/:id', requirePerm('flows.view'), async (c) => {

@@ -82,7 +82,7 @@ export function contentRoutes(deps: ResolvedDeps) {
   const svc = () => (service ??= new ContentService({ db: deps.db, media: mediaServiceFor(deps) }))
   const ctxOf = (c: Context<AppEnv>) => {
     const ctx = getCompanyCtx(c)
-    return { companyId: ctx.companyId, userId: ctx.auth.kind === 'session' ? (ctx.user?.id ?? null) : null }
+    return { companyId: ctx.companyId, userId: ctx.auth.kind !== 'api_token' ? (ctx.user?.id ?? null) : null }
   }
   const audit = (c: Context<AppEnv>, action: string, targetType: string, targetId: string) => setAudit(c, { action: `content.${action}`, targetType, targetId })
 

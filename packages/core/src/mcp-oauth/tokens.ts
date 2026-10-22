@@ -2,7 +2,7 @@
 // Sem import de `../mcp/*`: `mcp/credentials.ts` usa este módulo para aceitar o access token OAuth.
 import { createHash, randomBytes, timingSafeEqual } from 'node:crypto'
 import { and, desc, eq, inArray, isNull } from 'drizzle-orm'
-import { mcpCredentials, mcpOauthGrants, mcpOauthTokens, type Database } from '@crm/db'
+import { mcpCredentials, mcpOauthGrants, mcpOauthTokens, type Database, type McpAccessMode } from '@crm/db'
 import { hashToken } from '../platform/tokens'
 
 export const MCP_OAUTH_ACCESS_PREFIX = 'crm_mcpat_'
@@ -52,6 +52,9 @@ export interface OAuthAccess {
   credentialId: string
   companyId: string
   grantId: string
+  /** Usuário que autorizou o cliente (dono das ações de escrita); `null` se ele foi removido. */
+  userId: string | null
+  access: McpAccessMode
 }
 
 /**
@@ -64,11 +67,13 @@ export async function authenticateOAuthAccess(db: Database, token: string, now: 
     .select({
       accessExpiresAt: mcpOauthTokens.accessExpiresAt,
       grantId: mcpOauthGrants.id,
+      userId: mcpOauthGrants.userId,
       grantRevokedAt: mcpOauthGrants.revokedAt,
       credentialId: mcpCredentials.id,
       companyId: mcpCredentials.companyId,
       credentialRevokedAt: mcpCredentials.revokedAt,
       authType: mcpCredentials.authType,
+      access: mcpCredentials.access,
     })
     .from(mcpOauthTokens)
     .innerJoin(mcpOauthGrants, eq(mcpOauthGrants.id, mcpOauthTokens.grantId))
@@ -77,7 +82,7 @@ export async function authenticateOAuthAccess(db: Database, token: string, now: 
     .limit(1)
   if (!row || row.authType !== 'oauth' || row.grantRevokedAt || row.credentialRevokedAt) return null
   if (row.accessExpiresAt.getTime() <= now.getTime()) return null
-  return { credentialId: row.credentialId, companyId: row.companyId, grantId: row.grantId }
+  return { credentialId: row.credentialId, companyId: row.companyId, grantId: row.grantId, userId: row.userId, access: row.access }
 }
 
 /** Cliente conectado (grant ativo mais recente) por credencial OAuth, para o status `connected`. */

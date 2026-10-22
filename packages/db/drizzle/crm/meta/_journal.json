@@ -267,6 +267,13 @@
       "when": 1792304237454,
       "tag": "0037_rastreamento_meta",
       "breakpoints": true
+    },
+    {
+      "idx": 38,
+      "version": "7",
+      "when": 1792624694154,
+      "tag": "0038_mcp_write_access",
+      "breakpoints": true
     }
   ]
 }

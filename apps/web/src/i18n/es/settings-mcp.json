@@ -1,7 +1,7 @@
 {
   "tab": "Credenciales MCP",
   "title": "Credenciales MCP",
-  "subtitle": "Permite que clientes de IA (Cursor, n8n, Claude) lean los datos de la empresa mediante el Model Context Protocol.",
+  "subtitle": "Permite que clientes de IA (Cursor, n8n, Claude) lean y, si lo autorizas, modifiquen los datos de la empresa mediante el Model Context Protocol.",
   "create": "Nueva credencial",
   "loading": "Cargando...",
   "error": "No se pudo completar la acción.",
@@ -12,13 +12,35 @@
     "title": "URL del servidor MCP",
     "copy": "Copiar URL",
     "auth": "Autenticación: envía el token en el header",
-    "tips": "Buenas prácticas: usa una credencial por cliente y revoca las que no se usan. Las herramientas son de solo lectura."
+    "tips": "Buenas prácticas: usa una credencial por cliente y revoca las que no estén en uso. Las credenciales de solo lectura no cambian nada; con escritura, el cliente actúa con los permisos de quien creó o autorizó la credencial."
   },
-  "empty": { "title": "Ninguna credencial MCP", "body": "Crea una credencial para conectar un cliente MCP." },
-  "columns": { "name": "Nombre", "status": "Estado", "expires": "Vence", "lastUsed": "Último uso" },
-  "status": { "active": "Activa", "expired": "Vencida", "pending": "Pendiente", "connected": "Conectada", "connectedWith": "Conectada · {client}" },
-  "expiration": { "0": "Nunca", "30": "30 días", "90": "90 días", "365": "1 año" },
-  "authType": { "static": "Token (Bearer)", "oauth": "OAuth (conector de Claude)" },
+  "empty": {
+    "title": "Ninguna credencial MCP",
+    "body": "Crea una credencial para conectar un cliente MCP."
+  },
+  "columns": {
+    "name": "Nombre",
+    "status": "Estado",
+    "expires": "Vence",
+    "lastUsed": "Último uso"
+  },
+  "status": {
+    "active": "Activa",
+    "expired": "Vencida",
+    "pending": "Pendiente",
+    "connected": "Conectada",
+    "connectedWith": "Conectada · {client}"
+  },
+  "expiration": {
+    "0": "Nunca",
+    "30": "30 días",
+    "90": "90 días",
+    "365": "1 año"
+  },
+  "authType": {
+    "static": "Token (Bearer)",
+    "oauth": "OAuth (conector de Claude)"
+  },
   "authTypeHint": {
     "static": "Genera un token para clientes como Cursor y n8n. Se muestra una sola vez.",
     "oauth": "Para conectores que inician sesión, como el de Claude. No hay token para copiar."
@@ -41,7 +63,8 @@
     "expiration": "Vencimiento",
     "submit": "Crear",
     "nameRequired": "Indica el nombre de la credencial.",
-    "invalid": "Revisa los datos de la credencial."
+    "invalid": "Revisa los datos de la credencial.",
+    "access": "Acceso"
   },
   "created": {
     "title": "Credencial creada",
@@ -55,5 +78,13 @@
     "title": "¿Revocar credencial?",
     "body": "La credencial \"{name}\" deja de funcionar de inmediato y los clientes que la usan pierden el acceso.",
     "confirm": "Revocar"
+  },
+  "access": {
+    "read": "Solo lectura",
+    "write": "Lectura y escritura"
+  },
+  "accessHint": {
+    "read": "El cliente consulta contactos, conversaciones, flujos, embudo, ventas, píxeles y métricas sin cambiar nada.",
+    "write": "El cliente también puede crear y editar flujos, píxeles e integraciones de pago, y enviar mensajes, con tus permisos. Cada acción queda en la auditoría."
   }
 }

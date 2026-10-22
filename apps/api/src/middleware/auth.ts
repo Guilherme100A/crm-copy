@@ -1,10 +1,12 @@
 // Autenticação de `/api/*` (SPEC 3.4): cookie `crm_session` (navegador) ou `Authorization: Bearer crm_pat_…`
-// (integrações). Sem credencial, ou credencial inválida/expirada/revogada → 401 UNAUTHORIZED.
+// (integrações). Sem credencial, ou credencial inválida/expirada/revogada → 401 UNAUTHORIZED. Chamada interna de
+// ferramenta MCP (`MCP_ACTOR` no env do fetch) já chega com usuário, empresa e permissões resolvidos.
 import type { MiddlewareHandler } from 'hono'
 import { getCookie } from 'hono/cookie'
 import { SESSION_COOKIE, apiTokenPermissions, type SessionService } from '@crm/core'
 import { clearSessionCookie, setSessionCookie } from '../lib/cookies'
 import { ApiError } from '../lib/errors'
+import { mcpActorOf } from '../lib/mcp-actor'
 import type { AppEnv } from '../lib/types'
 import { isPublicApiRoute, type PublicRoute } from './public-routes'
 
@@ -22,6 +24,17 @@ export function parseBearer(header: string | undefined): string | undefined {
 export function sessionAuth(opts: SessionAuthOptions): MiddlewareHandler<AppEnv> {
   const { sessions, cookieSecure } = opts
   return async (c, next) => {
+    const actor = mcpActorOf(c.env)
+    if (actor) {
+      c.set('ctx', {
+        user: actor.user,
+        companyId: actor.companyId,
+        member: actor.member,
+        perms: actor.perms,
+        auth: { kind: 'mcp', mcpCredentialId: actor.credentialId },
+      })
+      return next()
+    }
     if (isPublicApiRoute(c.req.method, c.req.path, opts.publicRoutes)) return next()
 
     const authorization = c.req.header('authorization')
