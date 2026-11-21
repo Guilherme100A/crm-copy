@@ -14,7 +14,11 @@ import { notify } from './lib/toast'
 import { AI_MANAGER_THEME_KEY, initEmbed } from './lib/embed'
 import { applyTheme, currentTheme } from './lib/theme'
 import { routeTree } from './routeTree.gen'
+import { RouteError } from './components/route-error'
+import { installPreloadRecovery } from './lib/preload-recovery'
 import './styles.css'
+
+installPreloadRecovery()
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 30_000, refetchOnWindowFocus: false, retry: 1 } },
@@ -23,6 +27,7 @@ const queryClient = new QueryClient({
 function makeRouter() {
   return createRouter({
     routeTree,
+    defaultErrorComponent: RouteError,
     // Servida num subcaminho (VITE_BASE_PATH, ex.: `/crm/` dentro do painel do ai-manager): rotas e links ganham o prefixo.
     basepath: appBase() || '/',
     context: { queryClient },

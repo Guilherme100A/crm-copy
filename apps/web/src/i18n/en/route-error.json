@@ -1,0 +1,8 @@
+{
+  "title": "This page could not be opened",
+  "description": "An error occurred while loading this page. Try again or reload to fetch the latest version.",
+  "retry": "Try again",
+  "retrying": "Trying again…",
+  "reload": "Reload",
+  "retryFailed": "The attempt failed. You can try again or reload the page."
+}

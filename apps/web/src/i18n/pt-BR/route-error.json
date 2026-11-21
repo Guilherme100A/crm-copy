@@ -1,0 +1,8 @@
+{
+  "title": "Não foi possível abrir esta página",
+  "description": "Ocorreu um erro ao carregar a página. Tente novamente ou recarregue para buscar a versão mais recente.",
+  "retry": "Tentar novamente",
+  "retrying": "Tentando novamente…",
+  "reload": "Recarregar",
+  "retryFailed": "A tentativa falhou. Você pode tentar novamente ou recarregar a página."
+}
